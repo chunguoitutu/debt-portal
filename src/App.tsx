@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "./features/user/userSlice";
