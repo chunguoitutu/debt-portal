@@ -9,7 +9,7 @@ import Loans from '../pages/Loans';
 import Borrowers from '../pages/Borrowers';
 import MyTask from '../pages/MyTasks';
 import Transactions from '../pages/Transactions';
-import Header from "../pages/Header";
+import MainLayout from "../pages/MainLayout";
  
 const App: React.FC = () => {
 
@@ -22,7 +22,7 @@ const App: React.FC = () => {
     
     //private route 
     { path: "/", 
-      element: <Header />,
+      element: <MainLayout />,
       children: [
         {
           path: 'applications',
