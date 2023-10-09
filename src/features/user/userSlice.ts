@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
+
 import _get from "lodash/get";
+import Cookies from 'js-cookie';
 
 interface UserInfoInterface {
   email: string;
