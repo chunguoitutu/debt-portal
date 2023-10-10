@@ -13,7 +13,6 @@ import {Logout, useAuth} from '../modules/auth'
 import {App} from '../App'
 import {AuthLayout} from '../modules/auth/AuthLayout'
 import {Login} from '../modules/auth/components/Login'
-import {Registration} from '../modules/auth/components/Registration'
 import {ForgotPassword} from '../modules/auth/components/ForgotPassword'
 
 /**
@@ -38,7 +37,6 @@ const AppRoutes: FC = () => {
           ) : (
             <Route path='/*' element={<AuthLayout />}>
               <Route path='login' element={<Login />} />
-              <Route path='registration' element={<Registration />} />
               <Route path='forgot-password' element={<ForgotPassword />} />
               <Route path='*' element={<Navigate to='/login' />} />
             </Route>
