@@ -70,10 +70,9 @@ const Navbar = () => {
                 objectFit: 'cover',
               }}
             />
-            <div className='d-none d-lg-block'>
+            <div style={{marginLeft: '16px'}} className='d-none d-lg-block'>
               <p
                 style={{
-                  marginLeft: '16px',
                   wordWrap: 'break-word',
                   lineHeight: 'normal',
                   fontWeight: '400',
