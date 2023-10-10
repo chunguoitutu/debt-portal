@@ -4,6 +4,7 @@ import {AiOutlineSetting} from 'react-icons/ai'
 import {IoMdNotificationsOutline} from 'react-icons/io'
 import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
+import {Link} from 'react-router-dom'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -27,7 +28,7 @@ const Navbar = () => {
         <HeaderNotificationsMenu />
       </div>
 
-      <div className={clsx('app-navbar-item', itemClass)}>
+      <Link to={'/settings'} className={clsx('app-navbar-item', itemClass)}>
         <div
           data-kt-menu-trigger="{default: 'click'}"
           data-kt-menu-attach='parent'
@@ -36,8 +37,7 @@ const Navbar = () => {
         >
           <AiOutlineSetting className={btnIconClass} />
         </div>
-        <HeaderNotificationsMenu />
-      </div>
+      </Link>
 
       <div className={clsx('app-navbar-item', itemClass)}>
         <div
