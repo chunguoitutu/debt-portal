@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useEffect} from 'react'
-import {Outlet, Link} from 'react-router-dom'
+import {Outlet, Link, Navigate} from 'react-router-dom'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import logo from '../../../app/images/logo.png'
+import {useAuth} from './core/Auth'
 
 const AuthLayout = () => {
+  const {currentUser} = useAuth()
+
   useEffect(() => {
     const root = document.getElementById('root')
     if (root) {
@@ -17,6 +20,10 @@ const AuthLayout = () => {
       }
     }
   }, [])
+
+  if (currentUser) {
+    return <Navigate to='/dashboard' />
+  }
 
   return (
     <div className='d-flex flex-column flex-lg-row flex-column-fluid h-100'>

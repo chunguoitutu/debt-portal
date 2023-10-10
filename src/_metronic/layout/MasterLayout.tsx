@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import {Outlet, useLocation} from 'react-router-dom'
+import {Navigate, Outlet, useLocation} from 'react-router-dom'
 import {HeaderWrapper} from './components/header'
 import {ScrollTop} from './components/scroll-top'
 import {Content} from './components/content'
@@ -9,12 +9,20 @@ import {ActivityDrawer, DrawerMessenger, InviteUsers, UpgradePlan} from '../part
 import {PageDataProvider} from './core'
 import {reInitMenu} from '../helpers'
 import {ToolbarWrapper} from './components/toolbar'
+import {useAuth} from '../../app/modules/auth'
 
 const MasterLayout = () => {
   const location = useLocation()
+
+  const {currentUser} = useAuth()
+
   useEffect(() => {
     reInitMenu()
   }, [location.key])
+
+  if (!currentUser) {
+    return <Navigate to='/login' />
+  }
 
   return (
     <PageDataProvider>
