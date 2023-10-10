@@ -12,7 +12,7 @@ const loginSchema = Yup.object().shape({
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
+    .required('Username is required'),
   password: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
@@ -69,7 +69,7 @@ export function Login() {
     >
       <div className='text-center mb-11'>
         <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
-        <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
+        <div className='text-gray-500 fw-semibold fs-6'>Please Sign In With Your Account</div>
       </div>
 
       {formik.status && (
@@ -79,9 +79,9 @@ export function Login() {
       )}
 
       <div className='fv-row mb-8'>
-        <label className='form-label fs-6 fw-bolder text-dark'>Email</label>
+        <label className='form-label fs-6 fw-bolder text-dark'>Username</label>
         <input
-          placeholder='Email'
+          placeholder='Username'
           {...formik.getFieldProps('email')}
           className={clsx(
             'form-control bg-transparent',
