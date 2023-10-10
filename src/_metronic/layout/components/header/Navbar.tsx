@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import {KTIcon, toAbsoluteUrl} from '../../../helpers'
-import {HeaderNotificationsMenu, HeaderUserMenu, Search, ThemeModeSwitcher} from '../../../partials'
-import {useLayout} from '../../core'
+import {HeaderNotificationsMenu, HeaderUserMenu} from '../../../partials'
 import {AiOutlineSetting} from 'react-icons/ai'
 import {IoMdNotificationsOutline} from 'react-icons/io'
+import {useLayout} from '../../core'
+import {KTIcon} from '../../../helpers'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -61,18 +61,19 @@ const Navbar = () => {
             }}
           >
             <img
+              alt='Logo'
               src='https://vcdn-thethao.vnecdn.net/2021/12/13/2-jpeg-1639413745-3590-1639413816.jpg'
               style={{
-                marginRight: '16px',
                 width: '22px',
                 borderRadius: '50%',
                 height: '22px',
                 objectFit: 'cover',
               }}
             />
-            <div>
+            <div className='d-none d-lg-block'>
               <p
                 style={{
+                  marginLeft: '16px',
                   wordWrap: 'break-word',
                   lineHeight: 'normal',
                   fontWeight: '400',
@@ -102,6 +103,16 @@ const Navbar = () => {
         </div>
         <HeaderUserMenu />
       </div>
+      {config.app?.header?.default?.menu?.display && (
+        <div className='app-navbar-item d-lg-none ms-2 me-n3' title='Show header menu'>
+          <div
+            className='btn btn-icon btn-active-color-primary w-35px h-35px'
+            id='kt_app_header_menu_toggle'
+          >
+            <KTIcon iconName='text-align-left' className={btnIconClass} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

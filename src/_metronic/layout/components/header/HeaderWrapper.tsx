@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
-import {KTIcon, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
 import {Header} from './Header'
 import {Navbar} from './Navbar'
@@ -32,7 +31,7 @@ export function HeaderWrapper() {
               <img
                 alt='Logo'
                 src={logo}
-                className='h-50px h-lg-43 app-sidebar-logo-default theme-light-show'
+                className='h-20px h-md-30px h-lg-50px app-sidebar-logo-default theme-light-show'
               />
             </>
           </Link>

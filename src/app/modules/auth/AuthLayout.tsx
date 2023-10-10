@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useEffect} from 'react'
-import {Outlet, Link, Navigate} from 'react-router-dom'
-import {toAbsoluteUrl} from '../../../_metronic/helpers'
-import logo from '../../../app/images/logo.png'
+import {Outlet, Navigate} from 'react-router-dom'
 import {useAuth} from './core/Auth'
 import mainLogo from '../../../app/images/main-logo.png'
 
