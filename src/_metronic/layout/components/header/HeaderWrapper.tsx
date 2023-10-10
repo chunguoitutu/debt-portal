@@ -5,6 +5,7 @@ import {KTIcon, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
 import {Header} from './Header'
 import {Navbar} from './Navbar'
+import logo from '../../../../../src/app/images/logo.png'
 
 export function HeaderWrapper() {
   const {config, classes} = useLayout()
@@ -15,6 +16,9 @@ export function HeaderWrapper() {
   return (
     <div id='kt_app_header' className='app-header'>
       <div
+        style={{
+          width: '100%',
+        }}
         id='kt_app_header_container'
         className={clsx(
           'app-container',
@@ -22,57 +26,17 @@ export function HeaderWrapper() {
           config.app?.header?.default?.containerClass
         )}
       >
-        {config.app.sidebar?.display && (
-          <>
-            <div
-              className='d-flex align-items-center d-lg-none ms-n2 me-2'
-              title='Show sidebar menu'
-            >
-              <div
-                className='btn btn-icon btn-active-color-primary w-35px h-35px'
-                id='kt_app_sidebar_mobile_toggle'
-              >
-                <KTIcon iconName='abstract-14' className=' fs-1' />
-              </div>
-              <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
-                <Link to='/dashboard' className='d-lg-none'>
-                  <img
-                    alt='Logo'
-                    src={toAbsoluteUrl('/media/logos/default-small.svg')}
-                    className='h-30px'
-                  />
-                </Link>
-              </div>
-            </div>
-          </>
-        )}
-
-        {!(config.layoutType === 'dark-sidebar' || config.layoutType === 'light-sidebar') && (
-          <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
-            <Link to='/dashboard'>
-              {config.layoutType !== 'dark-header' ? (
-                <img
-                  alt='Logo'
-                  src={toAbsoluteUrl('/media/logos/default.svg')}
-                  className='h-20px h-lg-30px app-sidebar-logo-default'
-                />
-              ) : (
-                <>
-                  <img
-                    alt='Logo'
-                    src={toAbsoluteUrl('/media/logos/default-dark.svg')}
-                    className='h-20px h-lg-30px app-sidebar-logo-default theme-light-show'
-                  />
-                  <img
-                    alt='Logo'
-                    src={toAbsoluteUrl('/media/logos/default-small-dark.svg')}
-                    className='h-20px h-lg-30px app-sidebar-logo-default theme-dark-show'
-                  />
-                </>
-              )}
-            </Link>
-          </div>
-        )}
+        <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
+          <Link to='/dashboard'>
+            <>
+              <img
+                alt='Logo'
+                src={logo}
+                className='h-30px h-lg-43 app-sidebar-logo-default theme-light-show'
+              />
+            </>
+          </Link>
+        </div>
 
         <div
           id='kt_app_header_wrapper'
