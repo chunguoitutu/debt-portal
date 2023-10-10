@@ -57,8 +57,11 @@ const AppRoutes: FC = () => {
 
           <Route element={<MasterLayout />}>
             <Route path='dashboard' element={<DashboardWrapper />} />
-            <Route path='builder' element={<BuilderPageWrapper />} />
-            <Route path='menu-test' element={<MenuTestPage />} />
+            <Route path='/loans' element={<BuilderPageWrapper />} />
+            <Route path='/borrowers' element={<MenuTestPage />} />
+            <Route path='/transactions' element={<MenuTestPage />} />
+            <Route path='/my-tasks' element={<MenuTestPage />} />
+
             {/* Lazy Modules */}
             <Route
               path='crafted/pages/profile/*'

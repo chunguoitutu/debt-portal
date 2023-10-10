@@ -82,7 +82,7 @@ const Navbar = () => {
                   margin: '0',
                 }}
               >
-                le phuoc kha
+                Darlene Robertson
               </p>
               <p
                 style={{

@@ -8,10 +8,10 @@ export function MenuInner() {
   return (
     <>
       <MenuItem title={intl.formatMessage({id: 'Applications'})} to='/dashboard' />
-      <MenuItem title='Loans' to='/builder' />
-      <MenuItem title='Borrowers' to='/dashboard' />
-      <MenuItem title='My Tasks' to='/builder' />
-      <MenuItem title='Transactions' to='/dashboard' />
+      <MenuItem title='Loans' to='/loans' />
+      <MenuItem title='Borrowers' to='/borrowers' />
+      <MenuItem title='My Tasks' to='/my-tasks' />
+      <MenuItem title='Transactions' to='/transactions' />
     </>
   )
 }

@@ -32,7 +32,7 @@ export function HeaderWrapper() {
               <img
                 alt='Logo'
                 src={logo}
-                className='h-30px h-lg-43 app-sidebar-logo-default theme-light-show'
+                className='h-50px h-lg-43 app-sidebar-logo-default theme-light-show'
               />
             </>
           </Link>
