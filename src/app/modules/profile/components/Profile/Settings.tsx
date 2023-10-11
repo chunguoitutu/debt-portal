@@ -6,6 +6,7 @@ import {useFormik} from 'formik'
 
 import {useAuth} from '../../../auth'
 import {updateInfoUser} from '../../../auth/core/_requests'
+import ChangePassword from '../change-password/ChangePassword'
 
 const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First name is required'),
@@ -25,6 +26,7 @@ interface UserProfile {
 
 const Settings: React.FC = () => {
   const [loading, setLoading] = useState(false)
+  const [isShowResetPassword, setIsShowResetPassword] = useState<boolean>(false)
 
   const {currentUser} = useAuth()
 
@@ -42,30 +44,6 @@ const Settings: React.FC = () => {
       setLoading(true)
     },
   })
-  // const [avatarSrc, setAvatarSrc] = useState(
-  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdfYusZmpReA8vWiN3mQbyyBHpEcmO_GjGhhokiCGO9Q&s'
-  // )
-
-  // const handleImageClick = () => {
-  //   const input = document.createElement('input')
-  //   input.type = 'file'
-  //   input.accept = 'image/*'
-
-  //   input.addEventListener('change', (e: any) => {
-  //     const file = e.target.files[0]
-  //     if (file) {
-  //       const reader = new FileReader()
-  //       reader.onload = (e) => {
-  //         const result = e.target?.result
-  //         if (typeof result === 'string') {
-  //           setAvatarSrc(result)
-  //         }
-  //       }
-  //       reader.readAsDataURL(file)
-  //     }
-  //   })
-  //   input.click()
-  // }
 
   async function handleSubmitForm() {
     if (!currentUser) return
@@ -90,21 +68,36 @@ const Settings: React.FC = () => {
       setLoading(false)
     }
   }
+
+  function toggleResetPassword() {
+    setIsShowResetPassword(!isShowResetPassword)
+  }
+
   return (
     <>
       <ToastContainer />
+
+      {currentUser && isShowResetPassword && (
+        <ChangePassword
+          username={currentUser.username}
+          onClose={toggleResetPassword}
+          show={isShowResetPassword}
+        />
+      )}
       <div className='card mb-5 mb-xl-10'>
-        <div
-          className='card-header border-0 cursor-pointer'
-          role='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#kt_account_profile_details'
-          aria-expanded='true'
-          aria-controls='kt_account_profile_details'
-        >
+        <div className='card-header d-flex'>
           <div className='card-title m-0'>
             <h3 className='fw-bolder m-0'>Profile Details</h3>
           </div>
+
+          <button
+            type='button'
+            id='kt_sign_in_submit'
+            className='btn btn-primary align-self-center'
+            onClick={toggleResetPassword}
+          >
+            Reset Password
+          </button>
         </div>
 
         <div id='kt_account_profile_details' className='collapse show'>
