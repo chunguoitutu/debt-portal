@@ -31,3 +31,17 @@ export type UserInfo = {
   status: number
   role_name: string
 }
+
+export type updateUserInfo = {
+  avatar?: string
+  username?: string
+  is_active?: number
+  branch_id?: number
+  firstname?: string
+  middlename?: string | null
+  lastname?: string
+  telephone?: string
+  email?: string
+  status?: number
+  role_name?: string
+}

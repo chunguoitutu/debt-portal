@@ -5,6 +5,7 @@ import {IoMdNotificationsOutline} from 'react-icons/io'
 import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link} from 'react-router-dom'
+import { useAuth } from '../../../../app/modules/auth'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -14,6 +15,10 @@ const btnIconClass = 'fs-2'
 
 const Navbar = () => {
   const {config} = useLayout()
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {currentUser, logout} = useAuth()
+
   return (
     <div className='app-navbar'>
       <div className={clsx('app-navbar-item', itemClass)}>
@@ -82,7 +87,7 @@ const Navbar = () => {
                   margin: '0',
                 }}
               >
-                Darlene Robertson
+                 {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${currentUser?.lastname || ''}` || 'Guest'}
               </p>
               <p
                 style={{
@@ -95,7 +100,7 @@ const Navbar = () => {
                   opacity: '0.7',
                 }}
               >
-                Officer
+                {currentUser?.role_name || ''}
               </p>
             </div>
           </div>

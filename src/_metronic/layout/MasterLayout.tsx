@@ -23,7 +23,7 @@ const MasterLayout = () => {
   const location = useLocation()
 
   const {logout, setCurrentUser} = useAuth()
-
+  
   const navigate = useNavigate()
   const {pathname} = useLocation()
 
