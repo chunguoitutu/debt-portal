@@ -1,8 +1,5 @@
 import React from 'react'
 
-import {BsCheckLg} from 'react-icons/bs'
-import {BiErrorCircle} from 'react-icons/bi'
-
 interface IProps {
   onChange?: any
   value: any

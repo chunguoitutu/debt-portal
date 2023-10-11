@@ -4,7 +4,6 @@ import {NewCompanies} from './newCompanies'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
 import {
-  GET_USER_BY_ACCESSTOKEN_URL,
   REACT_APP_BASE_URL_API,
 } from '../../../modules/auth/core/_requests'
 
@@ -94,9 +93,9 @@ const SettingCompanies = (props: Props) => {
               />
             </div>
 
-            <a href='#' className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'>
+            <button className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'>
               <KTIcon iconName='trash' className='fs-3' />
-            </a>
+            </button>
           </div>,
         ])}
       />

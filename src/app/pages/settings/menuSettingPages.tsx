@@ -1,7 +1,5 @@
 import {Navigate, Routes, Route, Outlet} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {ProfileHeader} from '../../modules/profile/ProfileHeader'
-import {Overview} from '../../modules/profile/components/Overview'
 import {Projects} from '../../modules/profile/components/Projects'
 import {Campaigns} from '../../modules/profile/components/Campaigns'
 import {Documents} from '../../modules/profile/components/Documents'
