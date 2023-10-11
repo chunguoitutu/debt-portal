@@ -12,6 +12,7 @@ import {ToolbarWrapper} from './components/toolbar'
 import {useAuth} from '../../app/modules/auth'
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
+import {getCurrentUser} from '../../app/modules/auth/core/_requests'
 
 interface iJwtDecode {
   iat: number
@@ -21,7 +22,7 @@ interface iJwtDecode {
 const MasterLayout = () => {
   const location = useLocation()
 
-  const {currentUser, logout} = useAuth()
+  const {logout, setCurrentUser} = useAuth()
 
   const navigate = useNavigate()
   const {pathname} = useLocation()
@@ -32,9 +33,8 @@ const MasterLayout = () => {
     // Avoid crashes app if token is invalid
     try {
       const {exp} = jwtDecode<iJwtDecode>(token || '')
-      if (!exp) return
 
-      const isTokenExpired = Number(exp) < Date.now() / 1000
+      const isTokenExpired = exp ? Number(exp) < Date.now() / 1000 : false
 
       // handle token expired
       if (isTokenExpired) {
@@ -44,12 +44,14 @@ const MasterLayout = () => {
           ? `redirect=${pathname.slice(1)}`
           : ''
 
+        Cookies.remove('token')
         navigate(`/login${query}`)
       } else {
-        console.log(currentUser)
+        // Get info when reload
+        onFetchCurrentUser()
       }
     } catch (error) {
-      navigate('/login')
+      logout()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -57,6 +59,15 @@ const MasterLayout = () => {
   useEffect(() => {
     reInitMenu()
   }, [location.key])
+
+  async function onFetchCurrentUser() {
+    try {
+      const {data} = await getCurrentUser()
+      setCurrentUser(data.data)
+    } catch (error) {
+      logout()
+    }
+  }
 
   if (!token) {
     return <Navigate to='/login' />
