@@ -65,7 +65,7 @@ const NewCompanies = ({
         setDataCompany(response.data.data)
       })
       .catch((error) => {
-        console.error('Lỗi:', error)
+        console.error('Error: ', error?.message)
       })
   }, [])
 

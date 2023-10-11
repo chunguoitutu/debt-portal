@@ -16,9 +16,6 @@ const EnhancedTable = ({EnhancedTableHead, rows}: Props) => {
                     {data}
                   </th>
                 ))}
-                <th style={{color: 'black'}} className='min-w-150px'>
-                  actions
-                </th>
               </tr>
             </thead>
             <tbody>
