@@ -4,6 +4,7 @@ import {KTIcon} from '../../../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
 import {useAuth} from '../../../auth'
+import AvatarHeader from './AvatarHeader'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()
@@ -11,39 +12,30 @@ const AccountHeader: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {currentUser, logout} = useAuth()
 
-  const dataUser = [
-    {
-      avatar:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdfYusZmpReA8vWiN3mQbyyBHpEcmO_GjGhhokiCGO9Q&s',
-    },
-  ]
-
   return (
     <div className='card mb-5 mb-xl-10'>
-      <div className='card-body pt-9 pb-0'>
-        <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
-          <div className='me-7 mb-4'>
-            <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative'>
-              <img src={dataUser[0].avatar} alt='Metronic' />
-            </div>
+    <div className='card-body pt-9 pb-0'>
+      <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
+        <div className='me-7 mb-4'>
+          <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative'>
+            <AvatarHeader
+              firstname={currentUser?.firstname}
+              lastname={currentUser?.lastname}
+              style={{}}
+            />
           </div>
+        </div>
 
           <div className='flex-grow-1'>
             <div className='d-flex justify-content-between align-items-start flex-wrap mb-2'>
               <div className='d-flex flex-column'>
-                <div className='d-flex align-items-center mt-2 mb-2'>
-                  <a href='#' className='text-gray-400 text-hover-primary fs-6 fw-bolder me-1'>
-                    {currentUser?.role_name}
-                  </a>
-                </div>
-
                 <div className='d-flex align-items-center mb-2'>
-                  <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
+                  <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1 mt-4'>
                     {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${currentUser?.lastname || ''}`}
                   </a>
                 </div>
 
-                <div className='d-flex flex-wrap fw-bold fs-6 mb-4 pe-2'>
+                <div className='d-flex flex-wrap fw-bold fs-6 mb-3 mt-1 pe-2'>
                   <a
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-2 mb-2'
