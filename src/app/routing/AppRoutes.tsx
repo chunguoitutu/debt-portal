@@ -20,10 +20,11 @@ import {MenuTestPage} from '../pages/MenuTestPage'
 import {WithChildren} from '../../_metronic/helpers'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
+import SettingPage from '../pages/settings/settingsPage'
 
 const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
 const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
-const AccountPage = lazy(() => import('../modules/profile/components/profile/AccountPage'))
+const AccountPage = lazy(() => import('../modules/profile/components/Profile/AccountPage'))
 const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
 const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
 const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
@@ -61,14 +62,14 @@ const AppRoutes: FC = () => {
             <Route path='/borrowers' element={<MenuTestPage />} />
             <Route path='/transactions' element={<MenuTestPage />} />
             <Route path='/my-tasks' element={<MenuTestPage />} />
-            <Route path='/settings' element={<MenuTestPage />} />
+            {/* <Route path='/settings' element={<SettingPage />} /> */}
 
             {/* Lazy Modules */}
             <Route
-              path='crafted/pages/profile/*'
+              path='settings/*'
               element={
                 <SuspensedView>
-                  <ProfilePage />
+                  <SettingPage />
                 </SuspensedView>
               }
             />

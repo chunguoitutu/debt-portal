@@ -2,7 +2,7 @@
 import {FC} from 'react'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
-import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
+import Avatar from '../../../../app/modules/profile/components/Profile/Avatar'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout} = useAuth()

@@ -6,7 +6,7 @@ import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
-import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
+import Avatar from '../../../../app/modules/profile/components/Profile/Avatar'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -34,7 +34,7 @@ const Navbar = () => {
         <HeaderNotificationsMenu />
       </div>
 
-      <Link to={'/settings'} className={clsx('app-navbar-item', itemClass)}>
+      <Link to={'/settings/company'} className={clsx('app-navbar-item', itemClass)}>
         <div
           data-kt-menu-trigger="{default: 'click'}"
           data-kt-menu-attach='parent'
