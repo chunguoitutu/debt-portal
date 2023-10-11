@@ -21,7 +21,7 @@ const modalsRoot = document.getElementById('root-modals') || document.body
 
 const CreateAppModal = ({show, handleClose}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const [ stepper, setStepper ] = useState<StepperComponent | null>(null)
+  const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [data, setData] = useState<ICreateAppData>(defaultCreateAppData)
   const [hasError, setHasError] = useState(false)
 

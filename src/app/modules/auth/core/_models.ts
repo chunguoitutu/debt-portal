@@ -3,6 +3,12 @@ export type LoginInfo = {
   password: string
 }
 
+export type UpdatePasswordInfo = {
+  username: string
+  old_password: string
+  new_password: string
+}
+
 export type DataResponse<T> = {
   error: boolean
   message: string

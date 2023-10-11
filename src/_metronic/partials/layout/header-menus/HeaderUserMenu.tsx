@@ -2,7 +2,7 @@
 import {FC} from 'react'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
-import Avatar from '../../../../app/modules/profile/components/Profile/Avatar'
+import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout} = useAuth()
@@ -14,11 +14,17 @@ const HeaderUserMenu: FC = () => {
       <div className='menu-item px-3'>
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>
-          <Avatar firstname={currentUser?.firstname} lastname={currentUser?.lastname} style={{width: 50, height: 50}}/>
+            <Avatar
+              firstname={currentUser?.firstname}
+              lastname={currentUser?.lastname}
+              style={{width: 50, height: 50}}
+            />
           </div>
           <div className='d-flex flex-column'>
             <div className='fw-bolder d-flex align-items-center fs-5'>
-             {` ${currentUser?.firstname} ${currentUser?.middlename || ''} ${currentUser?.lastname || ''} `}
+              {` ${currentUser?.firstname} ${currentUser?.middlename || ''} ${
+                currentUser?.lastname || ''
+              } `}
             </div>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
               {currentUser?.email}
@@ -28,7 +34,6 @@ const HeaderUserMenu: FC = () => {
       </div>
 
       <div className='separator my-2'></div>
-
 
       <div className='menu-item px-5 my-1'>
         <Link to='/crafted/account/overview' className='menu-link px-5'>
