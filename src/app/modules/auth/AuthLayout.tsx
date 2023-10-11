@@ -1,11 +1,10 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useEffect} from 'react'
-import {Outlet, Navigate} from 'react-router-dom'
-import {useAuth} from './core/Auth'
+import {Navigate, Outlet} from 'react-router-dom'
 import mainLogo from '../../../app/images/main-logo.png'
+import Cookies from 'js-cookie'
 
 const AuthLayout = () => {
-  const {currentUser} = useAuth()
+  const token = Cookies.get('token')
 
   useEffect(() => {
     const root = document.getElementById('root')
@@ -18,9 +17,11 @@ const AuthLayout = () => {
         root.style.height = 'auto'
       }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (currentUser) {
+  if (token) {
     return <Navigate to='/dashboard' />
   }
 

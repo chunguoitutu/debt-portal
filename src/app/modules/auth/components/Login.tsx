@@ -1,15 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
 import * as Yup from 'yup'
-import {useFormik} from 'formik'
+import {FormikHelpers, useFormik} from 'formik'
 import clsx from 'clsx'
-import {Link, useNavigate} from 'react-router-dom'
-import {getUserByToken, login} from '../core/_requests'
+import {Link, useNavigate, useSearchParams} from 'react-router-dom'
+import {login} from '../core/_requests'
 import {useAuth} from '../core/Auth'
+import {LoginInfo} from '../core/_models'
+import Cookies from 'js-cookie'
 
 const loginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Wrong email format')
+  username: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('Username is required'),
@@ -20,46 +21,42 @@ const loginSchema = Yup.object().shape({
 })
 
 const initialValues = {
-  email: 'admin@demo.com',
-  password: 'demo',
+  username: process.env.NODE_ENV === 'production' ? '' : 'admin001',
+  password: process.env.NODE_ENV === 'production' ? '' : 'admin@123',
 }
-
-/*
-  Formik+YUP+Typescript:
-  https://jaredpalmer.com/formik/docs/tutorial#getfieldprops
-  https://medium.com/@maurice.de.beijer/yup-validation-and-typescript-and-formik-6c342578a20e
-*/
 
 export function Login() {
   const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
-
-  console.log('run')
+  const [searchParams] = useSearchParams()
+  const {setCurrentUser} = useAuth()
 
   const navigate = useNavigate()
 
-  const formik = useFormik({
+  const formik = useFormik<LoginInfo>({
     initialValues,
     validationSchema: loginSchema,
-    onSubmit: async (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
-      try {
-        const {data: auth} = await login(values.email, values.password)
-        saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
-
-        navigate('/dashboard')
-      } catch (error) {
-        console.error(error)
-        saveAuth(undefined)
-        setStatus('The login details are incorrect')
-        setSubmitting(false)
-        setLoading(false)
-      }
-    },
+    onSubmit,
   })
 
+  async function onSubmit(values: LoginInfo, {setStatus, setSubmitting}: FormikHelpers<LoginInfo>) {
+    const redirect = searchParams.get('redirect')
+    setLoading(true)
+
+    try {
+      const {data} = await login(values)
+      Cookies.set('token', data.token)
+
+      setCurrentUser(data.info)
+      setSubmitting(false)
+      setLoading(false)
+
+      navigate(`/${redirect ? redirect : 'dashboard'}`)
+    } catch (error) {
+      setStatus('Incorrect username or password')
+      setSubmitting(false)
+      setLoading(false)
+    }
+  }
   return (
     <form
       className='form w-100'
@@ -82,21 +79,21 @@ export function Login() {
         <label className='form-label fs-6 fw-bolder text-dark'>Username</label>
         <input
           placeholder='Username'
-          {...formik.getFieldProps('email')}
+          {...formik.getFieldProps('username')}
           className={clsx(
             'form-control bg-transparent',
-            {'is-invalid': formik.touched.email && formik.errors.email},
+            {'is-invalid': formik.touched.username && formik.errors.username},
             {
-              'is-valid': formik.touched.email && !formik.errors.email,
+              'is-valid': formik.touched.username && !formik.errors.username,
             }
           )}
-          type='email'
-          name='email'
+          type='username'
+          name='username'
           autoComplete='off'
         />
-        {formik.touched.email && formik.errors.email && (
+        {formik.touched.username && formik.errors.username && (
           <div className='fv-plugins-message-container'>
-            <span role='alert'>{formik.errors.email}</span>
+            <span role='alert'>{formik.errors.username}</span>
           </div>
         )}
       </div>
