@@ -3,12 +3,20 @@ export type LoginInfo = {
   password: string
 }
 
+export type DataResponse<T> = {
+  error: boolean
+  message: string
+  data: T
+}
+
 export type LoginResponse = {
   error: boolean
   message: string
   token: string
   info: UserInfo
 }
+
+export type GetCurrentUserResponse = {}
 
 export type UserInfo = {
   username: string
