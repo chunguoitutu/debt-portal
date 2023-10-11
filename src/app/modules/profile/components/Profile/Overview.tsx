@@ -5,9 +5,6 @@ import { useAuth } from '../../../auth'
 
 export function Overview() {
   const {currentUser} = useAuth()
-
-  console.log(currentUser)
-
   return (
     <>
       <div className='card mb-5 mb-xl-10' id='kt_profile_details_view'>

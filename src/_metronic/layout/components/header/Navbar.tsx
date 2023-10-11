@@ -6,6 +6,7 @@ import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link} from 'react-router-dom'
 import { useAuth } from '../../../../app/modules/auth'
+import Avatar from '../../../../app/modules/profile/components/Profile/Avatar'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -53,7 +54,7 @@ const Navbar = () => {
         >
           <div
             style={{
-              paddingLeft: '16px',
+              paddingLeft: '12px',
               paddingRight: '16px',
               paddingTop: '4px',
               paddingBottom: '4px',
@@ -65,13 +66,13 @@ const Navbar = () => {
               border: '1px solid var(--color-border-border-gray-800, #252F4A)',
             }}
           >
-            <img
-              alt='Logo'
-              src='https://vcdn-thethao.vnecdn.net/2021/12/13/2-jpeg-1639413745-3590-1639413816.jpg'
+            <Avatar
+              firstname={currentUser?.firstname}
+              lastname={currentUser?.lastname}
               style={{
-                width: '22px',
+                width: 30,
                 borderRadius: '50%',
-                height: '22px',
+                height: 30,
                 objectFit: 'cover',
               }}
             />
