@@ -23,7 +23,7 @@ import TopBarProgress from 'react-topbar-progress-indicator'
 
 const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
 const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
-const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
+const AccountPage = lazy(() => import('../modules/profile/components/Profile/AccountPage'))
 const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
 const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
 const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
@@ -62,6 +62,56 @@ const AppRoutes: FC = () => {
             <Route path='/transactions' element={<MenuTestPage />} />
             <Route path='/my-tasks' element={<MenuTestPage />} />
             <Route path='/settings' element={<MenuTestPage />} />
+
+            {/* Lazy Modules */}
+            <Route
+              path='crafted/pages/profile/*'
+              element={
+                <SuspensedView>
+                  <ProfilePage />
+                </SuspensedView>
+              }
+            />
+            <Route
+              path='crafted/pages/wizards/*'
+              element={
+                <SuspensedView>
+                  <WizardsPage />
+                </SuspensedView>
+              }
+            />
+            <Route
+              path='crafted/widgets/*'
+              element={
+                <SuspensedView>
+                  <WidgetsPage />
+                </SuspensedView>
+              }
+            />
+            <Route
+              path='crafted/account/*'
+              element={
+                <SuspensedView>
+                  <AccountPage />
+                </SuspensedView>
+              }
+            />
+            <Route
+              path='apps/chat/*'
+              element={
+                <SuspensedView>
+                  <ChatPage />
+                </SuspensedView>
+              }
+            />
+            <Route
+              path='apps/user-management/*'
+              element={
+                <SuspensedView>
+                  <UsersPage />
+                </SuspensedView>
+              }
+            />
           </Route>
 
           <Route element={<AuthLayout />}>
