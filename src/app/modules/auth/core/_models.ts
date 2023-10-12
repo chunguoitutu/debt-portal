@@ -57,3 +57,15 @@ export type UpdateUserResponse = {
   message: string
   token: string
 }
+
+export type RoleInfo = {
+  id: number
+  role_name: string
+  description?: string | null
+  permissions?: string | null
+}
+
+export type UpdateById<T = any> = {
+  id: number
+  data: T
+}

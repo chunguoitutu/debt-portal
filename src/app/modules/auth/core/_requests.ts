@@ -6,6 +6,8 @@ import {
   UserInfo,
   updateUserInfo,
   UpdateUserResponse,
+  RoleInfo,
+  UpdateById,
 } from './_models'
 import request from '../../../axios'
 
@@ -34,7 +36,22 @@ export function updatePasswordCurrentUser(updatePasswordInfo: UpdatePasswordInfo
   return request.post(endPoint, updatePasswordInfo)
 }
 
-export function getDataCompany() {
-  const endPoint = '/user/change-pass'
-  return request.post(endPoint)
+export function getRoleList() {
+  const endPoint = '/config/role'
+  return request.get<DataResponse<RoleInfo[]>>(endPoint)
+}
+
+export function deleteRoleById(id: number) {
+  const endPoint = `/config/role/${id}`
+  return request.delete(endPoint)
+}
+
+export function createNewRole(data: Omit<RoleInfo, 'id'>) {
+  const endPoint = '/config/role'
+  return request.post(endPoint, data)
+}
+
+export function updateRole({data, id}: UpdateById<Omit<RoleInfo, 'id'>>) {
+  const endPoint = `/config/role/${id}`
+  return request.post(endPoint, data)
 }

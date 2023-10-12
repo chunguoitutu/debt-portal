@@ -9,10 +9,16 @@ const EnhancedTable = ({EnhancedTableHead, rows}: Props) => {
       <div className='card-body py-3'>
         <div className='table-responsive'>
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
-            <thead className=''>
-              <tr className='fw-bold text-muted '>
-                {EnhancedTableHead?.map((data, index) => (
-                  <th style={{color: 'black'}} key={index} className='min-w-150px '>
+            <thead>
+              <tr className='fw-bold text-muted'>
+                {EnhancedTableHead.map((data, index) => (
+                  <th
+                    key={index}
+                    className={
+                      'min-w-150px text-black ' +
+                      (EnhancedTableHead.length === index + 1 && 'text-center')
+                    }
+                  >
                     {data}
                   </th>
                 ))}
@@ -23,11 +29,11 @@ const EnhancedTable = ({EnhancedTableHead, rows}: Props) => {
                 <tr key={indexs}>
                   {row.map((data: any, index: number) => (
                     <td key={index}>
-                      <div className='d-flex align-items-center'>
-                        <span className='text-muted fw-semibold text-muted d-block fs-7'>
-                          {data}
-                        </span>
-                      </div>
+                      {/* <div className='d-flex align-items-center'>
+                        <span className='text-muted fw-semibold text-muted d-block fs-7'> */}
+                      {data}
+                      {/* </span>
+                      </div> */}
                     </td>
                   ))}
                 </tr>

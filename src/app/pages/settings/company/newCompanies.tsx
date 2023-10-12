@@ -12,7 +12,6 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {InputTime} from '../../../../components/inputs/inputTime'
 
 type Props = {

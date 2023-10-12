@@ -34,8 +34,8 @@ export const Input: React.FC<IProps> = ({
 }) => {
   return (
     <div>
-      <div className='fv-row mb-10'>
-        <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
+      <div className='fv-row mb-8'>
+        <label className='d-flex align-items-center fs-5 fw-semibold mb-2' htmlFor={id}>
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
         <input
