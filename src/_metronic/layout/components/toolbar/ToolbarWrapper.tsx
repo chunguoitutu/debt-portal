@@ -4,6 +4,7 @@ import {PageTitleWrapper} from './page-title'
 
 interface IProps {}
 
+// eslint-disable-next-line no-empty-pattern
 const ToolbarWrapper = ({}: IProps) => {
   const {config, classes} = useLayout()
   if (!config.app?.toolbar?.display) {

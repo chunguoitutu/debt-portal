@@ -1,19 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react'
-import {LOAN_TYPE_TABLE_CONFIG} from './loanConfig'
 import { KTIcon } from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
 import { Modal } from 'react-bootstrap'
 import Swal from 'sweetalert2';
-import  CreateLoanType  from './createLoanType'
-// import { CreateLoanType } from './createLoanType'
+
 import request from '../../../axios'
+import { DOCUMENT_TYPE_TABLE_CONFIG } from './documentConfig';
+import CreateDocumentType from './createDocumentTypes'
 
 interface items {
   id: string
-  loan_type: string
+  type_name: string
   description: string
   status: number
+  createdAt: string
+  updatedAt: string
 }
 
 const ModalDelete = ({
@@ -27,9 +29,9 @@ const ModalDelete = ({
   itemDelete: any
   refreshData: () => void
 }) => {
-  const handleDeleteLoan = async () => {
+  const handleDeleteDocument = async () => {
     request
-      .delete(`config/loan_type/${itemDelete?.id}`)
+      .delete(`config/document_type/${itemDelete?.id}`)
       .then((response) => {
         if (!response.data?.error) {
           Swal.fire({
@@ -43,7 +45,7 @@ const ModalDelete = ({
       })
       .catch((error) => {
         Swal.fire({
-          timer: 1500,
+            timer: 1500,
           icon: 'error',
           title: error?.message,
         })
@@ -70,13 +72,13 @@ const ModalDelete = ({
       <div className='modal-body py-lg-10 px-lg-10'>
         <span
           style={{fontSize: '20px'}}
-        >{`Do you want to detete "${itemDelete?.type_name}"`}</span>
+        >{`Do you want to detete "${itemDelete?.type_name}" ?`}</span>
         <div className='d-flex justify-content-end mt-8 gap-4'>
           <button
             type='button'
             id='kt_sign_in_submit'
             className='btn btn-danger'
-            onClick={handleDeleteLoan}
+            onClick={handleDeleteDocument}
             disabled={false}
           >
             <span className='indicator-label'>Delete</span>
@@ -96,7 +98,7 @@ const ModalDelete = ({
   )
 }
 
- const  LoanTypes = () => {
+ const  DocumentTypes = () => {
 
   const [data, setData] = useState([])
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)
@@ -106,11 +108,11 @@ const ModalDelete = ({
   const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
   const [itemDelete, setItemDelete] = useState({})
 
-  const { rows } = LOAN_TYPE_TABLE_CONFIG
+  const { rows } = DOCUMENT_TYPE_TABLE_CONFIG
 
   const handleFetchLoanType = async () => {
     request
-      .get('config/loan_type')
+      .get('config/document_type')
       .then((response) => {
         setData(response.data.data)
       })
@@ -138,11 +140,11 @@ const ModalDelete = ({
             className='btn btn-sm btn-light-primary fw-bold'
           >
             <KTIcon iconName='plus' className='fs-3 fw-bold' />
-            New Loan Type
+            New Document Type
           </button>
         </div>
 
-        <CreateLoanType
+        <CreateDocumentType
           setLoadApi={setLoadApi}
           loadApi={loadapi}
           show={showPopupCreate}
@@ -192,7 +194,7 @@ const ModalDelete = ({
         />
       </div>
       {showPopupEdit ? (
-        <CreateLoanType
+        <CreateDocumentType
           setLoadApi={setLoadApi}
           loadApi={loadapi}
           show={showPopupEdit}
@@ -217,4 +219,4 @@ const ModalDelete = ({
   )
 }
 
-export default LoanTypes
+export default DocumentTypes

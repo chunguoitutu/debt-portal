@@ -15,7 +15,7 @@ const EnhancedTable = ({EnhancedTableHead, rows}: Props) => {
                   <th
                     key={index}
                     className={
-                      'min-w-150px text-black ' +
+                      'min-w-150px text-black fs-6 ' +
                       (EnhancedTableHead.length === index + 1 && 'text-center')
                     }
                   >
@@ -29,11 +29,7 @@ const EnhancedTable = ({EnhancedTableHead, rows}: Props) => {
                 <tr key={indexs}>
                   {row.map((data: any, index: number) => (
                     <td key={index}>
-                      {/* <div className='d-flex align-items-center'>
-                        <span className='text-muted fw-semibold text-muted d-block fs-7'> */}
                       {data}
-                      {/* </span>
-                      </div> */}
                     </td>
                   ))}
                 </tr>
