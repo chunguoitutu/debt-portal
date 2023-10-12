@@ -36,6 +36,9 @@ export type UserInfo = {
   email: string
   status: number
   role_name: string
+  permissions: any
+  role_id: number
+  last_login_date: any
 }
 
 export type updateUserInfo = {
