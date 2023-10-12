@@ -84,7 +84,7 @@ const NewCompanies = ({
         website: data ? data?.website : '',
         registration_date: data ? moment(data?.registration_date).format('YYYY-MM-DDTHH:mm') : '',
       },
-      // validationSchema: newCompaniesSchema,
+      validationSchema: newCompaniesSchema,
       onSubmit: async (values: any, actions: any) => {
         if (titleLable === 'New') {
           await axios
