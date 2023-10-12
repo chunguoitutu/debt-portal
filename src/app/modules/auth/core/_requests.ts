@@ -33,3 +33,8 @@ export function updatePasswordCurrentUser(updatePasswordInfo: UpdatePasswordInfo
   const endPoint = '/user/change-pass'
   return request.post(endPoint, updatePasswordInfo)
 }
+
+export function getDataCompany() {
+  const endPoint = '/user/change-pass'
+  return request.post(endPoint)
+}

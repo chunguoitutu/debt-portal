@@ -5,6 +5,7 @@ import {Campaigns} from '../../modules/profile/components/Campaigns'
 import {Documents} from '../../modules/profile/components/Documents'
 import {Connections} from '../../modules/profile/components/Connections'
 import SettingCompanies from './company/settingCompanies'
+import SettingBranch from './branch/SettingBranch'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -40,11 +41,11 @@ const MenuSettingPage = () => (
         }
       />
       <Route
-        path='projects'
+        path='branch'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Projects</PageTitle>
-            <Projects />
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Branch</PageTitle>
+            <SettingBranch />
           </>
         }
       />

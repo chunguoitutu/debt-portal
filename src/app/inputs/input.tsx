@@ -13,9 +13,13 @@ interface IProps {
   touched?: any
   classCSS?: string
   required?: boolean
+  onPaste?: any
+  onKeyPressCapture?: any
 }
 
 export const Input: React.FC<IProps> = ({
+  onKeyPressCapture,
+  onPaste,
   value,
   errorTitle,
   onChange,
@@ -35,6 +39,8 @@ export const Input: React.FC<IProps> = ({
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
         <input
+          onKeyPressCapture={onKeyPressCapture}
+          onPaste={onPaste}
           type={type}
           value={value}
           onChange={onChange}
