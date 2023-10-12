@@ -30,7 +30,7 @@ const Select = ({
   return (
     <div className='row mb-6'>
       <label className='col-lg-4 col-form-label fw-bold fs-6'>
-        <span className='required'>{title}</span>
+        <span className=''>{title}</span>
       </label>
 
       <div className=' fv-row'>

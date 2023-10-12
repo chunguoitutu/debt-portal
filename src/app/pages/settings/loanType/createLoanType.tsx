@@ -8,9 +8,9 @@ import {swalToast} from '../../../swal-notification'
 
 import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
-import {Input} from '../../../inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
+import {Input} from '../../../../components/inputs/input'
 
 type Props = {
   setLoadApi: any
@@ -158,7 +158,7 @@ const CreateLoanType = ({
                 onChange={handleChange}
               />
               <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid '>
-                  <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
+                <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
                 <input
                   className='form-check-input ms-4'
                   style={{width: 50, height: 25}}

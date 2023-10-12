@@ -2,7 +2,9 @@ import clsx from 'clsx'
 import {useLayout} from '../../core'
 import {PageTitleWrapper} from './page-title'
 
-const ToolbarWrapper = () => {
+interface IProps {}
+
+const ToolbarWrapper = ({}: IProps) => {
   const {config, classes} = useLayout()
   if (!config.app?.toolbar?.display) {
     return null

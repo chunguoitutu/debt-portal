@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import {Link, useLocation} from 'react-router-dom'
-import {useAuth} from '../../modules/auth'
 
 const MenuSetting: React.FC = () => {
   const location = useLocation()
@@ -30,7 +29,7 @@ const MenuSetting: React.FC = () => {
                 }
                 to='/settings/branch'
               >
-                branch
+                Branch
               </Link>
             </li>
             <li className='nav-item'>

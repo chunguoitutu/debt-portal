@@ -1,11 +1,12 @@
-import {Navigate, Routes, Route, Outlet} from 'react-router-dom'
+import {Navigate, Routes, Route, Outlet, useLocation} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {Projects} from '../../modules/profile/components/Projects'
 import {Campaigns} from '../../modules/profile/components/Campaigns'
 import {Documents} from '../../modules/profile/components/Documents'
 import  LoanTypes  from './loanType/loanType'
 import SettingCompanies from './company/settingCompanies'
 import SettingBranch from './branch/SettingBranch'
+import CompanyDetail from './company/companyDetail'
+import {MenuSetting} from './menuSetting'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -27,6 +28,7 @@ const MenuSettingPage = () => (
     <Route
       element={
         <>
+          <MenuSetting />
           <Outlet />
         </>
       }
@@ -40,6 +42,7 @@ const MenuSettingPage = () => (
           </>
         }
       />
+
       <Route
         path='branch'
         element={

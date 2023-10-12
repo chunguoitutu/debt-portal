@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {NewCompanies} from './newCompanies'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import {COMPANY_TABLE_CONFIG} from './companyConfig'
 import {Modal} from 'react-bootstrap'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
+import {NewCompanies} from './newCompanies'
+import CompanyDetail from './companyDetail'
+import moment from 'moment'
+import {COMPANY_TABLE_CONFIG} from './companyConfig'
 
 type Props = {}
 interface items {
@@ -102,10 +104,14 @@ const ModalDelete = ({
 const SettingCompanies = (props: Props) => {
   const [data, setData] = useState([])
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
+  const [showDetail, setshowDetail] = useState<boolean>(false)
+
+  const [id, setId] = useState<Number>(1)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [itemDelete, setItemDelete] = useState({})
   const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
+
   const {rows} = COMPANY_TABLE_CONFIG
 
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
@@ -150,24 +156,38 @@ const SettingCompanies = (props: Props) => {
           handleClose={() => setShowCreateAppModal(false)}
         />
         <EnhancedTable
-          EnhancedTableHead={rows?.map((row) => row.name)}
+          EnhancedTableHead={rows?.map((row: any) => row.name)}
           rows={data?.map((item: items, index: number) => {
             return rows.map((row) => {
               if (row.key === 'id') return index + 1
-              if (row.key === 'status' && item[row.key] === 1) {
+              if (row.key === 'status' && Number(item[row.key]) === 1) {
                 return <span className='badge badge-light-success fs-7 fw-semibold'>Active</span>
               }
-              if (row.key === 'status' && item[row.key] === 0) {
+              if (row.key === 'status' && Number(item[row.key]) === 0) {
                 return <span className='badge badge-light-danger fs-8 fw-bold my-2'>Disabled</span>
+              }
+              if (row.key === 'registration_date') {
+                return moment(item[row.key]).format('YYYY-MM-DD')
               }
 
               if (row.key === 'action') {
                 return (
                   <div className='d-flex justify-content-end flex-shrink-0'>
+                    <button
+                      onClick={() => {
+                        setId(index + 1)
+                        setshowDetail(true)
+                        setDataItem(item)
+                      }}
+                      className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                    >
+                      <KTIcon iconName='eye' className='fs-3' />
+                    </button>
                     <div>
                       <button
                         onClick={() => {
                           setEditShowCreateAppModal(true)
+
                           setDataItem(item)
                         }}
                         className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
@@ -192,6 +212,14 @@ const SettingCompanies = (props: Props) => {
           })}
         />
       </div>
+      {showDetail && (
+        <CompanyDetail
+          data={dataItem}
+          show={showDetail}
+          id={id}
+          handleClose={() => setshowDetail(false)}
+        />
+      )}
       {editShowCreateAppModal ? (
         <NewCompanies
           setLoadApi={setLoadApi}

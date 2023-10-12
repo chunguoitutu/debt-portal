@@ -7,13 +7,13 @@ import {Modal} from 'react-bootstrap'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {Input} from '../../../../components/inputs/input'
+import Select from '../../../../components/selects/select'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
+import {InputTime} from '../../../../components/inputs/inputTime'
 import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import {StepperComponent} from '../../../../_metronic/assets/ts/components'
-import {InputTime} from '../../../../components/inputs/inputTime'
 
 type Props = {
   setLoadApi: any
@@ -44,10 +44,10 @@ function handlePaste(e: any) {
   )
     e.preventDefault()
 }
-export const newCompaniesSchema = Yup.object().shape({
-  company_name: Yup.string().required('Company name is not null'),
-  company_code: Yup.string().required('Company code is not null'),
-  business_uen: Yup.string().required('Company code is not null'),
+export const NewBranchSchema = Yup.object().shape({
+  business_uen: Yup.string().required('Company name is not null'),
+  company_id: Yup.string().required('Company code is not null'),
+  branch_name: Yup.string().required('Company code is not null'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
     .max(11, 'Maximum 11 symbols')
@@ -57,8 +57,7 @@ export const newCompaniesSchema = Yup.object().shape({
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('Email is not null'),
-  website: Yup.string().required('Website code is not null'),
-  registration_date: Yup.string().required('Registration date code is not null'),
+  open_date: Yup.string().required('open_date date code is not null'),
   street_1: Yup.string().required('Street 1 date code is not null'),
   street_2: Yup.string().required('Street 2 date code is not null'),
   city: Yup.string().required('City date code is not null'),
@@ -69,7 +68,7 @@ export const newCompaniesSchema = Yup.object().shape({
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const NewCompanies = ({
+const NewBranch = ({
   show,
   handleClose,
   titleLable = 'New',
@@ -77,13 +76,17 @@ const NewCompanies = ({
   loadapi,
   setLoadApi,
 }: Props) => {
-  const stepperRef = useRef<HTMLDivElement | null>(null)
-
-  const [status, setStatus] = useState(data ? data?.status : false)
-
   useEffect(() => {
     request
-      .get(`config/company/id/${data.id}/address/${data.address_id}`)
+      .get('config/company')
+      .then((response) => {
+        setDataCompany(response.data.data)
+      })
+      .catch((error) => {
+        console.error('Error: ', error?.message)
+      })
+    request
+      .get(`config/branch/id/${data.id}/address/${data.address_id}`)
       .then((response) => {
         setFieldValue('street_1', response.data.data.street_1)
         setFieldValue('street_2', response.data.data.street_2)
@@ -97,24 +100,28 @@ const NewCompanies = ({
       })
   }, [])
 
+  const stepperRef = useRef<HTMLDivElement | null>(null)
+  const [dataCompany, setDataCompany] = useState([])
+
+  const [status, setStatus] = useState(data ? data?.status : false)
+
   const {values, touched, errors, handleChange, handleSubmit, setFieldValue, resetForm} = useFormik(
     {
       initialValues: {
-        company_name: data ? data?.company_name : '',
-        company_code: data ? data?.company_code : '',
         business_uen: data ? data?.business_uen : '',
+        company_id: data ? data?.company_id : '',
+        branch_name: data ? data?.branch_name : '',
         telephone: data ? data?.telephone : '',
         email: data ? data?.email : '',
-        website: data ? data?.website : '',
-        registration_date: data ? moment(data?.registration_date).format('YYYY-MM-DDTHH:mm') : '',
         street_1: '',
         street_2: '',
         city: '',
         state: '',
         zipcode: '',
         country: '',
+        open_date: data ? moment(data?.open_date).format('YYYY-MM-DDTHH:mm') : '',
       },
-      validationSchema: newCompaniesSchema,
+      validationSchema: NewBranchSchema,
       onSubmit: async (values: any, actions: any) => {
         if (titleLable === 'New') {
           await request
@@ -129,15 +136,14 @@ const NewCompanies = ({
             })
             .then((response) => {
               request
-                .post('config/company', {
-                  company_name: values.company_name,
-                  company_code: values.company_code,
+                .post('config/branch', {
                   business_uen: values.business_uen,
+                  company_id: Number(values.company_id),
+                  branch_name: values.branch_name,
+                  address_id: Number(response.data.data.id),
                   telephone: values.telephone,
                   email: values.email,
-                  website: values.website,
-                  address_id: Number(response.data.data.id),
-                  registration_date: new Date(values.registration_date),
+                  open_date: new Date(values.open_date),
                   status: status ? 1 : 0,
                 })
                 .then((response) => {
@@ -171,14 +177,13 @@ const NewCompanies = ({
 
         if (titleLable === 'Edit') {
           await request
-            .post('config/company/' + data?.id, {
-              company_name: values.company_name,
-              company_code: values.company_code,
+            .post('config/branch/' + data?.id, {
               business_uen: values.business_uen,
+              company_id: Number(values.company_id),
+              branch_name: values.branch_name,
               telephone: values.telephone,
               email: values.email,
-              website: values.website,
-              registration_date: new Date(values.registration_date),
+              open_date: new Date(values.open_date),
               status: status ? 1 : 0,
             })
             .then((response) => {
@@ -233,12 +238,12 @@ const NewCompanies = ({
       backdrop={true}
     >
       <div className='modal-header'>
-        <h2>{titleLable} Company</h2>
+        <h2>{titleLable} Branch</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
-      <div style={{maxHeight: '500px', overflowY: 'auto'}} className='modal-body '>
+      <div style={{maxHeight: '500px', overflowY: 'auto'}} className='modal-body  '>
         <div
           ref={stepperRef}
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
@@ -249,30 +254,33 @@ const NewCompanies = ({
               <div className='d-flex justify-content-center gap-10 '>
                 <div style={{width: '47%'}}>
                   <Input
-                    title='Company Name'
-                    id='company_name'
-                    error={errors.company_name}
-                    touched={touched.company_name}
-                    errorTitle={errors.company_name}
-                    value={values.company_name}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    title='Company Code'
-                    id='company_code'
-                    error={errors.company_code}
-                    touched={touched.company_code}
-                    errorTitle={errors.company_code}
-                    value={values.company_code}
-                    onChange={handleChange}
-                  />
-                  <Input
                     title='Business Uen'
                     id='business_uen'
                     error={errors.business_uen}
                     touched={touched.business_uen}
                     errorTitle={errors.business_uen}
                     value={values.business_uen}
+                    onChange={handleChange}
+                  />
+                  <Select
+                    datas={dataCompany}
+                    valueTitle='company_name'
+                    setValueTitle='id'
+                    title='Company Id'
+                    id='company_id'
+                    errors={errors.company_id}
+                    touched={touched.company_id}
+                    errorTitle={errors.company_id}
+                    value={values.company_id}
+                    onChange={setFieldValue}
+                  />
+                  <Input
+                    title='Branch Name'
+                    id='branch_name'
+                    error={errors.branch_name}
+                    touched={touched.branch_name}
+                    errorTitle={errors.branch_name}
+                    value={values.branch_name}
                     onChange={handleChange}
                   />
                   <Input
@@ -295,22 +303,13 @@ const NewCompanies = ({
                     value={values.email}
                     onChange={handleChange}
                   />
-                  <Input
-                    title='Website'
-                    id='website'
-                    error={errors.website}
-                    touched={touched.website}
-                    errorTitle={errors.website}
-                    value={values.website}
-                    onChange={handleChange}
-                  />
                   <InputTime
-                    title='Registration Date'
-                    id='registration_date'
-                    error={errors.registration_date}
-                    touched={touched.registration_date}
-                    errorTitle={errors.registration_date}
-                    value={values.registration_date}
+                    title='Open Date'
+                    id='open_date'
+                    error={errors.open_date}
+                    touched={touched.open_date}
+                    errorTitle={errors.open_date}
+                    value={values.open_date}
                     onChange={handleChange}
                   />
                   <InputCheck
@@ -393,4 +392,4 @@ const NewCompanies = ({
   )
 }
 
-export {NewCompanies}
+export {NewBranch}

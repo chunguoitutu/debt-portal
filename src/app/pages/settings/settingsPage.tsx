@@ -4,7 +4,6 @@ import MenuSettingPage from './menuSettingPages'
 const SettingPage: FC = () => {
   return (
     <>
-      <MenuSetting />
       <MenuSettingPage />
     </>
   )
