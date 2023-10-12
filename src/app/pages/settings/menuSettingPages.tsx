@@ -67,6 +67,15 @@ const MenuSettingPage = () => (
         }
       />
       <Route
+        path='roles'
+        element={
+          <>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Roles</PageTitle>
+            <div>hi</div>
+          </>
+        }
+      />
+      <Route
         path='connections'
         element={
           <>

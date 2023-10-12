@@ -38,7 +38,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     try {
       const {data} = await getCurrentUser()
       setCurrentUser(data.data)
-    } catch (error) {
+    } catch (error: any) {
       logout()
       swalToast.fire({
         title: 'Token expired. Please login again.',
