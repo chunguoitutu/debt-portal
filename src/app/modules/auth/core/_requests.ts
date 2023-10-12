@@ -5,11 +5,9 @@ import {
   UpdatePasswordInfo,
   UserInfo,
   updateUserInfo,
+  UpdateUserResponse,
 } from './_models'
 import request from '../../../axios'
-
-export const LOGIN_URL = '/user/login'
-export const CURRENT_INFO_URL = '/user/info'
 
 const API_URL = process.env.REACT_APP_API_URL
 export const REACT_APP_BASE_URL_API = process.env.REACT_APP_BASE_URL_API
@@ -18,15 +16,17 @@ export const REGISTER_URL = `${API_URL}/register`
 export const REQUEST_PASSWORD_URL = `${API_URL}/forgot_password`
 
 export function login(loginInfo: LoginInfo) {
-  return request.post<LoginResponse>(LOGIN_URL, loginInfo)
+  const endPoint = '/user/login'
+  return request.post<LoginResponse>(endPoint, loginInfo)
 }
 export function getCurrentUser() {
-  return request.get<DataResponse<UserInfo>>(CURRENT_INFO_URL)
+  const endPoint = '/user/info'
+  return request.get<DataResponse<UserInfo>>(endPoint)
 }
 
 export function updateInfoUser(id: number, updateUserInfo: updateUserInfo) {
   const endPoint = `user/${id}`
-  return request.put<updateUserInfo>(endPoint, updateUserInfo)
+  return request.put<UpdateUserResponse>(endPoint, updateUserInfo)
 }
 
 export function updatePasswordCurrentUser(updatePasswordInfo: UpdatePasswordInfo) {

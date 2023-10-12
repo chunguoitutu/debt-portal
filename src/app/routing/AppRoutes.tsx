@@ -23,7 +23,7 @@ import TopBarProgress from 'react-topbar-progress-indicator'
 import SettingPage from '../pages/settings/settingsPage'
 
 const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
-const AccountPage = lazy(() => import('../modules/profile/components/Profile/AccountPage'))
+const AccountPage = lazy(() => import('../modules/profile/components/profile/AccountPage'))
 const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
 const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
 const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))

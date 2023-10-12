@@ -6,7 +6,8 @@ import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
-import Avatar from '../../../../app/modules/profile/components/Profile/Avatar'
+import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
+import {useMemo} from 'react'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -18,7 +19,14 @@ const Navbar = () => {
   const {config} = useLayout()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {currentUser, logout} = useAuth()
+  const {currentUser} = useAuth()
+  const {firstname, lastname, middlename} = currentUser || {}
+
+  const fullName = useMemo(
+    () => (currentUser ? `${firstname} ${middlename} ${lastname}` : 'Guest'),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [firstname, lastname, middlename]
+  )
 
   return (
     <div className='app-navbar'>
@@ -88,9 +96,7 @@ const Navbar = () => {
                   margin: '0',
                 }}
               >
-                {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
-                  currentUser?.lastname || ''
-                }` || 'Guest'}
+                {fullName}
               </p>
               <p
                 style={{

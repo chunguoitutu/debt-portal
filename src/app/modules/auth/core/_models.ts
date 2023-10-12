@@ -51,3 +51,9 @@ export type updateUserInfo = {
   status?: number
   role_name?: string
 }
+
+export type UpdateUserResponse = {
+  error: boolean
+  message: string
+  token: string
+}
