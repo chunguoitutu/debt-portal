@@ -156,10 +156,10 @@ const SettingCompanies = (props: Props) => {
             return rows.map((row) => {
               if (row.key === 'id') return index + 1
               if (row.key === 'status' && item[row.key] === 1) {
-                return <span className='badge badge-light-primary fs-7 fw-semibold'>Active</span>
+                return <span className='badge badge-light-success fs-7 fw-semibold'>Active</span>
               }
               if (row.key === 'status' && item[row.key] === 0) {
-                return <span className='badge badge-light-danger fs-8 fw-bold my-2'>isActive</span>
+                return <span className='badge badge-light-danger fs-8 fw-bold my-2'>Disabled</span>
               }
 
               if (row.key === 'action') {

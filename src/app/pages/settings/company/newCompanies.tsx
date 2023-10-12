@@ -220,6 +220,7 @@ const NewCompanies = ({
               <Input
                 title='Telephone'
                 id='telephone'
+                type='Number'
                 error={errors.telephone}
                 touched={touched.telephone}
                 errorTitle={errors.telephone}
