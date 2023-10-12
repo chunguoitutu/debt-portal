@@ -36,11 +36,11 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/crafted/pages/profile/documents' && 'active')
+                  (location.pathname === '/settings/documents-type' && 'active')
                 }
-                to='/crafted/pages/profile/documents'
+                to='/settings/documents-type'
               >
-                Documents
+                Documents Type
               </Link>
             </li>
             <li className='nav-item'>
@@ -58,11 +58,22 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/crafted/pages/profile/connections' && 'active')
+                  (location.pathname === '/settings/loan-type' && 'active')
                 }
                 to='/settings/loan-type'
               >
                 Loan Type
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/settings/job-type' && 'active')
+                }
+                to='/settings/job-type'
+              >
+                Job Type
               </Link>
             </li>
           </ul>

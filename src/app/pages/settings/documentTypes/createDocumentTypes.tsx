@@ -8,9 +8,9 @@ import Swal from 'sweetalert2';
 
 import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
+import { Input } from '../../../../components/inputs/input';
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import {Input} from '../../../../components/inputs/input'
 
 type Props = {
   setLoadApi: any
@@ -22,12 +22,12 @@ type Props = {
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
-  type_name: Yup.string().required('Loan Type Name is required'),
+  type_name: Yup.string().required('Document Type Name is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const CreateLoanType = ({
+const CreateDocumentType = ({
   show,
   handleClose,
   title = 'New',
@@ -44,7 +44,7 @@ const CreateLoanType = ({
 
   useEffect(() => {
     request
-      .get('config/loan_type')
+      .get('config/document_type')
       .then((response) => {
         setDataLoan(response.data.data)
       })
@@ -62,7 +62,7 @@ const CreateLoanType = ({
     onSubmit: async (values: any, actions: any) => {
       if (title === 'New') {
         try {
-          await request.post('config/loan_type', {
+          await request.post('config/document_type', {
             ...values,
             status: status ? 1 : 0,
           })
@@ -73,7 +73,7 @@ const CreateLoanType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Create Loan Successfully',
+            title: 'Create Document Type Successfully',
           })
         } catch (error) {
           console.error(error)
@@ -86,7 +86,7 @@ const CreateLoanType = ({
         }
       } else {
         try {
-          await request.post(`config/loan_type/${data.id}`, {
+          await request.post(`config/document_type/${data.id}`, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -95,7 +95,7 @@ const CreateLoanType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Update Loan Type Successfully',
+            title: 'Update Document Type Successfully',
           })
         } catch (error) {
           console.error(error)
@@ -127,7 +127,7 @@ const CreateLoanType = ({
       backdrop={true}
     >
       <div className='modal-header'>
-        <h2>{title} Loan Type</h2>
+        <h2>{title} Document Type</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -186,4 +186,4 @@ const CreateLoanType = ({
   )
 }
 
-export default CreateLoanType
+export default CreateDocumentType

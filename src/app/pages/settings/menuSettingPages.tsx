@@ -1,12 +1,15 @@
 import {Navigate, Routes, Route, Outlet} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Campaigns} from '../../modules/profile/components/Campaigns'
-import {Documents} from '../../modules/profile/components/Documents'
 import LoanTypes from './loanType/loanType'
 import SettingCompanies from './company/settingCompanies'
 import SettingBranch from './branch/SettingBranch'
 import {MenuSetting} from './menuSetting'
 import RolePage from './role/settingRole'
+import JobType from './jobType/jobType';
+import DocumentTypes from './documentTypes/documentTypes'
+ 
+
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -62,11 +65,11 @@ const MenuSettingPage = () => (
         }
       />
       <Route
-        path='documents'
+        path='documents-type'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Documents</PageTitle>
-            <Documents />
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Documents Types</PageTitle>
+            <DocumentTypes />
           </>
         }
       />
@@ -85,6 +88,15 @@ const MenuSettingPage = () => (
           <>
             <PageTitle breadcrumbs={profileBreadCrumbs}>Roles</PageTitle>
             <RolePage />
+            </>
+        }
+      />
+       <Route
+        path='job-type'
+        element={
+          <>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Job Type</PageTitle>
+            <JobType />
           </>
         }
       />

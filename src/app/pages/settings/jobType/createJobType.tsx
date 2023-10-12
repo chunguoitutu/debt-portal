@@ -4,13 +4,13 @@ import {useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
+import * as Yup from 'yup'
 import Swal from 'sweetalert2';
 
-import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
+import { Input } from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import {Input} from '../../../../components/inputs/input'
 
 type Props = {
   setLoadApi: any
@@ -21,13 +21,13 @@ type Props = {
   handleClose: () => void
 }
 
-export const CreateLoanTypeSchema = Yup.object().shape({
-  type_name: Yup.string().required('Loan Type Name is required'),
+export const CreateJobTypeSchema = Yup.object().shape({
+  job_type_name: Yup.string().required('Job Type Name is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const CreateLoanType = ({
+const CreateJobType = ({
   show,
   handleClose,
   title = 'New',
@@ -39,12 +39,13 @@ const CreateLoanType = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [status, setStatus] = useState(data.status || false)
+  const [requestMoreInformation, setRequestMoreInformation] = useState(data.request_more_information || false)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dataLoan, setDataLoan] = useState([])
 
   useEffect(() => {
     request
-      .get('config/loan_type')
+      .get('config/job_type')
       .then((response) => {
         setDataLoan(response.data.data)
       })
@@ -55,15 +56,16 @@ const CreateLoanType = ({
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
-      type_name: data.type_name || '',
+      job_type_name: data.job_type_name || '',
       description: data.description || '',
     },
-    validationSchema: CreateLoanTypeSchema,
+    validationSchema: CreateJobTypeSchema,
     onSubmit: async (values: any, actions: any) => {
       if (title === 'New') {
         try {
-          await request.post('config/loan_type', {
+          await request.post('config/job_type', {
             ...values,
+            request_more_information : requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
           handleClose()
@@ -71,40 +73,41 @@ const CreateLoanType = ({
           setStatus(false)
           setLoadApi(!loadApi)
           Swal.fire({
-            timer: 1500,
             icon: 'success',
-            title: 'Create Loan Successfully',
+            title: 'Create Job Type Successfully',
+            timer: 1500,
           })
         } catch (error) {
           console.error(error)
           Swal.fire({
-            timer: 1500,
             icon: 'error',
             title: 'Error',
             text: 'Something went wrong. Please try again!',
+            timer: 1500,
           })
         }
       } else {
         try {
-          await request.post(`config/loan_type/${data.id}`, {
+          await request.post(`config/job_type/${data.id}`, {
             ...values,
+            request_more_information : requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
           handleClose()
           setLoadApi(!loadApi)
           Swal.fire({
-            timer: 1500,
             icon: 'success',
-            title: 'Update Loan Type Successfully',
+            title: 'Update Job Type Successfully',
+            timer: 1500,
           })
         } catch (error) {
           console.error(error)
           console.error(error)
           Swal.fire({
-            timer: 1500,
             icon: 'error',
             title: 'Error',
             text: 'Something went wrong. Please try again!',
+            timer: 1500,
           })
         }
       }
@@ -126,8 +129,8 @@ const CreateLoanType = ({
       onEntered={loadStepper}
       backdrop={true}
     >
-      <div className='modal-header'>
-        <h2>{title} Loan Type</h2>
+      <div className='modal-header '>
+        <h2>{title} Job Type</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -145,11 +148,11 @@ const CreateLoanType = ({
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <Input
                 title='Type Name'
-                id='type_name'
-                error={errors.type_name}
-                touched={touched.type_name}
-                errorTitle={errors.type_name}
-                value={values.type_name}
+                id='job_type_name'
+                error={errors.job_type_name}
+                touched={touched.job_type_name}
+                errorTitle={errors.job_type_name}
+                value={values.job_type_name}
                 onChange={handleChange}
               />
               <Input
@@ -161,17 +164,31 @@ const CreateLoanType = ({
                 value={values.description}
                 onChange={handleChange}
               />
-              <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid align-items-center justify-content-between'>
-                  <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
-                <input
-                  className='form-check-input ms-4'
-                  style={{width: 50, height: 25}}
-                  type='checkbox'
-                  name='notifications'
-                  onChange={() => setStatus(!status)}
-                  checked={status}
-                />
+
+                  <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center'>
+                    <div style={{fontWeight: 500, fontSize: 15}}>Status</div>
+                    <input
+                      className='form-check-input ms-4'
+                      style={{width: 50, height: 25}}
+                      type='checkbox'
+                      name='status'
+                      onChange={() => setStatus(!status)}
+                      checked={status}
+                    />
+                  </div>
+
+                  <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center mt-xl-6'>
+                    <div style={{fontWeight: 500, fontSize: 15}}>Need More Information</div>
+                    <input
+                      className='form-check-input ms-4'
+                      style={{width: 50, height: 25}}
+                      type='checkbox'
+                      name='request_more_information'
+                      onChange={() => setRequestMoreInformation(!requestMoreInformation)}
+                      checked={requestMoreInformation}
+                    />
               </div>
+
               <div className='d-flex flex-end pt-10'>
                 <button type='submit' className='btn btn-lg btn-primary'>
                   {title === 'New' ? 'Create' : 'Update'}
@@ -186,4 +203,4 @@ const CreateLoanType = ({
   )
 }
 
-export default CreateLoanType
+export default CreateJobType
