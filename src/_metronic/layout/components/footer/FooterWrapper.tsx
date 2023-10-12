@@ -17,6 +17,7 @@ const FooterWrapper = () => {
             config.app.footer.container === 'fixed' ? 'container-xxl' : 'container-fluid',
             config.app.footer.containerClass
           )}
+          style={{justifyContent: 'center'}}
         >
           <Footer />
         </div>
