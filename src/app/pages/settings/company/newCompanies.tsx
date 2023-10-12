@@ -15,13 +15,14 @@ import {InputTime} from '../../../inputs/inputTime'
 import axios from 'axios'
 import {REACT_APP_BASE_URL_API} from '../../../modules/auth/core/_requests'
 import moment from 'moment'
+import {swalToast} from '../../../swal-notification'
 
 type Props = {
   setLoadApi: any
   loadapi: boolean
   data?: any
   show: boolean
-  title?: string
+  titleLable?: string
   handleClose: () => void
 }
 export const newCompaniesSchema = Yup.object().shape({
@@ -47,7 +48,7 @@ const modalsRoot = document.getElementById('root-modals') || document.body
 const NewCompanies = ({
   show,
   handleClose,
-  title = 'New',
+  titleLable = 'New',
   data = [],
   loadapi,
   setLoadApi,
@@ -57,7 +58,9 @@ const NewCompanies = ({
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [dataCompany, setDataCompany] = useState([])
+
   const [status, setStatus] = useState(data ? data?.status : false)
+
   useEffect(() => {
     axios
       .get(REACT_APP_BASE_URL_API + 'config/address')
@@ -81,9 +84,9 @@ const NewCompanies = ({
         website: data ? data?.website : '',
         registration_date: data ? moment(data?.registration_date).format('YYYY-MM-DDTHH:mm') : '',
       },
-      validationSchema: newCompaniesSchema,
+      // validationSchema: newCompaniesSchema,
       onSubmit: async (values: any, actions: any) => {
-        if ((title = 'New')) {
+        if (titleLable === 'New') {
           await axios
             .post(REACT_APP_BASE_URL_API + 'config/company', {
               ...values,
@@ -91,28 +94,52 @@ const NewCompanies = ({
               registration_date: new Date(values.registration_date),
               status: status ? 1 : 0,
             })
-            .then(() => {
+            .then((response) => {
+              if (!response.data?.error) {
+                swalToast.fire({
+                  icon: 'success',
+                  title: 'Success',
+                })
+              }
               handleClose()
               resetForm()
               setStatus(false)
               setLoadApi(!loadapi)
             })
             .catch((e) => {
-              console.log(e)
+              handleClose()
+              swalToast.fire({
+                icon: 'error',
+                title: e?.message,
+              })
             })
-        } else {
+        }
+
+        if (titleLable === 'Edit') {
           await axios
-            .post(REACT_APP_BASE_URL_API + 'config/company' + data?.id, {
+            .post(REACT_APP_BASE_URL_API + 'config/company/' + data?.id, {
               ...values,
               address_id: Number(values.address_id),
               registration_date: new Date(values.registration_date),
               status: status ? 1 : 0,
             })
-            .then(() => {
+            .then((response) => {
+              if (!response.data?.error) {
+                swalToast.fire({
+                  icon: 'success',
+                  title: 'Success',
+                })
+              }
               handleClose()
               setLoadApi(!loadapi)
             })
-            .catch(() => {})
+            .catch((error) => {
+              handleClose()
+              swalToast.fire({
+                icon: 'error',
+                title: error?.message,
+              })
+            })
         }
       },
     }
@@ -134,7 +161,7 @@ const NewCompanies = ({
       backdrop={true}
     >
       <div className='modal-header'>
-        <h2>{title} Company</h2>
+        <h2>{titleLable} Company</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -234,7 +261,7 @@ const NewCompanies = ({
               />
               <div className='d-flex flex-end pt-10'>
                 <button type='submit' className='btn btn-lg btn-primary'>
-                  {(title = 'New' ? 'Create' : 'Update')}
+                  {titleLable === 'Edit' ? 'Update' : 'Create'}
                 </button>
               </div>
             </form>

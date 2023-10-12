@@ -155,6 +155,13 @@ const SettingCompanies = (props: Props) => {
           rows={data.map((item: items, index: number) => {
             return rows.map((row) => {
               if (row.key === 'id') return index + 1
+              if (row.key === 'status' && item[row.key] === 1) {
+                return <span className='badge badge-light-primary fs-7 fw-semibold'>Active</span>
+              }
+              if (row.key === 'status' && item[row.key] === 0) {
+                return <span className='badge badge-light-danger fs-8 fw-bold my-2'>isActive</span>
+              }
+
               if (row.key === 'action') {
                 return (
                   <div className='d-flex justify-content-end flex-shrink-0'>
@@ -174,7 +181,7 @@ const SettingCompanies = (props: Props) => {
                         setItemDelete(item)
                         setIsShowDelete(true)
                       }}
-                      className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+                      className='btn btn-icon btn-bg-light btn-active-color-danger btn-sm'
                     >
                       <KTIcon iconName='trash' className='fs-3' />
                     </button>
@@ -191,7 +198,7 @@ const SettingCompanies = (props: Props) => {
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}
-          title='Edit'
+          titleLable='Edit'
           data={dataItem}
           handleClose={() => {
             setEditShowCreateAppModal(false)
