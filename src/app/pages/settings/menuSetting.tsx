@@ -5,7 +5,6 @@ import {useAuth} from '../../modules/auth'
 
 const MenuSetting: React.FC = () => {
   const location = useLocation()
-  const {currentUser} = useAuth()
 
   return (
     <div className='card mb-5 mb-xl-10'>
