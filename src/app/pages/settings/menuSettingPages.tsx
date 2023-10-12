@@ -3,7 +3,7 @@ import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Projects} from '../../modules/profile/components/Projects'
 import {Campaigns} from '../../modules/profile/components/Campaigns'
 import {Documents} from '../../modules/profile/components/Documents'
-import {Connections} from '../../modules/profile/components/Connections'
+import  LoanTypes  from './loanType/loanType'
 import SettingCompanies from './company/settingCompanies'
 import SettingBranch from './branch/SettingBranch'
 
@@ -68,20 +68,11 @@ const MenuSettingPage = () => (
         }
       />
       <Route
-        path='roles'
+        path='loan-type'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Roles</PageTitle>
-            <div>hi</div>
-          </>
-        }
-      />
-      <Route
-        path='connections'
-        element={
-          <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Connections</PageTitle>
-            <Connections />
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Loan Type</PageTitle>
+            <LoanTypes />
           </>
         }
       />

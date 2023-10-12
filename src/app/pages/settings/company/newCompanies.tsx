@@ -12,8 +12,6 @@ import Select from '../../../selects/select'
 import InputCheck from '../../../inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
 import {InputTime} from '../../../inputs/inputTime'
-import axios from 'axios'
-import {REACT_APP_BASE_URL_API} from '../../../modules/auth/core/_requests'
 import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
@@ -78,6 +76,7 @@ const NewCompanies = ({
   console.log(data)
 
   const stepperRef = useRef<HTMLDivElement | null>(null)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [dataCompany, setDataCompany] = useState([])
 
