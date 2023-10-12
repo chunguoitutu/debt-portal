@@ -16,6 +16,7 @@ import axios from 'axios'
 import {REACT_APP_BASE_URL_API} from '../../../modules/auth/core/_requests'
 import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
+import request from '../../../axios'
 
 type Props = {
   setLoadApi: any
@@ -24,6 +25,27 @@ type Props = {
   show: boolean
   titleLable?: string
   handleClose: () => void
+}
+
+const numberAllowDotRegex = /^[0-9.]+$/
+function handleKeyPress(e: any) {
+  e = e || window.event
+  const charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
+  const charStr = String.fromCharCode(charCode)
+  const dotInvalid = true
+    ? charStr === '.' && true
+    : e.target.value.includes('.') && charStr === '.'
+  ;(dotInvalid || !charStr.match(numberAllowDotRegex)) && e.preventDefault()
+}
+function handlePaste(e: any) {
+  let valueCopied = e.clipboardData.getData('text/plain')
+  const oldValue = +e.target.value
+  if (
+    Number.isNaN(+valueCopied) ||
+    ((oldValue % 1 !== 0 || true) && +valueCopied % 1 !== 0) ||
+    +valueCopied < 0
+  )
+    e.preventDefault()
 }
 export const newCompaniesSchema = Yup.object().shape({
   company_name: Yup.string().required('Company name is not null'),
@@ -62,9 +84,11 @@ const NewCompanies = ({
   const [status, setStatus] = useState(data ? data?.status : false)
 
   useEffect(() => {
-    axios
-      .get(REACT_APP_BASE_URL_API + 'config/address')
+    request
+      .get('config/address')
       .then((response) => {
+        console.log(response)
+
         setDataCompany(response.data.data)
       })
       .catch((error) => {
@@ -87,8 +111,8 @@ const NewCompanies = ({
       validationSchema: newCompaniesSchema,
       onSubmit: async (values: any, actions: any) => {
         if (titleLable === 'New') {
-          await axios
-            .post(REACT_APP_BASE_URL_API + 'config/company', {
+          await request
+            .post('config/company', {
               ...values,
               address_id: Number(values.address_id),
               registration_date: new Date(values.registration_date),
@@ -116,8 +140,8 @@ const NewCompanies = ({
         }
 
         if (titleLable === 'Edit') {
-          await axios
-            .post(REACT_APP_BASE_URL_API + 'config/company/' + data?.id, {
+          await request
+            .post('config/company/' + data?.id, {
               ...values,
               address_id: Number(values.address_id),
               registration_date: new Date(values.registration_date),
@@ -218,9 +242,10 @@ const NewCompanies = ({
               />
 
               <Input
+                onPaste={handlePaste}
+                onKeyPressCapture={handleKeyPress}
                 title='Telephone'
                 id='telephone'
-                type='Number'
                 error={errors.telephone}
                 touched={touched.telephone}
                 errorTitle={errors.telephone}

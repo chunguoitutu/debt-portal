@@ -7,6 +7,7 @@ import {REACT_APP_BASE_URL_API} from '../../../modules/auth/core/_requests'
 import {COMPANY_TABLE_CONFIG} from './companyConfig'
 import {Modal} from 'react-bootstrap'
 import {swalToast} from '../../../swal-notification'
+import request from '../../../axios'
 
 type Props = {}
 interface items {
@@ -34,8 +35,8 @@ const ModalDelete = ({
   refreshData: () => void
 }) => {
   const handleDeleteCompany = async () => {
-    axios
-      .delete(REACT_APP_BASE_URL_API + `config/company/${itemDelete?.id}`)
+    request
+      .delete(`config/company/${itemDelete?.id}`)
       .then((response) => {
         if (!response.data?.error) {
           swalToast.fire({
@@ -112,8 +113,8 @@ const SettingCompanies = (props: Props) => {
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
 
   const handleFetchCompany = async () => {
-    axios
-      .get(REACT_APP_BASE_URL_API + 'config/company')
+    request
+      .get('config/company')
       .then((response) => {
         setData(response.data.data)
       })
@@ -151,8 +152,8 @@ const SettingCompanies = (props: Props) => {
           handleClose={() => setShowCreateAppModal(false)}
         />
         <EnhancedTable
-          EnhancedTableHead={rows.map((row) => row.name)}
-          rows={data.map((item: items, index: number) => {
+          EnhancedTableHead={rows?.map((row) => row.name)}
+          rows={data?.map((item: items, index: number) => {
             return rows.map((row) => {
               if (row.key === 'id') return index + 1
               if (row.key === 'status' && item[row.key] === 1) {

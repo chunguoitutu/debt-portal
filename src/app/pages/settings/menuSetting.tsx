@@ -27,11 +27,11 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/crafted/pages/profile/projects' && 'active')
+                  (location.pathname === '/settings/branch' && 'active')
                 }
-                to='/crafted/pages/profile/projects'
+                to='/settings/branch'
               >
-                Projects
+                branch
               </Link>
             </li>
             <li className='nav-item'>

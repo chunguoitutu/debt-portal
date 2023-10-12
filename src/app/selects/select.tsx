@@ -41,7 +41,7 @@ const Select = ({
           onChange={handleChange}
         >
           <option value={''}></option>
-          {datas.map((row, index) => (
+          {datas?.map((row, index) => (
             <option value={row[`${setValueTitle}`]} key={index}>
               {row[`${valueTitle}`]}
             </option>
