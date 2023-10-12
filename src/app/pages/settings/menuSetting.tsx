@@ -60,6 +60,17 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/crafted/pages/profile/roles' && 'active')
+                }
+                to='/roles'
+              >
+                Roles
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
                   (location.pathname === '/crafted/pages/profile/connections' && 'active')
                 }
                 to='/crafted/pages/profile/connections'
