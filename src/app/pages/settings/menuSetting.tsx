@@ -73,9 +73,9 @@ const MenuSetting: React.FC = () => {
                   `nav-link text-active-primary me-6 ` +
                   (location.pathname === '/crafted/pages/profile/connections' && 'active')
                 }
-                to='/crafted/pages/profile/connections'
+                to='/settings/loan-type'
               >
-                Connections
+                Loan Type
               </Link>
             </li>
           </ul>

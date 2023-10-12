@@ -4,7 +4,7 @@ import {Overview} from './components/Overview'
 import {Projects} from './components/Projects'
 import {Campaigns} from './components/Campaigns'
 import {Documents} from './components/Documents'
-import {Connections} from './components/Connections'
+import LoanTypes from '../../pages/settings/loanType/loanType'
 import {ProfileHeader} from './ProfileHeader'
 
 const profileBreadCrumbs: Array<PageLink> = [
@@ -73,7 +73,7 @@ const ProfilePage = () => (
         element={
           <>
             <PageTitle breadcrumbs={profileBreadCrumbs}>Connections</PageTitle>
-            <Connections />
+            <LoanTypes />
           </>
         }
       />

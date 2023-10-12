@@ -11,7 +11,7 @@ const EnhancedTable = ({EnhancedTableHead, rows}: Props) => {
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             <thead className=''>
               <tr className='fw-bold text-muted '>
-                {EnhancedTableHead.map((data, index) => (
+                {EnhancedTableHead?.map((data, index) => (
                   <th style={{color: 'black'}} key={index} className='min-w-150px '>
                     {data}
                   </th>
@@ -19,7 +19,7 @@ const EnhancedTable = ({EnhancedTableHead, rows}: Props) => {
               </tr>
             </thead>
             <tbody>
-              {rows.map((row, indexs) => (
+              {rows?.map((row, indexs) => (
                 <tr key={indexs}>
                   {row.map((data: any, index: number) => (
                     <td key={index}>

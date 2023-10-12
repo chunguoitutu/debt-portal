@@ -6,7 +6,7 @@ import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
-import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
+import Avatar from '../../../../app/modules/profile/components/Profile/Avatar'
 import {useMemo} from 'react'
 
 const itemClass = 'ms-1 ms-md-4'
