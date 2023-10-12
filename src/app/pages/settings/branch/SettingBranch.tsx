@@ -117,8 +117,6 @@ const SettingBranch = (props: Props) => {
     request
       .get('config/branch')
       .then((response) => {
-        console.log(response)
-
         setData(response.data.data)
       })
       .catch((error) => {

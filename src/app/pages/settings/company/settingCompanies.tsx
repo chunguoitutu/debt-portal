@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
+import {NewCompanies} from './newCompanies'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
 import {Modal} from 'react-bootstrap'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import {NewCompanies} from './newCompanies'
 import CompanyDetail from './companyDetail'
 import moment from 'moment'
 import {COMPANY_TABLE_CONFIG} from './companyConfig'
@@ -75,7 +75,7 @@ const ModalDelete = ({
       <div className='modal-body py-lg-10 px-lg-10'>
         <span
           style={{fontSize: '20px'}}
-        >{`Do you want to detete "${itemDelete?.company_name}"`}</span>
+        >{`Do you want to delete "${itemDelete?.company_name}"?`}</span>
         <div className='d-flex justify-content-end mt-8 gap-4'>
           <button
             type='button'
@@ -160,11 +160,18 @@ const SettingCompanies = (props: Props) => {
           rows={data?.map((item: items, index: number) => {
             return rows.map((row) => {
               if (row.key === 'id') return index + 1
-              if (row.key === 'status' && Number(item[row.key]) === 1) {
-                return <span className='badge badge-light-success fs-7 fw-semibold'>Active</span>
-              }
-              if (row.key === 'status' && Number(item[row.key]) === 0) {
-                return <span className='badge badge-light-danger fs-8 fw-bold my-2'>Disabled</span>
+
+              if (row.key === 'status') {
+                const isActive = item[row.key] === 1
+                return (
+                  <span
+                    className={`badge badge-light-${
+                      isActive ? 'success' : 'danger'
+                    } fs-8 fw-bold my-2`}
+                  >
+                    {isActive ? 'Active' : 'Disabled'}
+                  </span>
+                )
               }
               if (row.key === 'registration_date') {
                 return moment(item[row.key]).format('YYYY-MM-DD')
