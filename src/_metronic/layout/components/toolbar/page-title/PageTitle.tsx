@@ -75,6 +75,7 @@ const PageTitle = () => {
                   )}
                 </li>
               ))}
+
               <li className='breadcrumb-item text-dark'>{pageTitle}</li>
             </ul>
           </>

@@ -61,6 +61,7 @@ const AppRoutes: FC = () => {
             <Route path='/borrowers' element={<MenuTestPage />} />
             <Route path='/transactions' element={<MenuTestPage />} />
             <Route path='/my-tasks' element={<MenuTestPage />} />
+
             {/* <Route path='/settings' element={<SettingPage />} /> */}
 
             {/* Lazy Modules */}
