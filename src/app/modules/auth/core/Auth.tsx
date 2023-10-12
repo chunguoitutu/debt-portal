@@ -2,16 +2,20 @@ import {FC, useState, createContext, useContext, Dispatch, SetStateAction} from 
 import {UserInfo} from './_models'
 import {WithChildren} from '../../../../_metronic/helpers'
 import Cookies from 'js-cookie'
+import {getCurrentUser} from './_requests'
+import {swalToast} from '../../../swal-notification'
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
   setCurrentUser: Dispatch<SetStateAction<UserInfo | undefined>>
+  refreshToken: (token: string) => void
   logout: () => void
 }
 
 const initAuthContextPropsState = {
   currentUser: undefined,
   setCurrentUser: () => {},
+  refreshToken: (token: string) => {},
   logout: () => {},
 }
 
@@ -29,8 +33,22 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     Cookies.remove('token')
   }
 
+  const refreshToken = async (token: string) => {
+    Cookies.set('token', token)
+    try {
+      const {data} = await getCurrentUser()
+      setCurrentUser(data.data)
+    } catch (error) {
+      logout()
+      swalToast.fire({
+        title: 'Token expired. Please login again.',
+        icon: 'error',
+      })
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{currentUser, setCurrentUser, logout}}>
+    <AuthContext.Provider value={{currentUser, setCurrentUser, refreshToken, logout}}>
       {children}
     </AuthContext.Provider>
   )

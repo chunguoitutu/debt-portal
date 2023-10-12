@@ -28,7 +28,7 @@ const Settings: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [isShowResetPassword, setIsShowResetPassword] = useState<boolean>(false)
 
-  const {currentUser} = useAuth()
+  const {currentUser, refreshToken} = useAuth()
 
   const formik = useFormik<UserProfile>({
     initialValues: {
@@ -58,9 +58,8 @@ const Settings: React.FC = () => {
         email: formik.values.email,
       }
 
-      const newData = await updateInfoUser(currentUser.user_id, values)
-      console.log(newData)
-
+      const {data} = await updateInfoUser(currentUser.user_id, values)
+      refreshToken(data.token)
       toast.success('Change your information successfully')
     } catch (error) {
       toast.error('Something went wrong!')

@@ -12,7 +12,6 @@ import {ToolbarWrapper} from './components/toolbar'
 import {useAuth} from '../../app/modules/auth'
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
-import {getCurrentUser} from '../../app/modules/auth/core/_requests'
 
 interface iJwtDecode {
   iat: number
@@ -22,8 +21,8 @@ interface iJwtDecode {
 const MasterLayout = () => {
   const location = useLocation()
 
-  const {logout, setCurrentUser} = useAuth()
-  
+  const {logout, refreshToken} = useAuth()
+
   const navigate = useNavigate()
   const {pathname} = useLocation()
 
@@ -48,7 +47,7 @@ const MasterLayout = () => {
         navigate(`/login${query}`)
       } else {
         // Get info when reload
-        onFetchCurrentUser()
+        token && refreshToken(token)
       }
     } catch (error) {
       logout()
@@ -59,15 +58,6 @@ const MasterLayout = () => {
   useEffect(() => {
     reInitMenu()
   }, [location.key])
-
-  async function onFetchCurrentUser() {
-    try {
-      const {data} = await getCurrentUser()
-      setCurrentUser(data.data)
-    } catch (error) {
-      logout()
-    }
-  }
 
   if (!token) {
     return <Navigate to='/login' />
