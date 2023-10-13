@@ -4,11 +4,11 @@ import {useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
-import { Input } from '../../../../components/inputs/input';
+import {Input} from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 
@@ -162,7 +162,7 @@ const CreateDocumentType = ({
                 onChange={handleChange}
               />
               <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid align-items-center justify-content-between'>
-                  <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
+                <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
                 <input
                   className='form-check-input ms-4'
                   style={{width: 50, height: 25}}

@@ -2,12 +2,12 @@ import {useEffect, useState} from 'react'
 import {NewCompanies} from './newCompanies'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import {Modal} from 'react-bootstrap'
-import {swalToast} from '../../../swal-notification'
+import {swalConfirmDelete, swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import CompanyDetail from './companyDetail'
 import moment from 'moment'
 import {COMPANY_TABLE_CONFIG} from './companyConfig'
+import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 
 type Props = {}
 interface items {
@@ -23,98 +23,50 @@ interface items {
   status: number
 }
 
-const ModalDelete = ({
-  isShow,
-  onClose,
-  itemDelete,
-  refreshData,
-}: {
-  isShow: boolean
-  onClose: () => void
-  itemDelete: any
-  refreshData: () => void
-}) => {
-  const handleDeleteCompany = async () => {
-    request
-      .delete(`config/company/${itemDelete?.id}`)
-      .then((response) => {
-        if (!response.data?.error) {
-          swalToast.fire({
-            icon: 'success',
-            title: 'Success',
-          })
-          refreshData()
-          onClose()
-        }
-      })
-      .catch((error) => {
-        swalToast.fire({
-          icon: 'error',
-          title: error?.message,
-        })
-        onClose()
-      })
-  }
-  return (
-    <Modal
-      id='kt_modal_create_app'
-      tabIndex={-1}
-      aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
-      show={isShow}
-      onHide={onClose}
-      animation={true}
-    >
-      <div className='modal-header'>
-        <h2>Notification</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClose}>
-          <KTIcon className='fs-1' iconName='cross' />
-        </div>
-      </div>
-
-      <div className='modal-body py-lg-10 px-lg-10'>
-        <span
-          style={{fontSize: '20px'}}
-        >{`Do you want to delete "${itemDelete?.company_name}"?`}</span>
-        <div className='d-flex justify-content-end mt-8 gap-4'>
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-danger'
-            onClick={handleDeleteCompany}
-            disabled={false}
-          >
-            <span className='indicator-label'>Delete</span>
-          </button>
-
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-light btn-active-light-primary'
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </Modal>
-  )
-}
-
 const SettingCompanies = (props: Props) => {
   const [data, setData] = useState([])
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
   const [showDetail, setshowDetail] = useState<boolean>(false)
-
   const [id, setId] = useState<Number>(1)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
-  const [itemDelete, setItemDelete] = useState({})
-  const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
 
   const {rows} = COMPANY_TABLE_CONFIG
 
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
+
+  function handleShowConfirmDelete(item: any) {
+    swalConfirmDelete
+      .fire({
+        title: 'Are you sure?',
+        text: `This will delete the company "${item.company_name}" and can't be restored.`,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          onDeleteDeleteRole(item.id)
+        }
+      })
+  }
+
+  async function onDeleteDeleteRole(roleId: number) {
+    if (!roleId) return
+    try {
+      await request.delete(`config/company/${roleId}`).then((response) => {
+        setLoadApi(!loadapi)
+        swalToast.fire({
+          title: 'Company successfully deleted',
+          icon: 'success',
+        })
+      })
+    } catch (error: any) {
+      const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
+
+      swalToast.fire({
+        title: message,
+        icon: 'error',
+      })
+    }
+  }
 
   const handleFetchCompany = async () => {
     request
@@ -149,12 +101,14 @@ const SettingCompanies = (props: Props) => {
             New Company
           </button>
         </div>
-        <NewCompanies
-          setLoadApi={setLoadApi}
-          loadapi={loadapi}
-          show={showCreateAppModal}
-          handleClose={() => setShowCreateAppModal(false)}
-        />
+        {showCreateAppModal && (
+          <NewCompanies
+            setLoadApi={setLoadApi}
+            loadapi={loadapi}
+            show={showCreateAppModal}
+            handleClose={() => setShowCreateAppModal(false)}
+          />
+        )}
         <EnhancedTable
           EnhancedTableHead={rows?.map((row: any) => row.name)}
           rows={data?.map((item: items, index: number) => {
@@ -204,8 +158,7 @@ const SettingCompanies = (props: Props) => {
                     </div>
                     <button
                       onClick={() => {
-                        setItemDelete(item)
-                        setIsShowDelete(true)
+                        handleShowConfirmDelete(item)
                       }}
                       className='btn btn-icon btn-bg-light btn-active-color-danger btn-sm'
                     >
@@ -227,7 +180,7 @@ const SettingCompanies = (props: Props) => {
           handleClose={() => setshowDetail(false)}
         />
       )}
-      {editShowCreateAppModal ? (
+      {editShowCreateAppModal && (
         <NewCompanies
           setLoadApi={setLoadApi}
           loadapi={loadapi}
@@ -239,15 +192,7 @@ const SettingCompanies = (props: Props) => {
             setDataItem({})
           }}
         />
-      ) : null}
-      {isShowDelete ? (
-        <ModalDelete
-          itemDelete={itemDelete}
-          isShow={isShowDelete}
-          onClose={() => setIsShowDelete(false)}
-          refreshData={handleFetchCompany}
-        />
-      ) : null}
+      )}
     </>
   )
 }

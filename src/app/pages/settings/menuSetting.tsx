@@ -98,6 +98,17 @@ const MenuSetting: React.FC = () => {
                 Address Type
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/settings/Marketing-type' && 'active')
+                }
+                to='/settings/Marketing-type'
+              >
+                Marketing Type
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

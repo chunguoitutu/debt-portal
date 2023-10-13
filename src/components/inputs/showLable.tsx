@@ -5,7 +5,7 @@ export const showLable = ({title, value}: any) => {
         <label className='d-flex align-items-center fs-5 fw-semibold mb-2' htmlFor={title}>
           <span>{title}</span>
         </label>
-        <input value={value} className='form-control form-control-lg form-control-solid' />
+        <label className='form-control form-control-lg form-control-solid'>{value}</label>
       </div>
     </div>
   )

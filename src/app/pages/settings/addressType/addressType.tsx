@@ -1,12 +1,12 @@
 import {useEffect, useState} from 'react'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import {Modal} from 'react-bootstrap'
-import {swalToast} from '../../../swal-notification'
+import {swalConfirmDelete, swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import moment from 'moment'
 import {ADDRESS_TABLE_CONFIG} from './addressConfig'
 import {NewAddress} from './NewAddress'
+import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 
 type Props = {}
 interface items {
@@ -22,92 +22,12 @@ interface items {
   status: number
 }
 
-const ModalDelete = ({
-  isShow,
-  onClose,
-  itemDelete,
-  refreshData,
-}: {
-  isShow: boolean
-  onClose: () => void
-  itemDelete: any
-  refreshData: () => void
-}) => {
-  const addressDelete = async () => {
-    request
-      .delete(`config/address_type/${itemDelete?.id}`)
-      .then((response) => {
-        if (!response.data?.error) {
-          swalToast.fire({
-            icon: 'success',
-            title: 'Success',
-          })
-          refreshData()
-          onClose()
-        }
-      })
-      .catch((error) => {
-        swalToast.fire({
-          icon: 'error',
-          title: error?.message,
-        })
-        onClose()
-      })
-  }
-  return (
-    <Modal
-      id='kt_modal_create_app'
-      tabIndex={-1}
-      aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
-      show={isShow}
-      onHide={onClose}
-      animation={true}
-    >
-      <div className='modal-header'>
-        <h2>Notification</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClose}>
-          <KTIcon className='fs-1' iconName='cross' />
-        </div>
-      </div>
-
-      <div className='modal-body py-lg-10 px-lg-10'>
-        <span
-          style={{fontSize: '20px'}}
-        >{`Do you want to delete "${itemDelete?.address_type_name}"?`}</span>
-        <div className='d-flex justify-content-end mt-8 gap-4'>
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-danger'
-            onClick={addressDelete}
-            disabled={false}
-          >
-            <span className='indicator-label'>Delete</span>
-          </button>
-
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-light btn-active-light-primary'
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </Modal>
-  )
-}
-
 const AddressType = (props: Props) => {
   const [data, setData] = useState([])
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
 
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
-  const [itemDelete, setItemDelete] = useState({})
-  const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
 
   const {rows} = ADDRESS_TABLE_CONFIG
 
@@ -122,6 +42,39 @@ const AddressType = (props: Props) => {
       .catch((error) => {
         console.error('Erorr: ', error)
       })
+  }
+
+  function handleShowConfirmDelete(item: any) {
+    swalConfirmDelete
+      .fire({
+        title: 'Are you sure?',
+        text: `This will delete the Address Type "${item.address_type_name}" and can't be restored.`,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          onDeleteDeleteRole(item.id)
+        }
+      })
+  }
+
+  async function onDeleteDeleteRole(roleId: number) {
+    if (!roleId) return
+    try {
+      await request.delete(`config/address_type/${roleId}`).then((response) => {
+        setLoadApi(!loadapi)
+        swalToast.fire({
+          title: 'Address Type successfully deleted',
+          icon: 'success',
+        })
+      })
+    } catch (error: any) {
+      const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
+
+      swalToast.fire({
+        title: message,
+        icon: 'error',
+      })
+    }
   }
 
   useEffect(() => {
@@ -146,12 +99,14 @@ const AddressType = (props: Props) => {
             New Address Type
           </button>
         </div>
-        <NewAddress
-          setLoadApi={setLoadApi}
-          loadapi={loadapi}
-          show={showCreateAppModal}
-          handleClose={() => setShowCreateAppModal(false)}
-        />
+        {showCreateAppModal && (
+          <NewAddress
+            setLoadApi={setLoadApi}
+            loadapi={loadapi}
+            show={showCreateAppModal}
+            handleClose={() => setShowCreateAppModal(false)}
+          />
+        )}
         <EnhancedTable
           EnhancedTableHead={rows?.map((row: any) => row.name)}
           rows={data?.map((item: items, index: number) => {
@@ -191,8 +146,7 @@ const AddressType = (props: Props) => {
                     </div>
                     <button
                       onClick={() => {
-                        setItemDelete(item)
-                        setIsShowDelete(true)
+                        handleShowConfirmDelete(item)
                       }}
                       className='btn btn-icon btn-bg-light btn-active-color-danger btn-sm'
                     >
@@ -218,14 +172,6 @@ const AddressType = (props: Props) => {
             setEditShowCreateAppModal(false)
             setDataItem({})
           }}
-        />
-      ) : null}
-      {isShowDelete ? (
-        <ModalDelete
-          itemDelete={itemDelete}
-          isShow={isShowDelete}
-          onClose={() => setIsShowDelete(false)}
-          refreshData={handleFetchCompany}
         />
       ) : null}
     </>

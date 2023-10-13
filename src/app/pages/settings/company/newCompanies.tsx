@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
@@ -46,24 +44,24 @@ function handlePaste(e: any) {
 export const newCompaniesSchema = Yup.object().shape({
   company_name: Yup.string().required('Company name  is required.'),
   company_code: Yup.string().required('Company code  is required.'),
-  business_uen: Yup.string().required('Company code  is required.'),
+  business_uen: Yup.string().required('Busiess Uen  is required.'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
     .max(11, 'Maximum 11 symbols')
-    .required('Telephone code  is required.'),
+    .required('Telephone is required.'),
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
-    .required('Email  is required.'),
-  website: Yup.string().required('Website code  is required.'),
-  registration_date: Yup.string().required('Registration date code  is required.'),
-  street_1: Yup.string().required('Street 1 date code  is required.'),
+    .required('Email is required.'),
+  website: Yup.string().required('Website  is required.'),
+  registration_date: Yup.string().required('Registration is required.'),
+  street_1: Yup.string().required('Street 1 is required.'),
   street_2: Yup.string().required('Street 2 date code  is required.'),
-  city: Yup.string().required('City date code  is required.'),
-  state: Yup.string().required('State date code  is required.'),
-  zipcode: Yup.string().required('Zipcode date code  is required.'),
-  country: Yup.string().required('Country date code  is required.'),
+  city: Yup.string().required('City is required.'),
+  state: Yup.string().required('State is required.'),
+  zipcode: Yup.string().required('Zip Code is required.'),
+  country: Yup.string().required('Country is required.'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
