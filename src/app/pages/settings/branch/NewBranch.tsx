@@ -45,25 +45,25 @@ function handlePaste(e: any) {
     e.preventDefault()
 }
 export const NewBranchSchema = Yup.object().shape({
-  business_uen: Yup.string().required('Business Uen  is required.'),
-  company_id: Yup.string().required('Company code  is required.'),
-  branch_name: Yup.string().required('Branch name  is required.'),
+  business_uen: Yup.string().required('Business Uen is required.'),
+  company_id: Yup.string().required('Company id is required.'),
+  branch_name: Yup.string().required('Branch name is required.'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
     .max(11, 'Maximum 11 symbols')
-    .required('Telephone code  is required.'),
+    .required('Telephone is required.'),
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
-    .required('Email  is required.'),
-  open_date: Yup.string().required('open_date date code  is required.'),
-  street_1: Yup.string().required('Street 1 date code  is required.'),
-  street_2: Yup.string().required('Street 2 date code  is required.'),
-  city: Yup.string().required('City date code  is required.'),
-  state: Yup.string().required('State date code  is required.'),
-  zipcode: Yup.string().required('Zipcode date code  is required.'),
-  country: Yup.string().required('Country date code  is required.'),
+    .required('Email is required.'),
+  open_date: Yup.string().required('open_date is required.'),
+  street_1: Yup.string().required('Street 1 is required.'),
+  street_2: Yup.string().required('Street 2 is required.'),
+  city: Yup.string().required('City  is required.'),
+  state: Yup.string().required('State is required.'),
+  zipcode: Yup.string().required('Zip Code is required.'),
+  country: Yup.string().required('Country is required.'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body

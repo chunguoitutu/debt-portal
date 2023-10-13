@@ -10,6 +10,7 @@ import JobType from './jobType/jobType'
 import DocumentTypes from './documentTypes/documentTypes'
 import AddressType from './addressType/addressType'
 import UserManagement from './users/RoleManagement'
+import MarkettingType from './marketing_type/marketingType'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -115,6 +116,15 @@ const MenuSettingPage = () => (
           <>
             <PageTitle breadcrumbs={profileBreadCrumbs}>Address Type</PageTitle>
             <AddressType />
+          </>
+        }
+      />
+      <Route
+        path='marketing-type'
+        element={
+          <>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Marketing Type</PageTitle>
+            <MarkettingType />
           </>
         }
       />

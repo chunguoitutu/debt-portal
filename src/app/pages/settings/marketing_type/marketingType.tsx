@@ -1,54 +1,43 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
 import {swalConfirmDelete, swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import {BRANCH_TABLE_CONFIG} from './BranchConfig'
-import {NewBranch} from './NewBranch'
-import BranchDetail from './branchDetail'
 import moment from 'moment'
+import {MAKETTING_TABLE_CONFIG} from './markettingConfig'
+import {NewMarketting} from './NewMarketing'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 
 type Props = {}
-export interface items {
+interface items {
   id: string
+  company_name: string
+  company_code: string
   business_uen: string
-  company_id: string
-  branch_name: string
   address_id: string
   telephone: string
   email: string
-  open_date: string
+  website: string
+  registration_date: string
   status: number
 }
 
-const SettingBranch = (props: Props) => {
+const MarkettingType = (props: Props) => {
   const [data, setData] = useState([])
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
+
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
-  const [showDetail, setshowDetail] = useState<boolean>(false)
-  const [id, setId] = useState<Number>(1)
-  const {rows} = BRANCH_TABLE_CONFIG
+
+  const {rows} = MAKETTING_TABLE_CONFIG
 
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
-
-  const handleFetchCompany = async () => {
-    request
-      .get('config/branch')
-      .then((response) => {
-        setData(response.data.data)
-      })
-      .catch((error) => {
-        console.error('Erorr: ', error)
-      })
-  }
 
   function handleShowConfirmDelete(item: any) {
     swalConfirmDelete
       .fire({
         title: 'Are you sure?',
-        text: `This will delete the branch "${item.branch_name}" and can't be restored.`,
+        text: `This will delete the Marketing Type "${item.marketing_type_name}" and can't be restored.`,
       })
       .then((result) => {
         if (result.isConfirmed) {
@@ -60,10 +49,10 @@ const SettingBranch = (props: Props) => {
   async function onDeleteDeleteRole(roleId: number) {
     if (!roleId) return
     try {
-      await request.delete(`config/branch/${roleId}`).then((response) => {
+      await request.delete(`config/marketing_type/${roleId}`).then((response) => {
         setLoadApi(!loadapi)
         swalToast.fire({
-          title: 'Branch successfully deleted',
+          title: 'Marketing Type successfully deleted',
           icon: 'success',
         })
       })
@@ -75,6 +64,16 @@ const SettingBranch = (props: Props) => {
         icon: 'error',
       })
     }
+  }
+  const handleFetchCompany = async () => {
+    request
+      .get('config/marketing_type')
+      .then((response) => {
+        setData(response.data.data)
+      })
+      .catch((error) => {
+        console.error('Erorr: ', error)
+      })
   }
 
   useEffect(() => {
@@ -96,11 +95,11 @@ const SettingBranch = (props: Props) => {
             className='btn btn-sm btn-light-primary'
           >
             <KTIcon iconName='plus' className='fs-3' />
-            New Branch
+            New Marketing Type
           </button>
         </div>
         {showCreateAppModal && (
-          <NewBranch
+          <NewMarketting
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -108,17 +107,24 @@ const SettingBranch = (props: Props) => {
           />
         )}
         <EnhancedTable
-          EnhancedTableHead={rows?.map((row) => row.name)}
+          EnhancedTableHead={rows?.map((row: any) => row.name)}
           rows={data?.map((item: items, index: number) => {
             return rows.map((row) => {
               if (row.key === 'id') return index + 1
-              if (row.key === 'status' && Number(item[row.key]) === 1) {
-                return <span className='badge badge-light-success fs-7 fw-semibold'>Active</span>
+
+              if (row.key === 'status') {
+                const isActive = item[row.key] === 1
+                return (
+                  <span
+                    className={`badge badge-light-${
+                      isActive ? 'success' : 'danger'
+                    } fs-8 fw-bold my-2`}
+                  >
+                    {isActive ? 'Active' : 'Disabled'}
+                  </span>
+                )
               }
-              if (row.key === 'status' && Number(item[row.key]) === 0) {
-                return <span className='badge badge-light-danger fs-8 fw-bold my-2'>Disabled</span>
-              }
-              if (row.key === 'open_date') {
+              if (row.key === 'registration_date') {
                 return moment(item[row.key]).format('YYYY-MM-DD')
               }
 
@@ -128,24 +134,15 @@ const SettingBranch = (props: Props) => {
                     <div>
                       <button
                         onClick={() => {
-                          setId(index + 1)
-                          setshowDetail(true)
+                          setEditShowCreateAppModal(true)
+
                           setDataItem(item)
                         }}
                         className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                       >
-                        <KTIcon iconName='eye' className='fs-3' />
+                        <KTIcon iconName='pencil' className='fs-3' />
                       </button>
                     </div>
-                    <button
-                      onClick={() => {
-                        setEditShowCreateAppModal(true)
-                        setDataItem(item)
-                      }}
-                      className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                    >
-                      <KTIcon iconName='pencil' className='fs-3' />
-                    </button>
                     <button
                       onClick={() => {
                         handleShowConfirmDelete(item)
@@ -162,16 +159,9 @@ const SettingBranch = (props: Props) => {
           })}
         />
       </div>
-      {showDetail && (
-        <BranchDetail
-          data={dataItem}
-          show={showDetail}
-          id={id}
-          handleClose={() => setshowDetail(false)}
-        />
-      )}
+
       {editShowCreateAppModal ? (
-        <NewBranch
+        <NewMarketting
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}
@@ -187,4 +177,4 @@ const SettingBranch = (props: Props) => {
   )
 }
 
-export default SettingBranch
+export default MarkettingType

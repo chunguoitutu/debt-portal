@@ -53,7 +53,6 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
       .catch((error) => {
         console.error('Error: ', error?.message)
       })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
