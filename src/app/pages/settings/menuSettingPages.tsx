@@ -9,8 +9,8 @@ import RolePage from './role/settingRole'
 import JobType from './jobType/jobType'
 import DocumentTypes from './documentTypes/documentTypes'
 import AddressType from './addressType/addressType'
-import UserManagement from './users/RoleManagement'
 import MarkettingType from './marketing_type/marketingType'
+import UserManagement from './users/UserManagement'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
