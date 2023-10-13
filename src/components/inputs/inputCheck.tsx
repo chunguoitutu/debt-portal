@@ -1,25 +1,22 @@
 import React from 'react'
 
 type Props = {
-  title: string
+  title?: string
   lable?: string
   checked: boolean
   onChange?: () => void
   id?: string
 }
 
-const InputCheck = ({title, lable, checked = false, onChange, id}: Props) => {
+const InputCheck = ({title = '', lable, checked = false, onChange, id}: Props) => {
   return (
     <div>
-      <div className='row mb-6 '>
-        <label className='col-lg-4 col-form-label fw-bold fs-6'>{title}</label>
+      <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-start align-content-center mt-xl-6 '>
+        {title !== '' && <label className='col-lg-4 col-form-label fw-bold fs-6'>{title}</label>}
 
-        <div className='col-lg-8 fv-row'>
-          <div className='d-flex align-items-center mt-3 '>
-            <label
-              id={id}
-              className='form-check cursor-pointer  form-check-inline form-check-solid me-5'
-            >
+        <div className=' fv-row'>
+          <div className='d-flex align-items-center'>
+            <label id={id} className='form-check-input'>
               <input
                 className='form-check-input'
                 type='checkbox'
