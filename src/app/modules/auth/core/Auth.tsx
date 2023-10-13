@@ -4,6 +4,7 @@ import {WithChildren} from '../../../../_metronic/helpers'
 import Cookies from 'js-cookie'
 import {getCurrentUser} from './_requests'
 import {swalToast} from '../../../swal-notification'
+import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
@@ -35,13 +36,19 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
 
   const refreshToken = async (token: string) => {
     Cookies.set('token', token)
+
     try {
+      console.log(Cookies.get('token') as string)
+
       const {data} = await getCurrentUser()
+
+      console.log(data)
+
       setCurrentUser(data.data)
     } catch (error: any) {
       logout()
       swalToast.fire({
-        title: 'Token expired. Please login again.',
+        title: DEFAULT_MSG_ERROR,
         icon: 'error',
       })
     }
