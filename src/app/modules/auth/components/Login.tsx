@@ -28,7 +28,6 @@ const initialValues = {
 export function Login() {
   const [loading, setLoading] = useState(false)
   const [searchParams] = useSearchParams()
-  const {setCurrentUser} = useAuth()
 
   const navigate = useNavigate()
 
@@ -44,12 +43,13 @@ export function Login() {
 
     try {
       const {data} = await login(values)
+
       Cookies.set('token', data.token)
 
-      setCurrentUser(data.info)
       setSubmitting(false)
       setLoading(false)
 
+      // after navigate -> master layout will get current user
       navigate(`/${redirect ? redirect : 'dashboard'}`)
     } catch (error) {
       setStatus('Incorrect username or password')
