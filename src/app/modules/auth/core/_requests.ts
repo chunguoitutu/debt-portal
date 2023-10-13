@@ -8,6 +8,7 @@ import {
   UpdateUserResponse,
   RoleInfo,
   UpdateById,
+  SearchCriteria,
 } from './_models'
 import request from '../../../axios'
 
@@ -54,4 +55,9 @@ export function createNewRole(data: Omit<RoleInfo, 'id'>) {
 export function updateRole({data, id}: UpdateById<Omit<RoleInfo, 'id'>>) {
   const endPoint = `/config/role/${id}`
   return request.post(endPoint, data)
+}
+
+export function getUserList(searchCriteria: SearchCriteria) {
+  const endPoint = `/user`
+  return request.post(endPoint, searchCriteria)
 }
