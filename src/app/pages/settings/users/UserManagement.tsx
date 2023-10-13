@@ -108,7 +108,18 @@ const UserManagement = () => {
         rows={data.map((item, index: number) => {
           return rows.map((row) => {
             if (row.key === 'id') return index + 1
-
+            if (row.key === 'is_active') {
+              const isActive = item[row.key] === 1
+              return (
+                <span
+                  className={`badge badge-light-${
+                    isActive ? 'success' : 'danger'
+                  } fs-8 fw-bold my-2`}
+                >
+                  {isActive ? 'Active' : 'Disabled'}
+                </span>
+              )
+            }
             if (row.key === 'action')
               return (
                 <div className='d-flex justify-content-center'>
