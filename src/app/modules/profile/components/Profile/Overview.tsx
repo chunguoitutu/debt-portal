@@ -69,7 +69,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Status</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bold fs-6'>{currentUser?.status === 1 ? 'Active' : 'Disabled'}</span>
+              <span className='fw-bold fs-6'>{currentUser?.is_active === 1 ? 'Active' : 'Disabled'}</span>
             </div>
           </div>
         </div>

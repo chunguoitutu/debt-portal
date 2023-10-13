@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react'
 import { KTIcon } from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import { Modal } from 'react-bootstrap'
 import Swal from 'sweetalert2';
 
 import request from '../../../axios'
 import { DOCUMENT_TYPE_TABLE_CONFIG } from './documentConfig';
 import CreateDocumentType from './createDocumentTypes'
+import moment from 'moment';
+import { swalConfirmDelete, swalToast } from '../../../swal-notification';
 
 interface items {
   id: string
@@ -18,86 +19,6 @@ interface items {
   updatedAt: string
 }
 
-const ModalDelete = ({
-  isShow,
-  onClose,
-  itemDelete,
-  refreshData,
-}: {
-  isShow: boolean
-  onClose: () => void
-  itemDelete: any
-  refreshData: () => void
-}) => {
-  const handleDeleteDocument = async () => {
-    request
-      .delete(`config/document_type/${itemDelete?.id}`)
-      .then((response) => {
-        if (!response.data?.error) {
-          Swal.fire({
-            timer: 1500,
-            icon: 'success',
-            title: 'You have delete successfully',
-          })
-          refreshData()
-          onClose()
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-            timer: 1500,
-          icon: 'error',
-          title: error?.message,
-        })
-        onClose()
-      })
-  }
-  return (
-    <Modal
-      id='kt_modal_create_app'
-      tabIndex={-1}
-      aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
-      show={isShow}
-      onHide={onClose}
-      animation={true}
-    >
-      <div className='modal-header'>
-        <h2>Notification</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClose}>
-          <KTIcon className='fs-1' iconName='cross' />
-        </div>
-      </div>
-
-      <div className='modal-body py-lg-10 px-lg-10'>
-        <span
-          style={{fontSize: '20px'}}
-        >{`Do you want to detete "${itemDelete?.type_name}" ?`}</span>
-        <div className='d-flex justify-content-end mt-8 gap-4'>
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-danger'
-            onClick={handleDeleteDocument}
-            disabled={false}
-          >
-            <span className='indicator-label'>Delete</span>
-          </button>
-
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-light btn-active-light-primary'
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </Modal>
-  )
-}
-
  const  DocumentTypes = () => {
 
   const [data, setData] = useState([])
@@ -105,8 +26,6 @@ const ModalDelete = ({
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [showPopupEdit, setShowPopupEdit] = useState<boolean>(false)
-  const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
-  const [itemDelete, setItemDelete] = useState({})
 
   const { rows } = DOCUMENT_TYPE_TABLE_CONFIG
 
@@ -125,6 +44,38 @@ const ModalDelete = ({
     handleFetchLoanType()
   }, [loadapi])
 
+  const handleDeleteDocument = async (data) => {
+    request
+      .delete(`config/document_type/${data?.id}`)
+      .then((response) => {
+        if (!response.data?.error) {
+          swalToast.fire({
+            icon: 'success',
+            title: 'You have delete successfully',
+          })
+        }
+        handleFetchLoanType()
+      })
+      .catch((error) => {
+        Swal.fire({
+            timer: 1500,
+          icon: 'error',
+          title: error?.message,
+        })
+      })
+  }
+
+
+  function handleShowConfirmDelete(item: any) {
+    swalConfirmDelete.fire({
+      title: 'Are you sure?',
+      text: `This will delete item ${item?.type_name} and can't be restored.`,
+    }).then((result) => {
+      if(result.isConfirmed){
+        handleDeleteDocument(item)
+      }
+    })
+  }
   return (
     <>
       <div>
@@ -162,9 +113,20 @@ const ModalDelete = ({
               if (row.key === 'status' && item[row.key] === 0) {
                 return <span className='badge badge-light-danger fs-8 fw-bold my-2'>Disabled</span>
               }
+
+              if (row.key === "created_date") {
+                const createdDate = item[row.key];
+                return <span>{createdDate ? moment(createdDate).format('lll') : ''}</span>;
+              }
+
+              if (row.key === "updated_date") {
+                const updatedDate = item[row.key];
+                return <span>{updatedDate ? moment(updatedDate).format('lll') : ''}</span>;
+              }
+              
               if (row.key === 'action') {
                 return (
-                  <div className='d-flex justify-content-end flex-shrink-0'>
+                  <div className='d-flex justify-content-end flex-shrink-0 align-items-center justify-content-center'>
                     <div>
                       <button
                        onClick={() => {
@@ -177,10 +139,7 @@ const ModalDelete = ({
                       </button>
                     </div>
                     <button
-                    onClick={() => {
-                      setItemDelete(item)
-                      setIsShowDelete(true)
-                    }}
+                    onClick={() =>  handleShowConfirmDelete(item)}
                       className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
                     >
                       <KTIcon iconName='trash' className='fs-3' />
@@ -207,14 +166,7 @@ const ModalDelete = ({
         />
       ) : null}
      
-      {isShowDelete ? (
-        <ModalDelete
-          itemDelete={itemDelete}
-          isShow={isShowDelete}
-          onClose={() => setIsShowDelete(false)}
-          refreshData={handleFetchLoanType}
-        />
-      ) : null} 
+          
     </>
   )
 }
