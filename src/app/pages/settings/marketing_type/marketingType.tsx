@@ -130,7 +130,7 @@ const MarkettingType = (props: Props) => {
 
               if (row.key === 'action') {
                 return (
-                  <div className='d-flex justify-content-end flex-shrink-0'>
+                  <div className='d-flex justify-content-end flex-shrink-0 align-items-center justify-content-center'>
                     <div>
                       <button
                         onClick={() => {
