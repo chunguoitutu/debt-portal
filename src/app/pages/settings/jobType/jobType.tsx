@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { KTIcon } from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import { Modal } from 'react-bootstrap'
 import Swal from 'sweetalert2';
 import request from '../../../axios'
 import { JOBS_TYPE_TABLE_CONFIG } from './jobConfig';
 import CreateJobType from './createJobType'
+import { swalConfirmDelete, swalToast } from '../../../swal-notification';
 
 interface items {
   id: string
@@ -16,85 +16,6 @@ interface items {
   status: number
 }
 
-const ModalDelete = ({
-  isShow,
-  onClose,
-  itemDelete,
-  refreshData,
-}: {
-  isShow: boolean
-  onClose: () => void
-  itemDelete: any
-  refreshData: () => void
-}) => {
-  const handleDeleteJob = async () => {
-    request
-      .delete(`config/job_type/${itemDelete?.id}`)
-      .then((response) => {
-        if (!response.data?.error) {
-          Swal.fire({
-            icon: 'success',
-            title: 'You have delete successfully',
-            timer: 1500,
-          })
-          refreshData()
-          onClose()
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Something went wrong. Please try again!',
-          timer: 1500,
-        })
-        onClose()
-      })
-  }
-  return (
-    <Modal
-      id='kt_modal_create_app'
-      tabIndex={-1}
-      aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
-      show={isShow}
-      onHide={onClose}
-      animation={true}
-    >
-      <div className='modal-header'>
-        <h2>Notification</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClose}>
-          <KTIcon className='fs-1' iconName='cross' />
-        </div>
-      </div>
-
-      <div className='modal-body py-lg-10 px-lg-10'>
-        <span
-          style={{fontSize: '20px'}}
-        >{`Do you want to detete "${itemDelete?.job_type_name}" ?`}</span>
-        <div className='d-flex justify-content-end mt-8 gap-4'>
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-danger'
-            onClick={handleDeleteJob}
-            disabled={false}
-          >
-            <span className='indicator-label'>Delete</span>
-          </button>
-
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-light btn-active-light-primary'
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </Modal>
-  )
-}
 
  const  JobType = () => {
 
@@ -103,8 +24,6 @@ const ModalDelete = ({
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [showPopupEdit, setShowPopupEdit] = useState<boolean>(false)
-  const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
-  const [itemDelete, setItemDelete] = useState({})
 
   const { rows } = JOBS_TYPE_TABLE_CONFIG
 
@@ -117,6 +36,39 @@ const ModalDelete = ({
       .catch((error) => {
         console.error('Erorr: ', error)
       })
+  }
+
+  const handleDeleteDocument = async (data) => {
+    request
+      .delete(`config/job_type/${data?.id}`)
+      .then((response) => {
+        if (!response.data?.error) {
+          swalToast.fire({
+            icon: 'success',
+            title: 'You have delete successfully',
+          })
+        }
+        handleFetchLoanType()
+      })
+      .catch((error) => {
+        Swal.fire({
+            timer: 1500,
+          icon: 'error',
+          title: error?.message,
+        })
+      })
+  }
+
+
+  function handleShowConfirmDelete(item: any) {
+    swalConfirmDelete.fire({
+      title: 'Are you sure?',
+      text: `This will delete item ${item?.job_type_name} and can't be restored.`,
+    }).then((result) => {
+      if(result.isConfirmed){
+        handleDeleteDocument(item)
+      }
+    })
   }
 
   useEffect(() => {
@@ -169,7 +121,7 @@ const ModalDelete = ({
 
               if (row.key === 'action') {
                 return (
-                  <div className='d-flex justify-content-end flex-shrink-0'>
+                  <div className='d-flex justify-content-end flex-shrink-0 align-items-center justify-content-center'>
                     <div>
                       <button
                        onClick={() => {
@@ -182,10 +134,7 @@ const ModalDelete = ({
                       </button>
                     </div>
                     <button
-                    onClick={() => {
-                      setItemDelete(item)
-                      setIsShowDelete(true)
-                    }}
+                    onClick={() =>  handleShowConfirmDelete(item)}
                       className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
                     >
                       <KTIcon iconName='trash' className='fs-3' />
@@ -211,15 +160,6 @@ const ModalDelete = ({
           }}
         />
       ) : null}
-     
-      {isShowDelete ? (
-        <ModalDelete
-          itemDelete={itemDelete}
-          isShow={isShowDelete}
-          onClose={() => setIsShowDelete(false)}
-          refreshData={handleFetchLoanType}
-        />
-      ) : null} 
     </>
   )
 }

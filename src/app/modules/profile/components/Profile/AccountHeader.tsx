@@ -55,10 +55,10 @@ const AccountHeader: React.FC = () => {
                   <a
                     href='#'
                     className={`d-flex align-items-center text-gray-400 text-hover-primary mb-2 ${
-                      currentUser?.status === 1 ? 'active' : 'disabled'
+                      currentUser?.is_active === 1 ? 'active' : 'disabled'
                     }`}
                   >
-                    {currentUser?.status === 1 ? (
+                    {currentUser?.is_active === 1 ? (
                       <>
                         <KTIcon iconName='check' className='fs-4 me-1' />
                         Active
