@@ -1,20 +1,19 @@
 import {useEffect, useState} from 'react'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import {deleteRoleById, getRoleList, getUserList} from '../../../modules/auth/core/_requests'
-import {RoleInfo, SearchCriteria, UserInfo} from '../../../modules/auth'
+import {getUserList} from '../../../modules/auth/core/_requests'
+import {SearchCriteria, UserInfo} from '../../../modules/auth'
 import ButtonEdit from '../../../components/button/ButtonEdit'
 import ButtonDelete from '../../../components/button/ButtonDelete'
 import {swalConfirmDelete, swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import {USER_TABLE_CONFIG} from './UserTableConfig'
-import CreateEditRole from '../role/CreateEditRole'
 import UserEdit from './UserEdit'
 import request from '../../../axios'
 
 const UserManagement = () => {
   const [data, setData] = useState<UserInfo[]>([])
-  const [filter, setFilter] = useState<SearchCriteria>({
+  const [filter] = useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 1,
   })
@@ -24,6 +23,7 @@ const UserManagement = () => {
 
   useEffect(() => {
     onFetchUserList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function onFetchUserList() {
@@ -52,7 +52,7 @@ const UserManagement = () => {
   async function onDeleteDeleteRole(roleId: number) {
     if (!roleId) return
     try {
-      const {data} = await request.delete('config/loan_officer/' + roleId)
+      await request.delete('config/loan_officer/' + roleId)
       await onFetchUserList()
       swalToast.fire({
         title: 'Role successfully deleted',

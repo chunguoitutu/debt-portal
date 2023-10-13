@@ -2,7 +2,6 @@ import {FC, useEffect, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
 import {UpdateById, UserInfo} from '../../../modules/auth'
 import {useFormik} from 'formik'
-import {updateRole} from '../../../modules/auth/core/_requests'
 import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
@@ -62,6 +61,8 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
     setValues(data)
 
     return () => resetForm()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleSubmitForm(values: UserInfo) {

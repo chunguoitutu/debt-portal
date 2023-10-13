@@ -38,11 +38,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     Cookies.set('token', token)
 
     try {
-      console.log(Cookies.get('token') as string)
-
       const {data} = await getCurrentUser()
-
-      console.log(data)
 
       setCurrentUser(data.data)
     } catch (error: any) {
