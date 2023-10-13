@@ -1,14 +1,13 @@
 import {useEffect, useState} from 'react'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import {deleteRoleById, getRoleList, getUserList} from '../../../modules/auth/core/_requests'
-import {RoleInfo, SearchCriteria, UserInfo} from '../../../modules/auth'
+import {getUserList} from '../../../modules/auth/core/_requests'
+import {SearchCriteria, UserInfo} from '../../../modules/auth'
 import ButtonEdit from '../../../components/button/ButtonEdit'
 import ButtonDelete from '../../../components/button/ButtonDelete'
 import {swalConfirmDelete, swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import {USER_TABLE_CONFIG} from './UserTableConfig'
-import CreateEditRole from '../role/CreateEditRole'
 import UserEdit from './UserEdit'
 import request from '../../../axios'
 
@@ -53,11 +52,13 @@ const UserManagement = () => {
     if (!roleId) return
     try {
       const {data} = await request.delete('config/loan_officer/' + roleId)
-      await onFetchUserList()
-      swalToast.fire({
-        title: 'Role successfully deleted',
-        icon: 'success',
-      })
+      if (!data?.error) {
+        await onFetchUserList()
+        swalToast.fire({
+          title: 'User successfully deleted',
+          icon: 'success',
+        })
+      }
     } catch (error: any) {
       const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
 

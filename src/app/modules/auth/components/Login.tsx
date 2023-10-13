@@ -5,7 +5,6 @@ import {FormikHelpers, useFormik} from 'formik'
 import clsx from 'clsx'
 import {Link, useNavigate, useSearchParams} from 'react-router-dom'
 import {login} from '../core/_requests'
-import {useAuth} from '../core/Auth'
 import {LoginInfo} from '../core/_models'
 import Cookies from 'js-cookie'
 
