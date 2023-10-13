@@ -76,6 +76,17 @@ const MenuSetting: React.FC = () => {
                 Job Type
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/settings/address-type' && 'active')
+                }
+                to='/settings/address-type'
+              >
+                Address Type
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

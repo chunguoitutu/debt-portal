@@ -3,6 +3,7 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import moment from 'moment'
 import {useEffect, useState} from 'react'
 import request from '../../../axios'
+import {showLable} from '../../../../components/inputs/showLable'
 interface IProps {
   show: boolean
   data: any
@@ -104,7 +105,7 @@ const BranchDetail = ({data = {}, handleClose, show, id}: IProps) => {
       .catch((error) => {
         console.error('Error: ', error?.message)
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <Modal
@@ -122,93 +123,65 @@ const BranchDetail = ({data = {}, handleClose, show, id}: IProps) => {
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
-      <div style={{maxHeight: '500px', overflowY: 'auto'}} className='py-10 px-10'>
-        {BRANCH_TABLE_CONFIG_DETAIL.rows.map((row, index) => (
-          <>
-            {row.key === 'open_date' || row.key === 'id' || row.key === 'status' ? (
-              <>
-                {row.key === 'open_date' && (
-                  <div
-                    key={index}
-                    className='d-flex  content-center item-center gap-5 fw-bold fs-6'
-                  >
-                    <span
-                      style={{width: '150px', paddingBottom: '13px'}}
-                      className='card-label fw-bold fs-3   flex'
-                    >
-                      {row.name}:
-                    </span>
-                    <p className='text-gray-600 card-label fw-bold fs-3  flex'>
-                      {moment(dataCompanies[row.key]).format('YYYY-MM-DD')}
-                    </p>
-                  </div>
-                )}
-                {row.key === 'status' && (
-                  <div
-                    key={index}
-                    className='d-flex  content-center item-center gap-5 fw-bold fs-6'
-                  >
-                    <span
-                      style={{width: '150px', paddingBottom: '13px'}}
-                      className='card-label fw-bold fs-3   flex'
-                    >
-                      {row.name}:
-                    </span>
-                    <p className='text-gray-600 card-label fw-bold fs-3  flex'>
-                      {Number(dataCompanies[row.key]) === 0 ? 'Disabled' : 'Active'}
-                    </p>
-                  </div>
-                )}
-                {row.key === 'id' && (
-                  <div
-                    key={index}
-                    className='d-flex  content-center item-center gap-5 fw-bold fs-6'
-                  >
-                    <span
-                      style={{width: '150px', paddingBottom: '13px'}}
-                      className='card-label fw-bold fs-3   flex'
-                    >
-                      {row.name}:
-                    </span>
-                    <p className='text-gray-600 card-label fw-bold fs-3  flex'>
-                      {JSON.stringify(id)}
-                    </p>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                {row.key !== 'action' && row.key !== 'address_id' && row.key !== 'company_id' ? (
-                  <div
-                    key={index}
-                    className='d-flex  content-center item-center gap-5 fw-bold fs-6'
-                  >
-                    <span
-                      style={{width: '150px', paddingBottom: '13px'}}
-                      className='card-label fw-bold fs-3   flex'
-                    >
-                      {row.name}:
-                    </span>
-                    <p className='text-gray-600 card-label fw-bold fs-3  flex'>
-                      {dataCompanies[row.key]}
-                    </p>
-                  </div>
-                ) : null}
-              </>
-            )}
-          </>
-        ))}
-        {ADDRESS_TABLE_CONFIG_DETAIL.rows.map((d: any) => (
-          <div className='d-flex  content-center item-center gap-5 fw-bold fs-6'>
-            <span
-              style={{width: '150px', paddingBottom: '13px'}}
-              className='card-label fw-bold fs-3    flex'
-            >
-              {d.name}:
-            </span>
-            <p className='text-gray-600 card-label fw-bold fs-3  flex'> {dataAdress[d.key]}</p>
-          </div>
-        ))}
+      <div
+        style={{maxHeight: '500px', overflowY: 'auto', marginBottom: '20px'}}
+        className='d-flex justify-content-center gap-10 p-10 p'
+      >
+        <div style={{width: '47%'}}>
+          {BRANCH_TABLE_CONFIG_DETAIL.rows.map((row, index) => (
+            <>
+              {row.key === 'open_date' || row.key === 'id' || row.key === 'status' ? (
+                <>
+                  {row.key === 'open_date' && (
+                    <div>
+                      {showLable({
+                        title: row.name,
+                        value: moment(dataCompanies[row.key]).format('YYYY-MM-DD'),
+                      })}
+                    </div>
+                  )}
+                  {row.key === 'status' && (
+                    <div>
+                      {showLable({
+                        title: row.name,
+                        value: Number(dataCompanies[row.key]) === 0 ? 'Disabled' : 'Active',
+                      })}
+                    </div>
+                  )}
+                  {row.key === 'id' && (
+                    <div>
+                      {showLable({
+                        title: row.name,
+                        value: JSON.stringify(id),
+                      })}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {row.key !== 'action' && row.key !== 'address_id' && row.key !== 'company_id' ? (
+                    <div key={index}>
+                      {showLable({
+                        title: row.name,
+                        value: dataCompanies[row.key],
+                      })}
+                    </div>
+                  ) : null}
+                </>
+              )}
+            </>
+          ))}
+        </div>
+        <div style={{width: '47%'}} className=''>
+          {ADDRESS_TABLE_CONFIG_DETAIL.rows.map((d: any, index) => (
+            <div key={index}>
+              {showLable({
+                title: d.name,
+                value: dataAdress[d.key],
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     </Modal>
   )

@@ -1,4 +1,4 @@
-export const COMPANY_TABLE_CONFIG = {
+export const BRANCH_TABLE_CONFIG = {
   rows: [
     {
       key: 'id',
