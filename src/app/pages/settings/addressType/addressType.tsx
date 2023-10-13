@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {KTIcon} from '../../../../_metronic/helpers'
 import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
 import {Modal} from 'react-bootstrap'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import {BRANCH_TABLE_CONFIG} from './BranchConfig'
-import {NewBranch} from './NewBranch'
-import BranchDetail from './branchDetail'
 import moment from 'moment'
+import {ADDRESS_TABLE_CONFIG} from './addressConfig'
+import {NewAddress} from './NewAddress'
 
 type Props = {}
-export interface items {
+interface items {
   id: string
+  company_name: string
+  company_code: string
   business_uen: string
-  company_id: string
-  branch_name: string
   address_id: string
   telephone: string
   email: string
-  open_date: string
+  website: string
+  registration_date: string
   status: number
 }
 
@@ -33,9 +33,9 @@ const ModalDelete = ({
   itemDelete: any
   refreshData: () => void
 }) => {
-  const handleDeleteBranch = async () => {
+  const addressDelete = async () => {
     request
-      .delete(`config/branch/${itemDelete?.id}`)
+      .delete(`config/address_type/${itemDelete?.id}`)
       .then((response) => {
         if (!response.data?.error) {
           swalToast.fire({
@@ -74,13 +74,13 @@ const ModalDelete = ({
       <div className='modal-body py-lg-10 px-lg-10'>
         <span
           style={{fontSize: '20px'}}
-        >{`Do you want to detete "${itemDelete?.branch_name}"`}</span>
+        >{`Do you want to delete "${itemDelete?.address_type_name}"?`}</span>
         <div className='d-flex justify-content-end mt-8 gap-4'>
           <button
             type='button'
             id='kt_sign_in_submit'
             className='btn btn-danger'
-            onClick={handleDeleteBranch}
+            onClick={addressDelete}
             disabled={false}
           >
             <span className='indicator-label'>Delete</span>
@@ -100,22 +100,22 @@ const ModalDelete = ({
   )
 }
 
-const SettingBranch = (props: Props) => {
+const AddressType = (props: Props) => {
   const [data, setData] = useState([])
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
+
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [itemDelete, setItemDelete] = useState({})
   const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
-  const [showDetail, setshowDetail] = useState<boolean>(false)
-  const [id, setId] = useState<Number>(1)
-  const {rows} = BRANCH_TABLE_CONFIG
+
+  const {rows} = ADDRESS_TABLE_CONFIG
 
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
 
   const handleFetchCompany = async () => {
     request
-      .get('config/branch')
+      .get('config/address_type')
       .then((response) => {
         setData(response.data.data)
       })
@@ -143,27 +143,34 @@ const SettingBranch = (props: Props) => {
             className='btn btn-sm btn-light-primary'
           >
             <KTIcon iconName='plus' className='fs-3' />
-            New Brand
+            New Address Type
           </button>
         </div>
-        <NewBranch
+        <NewAddress
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={showCreateAppModal}
           handleClose={() => setShowCreateAppModal(false)}
         />
         <EnhancedTable
-          EnhancedTableHead={rows?.map((row) => row.name)}
+          EnhancedTableHead={rows?.map((row: any) => row.name)}
           rows={data?.map((item: items, index: number) => {
             return rows.map((row) => {
               if (row.key === 'id') return index + 1
-              if (row.key === 'status' && Number(item[row.key]) === 1) {
-                return <span className='badge badge-light-success fs-7 fw-semibold'>Active</span>
+
+              if (row.key === 'status') {
+                const isActive = item[row.key] === 1
+                return (
+                  <span
+                    className={`badge badge-light-${
+                      isActive ? 'success' : 'danger'
+                    } fs-8 fw-bold my-2`}
+                  >
+                    {isActive ? 'Active' : 'Disabled'}
+                  </span>
+                )
               }
-              if (row.key === 'status' && Number(item[row.key]) === 0) {
-                return <span className='badge badge-light-danger fs-8 fw-bold my-2'>Disabled</span>
-              }
-              if (row.key === 'open_date') {
+              if (row.key === 'registration_date') {
                 return moment(item[row.key]).format('YYYY-MM-DD')
               }
 
@@ -173,24 +180,15 @@ const SettingBranch = (props: Props) => {
                     <div>
                       <button
                         onClick={() => {
-                          setId(index + 1)
-                          setshowDetail(true)
+                          setEditShowCreateAppModal(true)
+
                           setDataItem(item)
                         }}
                         className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                       >
-                        <KTIcon iconName='eye' className='fs-3' />
+                        <KTIcon iconName='pencil' className='fs-3' />
                       </button>
                     </div>
-                    <button
-                      onClick={() => {
-                        setEditShowCreateAppModal(true)
-                        setDataItem(item)
-                      }}
-                      className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                    >
-                      <KTIcon iconName='pencil' className='fs-3' />
-                    </button>
                     <button
                       onClick={() => {
                         setItemDelete(item)
@@ -208,16 +206,9 @@ const SettingBranch = (props: Props) => {
           })}
         />
       </div>
-      {showDetail && (
-        <BranchDetail
-          data={dataItem}
-          show={showDetail}
-          id={id}
-          handleClose={() => setshowDetail(false)}
-        />
-      )}
+
       {editShowCreateAppModal ? (
-        <NewBranch
+        <NewAddress
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}
@@ -241,4 +232,4 @@ const SettingBranch = (props: Props) => {
   )
 }
 
-export default SettingBranch
+export default AddressType

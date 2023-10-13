@@ -4,24 +4,14 @@ import {COMPANY_TABLE_CONFIG} from './companyConfig'
 import moment from 'moment'
 import {useEffect, useState} from 'react'
 import request from '../../../axios'
+import {showLable} from '../../../../components/inputs/showLable'
 interface IProps {
   show: boolean
   data: any
   handleClose: () => void
   id: Number
 }
-const showLable = ({title, value}: any) => {
-  return (
-    <div>
-      <div className='fv-row mb-8'>
-        <label className='d-flex align-items-center fs-5 fw-semibold mb-2' htmlFor={title}>
-          <span>{title}</span>
-        </label>
-        <input value={value} className='form-control form-control-lg form-control-solid' />
-      </div>
-    </div>
-  )
-}
+
 const ADDRESS_TABLE_CONFIG_DETAIL = {
   rows: [
     {
@@ -63,7 +53,7 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
       .catch((error) => {
         console.error('Error: ', error?.message)
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
