@@ -9,6 +9,7 @@ import RolePage from './role/settingRole'
 import JobType from './jobType/jobType'
 import DocumentTypes from './documentTypes/documentTypes'
 import AddressType from './addressType/addressType'
+import UserManagement from './users/RoleManagement'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -51,6 +52,15 @@ const MenuSettingPage = () => (
           <>
             <PageTitle breadcrumbs={profileBreadCrumbs}>Branch</PageTitle>
             <SettingBranch />
+          </>
+        }
+      />
+      <Route
+        path='users'
+        element={
+          <>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Users</PageTitle>
+            <UserManagement />
           </>
         }
       />

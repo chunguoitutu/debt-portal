@@ -36,6 +36,17 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/settings/users' && 'active')
+                }
+                to='/settings/users'
+              >
+                Users
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
                   (location.pathname === '/settings/documents-type' && 'active')
                 }
                 to='/settings/documents-type'

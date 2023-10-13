@@ -53,6 +53,7 @@ export type updateUserInfo = {
   email?: string
   status?: number
   role_name?: string
+  role_permissions?: string
 }
 
 export type UpdateUserResponse = {
@@ -71,4 +72,9 @@ export type RoleInfo = {
 export type UpdateById<T = any> = {
   id: number
   data: T
+}
+
+export type SearchCriteria = {
+  pageSize: number
+  currentPage: number
 }
