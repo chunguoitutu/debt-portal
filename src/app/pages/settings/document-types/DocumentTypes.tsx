@@ -5,20 +5,12 @@ import CreateDocumentType from './CreateDocumentTypes'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import Table from '../../../components/table/Table'
 
-interface items {
-  id: string
-  type_name: string
-  description: string
-  status: number
-  createdAt: string
-  updatedAt: string
-}
-
 const DocumentTypes = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [showPopupEdit, setShowPopupEdit] = useState<boolean>(false)
+  const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
   function handleShowEdit(item: any) {
     setShowPopupEdit(!showPopupEdit)
@@ -48,9 +40,15 @@ const DocumentTypes = () => {
           loadApi={loadapi}
           show={showPopupCreate}
           handleClose={() => setShowPopupCreate(false)}
+          handleUpdated={() => setIsUpdated(true)}
         />
 
-        <Table config={DOCUMENT_TABLE_CONFIG} onEditItem={handleShowEdit} />
+        <Table
+          config={DOCUMENT_TABLE_CONFIG}
+          onEditItem={handleShowEdit}
+          isUpdated={isUpdated}
+          setIsUpdated={setIsUpdated}
+        />
       </div>
       {showPopupEdit ? (
         <CreateDocumentType
@@ -63,6 +61,7 @@ const DocumentTypes = () => {
             setShowPopupEdit(!showPopupEdit)
             setDataItem({})
           }}
+          handleUpdated={() => setIsUpdated(true)}
         />
       ) : null}
     </>

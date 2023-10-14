@@ -22,6 +22,7 @@ type Props = {
   show: boolean
   titleLable?: string
   handleClose: () => void
+  handleUpdated: () => void
 }
 
 const numberAllowDotRegex = /^[0-9.]+$/
@@ -75,6 +76,7 @@ const NewBranch = ({
   data = [],
   loadapi,
   setLoadApi,
+  handleUpdated,
 }: Props) => {
   useEffect(() => {
     request
@@ -153,6 +155,7 @@ const NewBranch = ({
                       title: 'Success',
                     })
                   }
+                  handleUpdated()
                   handleClose()
                   resetForm()
                   setStatus(false)
@@ -202,6 +205,7 @@ const NewBranch = ({
                       title: 'Success',
                     })
                   }
+                  handleUpdated()
                   handleClose()
                   setLoadApi(!loadapi)
                 })

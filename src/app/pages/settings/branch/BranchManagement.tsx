@@ -20,13 +20,12 @@ export interface items {
 }
 
 const BranchManagement = (props: Props) => {
-  const [data, setData] = useState([])
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [id, setId] = useState<Number>(1)
-  const {rows} = BRANCH_TABLE_CONFIG
+  const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
 
@@ -66,12 +65,15 @@ const BranchManagement = (props: Props) => {
             loadapi={loadapi}
             show={showCreateAppModal}
             handleClose={() => setShowCreateAppModal(false)}
+            handleUpdated={() => setIsUpdated(true)}
           />
         )}
         <Table
           config={BRANCH_TABLE_CONFIG}
           onEditItem={handleShowEdit}
           onViewDetail={handleViewDetail}
+          isUpdated={isUpdated}
+          setIsUpdated={setIsUpdated}
         />
       </div>
       {showDetail && (
@@ -93,6 +95,7 @@ const BranchManagement = (props: Props) => {
             setEditShowCreateAppModal(false)
             setDataItem({})
           }}
+          handleUpdated={() => setIsUpdated(true)}
         />
       ) : null}
     </>

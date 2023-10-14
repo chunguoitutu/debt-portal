@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {NewCompanies} from './CreateEditCompany'
 import {KTIcon} from '../../../../_metronic/helpers'
 import Table from '../../../components/table/Table'
@@ -13,6 +13,7 @@ const CompanyManagement = (props: Props) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [id, setId] = useState<Number>(1)
   const [loadapi, setLoadApi] = useState<boolean>(false)
+  const [isUpdated, setIsUpdated] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
 
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
@@ -53,12 +54,15 @@ const CompanyManagement = (props: Props) => {
             loadapi={loadapi}
             show={showCreateAppModal}
             handleClose={() => setShowCreateAppModal(false)}
+            handleUpdated={() => setIsUpdated(true)}
           />
         )}
         <Table
           config={COMPANY_TABLE_CONFIG}
           onEditItem={handleShowEdit}
           onViewDetail={handleViewDetail}
+          isUpdated={isUpdated}
+          setIsUpdated={setIsUpdated}
         />
       </div>
       {showDetail && (
@@ -80,6 +84,7 @@ const CompanyManagement = (props: Props) => {
             setEditShowCreateAppModal(false)
             setDataItem({})
           }}
+          handleUpdated={() => setIsUpdated(true)}
         />
       )}
     </>

@@ -4,12 +4,11 @@ import {ROLE_TABLE_CONFIG} from './RoleTableConfig'
 import {RoleInfo} from '../../../modules/auth'
 import CreateEditRole from './CreateEditRole'
 import Table from '../../../components/table/Table'
-import {getRoleList} from '../../../modules/auth/core/_requests'
 
 const RolePage = () => {
-  const [data, setData] = useState<RoleInfo[]>([])
   const [dataEdit, setDataEdit] = useState<RoleInfo | undefined>()
   const [showPopup, setShowPopup] = useState<boolean>(false)
+  const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
   // data = undefined -> create new. Otherwise edit
   function onShowPopup(data?: RoleInfo) {
@@ -29,8 +28,7 @@ const RolePage = () => {
 
   async function onFetchRoleList() {
     try {
-      const {data} = await getRoleList()
-      Array.isArray(data.data) && setData(data.data)
+      setIsUpdated(true)
     } catch (error) {
       // no thing
     }
@@ -60,7 +58,12 @@ const RolePage = () => {
         </button>
       </div>
 
-      <Table config={ROLE_TABLE_CONFIG} onEditItem={handleEditItem} />
+      <Table
+        config={ROLE_TABLE_CONFIG}
+        onEditItem={handleEditItem}
+        isUpdated={isUpdated}
+        setIsUpdated={setIsUpdated}
+      />
     </>
   )
 }

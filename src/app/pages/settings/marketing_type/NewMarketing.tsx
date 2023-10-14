@@ -19,6 +19,7 @@ type Props = {
   show: boolean
   titleLable?: string
   handleClose: () => void
+  handleUpdated: () => void
 }
 
 export const NewMarkettingSchema = Yup.object().shape({
@@ -34,6 +35,7 @@ const NewMarketting = ({
   data = [],
   loadapi,
   setLoadApi,
+  handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
@@ -58,6 +60,7 @@ const NewMarketting = ({
                 title: 'Success',
               })
             }
+            handleUpdated()
             handleClose()
             resetForm()
             setStatus(false)
@@ -84,6 +87,7 @@ const NewMarketting = ({
                 title: 'Success',
               })
             }
+            handleUpdated()
             handleClose()
             setLoadApi(!loadapi)
           })

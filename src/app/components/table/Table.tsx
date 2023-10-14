@@ -16,9 +16,11 @@ type Props = {
   config: TableConfig
   onEditItem?: (data: any) => void
   onViewDetail?: (data: any) => void
+  isUpdated?: boolean
+  setIsUpdated?: any
 }
 
-const Table: FC<Props> = ({config, onEditItem, onViewDetail}) => {
+const Table: FC<Props> = ({config, onEditItem, onViewDetail, isUpdated, setIsUpdated}) => {
   const {settings, rows} = config
   const {
     showAction = true,
@@ -38,9 +40,18 @@ const Table: FC<Props> = ({config, onEditItem, onViewDetail}) => {
 
   useEffect(() => {
     onFetchDataList()
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    const handleResfresh = async () => {
+      await onFetchDataList()
+      setIsUpdated(false)
+    }
+    if (isUpdated) {
+      handleResfresh()
+    }
+  }, [isUpdated])
 
   function convertValue(type: string, value: string | number) {
     if (typeof value !== 'string' && typeof value !== 'number') return
@@ -141,15 +152,19 @@ const Table: FC<Props> = ({config, onEditItem, onViewDetail}) => {
             </thead>
             <tbody className='text-gray-600 fw-bold'>
               {data.length > 0 ? (
-                data.map((item, i) => {
+                data.map((item, idx) => {
                   return (
-                    <tr key={i}>
+                    <tr key={idx}>
                       {rows.map(({key, component, type, classNameTableBody}, i) => {
                         let Component = component || Fragment
                         let value = item[key]
 
+                        if (key === 'id') {
+                          return <td key={i}>{idx + 1}</td>
+                        }
+
                         if (component) {
-                          if (key === 'status') {
+                          if (key === 'status' || key === 'is_active') {
                             return (
                               <td key={i}>
                                 <Component

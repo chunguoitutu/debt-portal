@@ -1,4 +1,15 @@
+import Badge from '../../../components/badge/Badge'
+
 export const ADDRESS_TABLE_CONFIG = {
+  settings: {
+    showAction: true,
+    showEditButton: true,
+    showDeleteButton: true,
+    showViewButton: true,
+    endPointDelete: '/config/address_type',
+    endPointGetListing: '/config/address_type',
+    messageDeleteSuccess: 'Address successfully deleted',
+  },
   rows: [
     {
       key: 'id',
@@ -16,10 +27,7 @@ export const ADDRESS_TABLE_CONFIG = {
     {
       key: 'status',
       name: 'Status',
-    },
-    {
-      key: 'action',
-      name: 'Action',
+      component: Badge,
     },
   ],
 }

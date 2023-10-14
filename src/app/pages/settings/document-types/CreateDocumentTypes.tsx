@@ -19,6 +19,7 @@ type Props = {
   show: boolean
   title?: string
   handleClose: () => void
+  handleUpdated: () => void
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
@@ -34,6 +35,7 @@ const CreateDocumentType = ({
   data = {},
   loadApi,
   setLoadApi,
+  handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -66,6 +68,7 @@ const CreateDocumentType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          handleUpdated()
           handleClose()
           resetForm()
           setStatus(false)
@@ -90,6 +93,7 @@ const CreateDocumentType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
           Swal.fire({

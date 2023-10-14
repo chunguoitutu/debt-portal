@@ -5,19 +5,12 @@ import {ROLE_TABLE_CONFIG} from './jobConfig'
 import CreateJobType from './createJobType'
 import Table from '../../../components/table/Table'
 
-interface items {
-  id: string
-  job_type_name: string
-  description: string
-  request_more_information: number
-  status: number
-}
-
 const JobType = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [showPopupEdit, setShowPopupEdit] = useState<boolean>(false)
+  const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
   function handleEditItem(item: any) {
     setShowPopupEdit(!showPopupEdit)
@@ -48,9 +41,15 @@ const JobType = () => {
           loadApi={loadapi}
           show={showPopupCreate}
           handleClose={() => setShowPopupCreate(false)}
+          handleUpdated={() => setIsUpdated(true)}
         />
 
-        <Table config={ROLE_TABLE_CONFIG} onEditItem={handleEditItem} />
+        <Table
+          config={ROLE_TABLE_CONFIG}
+          onEditItem={handleEditItem}
+          isUpdated={isUpdated}
+          setIsUpdated={setIsUpdated}
+        />
       </div>
       {showPopupEdit ? (
         <CreateJobType
@@ -63,6 +62,7 @@ const JobType = () => {
             setShowPopupEdit(!showPopupEdit)
             setDataItem({})
           }}
+          handleUpdated={() => setIsUpdated(true)}
         />
       ) : null}
     </>

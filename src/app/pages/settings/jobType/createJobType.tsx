@@ -5,10 +5,10 @@ import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
-import { Input } from '../../../../components/inputs/input'
+import {Input} from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 
@@ -19,6 +19,7 @@ type Props = {
   show: boolean
   title?: string
   handleClose: () => void
+  handleUpdated: () => void
 }
 
 export const CreateJobTypeSchema = Yup.object().shape({
@@ -34,12 +35,15 @@ const CreateJobType = ({
   data = {},
   loadApi,
   setLoadApi,
+  handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [status, setStatus] = useState(data.status || false)
-  const [requestMoreInformation, setRequestMoreInformation] = useState(data.request_more_information || false)
+  const [requestMoreInformation, setRequestMoreInformation] = useState(
+    data.request_more_information || false
+  )
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dataLoan, setDataLoan] = useState([])
 
@@ -65,9 +69,10 @@ const CreateJobType = ({
         try {
           await request.post('config/job_type', {
             ...values,
-            request_more_information : requestMoreInformation ? 1 : 0,
+            request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
+          handleUpdated()
           handleClose()
           resetForm()
           setStatus(false)
@@ -90,9 +95,10 @@ const CreateJobType = ({
         try {
           await request.post(`config/job_type/${data.id}`, {
             ...values,
-            request_more_information : requestMoreInformation ? 1 : 0,
+            request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
+          handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
           Swal.fire({
@@ -165,28 +171,28 @@ const CreateJobType = ({
                 onChange={handleChange}
               />
 
-                  <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center'>
-                    <div style={{fontWeight: 500, fontSize: 15}}>Status</div>
-                    <input
-                      className='form-check-input ms-4'
-                      style={{width: 50, height: 25}}
-                      type='checkbox'
-                      name='status'
-                      onChange={() => setStatus(!status)}
-                      checked={status}
-                    />
-                  </div>
+              <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center'>
+                <div style={{fontWeight: 500, fontSize: 15}}>Status</div>
+                <input
+                  className='form-check-input ms-4'
+                  style={{width: 50, height: 25}}
+                  type='checkbox'
+                  name='status'
+                  onChange={() => setStatus(!status)}
+                  checked={status}
+                />
+              </div>
 
-                  <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center mt-xl-6'>
-                    <div style={{fontWeight: 500, fontSize: 15}}>Need More Information</div>
-                    <input
-                      className='form-check-input ms-4'
-                      style={{width: 50, height: 25}}
-                      type='checkbox'
-                      name='request_more_information'
-                      onChange={() => setRequestMoreInformation(!requestMoreInformation)}
-                      checked={requestMoreInformation}
-                    />
+              <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center mt-xl-6'>
+                <div style={{fontWeight: 500, fontSize: 15}}>Need More Information</div>
+                <input
+                  className='form-check-input ms-4'
+                  style={{width: 50, height: 25}}
+                  type='checkbox'
+                  name='request_more_information'
+                  onChange={() => setRequestMoreInformation(!requestMoreInformation)}
+                  checked={requestMoreInformation}
+                />
               </div>
 
               <div className='d-flex flex-end pt-10'>

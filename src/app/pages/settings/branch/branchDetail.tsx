@@ -13,10 +13,6 @@ interface IProps {
 export const BRANCH_TABLE_CONFIG_DETAIL = {
   rows: [
     {
-      key: 'id',
-      name: 'ID',
-    },
-    {
       key: 'business_uen',
       name: 'Business Uen',
     },

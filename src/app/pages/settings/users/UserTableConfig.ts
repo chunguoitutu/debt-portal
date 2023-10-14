@@ -1,4 +1,16 @@
-export const USER_TABLE_CONFIG = {
+import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '../../../modules/auth'
+
+export const USER_TABLE_CONFIG: TableConfig = {
+  settings: {
+    showAction: true,
+    showEditButton: true,
+    showDeleteButton: true,
+    showViewButton: false,
+    endPointDelete: '/config/loan_officer',
+    endPointGetListing: '/config/loan_officer',
+    messageDeleteSuccess: 'User successfully deleted',
+  },
   rows: [
     {
       key: 'id',
@@ -29,14 +41,13 @@ export const USER_TABLE_CONFIG = {
       name: 'Telephone',
     },
     {
-      key: 'is_active',
-      name: 'Status',
+      key: 'email',
+      name: 'Email',
     },
     {
-      key: 'action',
-      name: 'Action',
+      key: 'is_active',
+      name: 'Status',
+      component: Badge,
     },
   ],
 }
-
-// ['branch_id', 'user_id', 'role_id', 'firstname', 'middlename', 'lastname', 'telephone', 'email', 'status', 'role_name', 'role_permissions', 'username', 'last_login_date', 'is_active']
