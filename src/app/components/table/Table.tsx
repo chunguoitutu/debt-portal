@@ -18,9 +18,17 @@ type Props = {
   onViewDetail?: (data: any) => void
   isUpdated?: boolean
   setIsUpdated?: any
+  handleAddNew: () => void
 }
 
-const Table: FC<Props> = ({config, onEditItem, onViewDetail, isUpdated, setIsUpdated}) => {
+const Table: FC<Props> = ({
+  config,
+  onEditItem,
+  onViewDetail,
+  isUpdated,
+  setIsUpdated,
+  handleAddNew,
+}) => {
   const {settings, rows} = config
   const {
     showAction = true,
@@ -130,7 +138,7 @@ const Table: FC<Props> = ({config, onEditItem, onViewDetail, isUpdated, setIsUpd
 
   return (
     <div className='card'>
-      <TableHelper />
+      <TableHelper config={config} handleAddNew={handleAddNew} />
 
       <KTCardBody className='py-4'>
         <div className='table-responsive'>

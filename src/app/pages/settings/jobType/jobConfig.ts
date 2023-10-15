@@ -10,6 +10,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     endPointDelete: '/config/job_type',
     endPointGetListing: '/config/job_type',
     messageDeleteSuccess: 'Job type successfully deleted',
+    buttonAddNew: 'New Job',
   },
   rows: [
     {

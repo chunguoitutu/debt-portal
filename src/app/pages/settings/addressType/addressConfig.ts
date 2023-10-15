@@ -1,6 +1,7 @@
 import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '../../../modules/auth'
 
-export const ADDRESS_TABLE_CONFIG = {
+export const ADDRESS_TABLE_CONFIG: TableConfig = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -9,6 +10,7 @@ export const ADDRESS_TABLE_CONFIG = {
     endPointDelete: '/config/address_type',
     endPointGetListing: '/config/address_type',
     messageDeleteSuccess: 'Address successfully deleted',
+    buttonAddNew: 'New Address',
   },
   rows: [
     {

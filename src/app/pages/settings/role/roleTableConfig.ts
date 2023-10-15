@@ -9,6 +9,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     endPointDelete: '/config/role',
     endPointGetListing: '/config/role',
     messageDeleteSuccess: 'Role successfully deleted',
+    buttonAddNew: 'New Role',
   },
   rows: [
     {

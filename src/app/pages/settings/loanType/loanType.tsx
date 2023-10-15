@@ -1,20 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {LOAN_TYPE_TABLE_CONFIG} from './loanConfig'
 import {KTIcon} from '../../../../_metronic/helpers'
-import EnhancedTable from '../../../../_metronic/partials/widgets/tables/EnhancedTable'
-import Swal from 'sweetalert2'
 import CreateLoanType from './createLoanType'
-import request from '../../../axios'
-import {swalConfirmDelete, swalToast} from '../../../swal-notification'
 import Table from '../../../components/table/Table'
-
-interface items {
-  id: string
-  loan_type: string
-  description: string
-  status: number
-}
 
 const LoanTypes = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)
@@ -60,6 +49,7 @@ const LoanTypes = () => {
           onEditItem={handleEditIten}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
+          handleAddNew={() => setShowPopupCreate(!showPopupCreate)}
         />
       </div>
       {showPopupEdit ? (

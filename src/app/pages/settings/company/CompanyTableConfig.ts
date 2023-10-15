@@ -10,6 +10,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     endPointDelete: '/config/company',
     endPointGetListing: '/config/company',
     messageDeleteSuccess: 'Company successfully deleted',
+    buttonAddNew: 'New Company',
   },
   rows: [
     {

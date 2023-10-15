@@ -10,6 +10,7 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
     endPointDelete: '/config/document_type',
     endPointGetListing: '/config/document_type',
     messageDeleteSuccess: 'Document Type successfully deleted',
+    buttonAddNew: 'New Document',
   },
   rows: [
     {

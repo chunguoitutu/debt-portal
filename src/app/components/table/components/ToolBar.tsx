@@ -1,7 +1,15 @@
 import {KTIcon} from '../../../../_metronic/helpers'
 import {UsersListFilter} from '../../../modules/apps/user-management/users-list/components/header/UsersListFilter'
+import {TableConfig} from '../../../modules/auth'
 
-const ToolBar = () => {
+type Props = {
+  config: TableConfig
+  handleAddNew: () => void
+}
+
+const ToolBar = ({config, handleAddNew}: Props) => {
+  const {settings} = config
+  const {buttonAddNew} = settings
   return (
     <div className='d-flex justify-content-end' data-kt-user-table-toolbar='base'>
       <UsersListFilter />
@@ -14,9 +22,9 @@ const ToolBar = () => {
       {/* end::Export */}
 
       {/* begin::Add user */}
-      <button type='button' className='btn btn-primary'>
+      <button onClick={handleAddNew} type='button' className='btn btn-primary'>
         <KTIcon iconName='plus' className='fs-2' />
-        Add User
+        {buttonAddNew}
       </button>
       {/* end::Add user */}
     </div>

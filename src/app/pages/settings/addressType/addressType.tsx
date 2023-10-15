@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import {KTIcon} from '../../../../_metronic/helpers'
 import {ADDRESS_TABLE_CONFIG} from './addressConfig'
 import {NewAddress} from './NewAddress'
 import Table from '../../../components/table/Table'
@@ -19,22 +18,6 @@ const AddressType = () => {
   return (
     <>
       <div>
-        <div
-          style={{marginBottom: '20px', width: '100%', display: 'flex', justifyContent: 'end'}}
-          className='card-toolbar'
-          data-bs-toggle='tooltip'
-          data-bs-placement='top'
-          data-bs-trigger='hover'
-          title='Click to add a user'
-        >
-          <button
-            onClick={() => setShowCreateAppModal(!showCreateAppModal)}
-            className='btn btn-sm btn-light-primary'
-          >
-            <KTIcon iconName='plus' className='fs-3' />
-            New Address Type
-          </button>
-        </div>
         {showCreateAppModal && (
           <NewAddress
             setLoadApi={setLoadApi}
@@ -49,6 +32,7 @@ const AddressType = () => {
           onEditItem={handleEditItem}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
+          handleAddNew={() => setShowCreateAppModal(!showCreateAppModal)}
         />
       </div>
 

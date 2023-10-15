@@ -104,6 +104,7 @@ export type TableConfig = {
     messageEditError?: string
     messageEditSuccess?: string
     dependencies?: {[key: string]: string}
+    buttonAddNew?: string
   }
   rows: TableRow[]
 }

@@ -10,6 +10,7 @@ export const BRANCH_TABLE_CONFIG: TableConfig = {
     endPointDelete: '/config/branch',
     endPointGetListing: '/config/branch',
     messageDeleteSuccess: 'Branch successfully deleted',
+    buttonAddNew: 'New Branch',
   },
   rows: [
     {

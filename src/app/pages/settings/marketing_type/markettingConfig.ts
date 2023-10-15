@@ -1,6 +1,7 @@
 import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '../../../modules/auth'
 
-export const MAKETTING_TABLE_CONFIG = {
+export const MAKETTING_TABLE_CONFIG: TableConfig = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -9,6 +10,7 @@ export const MAKETTING_TABLE_CONFIG = {
     endPointDelete: '/config/marketing_type',
     endPointGetListing: '/config/marketing_type',
     messageDeleteSuccess: 'Marketing Type successfully deleted',
+    buttonAddNew: 'New Marketing Type',
   },
   rows: [
     {

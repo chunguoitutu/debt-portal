@@ -10,6 +10,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
     endPointDelete: '/config/loan_officer',
     endPointGetListing: '/config/loan_officer',
     messageDeleteSuccess: 'User successfully deleted',
+    buttonAddNew: 'New User',
   },
   rows: [
     {

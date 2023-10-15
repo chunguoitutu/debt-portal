@@ -1,6 +1,7 @@
 import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '../../../modules/auth'
 
-export const LOAN_TYPE_TABLE_CONFIG = {
+export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -9,6 +10,7 @@ export const LOAN_TYPE_TABLE_CONFIG = {
     endPointDelete: '/config/loan_type',
     endPointGetListing: '/config/loan_type',
     messageDeleteSuccess: 'Loan Type successfully deleted',
+    buttonAddNew: 'New Loan Type',
   },
   rows: [
     {

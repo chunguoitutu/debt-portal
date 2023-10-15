@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {NewCompanies} from './CreateEditCompany'
-import {KTIcon} from '../../../../_metronic/helpers'
 import Table from '../../../components/table/Table'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
 import CompanyDetail from './CompanyDetail'
@@ -32,22 +31,6 @@ const CompanyManagement = (props: Props) => {
   return (
     <>
       <div>
-        <div
-          style={{marginBottom: '20px', width: '100%', display: 'flex', justifyContent: 'end'}}
-          className='card-toolbar'
-          data-bs-toggle='tooltip'
-          data-bs-placement='top'
-          data-bs-trigger='hover'
-          title='Click to add a user'
-        >
-          <button
-            onClick={() => setShowCreateAppModal(!showCreateAppModal)}
-            className='btn btn-sm btn-light-primary'
-          >
-            <KTIcon iconName='plus' className='fs-3' />
-            New Company
-          </button>
-        </div>
         {showCreateAppModal && (
           <NewCompanies
             setLoadApi={setLoadApi}
@@ -63,6 +46,7 @@ const CompanyManagement = (props: Props) => {
           onViewDetail={handleViewDetail}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
+          handleAddNew={() => setShowCreateAppModal(!showCreateAppModal)}
         />
       </div>
       {showDetail && (

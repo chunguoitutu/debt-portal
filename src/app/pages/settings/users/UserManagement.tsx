@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react'
-import {KTIcon} from '../../../../_metronic/helpers'
 import {UserInfo} from '../../../modules/auth'
 import {USER_TABLE_CONFIG} from './UserTableConfig'
 import UserEdit from './UserEdit'
@@ -43,24 +42,12 @@ const UserManagement = () => {
           onRefreshListing={onFetchUserList}
         />
       )}
-      <div className='d-flex justify-content-end mb-8'>
-        <button
-          className='btn btn-sm btn-light-primary'
-          title='Click to add new user'
-          data-bs-toggle='tooltip'
-          data-bs-placement='top'
-          data-bs-trigger='hover'
-          onClick={() => onShowPopup()}
-        >
-          <KTIcon iconName='plus' className='fs-3' />
-          New User
-        </button>
-      </div>
       <Table
         config={USER_TABLE_CONFIG}
         onEditItem={onShowPopup}
         isUpdated={isUpdated}
         setIsUpdated={setIsUpdated}
+        handleAddNew={() => onShowPopup()}
       />
     </>
   )
