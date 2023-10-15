@@ -30,9 +30,5 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'Status',
       component: Badge,
     },
-    {
-      key: 'action',
-      name: 'Action',
-    },
   ],
 }

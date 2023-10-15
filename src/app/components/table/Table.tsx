@@ -21,6 +21,12 @@ type Props = {
   handleAddNew: () => void
 }
 
+type SearchCriteria = {
+  pageSize: number
+  currentPage: number
+  total: number
+}
+
 const Table: FC<Props> = ({
   config,
   onEditItem,
@@ -45,6 +51,11 @@ const Table: FC<Props> = ({
 
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
+    pageSize: 10,
+    currentPage: 1,
+    total: 0,
+  })
 
   useEffect(() => {
     onFetchDataList()
@@ -85,8 +96,9 @@ const Table: FC<Props> = ({
   async function onFetchDataList() {
     setLoading(true)
     try {
-      const {data} = await request.get(endPointGetListing)
+      const {data} = await request.post(endPointGetListing + '/listing')
       Array.isArray(data.data) && setData(data.data)
+      data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
     } catch (error) {
       // no thing
     } finally {
@@ -121,6 +133,14 @@ const Table: FC<Props> = ({
         icon: 'error',
       })
     }
+  }
+  async function changePagePagination(page: number, pageSize: number) {
+    const {data} = await request.post(endPointGetListing + '/listing', {
+      pageSize,
+      currentPage: page,
+    })
+    Array.isArray(data.data) && setData(data.data)
+    data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
   }
 
   function handleShowConfirmDelete(item: any) {
@@ -228,7 +248,11 @@ const Table: FC<Props> = ({
             </tbody>
           </table>
         </div>
-        <Pagination />
+        <Pagination
+          changePagePagination={changePagePagination}
+          isLoading={loading}
+          searchCriteria={searchCriteria}
+        />
         {loading && <Loading />}
       </KTCardBody>
     </div>
