@@ -39,20 +39,20 @@ const MenuSettingPage = () => (
       }
     >
       <Route
-        path='company'
+        path='companies'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Company</PageTitle>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Companies</PageTitle>
             <SettingCompanies />
           </>
         }
       />
 
       <Route
-        path='branch'
+        path='branches'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Branch</PageTitle>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Branches</PageTitle>
             <SettingBranch />
           </>
         }

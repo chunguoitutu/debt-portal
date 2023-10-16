@@ -10,8 +10,8 @@ import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import {Input} from '../../../../components/inputs/input'
-import InputCheck from '../../../../components/inputs/inputCheck'
+import InputCheck from '../../../components/inputs/inputCheck'
+import {Input} from '../../../components/inputs/input'
 
 type Props = {
   setLoadApi: any

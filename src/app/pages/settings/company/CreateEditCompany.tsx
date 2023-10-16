@@ -4,13 +4,14 @@ import {Modal} from 'react-bootstrap'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import {Input} from '../../../../components/inputs/input'
-import InputCheck from '../../../../components/inputs/inputCheck'
+import {Input} from '../../../components/inputs/input'
+import InputCheck from '../../../components/inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
 import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import {InputTime} from '../../../../components/inputs/inputTime'
+import {InputTime} from '../../../components/inputs/inputTime'
+import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
 
 type Props = {
   setLoadApi: any
@@ -22,26 +23,6 @@ type Props = {
   handleUpdated: () => void
 }
 
-const numberAllowDotRegex = /^[0-9.]+$/
-function handleKeyPress(e: any) {
-  e = e || window.event
-  const charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
-  const charStr = String.fromCharCode(charCode)
-  const dotInvalid = true
-    ? charStr === '.' && true
-    : e.target.value.includes('.') && charStr === '.'
-  ;(dotInvalid || !charStr.match(numberAllowDotRegex)) && e.preventDefault()
-}
-function handlePaste(e: any) {
-  let valueCopied = e.clipboardData.getData('text/plain')
-  const oldValue = +e.target.value
-  if (
-    Number.isNaN(+valueCopied) ||
-    ((oldValue % 1 !== 0 || true) && +valueCopied % 1 !== 0) ||
-    +valueCopied < 0
-  )
-    e.preventDefault()
-}
 export const newCompaniesSchema = Yup.object().shape({
   company_name: Yup.string().required('Company name  is required.'),
   company_code: Yup.string().required('Company code  is required.'),

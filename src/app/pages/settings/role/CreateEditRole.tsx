@@ -8,7 +8,7 @@ import {createNewRole, updateRole} from '../../../modules/auth/core/_requests'
 import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
-import {Input} from '../../../../components/inputs/input'
+import {Input} from '../../../components/inputs/input'
 
 type Props = {
   data?: RoleInfo

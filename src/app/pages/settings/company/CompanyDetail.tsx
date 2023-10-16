@@ -3,7 +3,7 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import moment from 'moment'
 import {useEffect, useState} from 'react'
 import request from '../../../axios'
-import {showLable} from '../../../../components/inputs/showLable'
+import {showLable} from '../../../components/inputs/showLable'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
 
 interface IProps {

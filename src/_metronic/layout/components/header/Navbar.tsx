@@ -43,7 +43,7 @@ const Navbar = () => {
         <HeaderNotificationsMenu />
       </div>
 
-      <Link to={'/settings/company'} className={clsx('app-navbar-item', itemClass)}>
+      <Link to={'/settings/companies'} className={clsx('app-navbar-item', itemClass)}>
         <div
           data-kt-menu-trigger="{default: 'click'}"
           data-kt-menu-attach='parent'

@@ -153,6 +153,7 @@ const Table: FC<Props> = ({
         }
       })
   }
+  console.log(data)
 
   return (
     <div className='card'>
@@ -206,6 +207,8 @@ const Table: FC<Props> = ({
                               </td>
                             )
                           }
+
+                          return <Component data={item} key={i} />
                         }
 
                         if (type) {
