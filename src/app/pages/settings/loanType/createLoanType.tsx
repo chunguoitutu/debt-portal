@@ -76,7 +76,7 @@ const CreateLoanType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Create Loan Successfully',
+            title: 'Loan type successfully created',
           })
         } catch (error) {
           console.error(error)
@@ -99,7 +99,7 @@ const CreateLoanType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Update Loan Type Successfully',
+            title: 'Loan type successfully updated',
           })
         } catch (error) {
           console.error(error)
