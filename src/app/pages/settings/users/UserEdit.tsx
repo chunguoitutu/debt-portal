@@ -41,7 +41,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
 
   useEffect(() => {
     request
-      .get('config/branch')
+      .post('config/branch/listing')
       .then(({data}) => {
         setDataBranch(data.data)
       })
@@ -50,7 +50,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
       })
 
     request
-      .get('config/role')
+      .post('config/role/listing')
       .then(({data}) => {
         setDataRole(data.data)
       })
