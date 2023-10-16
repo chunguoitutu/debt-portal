@@ -1,9 +1,9 @@
 import {useState} from 'react'
 import Table from '../../../components/table/Table'
-import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
-import {CreateEditAddress} from './CreateEditAddress'
+import {REJECTION_TYPE_TABLE_CONFIG} from './RejectinonTypeConfig'
+import {CreateEditRejectionType} from './CreateEditRejectionType'
 
-const AddressType = () => {
+const RejectionType = () => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
@@ -19,7 +19,7 @@ const AddressType = () => {
     <>
       <div>
         {showCreateAppModal && (
-          <CreateEditAddress
+          <CreateEditRejectionType
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -28,7 +28,7 @@ const AddressType = () => {
           />
         )}
         <Table
-          config={ADDRESS_TABLE_CONFIG}
+          config={REJECTION_TYPE_TABLE_CONFIG}
           onEditItem={handleEditItem}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
@@ -37,7 +37,7 @@ const AddressType = () => {
       </div>
 
       {editShowCreateAppModal ? (
-        <CreateEditAddress
+        <CreateEditRejectionType
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}
@@ -54,4 +54,4 @@ const AddressType = () => {
   )
 }
 
-export default AddressType
+export default RejectionType
