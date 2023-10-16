@@ -7,14 +7,14 @@ import {Modal} from 'react-bootstrap'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {Input} from '../../../components/inputs/input'
-import Select from '../../../components/selects/select'
-import InputCheck from '../../../components/inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
 import {InputTime} from '../../../components/inputs/inputTime'
 import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
+import Select from './../../../components/selects/select';
+import InputCheck from './../../../../components/inputs/inputCheck'
 
 type Props = {
   setLoadApi: any
