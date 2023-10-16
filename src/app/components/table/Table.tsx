@@ -164,11 +164,14 @@ const Table: FC<Props> = ({
           >
             <thead>
               <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                {rows.map((row, i) => (
-                  <th className={row.classNameTableHead} key={i}>
-                    {row.name}
-                  </th>
-                ))}
+                {rows.map(
+                  (row, i) =>
+                    !row?.isHide && (
+                      <th className={row.classNameTableHead} key={i}>
+                        {row.name}
+                      </th>
+                    )
+                )}
                 {showAction && (showDeleteButton || showEditButton || showViewButton) && (
                   <th className='text-center w-150px'>Action</th>
                 )}
@@ -179,7 +182,10 @@ const Table: FC<Props> = ({
                 data.map((item, idx) => {
                   return (
                     <tr key={idx}>
-                      {rows.map(({key, component, type, classNameTableBody}, i) => {
+                      {rows.map(({key, component, type, classNameTableBody, isHide}, i) => {
+                        if (isHide) {
+                          return
+                        }
                         let Component = component || Fragment
                         let value = item[key]
 
