@@ -1,4 +1,17 @@
-export const BRANCH_TABLE_CONFIG = {
+import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '../../../modules/auth'
+
+export const BRANCH_TABLE_CONFIG: TableConfig = {
+  settings: {
+    showAction: true,
+    showEditButton: true,
+    showDeleteButton: true,
+    showViewButton: true,
+    endPointDelete: '/config/branch',
+    endPointGetListing: '/config/branch',
+    messageDeleteSuccess: 'Branch successfully deleted',
+    buttonAddNew: 'New Branch',
+  },
   rows: [
     {
       key: 'id',
@@ -36,10 +49,7 @@ export const BRANCH_TABLE_CONFIG = {
     {
       key: 'status',
       name: 'Status',
-    },
-    {
-      key: 'action',
-      name: 'Action',
+      component: Badge,
     },
   ],
 }

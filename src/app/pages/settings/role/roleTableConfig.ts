@@ -1,4 +1,16 @@
-export const ROLE_TABLE_CONFIG = {
+import {TableConfig} from '../../../modules/auth'
+
+export const ROLE_TABLE_CONFIG: TableConfig = {
+  settings: {
+    showAction: true,
+    showEditButton: true,
+    showDeleteButton: true,
+    showViewButton: false,
+    endPointDelete: '/config/role',
+    endPointGetListing: '/config/role',
+    messageDeleteSuccess: 'Role successfully deleted',
+    buttonAddNew: 'New Role',
+  },
   rows: [
     {
       key: 'id',
@@ -15,10 +27,6 @@ export const ROLE_TABLE_CONFIG = {
     {
       key: 'permissions',
       name: 'Permissions',
-    },
-    {
-      key: 'action',
-      name: 'Action',
     },
   ],
 }

@@ -1,17 +1,30 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
-import {ADDRESS_TABLE_CONFIG} from './addressConfig'
-import {NewAddress} from './NewAddress'
+import {NewCompanies} from './CreateEditCompany'
 import Table from '../../../components/table/Table'
+import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
+import CompanyDetail from './CompanyDetail'
 
-const AddressType = () => {
+type Props = {}
+
+const CompanyManagement = (props: Props) => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [id, setId] = useState<Number>(1)
   const [loadapi, setLoadApi] = useState<boolean>(false)
-  const [dataItem, setDataItem] = useState({})
-  const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
+  const [dataItem, setDataItem] = useState({})
 
-  function handleEditItem(item: any) {
+  const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
+
+  function handleShowEdit(item: any) {
     setEditShowCreateAppModal(true)
+    setDataItem(item)
+  }
+
+  function handleViewDetail(item: any) {
+    setId(item.id)
+    setShowDetail(true)
     setDataItem(item)
   }
 
@@ -19,7 +32,7 @@ const AddressType = () => {
     <>
       <div>
         {showCreateAppModal && (
-          <NewAddress
+          <NewCompanies
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -28,16 +41,24 @@ const AddressType = () => {
           />
         )}
         <Table
-          config={ADDRESS_TABLE_CONFIG}
-          onEditItem={handleEditItem}
+          config={COMPANY_TABLE_CONFIG}
+          onEditItem={handleShowEdit}
+          onViewDetail={handleViewDetail}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
           handleAddNew={() => setShowCreateAppModal(!showCreateAppModal)}
         />
       </div>
-
-      {editShowCreateAppModal ? (
-        <NewAddress
+      {showDetail && (
+        <CompanyDetail
+          data={dataItem}
+          show={showDetail}
+          id={id}
+          handleClose={() => setShowDetail(false)}
+        />
+      )}
+      {editShowCreateAppModal && (
+        <NewCompanies
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}
@@ -49,9 +70,9 @@ const AddressType = () => {
           }}
           handleUpdated={() => setIsUpdated(true)}
         />
-      ) : null}
+      )}
     </>
   )
 }
 
-export default AddressType
+export default CompanyManagement

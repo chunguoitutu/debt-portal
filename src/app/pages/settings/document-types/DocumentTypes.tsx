@@ -1,42 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
-import {LOAN_TYPE_TABLE_CONFIG} from './loanConfig'
-import {KTIcon} from '../../../../_metronic/helpers'
-import CreateLoanType from './createLoanType'
+import CreateDocumentType from './CreateDocumentTypes'
+import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import Table from '../../../components/table/Table'
 
-const LoanTypes = () => {
+const DocumentTypes = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
   const [showPopupEdit, setShowPopupEdit] = useState<boolean>(false)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
-  function handleEditIten(item: any) {
+  function handleShowEdit(item: any) {
     setShowPopupEdit(!showPopupEdit)
     setDataItem(item)
   }
-
   return (
     <>
       <div>
-        <div
-          style={{marginBottom: '20px', width: '100%', display: 'flex', justifyContent: 'end'}}
-          className='card-toolbar'
-          data-bs-toggle='tooltip'
-          data-bs-placement='top'
-          data-bs-trigger='hover'
-        >
-          <button
-            onClick={() => setShowPopupCreate(!showPopupCreate)}
-            className='btn btn-sm btn-light-primary fw-bold'
-          >
-            <KTIcon iconName='plus' className='fs-3 fw-bold' />
-            New Loan Type
-          </button>
-        </div>
-
-        <CreateLoanType
+        <CreateDocumentType
           setLoadApi={setLoadApi}
           loadApi={loadapi}
           show={showPopupCreate}
@@ -45,15 +27,15 @@ const LoanTypes = () => {
         />
 
         <Table
-          config={LOAN_TYPE_TABLE_CONFIG}
-          onEditItem={handleEditIten}
+          config={DOCUMENT_TABLE_CONFIG}
+          onEditItem={handleShowEdit}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
           handleAddNew={() => setShowPopupCreate(!showPopupCreate)}
         />
       </div>
       {showPopupEdit ? (
-        <CreateLoanType
+        <CreateDocumentType
           setLoadApi={setLoadApi}
           loadApi={loadapi}
           show={showPopupEdit}
@@ -70,4 +52,4 @@ const LoanTypes = () => {
   )
 }
 
-export default LoanTypes
+export default DocumentTypes

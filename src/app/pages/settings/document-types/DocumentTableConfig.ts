@@ -1,16 +1,16 @@
 import Badge from '../../../components/badge/Badge'
 import {TableConfig} from '../../../modules/auth'
 
-export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
+export const DOCUMENT_TABLE_CONFIG: TableConfig = {
   settings: {
     showAction: true,
     showEditButton: true,
     showDeleteButton: true,
     showViewButton: false,
-    endPointDelete: '/config/loan_type',
-    endPointGetListing: '/config/loan_type',
-    messageDeleteSuccess: 'Loan Type successfully deleted',
-    buttonAddNew: 'New Loan Type',
+    endPointDelete: '/config/document_type',
+    endPointGetListing: '/config/document_type',
+    messageDeleteSuccess: 'Document Type successfully deleted',
+    buttonAddNew: 'New Document',
   },
   rows: [
     {
@@ -19,7 +19,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'type_name',
-      name: 'Loan Type',
+      name: 'Document Type',
     },
     {
       key: 'description',
@@ -29,6 +29,15 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       key: 'status',
       name: 'Status',
       component: Badge,
+    },
+    {
+      key: 'created_date',
+      name: 'Created Date',
+    },
+    {
+      key: 'updated_date',
+      name: 'Updated Date',
+      type: 'datetime',
     },
   ],
 }

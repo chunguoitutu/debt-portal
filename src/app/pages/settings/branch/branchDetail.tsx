@@ -13,10 +13,6 @@ interface IProps {
 export const BRANCH_TABLE_CONFIG_DETAIL = {
   rows: [
     {
-      key: 'id',
-      name: 'ID',
-    },
-    {
       key: 'business_uen',
       name: 'Business Uen',
     },
@@ -133,7 +129,7 @@ const BranchDetail = ({data = {}, handleClose, show, id}: IProps) => {
               {row.key === 'open_date' || row.key === 'id' || row.key === 'status' ? (
                 <>
                   {row.key === 'open_date' && (
-                    <div>
+                    <div key={index}>
                       {showLable({
                         title: row.name,
                         value: moment(dataCompanies[row.key]).format('YYYY-MM-DD'),
@@ -141,7 +137,7 @@ const BranchDetail = ({data = {}, handleClose, show, id}: IProps) => {
                     </div>
                   )}
                   {row.key === 'status' && (
-                    <div>
+                    <div key={index}>
                       {showLable({
                         title: row.name,
                         value: Number(dataCompanies[row.key]) === 0 ? 'Disabled' : 'Active',
@@ -149,7 +145,7 @@ const BranchDetail = ({data = {}, handleClose, show, id}: IProps) => {
                     </div>
                   )}
                   {row.key === 'id' && (
-                    <div>
+                    <div key={index}>
                       {showLable({
                         title: row.name,
                         value: JSON.stringify(id),

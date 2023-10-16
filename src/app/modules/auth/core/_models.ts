@@ -78,3 +78,33 @@ export type SearchCriteria = {
   pageSize: number
   currentPage: number
 }
+
+export type TableRow = {
+  key: string
+  name: string
+  classNameTableHead?: string
+  classNameTableBody?: string
+  component?: any
+  componentProps?: {[key: string]: string}
+  type?: 'datetime' | 'badge'
+}
+
+export type TableConfig = {
+  settings: {
+    showAction?: boolean
+    showEditButton?: boolean
+    showDeleteButton?: boolean
+    showViewButton?: boolean
+    textConfirmRemove?: string
+    endPointDelete?: string
+    endPointGetListing: string
+    fieldDelete?: string
+    messageDeleteError?: string
+    messageDeleteSuccess?: string
+    messageEditError?: string
+    messageEditSuccess?: string
+    dependencies?: {[key: string]: string}
+    buttonAddNew?: string
+  }
+  rows: TableRow[]
+}

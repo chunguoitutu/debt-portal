@@ -1,17 +1,40 @@
 import {useState} from 'react'
-import {ADDRESS_TABLE_CONFIG} from './addressConfig'
-import {NewAddress} from './NewAddress'
+import {BRANCH_TABLE_CONFIG} from './BranchTableConfig'
+import {NewBranch} from './NewBranch'
+import BranchDetail from './BranchDetail'
 import Table from '../../../components/table/Table'
 
-const AddressType = () => {
+type Props = {}
+export interface items {
+  id: string
+  business_uen: string
+  company_id: string
+  branch_name: string
+  address_id: string
+  telephone: string
+  email: string
+  open_date: string
+  status: number
+}
+
+const BranchManagement = (props: Props) => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
   const [loadapi, setLoadApi] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
-  const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [id, setId] = useState<Number>(1)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
-  function handleEditItem(item: any) {
+  const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
+
+  function handleShowEdit(item: any) {
     setEditShowCreateAppModal(true)
+    setDataItem(item)
+  }
+
+  function handleViewDetail(item: any) {
+    setId(item.id)
+    setShowDetail(true)
     setDataItem(item)
   }
 
@@ -19,7 +42,7 @@ const AddressType = () => {
     <>
       <div>
         {showCreateAppModal && (
-          <NewAddress
+          <NewBranch
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -28,16 +51,24 @@ const AddressType = () => {
           />
         )}
         <Table
-          config={ADDRESS_TABLE_CONFIG}
-          onEditItem={handleEditItem}
+          config={BRANCH_TABLE_CONFIG}
+          onEditItem={handleShowEdit}
+          onViewDetail={handleViewDetail}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
           handleAddNew={() => setShowCreateAppModal(!showCreateAppModal)}
         />
       </div>
-
+      {showDetail && (
+        <BranchDetail
+          data={dataItem}
+          show={showDetail}
+          id={id}
+          handleClose={() => setShowDetail(false)}
+        />
+      )}
       {editShowCreateAppModal ? (
-        <NewAddress
+        <NewBranch
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}
@@ -54,4 +85,4 @@ const AddressType = () => {
   )
 }
 
-export default AddressType
+export default BranchManagement

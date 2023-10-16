@@ -102,9 +102,9 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/settings/Marketing-type' && 'active')
+                  (location.pathname === '/settings/marketing-type' && 'active')
                 }
-                to='/settings/Marketing-type'
+                to='/settings/marketing-type'
               >
                 Marketing Type
               </Link>

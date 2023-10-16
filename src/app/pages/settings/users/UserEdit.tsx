@@ -61,6 +61,8 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
     setValues(data)
 
     return () => resetForm()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleSubmitForm(values: UserInfo) {

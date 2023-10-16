@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
@@ -19,6 +19,7 @@ type Props = {
   show: boolean
   title?: string
   handleClose: () => void
+  handleUpdated: () => void
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
@@ -34,6 +35,7 @@ const CreateLoanType = ({
   data = {},
   loadApi,
   setLoadApi,
+  handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -66,6 +68,7 @@ const CreateLoanType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          handleUpdated()
           handleClose()
           resetForm()
           setStatus(false)
@@ -90,6 +93,7 @@ const CreateLoanType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
           Swal.fire({
@@ -162,7 +166,7 @@ const CreateLoanType = ({
                 onChange={handleChange}
               />
               <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid align-items-center justify-content-between'>
-                  <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
+                <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
                 <input
                   className='form-check-input ms-4'
                   style={{width: 50, height: 25}}

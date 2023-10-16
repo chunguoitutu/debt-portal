@@ -1,10 +1,11 @@
 import {Modal} from 'react-bootstrap'
 import {KTIcon} from '../../../../_metronic/helpers'
-import {COMPANY_TABLE_CONFIG} from './companyConfig'
 import moment from 'moment'
 import {useEffect, useState} from 'react'
 import request from '../../../axios'
 import {showLable} from '../../../../components/inputs/showLable'
+import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
+
 interface IProps {
   show: boolean
   data: any
@@ -53,6 +54,7 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
       .catch((error) => {
         console.error('Error: ', error?.message)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
