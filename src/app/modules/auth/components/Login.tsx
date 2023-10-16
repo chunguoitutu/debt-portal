@@ -92,7 +92,9 @@ export function Login() {
         />
         {formik.touched.username && formik.errors.username && (
           <div className='fv-plugins-message-container'>
-            <span role='alert'>{formik.errors.username}</span>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.username}</span>
+            </div>
           </div>
         )}
       </div>

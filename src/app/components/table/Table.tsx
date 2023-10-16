@@ -1,6 +1,6 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import {KTCardBody} from '../../../_metronic/helpers'
-import {TableConfig} from '../../modules/auth'
+import {SearchCriteria, TableConfig} from '../../modules/auth'
 import moment from 'moment'
 import ButtonDelete from '../button/ButtonDelete'
 import ButtonEdit from '../button/ButtonEdit'
@@ -19,12 +19,6 @@ type Props = {
   isUpdated?: boolean
   setIsUpdated?: any
   handleAddNew: () => void
-}
-
-type SearchCriteria = {
-  pageSize: number
-  currentPage: number
-  total: number
 }
 
 const Table: FC<Props> = ({
@@ -56,20 +50,24 @@ const Table: FC<Props> = ({
     currentPage: 1,
     total: 0,
   })
+  const {total, ...pagination} = searchCriteria
 
   useEffect(() => {
-    onFetchDataList()
+    onFetchDataList(pagination)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    const handleResfresh = async () => {
-      await onFetchDataList()
+    const handleRefresh = async () => {
+      await onFetchDataList(pagination)
       setIsUpdated(false)
     }
+
     if (isUpdated) {
-      handleResfresh()
+      handleRefresh()
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdated])
 
   function convertValue(type: string, value: string | number) {
@@ -93,10 +91,10 @@ const Table: FC<Props> = ({
     onViewDetail(item)
   }
 
-  async function onFetchDataList() {
+  async function onFetchDataList(body: Omit<SearchCriteria, 'total'>) {
     setLoading(true)
     try {
-      const {data} = await request.post(endPointGetListing + '/listing')
+      const {data} = await request.post(endPointGetListing + '/listing', body)
       Array.isArray(data.data) && setData(data.data)
       data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
     } catch (error) {
@@ -120,7 +118,7 @@ const Table: FC<Props> = ({
       await request.delete(endPoint)
 
       // handle refresh data
-      await onFetchDataList()
+      await onFetchDataList({...pagination, currentPage: 1})
       swalToast.fire({
         title: messageDeleteSuccess || 'Delete Successfully',
         icon: 'success',
@@ -134,11 +132,10 @@ const Table: FC<Props> = ({
       })
     }
   }
-  async function changePagePagination(page: number, pageSize: number) {
-    const {data} = await request.post(endPointGetListing + '/listing', {
-      pageSize,
-      currentPage: page,
-    })
+  async function handleChangePagination(pagination: Omit<SearchCriteria, 'total'>) {
+    const {data} = await request.post(endPointGetListing + '/listing', pagination)
+    console.log(data)
+
     Array.isArray(data.data) && setData(data.data)
     data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
   }
@@ -249,7 +246,7 @@ const Table: FC<Props> = ({
           </table>
         </div>
         <Pagination
-          changePagePagination={changePagePagination}
+          onChangePagePagination={handleChangePagination}
           isLoading={loading}
           searchCriteria={searchCriteria}
         />

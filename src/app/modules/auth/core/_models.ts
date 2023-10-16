@@ -77,6 +77,7 @@ export type UpdateById<T = any> = {
 export type SearchCriteria = {
   pageSize: number
   currentPage: number
+  total: number
 }
 
 export type TableRow = {
