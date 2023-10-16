@@ -17,14 +17,9 @@ export const BRANCH_TABLE_CONFIG: TableConfig = {
       key: 'id',
       name: 'ID',
     },
-
     {
       key: 'business_uen',
       name: 'Business UEN',
-    },
-    {
-      key: 'company_id',
-      name: 'Company ID',
     },
     {
       key: 'branch_name',
@@ -46,6 +41,7 @@ export const BRANCH_TABLE_CONFIG: TableConfig = {
     {
       key: 'open_date',
       name: 'Open date',
+      type: 'datetime',
     },
     {
       key: 'status',

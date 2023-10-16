@@ -55,13 +55,10 @@ export const newCompaniesSchema = Yup.object().shape({
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('Email is required.'),
-  website: Yup.string().required('Website  is required.'),
   registration_date: Yup.string().required('Registration is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
-  street_2: Yup.string().required('Street 2 date code  is required.'),
   city: Yup.string().required('City is required.'),
   state: Yup.string().required('State is required.'),
-  zipcode: Yup.string().required('Zip Code is required.'),
   country: Yup.string().required('Country is required.'),
 })
 
