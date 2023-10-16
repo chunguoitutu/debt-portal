@@ -109,6 +109,17 @@ const MenuSetting: React.FC = () => {
                 Marketing Type
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/settings/rejection-type' && 'active')
+                }
+                to='/settings/rejection-type'
+              >
+                Rejection Type
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

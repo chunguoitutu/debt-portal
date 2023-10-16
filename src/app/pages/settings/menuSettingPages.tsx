@@ -11,6 +11,7 @@ import UserManagement from './users/UserManagement'
 import DocumentTypes from './document_types/DocumentTypes'
 import RolePage from './role/RoleManagement'
 import MarkettingType from './marketing_type/MarketingType'
+import RejectionType from './rejection-type/RejectionType'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -125,6 +126,15 @@ const MenuSettingPage = () => (
           <>
             <PageTitle breadcrumbs={profileBreadCrumbs}>Marketing Type</PageTitle>
             <MarkettingType />
+          </>
+        }
+      />
+      <Route
+        path='rejection-type'
+        element={
+          <>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Rejection Type</PageTitle>
+            <RejectionType />
           </>
         }
       />
