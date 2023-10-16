@@ -61,7 +61,7 @@ const CreateEditAddress = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Success',
+                title: 'Address type successfully created',
               })
             }
             handleUpdated()
@@ -88,7 +88,7 @@ const CreateEditAddress = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Success',
+                title: 'Address type successfully updated',
               })
             }
             handleUpdated()

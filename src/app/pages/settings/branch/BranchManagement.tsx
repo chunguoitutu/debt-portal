@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {BRANCH_TABLE_CONFIG} from './BranchTableConfig'
-import {CreateEditBranch} from './NewBranch'
+import {CreateEditBranch} from './CreateEditBranch'
 import BranchDetail from './BranchDetail'
 import Table from '../../../components/table/Table'
 
