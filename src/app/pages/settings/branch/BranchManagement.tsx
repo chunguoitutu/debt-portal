@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {BRANCH_TABLE_CONFIG} from './BranchTableConfig'
-import {NewBranch} from './NewBranch'
+import {CreateEditBranch} from './NewBranch'
 import BranchDetail from './BranchDetail'
 import Table from '../../../components/table/Table'
 
@@ -42,7 +42,7 @@ const BranchManagement = (props: Props) => {
     <>
       <div>
         {showCreateAppModal && (
-          <NewBranch
+          <CreateEditBranch
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -68,7 +68,7 @@ const BranchManagement = (props: Props) => {
         />
       )}
       {editShowCreateAppModal ? (
-        <NewBranch
+        <CreateEditBranch
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}

@@ -9,10 +9,8 @@ import {useFormik} from 'formik'
 import {Input} from '../../../../components/inputs/input'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
-import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import TextArea from '../../../components/textarea/TextArea'
-import ErrorMessageFormik from '../../../components/error/ErrorMessageFormik'
+import {swalToast} from '../../../swal-notification'
 
 type Props = {
   setLoadApi: any
@@ -24,14 +22,13 @@ type Props = {
   handleUpdated: () => void
 }
 
-export const NewAddressSchema = Yup.object().shape({
-  address_type_name: Yup.string().required('Address Type name is required.'),
-  description: Yup.string().required('Description is required.'),
+export const NewEditMarkettingSchema = Yup.object().shape({
+  marketing_type_name: Yup.string().required('Marketing Type name is required.'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const NewAddress = ({
+const CreatEditMarkettingType = ({
   show,
   handleClose,
   titleLable = 'New',
@@ -46,14 +43,13 @@ const NewAddress = ({
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
-      address_type_name: data ? data?.address_type_name : '',
-      description: data ? data?.description : '',
+      marketing_type_name: data ? data?.marketing_type_name : '',
     },
-    validationSchema: NewAddressSchema,
+    validationSchema: NewEditMarkettingSchema,
     onSubmit: async (values: any, actions: any) => {
       if (titleLable === 'New') {
         await request
-          .post('config/address_type', {
+          .post('config/marketing_type', {
             ...values,
             status: status ? 1 : 0,
           })
@@ -80,7 +76,7 @@ const NewAddress = ({
 
       if (titleLable === 'Edit') {
         await request
-          .post('config/address_type/' + data?.id, {
+          .post('config/marketing_type/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -116,7 +112,7 @@ const NewAddress = ({
       backdrop={true}
     >
       <div className='modal-header'>
-        <h2>{titleLable} Address Type</h2>
+        <h2>{titleLable} MarKeting Type</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -130,28 +126,15 @@ const NewAddress = ({
           <div className='flex-row-fluid py-lg-5 px-lg-15'>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <Input
-                title='Address Type Name'
-                id='address_type_name'
-                error={errors.address_type_name}
-                touched={touched.address_type_name}
-                errorTitle={errors.address_type_name}
-                value={values.address_type_name}
+                title='Marketing Type Name'
+                id='marketing_type_name'
+                error={errors.marketing_type_name}
+                touched={touched.marketing_type_name}
+                errorTitle={errors.marketing_type_name}
+                value={values.marketing_type_name}
                 onChange={handleChange}
               />
-              <div className='mb-8'>
-                <TextArea
-                  title='Description'
-                  name='description'
-                  value={values.description || ''}
-                  onChange={handleChange}
-                />
 
-                <ErrorMessageFormik
-                  className='mt-2'
-                  shouldShowMessage={!!(errors.description && touched.description)}
-                  message={errors.description as string}
-                />
-              </div>
               <InputCheck
                 title='Status'
                 checked={status}
@@ -172,4 +155,4 @@ const NewAddress = ({
   )
 }
 
-export {NewAddress}
+export {CreatEditMarkettingType}
