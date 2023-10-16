@@ -15,7 +15,7 @@ const AccountHeader: React.FC = () => {
   return (
     <div className='card mb-5 mb-xl-10'>
       <div className='card-body pt-9 pb-0'>
-        <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
+        <div className='d-flex flex-wrap flex-sm-nowrap mb-5'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative'>
               <AvatarHeader
@@ -30,14 +30,14 @@ const AccountHeader: React.FC = () => {
             <div className='d-flex justify-content-between align-items-start flex-wrap mb-2'>
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
-                  <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1 mt-4'>
+                  <a href='#' className='text-gray-900 text-hover-primary fs-3 me-1' style={{fontWeight: 600}}>
                     {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
                       currentUser?.lastname || ''
                     }`}
                   </a>
                 </div>
 
-                <div className='d-flex flex-wrap fw-bold fs-6 mb-3 mt-1 pe-2'>
+                <div className='d-flex flex-wrap fw-bold fs-6 mb-3 mt-0 pe-2'>
                   <a
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-2 mb-2'
@@ -65,7 +65,7 @@ const AccountHeader: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <KTIcon iconName='ki-close' className='fs-4 me-1' />
+                        <KTIcon iconName='close' className='fs-4 me-1' />
                         Disabled
                       </>
                     )}
@@ -83,7 +83,7 @@ const AccountHeader: React.FC = () => {
         </div>
 
         <div className='d-flex overflow-auto h-55px'>
-          <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap'>
+          <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 flex-nowrap' style={{fontWeight: 600}}>
             <li className='nav-item'>
               <Link
                 className={

@@ -14,8 +14,8 @@ const AvatarHeader = ({ firstname, lastname, style }) => {
       className="avatar"
       style={{
         backgroundColor: '#C0C0C0',
-        width: '90px',
-        height: '90px',
+        width: '150px',
+        height: '152px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

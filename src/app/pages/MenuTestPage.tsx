@@ -68,7 +68,7 @@ const MenuTestPage: FC = () => {
                             <span className='menu-bullet'>
                               <span className='bullet bullet-dot'></span>
                             </span>
-                            <span className='menu-title'>Overview</span>
+                            <span className='menu-title'>Overview1</span>
                           </span>
                         </div>
                         <div className='menu-item'>
@@ -232,7 +232,7 @@ const MenuTestPage: FC = () => {
                                 <span className='menu-bullet'>
                                   <span className='bullet bullet-dot'></span>
                                 </span>
-                                <span className='menu-title'>Overview</span>
+                                <span className='menu-title'>Overview2</span>
                               </a>
                             </div>
                             <div className='menu-item'>
