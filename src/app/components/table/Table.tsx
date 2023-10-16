@@ -153,7 +153,6 @@ const Table: FC<Props> = ({
         }
       })
   }
-  console.log(data)
 
   return (
     <div className='card'>
@@ -187,7 +186,7 @@ const Table: FC<Props> = ({
                     <tr key={idx}>
                       {rows.map(({key, component, type, classNameTableBody, isHide}, i) => {
                         if (isHide) {
-                          return <></>
+                          return <Fragment key={i}></Fragment>
                         }
                         let Component = component || Fragment
                         let value = item[key]

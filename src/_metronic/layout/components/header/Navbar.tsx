@@ -19,11 +19,17 @@ const Navbar = () => {
   const {config} = useLayout()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {currentUser} = useAuth()
+  const {currentUser, priority} = useAuth()
   const {firstname, lastname, middlename} = currentUser || {}
 
   const fullName = useMemo(
-    () => (currentUser ? `${firstname} ${middlename} ${lastname}` : 'Guest'),
+    () => {
+      if (!currentUser) return 'Guest'
+      let name = firstname || ''
+      middlename && (name = name.trim() + ` ${middlename}`)
+      lastname && (name = name.trim() + ` ${lastname}`)
+      return name
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [firstname, lastname, middlename]
   )
@@ -43,20 +49,26 @@ const Navbar = () => {
         <HeaderNotificationsMenu />
       </div>
 
-      <Link to={'/settings/companies'} className={clsx('app-navbar-item', itemClass)}>
-        <div
-          data-kt-menu-trigger="{default: 'click'}"
-          data-kt-menu-attach='parent'
-          data-kt-menu-placement='bottom-end'
-          className={`${btnClass} ${
-            location.pathname?.split('/')[1] === 'settings'
-              ? 'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px show menu-dropdown'
-              : ''
-          }`}
+      {/* Priority <= 2 means super admin or admin */}
+      {priority <= 2 && (
+        <Link
+          to={`/settings/${priority === 1 ? 'companies' : 'branches'}`}
+          className={clsx('app-navbar-item', itemClass)}
         >
-          <AiOutlineSetting className={btnIconClass} />
-        </div>
-      </Link>
+          <div
+            data-kt-menu-trigger="{default: 'click'}"
+            data-kt-menu-attach='parent'
+            data-kt-menu-placement='bottom-end'
+            className={`${btnClass} ${
+              location.pathname?.split('/').includes('settings')
+                ? 'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px show menu-dropdown'
+                : ''
+            }`}
+          >
+            <AiOutlineSetting className={btnIconClass} />
+          </div>
+        </Link>
+      )}
 
       <div className={clsx('app-navbar-item', itemClass)}>
         <div
