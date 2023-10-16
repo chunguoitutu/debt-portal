@@ -94,6 +94,8 @@ const CreateEditCompanies = ({
       .catch((error) => {
         console.error('Error: ', error?.message)
       })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const {values, touched, errors, handleChange, handleSubmit, setFieldValue, resetForm} = useFormik(
