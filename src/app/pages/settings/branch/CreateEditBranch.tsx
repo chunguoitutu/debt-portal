@@ -60,10 +60,8 @@ export const CreateEditBranchSchema = Yup.object().shape({
     .required('Email is required.'),
   open_date: Yup.string().required('open_date is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
-  street_2: Yup.string().required('Street 2 is required.'),
   city: Yup.string().required('City  is required.'),
   state: Yup.string().required('State is required.'),
-  zipcode: Yup.string().required('Zip Code is required.'),
   country: Yup.string().required('Country is required.'),
 })
 
