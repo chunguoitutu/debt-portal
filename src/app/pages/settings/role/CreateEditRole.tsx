@@ -9,6 +9,8 @@ import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
 import {Input} from '../../../components/inputs/input'
+import {ROLE_PRIORITY} from '../../../utils/globalConfig'
+import Select from '../../../components/selects/select'
 
 type Props = {
   data?: RoleInfo
@@ -19,18 +21,20 @@ type Props = {
 
 export const roleSchema = Yup.object().shape({
   role_name: Yup.string().required('Role name is required.'),
+  priority: Yup.string().required('Priority is required.'),
 })
 
 const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
 
-  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues} =
+  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
     useFormik<RoleInfo>({
       initialValues: {
         id: 0,
         role_name: '',
         description: '',
         permissions: '',
+        priority: '',
       },
       validationSchema: roleSchema,
       onSubmit: handleSubmitForm,
@@ -49,9 +53,18 @@ const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
     const {id, ...payload} = values
 
     if (data) {
-      onUpdateRole({id, data: payload})
+      onUpdateRole({
+        id,
+        data: {
+          ...payload,
+          priority: Number(payload.priority),
+        },
+      })
     } else {
-      onCreateNewRole(payload)
+      onCreateNewRole({
+        ...payload,
+        priority: Number(payload.priority),
+      })
     }
   }
 
@@ -140,6 +153,18 @@ const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
             message={errors.description}
           />
         </div>
+        <Select
+          datas={ROLE_PRIORITY}
+          valueTitle='label'
+          setValueTitle='value'
+          title='Priority'
+          id='priority'
+          errors={errors.priority}
+          touched={touched.priority}
+          errorTitle={errors.priority}
+          value={values.priority || ''}
+          onChange={setFieldValue}
+        />
 
         <Input
           title='Permissions'

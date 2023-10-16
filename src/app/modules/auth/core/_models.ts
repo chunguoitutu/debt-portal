@@ -69,6 +69,7 @@ export type RoleInfo = {
   role_name: string
   description?: string | null
   permissions?: string | null
+  priority?: string | number | null
 }
 
 export type UpdateById<T = any> = {
