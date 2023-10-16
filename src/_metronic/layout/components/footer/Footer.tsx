@@ -13,7 +13,7 @@ const Footer = () => {
         <span className='text-muted fw-semibold me-1'>
           {new Date().getFullYear().toString()}&copy;
         </span>
-        <span className='text-gray-800 text-uppercase'>Monetium Credit</span>
+        <span className='text-gray-800 fw-bold'>Copyright Monetium Credit</span>
       </div>
     </>
   )

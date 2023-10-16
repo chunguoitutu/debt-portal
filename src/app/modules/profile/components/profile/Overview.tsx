@@ -13,14 +13,14 @@ export function Overview() {
             <h3 className='fw-bolder m-0'>Profile Details</h3>
           </div>
 
-          <Link to='/crafted/account/settings' className='btn btn-primary align-self-center'>
+          <Link to='/crafted/account/settings' className='btn btn-primary align-self-center' style={{fontSize: 12}}>
             Edit Profile
           </Link>
         </div>
 
         <div className='card-body p-9'>
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
+            <label className='col-lg-4 fw-semibold text-muted'>Full Name</label>
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>
@@ -30,7 +30,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Branch ID</label>
+            <label className='col-lg-4 fw-semibold text-muted'>Branch ID</label>
 
             <div className='col-lg-8 fv-row'>
               <span className='fw-bold fs-6'>{currentUser?.branch_id}</span>
@@ -38,7 +38,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>
+            <label className='col-lg-4 fw-semibold text-muted'>
               Contact Phone
             </label>
 
@@ -48,7 +48,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>
+            <label className='col-lg-4 fw-semibold text-muted'>
               Role
             </label>
 
@@ -58,7 +58,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Email</label>
+            <label className='col-lg-4 fw-semibold text-muted'>Contact Email</label>
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>{currentUser?.email}</span>
@@ -66,7 +66,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-10'>
-            <label className='col-lg-4 fw-bold text-muted'>Status</label>
+            <label className='col-lg-4 fw-semibold text-muted'>Status</label>
 
             <div className='col-lg-8'>
               <span className='fw-bold fs-6'>{currentUser?.is_active === 1 ? 'Active' : 'Disabled'}</span>

@@ -36,7 +36,7 @@ const ProfilePage = () => (
         path='overview'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Overview</PageTitle>
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Account Overview</PageTitle>
             <Overview />
           </>
         }

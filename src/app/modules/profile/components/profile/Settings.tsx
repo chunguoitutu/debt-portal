@@ -1,22 +1,25 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import * as Yup from 'yup'
-import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {useFormik} from 'formik'
 
 import {useAuth} from '../../../auth'
 import {updateInfoUser} from '../../../auth/core/_requests'
 import ChangePassword from '../change-password/ChangePassword'
+import {swalToast} from '../../../../swal-notification'
 
 const profileDetailsSchema = Yup.object().shape({
-  firstname: Yup.string().required('First name is required'),
-  email: Yup.string().required('Email name is required'),
-  telephone: Yup.string().required('Telephone is required'),
-  status: Yup.string().required('Status is required'),
+  firstname: Yup.string().required('First Name is required'),
+  email: Yup.string()
+    .required('Email Name is required')
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      'Invalid email format. Must contain @ in the format'
+    ),
+  telephone: Yup.string().required('Contact Phone is required'),
 })
 
 interface UserProfile {
-  avatar: string
   firstname: string
   middlename: string
   lastname: string
@@ -28,11 +31,12 @@ const Settings: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [isShowResetPassword, setIsShowResetPassword] = useState<boolean>(false)
 
+  const [originalData, setOriginalData] = useState<UserProfile | null>(null)
+
   const {currentUser, refreshToken} = useAuth()
 
   const formik = useFormik<UserProfile>({
     initialValues: {
-      avatar: '',
       firstname: currentUser?.firstname || '',
       middlename: currentUser?.middlename || '',
       lastname: currentUser?.lastname || '',
@@ -40,17 +44,26 @@ const Settings: React.FC = () => {
       email: currentUser?.email || '',
     },
     validationSchema: profileDetailsSchema,
-    onSubmit: (values) => {
-      setLoading(true)
-    },
+    onSubmit: handleSubmitForm,
   })
+
+  useEffect(() => {
+    if (currentUser) {
+      setOriginalData({
+        firstname: currentUser.firstname || '',
+        middlename: currentUser.middlename || '',
+        lastname: currentUser.lastname || '',
+        telephone: currentUser.telephone || '',
+        email: currentUser.email || '',
+      })
+    }
+  }, [currentUser])
 
   async function handleSubmitForm() {
     if (!currentUser) return
     try {
       setLoading(true)
       const values: UserProfile = {
-        avatar: formik.values.avatar || '',
         firstname: formik.values.firstname,
         middlename: formik.values.middlename,
         lastname: formik.values.lastname,
@@ -60,9 +73,15 @@ const Settings: React.FC = () => {
 
       const {data} = await updateInfoUser(currentUser.user_id, values)
       refreshToken(data.token)
-      toast.success('Change your information successfully')
+      swalToast.fire({
+        title: 'User information successfully updated',
+        icon: 'success',
+      })
     } catch (error) {
-      toast.error('Something went wrong!')
+      swalToast.fire({
+        title: 'Something went wrong. Please try again!',
+        icon: 'error',
+      })
     } finally {
       setLoading(false)
     }
@@ -72,10 +91,14 @@ const Settings: React.FC = () => {
     setIsShowResetPassword(!isShowResetPassword)
   }
 
+  function handleDiscardChanges() {
+    if (originalData) {
+      formik.setValues(originalData)
+    }
+  }
+
   return (
     <>
-      <ToastContainer />
-
       {currentUser && isShowResetPassword && (
         <ChangePassword
           username={currentUser.username}
@@ -102,7 +125,7 @@ const Settings: React.FC = () => {
         <div id='kt_account_profile_details' className='collapse show'>
           <form onSubmit={formik.handleSubmit} noValidate className='form'>
             <div className='card-body border-top p-9'>
-              <div className='row mb-6'>
+              <div className='row mb-6 p-1'>
                 <label className='col-lg-4 col-form-label required fw-bold fs-6'>Full Name</label>
 
                 <div className='col-lg-8'>
@@ -116,7 +139,9 @@ const Settings: React.FC = () => {
                       />
                       {formik.touched.firstname && formik.errors.firstname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block'>{formik.errors.firstname}</div>
+                          <div className='fv-help-block' style={{fontSize: 12}}>
+                            {formik.errors.firstname}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -128,11 +153,6 @@ const Settings: React.FC = () => {
                         placeholder='Middle name'
                         {...formik.getFieldProps('middlename')}
                       />
-                      {formik.touched.middlename && formik.errors.middlename && (
-                        <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block'>{formik.errors.middlename}</div>
-                        </div>
-                      )}
                     </div>
 
                     <div className='col-lg-4 fv-row'>
@@ -144,7 +164,9 @@ const Settings: React.FC = () => {
                       />
                       {formik.touched.lastname && formik.errors.lastname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block'>{formik.errors.lastname}</div>
+                          <div className='fv-help-block' style={{fontSize: 12}}>
+                            {formik.errors.lastname}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -152,9 +174,9 @@ const Settings: React.FC = () => {
                 </div>
               </div>
 
-              <div className='row mb-6'>
+              <div className='row mb-6 '>
                 <label className='col-lg-4 col-form-label fw-bold fs-6'>
-                  <span className='required'>Telephone</span>
+                  <span className='required'>Contact Phone</span>
                 </label>
 
                 <div className='col-lg-8 fv-row'>
@@ -166,25 +188,30 @@ const Settings: React.FC = () => {
                   />
                   {formik.touched.telephone && formik.errors.telephone && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block'>{formik.errors.telephone}</div>
+                      <div className='fv-help-block' style={{fontSize: 12}}>
+                        {formik.errors.telephone}
+                      </div>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className='row mb-6'>
+              <div className='row mb-6 p-1'>
                 <label className='col-lg-4 col-form-label required fw-bold fs-6'>Email</label>
 
                 <div className='col-lg-8 fv-row'>
                   <input
-                    type='text'
+                    type='email'
                     className='form-control form-control-lg form-control-solid'
-                    placeholder='Company name'
+                    placeholder='Email name'
                     {...formik.getFieldProps('email')}
+                    pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
                   />
                   {formik.touched.email && formik.errors.email && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block'>{formik.errors.email}</div>
+                      <div className='fv-help-block' style={{fontSize: 12}}>
+                        {formik.errors.email}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -193,10 +220,18 @@ const Settings: React.FC = () => {
 
             <div className='card-footer d-flex justify-content-end py-6 px-9'>
               <button
+                type='button'
+                className='btn btn-secondary align-self-center me-3'
+                onClick={handleDiscardChanges}
+                disabled={loading}
+              >
+                Discard Changes
+              </button>
+              <button
                 type='submit'
                 className='btn btn-primary'
                 disabled={loading}
-                onClick={handleSubmitForm}
+                onClick={() => formik.handleSubmit}
               >
                 {!loading && 'Save Changes'}
                 {loading && (

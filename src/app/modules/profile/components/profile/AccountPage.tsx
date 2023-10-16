@@ -35,7 +35,7 @@ const AccountPage: React.FC = () => {
           path='overview'
           element={
             <>
-              <PageTitle breadcrumbs={accountBreadCrumbs}>Overview</PageTitle>
+              <PageTitle breadcrumbs={accountBreadCrumbs}>Account Overview</PageTitle>
               <Overview />
             </>
           }
@@ -44,7 +44,7 @@ const AccountPage: React.FC = () => {
           path='settings'
           element={
             <>
-              <PageTitle breadcrumbs={accountBreadCrumbs}>Settings</PageTitle>
+              <PageTitle breadcrumbs={accountBreadCrumbs}>Account Settings</PageTitle>
               <Settings />
             </>
           }
