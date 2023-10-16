@@ -4,7 +4,7 @@ import {AiOutlineSetting} from 'react-icons/ai'
 import {IoMdNotificationsOutline} from 'react-icons/io'
 import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
 import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
 import {useMemo} from 'react'
@@ -27,6 +27,7 @@ const Navbar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [firstname, lastname, middlename]
   )
+  const location = useLocation()
 
   return (
     <div className='app-navbar'>
@@ -47,7 +48,11 @@ const Navbar = () => {
           data-kt-menu-trigger="{default: 'click'}"
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
-          className={btnClass}
+          className={`${btnClass} ${
+            location.pathname?.split('/')[1] === 'settings'
+              ? 'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px show menu-dropdown'
+              : ''
+          }`}
         >
           <AiOutlineSetting className={btnIconClass} />
         </div>
