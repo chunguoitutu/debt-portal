@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import clsx from 'clsx'
 
-import {useMemo} from 'react'
+import * as React from 'react'
 import {useQueryResponsePagination} from '../../../modules/apps/user-management/users-list/core/QueryResponseProvider'
 
 type SearchCriteria = {
@@ -31,32 +31,15 @@ const mappedLabel = (label: string): string => {
 const Pagination = ({changePagePagination, isLoading, searchCriteria}: Props) => {
   const PER_PAGE = 10
   const pagination = useQueryResponsePagination()
-  const paginationLinks = useMemo(
-    () => [
-      {
-        url: '/?page=1',
-        label: '1',
-        active: true,
-        page: 1,
-      },
-      {
-        url: '/?page=2',
-        label: '2',
-        active: false,
-        page: 2,
-      },
-      {
-        url: '/?page=3',
-        label: '3',
-        active: false,
-        page: 3,
-      },
-    ],
-    [pagination]
-  )
+  const [currentPage, setCurrentPage] = React.useState<number>(1)
 
-  const totalPagination = useMemo(() => {
+  const totalPagination = React.useMemo(() => {
     return Math.ceil(searchCriteria.total / searchCriteria.pageSize)
+  }, [searchCriteria])
+
+  React.useEffect(() => {
+    const {currentPage} = searchCriteria
+    setCurrentPage(currentPage)
   }, [searchCriteria])
 
   return (
@@ -78,7 +61,7 @@ const Pagination = ({changePagePagination, isLoading, searchCriteria}: Props) =>
           </li>
           <li
             className={clsx('page-item', {
-              disabled: isLoading,
+              disabled: isLoading || currentPage - 1 <= 0,
               previous: true,
             })}
           >
@@ -94,7 +77,7 @@ const Pagination = ({changePagePagination, isLoading, searchCriteria}: Props) =>
             </a>
           </li>
           {Array.from({length: totalPagination})}
-          {Array.from({length: totalPagination}).map((link, ind) => (
+          {Array.from({length: totalPagination}).map((_, ind) => (
             <li
               key={ind}
               className={clsx('page-item', {
@@ -104,7 +87,10 @@ const Pagination = ({changePagePagination, isLoading, searchCriteria}: Props) =>
             >
               <a
                 className={clsx('page-link')}
-                onClick={() => changePagePagination(ind, PER_PAGE)}
+                onClick={() => {
+                  changePagePagination(ind, PER_PAGE)
+                  setCurrentPage(ind)
+                }}
                 style={{cursor: 'pointer'}}
               >
                 {ind + 1}
@@ -113,7 +99,7 @@ const Pagination = ({changePagePagination, isLoading, searchCriteria}: Props) =>
           ))}
           <li
             className={clsx('page-item', {
-              disabled: isLoading,
+              disabled: isLoading || currentPage + 1 >= totalPagination,
               next: true,
             })}
           >
@@ -129,11 +115,11 @@ const Pagination = ({changePagePagination, isLoading, searchCriteria}: Props) =>
           </li>
           <li
             className={clsx('page-item', {
-              disabled: isLoading || pagination.page === pagination.links?.length! - 2,
+              disabled: isLoading || totalPagination === currentPage,
             })}
           >
             <a
-              onClick={() => changePagePagination(pagination.links?.length! - 2, PER_PAGE)}
+              onClick={() => changePagePagination(totalPagination, PER_PAGE)}
               style={{cursor: 'pointer'}}
               className='page-link'
             >
