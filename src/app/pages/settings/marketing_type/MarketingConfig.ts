@@ -6,7 +6,7 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     showAction: true,
     showEditButton: true,
     showDeleteButton: true,
-    showViewButton: true,
+    showViewButton: false,
     endPointDelete: '/config/marketing_type',
     endPointGetListing: '/config/marketing_type',
     messageDeleteSuccess: 'Marketing Type successfully deleted',

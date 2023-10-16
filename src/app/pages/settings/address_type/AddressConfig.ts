@@ -6,7 +6,7 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     showAction: true,
     showEditButton: true,
     showDeleteButton: true,
-    showViewButton: true,
+    showViewButton: false,
     endPointDelete: '/config/address_type',
     endPointGetListing: '/config/address_type',
     messageDeleteSuccess: 'Address successfully deleted',
