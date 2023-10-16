@@ -67,7 +67,7 @@ export const newCompaniesSchema = Yup.object().shape({
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const NewCompanies = ({
+const CreateEditCompanies = ({
   show,
   handleClose,
   titleLable = 'New',
@@ -392,4 +392,4 @@ const NewCompanies = ({
   )
 }
 
-export {NewCompanies}
+export {CreateEditCompanies}

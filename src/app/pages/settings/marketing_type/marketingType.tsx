@@ -1,7 +1,7 @@
 import {useState} from 'react'
-import {MAKETTING_TABLE_CONFIG} from './markettingConfig'
-import {NewMarketting} from './NewMarketing'
 import Table from '../../../components/table/Table'
+import {CreatEditMarkettingType} from './CreateEditMarketing'
+import {MAKETTING_TABLE_CONFIG} from './MarkettingConfig'
 
 const MarkettingType = () => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
@@ -19,7 +19,7 @@ const MarkettingType = () => {
     <>
       <div>
         {showCreateAppModal && (
-          <NewMarketting
+          <CreatEditMarkettingType
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -37,7 +37,7 @@ const MarkettingType = () => {
       </div>
 
       {editShowCreateAppModal ? (
-        <NewMarketting
+        <CreatEditMarkettingType
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}

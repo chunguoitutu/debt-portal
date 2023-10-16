@@ -1,7 +1,7 @@
 import {useState} from 'react'
-import {ADDRESS_TABLE_CONFIG} from './addressConfig'
-import {NewAddress} from './NewAddress'
+import {CreateEditAddress} from './NewAddress'
 import Table from '../../../components/table/Table'
+import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
 
 const AddressType = () => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
@@ -19,7 +19,7 @@ const AddressType = () => {
     <>
       <div>
         {showCreateAppModal && (
-          <NewAddress
+          <CreateEditAddress
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -37,7 +37,7 @@ const AddressType = () => {
       </div>
 
       {editShowCreateAppModal ? (
-        <NewAddress
+        <CreateEditAddress
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}

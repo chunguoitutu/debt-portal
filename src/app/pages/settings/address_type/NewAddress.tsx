@@ -9,8 +9,10 @@ import {useFormik} from 'formik'
 import {Input} from '../../../../components/inputs/input'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
-import request from '../../../axios'
 import {swalToast} from '../../../swal-notification'
+import request from '../../../axios'
+import TextArea from '../../../components/textarea/TextArea'
+import ErrorMessageFormik from '../../../components/error/ErrorMessageFormik'
 
 type Props = {
   setLoadApi: any
@@ -22,13 +24,14 @@ type Props = {
   handleUpdated: () => void
 }
 
-export const NewMarkettingSchema = Yup.object().shape({
-  marketing_type_name: Yup.string().required('Marketing Type name is required.'),
+export const CreateEditAddressSchema = Yup.object().shape({
+  address_type_name: Yup.string().required('Address Type name is required.'),
+  description: Yup.string().required('Description is required.'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const NewMarketting = ({
+const CreateEditAddress = ({
   show,
   handleClose,
   titleLable = 'New',
@@ -43,13 +46,14 @@ const NewMarketting = ({
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
-      marketing_type_name: data ? data?.marketing_type_name : '',
+      address_type_name: data ? data?.address_type_name : '',
+      description: data ? data?.description : '',
     },
-    validationSchema: NewMarkettingSchema,
+    validationSchema: CreateEditAddressSchema,
     onSubmit: async (values: any, actions: any) => {
       if (titleLable === 'New') {
         await request
-          .post('config/marketing_type', {
+          .post('config/address_type', {
             ...values,
             status: status ? 1 : 0,
           })
@@ -76,7 +80,7 @@ const NewMarketting = ({
 
       if (titleLable === 'Edit') {
         await request
-          .post('config/marketing_type/' + data?.id, {
+          .post('config/address_type/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -112,7 +116,7 @@ const NewMarketting = ({
       backdrop={true}
     >
       <div className='modal-header'>
-        <h2>{titleLable} MarKeting Type</h2>
+        <h2>{titleLable} Address Type</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -126,15 +130,28 @@ const NewMarketting = ({
           <div className='flex-row-fluid py-lg-5 px-lg-15'>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <Input
-                title='Marketing Type Name'
-                id='marketing_type_name'
-                error={errors.marketing_type_name}
-                touched={touched.marketing_type_name}
-                errorTitle={errors.marketing_type_name}
-                value={values.marketing_type_name}
+                title='Address Type Name'
+                id='address_type_name'
+                error={errors.address_type_name}
+                touched={touched.address_type_name}
+                errorTitle={errors.address_type_name}
+                value={values.address_type_name}
                 onChange={handleChange}
               />
+              <div className='mb-8'>
+                <TextArea
+                  title='Description'
+                  name='description'
+                  value={values.description || ''}
+                  onChange={handleChange}
+                />
 
+                <ErrorMessageFormik
+                  className='mt-2'
+                  shouldShowMessage={!!(errors.description && touched.description)}
+                  message={errors.description as string}
+                />
+              </div>
               <InputCheck
                 title='Status'
                 checked={status}
@@ -155,4 +172,4 @@ const NewMarketting = ({
   )
 }
 
-export {NewMarketting}
+export {CreateEditAddress}

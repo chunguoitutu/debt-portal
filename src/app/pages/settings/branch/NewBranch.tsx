@@ -45,7 +45,7 @@ function handlePaste(e: any) {
   )
     e.preventDefault()
 }
-export const NewBranchSchema = Yup.object().shape({
+export const CreateEditBranchSchema = Yup.object().shape({
   business_uen: Yup.string().required('Business Uen is required.'),
   company_id: Yup.string().required('Company id is required.'),
   branch_name: Yup.string().required('Branch name is required.'),
@@ -69,7 +69,7 @@ export const NewBranchSchema = Yup.object().shape({
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const NewBranch = ({
+const CreateEditBranch = ({
   show,
   handleClose,
   titleLable = 'New',
@@ -123,7 +123,7 @@ const NewBranch = ({
         country: '',
         open_date: data ? moment(data?.open_date).format('YYYY-MM-DDTHH:mm') : '',
       },
-      validationSchema: NewBranchSchema,
+      validationSchema: CreateEditBranchSchema,
       onSubmit: async (values: any, actions: any) => {
         if (titleLable === 'New') {
           await request
@@ -394,4 +394,4 @@ const NewBranch = ({
   )
 }
 
-export {NewBranch}
+export {CreateEditBranch}

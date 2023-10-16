@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
-import {NewCompanies} from './CreateEditCompany'
+import {CreateEditCompanies} from './CreateEditCompany'
 import Table from '../../../components/table/Table'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
 import CompanyDetail from './CompanyDetail'
@@ -32,7 +32,7 @@ const CompanyManagement = (props: Props) => {
     <>
       <div>
         {showCreateAppModal && (
-          <NewCompanies
+          <CreateEditCompanies
             setLoadApi={setLoadApi}
             loadapi={loadapi}
             show={showCreateAppModal}
@@ -58,7 +58,7 @@ const CompanyManagement = (props: Props) => {
         />
       )}
       {editShowCreateAppModal && (
-        <NewCompanies
+        <CreateEditCompanies
           setLoadApi={setLoadApi}
           loadapi={loadapi}
           show={editShowCreateAppModal}

@@ -6,11 +6,11 @@ import SettingCompanies from './company/CompanyManagement'
 import SettingBranch from './branch/BranchManagement'
 import {MenuSetting} from './menuSetting'
 import JobType from './jobType/jobType'
-import AddressType from './addressType/addressType'
-import MarkettingType from './marketing_type/marketingType'
+import AddressType from './address_type/AddressType'
 import UserManagement from './users/UserManagement'
 import DocumentTypes from './document-types/DocumentTypes'
 import RolePage from './role/RoleManagement'
+import MarkettingType from './marketing_type/MarketingType'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
