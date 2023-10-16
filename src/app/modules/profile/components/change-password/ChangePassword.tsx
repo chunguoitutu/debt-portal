@@ -5,8 +5,8 @@ import {FormikHelpers, useFormik} from 'formik'
 import * as Yup from 'yup'
 import {updatePasswordCurrentUser} from '../../../auth/core/_requests'
 import {UpdatePasswordInfo, useAuth} from '../../../auth'
-import {DEFAULT_MSG_ERROR} from '../../../../constants/error-message'
 import {swalToast} from '../../../../swal-notification'
+import {convertErrorMessageResponse} from '../../../../utils'
 
 type Props = {
   show: boolean
@@ -102,7 +102,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
       onClosePopup()
       logout()
     } catch (error: any) {
-      const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
+      const message = convertErrorMessageResponse(error)
       setStatus(message)
     } finally {
       setLoading(false)

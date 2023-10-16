@@ -6,11 +6,11 @@ import ButtonDelete from '../button/ButtonDelete'
 import ButtonEdit from '../button/ButtonEdit'
 import {swalConfirmDelete, swalToast} from '../../swal-notification'
 import request from '../../axios'
-import {DEFAULT_MSG_ERROR} from '../../constants/error-message'
 import TableHelper from './components/TableHelper'
 import Loading from './components/Loading'
 import Pagination from './components/Pagination'
 import ButtonViewDetail from '../button/ButtonViewDetail'
+import {convertErrorMessageResponse} from '../../utils'
 
 type Props = {
   config: TableConfig
@@ -124,7 +124,7 @@ const Table: FC<Props> = ({
         icon: 'success',
       })
     } catch (error: any) {
-      const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
+      const message = convertErrorMessageResponse(error)
 
       swalToast.fire({
         title: messageDeleteError || message,
@@ -170,7 +170,7 @@ const Table: FC<Props> = ({
                   </th>
                 ))}
                 {showAction && (showDeleteButton || showEditButton || showViewButton) && (
-                  <th className='text-center'>Action</th>
+                  <th className='text-center w-150px'>Action</th>
                 )}
               </tr>
             </thead>

@@ -1,3 +1,5 @@
+import {DEFAULT_MSG_ERROR} from '../constants/error-message'
+
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
     case 'SuperAdmin':
@@ -9,4 +11,9 @@ export const convertRoleToNumber = (roleName: string) => {
     default:
       return 0
   }
+}
+
+export const convertErrorMessageResponse = (error: any) => {
+  const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
+  return message
 }
