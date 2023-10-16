@@ -8,9 +8,10 @@ type Props = {
 }
 
 const TableHelper = ({config, handleAddNew}: Props) => {
+  const {showSearch} = config?.settings
   return (
     <div className='card-header border-0 pt-6'>
-      <SearchBar />
+      <div>{showSearch && <SearchBar />}</div>
       <div className='card-toolbar'>
         <ToolBar config={config} handleAddNew={handleAddNew} />
       </div>

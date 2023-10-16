@@ -106,6 +106,8 @@ export type TableConfig = {
     messageEditSuccess?: string
     dependencies?: {[key: string]: string}
     buttonAddNew?: string
+    showSearch?: boolean
+    showfilter?: boolean
   }
   rows: TableRow[]
 }

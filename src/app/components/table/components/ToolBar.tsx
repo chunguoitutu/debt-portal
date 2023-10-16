@@ -9,10 +9,10 @@ type Props = {
 
 const ToolBar = ({config, handleAddNew}: Props) => {
   const {settings} = config
-  const {buttonAddNew} = settings
+  const {buttonAddNew, showfilter} = settings
   return (
     <div className='d-flex justify-content-end' data-kt-user-table-toolbar='base'>
-      <UsersListFilter />
+      {showfilter && <UsersListFilter />}
 
       {/* begin::Add user */}
       <button onClick={handleAddNew} type='button' className='btn btn-primary'>
