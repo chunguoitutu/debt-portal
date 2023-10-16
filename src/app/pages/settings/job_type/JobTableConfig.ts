@@ -1,7 +1,7 @@
 import Badge from '../../../components/badge/Badge'
 import {TableConfig} from '../../../modules/auth'
 
-export const ROLE_TABLE_CONFIG: TableConfig = {
+export const JOB_TABLE_CONFIG: TableConfig = {
   settings: {
     showAction: true,
     showEditButton: true,

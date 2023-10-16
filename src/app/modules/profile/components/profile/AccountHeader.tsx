@@ -12,6 +12,8 @@ const AccountHeader: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {currentUser, logout} = useAuth()
 
+  console.log(currentUser)
+
   return (
     <div className='card mb-5 mb-xl-10'>
       <div className='card-body pt-9 pb-0'>

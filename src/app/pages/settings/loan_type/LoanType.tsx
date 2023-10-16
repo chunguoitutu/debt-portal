@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
-import {LOAN_TYPE_TABLE_CONFIG} from './loanConfig'
+import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
 import {KTIcon} from '../../../../_metronic/helpers'
-import CreateLoanType from './createLoanType'
+import CreateLoanType from './CreateLoanType'
 import Table from '../../../components/table/Table'
 
 const LoanTypes = () => {
