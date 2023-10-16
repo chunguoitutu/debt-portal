@@ -39,6 +39,7 @@ export type UserInfo = {
   permissions: any
   role_id: number
   last_login_date: any
+  branch_name?: string | null | undefined
 }
 
 export type updateUserInfo = {
