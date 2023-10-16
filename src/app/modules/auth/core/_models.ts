@@ -88,7 +88,7 @@ export type TableRow = {
   classNameTableBody?: string
   component?: any
   componentProps?: {[key: string]: string}
-  type?: 'datetime' | 'badge'
+  type?: 'datetime' | 'yes/no'
   isHide?: boolean
 }
 

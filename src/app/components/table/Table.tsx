@@ -73,9 +73,12 @@ const Table: FC<Props> = ({
   function convertValue(type: string, value: string | number) {
     if (typeof value !== 'string' && typeof value !== 'number') return
 
+    console.log(value, 'value')
     switch (type) {
       case 'datetime':
         return moment(value).format('lll') === 'Invalid date' ? value : moment(value).format('lll')
+      case 'yes/no' :
+        return value === 1 ? 'Yes' : 'No' 
       default:
         return value
     }

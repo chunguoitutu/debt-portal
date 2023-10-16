@@ -11,6 +11,7 @@ import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Input} from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
+import InputCheck from '../../../../components/inputs/inputCheck'
 
 type Props = {
   setLoadApi: any
@@ -136,10 +137,7 @@ const CreateDocumentType = ({
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
-      <div
-        style={{maxHeight: '500px', overflowY: 'auto'}}
-        className='modal-body py-lg-10 px-lg-10 '
-      >
+      <div style={{maxHeight: '500px', overflowY: 'auto'}} className='modal-body py-lg-10 px-lg-10'>
         <div
           ref={stepperRef}
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
@@ -165,18 +163,13 @@ const CreateDocumentType = ({
                 value={values.description}
                 onChange={handleChange}
               />
-              <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid align-items-center justify-content-between'>
-                <div style={{fontWeight: 500, fontSize: 14}}>Status</div>
-                <input
-                  className='form-check-input ms-4'
-                  style={{width: 50, height: 25}}
-                  type='checkbox'
-                  name='notifications'
-                  onChange={() => setStatus(!status)}
-                  checked={status}
-                />
-              </div>
-              <div className='d-flex flex-end pt-10'>
+              <InputCheck
+                checked={status}
+                onChange={() => setStatus(!status)}
+                id='status'
+                title='Status'
+              />
+              <div className='d-flex flex-end pt-4'>
                 <button type='submit' className='btn btn-lg btn-primary'>
                   {title === 'New' ? 'Create' : 'Update'}
                 </button>
