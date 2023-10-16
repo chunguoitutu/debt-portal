@@ -76,7 +76,7 @@ const CreateDocumentType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Create Document Type Successfully',
+            title: 'Document type successfully created',
           })
         } catch (error) {
           console.error(error)
@@ -99,7 +99,7 @@ const CreateDocumentType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Update Document Type Successfully',
+            title: 'Document type successfully update',
           })
         } catch (error) {
           console.error(error)

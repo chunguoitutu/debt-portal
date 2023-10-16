@@ -79,7 +79,7 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           Swal.fire({
             icon: 'success',
-            title: 'Create Job Type Successfully',
+            title: 'Job type successfully created',
             timer: 1500,
           })
         } catch (error) {
@@ -103,7 +103,7 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           Swal.fire({
             icon: 'success',
-            title: 'Update Job Type Successfully',
+            title: 'Job type successfully update',
             timer: 1500,
           })
         } catch (error) {
