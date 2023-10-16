@@ -129,6 +129,7 @@ const CreateEditAddress = ({
           <div className='flex-row-fluid '>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <Input
+                required={true}
                 title='Address Type Name'
                 id='address_type_name'
                 error={errors.address_type_name}

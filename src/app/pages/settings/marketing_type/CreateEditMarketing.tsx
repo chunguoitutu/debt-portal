@@ -126,6 +126,7 @@ const CreatEditMarkettingType = ({
           <div className='flex-row-fluid '>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <Input
+                required={true}
                 title='Marketing Type Name'
                 id='marketing_type_name'
                 error={errors.marketing_type_name}

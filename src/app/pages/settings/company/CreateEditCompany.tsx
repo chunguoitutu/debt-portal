@@ -34,8 +34,7 @@ export const newCompaniesSchema = Yup.object().shape({
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required.'),
+    .max(50, 'Maximum 50 symbols'),
   registration_date: Yup.string().required('Registration is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
   city: Yup.string().required('City is required.'),
@@ -228,6 +227,7 @@ const CreateEditCompanies = ({
               <div className='d-flex justify-content-center gap-10 '>
                 <div style={{width: '47%'}}>
                   <Input
+                    required={true}
                     title='Company Name'
                     id='company_name'
                     error={errors.company_name}
@@ -246,6 +246,7 @@ const CreateEditCompanies = ({
                     onChange={handleChange}
                   />
                   <Input
+                    required={true}
                     title='Business Uen'
                     id='business_uen'
                     error={errors.business_uen}
@@ -255,6 +256,7 @@ const CreateEditCompanies = ({
                     onChange={handleChange}
                   />
                   <Input
+                    required={true}
                     onPaste={handlePaste}
                     onKeyPressCapture={handleKeyPress}
                     title='Telephone'
@@ -284,6 +286,7 @@ const CreateEditCompanies = ({
                     onChange={handleChange}
                   />
                   <InputTime
+                    required={true}
                     title='Registration Date'
                     id='registration_date'
                     error={errors.registration_date}
@@ -301,6 +304,7 @@ const CreateEditCompanies = ({
                 </div>
                 <div style={{width: '47%'}}>
                   <Input
+                    required={true}
                     title='Street 1'
                     id='street_1'
                     error={errors.street_1}
@@ -328,6 +332,7 @@ const CreateEditCompanies = ({
                     onChange={handleChange}
                   />
                   <Input
+                    required={true}
                     title='State'
                     id='state'
                     error={errors.state}
@@ -337,6 +342,7 @@ const CreateEditCompanies = ({
                     onChange={handleChange}
                   />
                   <Input
+                    required={true}
                     title='Zip Code'
                     id='zipcode'
                     error={errors.zipcode}
@@ -347,6 +353,7 @@ const CreateEditCompanies = ({
                   />
 
                   <Input
+                    required={true}
                     title='Country'
                     id='country'
                     error={errors.country}
