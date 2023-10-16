@@ -134,7 +134,6 @@ const Table: FC<Props> = ({
   }
   async function handleChangePagination(pagination: Omit<SearchCriteria, 'total'>) {
     const {data} = await request.post(endPointGetListing + '/listing', pagination)
-    console.log(data)
 
     Array.isArray(data.data) && setData(data.data)
     data?.searchCriteria && setSearchCriteria(data?.searchCriteria)

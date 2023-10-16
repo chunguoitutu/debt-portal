@@ -67,9 +67,8 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
 
   function handleSubmitForm(values: UserInfo) {
     const {user_id, ...payload} = values
-
     if (data) {
-      onUpdateUser({id: user_id, data: payload})
+      onUpdateUser({id: user_id, data: {...payload, is_active: isActive ? 1 : 0}})
     } else {
       handleCreateUser(payload)
     }
