@@ -37,6 +37,7 @@ export type UserInfo = {
   status: number
   role_name: string
   permissions: any
+  priority: number
   role_id: number
   last_login_date: any
   branch_name?: string | null | undefined
