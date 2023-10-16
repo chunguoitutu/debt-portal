@@ -4,7 +4,7 @@ import {Overview} from './components/Overview'
 import {Projects} from './components/Projects'
 import {Campaigns} from './components/Campaigns'
 import {Documents} from './components/Documents'
-import LoanTypes from '../../pages/settings/loanType/loanType'
+import LoanTypes from '../../pages/settings/loan_type/LoanType'
 import {ProfileHeader} from './ProfileHeader'
 
 const profileBreadCrumbs: Array<PageLink> = [

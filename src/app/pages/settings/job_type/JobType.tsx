@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
-import {ROLE_TABLE_CONFIG} from './jobConfig'
-import CreateJobType from './createJobType'
+import {JOB_TABLE_CONFIG} from './JobTableConfig'
+import CreateJobType from './CreateJobType'
 import Table from '../../../components/table/Table'
 
 const JobType = () => {
@@ -28,7 +28,7 @@ const JobType = () => {
         />
 
         <Table
-          config={ROLE_TABLE_CONFIG}
+          config={JOB_TABLE_CONFIG}
           onEditItem={handleEditItem}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
