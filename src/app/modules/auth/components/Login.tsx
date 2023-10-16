@@ -3,7 +3,7 @@ import {useState} from 'react'
 import * as Yup from 'yup'
 import {FormikHelpers, useFormik} from 'formik'
 import clsx from 'clsx'
-import {Link, useNavigate, useSearchParams} from 'react-router-dom'
+import {useNavigate, useSearchParams} from 'react-router-dom'
 import {login} from '../core/_requests'
 import {LoginInfo} from '../core/_models'
 import Cookies from 'js-cookie'
@@ -31,7 +31,7 @@ export function Login() {
 
   const navigate = useNavigate()
 
-  const formik = useFormik<LoginInfo>({
+  const {status, errors, touched, handleSubmit, getFieldProps} = useFormik<LoginInfo>({
     initialValues,
     validationSchema: loginSchema,
     onSubmit,
@@ -67,20 +67,15 @@ export function Login() {
     }
   }
   return (
-    <form
-      className='form w-100'
-      onSubmit={formik.handleSubmit}
-      noValidate
-      id='kt_login_signin_form'
-    >
+    <form className='form w-100' onSubmit={handleSubmit} noValidate id='kt_login_signin_form'>
       <div className='text-start mb-11'>
         <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
-        <div className='text-gray-500 fw-semibold fs-6'>Please Sign In With Your Account</div>
+        <div className='text-gray-500 fw-bold fs-6'>Please Sign In With Your Account</div>
       </div>
 
-      {formik.status && (
+      {status && (
         <div className='mb-8 alert alert-danger'>
-          <div className='alert-text font-weight-bold'>{formik.status}</div>
+          <div className='alert-text font-weight-bold'>{status}</div>
         </div>
       )}
 
@@ -88,68 +83,55 @@ export function Login() {
         <label className='form-label fs-6 fw-bolder text-dark'>Username</label>
         <input
           placeholder='Username'
-          {...formik.getFieldProps('username')}
+          {...getFieldProps('username')}
           className={clsx(
             'form-control bg-transparent',
-            {'is-invalid': formik.touched.username && formik.errors.username},
+            {'is-invalid': touched.username && errors.username},
             {
-              'is-valid': formik.touched.username && !formik.errors.username,
+              'is-valid': touched.username && !errors.username,
             }
           )}
           type='username'
           name='username'
           autoComplete='off'
         />
-        {formik.touched.username && formik.errors.username && (
+        {touched.username && errors.username && (
           <div className='fv-plugins-message-container'>
             <div className='fv-help-block'>
-              <span role='alert'>{formik.errors.username}</span>
+              <span role='alert'>{errors.username}</span>
             </div>
           </div>
         )}
       </div>
 
-      <div className='fv-row mb-3'>
+      <div className='fv-row'>
         <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
         <input
           type='password'
           autoComplete='off'
           placeholder='Password'
-          {...formik.getFieldProps('password')}
+          {...getFieldProps('password')}
           className={clsx(
             'form-control bg-transparent',
             {
-              'is-invalid': formik.touched.password && formik.errors.password,
+              'is-invalid': touched.password && errors.password,
             },
             {
-              'is-valid': formik.touched.password && !formik.errors.password,
+              'is-valid': touched.password && !errors.password,
             }
           )}
         />
-        {formik.touched.password && formik.errors.password && (
+        {touched.password && errors.password && (
           <div className='fv-plugins-message-container'>
             <div className='fv-help-block'>
-              <span role='alert'>{formik.errors.password}</span>
+              <span role='alert'>{errors.password}</span>
             </div>
           </div>
         )}
       </div>
 
-      <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
-        <div />
-
-        <Link to='/forgot-password' className='link-primary'>
-          Forgot Password ?
-        </Link>
-      </div>
-
-      <div className='d-grid mb-10'>
-        <button
-          type='submit'
-          id='kt_sign_in_submit'
-          className='btn btn-primary'
-          disabled={formik.isSubmitting || !formik.isValid}
-        >
+      <div className='d-grid mt-8'>
+        <button type='submit' id='kt_sign_in_submit' className='btn btn-primary' disabled={loading}>
           {!loading && <span className='indicator-label'>Sign In</span>}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>

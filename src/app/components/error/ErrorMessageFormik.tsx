@@ -10,7 +10,9 @@ const ErrorMessageFormik: FC<Props> = ({shouldShowMessage = false, message, clas
   return (
     <>
       {shouldShowMessage && (
-        <span className={`d-inline-block text-danger ${className}`}>{message}</span>
+        <div className='fv-plugins-message-container'>
+          <span className={`fv-help-block ${className}`}>{message}</span>
+        </div>
       )}
     </>
   )
