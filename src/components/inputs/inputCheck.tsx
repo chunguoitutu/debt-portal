@@ -11,20 +11,20 @@ type Props = {
 const InputCheck = ({title = '', lable, checked = false, onChange, id}: Props) => {
   return (
     <div>
-      <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-start align-content-center mt-xl-6 '>
-        {title !== '' && <label className='col-lg-4 col-form-label fw-bold fs-6'>{title}</label>}
+      <div className='form-check form-check-custom form-check-solid form-switch d-flex justify-content-between align-items-center' >
+        {title !== '' && <span className='fs-5 fw-semibold mb-2'>{title}</span>}
 
-        <div className=' fv-row'>
-          <div className='d-flex align-items-center'>
-            <label id={id} className='form-check-input'>
+        <div className='fv-row'>
+          <div className=' form-check form-check-custom form-check-solid form-switch'>
               <input
                 className='form-check-input'
                 type='checkbox'
                 checked={checked}
+                style={{width: 45, height: 23}}
                 onChange={onChange}
+                id='kt_builder_sidebar_minimize_desktop_enabled'
               />
               <span className='fw-bold ps-2 fs-6'>{lable}</span>
-            </label>
           </div>
         </div>
       </div>

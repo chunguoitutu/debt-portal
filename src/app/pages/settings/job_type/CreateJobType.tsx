@@ -11,6 +11,7 @@ import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Input} from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
+import InputCheck from '../../../../components/inputs/inputCheck'
 
 type Props = {
   setLoadApi: any
@@ -171,29 +172,19 @@ const CreateJobType = ({
                 onChange={handleChange}
               />
 
-              <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center'>
-                <div style={{fontWeight: 500, fontSize: 15}}>Status</div>
-                <input
-                  className='form-check-input ms-4'
-                  style={{width: 50, height: 25}}
-                  type='checkbox'
-                  name='status'
-                  onChange={() => setStatus(!status)}
-                  checked={status}
-                />
-              </div>
+              <InputCheck
+                onChange={() => setStatus(!status)}
+                checked={status}
+                id='status'
+                title='Status'
+              />
 
-              <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-between align-content-center mt-xl-6'>
-                <div style={{fontWeight: 500, fontSize: 15}}>Need More Information</div>
-                <input
-                  className='form-check-input ms-4'
-                  style={{width: 50, height: 25}}
-                  type='checkbox'
-                  name='request_more_information'
-                  onChange={() => setRequestMoreInformation(!requestMoreInformation)}
-                  checked={requestMoreInformation}
-                />
-              </div>
+              <InputCheck
+                onChange={() => setRequestMoreInformation(!requestMoreInformation)}
+                checked={requestMoreInformation}
+                id='request_more_information'
+                title='Need More Information'
+              />
 
               <div className='d-flex flex-end pt-10'>
                 <button type='submit' className='btn btn-lg btn-primary'>

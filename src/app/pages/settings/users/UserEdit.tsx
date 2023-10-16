@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 import {Input} from '../../../../components/inputs/input'
 import request from '../../../axios'
 import Select from '../../../../components/selects/select'
+import InputCheck from '../../../../components/inputs/inputCheck'
 
 type Props = {
   data?: UserInfo
@@ -252,20 +253,14 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
           onChange={handleChange}
         />
 
-        <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid align-items-center'>
-          <div style={{fontWeight: 500, fontSize: 16}}>Acive</div>
-          <input
-            className='form-check-input ms-4'
-            style={{width: 50, height: 25}}
-            type='checkbox'
-            id='is_active'
-            name='notifications'
-            onChange={() => setIsActive(!isActive)}
-            checked={isActive}
-          />
-        </div>
+        <InputCheck
+          checked={isActive}
+          onChange={() => setIsActive(!isActive)}
+          id='is_active'
+          title='Active'
+        />
 
-        <div className='d-flex flex-end'>
+        <div className='d-flex flex-end pt-4'>
           <button type='submit' className='btn btn-lg btn-primary'>
             {loading ? (
               <>

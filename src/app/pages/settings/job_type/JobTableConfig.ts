@@ -28,6 +28,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
     {
       key: 'request_more_information',
       name: 'Need More Information',
+      type: 'yes/no'
     },
     {
       key: 'status',
