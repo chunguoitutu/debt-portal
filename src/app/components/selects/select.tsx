@@ -23,17 +23,32 @@ const Select = ({
   valueTitle,
   setValueTitle,
 }: Props) => {
-  const handleChange = (event) => {
-    onChange(id, event.target.value as string)
+  const handleChange = (e: any) => {
+    onChange(id, e.target.value as string);
   }
 
+  const renderOptions = () => {
+    return datas?.map((row, index) => (
+      <option value={row[setValueTitle]} key={index}>
+        {row[valueTitle]}
+      </option>
+    ));
+  }
+
+  const renderError = () => {
+    return touched && errors && (
+      <div className='fv-plugins-message-container'>
+        <div className='fv-help-block'>{errorTitle}</div>
+      </div>
+    );
+  }
   return (
     <div className='row mb-6'>
-      <label className='col-lg-4 col-form-label fw-bold fs-6'>
-        <span className=''>{title}</span>
+      <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
+        <span>{title}</span>
       </label>
-
-      <div className=' fv-row'>
+  
+      <div className='fv-row'>
         <select
           id={id}
           className='form-select form-select-solid form-select-lg fw-bold'
@@ -41,20 +56,11 @@ const Select = ({
           onChange={handleChange}
         >
           <option value={''}></option>
-          {datas?.map((row, index) => (
-            <option value={row[`${setValueTitle}`]} key={index}>
-              {row[`${valueTitle}`]}
-            </option>
-          ))}
+          {renderOptions()}
         </select>
-        {touched && errors && (
-          <div className='fv-plugins-message-container'>
-            <div className='fv-help-block'>{errorTitle}</div>
-          </div>
-        )}
+        {renderError()}
       </div>
     </div>
-  )
+  );
 }
-
 export default Select
