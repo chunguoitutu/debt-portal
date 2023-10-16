@@ -11,6 +11,7 @@ interface IProps {
   errorTitle?: any
   touched?: any
   classCSS?: string
+  required?: boolean
 }
 
 export const InputTime: React.FC<IProps> = ({
@@ -23,12 +24,13 @@ export const InputTime: React.FC<IProps> = ({
   title,
   onBlur,
   touched,
+  required = false,
 }) => {
   return (
     <div>
       <div className='fv-row mb-10'>
         <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
-          <span>{title}</span>
+          <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
         <input
           type='datetime-local'

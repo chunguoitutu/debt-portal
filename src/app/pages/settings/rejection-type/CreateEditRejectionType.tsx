@@ -131,6 +131,7 @@ const CreateEditRejectionType = ({
           <div className='flex-row-fluid '>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <Input
+                required={true}
                 title='Rejection Type Name'
                 id='rejection_type_name'
                 error={errors.rejection_type_name}
@@ -140,6 +141,7 @@ const CreateEditRejectionType = ({
                 onChange={handleChange}
               />
               <Input
+                required={true}
                 title='Rejection Type Code'
                 id='rejection_type_code'
                 error={errors.rejection_type_code}

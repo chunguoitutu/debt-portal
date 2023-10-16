@@ -13,7 +13,7 @@ import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
-import Select from './../../../components/selects/select';
+import Select from './../../../components/selects/select'
 import InputCheck from './../../../../components/inputs/inputCheck'
 
 type Props = {
@@ -237,6 +237,7 @@ const CreateEditBranch = ({
                   <Input
                     title='Business Uen'
                     id='business_uen'
+                    required={true}
                     error={errors.business_uen}
                     touched={touched.business_uen}
                     errorTitle={errors.business_uen}
@@ -248,6 +249,7 @@ const CreateEditBranch = ({
                     valueTitle='company_name'
                     setValueTitle='id'
                     title='Company Id'
+                    required={true}
                     id='company_id'
                     errors={errors.company_id}
                     touched={touched.company_id}
@@ -263,6 +265,7 @@ const CreateEditBranch = ({
                     errorTitle={errors.branch_name}
                     value={values.branch_name}
                     onChange={handleChange}
+                    required={true}
                   />
                   <Input
                     onPaste={handlePaste}
@@ -273,6 +276,7 @@ const CreateEditBranch = ({
                     touched={touched.telephone}
                     errorTitle={errors.telephone}
                     value={values.telephone}
+                    required={true}
                     onChange={handleChange}
                   />
                   <Input
@@ -283,6 +287,7 @@ const CreateEditBranch = ({
                     errorTitle={errors.email}
                     value={values.email}
                     onChange={handleChange}
+                    required={true}
                   />
                   <InputTime
                     title='Open Date'
@@ -304,6 +309,7 @@ const CreateEditBranch = ({
                   <Input
                     title='Street 1'
                     id='street_1'
+                    required={true}
                     error={errors.street_1}
                     touched={touched.street_1}
                     errorTitle={errors.street_1}
@@ -322,6 +328,7 @@ const CreateEditBranch = ({
                   <Input
                     title='City'
                     id='city'
+                    required={true}
                     error={errors.city}
                     touched={touched.city}
                     errorTitle={errors.city}
@@ -331,6 +338,7 @@ const CreateEditBranch = ({
                   <Input
                     title='State'
                     id='state'
+                    required={true}
                     error={errors.state}
                     touched={touched.state}
                     errorTitle={errors.state}
@@ -340,6 +348,7 @@ const CreateEditBranch = ({
                   <Input
                     title='Zip Code'
                     id='zipcode'
+                    required={true}
                     error={errors.zipcode}
                     touched={touched.zipcode}
                     errorTitle={errors.zipcode}
@@ -350,6 +359,7 @@ const CreateEditBranch = ({
                   <Input
                     title='Country'
                     id='country'
+                    required={true}
                     error={errors.country}
                     touched={touched.country}
                     errorTitle={errors.country}

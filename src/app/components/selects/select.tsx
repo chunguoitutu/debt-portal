@@ -9,6 +9,7 @@ type Props = {
   id: string
   valueTitle: string
   setValueTitle: string
+  required?: boolean
 }
 
 const Select = ({
@@ -21,10 +22,11 @@ const Select = ({
   errors,
   id,
   valueTitle,
+  required = false,
   setValueTitle,
 }: Props) => {
   const handleChange = (e: any) => {
-    onChange(id, e.target.value as string);
+    onChange(id, e.target.value as string)
   }
 
   const renderOptions = () => {
@@ -32,22 +34,25 @@ const Select = ({
       <option value={row[setValueTitle]} key={index}>
         {row[valueTitle]}
       </option>
-    ));
+    ))
   }
 
   const renderError = () => {
-    return touched && errors && (
-      <div className='fv-plugins-message-container'>
-        <div className='fv-help-block'>{errorTitle}</div>
-      </div>
-    );
+    return (
+      touched &&
+      errors && (
+        <div className='fv-plugins-message-container'>
+          <div className='fv-help-block'>{errorTitle}</div>
+        </div>
+      )
+    )
   }
   return (
     <div className='row mb-6'>
       <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
-        <span>{title}</span>
+        <span className={`${required ? 'required' : ''}`}>{title}</span>
       </label>
-  
+
       <div className='fv-row'>
         <select
           id={id}
@@ -61,6 +66,6 @@ const Select = ({
         {renderError()}
       </div>
     </div>
-  );
+  )
 }
 export default Select

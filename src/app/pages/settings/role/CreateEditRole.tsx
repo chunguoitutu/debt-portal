@@ -157,6 +157,7 @@ const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
           datas={ROLE_PRIORITY}
           valueTitle='label'
           setValueTitle='value'
+          required={true}
           title='Priority'
           id='priority'
           errors={errors.priority}
