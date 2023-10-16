@@ -106,7 +106,7 @@ const CreatEditMarkettingType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-500px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-600px'
       show={show}
       onHide={handleClose}
       backdrop={true}
@@ -123,7 +123,7 @@ const CreatEditMarkettingType = ({
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
           id='kt_modal_create_app_stepper'
         >
-          <div className='flex-row-fluid py-lg-5 px-lg-15'>
+          <div className='flex-row-fluid '>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <Input
                 title='Marketing Type Name'

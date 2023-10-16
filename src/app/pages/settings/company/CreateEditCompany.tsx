@@ -245,7 +245,7 @@ const CreateEditCompanies = ({
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
           id='kt_modal_create_app_stepper'
         >
-          <div className='flex-row-fluid py-lg-5 px-lg-15'>
+          <div className='flex-row-fluid'>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <div className='d-flex justify-content-center gap-10 '>
                 <div style={{width: '47%'}}>
