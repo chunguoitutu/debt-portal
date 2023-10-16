@@ -16,6 +16,10 @@ import './_metronic/assets/keenicons/solid/style.css'
  **/
 import './_metronic/assets/sass/style.scss'
 import './_metronic/assets/sass/plugins.scss'
+
+// My styles
+import './app/sass/style.scss'
+
 import {AppRoutes} from './app/routing/AppRoutes'
 import {AuthProvider} from './app/modules/auth'
 import {MetronicI18nProvider} from './_metronic/i18n/Metronici18n'

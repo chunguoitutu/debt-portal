@@ -1,0 +1,33 @@
+#root {
+  height: 100%;
+  min-height: 100vh;
+}
+
+.bg-auth {
+  background-image: url(../images/bg-auth.png);
+}
+
+.fs-50px {
+  font-size: 50px;
+}
+
+.multiple-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.two-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 2;
+}
+
+.three-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 3;
+}
+
+.four-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 4;
+}

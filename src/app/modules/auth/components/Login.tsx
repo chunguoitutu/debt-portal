@@ -7,6 +7,7 @@ import {Link, useNavigate, useSearchParams} from 'react-router-dom'
 import {login} from '../core/_requests'
 import {LoginInfo} from '../core/_models'
 import Cookies from 'js-cookie'
+import {convertErrorMessageResponse} from '../../../utils'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -20,8 +21,8 @@ const loginSchema = Yup.object().shape({
 })
 
 const initialValues = {
-  username: process.env.NODE_ENV === 'production' ? '' : 'admin001',
-  password: process.env.NODE_ENV === 'production' ? '' : 'admin@123',
+  username: '',
+  password: '',
 }
 
 export function Login() {
@@ -43,6 +44,14 @@ export function Login() {
     try {
       const {data} = await login(values)
 
+      // If account isn't active -> no login
+      if (data.error) {
+        setStatus(data.message)
+        setSubmitting(false)
+        setLoading(false)
+        return
+      }
+
       Cookies.set('token', data.token)
 
       setSubmitting(false)
@@ -51,7 +60,8 @@ export function Login() {
       // after navigate -> master layout will get current user
       navigate(`/${redirect ? redirect : 'dashboard'}`)
     } catch (error) {
-      setStatus('Incorrect username or password')
+      const message = convertErrorMessageResponse(error)
+      setStatus(message)
       setSubmitting(false)
       setLoading(false)
     }
@@ -63,13 +73,13 @@ export function Login() {
       noValidate
       id='kt_login_signin_form'
     >
-      <div className='text-center mb-11'>
+      <div className='text-start mb-11'>
         <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
         <div className='text-gray-500 fw-semibold fs-6'>Please Sign In With Your Account</div>
       </div>
 
       {formik.status && (
-        <div className='mb-lg-15 alert alert-danger'>
+        <div className='mb-8 alert alert-danger'>
           <div className='alert-text font-weight-bold'>{formik.status}</div>
         </div>
       )}
@@ -104,6 +114,7 @@ export function Login() {
         <input
           type='password'
           autoComplete='off'
+          placeholder='Password'
           {...formik.getFieldProps('password')}
           className={clsx(
             'form-control bg-transparent',
@@ -139,7 +150,7 @@ export function Login() {
           className='btn btn-primary'
           disabled={formik.isSubmitting || !formik.isValid}
         >
-          {!loading && <span className='indicator-label'>Continue</span>}
+          {!loading && <span className='indicator-label'>Sign In</span>}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
               Please wait...
