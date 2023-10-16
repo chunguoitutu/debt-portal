@@ -143,7 +143,7 @@ const CreateEditCompanies = ({
                   if (!response.data?.error) {
                     swalToast.fire({
                       icon: 'success',
-                      title: 'Success',
+                      title: 'Company successfully created',
                     })
                   }
                   handleUpdated()
@@ -194,7 +194,7 @@ const CreateEditCompanies = ({
                   if (!response.data?.error) {
                     swalToast.fire({
                       icon: 'success',
-                      title: 'Success',
+                      title: 'Company successfully updated',
                     })
                   }
                   handleUpdated()

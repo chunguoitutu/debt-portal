@@ -57,7 +57,7 @@ const CreatEditMarkettingType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Success',
+                title: 'Marketing type successfully created',
               })
             }
             handleUpdated()
@@ -84,7 +84,7 @@ const CreatEditMarkettingType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Success',
+                title: 'Marketing type successfully updated',
               })
             }
             handleUpdated()

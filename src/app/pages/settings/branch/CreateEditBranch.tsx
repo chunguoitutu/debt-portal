@@ -80,7 +80,7 @@ const CreateEditBranch = ({
 }: Props) => {
   useEffect(() => {
     request
-      .get('config/company')
+      .post('config/company/listing')
       .then((response) => {
         setDataCompany(response.data.data)
       })
@@ -152,7 +152,7 @@ const CreateEditBranch = ({
                   if (!response.data?.error) {
                     swalToast.fire({
                       icon: 'success',
-                      title: 'Success',
+                      title: 'Branch successfully created',
                     })
                   }
                   handleUpdated()
@@ -202,7 +202,7 @@ const CreateEditBranch = ({
                   if (!response.data?.error) {
                     swalToast.fire({
                       icon: 'success',
-                      title: 'Success',
+                      title: 'Branch successfully updated',
                     })
                   }
                   handleUpdated()
