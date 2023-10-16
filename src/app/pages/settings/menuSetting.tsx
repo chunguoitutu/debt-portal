@@ -14,9 +14,9 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/settings/company' && 'active')
+                  (location.pathname === '/settings/companies' && 'active')
                 }
-                to='/settings/company'
+                to='/settings/companies'
               >
                 Companies
               </Link>
@@ -25,11 +25,11 @@ const MenuSetting: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/settings/branch' && 'active')
+                  (location.pathname === '/settings/branches' && 'active')
                 }
-                to='/settings/branch'
+                to='/settings/branches'
               >
-                Branch
+                Branches
               </Link>
             </li>
             <li className='nav-item'>
