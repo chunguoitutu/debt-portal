@@ -8,6 +8,7 @@ import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
+  priority: number
   setCurrentUser: Dispatch<SetStateAction<UserInfo | undefined>>
   refreshToken: (token: string) => void
   logout: () => void
@@ -15,6 +16,7 @@ type AuthContextProps = {
 
 const initAuthContextPropsState = {
   currentUser: undefined,
+  priority: 0,
   setCurrentUser: () => {},
   refreshToken: (token: string) => {},
   logout: () => {},
@@ -28,6 +30,7 @@ const useAuth = () => {
 
 const AuthProvider: FC<WithChildren> = ({children}) => {
   const [currentUser, setCurrentUser] = useState<UserInfo | undefined>()
+  const [priority, setPriority] = useState<number>(0)
 
   const logout = () => {
     setCurrentUser(undefined)
@@ -39,7 +42,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
 
     try {
       const {data} = await getCurrentUser()
-
+      setPriority(data.data.priority)
       setCurrentUser(data.data)
     } catch (error: any) {
       logout()
@@ -51,7 +54,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
   }
 
   return (
-    <AuthContext.Provider value={{currentUser, setCurrentUser, refreshToken, logout}}>
+    <AuthContext.Provider value={{currentUser, priority, setCurrentUser, refreshToken, logout}}>
       {children}
     </AuthContext.Provider>
   )

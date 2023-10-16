@@ -3,7 +3,7 @@ import Modal from '../../../components/modal/Modal'
 import {RoleInfo, UpdateById} from '../../../modules/auth'
 import {useFormik} from 'formik'
 import TextArea from '../../../components/textarea/TextArea'
-import ErrorMessageFormik from '../../../components/error/ErrorMessageFormik'
+import ErrorMessage from '../../../components/error/ErrorMessage'
 import {createNewRole, updateRole} from '../../../modules/auth/core/_requests'
 import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
@@ -134,7 +134,7 @@ const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
             onChange={handleChange}
           />
 
-          <ErrorMessageFormik
+          <ErrorMessage
             className='mt-2'
             shouldShowMessage={!!(errors.description && touched.description)}
             message={errors.description}

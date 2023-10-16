@@ -6,7 +6,7 @@ type Props = {
   className?: string
 }
 
-const ErrorMessageFormik: FC<Props> = ({shouldShowMessage = false, message, className = ''}) => {
+const ErrorMessage: FC<Props> = ({shouldShowMessage = false, message, className = ''}) => {
   return (
     <>
       {shouldShowMessage && (
@@ -18,4 +18,4 @@ const ErrorMessageFormik: FC<Props> = ({shouldShowMessage = false, message, clas
   )
 }
 
-export default ErrorMessageFormik
+export default ErrorMessage

@@ -12,7 +12,7 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import TextArea from '../../../components/textarea/TextArea'
-import ErrorMessageFormik from '../../../components/error/ErrorMessageFormik'
+import ErrorMessage from '../../../components/error/ErrorMessage'
 
 type Props = {
   setLoadApi: any
@@ -156,7 +156,7 @@ const CreateEditRejectionType = ({
                   onChange={handleChange}
                 />
 
-                <ErrorMessageFormik
+                <ErrorMessage
                   className='mt-2'
                   shouldShowMessage={
                     !!(errors.rejection_type_description && touched.rejection_type_description)

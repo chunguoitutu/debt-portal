@@ -8,6 +8,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
     showDeleteButton: true,
     showViewButton: false,
     endPointDelete: '/config/loan_officer',
+    fieldDelete: 'user_id',
     endPointGetListing: '/config/loan_officer',
     messageDeleteSuccess: 'User successfully deleted',
     buttonAddNew: 'New User',

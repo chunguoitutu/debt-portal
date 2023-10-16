@@ -7,7 +7,7 @@ import {updatePasswordCurrentUser} from '../../../auth/core/_requests'
 import {UpdatePasswordInfo, useAuth} from '../../../auth'
 import {swalToast} from '../../../../swal-notification'
 import {convertErrorMessageResponse} from '../../../../utils'
-import ErrorMessageFormik from '../../../../components/error/ErrorMessageFormik'
+import ErrorMessage from '../../../../components/error/ErrorMessage'
 
 type Props = {
   show: boolean
@@ -142,7 +142,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                   id='old_password'
                   {...getFieldProps('old_password')}
                 />
-                <ErrorMessageFormik
+                <ErrorMessage
                   shouldShowMessage={!!(touched.old_password && errors.old_password)}
                   message={errors.old_password}
                 />
@@ -161,7 +161,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                 id='new_password'
                 {...getFieldProps('new_password')}
               />
-              <ErrorMessageFormik
+              <ErrorMessage
                 shouldShowMessage={!!(touched.new_password && errors.new_password)}
                 message={errors.new_password}
               />
