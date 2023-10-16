@@ -5,10 +5,10 @@ import {useFormik} from 'formik'
 import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
-import {Input} from '../../../../components/inputs/input'
+import {Input} from '../../../components/inputs/input'
 import request from '../../../axios'
-import Select from '../../../../components/selects/select'
 import InputCheck from '../../../../components/inputs/inputCheck'
+import Select from '../../../components/selects/select'
 
 type Props = {
   data?: UserInfo

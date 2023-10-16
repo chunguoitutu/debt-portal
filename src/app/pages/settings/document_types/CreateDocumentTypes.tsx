@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 
 import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
-import {Input} from '../../../../components/inputs/input'
+import {Input} from '../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'

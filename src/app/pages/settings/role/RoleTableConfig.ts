@@ -1,4 +1,5 @@
 import {TableConfig} from '../../../modules/auth'
+import Priority from './Priority'
 
 export const ROLE_TABLE_CONFIG: TableConfig = {
   settings: {
@@ -23,6 +24,11 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     {
       key: 'description',
       name: 'Description',
+    },
+    {
+      key: 'priority',
+      name: 'Priority',
+      component: Priority,
     },
     {
       key: 'permissions',
