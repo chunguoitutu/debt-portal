@@ -1,6 +1,6 @@
 type Props = {
   title: string
-  value: string
+  value: string | number | null
   onChange: (id: string, value: string) => void
   datas: any[]
   errors?: any
@@ -37,7 +37,7 @@ const Select = ({
         <select
           id={id}
           className='form-select form-select-solid form-select-lg fw-bold'
-          value={value}
+          value={value || ''}
           onChange={handleChange}
         >
           <option value={''}></option>

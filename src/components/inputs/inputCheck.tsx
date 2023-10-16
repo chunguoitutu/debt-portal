@@ -1,11 +1,14 @@
+import React from 'react'
+
 type Props = {
   title?: string
+  lable?: string
   checked: boolean
   onChange?: () => void
   id?: string
 }
 
-const InputCheck = ({title = '', checked = false, onChange, id}: Props) => {
+const InputCheck = ({title = '', lable, checked = false, onChange, id}: Props) => {
   return (
     <div>
       <div className='form-check form-check-custom form-check-solid form-switch d-flex justify-content-between align-items-center'>
@@ -21,6 +24,7 @@ const InputCheck = ({title = '', checked = false, onChange, id}: Props) => {
               onChange={onChange}
               id='kt_builder_sidebar_minimize_desktop_enabled'
             />
+            <span className='fw-bold ps-2 fs-6'>{lable}</span>
           </div>
         </div>
       </div>

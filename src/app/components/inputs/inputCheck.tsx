@@ -23,7 +23,6 @@ const InputCheck = ({title = '', lable, checked = false, onChange, id}: Props) =
                 checked={checked}
                 onChange={onChange}
               />
-              <span className='fw-bold ps-2 fs-6'>{lable}</span>
             </label>
           </div>
         </div>
