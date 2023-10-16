@@ -17,20 +17,25 @@ const AuthLayout = () => {
           <img src={Logo} alt='logo' className='w-50px w-lg-100px mw-100 object-fit-contain' />
           <div>
             <img className='mw-100 object-fit-contain' src={WelcomeText} alt='welcome' />
-            <h1 className='text-capitalize text-white m-0 fw-medium fs-xl-2tx'>
+            <h1 className='text-capitalize text-white m-0 fw-normal fs-xl-2tx'>
               The Money Lending System Monetium Credit
             </h1>
           </div>
-          <span className='text-capitalize text-white fs-2'>Sign In To Access Your Account</span>
+          <span className='text-capitalize text-white fs-2 fw-semibold'>
+            Sign In To Access Your Account
+          </span>
         </div>
       </div>
 
-      <div className='d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1'>
+      <div className='d-flex flex-column flex-lg-row-fluid align-items-center w-lg-50 p-13 order-2 order-lg-1'>
         <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
           <div className='w-lg-500px p-lg-10'>
             <Outlet />
           </div>
         </div>
+        <span className='mt-auto text-gray d-none d-lg-block fw-semibold'>
+          Copy Right©2023 MC Dynamics Pte Ltd.All rights reserved
+        </span>
       </div>
     </div>
   )
