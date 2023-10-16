@@ -89,6 +89,7 @@ export type TableRow = {
   component?: any
   componentProps?: {[key: string]: string}
   type?: 'datetime' | 'badge'
+  isHide?: boolean
 }
 
 export type TableConfig = {

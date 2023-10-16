@@ -33,6 +33,7 @@ export const BRANCH_TABLE_CONFIG: TableConfig = {
     {
       key: 'address_id',
       name: 'Address ID',
+      isHide: true,
     },
     {
       key: 'telephone',
