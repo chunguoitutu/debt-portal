@@ -7,6 +7,7 @@ import {updatePasswordCurrentUser} from '../../../auth/core/_requests'
 import {UpdatePasswordInfo, useAuth} from '../../../auth'
 import {swalToast} from '../../../../swal-notification'
 import {convertErrorMessageResponse} from '../../../../utils'
+import ErrorMessageFormik from '../../../../components/error/ErrorMessageFormik'
 
 type Props = {
   show: boolean
@@ -27,22 +28,21 @@ const initialValues = {
   old_password: '',
 }
 
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/gi
+
 const passwordFormValidationSchema = Yup.object().shape({
   new_password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password is required'),
+    .matches(regexPassword, 'New Password must be at least 8 character and contain symbols')
+    .required('New Password is required'),
   confirm_new_password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
+    .matches(regexPassword, 'Confirm New Password must be at least 8 character and contain symbols')
     .required('Confirm New Password is required')
-    .oneOf([Yup.ref('new_password')], 'Passwords must match'),
+    .oneOf([Yup.ref('new_password')], 'Confirm New Password must match'),
 })
 
 const oldPasswordValidationSchema = Yup.object().shape({
   old_password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
+    .matches(regexPassword, 'Current Password must be at least 8 character and contain symbols')
     .required('Current Password is required'),
 })
 
@@ -57,11 +57,13 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
     return schema
   }, [ignoreOldPassword])
 
-  const formik = useFormik<ValuesChangePassword>({
-    initialValues,
-    validationSchema,
-    onSubmit: handleChangePassword,
-  })
+  const {touched, errors, resetForm, getFieldProps, handleSubmit} = useFormik<ValuesChangePassword>(
+    {
+      initialValues,
+      validationSchema,
+      onSubmit: handleChangePassword,
+    }
+  )
 
   function handleChangePassword(
     values: ValuesChangePassword,
@@ -84,7 +86,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
   }
 
   function onClosePopup() {
-    formik.resetForm()
+    resetForm()
     onClose()
   }
 
@@ -120,7 +122,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
       animation={true}
     >
       <div className='modal-header'>
-        <h2>Change Password</h2>
+        <h3 className='mb-0'>Change Password</h3>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClosePopup}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -131,57 +133,55 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
           {!ignoreOldPassword && (
             <div className='col-12'>
               <div className='fv-row mb-0'>
-                <label htmlFor='old_password' className='form-label fs-6 fw-bolder mb-3'>
+                <label htmlFor='old_password' className='form-label fs-6 fw-bold mb-3'>
                   Current Password
                 </label>
                 <input
                   type='password'
-                  className='form-control form-control-lg form-control-solid '
+                  className='form-control form-control-lg form-control-solid'
                   id='old_password'
-                  {...formik.getFieldProps('old_password')}
+                  {...getFieldProps('old_password')}
                 />
-                {formik.touched.old_password && formik.errors.old_password && (
-                  <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.old_password}</div>
-                  </div>
-                )}
+                <ErrorMessageFormik
+                  shouldShowMessage={!!(touched.old_password && errors.old_password)}
+                  message={errors.old_password}
+                />
               </div>
             </div>
           )}
 
           <div className='col-12'>
             <div className='fv-row mb-0'>
-              <label htmlFor='new_password' className='form-label fs-6 fw-bolder mb-3'>
+              <label htmlFor='new_password' className='form-label fs-6 fw-bold mb-3'>
                 New Password
               </label>
               <input
                 type='password'
                 className='form-control form-control-lg form-control-solid '
                 id='new_password'
-                {...formik.getFieldProps('new_password')}
+                {...getFieldProps('new_password')}
               />
-              {formik.touched.new_password && formik.errors.new_password && (
-                <div className='fv-plugins-message-container'>
-                  <div className='fv-help-block'>{formik.errors.new_password}</div>
-                </div>
-              )}
+              <ErrorMessageFormik
+                shouldShowMessage={!!(touched.new_password && errors.new_password)}
+                message={errors.new_password}
+              />
             </div>
           </div>
 
           <div className='col-12'>
             <div className='fv-row mb-0'>
-              <label htmlFor='confirm_new_password' className='form-label fs-6 fw-bolder mb-3'>
+              <label htmlFor='confirm_new_password' className='form-label fs-6 fw-bold mb-3'>
                 Confirm New Password
               </label>
               <input
                 type='password'
                 className='form-control form-control-lg form-control-solid '
                 id='confirm_new_password'
-                {...formik.getFieldProps('confirm_new_password')}
+                {...getFieldProps('confirm_new_password')}
               />
-              {formik.touched.confirm_new_password && formik.errors.confirm_new_password && (
+              {touched.confirm_new_password && errors.confirm_new_password && (
                 <div className='fv-plugins-message-container'>
-                  <div className='fv-help-block'>{formik.errors.confirm_new_password}</div>
+                  <div className='fv-help-block'>{errors.confirm_new_password}</div>
                 </div>
               )}
             </div>
@@ -193,7 +193,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
             type='button'
             id='kt_sign_in_submit'
             className='btn btn-primary'
-            onClick={() => formik.handleSubmit()}
+            onClick={() => handleSubmit()}
             disabled={loading}
           >
             {!loading && <span className='indicator-label'>Update Password</span>}
@@ -208,7 +208,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
           <button
             type='button'
             id='kt_sign_in_submit'
-            className='btn btn-light btn-active-light-primary'
+            className='btn btn-color-gray-400 btn-active-light-primary'
             onClick={onClosePopup}
             disabled={loading}
           >

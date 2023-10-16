@@ -7,10 +7,6 @@
   background-image: url(../images/bg-auth.png);
 }
 
-.fs-50px {
-  font-size: 50px;
-}
-
 .multiple-line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -30,4 +26,8 @@
 .four-line {
   @extend .multiple-line;
   -webkit-line-clamp: 4;
+}
+
+.text-gray {
+  color: #b5b5c3;
 }

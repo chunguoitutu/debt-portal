@@ -115,7 +115,7 @@ const Settings: React.FC = () => {
           <button
             type='button'
             id='kt_sign_in_submit'
-            className='btn btn-primary align-self-center'
+            className='btn btn-light btn-active-light-primary align-self-center'
             onClick={toggleResetPassword}
           >
             Reset Password
