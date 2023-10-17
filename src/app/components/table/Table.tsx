@@ -1,6 +1,6 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import {KTCardBody} from '../../../_metronic/helpers'
-import {SearchCriteria, TableConfig, useAuth} from '../../modules/auth'
+import {SearchCriteria, TableConfig, UserInfo} from '../../modules/auth'
 import moment from 'moment'
 import ButtonDelete from '../button/ButtonDelete'
 import ButtonEdit from '../button/ButtonEdit'
@@ -19,6 +19,7 @@ type Props = {
   isUpdated?: boolean
   setIsUpdated?: any
   handleAddNew: () => void
+  currentUser?: UserInfo
 }
 
 const Table: FC<Props> = ({
@@ -28,6 +29,7 @@ const Table: FC<Props> = ({
   isUpdated,
   setIsUpdated,
   handleAddNew,
+  currentUser,
 }) => {
   const {settings, rows} = config
   const {
@@ -51,7 +53,7 @@ const Table: FC<Props> = ({
     total: 0,
   })
   const {total, ...pagination} = searchCriteria
-  const {currentUser} = useAuth()
+  console.log(currentUser, 'currentUser')
 
   useEffect(() => {
     onFetchDataList(pagination)
@@ -69,7 +71,7 @@ const Table: FC<Props> = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUpdated])
+  }, [isUpdated, currentUser])
 
   function convertValue(type: string, value: string | number) {
     if (typeof value !== 'string' && typeof value !== 'number') return
@@ -84,7 +86,6 @@ const Table: FC<Props> = ({
     }
   }
 
-  
   function handleEditItem(item: any) {
     if (typeof onEditItem !== 'function') return
     onEditItem(item)
@@ -99,12 +100,22 @@ const Table: FC<Props> = ({
     setLoading(true)
     try {
       const {data} = await request.post(endPointGetListing + '/listing', body)
-      if (endPointGetListing === '/config/loan_officer') {
-        const userRender = data.data.filter((item) => item.branch_id === currentUser?.branch_id)
-        Array.isArray(data.data) && setData(userRender)
-      } else {      
-         Array.isArray(data.data) && setData(data.data)
-      } 
+
+      if (endPointGetListing === '/config/branch') {
+        const listData2 = data?.data.filter((list: any) => {
+          if (currentUser?.role_name === 'Full-Access') {
+            return list
+          }
+          if (currentUser?.role_name === 'Manager') {
+            return list?.id === currentUser?.branch_id
+          }
+          return []
+        })
+        setData(listData2)
+      } else {
+        Array.isArray(data.data) && setData(data.data)
+      }
+
       data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
     } catch (error) {
       // no thing
@@ -144,7 +155,20 @@ const Table: FC<Props> = ({
   async function handleChangePagination(pagination: Omit<SearchCriteria, 'total'>) {
     const {data} = await request.post(endPointGetListing + '/listing', pagination)
 
-    Array.isArray(data.data) && setData(data.data)
+    if (endPointGetListing === '/config/branch') {
+      const listData2 = data?.data.filter((list: any) => {
+        if (currentUser?.role_name === 'Full-Access') {
+          return list
+        }
+        if (currentUser?.role_name === 'Manager') {
+          return list?.id === currentUser?.branch_id
+        }
+        return []
+      })
+      setData(listData2)
+    } else {
+      Array.isArray(data.data) && setData(data.data)
+    }
     data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
   }
 

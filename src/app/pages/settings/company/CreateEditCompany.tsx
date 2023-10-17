@@ -25,7 +25,6 @@ type Props = {
 
 export const newCompaniesSchema = Yup.object().shape({
   company_name: Yup.string().required('Company name  is required.'),
-  company_code: Yup.string().required('Company code  is required.'),
   business_uen: Yup.string().required('Busiess Uen  is required.'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
@@ -38,6 +37,7 @@ export const newCompaniesSchema = Yup.object().shape({
   registration_date: Yup.string().required('Registration is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
   city: Yup.string().required('City is required.'),
+  zipcode: Yup.string().required('zip code is required.'),
   state: Yup.string().required('State is required.'),
   country: Yup.string().required('Country is required.'),
 })
@@ -323,6 +323,7 @@ const CreateEditCompanies = ({
                     onChange={handleChange}
                   />
                   <Input
+                    required={true}
                     title='City'
                     id='city'
                     error={errors.city}
