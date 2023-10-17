@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useMemo} from 'react'
-import {NavLink, Navigate} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {useAuth} from '../../modules/auth'
 
 const MenuSetting: React.FC = () => {
@@ -56,9 +56,6 @@ const MenuSetting: React.FC = () => {
     return fullMenu
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priority])
-
-  // If priority > 2 means not super admin or admin
-  if (priority > 2) return <Navigate to='/error/404' />
 
   return (
     <div className='card mb-5 mb-xl-10'>

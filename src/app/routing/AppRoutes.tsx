@@ -20,7 +20,7 @@ import {MenuTestPage} from '../pages/MenuTestPage'
 import {WithChildren} from '../../_metronic/helpers'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
-import MenuRouter from '../pages/settings/MenuRouter'
+import SettingPageRouter from '../pages/settings/SettingPageRouter'
 
 const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
 const AccountPage = lazy(() => import('../modules/profile/components/profile/AccountPage'))
@@ -67,7 +67,7 @@ const AppRoutes: FC = () => {
               path='settings/*'
               element={
                 <SuspensedView>
-                  <MenuRouter />
+                  <SettingPageRouter />
                 </SuspensedView>
               }
             />

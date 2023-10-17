@@ -1,4 +1,4 @@
-import {Routes, Route, Outlet} from 'react-router-dom'
+import {Routes, Route, Outlet, Navigate} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import LoanTypes from './loan_type/LoanType'
 import SettingCompanies from './company/CompanyManagement'
@@ -17,7 +17,7 @@ import {useAuth} from '../../modules/auth'
 const profileBreadCrumbs: Array<PageLink> = [
   {
     title: 'Setting',
-    path: '/settings/company',
+    path: '/settings/companies',
     isSeparator: false,
     isActive: false,
   },
@@ -29,10 +29,13 @@ const profileBreadCrumbs: Array<PageLink> = [
   },
 ]
 
-const MenuRouter = () => {
+const SettingPageRouter = () => {
   const {priority} = useAuth()
+
   const router = useMemo(() => {
-    return [
+    if (priority > 2) return []
+
+    const fullRouter = [
       {
         path: 'companies',
         labelBreadCrumbs: 'Companies',
@@ -84,8 +87,18 @@ const MenuRouter = () => {
         component: RejectionType,
       },
     ]
+
+    // priority = 2 means admin
+    if (priority === 2)
+      return fullRouter.filter((item) => ['Branches', 'Users'].includes(item.labelBreadCrumbs))
+
+    return fullRouter
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priority])
+
+  // If the current user is loading, nothing will be displayed
+  if (!priority) return null
+
   return (
     <Routes>
       <Route
@@ -98,6 +111,11 @@ const MenuRouter = () => {
       >
         {router.map(({path, component, labelBreadCrumbs}, i) => {
           const Comp = component
+
+          if (priority === 2) {
+            profileBreadCrumbs[0]['path'] = '/settings/branches'
+          }
+
           return (
             <Route
               key={i}
@@ -111,9 +129,10 @@ const MenuRouter = () => {
             />
           )
         })}
+        <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>
     </Routes>
   )
 }
 
-export default MenuRouter
+export default SettingPageRouter
