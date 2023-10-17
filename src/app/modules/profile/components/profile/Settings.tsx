@@ -10,6 +10,7 @@ import {swalToast} from '../../../../swal-notification'
 
 const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),
+  lastname: Yup.string().required('Last Name is required'),
   email: Yup.string()
     .required('Email Name is required')
     .matches(
