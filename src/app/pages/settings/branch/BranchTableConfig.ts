@@ -1,9 +1,10 @@
 import Badge from '../../../components/badge/Badge'
 import {TableConfig} from '../../../modules/auth'
+import ButtonAction from './ButtonAction'
 
 export const BRANCH_TABLE_CONFIG: TableConfig = {
   settings: {
-    showAction: true,
+    showAction: false,
     showEditButton: true,
     showDeleteButton: true,
     showViewButton: true,
@@ -47,6 +48,11 @@ export const BRANCH_TABLE_CONFIG: TableConfig = {
       key: 'status',
       name: 'Status',
       component: Badge,
+    },
+    {
+      key: 'ACTION',
+      name: 'ACTION',
+      component: ButtonAction,
     },
   ],
 }

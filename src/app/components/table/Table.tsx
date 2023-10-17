@@ -1,6 +1,6 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import {KTCardBody} from '../../../_metronic/helpers'
-import {SearchCriteria, TableConfig, UserInfo} from '../../modules/auth'
+import {SearchCriteria, TableConfig, useAuth} from '../../modules/auth'
 import moment from 'moment'
 import ButtonDelete from '../button/ButtonDelete'
 import ButtonEdit from '../button/ButtonEdit'
@@ -19,7 +19,6 @@ type Props = {
   isUpdated?: boolean
   setIsUpdated?: any
   handleAddNew: () => void
-  currentUser?: UserInfo
 }
 
 const Table: FC<Props> = ({
@@ -29,7 +28,6 @@ const Table: FC<Props> = ({
   isUpdated,
   setIsUpdated,
   handleAddNew,
-  currentUser,
 }) => {
   const {settings, rows} = config
   const {
@@ -54,10 +52,13 @@ const Table: FC<Props> = ({
   })
   const {total, ...pagination} = searchCriteria
 
+  const {currentUser} = useAuth()
+
   useEffect(() => {
+    if (!currentUser) return
     onFetchDataList(pagination)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentUser])
 
   useEffect(() => {
     const handleRefresh = async () => {
@@ -102,10 +103,10 @@ const Table: FC<Props> = ({
 
       if (endPointGetListing === '/config/branch') {
         const listData2 = data?.data.filter((list: any) => {
-          if (currentUser?.role_name === 'Full-Access') {
+          if (currentUser?.priority === 1) {
             return list
           }
-          if (currentUser?.role_name === 'Manager') {
+          if (currentUser?.priority === 2) {
             return list?.id === currentUser?.branch_id
           }
           return []
@@ -155,23 +156,7 @@ const Table: FC<Props> = ({
     }
   }
   async function handleChangePagination(pagination: Omit<SearchCriteria, 'total'>) {
-    const {data} = await request.post(endPointGetListing + '/listing', pagination)
-
-    if (endPointGetListing === '/config/branch') {
-      const listData2 = data?.data.filter((list: any) => {
-        if (currentUser?.role_name === 'Full-Access') {
-          return list
-        }
-        if (currentUser?.role_name === 'Manager') {
-          return list?.id === currentUser?.branch_id
-        }
-        return []
-      })
-      setData(listData2)
-    } else {
-      Array.isArray(data.data) && setData(data.data)
-    }
-    data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
+    await onFetchDataList(pagination)
   }
 
   function handleShowConfirmDelete(item: any) {
@@ -186,6 +171,8 @@ const Table: FC<Props> = ({
         }
       })
   }
+
+  if (!currentUser) return null
 
   return (
     <div className='card'>
@@ -215,6 +202,8 @@ const Table: FC<Props> = ({
             <tbody className='text-gray-600 fw-bold'>
               {data.length > 0 ? (
                 data.map((item, idx) => {
+                  console.log(item)
+
                   return (
                     <tr key={idx}>
                       {rows.map(({key, component, type, classNameTableBody, isHide}, i) => {
