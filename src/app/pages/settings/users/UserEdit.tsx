@@ -30,7 +30,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   const [isActive, setIsActive] = useState<any>(data?.is_active || false)
   const [dataBranch, setDataBranch] = useState([])
   const [dataRole, setDataRole] = useState([])
-
+  
   const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
     useFormik<any>({
       initialValues: {

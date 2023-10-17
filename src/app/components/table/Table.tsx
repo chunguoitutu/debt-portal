@@ -1,6 +1,6 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import {KTCardBody} from '../../../_metronic/helpers'
-import {SearchCriteria, TableConfig} from '../../modules/auth'
+import {SearchCriteria, TableConfig, useAuth} from '../../modules/auth'
 import moment from 'moment'
 import ButtonDelete from '../button/ButtonDelete'
 import ButtonEdit from '../button/ButtonEdit'
@@ -51,11 +51,12 @@ const Table: FC<Props> = ({
     total: 0,
   })
   const {total, ...pagination} = searchCriteria
+  const {currentUser} = useAuth()
 
   useEffect(() => {
     onFetchDataList(pagination)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentUser])
 
   useEffect(() => {
     const handleRefresh = async () => {
@@ -83,6 +84,7 @@ const Table: FC<Props> = ({
     }
   }
 
+  
   function handleEditItem(item: any) {
     if (typeof onEditItem !== 'function') return
     onEditItem(item)
@@ -97,7 +99,12 @@ const Table: FC<Props> = ({
     setLoading(true)
     try {
       const {data} = await request.post(endPointGetListing + '/listing', body)
-      Array.isArray(data.data) && setData(data.data)
+      if (endPointGetListing === '/config/loan_officer') {
+        const userRender = data.data.filter((item) => item.branch_id === currentUser?.branch_id)
+        Array.isArray(data.data) && setData(userRender)
+      } else {      
+         Array.isArray(data.data) && setData(data.data)
+      } 
       data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
     } catch (error) {
       // no thing
