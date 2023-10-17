@@ -49,7 +49,7 @@ const CreateEditBranch = ({
   show,
   handleClose,
   titleLable = 'New',
-  data = [],
+  data,
   loadapi,
   setLoadApi,
   handleUpdated,
