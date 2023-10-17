@@ -76,7 +76,7 @@ const ButtonAction = ({data, setIsUpdated, isUpdated}: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <div>
+    <>
       {showCreateAppModal && (
         <CreateEditBranch
           setLoadApi={setLoadApi}
@@ -108,7 +108,7 @@ const ButtonAction = ({data, setIsUpdated, isUpdated}: Props) => {
           handleUpdated={() => setIsUpdated(true)}
         />
       ) : null}
-      <td className='text-center'>
+      <div className='text-center'>
         <div className='d-flex align-items-center justify-content-center gap-1'>
           <ButtonViewDetail onClick={() => handleViewDetail(data)} />
 
@@ -116,8 +116,8 @@ const ButtonAction = ({data, setIsUpdated, isUpdated}: Props) => {
 
           {checkNewButton && <ButtonDelete onClick={() => handleShowConfirmDelete(data)} />}
         </div>
-      </td>
-    </div>
+      </div>
+    </>
   )
 }
 

@@ -50,6 +50,7 @@ export const BRANCH_TABLE_CONFIG: TableConfig = {
       component: Badge,
     },
     {
+      classNameTableHead: 'text-center',
       key: 'ACTION',
       name: 'ACTION',
       component: ButtonAction,

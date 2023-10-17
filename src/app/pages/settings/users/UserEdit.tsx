@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect, useMemo, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
 import {
   BranchItem,
@@ -29,7 +29,6 @@ export const roleSchema = Yup.object().shape({
   firstname: Yup.string().required('First name is required.'),
   lastname: Yup.string().required('Last name is required.'),
   username: Yup.string().required('User name is required.'),
-  password: Yup.string().required('Password is required.'),
   branch_id: Yup.string().required('Branch is required.'),
   role_id: Yup.string().required('Role is required.'),
   email: Yup.string().email("Email isn't valid").required('Email is required.'),
@@ -37,6 +36,10 @@ export const roleSchema = Yup.object().shape({
     .min(6, 'Minimum 6 symbols')
     .max(11, 'Maximum 11 symbols')
     .required('Telephone is required.'),
+})
+
+export const passwordSchema = Yup.object().shape({
+  password: Yup.string().required('Password is required.'),
 })
 
 const initialValues = {
@@ -59,10 +62,17 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
 
   const {priority, currentUser} = useAuth()
 
+  const validationSchema = useMemo(() => {
+    let schema = roleSchema
+    if (!data) return schema.concat(passwordSchema)
+
+    return schema
+  }, [data])
+
   const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
     useFormik<any>({
       initialValues,
-      validationSchema: roleSchema,
+      validationSchema,
       onSubmit: handleSubmitForm,
     })
 
@@ -248,7 +258,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
             value={values.password || ''}
             type='password'
             onChange={handleChange}
-            required={true}
+            required={data ? false : true}
           />
         </div>
 
