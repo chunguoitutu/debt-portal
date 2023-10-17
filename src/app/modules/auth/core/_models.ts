@@ -12,6 +12,7 @@ export type UpdatePasswordInfo = {
 export type DataResponse<T> = {
   error: boolean
   message: string
+  searchCriteria?: {[key: string]: string}
   data: T
 }
 
@@ -69,7 +70,7 @@ export type RoleInfo = {
   role_name: string
   description?: string | null
   permissions?: string | null
-  priority?: string | number | null
+  priority: number
 }
 
 export type UpdateById<T = any> = {
@@ -114,4 +115,16 @@ export type TableConfig = {
     showfilter?: boolean
   }
   rows: TableRow[]
+}
+
+export type BranchItem = {
+  id: number
+  business_uen: string
+  company_id: number
+  branch_name: string
+  address_id: number
+  telephone?: string | null
+  email?: string | null
+  open_date: string
+  status: number
 }

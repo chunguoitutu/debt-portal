@@ -34,7 +34,7 @@ const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
         role_name: '',
         description: '',
         permissions: '',
-        priority: '',
+        priority: 0,
       },
       validationSchema: roleSchema,
       onSubmit: handleSubmitForm,
