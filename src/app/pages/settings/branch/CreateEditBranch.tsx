@@ -63,19 +63,21 @@ const CreateEditBranch = ({
       .catch((error) => {
         console.error('Error: ', error?.message)
       })
-    request
-      .get(`config/branch/id/${data.id}/address/${data.address_id}`)
-      .then((response) => {
-        setFieldValue('street_1', response.data.data.street_1)
-        setFieldValue('street_2', response.data.data.street_2)
-        setFieldValue('city', response.data.data.city)
-        setFieldValue('state', response.data.data.state)
-        setFieldValue('zipcode', response.data.data.zipcode)
-        setFieldValue('country', response.data.data.country)
-      })
-      .catch((error) => {
-        console.error('Error: ', error?.message)
-      })
+
+    data &&
+      request
+        .get(`config/branch/id/${data?.id}/address/${data?.address_id}`)
+        .then((response) => {
+          setFieldValue('street_1', response.data.data.street_1)
+          setFieldValue('street_2', response.data.data.street_2)
+          setFieldValue('city', response.data.data.city)
+          setFieldValue('state', response.data.data.state)
+          setFieldValue('zipcode', response.data.data.zipcode)
+          setFieldValue('country', response.data.data.country)
+        })
+        .catch((error) => {
+          console.error('Error: ', error?.message)
+        })
   }, [])
 
   const stepperRef = useRef<HTMLDivElement | null>(null)
