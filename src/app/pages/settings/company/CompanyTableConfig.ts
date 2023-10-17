@@ -5,12 +5,13 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
   settings: {
     showAction: true,
     showEditButton: true,
-    showDeleteButton: true,
+    showDeleteButton: false,
     showViewButton: true,
     endPointDelete: '/config/company',
     endPointGetListing: '/config/company',
     messageDeleteSuccess: 'Company successfully deleted',
     buttonAddNew: 'New Company',
+    showAddNewButton: false
   },
   rows: [
     {

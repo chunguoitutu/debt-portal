@@ -75,7 +75,7 @@ const CreateEditCompanies = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const {values, touched, errors, handleChange, handleSubmit, setFieldValue, resetForm} = useFormik(
+  const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik(
     {
       initialValues: {
         company_name: data ? data?.company_name : '',
@@ -94,57 +94,6 @@ const CreateEditCompanies = ({
       },
       validationSchema: newCompaniesSchema,
       onSubmit: async (values: any, actions: any) => {
-        if (titleLable === 'New') {
-          await request
-            .post('config/address', {
-              address_type_id: 1,
-              street_1: values.street_1,
-              street_2: values.street_2,
-              city: values.city,
-              state: values.state,
-              zipcode: values.zipcode,
-              country: values.country,
-            })
-            .then((response) => {
-              request
-                .post('config/company', {
-                  company_name: values.company_name,
-                  company_code: values.company_code,
-                  business_uen: values.business_uen,
-                  telephone: values.telephone,
-                  email: values.email,
-                  website: values.website,
-                  address_id: Number(response.data.data.id),
-                  registration_date: new Date(values.registration_date),
-                  status: status ? 1 : 0,
-                })
-                .then((response) => {
-                  if (!response.data?.error) {
-                    swalToast.fire({
-                      icon: 'success',
-                      title: 'Company successfully created',
-                    })
-                  }
-                  handleUpdated()
-                  handleClose()
-                  resetForm()
-                  setStatus(false)
-                  setLoadApi(!loadapi)
-                })
-                .catch((e) => {
-                  swalToast.fire({
-                    icon: 'error',
-                    title: e?.message,
-                  })
-                })
-            })
-            .catch((e) => {
-              swalToast.fire({
-                icon: 'error',
-                title: e?.message,
-              })
-            })
-        }
 
         if (titleLable === 'Edit') {
           await request

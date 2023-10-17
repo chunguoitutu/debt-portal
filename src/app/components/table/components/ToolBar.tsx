@@ -11,7 +11,7 @@ type Props = {
 const ToolBar = ({config, handleAddNew}: Props) => {
   const {settings} = config
   const {currentUser} = useAuth()
-  const {buttonAddNew, showfilter} = settings
+  const {buttonAddNew, showFilter, showAddNewButton = true} = settings
 
   const checkNewButton = useMemo(() => {
     if (settings?.endPointGetListing === '/config/branch' && currentUser?.priority !== 1) {
@@ -22,9 +22,9 @@ const ToolBar = ({config, handleAddNew}: Props) => {
   }, [])
   return (
     <div className='d-flex justify-content-end' data-kt-user-table-toolbar='base'>
-      {showfilter && <UsersListFilter />}
+      {showFilter && <UsersListFilter />}
 
-      {checkNewButton && (
+      {checkNewButton && showAddNewButton && (
         <button onClick={handleAddNew} type='button' className='btn btn-primary'>
           <KTIcon iconName='plus' className='fs-2' />
           {buttonAddNew}

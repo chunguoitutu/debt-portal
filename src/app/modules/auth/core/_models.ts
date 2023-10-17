@@ -101,7 +101,8 @@ export type TableConfig = {
     showEditButton?: boolean
     showDeleteButton?: boolean
     showViewButton?: boolean
-    textConfirmRemove?: string
+    showAddNewButton?: boolean
+    textConfirmDelete?: string
     endPointDelete?: string
     endPointGetListing: string
     fieldDelete?: string
@@ -112,7 +113,7 @@ export type TableConfig = {
     dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
-    showfilter?: boolean
+    showFilter?: boolean
   }
   rows: TableRow[]
 }

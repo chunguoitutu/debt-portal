@@ -36,7 +36,7 @@ const HeaderUserMenu: FC = () => {
       <div className='separator my-2'></div>
 
       <div className='menu-item px-5 my-1'>
-        <Link to='/crafted/account/overview' className='menu-link px-5'>
+        <Link to='/account/overview' className='menu-link px-5'>
           Account Settings
         </Link>
       </div>

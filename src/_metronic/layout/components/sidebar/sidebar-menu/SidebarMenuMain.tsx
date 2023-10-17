@@ -63,8 +63,8 @@ const SidebarMenuMain = () => {
         icon='profile-circle'
         fontIcon='bi-person'
       >
-        <SidebarMenuItem to='/crafted/account/overview' title='Overview' hasBullet={true} />
-        <SidebarMenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
+        <SidebarMenuItem to='/account/overview' title='Overview' hasBullet={true} />
+        <SidebarMenuItem to='/account/settings' title='Settings' hasBullet={true} />
       </SidebarMenuItemWithSub>
       <SidebarMenuItemWithSub to='/error' title='Errors' fontIcon='bi-sticky' icon='cross-circle'>
         <SidebarMenuItem to='/error/404' title='Error 404' hasBullet={true} />
