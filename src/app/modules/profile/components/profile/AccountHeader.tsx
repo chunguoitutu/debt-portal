@@ -9,10 +9,7 @@ import AvatarHeader from './AvatarHeader'
 const AccountHeader: React.FC = () => {
   const location = useLocation()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {currentUser, logout} = useAuth()
-
-  console.log(currentUser)
+  const {currentUser} = useAuth()
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -32,7 +29,11 @@ const AccountHeader: React.FC = () => {
             <div className='d-flex justify-content-between align-items-start flex-wrap mb-2'>
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
-                  <a href='#' className='text-gray-900 text-hover-primary fs-3 me-1' style={{fontWeight: 600}}>
+                  <a
+                    href='#'
+                    className='text-gray-900 text-hover-primary fs-3 me-1'
+                    style={{fontWeight: 600}}
+                  >
                     {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
                       currentUser?.lastname || ''
                     }`}
@@ -85,7 +86,10 @@ const AccountHeader: React.FC = () => {
         </div>
 
         <div className='d-flex overflow-auto h-55px'>
-          <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 flex-nowrap' style={{fontWeight: 600}}>
+          <ul
+            className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 flex-nowrap'
+            style={{fontWeight: 600}}
+          >
             <li className='nav-item'>
               <Link
                 className={

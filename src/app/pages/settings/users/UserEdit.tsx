@@ -1,6 +1,13 @@
 import {FC, useEffect, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
-import {UpdateById, UserInfo} from '../../../modules/auth'
+import {
+  BranchItem,
+  DataResponse,
+  RoleInfo,
+  UpdateById,
+  UserInfo,
+  useAuth,
+} from '../../../modules/auth'
 import {useFormik} from 'formik'
 import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
@@ -9,6 +16,7 @@ import {Input} from '../../../components/inputs/input'
 import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import Select from '../../../components/selects/select'
+import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
 
 type Props = {
   data?: UserInfo
@@ -21,28 +29,48 @@ export const roleSchema = Yup.object().shape({
   firstname: Yup.string().required('First name is required.'),
   lastname: Yup.string().required('Last name is required.'),
   username: Yup.string().required('User name is required.'),
+  password: Yup.string().required('Password is required.'),
   branch_id: Yup.string().required('Branch is required.'),
   role_id: Yup.string().required('Role is required.'),
+  email: Yup.string().email("Email isn't valid").required('Email is required.'),
+  telephone: Yup.string()
+    .min(6, 'Minimum 6 symbols')
+    .max(11, 'Maximum 11 symbols')
+    .required('Telephone is required.'),
 })
+
+const initialValues = {
+  firstname: '',
+  middlename: '',
+  lastname: '',
+  username: '',
+  password: '',
+  branch_id: '',
+  role_id: '',
+  email: '',
+  telephone: '',
+}
 
 const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [isActive, setIsActive] = useState<any>(data?.is_active || false)
-  const [dataBranch, setDataBranch] = useState([])
-  const [dataRole, setDataRole] = useState([])
-  
+  const [isActive, setIsActive] = useState<any>(data ? data?.is_active : true)
+  const [dataBranch, setDataBranch] = useState<BranchItem[]>([])
+  const [dataRole, setDataRole] = useState<RoleInfo[]>([])
+
+  const {priority, currentUser} = useAuth()
+
   const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
     useFormik<any>({
-      initialValues: {
-        ...data,
-      },
+      initialValues,
       validationSchema: roleSchema,
       onSubmit: handleSubmitForm,
     })
 
   useEffect(() => {
+    if (!currentUser) return
+
     request
-      .post('config/branch/listing')
+      .post<DataResponse<BranchItem[]>>('config/branch/listing')
       .then(({data}) => {
         setDataBranch(data.data)
       })
@@ -51,9 +79,14 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
       })
 
     request
-      .post('config/role/listing')
+      .post<DataResponse<RoleInfo[]>>('config/role/listing')
       .then(({data}) => {
-        setDataRole(data.data)
+        let roleList = Array.isArray(data.data) ? [...data.data] : []
+
+        if (priority === 2) {
+          roleList = roleList.filter((role) => role.priority > 2)
+        }
+        setDataRole(roleList)
       })
       .catch((error) => {
         console.error('Error: ', error?.message)
@@ -64,7 +97,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
     return () => resetForm()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentUser])
 
   function handleSubmitForm(values: UserInfo) {
     const {user_id, ...payload} = values
@@ -152,106 +185,132 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
       show={show}
       onClose={onClose}
     >
-      <form onSubmit={handleSubmit} className='flex-row-fluid p-1'>
-        <Input
-          title='User Name'
-          id='username'
-          error={errors.username}
-          touched={touched.username}
-          errorTitle={errors.username}
-          value={values.username || ''}
-          onChange={handleChange}
-          required={true}
-        />
+      <div className='row'>
+        <div className='col-4'>
+          <Input
+            title='First Name'
+            id='firstname'
+            error={errors.firstname}
+            touched={touched.firstname}
+            errorTitle={errors.firstname}
+            value={values.firstname || ''}
+            onChange={handleChange}
+            required={true}
+            name='firstname'
+          />
+        </div>
 
-        <Input
-          title='Password'
-          id='password'
-          error={errors.password}
-          touched={touched.password}
-          errorTitle={errors.password}
-          value={values.password || ''}
-          type='password'
-          onChange={handleChange}
-          required={true}
-        />
-        <Select
-          datas={dataBranch}
-          valueTitle='branch_name'
-          setValueTitle='id'
-          title='Branch'
-          id='branch_id'
-          errors={errors.branch_id}
-          touched={touched.branch_id}
-          errorTitle={errors.branch_id}
-          value={values.branch_id}
-          onChange={setFieldValue}
-        />
+        <div className='col-4'>
+          <Input
+            title='Middle Name'
+            id='middlename'
+            error={errors.middlename}
+            touched={touched.middlename}
+            errorTitle={errors.middlename}
+            value={values.middlename || ''}
+            onChange={handleChange}
+          />
+        </div>
 
-        <Select
-          datas={dataRole}
-          valueTitle='role_name'
-          setValueTitle='id'
-          title='Role'
-          id='role_id'
-          errors={errors.role_id}
-          touched={touched.role_id}
-          errorTitle={errors.role_id}
-          value={values.role_id}
-          onChange={setFieldValue}
-        />
+        <div className='col-4'>
+          <Input
+            title='Last Name'
+            id='lastname'
+            error={errors.lastname}
+            touched={touched.lastname}
+            errorTitle={errors.lastname}
+            value={values.lastname || ''}
+            onChange={handleChange}
+            required={true}
+          />
+        </div>
 
-        <Input
-          title='First Name'
-          id='firstname'
-          error={errors.firstname}
-          touched={touched.firstname}
-          errorTitle={errors.firstname}
-          value={values.firstname || ''}
-          onChange={handleChange}
-          required={true}
-        />
+        <div className='col-6'>
+          <Input
+            title='User Name'
+            id='username'
+            error={errors.username}
+            touched={touched.username}
+            errorTitle={errors.username}
+            value={values.username || ''}
+            onChange={handleChange}
+            required={true}
+          />
+        </div>
 
-        <Input
-          title='Middle Name'
-          id='middlename'
-          error={errors.middlename}
-          touched={touched.middlename}
-          errorTitle={errors.middlename}
-          value={values.middlename || ''}
-          onChange={handleChange}
-        />
+        <div className='col-6'>
+          <Input
+            title='Password'
+            id='password'
+            error={errors.password}
+            touched={touched.password}
+            errorTitle={errors.password}
+            value={values.password || ''}
+            type='password'
+            onChange={handleChange}
+            required={true}
+          />
+        </div>
 
-        <Input
-          title='Last Name'
-          id='lastname'
-          error={errors.lastname}
-          touched={touched.lastname}
-          errorTitle={errors.lastname}
-          value={values.lastname || ''}
-          onChange={handleChange}
-          required={true}
-        />
+        <div className='col-6'>
+          <Select
+            required
+            datas={dataBranch}
+            valueTitle='branch_name'
+            setValueTitle='id'
+            title='Branch'
+            id='branch_id'
+            errors={errors.branch_id}
+            touched={touched.branch_id}
+            errorTitle={errors.branch_id}
+            value={values.branch_id}
+            onChange={setFieldValue}
+          />
+        </div>
 
-        <Input
-          title='Email'
-          id='email'
-          error={errors.email}
-          touched={touched.email}
-          errorTitle={errors.email}
-          value={values.email || ''}
-          onChange={handleChange}
-        />
+        <div className='col-6'>
+          <Select
+            required
+            datas={dataRole}
+            valueTitle='role_name'
+            setValueTitle='id'
+            title='Role'
+            id='role_id'
+            errors={errors.role_id}
+            touched={touched.role_id}
+            errorTitle={errors.role_id}
+            value={values.role_id}
+            onChange={setFieldValue}
+          />
+        </div>
 
-        <Input
-          title='Telephone'
-          id='telephone'
-          error={errors.telephone}
-          touched={touched.telephone}
-          errorTitle={errors.telephone}
-          value={values.telephone || ''}
-          onChange={handleChange}
-        />
+        <div className='col-6'>
+          <Input
+            required
+            title='Email'
+            id='email'
+            error={errors.email}
+            touched={touched.email}
+            errorTitle={errors.email}
+            value={values.email || ''}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className='col-6'>
+          <Input
+            required
+            title='Telephone'
+            id='telephone'
+            onPaste={handlePaste}
+            onKeyPressCapture={handleKeyPress}
+            error={errors.telephone}
+            touched={touched.telephone}
+            errorTitle={errors.telephone}
+            value={values.telephone || ''}
+            onChange={handleChange}
+          />
+        </div>
 
         <InputCheck
           checked={isActive}
@@ -259,20 +318,20 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
           id='is_active'
           title='Active'
         />
+      </div>
 
-        <div className='d-flex flex-end pt-4'>
-          <button type='submit' className='btn btn-lg btn-primary'>
-            {loading ? (
-              <>
-                Please wait...
-                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-              </>
-            ) : (
-              <span>{data ? 'Update' : 'Create'}</span>
-            )}
-          </button>
-        </div>
-      </form>
+      <div className='d-flex flex-end pt-4'>
+        <button type='button' className='btn btn-lg btn-primary' onClick={() => handleSubmit()}>
+          {loading ? (
+            <>
+              Please wait...
+              <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+            </>
+          ) : (
+            <span>{data ? 'Update' : 'Create'}</span>
+          )}
+        </button>
+      </div>
     </Modal>
   )
 }

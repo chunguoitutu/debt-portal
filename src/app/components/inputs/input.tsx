@@ -15,6 +15,7 @@ interface IProps {
   required?: boolean
   onPaste?: any
   onKeyPressCapture?: any
+  name?: string
 }
 
 export const Input: React.FC<IProps> = ({
@@ -31,6 +32,7 @@ export const Input: React.FC<IProps> = ({
   onBlur,
   touched,
   required = false,
+  name,
 }) => {
   return (
     <div>
@@ -47,6 +49,7 @@ export const Input: React.FC<IProps> = ({
           placeholder={placeholder}
           id={id}
           onBlur={onBlur}
+          name={name}
           className='form-control form-control-lg form-control-solid'
         />
         {touched && error && (

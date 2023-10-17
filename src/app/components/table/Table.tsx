@@ -212,12 +212,13 @@ const Table: FC<Props> = ({
                           }
 
                           return (
-                            <Component
-                              data={item}
-                              key={i}
-                              isUpdated={isUpdated}
-                              setIsUpdated={setIsUpdated}
-                            />
+                            <td key={i}>
+                              <Component
+                                data={item}
+                                isUpdated={isUpdated}
+                                setIsUpdated={setIsUpdated}
+                              />
+                            </td>
                           )
                         }
 

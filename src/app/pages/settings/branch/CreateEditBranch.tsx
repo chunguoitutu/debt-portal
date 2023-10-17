@@ -35,10 +35,10 @@ export const CreateEditBranchSchema = Yup.object().shape({
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols'),
-  open_date: Yup.string().required('open_date is required.'),
+  open_date: Yup.string().required('Open Date is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
   city: Yup.string().required('City  is required.'),
-  zipcode: Yup.string().required('Zxip code is required.'),
+  zipcode: Yup.string().required('Zip Code is required.'),
   state: Yup.string().required('State is required.'),
   country: Yup.string().required('Country is required.'),
 })
