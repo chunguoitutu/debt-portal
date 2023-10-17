@@ -101,23 +101,7 @@ const Table: FC<Props> = ({
     try {
       const {data} = await request.post(endPointGetListing + '/listing', body)
 
-      if (endPointGetListing === '/config/branch') {
-        const listData2 = data?.data.filter((list: any) => {
-          if (currentUser?.priority === 1) {
-            return list
-          }
-          if (currentUser?.priority === 2) {
-            return list?.id === currentUser?.branch_id
-          }
-          return []
-        })
-        setData(listData2)
-      } else if (endPointGetListing === '/config/loan_officer') {
-        const userRender = data.data.filter((item) => item.branch_id === currentUser?.branch_id)
-        Array.isArray(data.data) && setData(userRender)
-      } else {
-        Array.isArray(data.data) && setData(data.data)
-      }
+      Array.isArray(data.data) && setData(data.data)
 
       data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
     } catch (error) {
@@ -202,8 +186,6 @@ const Table: FC<Props> = ({
             <tbody className='text-gray-600 fw-bold'>
               {data.length > 0 ? (
                 data.map((item, idx) => {
-                  console.log(item)
-
                   return (
                     <tr key={idx}>
                       {rows.map(({key, component, type, classNameTableBody, isHide}, i) => {
