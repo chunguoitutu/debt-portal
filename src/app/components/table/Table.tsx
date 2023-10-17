@@ -53,12 +53,11 @@ const Table: FC<Props> = ({
     total: 0,
   })
   const {total, ...pagination} = searchCriteria
-  console.log(currentUser, 'currentUser')
 
   useEffect(() => {
     onFetchDataList(pagination)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser])
+  }, [])
 
   useEffect(() => {
     const handleRefresh = async () => {
@@ -112,6 +111,9 @@ const Table: FC<Props> = ({
           return []
         })
         setData(listData2)
+      } else if (endPointGetListing === '/config/loan_officer') {
+        const userRender = data.data.filter((item) => item.branch_id === currentUser?.branch_id)
+        Array.isArray(data.data) && setData(userRender)
       } else {
         Array.isArray(data.data) && setData(data.data)
       }

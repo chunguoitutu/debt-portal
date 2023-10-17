@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {UserInfo} from '../../../modules/auth'
+import {UserInfo, useAuth} from '../../../modules/auth'
 import {USER_TABLE_CONFIG} from './UserTableConfig'
 import UserEdit from './UserEdit'
 import Table from '../../../components/table/Table'
@@ -8,6 +8,7 @@ const UserManagement = () => {
   const [dataEdit, setDataEdit] = useState<UserInfo>()
   const [showPopup, setShowPopup] = useState<boolean>(false)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
+  const {currentUser} = useAuth()
 
   useEffect(() => {
     onFetchUserList()
@@ -43,6 +44,7 @@ const UserManagement = () => {
         />
       )}
       <Table
+        currentUser={currentUser}
         config={USER_TABLE_CONFIG}
         onEditItem={onShowPopup}
         isUpdated={isUpdated}
