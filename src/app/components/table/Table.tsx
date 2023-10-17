@@ -35,7 +35,7 @@ const Table: FC<Props> = ({
     showDeleteButton = true,
     showEditButton = true,
     showViewButton = true,
-    textConfirmRemove,
+    textConfirmDelete,
     endPointDelete,
     endPointGetListing,
     fieldDelete,
@@ -147,7 +147,7 @@ const Table: FC<Props> = ({
     swalConfirmDelete
       .fire({
         title: 'Are you sure?',
-        text: textConfirmRemove || `You won't be able to revert this.`,
+        text: textConfirmDelete || `You won't be able to revert this.`,
       })
       .then((result) => {
         if (result.isConfirmed) {

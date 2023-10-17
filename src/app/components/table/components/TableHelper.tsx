@@ -8,7 +8,9 @@ type Props = {
 }
 
 const TableHelper = ({config, handleAddNew}: Props) => {
-  const {showSearch} = config?.settings
+  const {showSearch, showFilter, showAddNewButton = true} = config?.settings
+  if( !showFilter && !showSearch && !showAddNewButton ) return <></>
+
   return (
     <div className='card-header border-0 pt-6'>
       <div>{showSearch && <SearchBar />}</div>

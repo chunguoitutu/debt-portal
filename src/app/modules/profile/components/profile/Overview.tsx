@@ -13,7 +13,7 @@ export function Overview() {
           </div>
 
           <Link
-            to='/crafted/account/settings'
+            to='/account/settings'
             className='btn btn-primary align-self-center'
             style={{fontSize: 12}}
           >
