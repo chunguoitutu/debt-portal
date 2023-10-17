@@ -10,6 +10,7 @@ type Props = {
   valueTitle: string
   setValueTitle: string
   required?: boolean
+  classShared?: string
 }
 
 const Select = ({
@@ -24,6 +25,7 @@ const Select = ({
   valueTitle,
   required = false,
   setValueTitle,
+  classShared = 'row mb-6',
 }: Props) => {
   const handleChange = (e: any) => {
     onChange(id, e.target.value as string)
@@ -48,7 +50,7 @@ const Select = ({
     )
   }
   return (
-    <div className='row mb-6'>
+    <div className={`${classShared}`}>
       <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
         <span className={`${required ? 'required' : ''}`}>{title}</span>
       </label>
