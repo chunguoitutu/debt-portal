@@ -12,14 +12,13 @@ const ToolBar = ({config, handleAddNew}: Props) => {
   const {settings} = config
   const {currentUser} = useAuth()
   const {buttonAddNew, showfilter} = settings
+
   const checkNewButton = useMemo(() => {
-    if (
-      settings?.endPointGetListing === '/config/branch' &&
-      currentUser?.role_name !== 'Full-Access'
-    ) {
+    if (settings?.endPointGetListing === '/config/branch' && currentUser?.priority !== 1) {
       return false
     }
     return true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <div className='d-flex justify-content-end' data-kt-user-table-toolbar='base'>

@@ -3,7 +3,6 @@ import {BRANCH_TABLE_CONFIG} from './BranchTableConfig'
 import {CreateEditBranch} from './CreateEditBranch'
 import BranchDetail from './BranchDetail'
 import Table from '../../../components/table/Table'
-import {useAuth} from '../../../modules/auth'
 
 type Props = {}
 export interface items {
@@ -25,7 +24,6 @@ const BranchManagement = (props: Props) => {
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [id, setId] = useState<Number>(1)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
-  const {currentUser} = useAuth()
 
   const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
 
@@ -57,7 +55,6 @@ const BranchManagement = (props: Props) => {
           onEditItem={handleShowEdit}
           onViewDetail={handleViewDetail}
           isUpdated={isUpdated}
-          currentUser={currentUser}
           setIsUpdated={setIsUpdated}
           handleAddNew={() => setShowCreateAppModal(!showCreateAppModal)}
         />
