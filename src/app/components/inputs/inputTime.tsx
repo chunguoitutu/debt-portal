@@ -1,44 +1,33 @@
-import React from 'react'
+import React, {InputHTMLAttributes} from 'react'
 
-interface IProps {
-  onChange?: any
-  value: any
-  placeholder?: string
+interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   id?: string
   title: string
-  onBlur?: any
   error?: any
   errorTitle?: any
   touched?: any
-  classCSS?: string
   required?: boolean
+  classShared?: string
 }
 
 export const InputTime: React.FC<IProps> = ({
-  value,
   errorTitle,
-  onChange,
-  placeholder,
   error = false,
-  id,
   title,
-  onBlur,
   touched,
   required = false,
+  classShared = 'fv-row mb-10',
+  ...reset
 }) => {
   return (
     <div>
-      <div className='fv-row mb-10'>
+      <div className={`${classShared}`}>
         <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
         <input
           type='datetime-local'
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          id={id}
-          onBlur={onBlur}
+          {...reset}
           className='form-control form-control-lg form-control-solid'
         />
         {touched && error && (
