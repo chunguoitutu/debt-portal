@@ -211,7 +211,14 @@ const Table: FC<Props> = ({
                             )
                           }
 
-                          return <Component data={item} key={i} />
+                          return (
+                            <Component
+                              data={item}
+                              key={i}
+                              isUpdated={isUpdated}
+                              setIsUpdated={setIsUpdated}
+                            />
+                          )
                         }
 
                         if (type) {
