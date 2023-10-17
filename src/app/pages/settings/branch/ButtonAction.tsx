@@ -34,9 +34,10 @@ const ButtonAction = ({data, setIsUpdated, isUpdated}: Props) => {
     setShowDetail(true)
     setDataItem(item)
   }
+
   async function handleDeleteItem(item: any) {
     try {
-      const endPoint = '/config/branch' + `/${item?.id}`
+      const endPoint = `/config/branch/${item?.id}`
       await request.delete(endPoint)
       swalToast.fire({
         title: 'Branch successfully deleted',

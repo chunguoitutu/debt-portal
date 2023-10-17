@@ -24,8 +24,8 @@ type Props = {
 }
 
 export const newCompaniesSchema = Yup.object().shape({
-  company_name: Yup.string().required('Company name  is required.'),
-  business_uen: Yup.string().required('Busiess Uen  is required.'),
+  company_name: Yup.string().required('Company Name is required.'),
+  business_uen: Yup.string().required('Business Uen is required.'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
     .max(11, 'Maximum 11 symbols')
@@ -37,7 +37,7 @@ export const newCompaniesSchema = Yup.object().shape({
   registration_date: Yup.string().required('Registration is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
   city: Yup.string().required('City is required.'),
-  zipcode: Yup.string().required('zip code is required.'),
+  zipcode: Yup.string().required('Zip Code is required.'),
   state: Yup.string().required('State is required.'),
   country: Yup.string().required('Country is required.'),
 })
