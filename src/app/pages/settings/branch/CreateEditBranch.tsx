@@ -30,18 +30,15 @@ export const CreateEditBranchSchema = Yup.object().shape({
   business_uen: Yup.string().required('Business Uen is required.'),
   company_id: Yup.string().required('Company id is required.'),
   branch_name: Yup.string().required('Branch name is required.'),
-  telephone: Yup.string()
-    .min(6, 'Minimum 6 symbols')
-    .max(11, 'Maximum 11 symbols')
-    .required('Telephone is required.'),
+  telephone: Yup.string().min(6, 'Minimum 6 symbols').max(11, 'Maximum 11 symbols'),
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required.'),
+    .max(50, 'Maximum 50 symbols'),
   open_date: Yup.string().required('open_date is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
   city: Yup.string().required('City  is required.'),
+  zipcode: Yup.string().required('Zxip code is required.'),
   state: Yup.string().required('State is required.'),
   country: Yup.string().required('Country is required.'),
 })
@@ -276,7 +273,6 @@ const CreateEditBranch = ({
                     touched={touched.telephone}
                     errorTitle={errors.telephone}
                     value={values.telephone}
-                    required={true}
                     onChange={handleChange}
                   />
                   <Input
@@ -287,9 +283,9 @@ const CreateEditBranch = ({
                     errorTitle={errors.email}
                     value={values.email}
                     onChange={handleChange}
-                    required={true}
                   />
                   <InputTime
+                    required={true}
                     title='Open Date'
                     id='open_date'
                     error={errors.open_date}
