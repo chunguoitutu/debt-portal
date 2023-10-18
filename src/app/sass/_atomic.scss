@@ -1,0 +1,24 @@
+.multiple-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.two-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 2;
+}
+
+.three-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 3;
+}
+
+.four-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 4;
+}
+
+.text-gray {
+  color: #b5b5c3;
+}
