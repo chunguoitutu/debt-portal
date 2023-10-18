@@ -28,8 +28,8 @@ export type GetCurrentUserResponse = {}
 export type UserInfo = {
   username: string
   is_active: number | any
-  branch_id: number
-  user_id: number
+  company_id: number
+  id: number
   firstname: string
   middlename: string | null
   lastname: string
@@ -41,7 +41,7 @@ export type UserInfo = {
   priority: number
   role_id: number
   last_login_date: any
-  branch_name?: string | null | undefined
+  company_name?: string | null | undefined
 }
 
 export type updateUserInfo = {

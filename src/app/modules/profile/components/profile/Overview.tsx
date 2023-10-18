@@ -35,10 +35,10 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-semibold text-muted'>Branch Name</label>
+            <label className='col-lg-4 fw-semibold text-muted'>Company Name</label>
 
             <div className='col-lg-8 fv-row'>
-              <span className='fw-bold fs-6'>{currentUser?.branch_name}</span>
+              <span className='fw-bold fs-6'>{currentUser?.company_name}</span>
             </div>
           </div>
 

@@ -72,7 +72,7 @@ const Settings: React.FC = () => {
         email: formik.values.email,
       }
 
-      const {data} = await updateInfoUser(currentUser.user_id, values)
+      const {data} = await updateInfoUser(currentUser.id, values)
       refreshToken(data.token)
       swalToast.fire({
         title: 'User information successfully updated',

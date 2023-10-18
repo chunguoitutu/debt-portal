@@ -42,11 +42,6 @@ const SettingPageRouter = () => {
         component: SettingCompanies,
       },
       {
-        path: 'branches',
-        labelBreadCrumbs: 'Branches',
-        component: SettingBranch,
-      },
-      {
         path: 'users',
         labelBreadCrumbs: 'Users',
         component: UserManagement,

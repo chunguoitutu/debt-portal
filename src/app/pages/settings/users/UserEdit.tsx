@@ -33,7 +33,7 @@ export const roleSchema = Yup.object().shape({
   firstname: Yup.string().required('First name is required.'),
   lastname: Yup.string().required('Last name is required.'),
   username: Yup.string().required('User name is required.'),
-  branch_id: Yup.string().required('Branch is required.'),
+  company_id: Yup.string().required('Branch is required.'),
   role_id: Yup.string().required('Role is required.'),
   email: Yup.string().email("Email isn't valid").required('Email is required.'),
   telephone: Yup.string()
@@ -52,7 +52,7 @@ const initialValues = {
   lastname: '',
   username: '',
   password: '',
-  branch_id: '',
+  company_id: '',
   role_id: '',
   email: '',
   telephone: '',
@@ -85,7 +85,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
     if (!currentUser) return
 
     request
-      .post<DataResponse<BranchItem[]>>('config/branch/listing')
+      .post<DataResponse<BranchItem[]>>('config/company/listing')
       .then(({data}) => {
         setDataBranch(data.data)
       })
@@ -115,25 +115,25 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   }, [currentUser])
 
   function handleSubmitForm(values: UserInfo) {
-    const {user_id, ...payload} = values
+    const {id, ...payload} = values
     if (data) {
-      onUpdateUser({id: user_id, data: {...payload, is_active: isActive ? 1 : 0}})
+      onUpdateUser({id: id, data: {...payload, is_active: isActive ? 1 : 0}})
     } else {
       handleCreateUser(payload)
     }
   }
 
-  async function handleCreateUser(payload: Omit<UserInfo, 'user_id'>) {
+  async function handleCreateUser(payload: Omit<UserInfo, 'id'>) {
     setLoading(true)
 
     try {
       const mappingPayload = {
         ...payload,
         is_active: isActive ? 1 : 0,
-        branch_id: +payload.branch_id,
+        company_id: +payload.company_id,
         role_id: +payload.role_id,
       }
-      const {data} = await request.post('config/loan_officer', mappingPayload)
+      const {data} = await request.post('config/user', mappingPayload)
 
       // handle after create successfully
       if (!data?.error) {
@@ -161,14 +161,14 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
     }
   }
 
-  async function onUpdateUser(payload: UpdateById<Omit<UserInfo, 'user_id'>>) {
+  async function onUpdateUser(payload: UpdateById<Omit<UserInfo, 'id'>>) {
     // Pass if id = 0
     if (!payload.id) return
 
     setLoading(true)
 
     try {
-      const {data} = await request.post('config/loan_officer/' + payload.id, payload.data)
+      const {data} = await request.post('config/user/' + payload.id, payload.data)
       if (!data?.error) {
         await onRefreshListing()
         onClose()
@@ -330,14 +330,14 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
                       <Select
                         required
                         datas={dataBranch}
-                        valueTitle='branch_name'
+                        valueTitle='company_name'
                         setValueTitle='id'
-                        title='Branch'
-                        id='branch_id'
-                        errors={errors.branch_id}
-                        touched={touched.branch_id}
-                        errorTitle={errors.branch_id}
-                        value={values.branch_id}
+                        title='Company'
+                        id='company_id'
+                        errors={errors.company_id}
+                        touched={touched.company_id}
+                        errorTitle={errors.company_id}
+                        value={values.company_id}
                         onChange={setFieldValue}
                       />
                     </div>
