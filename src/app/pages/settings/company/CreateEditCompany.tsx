@@ -48,106 +48,104 @@ const CreateEditCompanies = ({
   show,
   handleClose,
   titleLable = 'New',
-  data = [],
+  data,
   loadapi,
   setLoadApi,
   handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
-  const [status, setStatus] = useState(data ? data?.status : false)
+  const [status, setStatus] = useState(data ? data?.status : true)
 
   useEffect(() => {
-    request
-      .get(`config/company/id/${data.id}/address/${data.address_id}`)
-      .then((response) => {
-        setFieldValue('street_1', response.data.data.street_1)
-        setFieldValue('street_2', response.data.data.street_2)
-        setFieldValue('city', response.data.data.city)
-        setFieldValue('state', response.data.data.state)
-        setFieldValue('zipcode', response.data.data.zipcode)
-        setFieldValue('country', response.data.data.country)
-      })
-      .catch((error) => {
-        console.error('Error: ', error?.message)
-      })
+    data &&
+      request
+        .get(`config/company/id/${data.id}/address/${data.address_id}`)
+        .then((response) => {
+          setFieldValue('street_1', response.data.data.street_1)
+          setFieldValue('street_2', response.data.data.street_2)
+          setFieldValue('city', response.data.data.city)
+          setFieldValue('state', response.data.data.state)
+          setFieldValue('zipcode', response.data.data.zipcode)
+          setFieldValue('country', response.data.data.country)
+        })
+        .catch((error) => {
+          console.error('Error: ', error?.message)
+        })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik(
-    {
-      initialValues: {
-        company_name: data ? data?.company_name : '',
-        company_code: data ? data?.company_code : '',
-        business_uen: data ? data?.business_uen : '',
-        telephone: data ? data?.telephone : '',
-        email: data ? data?.email : '',
-        website: data ? data?.website : '',
-        registration_date: data ? moment(data?.registration_date).format('YYYY-MM-DDTHH:mm') : '',
-        street_1: '',
-        street_2: '',
-        city: '',
-        state: '',
-        zipcode: '',
-        country: '',
-      },
-      validationSchema: newCompaniesSchema,
-      onSubmit: async (values: any, actions: any) => {
-
-        if (titleLable === 'Edit') {
-          await request
-            .post('config/company/' + data?.id, {
-              company_name: values.company_name,
-              company_code: values.company_code,
-              business_uen: values.business_uen,
-              telephone: values.telephone,
-              email: values.email,
-              website: values.website,
-              registration_date: new Date(values.registration_date),
-              status: status ? 1 : 0,
-            })
-            .then((response) => {
-              request
-                .post('config/address/' + data?.address_id, {
-                  address_type_id: 1,
-                  street_1: values.street_1,
-                  street_2: values.street_2,
-                  city: values.city,
-                  state: values.state,
-                  zipcode: values.zipcode,
-                  country: values.country,
-                })
-                .then((response) => {
-                  if (!response.data?.error) {
-                    swalToast.fire({
-                      icon: 'success',
-                      title: 'Company successfully updated',
-                    })
-                  }
-                  handleUpdated()
-                  handleClose()
-                  setLoadApi(!loadapi)
-                })
-                .catch((error) => {
-                  handleClose()
-                  swalToast.fire({
-                    icon: 'error',
-                    title: error?.message,
-                  })
-                })
-            })
-            .catch((error) => {
-              handleClose()
-              swalToast.fire({
-                icon: 'error',
-                title: error?.message,
+  const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik({
+    initialValues: {
+      company_name: data ? data?.company_name : '',
+      company_code: data ? data?.company_code : '',
+      business_uen: data ? data?.business_uen : '',
+      telephone: data ? data?.telephone : '',
+      email: data ? data?.email : '',
+      website: data ? data?.website : '',
+      registration_date: data ? moment(data?.registration_date).format('YYYY-MM-DDTHH:mm') : '',
+      street_1: '',
+      street_2: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      country: '',
+    },
+    validationSchema: newCompaniesSchema,
+    onSubmit: async (values: any, actions: any) => {
+      if (titleLable === 'Edit') {
+        await request
+          .post('config/company/' + data?.id, {
+            company_name: values.company_name,
+            company_code: values.company_code,
+            business_uen: values.business_uen,
+            telephone: values.telephone,
+            email: values.email,
+            website: values.website,
+            registration_date: new Date(values.registration_date),
+            status: status ? 1 : 0,
+          })
+          .then((response) => {
+            request
+              .post('config/address/' + data?.address_id, {
+                address_type_id: 1,
+                street_1: values.street_1,
+                street_2: values.street_2,
+                city: values.city,
+                state: values.state,
+                zipcode: values.zipcode,
+                country: values.country,
               })
+              .then((response) => {
+                if (!response.data?.error) {
+                  swalToast.fire({
+                    icon: 'success',
+                    title: 'Company successfully updated',
+                  })
+                }
+                handleUpdated()
+                handleClose()
+                setLoadApi(!loadapi)
+              })
+              .catch((error) => {
+                handleClose()
+                swalToast.fire({
+                  icon: 'error',
+                  title: error?.message,
+                })
+              })
+          })
+          .catch((error) => {
+            handleClose()
+            swalToast.fire({
+              icon: 'error',
+              title: error?.message,
             })
-        }
-      },
-    }
-  )
+          })
+      }
+    },
+  })
 
   return createPortal(
     <Modal
@@ -165,6 +163,7 @@ const CreateEditCompanies = ({
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
+
       <div style={{maxHeight: '500px', overflowY: 'auto'}} className='modal-body '>
         <div
           ref={stepperRef}
