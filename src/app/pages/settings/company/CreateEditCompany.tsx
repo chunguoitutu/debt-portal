@@ -34,7 +34,7 @@ export const newCompaniesSchema = Yup.object().shape({
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols'),
-  registration_date: Yup.string().required('Registration is required.'),
+  open_date: Yup.string().required('Open Date is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
   city: Yup.string().required('City is required.'),
   zipcode: Yup.string().required('Zip Code is required.'),
@@ -84,7 +84,7 @@ const CreateEditCompanies = ({
       telephone: data ? data?.telephone : '',
       email: data ? data?.email : '',
       website: data ? data?.website : '',
-      registration_date: data ? moment(data?.registration_date).format('YYYY-MM-DDTHH:mm') : '',
+      open_date: data ? moment(data?.open_date).format('YYYY-MM-DDTHH:mm') : '',
       street_1: '',
       street_2: '',
       city: '',
@@ -103,7 +103,7 @@ const CreateEditCompanies = ({
             telephone: values.telephone,
             email: values.email,
             website: values.website,
-            registration_date: new Date(values.registration_date),
+            open_date: new Date(values.open_date),
             status: status ? 1 : 0,
           })
           .then((response) => {
@@ -235,12 +235,12 @@ const CreateEditCompanies = ({
                   />
                   <InputTime
                     required={true}
-                    title='Registration Date'
-                    id='registration_date'
-                    error={errors.registration_date}
-                    touched={touched.registration_date}
-                    errorTitle={errors.registration_date}
-                    value={values.registration_date}
+                    title='Open Date'
+                    id='open_date'
+                    error={errors.open_date}
+                    touched={touched.open_date}
+                    errorTitle={errors.open_date}
+                    value={values.open_date}
                     onChange={handleChange}
                   />
                   <InputCheck

@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {UserInfo} from '../../../modules/auth'
 import {USER_TABLE_CONFIG} from './UserTableConfig'
-import UserEdit from './UserEdit'
+import CreateEditUser from './CreateEditUser'
 import Table from '../../../components/table/Table'
 
 const UserManagement = () => {
@@ -30,7 +30,8 @@ const UserManagement = () => {
   return (
     <>
       {showPopup && (
-        <UserEdit
+        <CreateEditUser
+          config={USER_TABLE_CONFIG}
           show={showPopup}
           data={dataEdit}
           onClose={handleClosePopupCreateEditPopup}
