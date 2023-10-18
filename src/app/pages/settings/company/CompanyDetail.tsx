@@ -80,9 +80,9 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
         <div style={{width: '47%'}}>
           {rows.map((row, index) => (
             <>
-              {row.key === 'registration_date' || row.key === 'id' || row.key === 'status' ? (
+              {row.key === 'open_date' || row.key === 'id' || row.key === 'status' ? (
                 <>
-                  {row.key === 'registration_date' && (
+                  {row.key === 'open_date' && (
                     <div key={index}>
                       {showLable({
                         title: row.name,

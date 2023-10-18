@@ -4,6 +4,7 @@ import {
   BranchItem,
   DataResponse,
   RoleInfo,
+  TableConfig,
   UpdateById,
   UserInfo,
   useAuth,
@@ -23,6 +24,7 @@ import Select from '../../../components/selects/select'
 import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
 
 type Props = {
+  config?: TableConfig
   data?: UserInfo
   show: boolean
   onClose: () => void
@@ -58,12 +60,14 @@ const initialValues = {
   telephone: '',
 }
 
-const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
+const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [isActive, setIsActive] = useState<any>(data ? data?.is_active : true)
   const [dataBranch, setDataBranch] = useState<BranchItem[]>([])
   const [dataRole, setDataRole] = useState<RoleInfo[]>([])
   const [active, setActive] = useState<boolean>(true)
+
+  const {apiGetCompanyList, apiGetRoleList} = config?.settings?.dependencies || {}
 
   const {priority, currentUser} = useAuth()
 
@@ -84,28 +88,31 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   useEffect(() => {
     if (!currentUser) return
 
-    request
-      .post<DataResponse<BranchItem[]>>('config/company/listing')
-      .then(({data}) => {
-        setDataBranch(data.data)
-      })
-      .catch((error) => {
-        console.error('Error: ', error?.message)
-      })
+    apiGetCompanyList &&
+      request
+        .post<DataResponse<BranchItem[]>>(apiGetCompanyList)
+        .then(({data}) => {
+          setDataBranch(data.data)
+        })
+        .catch((error) => {
+          console.error('Error: ', error?.message)
+        })
 
-    request
-      .post<DataResponse<RoleInfo[]>>('config/role/listing')
-      .then(({data}) => {
-        let roleList = Array.isArray(data.data) ? [...data.data] : []
+    apiGetRoleList &&
+      request
+        .post<DataResponse<RoleInfo[]>>(apiGetRoleList)
+        .then(({data}) => {
+          let roleList = Array.isArray(data.data) ? [...data.data] : []
 
-        if (priority === 2) {
-          roleList = roleList.filter((role) => role.priority > 2)
-        }
-        setDataRole(roleList)
-      })
-      .catch((error) => {
-        console.error('Error: ', error?.message)
-      })
+          if (priority === 2) {
+            roleList = roleList.filter((role) => role.priority > 2)
+          }
+          setDataRole(roleList)
+        })
+        .catch((error) => {
+          console.error('Error: ', error?.message)
+        })
+
     if (!data) return
     setValues(data)
 
@@ -117,7 +124,15 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   function handleSubmitForm(values: UserInfo) {
     const {id, ...payload} = values
     if (data) {
-      onUpdateUser({id: id, data: {...payload, is_active: isActive ? 1 : 0}})
+      onUpdateUser({
+        id: id,
+        data: {
+          ...payload,
+          is_active: isActive ? 1 : 0,
+          company_id: +payload.company_id,
+          role_id: +payload.role_id,
+        },
+      })
     } else {
       handleCreateUser(payload)
     }
@@ -399,4 +414,4 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   )
 }
 
-export default UserEdit
+export default CreateEditUser

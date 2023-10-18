@@ -8,7 +8,10 @@ export const USER_TABLE_CONFIG: TableConfig = {
     showDeleteButton: true,
     showViewButton: false,
     endPointDelete: '/config/user',
-    fieldDelete: 'user_id',
+    dependencies: {
+      apiGetCompanyList: 'config/company/listing',
+      apiGetRoleList: 'config/role/listing',
+    },
     endPointGetListing: '/config/user',
     messageDeleteSuccess: 'User successfully deleted',
     buttonAddNew: 'New User',

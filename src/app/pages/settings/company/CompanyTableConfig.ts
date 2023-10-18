@@ -11,7 +11,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     endPointGetListing: '/config/company',
     messageDeleteSuccess: 'Company successfully deleted',
     buttonAddNew: 'New Company',
-    showAddNewButton: false
+    showAddNewButton: false,
   },
   rows: [
     {
@@ -43,7 +43,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
       name: 'Website',
     },
     {
-      key: 'registration_date',
+      key: 'open_date',
       name: 'Registation Date',
       type: 'datetime',
     },

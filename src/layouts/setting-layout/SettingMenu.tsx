@@ -7,6 +7,7 @@ import {v4 as uuidv4} from 'uuid'
 type MenuItem = {
   activeKey: string
   title: string
+  priority: number[]
   children: MenuChildren[]
 }
 
@@ -23,10 +24,11 @@ const SettingMenu = () => {
   const {priority} = useAuth()
 
   const MENU_LIST: MenuItem[] = useMemo(() => {
-    const fullMenu = [
+    return [
       {
         activeKey: uuidv4(),
         title: 'Company Management',
+        priority: [1],
         children: [
           {
             id: uuidv4(),
@@ -38,6 +40,7 @@ const SettingMenu = () => {
       {
         activeKey: uuidv4(),
         title: 'User Management',
+        priority: [1, 2],
         children: [
           {
             id: uuidv4(),
@@ -49,11 +52,12 @@ const SettingMenu = () => {
       {
         activeKey: uuidv4(),
         title: 'Listing',
+        priority: [1],
         children: [
           {
             id: uuidv4(),
-            to: '/settings/branches',
-            label: 'Branches',
+            to: '/settings/companies',
+            label: 'Companies',
           },
           {
             id: uuidv4(),
@@ -95,6 +99,7 @@ const SettingMenu = () => {
       {
         activeKey: uuidv4(),
         title: 'Settings',
+        priority: [1],
         children: [
           {
             id: uuidv4(),
@@ -105,28 +110,11 @@ const SettingMenu = () => {
       },
     ]
 
-    if (priority === 2) {
-      let menuAdminOnly = fullMenu.filter((menu) =>
-        ['Listing', 'User Management'].includes(menu.title)
-      )
-      menuAdminOnly = menuAdminOnly.map((menu) => {
-        if (menu.title === 'Listing') {
-          const childrenAccept = menu.children.filter((item) => ['Branches'].includes(item.label))
-          return {...menu, children: childrenAccept}
-        }
-
-        return menu
-      })
-      return menuAdminOnly
-    }
-
-    return fullMenu
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priority])
+  }, [])
 
   useEffect(() => {
-    if (!priority || priority > 2) return
+    if (!priority) return
 
     const currentMenuItemActive = MENU_LIST.filter((menu) =>
       menu.children.find((item) => item.to === pathname)
@@ -153,7 +141,7 @@ const SettingMenu = () => {
         activeKey={activeKey}
         onSelect={handleSelect}
       >
-        {MENU_LIST.map((menu, index) => {
+        {MENU_LIST.filter((item) => item.priority.includes(priority)).map((menu, index) => {
           return (
             <Accordion.Item eventKey={menu.activeKey} key={index}>
               <Accordion.Header>{menu.title}</Accordion.Header>
