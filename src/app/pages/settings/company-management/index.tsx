@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import {swalToast} from '../../../swal-notification'
 import {Input} from '../../../components/inputs/input'
 import {InputTime} from '../../../components/inputs/inputTime'
+import moment from 'moment'
 
 export const CompanyManagement = () => {
   const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG
@@ -38,6 +39,7 @@ export const CompanyManagement = () => {
       .catch((error) => {
         console.error('Error: ', error?.message)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const generateField = React.useMemo(() => {
@@ -48,6 +50,8 @@ export const CompanyManagement = () => {
       }, {})
     }
     return {}
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [information])
 
   const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik({
@@ -104,13 +108,19 @@ export const CompanyManagement = () => {
   React.useEffect(() => {
     if (information) {
       rows.forEach((row) => {
-        setFieldValue(row.key, information[row.key])
+        if (row.key === 'open_date') {
+          setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DDTHH:mm'))
+        } else {
+          setFieldValue(row.key, information[row.key])
+        }
       }, {})
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [information])
+
   return (
-    <>
-      <div className='row gx-10'>
+    <div className='card'>
+      <div className='card-body row gx-10'>
         {information ? (
           <>
             {rows.map((row) => (
@@ -123,7 +133,7 @@ export const CompanyManagement = () => {
                     error={errors[row.key]}
                     touched={touched[row.key]}
                     errorTitle={errors[row.key]}
-                    value={values[row.key]}
+                    value={values[row.key] || ''}
                     onChange={handleChange}
                   />
                 ) : (
@@ -134,7 +144,7 @@ export const CompanyManagement = () => {
                     error={errors[row.key]}
                     touched={touched[row.key]}
                     errorTitle={errors[row.key]}
-                    value={values[row.key]}
+                    value={values[row.key] || ''}
                     onChange={handleChange}
                   />
                 )}
@@ -148,6 +158,6 @@ export const CompanyManagement = () => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   )
 }

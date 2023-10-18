@@ -21,15 +21,6 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       require: true,
     },
     {
-      key: 'email',
-      name: 'Email',
-      require: true,
-    },
-    {
-      key: 'website',
-      name: 'Website',
-    },
-    {
       key: 'street_1',
       name: 'Street 1',
       require: true,
@@ -37,6 +28,11 @@ export const COMPANY_MANAGEMENT_CONFIG = {
     {
       key: 'street_2',
       name: 'Street 2',
+    },
+    {
+      key: 'email',
+      name: 'Email',
+      require: true,
     },
     {
       key: 'open_date',
@@ -55,13 +51,13 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       require: true,
     },
     {
-      key: 'zipcode',
-      name: 'Zip Code',
+      key: 'country',
+      name: 'Country',
       require: true,
     },
     {
-      key: 'country',
-      name: 'Country',
+      key: 'zipcode',
+      name: 'Zip Code',
       require: true,
     },
   ],
