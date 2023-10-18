@@ -14,6 +14,10 @@ import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
 import {Input} from '../../../components/inputs/input'
 import request from '../../../axios'
+import Col from 'react-bootstrap/Col'
+import Nav from 'react-bootstrap/Nav'
+import Row from 'react-bootstrap/Row'
+import Tab from 'react-bootstrap/Tab'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import Select from '../../../components/selects/select'
 import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
@@ -59,6 +63,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
   const [isActive, setIsActive] = useState<any>(data ? data?.is_active : true)
   const [dataBranch, setDataBranch] = useState<BranchItem[]>([])
   const [dataRole, setDataRole] = useState<RoleInfo[]>([])
+  const [active, setActive] = useState<boolean>(true)
 
   const {priority, currentUser} = useAuth()
 
@@ -195,141 +200,189 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
       show={show}
       onClose={onClose}
     >
-      <div className='row'>
-        <div className='col-4'>
-          <Input
-            title='First Name'
-            id='firstname'
-            error={errors.firstname}
-            touched={touched.firstname}
-            errorTitle={errors.firstname}
-            value={values.firstname || ''}
-            onChange={handleChange}
-            required={true}
-            name='firstname'
-          />
-        </div>
+      <Tab.Container id='left-tabs-example' defaultActiveKey='first'>
+        <Row>
+          <Col>
+            <Nav variant='pills' className='flex-column gap-2 '>
+              <Nav.Item
+                style={{
+                  width: '100%',
+                }}
+              >
+                <Nav.Link
+                  onClick={() => setActive(true)}
+                  eventKey='first'
+                  style={{
+                    width: '100%',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: active ? 'white' : '#071437',
+                    background: active ? '#3e97ff' : '',
+                  }}
+                >
+                  Account
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  onClick={() => setActive(false)}
+                  eventKey='second'
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: active ? '#071437' : 'white',
+                    background: active ? '' : '#3e97ff',
+                    marginBottom: '30px',
+                  }}
+                >
+                  Information
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col sm={9} className='h-lg-350px'>
+            <Tab.Content>
+              <Tab.Pane eventKey='first'>
+                <div className='row'>
+                  <div className='col-6'>
+                    <Input
+                      title='User Name'
+                      id='username'
+                      error={errors.username}
+                      touched={touched.username}
+                      errorTitle={errors.username}
+                      value={values.username || ''}
+                      onChange={handleChange}
+                      required={true}
+                    />
+                  </div>
+                  <div className='col-6'>
+                    <Input
+                      title='Password'
+                      id='password'
+                      error={errors.password}
+                      touched={touched.password}
+                      errorTitle={errors.password}
+                      value={values.password || ''}
+                      type='password'
+                      onChange={handleChange}
+                      required={data ? false : true}
+                    />
+                  </div>
+                  <div className='col-6'>
+                    <Select
+                      required
+                      datas={dataRole}
+                      valueTitle='role_name'
+                      setValueTitle='id'
+                      title='Role'
+                      id='role_id'
+                      errors={errors.role_id}
+                      touched={touched.role_id}
+                      errorTitle={errors.role_id}
+                      value={values.role_id}
+                      onChange={setFieldValue}
+                    />
+                  </div>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey='second'>
+                <div>
+                  <div className='row'>
+                    <div className='col-6'>
+                      <Input
+                        title='First Name'
+                        id='firstname'
+                        error={errors.firstname}
+                        touched={touched.firstname}
+                        errorTitle={errors.firstname}
+                        value={values.firstname || ''}
+                        onChange={handleChange}
+                        required={true}
+                        name='firstname'
+                      />
+                    </div>
 
-        <div className='col-4'>
-          <Input
-            title='Middle Name'
-            id='middlename'
-            error={errors.middlename}
-            touched={touched.middlename}
-            errorTitle={errors.middlename}
-            value={values.middlename || ''}
-            onChange={handleChange}
-          />
-        </div>
+                    <div className='col-6'>
+                      <Input
+                        title='Last Name'
+                        id='lastname'
+                        error={errors.lastname}
+                        touched={touched.lastname}
+                        errorTitle={errors.lastname}
+                        value={values.lastname || ''}
+                        onChange={handleChange}
+                        required={true}
+                      />
+                    </div>
+                    <div className='col-6'>
+                      <Input
+                        title='Middle Name'
+                        id='middlename'
+                        error={errors.middlename}
+                        touched={touched.middlename}
+                        errorTitle={errors.middlename}
+                        value={values.middlename || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className='col-6'>
+                      <Select
+                        required
+                        datas={dataBranch}
+                        valueTitle='branch_name'
+                        setValueTitle='id'
+                        title='Branch'
+                        id='branch_id'
+                        errors={errors.branch_id}
+                        touched={touched.branch_id}
+                        errorTitle={errors.branch_id}
+                        value={values.branch_id}
+                        onChange={setFieldValue}
+                      />
+                    </div>
 
-        <div className='col-4'>
-          <Input
-            title='Last Name'
-            id='lastname'
-            error={errors.lastname}
-            touched={touched.lastname}
-            errorTitle={errors.lastname}
-            value={values.lastname || ''}
-            onChange={handleChange}
-            required={true}
-          />
-        </div>
+                    <div className='col-6'>
+                      <Input
+                        required
+                        title='Email'
+                        id='email'
+                        error={errors.email}
+                        touched={touched.email}
+                        errorTitle={errors.email}
+                        value={values.email || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
 
-        <div className='col-6'>
-          <Input
-            title='User Name'
-            id='username'
-            error={errors.username}
-            touched={touched.username}
-            errorTitle={errors.username}
-            value={values.username || ''}
-            onChange={handleChange}
-            required={true}
-          />
-        </div>
+                    <div className='col-6'>
+                      <Input
+                        required
+                        title='Telephone'
+                        id='telephone'
+                        onPaste={handlePaste}
+                        onKeyPressCapture={handleKeyPress}
+                        error={errors.telephone}
+                        touched={touched.telephone}
+                        errorTitle={errors.telephone}
+                        value={values.telephone || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
 
-        <div className='col-6'>
-          <Input
-            title='Password'
-            id='password'
-            error={errors.password}
-            touched={touched.password}
-            errorTitle={errors.password}
-            value={values.password || ''}
-            type='password'
-            onChange={handleChange}
-            required={data ? false : true}
-          />
-        </div>
-
-        <div className='col-6'>
-          <Select
-            required
-            datas={dataBranch}
-            valueTitle='branch_name'
-            setValueTitle='id'
-            title='Branch'
-            id='branch_id'
-            errors={errors.branch_id}
-            touched={touched.branch_id}
-            errorTitle={errors.branch_id}
-            value={values.branch_id}
-            onChange={setFieldValue}
-          />
-        </div>
-
-        <div className='col-6'>
-          <Select
-            required
-            datas={dataRole}
-            valueTitle='role_name'
-            setValueTitle='id'
-            title='Role'
-            id='role_id'
-            errors={errors.role_id}
-            touched={touched.role_id}
-            errorTitle={errors.role_id}
-            value={values.role_id}
-            onChange={setFieldValue}
-          />
-        </div>
-
-        <div className='col-6'>
-          <Input
-            required
-            title='Email'
-            id='email'
-            error={errors.email}
-            touched={touched.email}
-            errorTitle={errors.email}
-            value={values.email || ''}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className='col-6'>
-          <Input
-            required
-            title='Telephone'
-            id='telephone'
-            onPaste={handlePaste}
-            onKeyPressCapture={handleKeyPress}
-            error={errors.telephone}
-            touched={touched.telephone}
-            errorTitle={errors.telephone}
-            value={values.telephone || ''}
-            onChange={handleChange}
-          />
-        </div>
-
-        <InputCheck
-          checked={isActive}
-          onChange={() => setIsActive(!isActive)}
-          id='is_active'
-          title='Active'
-        />
-      </div>
-
+                    <InputCheck
+                      checked={isActive}
+                      onChange={() => setIsActive(!isActive)}
+                      id='is_active'
+                      title='Active'
+                    />
+                  </div>
+                </div>
+              </Tab.Pane>
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
       <div className='d-flex flex-end pt-4'>
         <button type='button' className='btn btn-lg btn-primary' onClick={() => handleSubmit()}>
           {loading ? (
