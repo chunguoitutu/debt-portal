@@ -206,7 +206,7 @@ const UserEdit: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
             <Nav variant='pills' className='flex-column gap-2 '>
               <Nav.Item
                 style={{
-                  width: '100%',
+                  marginRight: '0',
                 }}
               >
                 <Nav.Link
