@@ -32,8 +32,8 @@ const SettingMenu = () => {
         children: [
           {
             id: uuidv4(),
-            to: '/settings/companies',
-            label: 'Company Listing',
+            to: '/settings/company-management',
+            label: 'Company Information',
           },
         ],
       },

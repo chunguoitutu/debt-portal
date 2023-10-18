@@ -12,6 +12,7 @@ import RejectionType from './rejection-type/RejectionType'
 import {useMemo} from 'react'
 import {useAuth} from '../../modules/auth'
 import SettingManagementLayout from '../../../layouts/setting-layout/SettingManagement'
+import {CompanyManagement} from './company-management'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -33,6 +34,12 @@ const SettingPageRouter = () => {
 
   const router = useMemo(() => {
     return [
+      {
+        path: 'company-management',
+        labelBreadCrumbs: 'Company Management',
+        component: CompanyManagement,
+        priority: [1],
+      },
       {
         path: 'companies',
         labelBreadCrumbs: 'Companies',
