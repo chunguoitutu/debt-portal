@@ -83,7 +83,6 @@ const CreateEditCompanies = ({
       business_uen: data ? data?.business_uen : '',
       telephone: data ? data?.telephone : '',
       email: data ? data?.email : '',
-      website: data ? data?.website : '',
       open_date: data ? moment(data?.open_date).format('YYYY-MM-DDTHH:mm') : '',
       street_1: '',
       street_2: '',
@@ -102,7 +101,6 @@ const CreateEditCompanies = ({
             business_uen: values.business_uen,
             telephone: values.telephone,
             email: values.email,
-            website: values.website,
             open_date: new Date(values.open_date),
             status: status ? 1 : 0,
           })
@@ -224,15 +222,7 @@ const CreateEditCompanies = ({
                     value={values.email}
                     onChange={handleChange}
                   />
-                  <Input
-                    title='Website'
-                    id='website'
-                    error={errors.website}
-                    touched={touched.website}
-                    errorTitle={errors.website}
-                    value={values.website}
-                    onChange={handleChange}
-                  />
+
                   <InputTime
                     required={true}
                     title='Open Date'

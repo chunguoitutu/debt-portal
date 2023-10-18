@@ -12,7 +12,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       apiGetCompanyList: 'config/company/listing',
       apiGetRoleList: 'config/role/listing',
     },
-    endPointGetListing: '/config/user',
+    endPointGetListing: '/user',
     messageDeleteSuccess: 'User successfully deleted',
     buttonAddNew: 'New User',
   },

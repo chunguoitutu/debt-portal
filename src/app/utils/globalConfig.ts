@@ -1,3 +1,16 @@
+import {MenuSettingItem} from '../modules/auth'
+import AddressType from '../pages/settings/address-type/AddressType'
+import {CompanyManagement} from '../pages/settings/company-management'
+import CompanyListing from '../pages/settings/company/CompanyManagement'
+import DocumentTypes from '../pages/settings/document-types/DocumentTypes'
+import JobType from '../pages/settings/job-type/JobType'
+import LoanTypes from '../pages/settings/loan-type/LoanType'
+import MarkettingType from '../pages/settings/marketing-type/MarketingType'
+import RejectionType from '../pages/settings/rejection-type/RejectionType'
+import RolePage from '../pages/settings/role/RoleManagement'
+import UserManagement from '../pages/settings/user/UserManagement'
+import {v4 as uuidv4} from 'uuid'
+
 type BaseConfig = {
   value: string | number
   label: string
@@ -191,5 +204,154 @@ export const OBLIGATION: AdvanceConfig[] = [
     value: 'guarantor',
     label: 'Guarantor',
     code: 'G',
+  },
+]
+
+export const ROUTER_SETTING = [
+  {
+    path: 'company-management',
+    labelBreadCrumbs: 'Company Management',
+    component: CompanyManagement,
+    priority: [1],
+  },
+  {
+    path: 'companies',
+    labelBreadCrumbs: 'Companies',
+    priority: [1],
+    component: CompanyListing,
+  },
+  {
+    path: 'users',
+    labelBreadCrumbs: 'Users',
+    priority: [1, 2],
+    component: UserManagement,
+  },
+  {
+    path: 'document-type',
+    labelBreadCrumbs: 'Document Type',
+    priority: [1],
+    component: DocumentTypes,
+  },
+  {
+    path: 'loan-type',
+    labelBreadCrumbs: 'Loan Type',
+    priority: [1],
+    component: LoanTypes,
+  },
+  {
+    path: 'roles',
+    labelBreadCrumbs: 'Loan Type',
+    priority: [1],
+    component: RolePage,
+  },
+  {
+    path: 'job-type',
+    labelBreadCrumbs: 'Job Type',
+    priority: [1],
+    component: JobType,
+  },
+  {
+    path: 'address-type',
+    labelBreadCrumbs: 'Address Type',
+    priority: [1],
+    component: AddressType,
+  },
+  {
+    path: 'marketing-type',
+    labelBreadCrumbs: 'Marketing Type',
+    priority: [1],
+    component: MarkettingType,
+  },
+  {
+    path: 'rejection-type',
+    labelBreadCrumbs: 'Rejection Type',
+    priority: [1],
+    component: RejectionType,
+  },
+]
+
+export const MENU_SETTING_LISTING: MenuSettingItem[] = [
+  {
+    activeKey: uuidv4(),
+    title: 'Company Management',
+    priority: [1],
+    children: [
+      {
+        id: uuidv4(),
+        to: '/settings/company-management',
+        label: 'Company Information',
+      },
+    ],
+  },
+  {
+    activeKey: uuidv4(),
+    title: 'User Management',
+    priority: [1, 2],
+    children: [
+      {
+        id: uuidv4(),
+        to: '/settings/users',
+        label: 'User Listing',
+      },
+    ],
+  },
+  {
+    activeKey: uuidv4(),
+    title: 'Listing',
+    priority: [1],
+    children: [
+      {
+        id: uuidv4(),
+        to: '/settings/companies',
+        label: 'Companies',
+      },
+      {
+        id: uuidv4(),
+        to: '/settings/roles',
+        label: 'Roles',
+      },
+      {
+        id: uuidv4(),
+        to: '/settings/document-type',
+        label: 'Document Type',
+      },
+      {
+        id: uuidv4(),
+        to: '/settings/loan-type',
+        label: 'Loan Type',
+      },
+      {
+        id: uuidv4(),
+        to: '/settings/job-type',
+        label: 'Job Type',
+      },
+      {
+        id: uuidv4(),
+        to: '/settings/address-type',
+        label: 'Address Type',
+      },
+      {
+        id: uuidv4(),
+        to: '/settings/marketing-type',
+        label: 'Marketing Type',
+      },
+      {
+        id: uuidv4(),
+        to: '/settings/rejection-type',
+        label: 'Rejection Type',
+      },
+    ],
+  },
+  {
+    activeKey: uuidv4(),
+    title: 'Settings',
+    priority: [1],
+    children: [
+      {
+        id: uuidv4(),
+        to: '/settings/other',
+        label: 'Config',
+      },
+    ],
   },
 ]

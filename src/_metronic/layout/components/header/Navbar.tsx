@@ -52,7 +52,7 @@ const Navbar = () => {
       {/* Priority <= 2 means super admin or admin */}
       {priority <= 2 && (
         <Link
-          to={`/settings/${priority === 1 ? 'companies' : 'users'}`}
+          to={`/settings/${priority === 1 ? 'company-management' : 'users'}`}
           className={clsx('app-navbar-item', itemClass)}
         >
           <div

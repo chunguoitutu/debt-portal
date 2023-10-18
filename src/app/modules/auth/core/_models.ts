@@ -129,3 +129,16 @@ export type BranchItem = {
   open_date: string
   status: number
 }
+
+export type MenuSettingItem = {
+  activeKey: string
+  title: string
+  priority: number[]
+  children: MenuChildren[]
+}
+
+type MenuChildren = {
+  id: string
+  to: string
+  label: string
+}

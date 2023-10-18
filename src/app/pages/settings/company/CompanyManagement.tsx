@@ -7,7 +7,7 @@ import CompanyDetail from './CompanyDetail'
 
 type Props = {}
 
-const CompanyManagement = (props: Props) => {
+const CompanyListing = (props: Props) => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
   const [showDetail, setShowDetail] = useState<boolean>(false)
   const [id, setId] = useState<Number>(1)
@@ -66,4 +66,4 @@ const CompanyManagement = (props: Props) => {
   )
 }
 
-export default CompanyManagement
+export default CompanyListing
