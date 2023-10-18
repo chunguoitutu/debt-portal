@@ -1,4 +1,4 @@
-import {Routes, Route, Outlet, Navigate} from 'react-router-dom'
+import {Routes, Route, Navigate} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import LoanTypes from './loan_type/LoanType'
 import SettingCompanies from './company/CompanyManagement'
@@ -10,9 +10,9 @@ import DocumentTypes from './document_types/DocumentTypes'
 import RolePage from './role/RoleManagement'
 import MarkettingType from './marketing_type/MarketingType'
 import RejectionType from './rejection-type/RejectionType'
-import {MenuSetting} from './MenuSetting'
 import {useMemo} from 'react'
 import {useAuth} from '../../modules/auth'
+import SettingManagementLayout from '../../../layouts/setting-layout/SettingManagement'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -101,19 +101,12 @@ const SettingPageRouter = () => {
 
   return (
     <Routes>
-      <Route
-        element={
-          <>
-            <MenuSetting />
-            <Outlet />
-          </>
-        }
-      >
+      <Route element={<SettingManagementLayout />}>
         {router.map(({path, component, labelBreadCrumbs}, i) => {
           const Comp = component
 
           if (priority === 2) {
-            profileBreadCrumbs[0]['path'] = '/settings/branches'
+            profileBreadCrumbs[0]['path'] = '/settings/users'
           }
 
           return (

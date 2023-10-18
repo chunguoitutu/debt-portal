@@ -1,37 +1,13 @@
 import clsx from 'clsx'
-import {useLayout} from '../../core'
 import {PageTitleWrapper} from './page-title'
 
 interface IProps {}
 
 // eslint-disable-next-line no-empty-pattern
 const ToolbarWrapper = ({}: IProps) => {
-  const {config, classes} = useLayout()
-  if (!config.app?.toolbar?.display) {
-    return null
-  }
-
   return (
-    <div
-      id='kt_app_toolbar'
-      className={clsx('app-toolbar', classes.toolbar.join(' '), config?.app?.toolbar?.class)}
-    >
-      <div
-        id='kt_app_toolbar_container'
-        className={clsx(
-          'app-container',
-          classes.toolbarContainer.join(' '),
-          config.app?.toolbar?.containerClass,
-          config.app?.toolbar?.minimize?.enabled ? 'app-toolbar-minimize' : '',
-          {
-            'container-fluid': config.app?.toolbar?.container === 'fluid',
-            'container-xxl': config.app?.toolbar?.container === 'fixed',
-          }
-        )}
-      >
-        <PageTitleWrapper />
-        {/* <Toolbar /> */}
-      </div>
+    <div className={clsx('my-8')}>
+      <PageTitleWrapper />
     </div>
   )
 }

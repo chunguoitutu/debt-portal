@@ -2,7 +2,6 @@ import {useEffect} from 'react'
 import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom'
 import {HeaderWrapper} from './components/header'
 import {ScrollTop} from './components/scroll-top'
-import {Content} from './components/content'
 import {FooterWrapper} from './components/footer'
 import {Sidebar} from './components/sidebar'
 import {ActivityDrawer, DrawerMessenger, InviteUsers, UpgradePlan} from '../partials'
@@ -71,11 +70,9 @@ const MasterLayout = () => {
           <div className='app-wrapper flex-column flex-row-fluid' id='kt_app_wrapper'>
             <Sidebar />
             <div className='app-main flex-column flex-row-fluid' id='kt_app_main'>
-              <div className='d-flex flex-column flex-column-fluid'>
+              <div className='d-flex flex-column flex-column-fluid app-container'>
                 <ToolbarWrapper />
-                <Content>
-                  <Outlet />
-                </Content>
+                <Outlet />
               </div>
               <FooterWrapper />
             </div>
