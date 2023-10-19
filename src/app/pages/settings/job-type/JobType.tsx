@@ -19,13 +19,15 @@ const JobType = () => {
   return (
     <>
       <div>
-        <CreateJobType
-          setLoadApi={setLoadApi}
-          loadApi={loadapi}
-          show={showPopupCreate}
-          handleClose={() => setShowPopupCreate(false)}
-          handleUpdated={() => setIsUpdated(true)}
-        />
+        {showPopupCreate && (
+          <CreateJobType
+            setLoadApi={setLoadApi}
+            loadApi={loadapi}
+            show={showPopupCreate}
+            handleClose={() => setShowPopupCreate(false)}
+            handleUpdated={() => setIsUpdated(true)}
+          />
+        )}
 
         <Table
           config={JOB_TABLE_CONFIG}
