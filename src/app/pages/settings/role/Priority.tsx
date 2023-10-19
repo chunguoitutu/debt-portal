@@ -5,7 +5,8 @@ type Props = {
 }
 
 const Priority = ({data}: Props) => {
-  const priority = ROLE_PRIORITY.filter((prioritys) => Number(data?.priority) === prioritys.value)
+  const priority = ROLE_PRIORITY.filter((priority) => Number(data?.priority) === priority.value)
+
   return (
     <div
       style={{
@@ -17,7 +18,7 @@ const Priority = ({data}: Props) => {
       }}
       className='text-gray-600 fw-bold '
     >
-      {priority?.[0].label}
+      {priority?.[0]?.label}
     </div>
   )
 }
