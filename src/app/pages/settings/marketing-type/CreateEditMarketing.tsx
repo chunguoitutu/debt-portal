@@ -42,7 +42,7 @@ const CreatEditMarkettingType = ({
   const {swalToastTitle, endpoint} = settings
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
-  const [status, setStatus] = useState(data ? data?.status : false)
+  const [status, setStatus] = useState(data?.length > 0 ? data?.status : true)
 
   const generateField = React.useMemo(() => {
     if (data) {
