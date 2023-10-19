@@ -258,7 +258,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     background: active ? '#3e97ff' : '',
                   }}
                 >
-                  Account
+                  Information
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
@@ -273,7 +273,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     marginBottom: '30px',
                   }}
                 >
-                  Information
+                  Account
                 </Nav.Link>
               </Nav.Item>
             </Nav>
@@ -281,57 +281,6 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
           <Col sm={9} className='h-lg-350px'>
             <Tab.Content>
               <Tab.Pane eventKey='first'>
-                <div className='row'>
-                  {(rows || [])
-                    ?.filter(
-                      (item) =>
-                        item.isCreateEdit && ['username', 'password', 'role_id'].includes(item.key)
-                    )
-                    .map((item, i) => {
-                      const {informCreateEdit, key, name} = item
-                      const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
-                        informCreateEdit || {}
-                      if (type === 'input') {
-                        return (
-                          <div className='col-6' key={i}>
-                            <Input
-                              type={typeInput}
-                              title={name}
-                              id={key}
-                              error={errors[key]}
-                              touched={touched[key]}
-                              errorTitle={errors[key]}
-                              value={values[key] || ''}
-                              onChange={handleChange}
-                              required={isRequired}
-                            />
-                          </div>
-                        )
-                      } else if (type === 'select') {
-                        return (
-                          <div className='col-6' key={i}>
-                            <Select
-                              required={isRequired}
-                              datas={dataRole}
-                              valueTitle={fieldLabelOption || key}
-                              setValueTitle={fieldValueOption || 'id'}
-                              title={name}
-                              id={key}
-                              errors={errors[key]}
-                              touched={touched[key]}
-                              errorTitle={errors[key]}
-                              value={values[key]}
-                              onChange={setFieldValue}
-                            />
-                          </div>
-                        )
-                      }
-
-                      return <Fragment key={i}></Fragment>
-                    })}
-                </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey='second'>
                 <div>
                   <div className='row'>
                     {(rows || [])
@@ -393,6 +342,57 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                         return <Fragment key={i}></Fragment>
                       })}
                   </div>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey='second'>
+                <div className='row'>
+                  {(rows || [])
+                    ?.filter(
+                      (item) =>
+                        item.isCreateEdit && ['username', 'password', 'role_id'].includes(item.key)
+                    )
+                    .map((item, i) => {
+                      const {informCreateEdit, key, name} = item
+                      const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
+                        informCreateEdit || {}
+                      if (type === 'input') {
+                        return (
+                          <div className='col-6' key={i}>
+                            <Input
+                              type={typeInput}
+                              title={name}
+                              id={key}
+                              error={errors[key]}
+                              touched={touched[key]}
+                              errorTitle={errors[key]}
+                              value={values[key] || ''}
+                              onChange={handleChange}
+                              required={isRequired}
+                            />
+                          </div>
+                        )
+                      } else if (type === 'select') {
+                        return (
+                          <div className='col-6' key={i}>
+                            <Select
+                              required={isRequired}
+                              datas={dataRole}
+                              valueTitle={fieldLabelOption || key}
+                              setValueTitle={fieldValueOption || 'id'}
+                              title={name}
+                              id={key}
+                              errors={errors[key]}
+                              touched={touched[key]}
+                              errorTitle={errors[key]}
+                              value={values[key]}
+                              onChange={setFieldValue}
+                            />
+                          </div>
+                        )
+                      }
+
+                      return <Fragment key={i}></Fragment>
+                    })}
                 </div>
               </Tab.Pane>
             </Tab.Content>

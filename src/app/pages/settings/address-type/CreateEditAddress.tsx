@@ -42,7 +42,7 @@ const CreateEditAddress = ({
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
-  const [status, setStatus] = useState(data ? data?.status : false)
+  const [status, setStatus] = useState(data?.length > 0 ? data?.status : true)
 
   const {rows, settings} = ADDRESS_TABLE_CONFIG
   const {swalToastTitle, endpoint} = settings
