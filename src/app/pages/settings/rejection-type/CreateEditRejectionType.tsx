@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 
@@ -13,6 +13,7 @@ import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import TextArea from '../../../components/textarea/TextArea'
 import ErrorMessage from '../../../components/error/ErrorMessage'
+import {REJECTION_MANAGEMENT_CONFIG} from './configMarketing'
 
 type Props = {
   setLoadApi: any
@@ -43,18 +44,29 @@ const CreateEditRejectionType = ({
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
   const [status, setStatus] = useState(data ? data?.status : false)
+  const {rows, endpoint, swalToastTitle} = REJECTION_MANAGEMENT_CONFIG
+
+  const generateField = React.useMemo(() => {
+    if (data) {
+      return rows.reduce((a, b) => {
+        a[b.key] = data[b.key] || ''
+        return a
+      }, {})
+    }
+    return {}
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
-      rejection_type_name: data ? data?.rejection_type_name : '',
-      rejection_type_code: data ? data?.rejection_type_code : '',
-      rejection_type_description: data ? data?.rejection_type_description : '',
+      ...generateField,
     },
     validationSchema: CreateEditRejectionTypeSchema,
     onSubmit: async (values: any, actions: any) => {
       if (titleLable === 'New') {
         await request
-          .post('config/rejection_type', {
+          .post(endpoint, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -62,7 +74,7 @@ const CreateEditRejectionType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Rejection type successfully created',
+                title: swalToastTitle + ' created',
               })
             }
             handleUpdated()
@@ -81,7 +93,7 @@ const CreateEditRejectionType = ({
 
       if (titleLable === 'Edit') {
         await request
-          .post('config/rejection_type/' + data?.id, {
+          .post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -89,7 +101,7 @@ const CreateEditRejectionType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Rejection type successfully updated',
+                title: swalToastTitle + ' updated',
               })
             }
             handleUpdated()
@@ -125,47 +137,47 @@ const CreateEditRejectionType = ({
       <div style={{maxHeight: '600px', overflowY: 'auto'}} className='modal-body  '>
         <div
           ref={stepperRef}
-          className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
+          className='stepper stepper-pills stepper-column '
           id='kt_modal_create_app_stepper'
         >
           <div className='flex-row-fluid '>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-              <Input
-                required={true}
-                title='Rejection Type Name'
-                id='rejection_type_name'
-                error={errors.rejection_type_name}
-                touched={touched.rejection_type_name}
-                errorTitle={errors.rejection_type_name}
-                value={values.rejection_type_name}
-                onChange={handleChange}
-              />
-              <Input
-                required={true}
-                title='Rejection Type Code'
-                id='rejection_type_code'
-                error={errors.rejection_type_code}
-                touched={touched.rejection_type_code}
-                errorTitle={errors.rejection_type_code}
-                value={values.rejection_type_code}
-                onChange={handleChange}
-              />
-              <div className='mb-8'>
-                <TextArea
-                  title='Rejection Type Description'
-                  name='rejection_type_description'
-                  value={values.rejection_type_description || ''}
-                  onChange={handleChange}
-                />
+              {data ? (
+                <>
+                  {rows.map((row) => (
+                    <div key={row.key} style={{flex: '0 0 50%'}}>
+                      {row.key === 'rejection_type_description' ? (
+                        <div className='mb-8'>
+                          <TextArea
+                            title={row.name}
+                            name={row.key}
+                            value={values[row.key] || ''}
+                            onChange={handleChange}
+                          />
 
-                <ErrorMessage
-                  className='mt-2'
-                  shouldShowMessage={
-                    !!(errors.rejection_type_description && touched.rejection_type_description)
-                  }
-                  message={errors.rejection_type_description as string}
-                />
-              </div>
+                          <ErrorMessage
+                            className='mt-2'
+                            shouldShowMessage={!!(errors[row.key] && touched[row.key])}
+                            message={errors[row.key] as string}
+                          />
+                        </div>
+                      ) : (
+                        <Input
+                          required={row?.require ? true : false}
+                          title={row.name}
+                          id={row.key}
+                          type={row.type}
+                          error={errors[row.key]}
+                          touched={touched[row.key]}
+                          errorTitle={errors[row.key]}
+                          value={values[row.key] || ''}
+                          onChange={handleChange}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </>
+              ) : null}
               <InputCheck
                 title='Status'
                 checked={status}

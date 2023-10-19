@@ -1,4 +1,5 @@
 import React, {InputHTMLAttributes} from 'react'
+import {handleKeyPress, handlePaste} from '../enter-numbers-only'
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   title: string
@@ -8,6 +9,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean
   name?: string
   classShared?: string
+  type?: string
 }
 
 export const Input: React.FC<IProps> = ({
@@ -19,6 +21,7 @@ export const Input: React.FC<IProps> = ({
   required = false,
   name,
   classShared = 'fv-row mb-8',
+  type = 'text',
   ...rest
 }) => {
   return (
@@ -28,6 +31,16 @@ export const Input: React.FC<IProps> = ({
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
         <input
+          onKeyPressCapture={(e) => {
+            if (type === 'number') {
+              handleKeyPress(e)
+            }
+          }}
+          onPaste={(e) => {
+            if (type === 'number') {
+              handlePaste(e)
+            }
+          }}
           id={id}
           {...rest}
           name={name}
