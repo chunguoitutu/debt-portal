@@ -10,8 +10,10 @@ import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import InputCheck from '../../../components/inputs/inputCheck'
+import InputCheck from '../../../../components/inputs/inputCheck'
 import {Input} from '../../../components/inputs/input'
+import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
+
 
 type Props = {
   setLoadApi: any
@@ -25,6 +27,7 @@ type Props = {
 
 export const CreateLoanTypeSchema = Yup.object().shape({
   type_name: Yup.string().required('Loan Type Name is required'),
+  description: Yup.string().max(45, 'Description must be at most 45 characters')
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -44,10 +47,11 @@ const CreateLoanType = ({
   const [status, setStatus] = useState(data.status || false)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dataLoan, setDataLoan] = useState([])
+  const {rows, endpoint} = LOAN_TYPE_TABLE_CONFIG
 
   useEffect(() => {
     request
-      .get('config/loan_type')
+      .get(endpoint || '')
       .then((response) => {
         setDataLoan(response.data.data)
       })
@@ -65,7 +69,7 @@ const CreateLoanType = ({
     onSubmit: async (values: any, actions: any) => {
       if (title === 'New') {
         try {
-          await request.post('config/loan_type', {
+          await request.post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
           })
@@ -90,7 +94,7 @@ const CreateLoanType = ({
         }
       } else {
         try {
-          await request.post(`config/loan_type/${data.id}`, {
+          await request.post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -125,62 +129,56 @@ const CreateLoanType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-600px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
       show={show}
       onHide={handleClose}
       onEntered={loadStepper}
       backdrop={true}
     >
-      <div className='modal-header'>
-        <h2>{title} Loan Type</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
-          <KTIcon className='fs-1' iconName='cross' />
-        </div>
-      </div>
-      <div
-        style={{maxHeight: '500px', overflowY: 'auto'}}
-        className='modal-body py-lg-10 px-lg-10 '
-      >
-        <div
-          ref={stepperRef}
-          className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
-          id='kt_modal_create_app_stepper'
-        >
-          <div className='flex-row-fluid p-1'>
-            <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-              <Input
-                title='Type Name'
-                id='type_name'
-                error={errors.type_name}
-                touched={touched.type_name}
-                errorTitle={errors.type_name}
-                value={values.type_name}
-                onChange={handleChange}
-              />
-              <Input
-                title='Description'
-                id='description'
-                error={errors.description}
-                touched={touched.description}
-                errorTitle={errors.description}
-                value={values.description}
-                onChange={handleChange}
-              />
-              <InputCheck
-                checked={status}
-                onChange={() => setStatus(!status)}
-                id='status'
-                title='Status'
-              />
-              <div className='d-flex flex-end pt-10'>
-                <button type='submit' className='btn btn-lg btn-primary'>
-                  {title === 'New' ? 'Create' : 'Update'}
-                </button>
-              </div>
-            </form>
+      <>
+        <div className='modal-header'>
+          <h2>{title} Loan Type</h2>
+          <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
+            <KTIcon className='fs-1' iconName='cross' />
           </div>
         </div>
-      </div>
+        <div className='flex-row-fluid' style={{padding: 23}}>
+          <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
+            {rows.map((row) => {
+              const {informCreateEdit} = row
+              const {isRequired} = informCreateEdit || {}
+              if (['id', 'status'].includes(row.key)) {
+                return null  
+              }
+              return (
+                <div key={row.key} style={{flex: '0 0 50%'}}>
+                  <Input
+                   title={row.name}
+                    id={row.key}
+                    error={errors[row.key]}
+                    touched={touched[row.key]}
+                    errorTitle={errors[row.key]}
+                    value={values[row.key] || ''}
+                    onChange={handleChange}
+                    required= {isRequired}
+                  />
+                </div>
+              )
+            })}
+            <InputCheck
+              checked={status}
+              onChange={() => setStatus(!status)}
+              id='status'
+              title='Status'
+            />
+            <div className='d-flex justify-content-end pt-4'>
+              <button type='submit' className='btn btn-lg btn-primary'>
+                {title === 'New' ? 'Create' : 'Update'}
+              </button>
+            </div>{' '}
+          </form>
+        </div>
+      </>
     </Modal>,
     modalsRoot
   )

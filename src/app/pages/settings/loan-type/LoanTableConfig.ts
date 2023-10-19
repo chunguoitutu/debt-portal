@@ -2,6 +2,7 @@ import Badge from '../../../components/badge/Badge'
 import {TableConfig} from '../../../modules/auth'
 
 export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
+  endpoint: 'config/loan_type',
   settings: {
     showAction: true,
     showEditButton: true,
@@ -20,6 +21,11 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     {
       key: 'type_name',
       name: 'Loan Type',
+      informCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        isRequired: true,
+      },
     },
     {
       key: 'description',
