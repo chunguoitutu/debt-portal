@@ -11,6 +11,7 @@ import moment from 'moment'
 export const CompanyManagement = () => {
   const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG
   const [information, setInformation] = React.useState<any>(null)
+  const [loadapi, setLoadApi] = React.useState<any>(false)
 
   const newCompaniesSchema = Yup.object().shape({
     company_name: Yup.string().required('Company Name is required.'),
@@ -40,7 +41,7 @@ export const CompanyManagement = () => {
         console.error('Error: ', error?.message)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [loadapi])
 
   const generateField = React.useMemo(() => {
     if (information) {
@@ -153,6 +154,13 @@ export const CompanyManagement = () => {
           </>
         ) : null}
         <div className='d-flex flex-end pt-10'>
+          <button
+            type='reset'
+            onClick={() => setLoadApi(!loadapi)}
+            className='btn btn-secondary align-self-center me-3'
+          >
+            Discard
+          </button>
           <button className='btn btn-lg btn-primary' onClick={() => handleSubmit()}>
             Update
           </button>
