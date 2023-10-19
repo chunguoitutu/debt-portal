@@ -4,7 +4,6 @@ import React, {useEffect, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-import Swal from 'sweetalert2'
 
 import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
@@ -14,6 +13,7 @@ import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
+import { swalToast } from '../../../swal-notification'
 
 type Props = {
   setLoadApi: any
@@ -78,14 +78,14 @@ const CreateDocumentType = ({
           resetForm()
           setStatus(false)
           setLoadApi(!loadApi)
-          Swal.fire({
+          swalToast.fire({
             timer: 1500,
             icon: 'success',
             title: 'Document type successfully created',
           })
         } catch (error) {
           console.error(error)
-          Swal.fire({
+          swalToast.fire({
             timer: 1500,
             icon: 'error',
             title: 'Error',
@@ -101,7 +101,7 @@ const CreateDocumentType = ({
           handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
-          Swal.fire({
+          swalToast.fire({
             timer: 1500,
             icon: 'success',
             title: 'Document type successfully update',
@@ -109,7 +109,7 @@ const CreateDocumentType = ({
         } catch (error) {
           console.error(error)
           console.error(error)
-          Swal.fire({
+          swalToast.fire({
             timer: 1500,
             icon: 'error',
             title: 'Error',
