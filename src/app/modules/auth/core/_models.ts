@@ -25,8 +25,6 @@ export type LoginResponse = {
   info: UserInfo
 }
 
-export type GetCurrentUserResponse = {}
-
 export type UserInfo = {
   username: string
   is_active: number | any
@@ -120,6 +118,8 @@ export type TableConfig = {
     messageDeleteSuccess?: string
     messageEditError?: string
     messageEditSuccess?: string
+    messageCreateError?: string
+    messageCreateSuccess?: string
     dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
@@ -155,4 +155,5 @@ type MenuChildren = {
   id: string
   to: string
   label: string
+  priority: number[]
 }

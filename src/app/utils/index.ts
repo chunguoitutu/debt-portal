@@ -1,4 +1,4 @@
-import {DEFAULT_MSG_ERROR} from '../constants/error-message'
+import {DEFAULT_MESSAGE_ERROR_500} from '../constants/error-message'
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -14,6 +14,5 @@ export const convertRoleToNumber = (roleName: string) => {
 }
 
 export const convertErrorMessageResponse = (error: any) => {
-  const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
-  return message
+  return DEFAULT_MESSAGE_ERROR_500
 }

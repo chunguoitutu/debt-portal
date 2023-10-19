@@ -44,20 +44,22 @@ const SettingMenu = () => {
               <Accordion.Item eventKey={menu.activeKey} key={index}>
                 <Accordion.Header>{menu.title}</Accordion.Header>
                 <Accordion.Body>
-                  {menu.children.map((item) => {
-                    return (
-                      <NavLink
-                        key={item.id}
-                        className={({isActive}) =>
-                          'd-block nav-link text-hover-primary text-active-primary' +
-                          (isActive ? ' active' : '')
-                        }
-                        to={item.to}
-                      >
-                        {item.label}
-                      </NavLink>
-                    )
-                  })}
+                  {menu.children
+                    .filter((item) => item.priority.includes(priority))
+                    .map((item) => {
+                      return (
+                        <NavLink
+                          key={item.id}
+                          className={({isActive}) =>
+                            'd-block nav-link text-hover-primary text-active-primary' +
+                            (isActive ? ' active' : '')
+                          }
+                          to={item.to}
+                        >
+                          {item.label}
+                        </NavLink>
+                      )
+                    })}
                 </Accordion.Body>
               </Accordion.Item>
             )

@@ -37,6 +37,7 @@ const RolePage = () => {
     <>
       {showPopup && (
         <CreateEditRole
+          config={ROLE_TABLE_CONFIG}
           show={showPopup}
           data={dataEdit}
           onClose={handleClosePopupCreateEditPopup}

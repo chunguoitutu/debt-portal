@@ -13,7 +13,6 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
-import TextArea from '../../../components/textarea/TextArea'
 import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
 
 type Props = {
