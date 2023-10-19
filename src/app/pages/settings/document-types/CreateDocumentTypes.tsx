@@ -14,6 +14,7 @@ import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
+import { DEFAULT_MESSAGE_ERROR_500 } from '../../../constants/error-message'
 
 type Props = {
   setLoadApi: any
@@ -89,7 +90,7 @@ const CreateDocumentType = ({
             timer: 1500,
             icon: 'error',
             title: 'Error',
-            text: 'Something went wrong. Please try again!',
+            text: DEFAULT_MESSAGE_ERROR_500,
           })
         }
       } else {
@@ -113,7 +114,7 @@ const CreateDocumentType = ({
             timer: 1500,
             icon: 'error',
             title: 'Error',
-            text: 'Something went wrong. Please try again!',
+            text: DEFAULT_MESSAGE_ERROR_500,
           })
         }
       }
