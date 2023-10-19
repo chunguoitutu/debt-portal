@@ -13,7 +13,7 @@ import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {Input} from '../../../components/inputs/input'
 import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
-
+import TextArea from '../../../components/textarea/TextArea'
 
 type Props = {
   setLoadApi: any
@@ -27,7 +27,7 @@ type Props = {
 
 export const CreateLoanTypeSchema = Yup.object().shape({
   type_name: Yup.string().required('Loan Type Name is required'),
-  description: Yup.string().max(45, 'Description must be at most 45 characters')
+  description: Yup.string().max(45, 'Description must be at most 45 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -148,29 +148,42 @@ const CreateLoanType = ({
               const {informCreateEdit} = row
               const {isRequired} = informCreateEdit || {}
               if (['id', 'status'].includes(row.key)) {
-                return null  
+                return null
               }
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
-                  <Input
-                   title={row.name}
-                    id={row.key}
-                    error={errors[row.key]}
-                    touched={touched[row.key]}
-                    errorTitle={errors[row.key]}
-                    value={values[row.key] || ''}
-                    onChange={handleChange}
-                    required= {isRequired}
-                  />
+                  {row.key === 'description' ? (
+                    <div>
+                      <TextArea
+                        title={row.name}
+                        name={row.key}
+                        value={values[row.key] || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  ) : (
+                    <Input
+                      title={row.name}
+                      id={row.key}
+                      error={errors[row.key]}
+                      touched={touched[row.key]}
+                      errorTitle={errors[row.key]}
+                      value={values[row.key] || ''}
+                      onChange={handleChange}
+                      required={isRequired}
+                    />
+                  )}
                 </div>
               )
             })}
-            <InputCheck
-              checked={status}
-              onChange={() => setStatus(!status)}
-              id='status'
-              title='Status'
-            />
+           <div className='mt-6'>
+              <InputCheck
+                checked={status}
+                onChange={() => setStatus(!status)}
+                id='status'
+                title='Status'
+              />
+           </div>
             <div className='d-flex justify-content-end pt-4'>
               <button type='submit' className='btn btn-lg btn-primary'>
                 {title === 'New' ? 'Create' : 'Update'}
