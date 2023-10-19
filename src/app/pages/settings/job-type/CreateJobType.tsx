@@ -5,7 +5,6 @@ import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import Swal from 'sweetalert2'
 
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Input} from '../../../components/inputs/input'
@@ -15,6 +14,7 @@ import InputCheck from '../../../../components/inputs/inputCheck'
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
 import { DEFAULT_MESSAGE_ERROR_500 } from '../../../constants/error-message'
+import { swalToast } from '../../../swal-notification'
 
 type Props = {
   setLoadApi: any
@@ -84,14 +84,14 @@ const CreateJobType = ({
           resetForm()
           setStatus(false)
           setLoadApi(!loadApi)
-          Swal.fire({
+          swalToast.fire({
             icon: 'success',
             title: `Job type successfully created.`,
             timer: 1500,
           })
         } catch (error) {
           console.error(error)
-          Swal.fire({
+          swalToast.fire({
             icon: 'error',
             title: 'Error',
             text: DEFAULT_MESSAGE_ERROR_500,
@@ -108,12 +108,12 @@ const CreateJobType = ({
           handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
-          Swal.fire({
+          swalToast.fire({
             icon: 'success',
             title: `Job type successfully updated.`,
           })
         } catch (error) {
-          Swal.fire({
+          swalToast.fire({
             icon: 'error',
             title: 'Error',
             text: DEFAULT_MESSAGE_ERROR_500,
