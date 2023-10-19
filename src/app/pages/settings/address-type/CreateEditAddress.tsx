@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 
@@ -13,6 +13,7 @@ import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import TextArea from '../../../components/textarea/TextArea'
 import ErrorMessage from '../../../components/error/ErrorMessage'
+import {ADDRESS_MANAGEMENT_CONFIG} from './configAddress'
 
 type Props = {
   setLoadApi: any
@@ -43,16 +44,28 @@ const CreateEditAddress = ({
 
   const [status, setStatus] = useState(data ? data?.status : false)
 
+  const {rows, endpoint, swalToastTitle} = ADDRESS_MANAGEMENT_CONFIG
+
+  const generateField = React.useMemo(() => {
+    if (data) {
+      return rows.reduce((a, b) => {
+        a[b.key] = data[b.key] || ''
+        return a
+      }, {})
+    }
+    return {}
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
-      address_type_name: data ? data?.address_type_name : '',
-      description: data ? data?.description : '',
+      ...generateField,
     },
     validationSchema: CreateEditAddressSchema,
     onSubmit: async (values: any, actions: any) => {
       if (titleLable === 'New') {
         await request
-          .post('config/address_type', {
+          .post(endpoint, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -60,7 +73,7 @@ const CreateEditAddress = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Address type successfully created',
+                title: swalToastTitle + ' created',
               })
             }
             handleUpdated()
@@ -79,7 +92,7 @@ const CreateEditAddress = ({
 
       if (titleLable === 'Edit') {
         await request
-          .post('config/address_type/' + data?.id, {
+          .post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -87,7 +100,7 @@ const CreateEditAddress = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Address type successfully updated',
+                title: swalToastTitle + ' updated',
               })
             }
             handleUpdated()
@@ -128,30 +141,42 @@ const CreateEditAddress = ({
         >
           <div className='flex-row-fluid '>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-              <Input
-                required={true}
-                title='Address Type Name'
-                id='address_type_name'
-                error={errors.address_type_name}
-                touched={touched.address_type_name}
-                errorTitle={errors.address_type_name}
-                value={values.address_type_name}
-                onChange={handleChange}
-              />
-              <div className='mb-8'>
-                <TextArea
-                  title='Description'
-                  name='description'
-                  value={values.description || ''}
-                  onChange={handleChange}
-                />
+              {data ? (
+                <>
+                  {rows.map((row) => (
+                    <div key={row.key} style={{flex: '0 0 50%'}}>
+                      {row.key === 'rejection_type_description' ? (
+                        <div className='mb-8'>
+                          <TextArea
+                            title={row.name}
+                            name={row.key}
+                            value={values[row.key] || ''}
+                            onChange={handleChange}
+                          />
 
-                <ErrorMessage
-                  className='mt-2'
-                  shouldShowMessage={!!(errors.description && touched.description)}
-                  message={errors.description as string}
-                />
-              </div>
+                          <ErrorMessage
+                            className='mt-2'
+                            shouldShowMessage={!!(errors[row.key] && touched[row.key])}
+                            message={errors[row.key] as string}
+                          />
+                        </div>
+                      ) : (
+                        <Input
+                          required={row?.require ? true : false}
+                          title={row.name}
+                          id={row.key}
+                          type={row.type}
+                          error={errors[row.key]}
+                          touched={touched[row.key]}
+                          errorTitle={errors[row.key]}
+                          value={values[row.key] || ''}
+                          onChange={handleChange}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </>
+              ) : null}
               <InputCheck
                 title='Status'
                 checked={status}

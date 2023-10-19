@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 
@@ -11,6 +11,7 @@ import InputCheck from '../../../components/inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import {swalToast} from '../../../swal-notification'
+import {MARKETTING_MANAGEMENT_CONFIG} from './configMarketing'
 
 type Props = {
   setLoadApi: any
@@ -37,19 +38,31 @@ const CreatEditMarkettingType = ({
   setLoadApi,
   handleUpdated,
 }: Props) => {
+  const {rows, endpoint, swalToastTitle} = MARKETTING_MANAGEMENT_CONFIG
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
   const [status, setStatus] = useState(data ? data?.status : false)
 
+  const generateField = React.useMemo(() => {
+    if (data) {
+      return rows.reduce((a, b) => {
+        a[b.key] = data[b.key] || ''
+        return a
+      }, {})
+    }
+    return {}
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
-      marketing_type_name: data ? data?.marketing_type_name : '',
+      ...generateField,
     },
     validationSchema: NewEditMarkettingSchema,
     onSubmit: async (values: any, actions: any) => {
       if (titleLable === 'New') {
         await request
-          .post('config/marketing_type', {
+          .post(endpoint, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -57,13 +70,13 @@ const CreatEditMarkettingType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Marketing type successfully created',
+                title: swalToastTitle + ' created',
               })
             }
-            handleUpdated()
-            handleClose()
             resetForm()
             setStatus(false)
+            handleUpdated()
+            handleClose()
             setLoadApi(!loadapi)
           })
           .catch((e) => {
@@ -76,7 +89,7 @@ const CreatEditMarkettingType = ({
 
       if (titleLable === 'Edit') {
         await request
-          .post('config/marketing_type/' + data?.id, {
+          .post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
           })
@@ -84,7 +97,7 @@ const CreatEditMarkettingType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Marketing type successfully updated',
+                title: swalToastTitle + ' updated',
               })
             }
             handleUpdated()
@@ -125,17 +138,25 @@ const CreatEditMarkettingType = ({
         >
           <div className='flex-row-fluid '>
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-              <Input
-                required={true}
-                title='Marketing Type Name'
-                id='marketing_type_name'
-                error={errors.marketing_type_name}
-                touched={touched.marketing_type_name}
-                errorTitle={errors.marketing_type_name}
-                value={values.marketing_type_name}
-                onChange={handleChange}
-              />
-
+              {data ? (
+                <>
+                  {rows.map((row) => (
+                    <div key={row.key} style={{flex: '0 0 50%'}}>
+                      <Input
+                        required={row?.require ? true : false}
+                        title={row.name}
+                        id={row.key}
+                        type={row.type}
+                        error={errors[row.key]}
+                        touched={touched[row.key]}
+                        errorTitle={errors[row.key]}
+                        value={values[row.key] || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  ))}
+                </>
+              ) : null}
               <InputCheck
                 title='Status'
                 checked={status}
