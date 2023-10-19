@@ -1,3 +1,5 @@
+import { HTMLInputTypeAttribute } from "react"
+
 export type LoginInfo = {
   username: string
   password: string
@@ -93,6 +95,14 @@ export type TableRow = {
   componentProps?: {[key: string]: string}
   type?: 'datetime' | 'yes/no'
   isHide?: boolean
+  isCreateEdit?: boolean
+  informCreateEdit?: {
+    type: 'input' | 'select' | 'textarea' | 'checkbox'
+    typeInput?: HTMLInputTypeAttribute
+    isRequired?: boolean
+    fieldLabelOption?: string
+    fieldValueOption?: string
+  }
 }
 
 export type TableConfig = {
@@ -115,6 +125,7 @@ export type TableConfig = {
     showSearch?: boolean
     showFilter?: boolean
   }
+  endpoint?: string
   rows: TableRow[]
 }
 

@@ -12,6 +12,7 @@ import {Input} from '../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
+import {JOB_TABLE_CONFIG} from './JobTableConfig'
 
 type Props = {
   setLoadApi: any
@@ -25,6 +26,7 @@ type Props = {
 
 export const CreateJobTypeSchema = Yup.object().shape({
   job_type_name: Yup.string().required('Job Type Name is required'),
+  description: Yup.string().max(45, 'Description must be at most 45 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -47,10 +49,11 @@ const CreateJobType = ({
   )
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dataLoan, setDataLoan] = useState([])
+  const {rows, endpoint} = JOB_TABLE_CONFIG
 
   useEffect(() => {
     request
-      .get('config/job_type')
+      .get(endpoint || '')
       .then((response) => {
         setDataLoan(response.data.data)
       })
@@ -68,7 +71,7 @@ const CreateJobType = ({
     onSubmit: async (values: any, actions: any) => {
       if (title === 'New') {
         try {
-          await request.post('config/job_type', {
+          await request.post(endpoint || '', {
             ...values,
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
@@ -94,7 +97,7 @@ const CreateJobType = ({
         }
       } else {
         try {
-          await request.post(`config/job_type/${data.id}`, {
+          await request.post(endpoint + '/' + data?.id, {
             ...values,
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
@@ -130,71 +133,64 @@ const CreateJobType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-600px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
       show={show}
       onHide={handleClose}
       onEntered={loadStepper}
       backdrop={true}
     >
-      <div className='modal-header '>
-        <h2>{title} Job Type</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
-          <KTIcon className='fs-1' iconName='cross' />
+      <>
+        <div className='modal-header'>
+          <h2>{title} Job Type</h2>
+          <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
+            <KTIcon className='fs-1' iconName='cross' />
+          </div>
         </div>
-      </div>
-      <div
-        style={{maxHeight: '500px', overflowY: 'auto'}}
-        className='modal-body py-lg-10 px-lg-10 '
-      >
-        <div
-          ref={stepperRef}
-          className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
-          id='kt_modal_create_app_stepper'
-        >
-          <div className='flex-row-fluid p-1'>
-            <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-              <Input
-                title='Type Name'
-                id='job_type_name'
-                error={errors.job_type_name}
-                touched={touched.job_type_name}
-                errorTitle={errors.job_type_name}
-                value={values.job_type_name}
-                onChange={handleChange}
-              />
-              <Input
-                title='Description'
-                id='description'
-                error={errors.description}
-                touched={touched.description}
-                errorTitle={errors.description}
-                value={values.description}
-                onChange={handleChange}
-              />
-
+        <div className='flex-row-fluid' style={{padding: 23}}>
+          <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
+            {rows.map((row) => {
+              const {informCreateEdit} = row
+              const {isRequired} = informCreateEdit || {}
+              if (['id', 'status', 'request_more_information'].includes(row.key)) {
+                return null
+              }
+              return (
+                <div key={row.key} style={{flex: '0 0 50%'}}>
+                  <Input
+                    title={row.name}
+                    id={row.key}
+                    error={errors[row.key]}
+                    touched={touched[row.key]}
+                    errorTitle={errors[row.key]}
+                    value={values[row.key] || ''}
+                    onChange={handleChange}
+                    required={isRequired}
+                  />
+                </div>
+              )
+            })}
+            <InputCheck
+              onChange={() => setRequestMoreInformation(!requestMoreInformation)}
+              checked={requestMoreInformation}
+              id='request_more_information'
+              title='Need More Information'
+            />
+            <div className='mt-5'>
               <InputCheck
-                onChange={() => setStatus(!status)}
                 checked={status}
+                onChange={() => setStatus(!status)}
                 id='status'
                 title='Status'
               />
-
-              <InputCheck
-                onChange={() => setRequestMoreInformation(!requestMoreInformation)}
-                checked={requestMoreInformation}
-                id='request_more_information'
-                title='Need More Information'
-              />
-
-              <div className='d-flex flex-end pt-10'>
-                <button type='submit' className='btn btn-lg btn-primary'>
-                  {title === 'New' ? 'Create' : 'Update'}
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>
+            <div className='d-flex justify-content-end pt-4'>
+              <button type='submit' className='btn btn-lg btn-primary'>
+                {title === 'New' ? 'Create' : 'Update'}
+              </button>
+            </div>{' '}
+          </form>
         </div>
-      </div>
+      </>
     </Modal>,
     modalsRoot
   )
