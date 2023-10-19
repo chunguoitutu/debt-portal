@@ -12,7 +12,10 @@ import {
 } from './_models'
 import request from '../../../axios'
 
-const API_URL = process.env.REACT_APP_API_URL
+export const API_URL =
+  process.env.NODE_ENV === 'development'
+    ? process.env.REACT_APP_LOCAL_BASE_URL
+    : process.env.REACT_APP_API_URL
 export const REACT_APP_BASE_URL_API = process.env.REACT_APP_BASE_URL_API
 export const GET_USER_BY_ACCESSTOKEN_URL = `${API_URL}/verify_token`
 export const REGISTER_URL = `${API_URL}/register`
