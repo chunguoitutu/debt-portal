@@ -14,6 +14,7 @@ import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
+import { DEFAULT_MESSAGE_ERROR_500 } from '../../../constants/error-message'
 
 type Props = {
   setLoadApi: any
@@ -77,6 +78,7 @@ const CreateJobType = ({
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
+          console.log(values)
           handleUpdated()
           handleClose()
           resetForm()
@@ -84,7 +86,7 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           Swal.fire({
             icon: 'success',
-            title: 'Job type successfully created',
+            title: `Job type successfully created.`,
             timer: 1500,
           })
         } catch (error) {
@@ -92,7 +94,7 @@ const CreateJobType = ({
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Something went wrong. Please try again!',
+            text: DEFAULT_MESSAGE_ERROR_500,
             timer: 1500,
           })
         }
@@ -108,17 +110,13 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           Swal.fire({
             icon: 'success',
-            title: 'Job type successfully update',
-            timer: 1500,
+            title: `Job type successfully updated.`,
           })
         } catch (error) {
-          console.error(error)
-          console.error(error)
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Something went wrong. Please try again!',
-            timer: 1500,
+            text: DEFAULT_MESSAGE_ERROR_500,
           })
         }
       }

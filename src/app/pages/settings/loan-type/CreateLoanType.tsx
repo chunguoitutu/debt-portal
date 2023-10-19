@@ -14,6 +14,7 @@ import InputCheck from '../../../../components/inputs/inputCheck'
 import {Input} from '../../../components/inputs/input'
 import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
+import { DEFAULT_MESSAGE_ERROR_500 } from '../../../constants/error-message'
 
 type Props = {
   setLoadApi: any
@@ -81,7 +82,7 @@ const CreateLoanType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Loan type successfully created',
+            title: `Loan type successfully created.`,
           })
         } catch (error) {
           console.error(error)
@@ -89,7 +90,7 @@ const CreateLoanType = ({
             timer: 1500,
             icon: 'error',
             title: 'Error',
-            text: 'Something went wrong. Please try again!',
+            text: DEFAULT_MESSAGE_ERROR_500,
           })
         }
       } else {
@@ -104,16 +105,14 @@ const CreateLoanType = ({
           Swal.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Loan type successfully updated',
+            title: `Loan type successfully updated`,
           })
         } catch (error) {
-          console.error(error)
-          console.error(error)
           Swal.fire({
             timer: 1500,
             icon: 'error',
             title: 'Error',
-            text: 'Something went wrong. Please try again!',
+            text: DEFAULT_MESSAGE_ERROR_500,
           })
         }
       }
