@@ -50,7 +50,7 @@ export function deleteRoleById(id: number) {
   return request.delete(endPoint)
 }
 
-export function createNewRole(data: Omit<RoleInfo, 'id'>) {
+export function createNewRole(data: Omit<RoleInfo, 'id'> & {company_id: number} ) {
   const endPoint = '/config/role'
   return request.post(endPoint, data)
 }
