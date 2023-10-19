@@ -241,7 +241,7 @@ export const ROUTER_SETTING = [
   {
     path: 'roles',
     labelBreadCrumbs: 'Loan Type',
-    priority: [1],
+    priority: [1, 2],
     component: RolePage,
   },
   {
@@ -305,7 +305,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
         id: uuidv4(),
         to: '/settings/roles',
         label: 'Roles',
-        priority: [1],
+        priority: [1, 2],
       },
     ],
   },
