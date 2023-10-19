@@ -129,7 +129,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
       </div>
 
       <div className='modal-body py-lg-10 px-lg-10'>
-        <div className='row gy-4'>
+        <form className='row gy-4'>
           {!ignoreOldPassword && (
             <div className='col-12'>
               <div className='fv-row mb-0'>
@@ -137,6 +137,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                   Current Password
                 </label>
                 <input
+                  autoComplete='off'
                   type='password'
                   className='form-control form-control-lg form-control-solid'
                   id='old_password'
@@ -156,6 +157,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                 New Password
               </label>
               <input
+                autoComplete='off'
                 type='password'
                 className='form-control form-control-lg form-control-solid '
                 id='new_password'
@@ -174,6 +176,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                 Confirm New Password
               </label>
               <input
+                autoComplete='off'
                 type='password'
                 className='form-control form-control-lg form-control-solid '
                 id='confirm_new_password'
@@ -186,7 +189,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
               )}
             </div>
           </div>
-        </div>
+        </form>
 
         <div className='d-flex justify-content-end mt-8 gap-4'>
           <button
