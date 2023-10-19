@@ -11,6 +11,8 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     endPointGetListing: '/config/address_type',
     messageDeleteSuccess: 'Address successfully deleted',
     buttonAddNew: 'New Address',
+    endpoint: 'config/address_type',
+    swalToastTitle: 'Address type successfully',
   },
   rows: [
     {
@@ -21,10 +23,20 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     {
       key: 'address_type_name',
       name: 'Address Type Name',
+      informCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        isRequired: true,
+      },
     },
     {
       key: 'description',
       name: 'Description',
+      informCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        isRequired: true,
+      },
     },
     {
       key: 'status',

@@ -13,7 +13,7 @@ import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import TextArea from '../../../components/textarea/TextArea'
 import ErrorMessage from '../../../components/error/ErrorMessage'
-import {ADDRESS_MANAGEMENT_CONFIG} from './configAddress'
+import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
 
 type Props = {
   setLoadApi: any
@@ -44,14 +44,17 @@ const CreateEditAddress = ({
 
   const [status, setStatus] = useState(data ? data?.status : false)
 
-  const {rows, endpoint, swalToastTitle} = ADDRESS_MANAGEMENT_CONFIG
+  const {rows, settings} = ADDRESS_TABLE_CONFIG
+  const {swalToastTitle, endpoint} = settings
 
   const generateField = React.useMemo(() => {
     if (data) {
-      return rows.reduce((a, b) => {
-        a[b.key] = data[b.key] || ''
-        return a
-      }, {})
+      return rows
+        .filter((row) => !!row.informCreateEdit)
+        .reduce((a, b) => {
+          a[b.key] = data[b.key] || ''
+          return a
+        }, {})
     }
     return {}
 
@@ -65,7 +68,7 @@ const CreateEditAddress = ({
     onSubmit: async (values: any, actions: any) => {
       if (titleLable === 'New') {
         await request
-          .post(endpoint, {
+          .post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
           })
@@ -143,38 +146,43 @@ const CreateEditAddress = ({
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               {data ? (
                 <>
-                  {rows.map((row) => (
-                    <div key={row.key} style={{flex: '0 0 50%'}}>
-                      {row.key === 'rejection_type_description' ? (
-                        <div className='mb-8'>
-                          <TextArea
-                            title={row.name}
-                            name={row.key}
-                            value={values[row.key] || ''}
-                            onChange={handleChange}
-                          />
+                  {rows
+                    .filter((data) => !!data.informCreateEdit)
+                    .map((row) => {
+                      const {isRequired, typeInput} = row.informCreateEdit || {}
+                      return (
+                        <div key={row.key} style={{flex: '0 0 50%'}}>
+                          {row.key === 'rejection_type_description' ? (
+                            <div className='mb-8'>
+                              <TextArea
+                                title={row.name}
+                                name={row.key}
+                                value={values[row.key] || ''}
+                                onChange={handleChange}
+                              />
 
-                          <ErrorMessage
-                            className='mt-2'
-                            shouldShowMessage={!!(errors[row.key] && touched[row.key])}
-                            message={errors[row.key] as string}
-                          />
+                              <ErrorMessage
+                                className='mt-2'
+                                shouldShowMessage={!!(errors[row.key] && touched[row.key])}
+                                message={errors[row.key] as string}
+                              />
+                            </div>
+                          ) : (
+                            <Input
+                              required={isRequired ? true : false}
+                              title={row.name}
+                              id={row.key}
+                              type={typeInput}
+                              error={errors[row.key]}
+                              touched={touched[row.key]}
+                              errorTitle={errors[row.key]}
+                              value={values[row.key] || ''}
+                              onChange={handleChange}
+                            />
+                          )}
                         </div>
-                      ) : (
-                        <Input
-                          required={row?.require ? true : false}
-                          title={row.name}
-                          id={row.key}
-                          type={row.type}
-                          error={errors[row.key]}
-                          touched={touched[row.key]}
-                          errorTitle={errors[row.key]}
-                          value={values[row.key] || ''}
-                          onChange={handleChange}
-                        />
-                      )}
-                    </div>
-                  ))}
+                      )
+                    })}
                 </>
               ) : null}
               <InputCheck

@@ -11,7 +11,7 @@ import InputCheck from '../../../components/inputs/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import {swalToast} from '../../../swal-notification'
-import {MARKETTING_MANAGEMENT_CONFIG} from './configMarketing'
+import {MAKETTING_TABLE_CONFIG} from './MarketingConfig'
 
 type Props = {
   setLoadApi: any
@@ -38,22 +38,26 @@ const CreatEditMarkettingType = ({
   setLoadApi,
   handleUpdated,
 }: Props) => {
-  const {rows, endpoint, swalToastTitle} = MARKETTING_MANAGEMENT_CONFIG
+  const {rows, settings} = MAKETTING_TABLE_CONFIG
+  const {swalToastTitle, endpoint} = settings
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
   const [status, setStatus] = useState(data ? data?.status : false)
 
   const generateField = React.useMemo(() => {
     if (data) {
-      return rows.reduce((a, b) => {
-        a[b.key] = data[b.key] || ''
-        return a
-      }, {})
+      return rows
+        .filter((row) => !!row.informCreateEdit)
+        .reduce((a, b) => {
+          a[b.key] = data[b.key] || ''
+          return a
+        }, {})
     }
     return {}
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
+
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
       ...generateField,
@@ -62,7 +66,7 @@ const CreatEditMarkettingType = ({
     onSubmit: async (values: any, actions: any) => {
       if (titleLable === 'New') {
         await request
-          .post(endpoint, {
+          .post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
           })
@@ -114,6 +118,8 @@ const CreatEditMarkettingType = ({
     },
   })
 
+  console.log(rows.filter((data) => !!data.informCreateEdit))
+
   return createPortal(
     <Modal
       id='kt_modal_create_app'
@@ -140,21 +146,26 @@ const CreatEditMarkettingType = ({
             <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               {data ? (
                 <>
-                  {rows.map((row) => (
-                    <div key={row.key} style={{flex: '0 0 50%'}}>
-                      <Input
-                        required={row?.require ? true : false}
-                        title={row.name}
-                        id={row.key}
-                        type={row.type}
-                        error={errors[row.key]}
-                        touched={touched[row.key]}
-                        errorTitle={errors[row.key]}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  ))}
+                  {rows
+                    .filter((data) => !!data.informCreateEdit)
+                    .map((row) => {
+                      const {isRequired, typeInput} = row.informCreateEdit || {}
+                      return (
+                        <div key={row.key} style={{flex: '0 0 50%'}}>
+                          <Input
+                            required={isRequired ? true : false}
+                            title={row.name}
+                            id={row.key}
+                            type={typeInput}
+                            error={errors[row.key]}
+                            touched={touched[row.key]}
+                            errorTitle={errors[row.key]}
+                            value={values[row.key] || ''}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      )
+                    })}
                 </>
               ) : null}
               <InputCheck

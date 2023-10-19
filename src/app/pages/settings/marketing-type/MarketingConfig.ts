@@ -11,6 +11,8 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     endPointGetListing: '/config/marketing_type',
     messageDeleteSuccess: 'Marketing Type successfully deleted',
     buttonAddNew: 'New Marketing Type',
+    endpoint: 'config/marketing_type',
+    swalToastTitle: 'Marketing type successfully',
   },
   rows: [
     {
@@ -20,6 +22,11 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     {
       key: 'marketing_type_name',
       name: 'Marketing Type Name',
+      informCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        isRequired: true,
+      },
     },
     {
       key: 'status',
