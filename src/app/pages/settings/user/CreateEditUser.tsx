@@ -1,11 +1,10 @@
-import {FC, useEffect, useMemo, useState} from 'react'
+import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
 import {
   BranchItem,
   DataResponse,
   RoleInfo,
   TableConfig,
-  UpdateById,
   UserInfo,
   useAuth,
 } from '../../../modules/auth'
@@ -21,7 +20,6 @@ import Row from 'react-bootstrap/Row'
 import Tab from 'react-bootstrap/Tab'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import Select from '../../../components/selects/select'
-import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
 
 type Props = {
   config?: TableConfig
@@ -48,26 +46,37 @@ export const passwordSchema = Yup.object().shape({
   password: Yup.string().required('Password is required.'),
 })
 
-const initialValues = {
+interface ValuesCreateEdit
+  extends Omit<
+    UserInfo,
+    'priority' | 'role_name' | 'company_name' | 'id' | 'status' | 'permissions' | 'last_login_date'
+  > {
+  password: string | undefined
+}
+
+const initialValues: ValuesCreateEdit = {
   firstname: '',
   middlename: '',
   lastname: '',
   username: '',
   password: '',
-  company_id: '',
-  role_id: '',
+  company_id: 0,
+  role_id: 0,
   email: '',
   telephone: '',
+  is_active: true,
 }
 
 const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [isActive, setIsActive] = useState<any>(data ? data?.is_active : true)
   const [dataBranch, setDataBranch] = useState<BranchItem[]>([])
   const [dataRole, setDataRole] = useState<RoleInfo[]>([])
   const [active, setActive] = useState<boolean>(true)
 
-  const {apiGetCompanyList, apiGetRoleList} = config?.settings?.dependencies || {}
+  const {apiGetCompanyList, apiGetRoleList, apiCreateUser, apiUpdateUser} =
+    config?.settings?.dependencies || {}
+  const {messageCreateSuccess, messageEditSuccess} = config?.settings || {}
+  const {rows} = config || {}
 
   const {priority, currentUser} = useAuth()
 
@@ -114,48 +123,64 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         })
 
     if (!data) return
-    setValues(data)
+    const {
+      firstname,
+      middlename,
+      lastname,
+      username,
+      company_id,
+      role_id,
+      email,
+      telephone,
+      is_active,
+    } = data
+
+    setValues({
+      ...values,
+      firstname,
+      middlename,
+      lastname,
+      username,
+      company_id,
+      role_id,
+      email,
+      telephone,
+      is_active,
+    })
 
     return () => resetForm()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser])
 
-  function handleSubmitForm(values: UserInfo) {
-    const {id, ...payload} = values
+  function handleSubmitForm(values: ValuesCreateEdit) {
+    const mappingPayload = {
+      ...values,
+      is_active: values.is_active ? 1 : 0,
+      company_id: +values.company_id,
+      role_id: +values.role_id,
+      telephone: values.telephone.toString(),
+      password: values.password || undefined,
+    }
     if (data) {
-      onUpdateUser({
-        id: id,
-        data: {
-          ...payload,
-          is_active: isActive ? 1 : 0,
-          company_id: +payload.company_id,
-          role_id: +payload.role_id,
-        },
-      })
+      onUpdateUser(mappingPayload)
     } else {
-      handleCreateUser(payload)
+      handleCreateUser(mappingPayload)
     }
   }
 
-  async function handleCreateUser(payload: Omit<UserInfo, 'id'>) {
+  async function handleCreateUser(payload: ValuesCreateEdit) {
     setLoading(true)
 
     try {
-      const mappingPayload = {
-        ...payload,
-        is_active: isActive ? 1 : 0,
-        company_id: +payload.company_id,
-        role_id: +payload.role_id,
-      }
-      const {data} = await request.post('config/user', mappingPayload)
+      const {data} = await request.post(apiCreateUser, payload)
 
       // handle after create successfully
       if (!data?.error) {
         await onRefreshListing()
         onClose()
         swalToast.fire({
-          title: 'User successfully created!',
+          title: messageCreateSuccess,
           icon: 'success',
         })
       } else {
@@ -176,19 +201,19 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     }
   }
 
-  async function onUpdateUser(payload: UpdateById<Omit<UserInfo, 'id'>>) {
+  async function onUpdateUser(payload: ValuesCreateEdit) {
     // Pass if id = 0
-    if (!payload.id) return
+    if (!data?.id) return
 
     setLoading(true)
 
     try {
-      const {data} = await request.post('config/user/' + payload.id, payload.data)
-      if (!data?.error) {
+      const {data: dataRes} = await request.post(apiUpdateUser + `/${data.id}`, payload)
+      if (!dataRes?.error) {
         await onRefreshListing()
         onClose()
         swalToast.fire({
-          title: 'User successfully updated',
+          title: messageEditSuccess,
           icon: 'success',
         })
       } else {
@@ -198,10 +223,8 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         })
       }
     } catch (error: any) {
-      const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
-
       swalToast.fire({
-        title: message,
+        title: DEFAULT_MSG_ERROR,
         icon: 'error',
       })
     } finally {
@@ -235,7 +258,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     background: active ? '#3e97ff' : '',
                   }}
                 >
-                  Account
+                  Information
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
@@ -250,7 +273,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     marginBottom: '30px',
                   }}
                 >
-                  Information
+                  Account
                 </Nav.Link>
               </Nav.Item>
             </Nav>
@@ -258,146 +281,125 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
           <Col sm={9} className='h-lg-350px'>
             <Tab.Content>
               <Tab.Pane eventKey='first'>
-                <div className='row'>
-                  <div className='col-6'>
-                    <Input
-                      title='User Name'
-                      id='username'
-                      error={errors.username}
-                      touched={touched.username}
-                      errorTitle={errors.username}
-                      value={values.username || ''}
-                      onChange={handleChange}
-                      required={true}
-                    />
-                  </div>
-                  <div className='col-6'>
-                    <Input
-                      title='Password'
-                      id='password'
-                      error={errors.password}
-                      touched={touched.password}
-                      errorTitle={errors.password}
-                      value={values.password || ''}
-                      type='password'
-                      onChange={handleChange}
-                      required={data ? false : true}
-                    />
-                  </div>
-                  <div className='col-6'>
-                    <Select
-                      required
-                      datas={dataRole}
-                      valueTitle='role_name'
-                      setValueTitle='id'
-                      title='Role'
-                      id='role_id'
-                      errors={errors.role_id}
-                      touched={touched.role_id}
-                      errorTitle={errors.role_id}
-                      value={values.role_id}
-                      onChange={setFieldValue}
-                    />
+                <div>
+                  <div className='row'>
+                    {(rows || [])
+                      ?.filter(
+                        (item) =>
+                          item.isCreateEdit &&
+                          !['username', 'password', 'role_id'].includes(item.key)
+                      )
+                      .map((item, i) => {
+                        const {informCreateEdit, key, name} = item
+                        const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
+                          informCreateEdit || {}
+                        if (type === 'input') {
+                          return (
+                            <div className='col-6' key={i}>
+                              <Input
+                                type={typeInput}
+                                title={name}
+                                id={key}
+                                error={errors[key]}
+                                touched={touched[key]}
+                                errorTitle={errors[key]}
+                                value={values[key] || ''}
+                                onChange={handleChange}
+                                required={isRequired}
+                              />
+                            </div>
+                          )
+                        } else if (type === 'select') {
+                          return (
+                            <div className='col-6' key={i}>
+                              <Select
+                                required={isRequired}
+                                datas={dataBranch}
+                                valueTitle={fieldLabelOption || key}
+                                setValueTitle={fieldValueOption || 'id'}
+                                title={name}
+                                id={key}
+                                errors={errors[key]}
+                                touched={touched[key]}
+                                errorTitle={errors[key]}
+                                value={values[key]}
+                                onChange={setFieldValue}
+                              />
+                            </div>
+                          )
+                        } else if (type === 'checkbox') {
+                          return (
+                            <InputCheck
+                              key={i}
+                              checked={values[key]}
+                              onChange={handleChange}
+                              id='is_active'
+                              title='Active'
+                            />
+                          )
+                        }
+
+                        return <Fragment key={i}></Fragment>
+                      })}
                   </div>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey='second'>
-                <div>
-                  <div className='row'>
-                    <div className='col-6'>
-                      <Input
-                        title='First Name'
-                        id='firstname'
-                        error={errors.firstname}
-                        touched={touched.firstname}
-                        errorTitle={errors.firstname}
-                        value={values.firstname || ''}
-                        onChange={handleChange}
-                        required={true}
-                        name='firstname'
-                      />
-                    </div>
+                <div className='row'>
+                  {(rows || [])
+                    ?.filter(
+                      (item) =>
+                        item.isCreateEdit && ['username', 'password', 'role_id'].includes(item.key)
+                    )
+                    .map((item, i) => {
+                      const {informCreateEdit, key, name} = item
+                      const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
+                        informCreateEdit || {}
+                      if (type === 'input') {
+                        return (
+                          <div className='col-6' key={i}>
+                            <Input
+                              type={typeInput}
+                              title={name}
+                              id={key}
+                              error={errors[key]}
+                              touched={touched[key]}
+                              errorTitle={errors[key]}
+                              value={values[key] || ''}
+                              onChange={handleChange}
+                              required={isRequired}
+                            />
+                          </div>
+                        )
+                      } else if (type === 'select') {
+                        return (
+                          <div className='col-6' key={i}>
+                            <Select
+                              required={isRequired}
+                              datas={dataRole}
+                              valueTitle={fieldLabelOption || key}
+                              setValueTitle={fieldValueOption || 'id'}
+                              title={name}
+                              id={key}
+                              errors={errors[key]}
+                              touched={touched[key]}
+                              errorTitle={errors[key]}
+                              value={values[key]}
+                              onChange={setFieldValue}
+                            />
+                          </div>
+                        )
+                      }
 
-                    <div className='col-6'>
-                      <Input
-                        title='Last Name'
-                        id='lastname'
-                        error={errors.lastname}
-                        touched={touched.lastname}
-                        errorTitle={errors.lastname}
-                        value={values.lastname || ''}
-                        onChange={handleChange}
-                        required={true}
-                      />
-                    </div>
-                    <div className='col-6'>
-                      <Input
-                        title='Middle Name'
-                        id='middlename'
-                        error={errors.middlename}
-                        touched={touched.middlename}
-                        errorTitle={errors.middlename}
-                        value={values.middlename || ''}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className='col-6'>
-                      <Select
-                        required
-                        datas={dataBranch}
-                        valueTitle='company_name'
-                        setValueTitle='id'
-                        title='Company'
-                        id='company_id'
-                        errors={errors.company_id}
-                        touched={touched.company_id}
-                        errorTitle={errors.company_id}
-                        value={values.company_id}
-                        onChange={setFieldValue}
-                      />
-                    </div>
-
-                    <div className='col-6'>
-                      <Input
-                        required
-                        title='Email'
-                        id='email'
-                        error={errors.email}
-                        touched={touched.email}
-                        errorTitle={errors.email}
-                        value={values.email || ''}
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className='col-6'>
-                      <Input
-                        required
-                        title='Telephone'
-                        id='telephone'
-                        onPaste={handlePaste}
-                        onKeyPressCapture={handleKeyPress}
-                        error={errors.telephone}
-                        touched={touched.telephone}
-                        errorTitle={errors.telephone}
-                        value={values.telephone || ''}
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <InputCheck
-                      checked={isActive}
-                      onChange={() => setIsActive(!isActive)}
-                      id='is_active'
-                      title='Active'
-                    />
-                  </div>
+                      return <Fragment key={i}></Fragment>
+                    })}
                 </div>
               </Tab.Pane>
             </Tab.Content>
           </Col>
         </Row>
       </Tab.Container>
+
       <div className='d-flex flex-end pt-4'>
         <button type='button' className='btn btn-lg btn-primary' onClick={() => handleSubmit()}>
           {loading ? (

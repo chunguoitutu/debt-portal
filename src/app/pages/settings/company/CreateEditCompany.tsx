@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 
@@ -11,7 +11,7 @@ import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
 import {InputTime} from '../../../components/inputs/inputTime'
-import {handleKeyPress, handlePaste} from '../../../components/enter-numbers-only'
+import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
 
 type Props = {
   setLoadApi: any
@@ -54,96 +54,101 @@ const CreateEditCompanies = ({
   handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
+  const {rows} = COMPANY_MANAGEMENT_CONFIG
+  const [information, setInformation] = React.useState<any>(null)
 
   const [status, setStatus] = useState(data ? data?.status : true)
 
-  useEffect(() => {
-    data &&
-      request
-        .get(`config/company/id/${data.id}/address/${data.address_id}`)
-        .then((response) => {
-          setFieldValue('street_1', response.data.data.street_1)
-          setFieldValue('street_2', response.data.data.street_2)
-          setFieldValue('city', response.data.data.city)
-          setFieldValue('state', response.data.data.state)
-          setFieldValue('zipcode', response.data.data.zipcode)
-          setFieldValue('country', response.data.data.country)
-        })
-        .catch((error) => {
-          console.error('Error: ', error?.message)
-        })
-
+  React.useEffect(() => {
+    request
+      .get(`config/company/id/${data.id}/address/${data.address_id}`)
+      .then(({data}) => {
+        if (!data?.error) setInformation(data?.data)
+      })
+      .catch((error) => {
+        console.error('Error: ', error?.message)
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const generateField = React.useMemo(() => {
+    if (information) {
+      return rows.reduce((a, b) => {
+        a[b.key] = information[b.key] || ''
+        return a
+      }, {})
+    }
+    return {}
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [information])
+
   const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik({
     initialValues: {
-      company_name: data ? data?.company_name : '',
-      company_code: data ? data?.company_code : '',
-      business_uen: data ? data?.business_uen : '',
-      telephone: data ? data?.telephone : '',
-      email: data ? data?.email : '',
-      open_date: data ? moment(data?.open_date).format('YYYY-MM-DDTHH:mm') : '',
-      street_1: '',
-      street_2: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      country: '',
+      ...generateField,
     },
     validationSchema: newCompaniesSchema,
     onSubmit: async (values: any, actions: any) => {
-      if (titleLable === 'Edit') {
-        await request
-          .post('config/company/' + data?.id, {
-            company_name: values.company_name,
-            company_code: values.company_code,
-            business_uen: values.business_uen,
-            telephone: values.telephone,
-            email: values.email,
-            open_date: new Date(values.open_date),
-            status: status ? 1 : 0,
-          })
-          .then((response) => {
-            request
-              .post('config/address/' + data?.address_id, {
-                address_type_id: 1,
-                street_1: values.street_1,
-                street_2: values.street_2,
-                city: values.city,
-                state: values.state,
-                zipcode: values.zipcode,
-                country: values.country,
-              })
-              .then((response) => {
-                if (!response.data?.error) {
-                  swalToast.fire({
-                    icon: 'success',
-                    title: 'Company successfully updated',
-                  })
-                }
-                handleUpdated()
-                handleClose()
-                setLoadApi(!loadapi)
-              })
-              .catch((error) => {
-                handleClose()
-                swalToast.fire({
-                  icon: 'error',
-                  title: error?.message,
-                })
-              })
-          })
-          .catch((error) => {
-            handleClose()
-            swalToast.fire({
-              icon: 'error',
-              title: error?.message,
+      await request
+        .post('config/company/' + information?.id, {
+          company_name: values.company_name,
+          company_code: values.company_code,
+          business_uen: values.business_uen,
+          telephone: values.telephone as string,
+          email: values.email,
+          website: values.website,
+          open_date: new Date(values.open_date),
+        })
+        .then((response) => {
+          request
+            .post('config/address/' + information?.address_id, {
+              address_type_id: 1,
+              street_1: values.street_1,
+              street_2: values.street_2,
+              city: values.city,
+              state: values.state,
+              zipcode: values.zipcode,
+              country: values.country,
             })
+            .then((response) => {
+              if (!response.data?.error) {
+                swalToast.fire({
+                  icon: 'success',
+                  title: 'Company successfully updated',
+                })
+              }
+              handleUpdated()
+              handleClose()
+              setLoadApi(!loadapi)
+            })
+            .catch((error) => {
+              swalToast.fire({
+                icon: 'error',
+                title: error?.message,
+              })
+            })
+        })
+        .catch((error) => {
+          swalToast.fire({
+            icon: 'error',
+            title: error?.message,
           })
-      }
+        })
     },
   })
+
+  React.useEffect(() => {
+    if (information) {
+      rows.forEach((row) => {
+        if (row.key === 'open_date') {
+          setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DDTHH:mm'))
+        } else {
+          setFieldValue(row.key, information[row.key])
+        }
+      }, {})
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [information])
 
   return createPortal(
     <Modal
@@ -168,148 +173,57 @@ const CreateEditCompanies = ({
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
           id='kt_modal_create_app_stepper'
         >
-          <div className='flex-row-fluid'>
-            <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-              <div className='d-flex justify-content-center gap-10 '>
-                <div style={{width: '47%'}}>
-                  <Input
-                    required={true}
-                    title='Company Name'
-                    id='company_name'
-                    error={errors.company_name}
-                    touched={touched.company_name}
-                    errorTitle={errors.company_name}
-                    value={values.company_name}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    title='Company Code'
-                    id='company_code'
-                    error={errors.company_code}
-                    touched={touched.company_code}
-                    errorTitle={errors.company_code}
-                    value={values.company_code}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    required={true}
-                    title='Business Uen'
-                    id='business_uen'
-                    error={errors.business_uen}
-                    touched={touched.business_uen}
-                    errorTitle={errors.business_uen}
-                    value={values.business_uen}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    required={true}
-                    onPaste={handlePaste}
-                    onKeyPressCapture={handleKeyPress}
-                    title='Telephone'
-                    id='telephone'
-                    error={errors.telephone}
-                    touched={touched.telephone}
-                    errorTitle={errors.telephone}
-                    value={values.telephone}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    title='Email'
-                    id='email'
-                    error={errors.email}
-                    touched={touched.email}
-                    errorTitle={errors.email}
-                    value={values.email}
-                    onChange={handleChange}
-                  />
+          <div className=''>
+            <div className='card-body  px-lg-7 row gx-10'>
+              {information ? (
+                <>
+                  {rows.map((row) => (
+                    <div key={row.key} style={{flex: '0 0 50%'}}>
+                      {row.key === 'open_date' ? (
+                        <InputTime
+                          required={row?.require ? true : false}
+                          title={row.name}
+                          id={row.key}
+                          error={errors[row.key]}
+                          touched={touched[row.key]}
+                          errorTitle={errors[row.key]}
+                          value={values[row.key] || ''}
+                          onChange={handleChange}
+                        />
+                      ) : (
+                        <Input
+                          required={row?.require ? true : false}
+                          title={row.name}
+                          id={row.key}
+                          type={row.type}
+                          error={errors[row.key]}
+                          touched={touched[row.key]}
+                          errorTitle={errors[row.key]}
+                          value={values[row.key] || ''}
+                          onChange={handleChange}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </>
+              ) : null}
+              <InputCheck
+                title='Status'
+                checked={status}
+                onChange={() => setStatus(!status)}
+                id='Status'
+              />
+            </div>
 
-                  <InputTime
-                    required={true}
-                    title='Open Date'
-                    id='open_date'
-                    error={errors.open_date}
-                    touched={touched.open_date}
-                    errorTitle={errors.open_date}
-                    value={values.open_date}
-                    onChange={handleChange}
-                  />
-                  <InputCheck
-                    title='Status'
-                    checked={status}
-                    onChange={() => setStatus(!status)}
-                    id='Status'
-                  />
-                </div>
-                <div style={{width: '47%'}}>
-                  <Input
-                    required={true}
-                    title='Street 1'
-                    id='street_1'
-                    error={errors.street_1}
-                    touched={touched.street_1}
-                    errorTitle={errors.street_1}
-                    value={values.street_1}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    title='Street 2'
-                    id='street_2'
-                    error={errors.street_2}
-                    touched={touched.street_2}
-                    errorTitle={errors.street_2}
-                    value={values.street_2}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    required={true}
-                    title='City'
-                    id='city'
-                    error={errors.city}
-                    touched={touched.city}
-                    errorTitle={errors.city}
-                    value={values.city}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    required={true}
-                    title='State'
-                    id='state'
-                    error={errors.state}
-                    touched={touched.state}
-                    errorTitle={errors.state}
-                    value={values.state}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    required={true}
-                    title='Zip Code'
-                    id='zipcode'
-                    error={errors.zipcode}
-                    touched={touched.zipcode}
-                    errorTitle={errors.zipcode}
-                    value={values.zipcode}
-                    onChange={handleChange}
-                  />
-
-                  <Input
-                    required={true}
-                    title='Country'
-                    id='country'
-                    error={errors.country}
-                    touched={touched.country}
-                    errorTitle={errors.country}
-                    value={values.country}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <div className='d-flex flex-end pt-10'>
-                <button type='submit' className='btn btn-lg btn-primary'>
-                  {titleLable === 'Edit' ? 'Update' : 'Create'}
-                </button>
-              </div>
-            </form>
+            <div className='d-flex flex-end pt-10'>
+              <button
+                onClick={() => handleSubmit()}
+                type='submit'
+                className='btn btn-lg btn-primary'
+              >
+                {titleLable === 'Edit' ? 'Update' : 'Create'}
+              </button>
+            </div>
           </div>
         </div>
       </div>

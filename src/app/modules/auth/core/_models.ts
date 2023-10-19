@@ -1,3 +1,5 @@
+import {HTMLInputTypeAttribute} from 'react'
+
 export type LoginInfo = {
   username: string
   password: string
@@ -22,8 +24,6 @@ export type LoginResponse = {
   token: string
   info: UserInfo
 }
-
-export type GetCurrentUserResponse = {}
 
 export type UserInfo = {
   username: string
@@ -93,6 +93,14 @@ export type TableRow = {
   componentProps?: {[key: string]: string}
   type?: 'datetime' | 'yes/no'
   isHide?: boolean
+  isCreateEdit?: boolean
+  informCreateEdit?: {
+    type: 'input' | 'select' | 'textarea' | 'checkbox'
+    typeInput?: HTMLInputTypeAttribute
+    isRequired?: boolean
+    fieldLabelOption?: string
+    fieldValueOption?: string
+  }
 }
 
 export type TableConfig = {
@@ -110,11 +118,17 @@ export type TableConfig = {
     messageDeleteSuccess?: string
     messageEditError?: string
     messageEditSuccess?: string
+    messageCreateError?: string
+    messageCreateSuccess?: string
     dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
     showFilter?: boolean
+    endpoint?: string
+    swalToastTitle?: string
   }
+  endpoint?: string
+
   rows: TableRow[]
 }
 
@@ -141,4 +155,5 @@ type MenuChildren = {
   id: string
   to: string
   label: string
+  priority: number[]
 }
