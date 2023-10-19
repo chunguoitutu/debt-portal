@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
 import {RoleInfo, TableConfig, UpdateById, useAuth} from '../../../modules/auth'
 import {useFormik} from 'formik'
@@ -211,7 +211,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                 />
               )
             } else {
-              return <></>
+              return <Fragment key={index}></Fragment>
             }
           })}
 
