@@ -13,6 +13,7 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
+import TextArea from '../../../components/textarea/TextArea'
 
 type Props = {
   setLoadApi: any
@@ -26,7 +27,7 @@ type Props = {
 
 export const CreateLoanTypeSchema = Yup.object().shape({
   type_name: Yup.string().required('Document Type Name is required'),
-  description: Yup.string().max(1024, 'Description must be at most 1024 characters')
+  description: Yup.string().max(1024, 'Description must be at most 1024 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -141,35 +142,48 @@ const CreateDocumentType = ({
             <KTIcon className='fs-1' iconName='cross' />
           </div>
         </div>
-        <div className='flex-row-fluid'style={{padding: 23}}>
+        <div className='flex-row-fluid' style={{padding: 23}}>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
             {rows.map((row) => {
               const {informCreateEdit} = row
               const {isRequired} = informCreateEdit || {}
               if (['id', 'status', 'created_date', 'updated_date'].includes(row.key)) {
-                return null  
+                return null
               }
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
-                  <Input
-                    title={row.name}
-                    id={row.key}
-                    error={errors[row.key]}
-                    touched={touched[row.key]}
-                    errorTitle={errors[row.key]}
-                    value={values[row.key] || ''}
-                    onChange={handleChange}
-                    required= {isRequired}
-                  />
+                  {row.key === 'description' ? (
+                    <div>
+                      <TextArea
+                        title={row.name}
+                        name={row.key}
+                        value={values[row.key] || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  ) : (
+                    <Input
+                      title={row.name}
+                      id={row.key}
+                      error={errors[row.key]}
+                      touched={touched[row.key]}
+                      errorTitle={errors[row.key]}
+                      value={values[row.key] || ''}
+                      onChange={handleChange}
+                      required={isRequired}
+                    />
+                  )}
                 </div>
               )
             })}
-            <InputCheck
-              checked={status}
-              onChange={() => setStatus(!status)}
-              id='status'
-              title='Status'
-            />
+            <div className='mt-6'>
+              <InputCheck
+                checked={status}
+                onChange={() => setStatus(!status)}
+                id='status'
+                title='Status'
+              />
+            </div>
             <div className='d-flex justify-content-end pt-4'>
               <button type='submit' className='btn btn-lg btn-primary'>
                 {title === 'New' ? 'Create' : 'Update'}

@@ -13,6 +13,7 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
+import TextArea from '../../../components/textarea/TextArea'
 
 type Props = {
   setLoadApi: any
@@ -156,26 +157,39 @@ const CreateJobType = ({
               }
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
-                  <Input
-                    title={row.name}
-                    id={row.key}
-                    error={errors[row.key]}
-                    touched={touched[row.key]}
-                    errorTitle={errors[row.key]}
-                    value={values[row.key] || ''}
-                    onChange={handleChange}
-                    required={isRequired}
-                  />
+                  {row.key === 'description' ? (
+                    <div>
+                      <TextArea
+                        title={row.name}
+                        name={row.key}
+                        value={values[row.key] || ''}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  ) : (
+                    <Input
+                      title={row.name}
+                      id={row.key}
+                      error={errors[row.key]}
+                      touched={touched[row.key]}
+                      errorTitle={errors[row.key]}
+                      value={values[row.key] || ''}
+                      onChange={handleChange}
+                      required={isRequired}
+                    />
+                  )}
                 </div>
               )
             })}
-            <InputCheck
-              onChange={() => setRequestMoreInformation(!requestMoreInformation)}
-              checked={requestMoreInformation}
-              id='request_more_information'
-              title='Need More Information'
-            />
-            <div className='mt-5'>
+            <div className='mt-6'>
+              <InputCheck
+                onChange={() => setRequestMoreInformation(!requestMoreInformation)}
+                checked={requestMoreInformation}
+                id='request_more_information'
+                title='Need More Information'
+              />
+            </div>
+            <div className='mt-6'>
               <InputCheck
                 checked={status}
                 onChange={() => setStatus(!status)}
