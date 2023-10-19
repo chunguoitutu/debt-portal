@@ -28,8 +28,8 @@ export const roleSchema = Yup.object().shape({
 const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const {rows} = config || {}
-  
-  const {currentUser} = useAuth()
+
+  const {currentUser, priority} = useAuth()
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
     useFormik<RoleInfo>({
@@ -125,6 +125,10 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     }
   }
 
+  const DATA_ROLE_PRIORITY = ROLE_PRIORITY.filter(
+    (rolePriority) => Number(rolePriority.value) > Number(priority)
+  )
+
   return (
     <Modal
       title={data ? `Edit Role "${data.role_name}"` : 'Create New Role'}
@@ -134,13 +138,14 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       <form onSubmit={handleSubmit}>
         {(rows || [])
           .filter((item) => item.isCreateEdit)
-          .map((item) => {
+          .map((item, index) => {
             const {informCreateEdit, key, name} = item
             const {type, typeInput, isRequired} = informCreateEdit || {}
 
             if (type === 'input') {
               return (
                 <Input
+                  key={index}
                   title={name}
                   type={typeInput || 'text'}
                   id={key}
@@ -154,7 +159,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
               )
             } else if (type === 'textarea') {
               return (
-                <div className='mb-8'>
+                <div className='mb-8' key={index}>
                   <TextArea
                     title={name}
                     name={key}
@@ -174,7 +179,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
               if (key === 'priority')
                 return (
                   <Select
-                    datas={ROLE_PRIORITY}
+                    key={index}
+                    datas={DATA_ROLE_PRIORITY}
                     valueTitle='label'
                     setValueTitle='value'
                     required={true}
@@ -190,7 +196,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
               return (
                 <Select
-                  datas={ROLE_PRIORITY}
+                  key={index}
+                  datas={DATA_ROLE_PRIORITY}
                   valueTitle='label'
                   setValueTitle='value'
                   required={isRequired}
