@@ -19,13 +19,15 @@ const LoanTypes = () => {
   return (
     <>
       <div>
-        <CreateLoanType
-          setLoadApi={setLoadApi}
-          loadApi={loadapi}
-          show={showPopupCreate}
-          handleClose={() => setShowPopupCreate(false)}
-          handleUpdated={() => setIsUpdated(true)}
-        />
+        {showPopupCreate && (
+          <CreateLoanType
+            setLoadApi={setLoadApi}
+            loadApi={loadapi}
+            show={showPopupCreate}
+            handleClose={() => setShowPopupCreate(false)}
+            handleUpdated={() => setIsUpdated(true)}
+          />
+        )}
 
         <Table
           config={LOAN_TYPE_TABLE_CONFIG}

@@ -18,13 +18,15 @@ const DocumentTypes = () => {
   return (
     <>
       <div>
-        <CreateDocumentType
-          setLoadApi={setLoadApi}
-          loadApi={loadapi}
-          show={showPopupCreate}
-          handleClose={() => setShowPopupCreate(false)}
-          handleUpdated={() => setIsUpdated(true)}
-        />
+        {showPopupCreate && (
+          <CreateDocumentType
+            setLoadApi={setLoadApi}
+            loadApi={loadapi}
+            show={showPopupCreate}
+            handleClose={() => setShowPopupCreate(false)}
+            handleUpdated={() => setIsUpdated(true)}
+          />
+        )}
 
         <Table
           config={DOCUMENT_TABLE_CONFIG}
