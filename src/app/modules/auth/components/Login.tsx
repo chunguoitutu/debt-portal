@@ -58,7 +58,7 @@ export function Login() {
       }
       if (data?.info) {
         const {priority} = data?.info
-        if (priority == 1) {
+        if (priority === 1) {
           setDataInfo(data)
           setIsAdmin(true)
           setShowBranch(true)
@@ -105,6 +105,7 @@ export function Login() {
       }
     }
     fetchCompany()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdmin])
 
   return (

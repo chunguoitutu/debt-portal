@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
-import {RoleInfo, TableConfig, UpdateById} from '../../../modules/auth'
+import {RoleInfo, TableConfig, UpdateById, useAuth} from '../../../modules/auth'
 import {useFormik} from 'formik'
 import TextArea from '../../../components/textarea/TextArea'
 import ErrorMessage from '../../../components/error/ErrorMessage'
@@ -28,6 +28,8 @@ export const roleSchema = Yup.object().shape({
 const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const {rows} = config || {}
+  
+  const {currentUser} = useAuth()
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
     useFormik<RoleInfo>({
@@ -74,7 +76,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     setLoading(true)
 
     try {
-      await createNewRole(payload)
+      await createNewRole({...payload, company_id: currentUser?.company_id || 0})
 
       // handle after create successfully
       await onRefreshListing()
