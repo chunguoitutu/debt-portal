@@ -14,7 +14,7 @@ import request from '../../../axios'
 import InputCheck from '../../../../components/inputs/inputCheck'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
-import { DEFAULT_MESSAGE_ERROR_500 } from '../../../constants/error-message'
+import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
 
 type Props = {
   setLoadApi: any
@@ -153,27 +153,16 @@ const CreateDocumentType = ({
               }
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
-                  {row.key === 'description' ? (
-                    <div>
-                      <TextArea
-                        title={row.name}
-                        name={row.key}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  ) : (
-                    <Input
-                      title={row.name}
-                      id={row.key}
-                      error={errors[row.key]}
-                      touched={touched[row.key]}
-                      errorTitle={errors[row.key]}
-                      value={values[row.key] || ''}
-                      onChange={handleChange}
-                      required={isRequired}
-                    />
-                  )}
+                  <Input
+                    title={row.name}
+                    id={row.key}
+                    error={errors[row.key]}
+                    touched={touched[row.key]}
+                    errorTitle={errors[row.key]}
+                    value={values[row.key] || ''}
+                    onChange={handleChange}
+                    required={isRequired}
+                  />
                 </div>
               )
             })}

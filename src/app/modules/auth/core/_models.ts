@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute } from "react"
+import {HTMLInputTypeAttribute} from 'react'
 
 export type LoginInfo = {
   username: string
@@ -124,8 +124,11 @@ export type TableConfig = {
     buttonAddNew?: string
     showSearch?: boolean
     showFilter?: boolean
+    endpoint?: string
+    swalToastTitle?: string
   }
   endpoint?: string
+
   rows: TableRow[]
 }
 
