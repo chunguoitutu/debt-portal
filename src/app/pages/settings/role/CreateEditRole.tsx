@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
-import {RoleInfo, UpdateById} from '../../../modules/auth'
+import {RoleInfo, TableConfig, UpdateById} from '../../../modules/auth'
 import {useFormik} from 'formik'
 import TextArea from '../../../components/textarea/TextArea'
 import ErrorMessage from '../../../components/error/ErrorMessage'
@@ -17,6 +17,7 @@ type Props = {
   show: boolean
   onClose: () => void
   onRefreshListing: () => Promise<void>
+  config?: TableConfig
 }
 
 export const roleSchema = Yup.object().shape({
@@ -24,8 +25,9 @@ export const roleSchema = Yup.object().shape({
   priority: Yup.string().required('Priority is required.'),
 })
 
-const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
+const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
+  const {rows} = config || {}
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
     useFormik<RoleInfo>({
@@ -128,54 +130,81 @@ const CreateEditRole: FC<Props> = ({data, show, onClose, onRefreshListing}) => {
       onClose={onClose}
     >
       <form onSubmit={handleSubmit}>
-        <Input
-          title='Role Name'
-          id='role_name'
-          error={errors.role_name}
-          touched={touched.role_name}
-          errorTitle={errors.role_name}
-          value={values.role_name || ''}
-          onChange={handleChange}
-          required
-        />
+        {(rows || [])
+          .filter((item) => item.isCreateEdit)
+          .map((item) => {
+            const {informCreateEdit, key, name} = item
+            const {type, typeInput, isRequired} = informCreateEdit || {}
 
-        <div className='mb-8'>
-          <TextArea
-            title='Description'
-            name='description'
-            value={values.description || ''}
-            onChange={handleChange}
-          />
+            if (type === 'input') {
+              return (
+                <Input
+                  title={name}
+                  type={typeInput || 'text'}
+                  id={key}
+                  error={errors[key]}
+                  touched={touched[key]}
+                  errorTitle={errors[key]}
+                  value={values[key] || ''}
+                  onChange={handleChange}
+                  required={isRequired}
+                />
+              )
+            } else if (type === 'textarea') {
+              return (
+                <div className='mb-8'>
+                  <TextArea
+                    title={name}
+                    name={key}
+                    value={values[key] || ''}
+                    onChange={handleChange}
+                    isRequired={isRequired}
+                  />
 
-          <ErrorMessage
-            className='mt-2'
-            shouldShowMessage={!!(errors.description && touched.description)}
-            message={errors.description}
-          />
-        </div>
-        <Select
-          datas={ROLE_PRIORITY}
-          valueTitle='label'
-          setValueTitle='value'
-          required={true}
-          title='Priority'
-          id='priority'
-          errors={errors.priority}
-          touched={touched.priority}
-          errorTitle={errors.priority}
-          value={values.priority || ''}
-          onChange={setFieldValue}
-        />
+                  <ErrorMessage
+                    className='mt-2'
+                    shouldShowMessage={!!(errors[key] && touched[key])}
+                    message={errors[key]}
+                  />
+                </div>
+              )
+            } else if (type === 'select') {
+              if (key === 'priority')
+                return (
+                  <Select
+                    datas={ROLE_PRIORITY}
+                    valueTitle='label'
+                    setValueTitle='value'
+                    required={true}
+                    title='Priority'
+                    id='priority'
+                    errors={errors.priority}
+                    touched={touched.priority}
+                    errorTitle={errors.priority}
+                    value={values.priority || ''}
+                    onChange={setFieldValue}
+                  />
+                )
 
-        <Input
-          title='Permissions'
-          id='permissions'
-          error={errors.permissions}
-          touched={touched.permissions}
-          errorTitle={errors.permissions}
-          value={values.permissions || ''}
-          onChange={handleChange}
-        />
+              return (
+                <Select
+                  datas={ROLE_PRIORITY}
+                  valueTitle='label'
+                  setValueTitle='value'
+                  required={isRequired}
+                  title='Priority'
+                  id='priority'
+                  errors={errors.priority}
+                  touched={touched.priority}
+                  errorTitle={errors.priority}
+                  value={values.priority || ''}
+                  onChange={setFieldValue}
+                />
+              )
+            } else {
+              return <></>
+            }
+          })}
 
         <div className='d-flex flex-end'>
           <button type='submit' className='btn btn-lg btn-primary'>
