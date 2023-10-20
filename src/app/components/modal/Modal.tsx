@@ -28,10 +28,9 @@ const Modal: FC<Props> = ({show, title, onClose, children}) => {
       </div>
 
       <div
-        className='modal-body py-lg-10 px-lg-10 overflow-auto max-height'
+        className='modal-body py-lg-10 px-lg-10 overflow-y-auto'
         style={{
           maxHeight: 'calc(100vh - 200px)',
-          overflow: 'auto',
         }}
       >
         {children}
