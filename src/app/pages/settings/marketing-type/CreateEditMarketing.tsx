@@ -118,8 +118,6 @@ const CreatEditMarkettingType = ({
     },
   })
 
-  console.log(rows.filter((data) => !!data.informCreateEdit))
-
   return createPortal(
     <Modal
       id='kt_modal_create_app'
