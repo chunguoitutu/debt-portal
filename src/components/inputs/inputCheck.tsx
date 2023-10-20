@@ -1,18 +1,24 @@
-import React from 'react'
+import React, {InputHTMLAttributes, useId} from 'react'
 
-type Props = {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   title?: string
   label?: string
-  checked: boolean
+  checked?: boolean
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   id?: string
 }
 
-const InputCheck = ({title = '', label, checked = false, onChange, id}: Props) => {
+const InputCheck = ({title = '', label, checked = false, onChange, ...rest}: Props) => {
+  const id = useId()
+
   return (
     <div>
       <div className='form-check form-check-custom form-check-solid form-switch'>
-        {title !== '' && <span className='fs-5 fw-semibold mb-2'>{title}</span>}
+        {title !== '' && (
+          <label htmlFor={id} className='fs-5 fw-semibold cursor-pointer'>
+            {title}
+          </label>
+        )}
 
         <div className='fv-row'>
           <div className=' form-check form-check-custom form-check-solid form-switch'>
@@ -22,9 +28,14 @@ const InputCheck = ({title = '', label, checked = false, onChange, id}: Props) =
               checked={checked}
               style={{width: 45, height: 23, marginLeft: 20}}
               onChange={onChange}
-              id='kt_builder_sidebar_minimize_desktop_enabled'
+              {...rest}
+              id={id}
             />
-            <span className='fw-bold ps-2 fs-6'>{label}</span>
+            {label && (
+              <label htmlFor={id} className='fw-bold ps-2 fs-6 cursor-pointer'>
+                {label}
+              </label>
+            )}
           </div>
         </div>
       </div>

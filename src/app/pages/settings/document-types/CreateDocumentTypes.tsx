@@ -10,10 +10,10 @@ import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Input} from '../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import InputCheck from '../../../../components/inputs/inputCheck'
+import InputCheck from '../../../../components/inputs/InputCheck'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
-import { swalToast } from '../../../swal-notification'
+import {swalToast} from '../../../swal-notification'
 
 type Props = {
   setLoadApi: any
@@ -45,7 +45,7 @@ const CreateDocumentType = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [status, setStatus] = useState(data.status || false)
-  
+
   const {rows, endpoint} = DOCUMENT_TABLE_CONFIG
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({

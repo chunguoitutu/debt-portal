@@ -8,7 +8,7 @@ type Props = {
   id?: string
 }
 
-const InputCheck = ({title = '', lable, checked = false, onChange, id}: Props) => {
+const InputCheck = ({title = '', checked = false, onChange, id}: Props) => {
   return (
     <div>
       <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-start align-content-center mt-xl-6 '>

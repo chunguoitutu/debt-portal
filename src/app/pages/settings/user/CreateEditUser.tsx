@@ -18,7 +18,7 @@ import Col from 'react-bootstrap/Col'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 import Tab from 'react-bootstrap/Tab'
-import InputCheck from '../../../../components/inputs/inputCheck'
+import InputCheck from '../../../../components/inputs/InputCheck'
 import Select from '../../../components/selects/select'
 
 type Props = {
@@ -145,7 +145,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       role_id,
       email,
       telephone,
-      is_active,
+      is_active: !!is_active,
     })
 
     return () => resetForm()
@@ -330,10 +330,11 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                         } else if (type === 'checkbox') {
                           return (
                             <InputCheck
+                              name={key}
                               key={i}
                               checked={values[key]}
                               onChange={handleChange}
-                              id='is_active'
+                              id={key}
                               title='Active'
                             />
                           )

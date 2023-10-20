@@ -27,7 +27,10 @@ export const Input: React.FC<IProps> = ({
   return (
     <div>
       <div className={`${classShared}`}>
-        <label className='d-flex align-items-center fs-5 fw-semibold mb-2' htmlFor={id}>
+        <label
+          className='d-flex align-items-center fs-5 fw-semibold mb-2 cursor-pointer'
+          htmlFor={id}
+        >
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
         <input
