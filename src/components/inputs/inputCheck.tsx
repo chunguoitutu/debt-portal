@@ -15,7 +15,7 @@ const InputCheck = ({title = '', label, checked = false, onChange, ...rest}: Pro
     <div>
       <div className='form-check form-check-custom form-check-solid form-switch'>
         {title !== '' && (
-          <label htmlFor={id} className='fs-5 fw-semibold cursor-pointer'>
+          <label htmlFor={id} className='fs-5 fw-semibold cursor-grab'>
             {title}
           </label>
         )}
@@ -32,7 +32,7 @@ const InputCheck = ({title = '', label, checked = false, onChange, ...rest}: Pro
               id={id}
             />
             {label && (
-              <label htmlFor={id} className='fw-bold ps-2 fs-6 cursor-pointer'>
+              <label htmlFor={id} className='fw-bold ps-2 fs-6 cursor-grab'>
                 {label}
               </label>
             )}

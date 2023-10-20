@@ -10,6 +10,11 @@ $utilities: map-merge(
       responsive: true,
       values: static relative absolute fixed sticky,
     ),
+    'cursor': (
+      property: cursor,
+      class: 'cursor',
+      values: auto pointer all-scroll copy default grab grabbing help text zoom-in zoom-out,
+    ),
     'overflow': (
       property: overflow,
       responsive: true,
