@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useEffect, useRef, useState} from 'react'
+import {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -9,12 +9,12 @@ import * as Yup from 'yup'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import InputCheck from '../../../../components/inputs/inputCheck'
+import InputCheck from '../../../../components/inputs/InputCheck'
 import {Input} from '../../../components/inputs/input'
 import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
-import { DEFAULT_MESSAGE_ERROR_500 } from '../../../constants/error-message'
-import { swalToast } from '../../../swal-notification'
+import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
+import {swalToast} from '../../../swal-notification'
 
 type Props = {
   setLoadApi: any
@@ -46,20 +46,8 @@ const CreateLoanType = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [status, setStatus] = useState(data.status || false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [dataLoan, setDataLoan] = useState([])
-  const {rows, endpoint} = LOAN_TYPE_TABLE_CONFIG
 
-  useEffect(() => {
-    request
-      .get(endpoint || '')
-      .then((response) => {
-        setDataLoan(response.data.data)
-      })
-      .catch((error) => {
-        console.error('Error:', error?.message)
-      })
-  }, [])
+  const {rows, endpoint} = LOAN_TYPE_TABLE_CONFIG
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
@@ -175,14 +163,14 @@ const CreateLoanType = ({
                 </div>
               )
             })}
-           <div className='mt-6'>
+            <div className='mt-6'>
               <InputCheck
                 checked={status}
                 onChange={() => setStatus(!status)}
                 id='status'
                 title='Status'
               />
-           </div>
+            </div>
             <div className='d-flex justify-content-end pt-4'>
               <button type='submit' className='btn btn-lg btn-primary'>
                 {title === 'New' ? 'Create' : 'Update'}

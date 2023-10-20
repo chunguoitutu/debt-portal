@@ -240,7 +240,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'roles',
-    labelBreadCrumbs: 'Loan Type',
+    labelBreadCrumbs: 'Roles',
     priority: [1, 2],
     component: RolePage,
   },

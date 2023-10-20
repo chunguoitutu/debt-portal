@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useEffect, useRef, useState} from 'react'
+import {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -10,11 +10,11 @@ import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Input} from '../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import InputCheck from '../../../../components/inputs/inputCheck'
+import InputCheck from '../../../../components/inputs/InputCheck'
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
-import { DEFAULT_MESSAGE_ERROR_500 } from '../../../constants/error-message'
-import { swalToast } from '../../../swal-notification'
+import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
+import {swalToast} from '../../../swal-notification'
 
 type Props = {
   setLoadApi: any
@@ -49,20 +49,8 @@ const CreateJobType = ({
   const [requestMoreInformation, setRequestMoreInformation] = useState(
     data.request_more_information || false
   )
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [dataLoan, setDataLoan] = useState([])
-  const {rows, endpoint} = JOB_TABLE_CONFIG
 
-  useEffect(() => {
-    request
-      .get(endpoint || '')
-      .then((response) => {
-        setDataLoan(response.data.data)
-      })
-      .catch((error) => {
-        console.error('Error:', error?.message)
-      })
-  }, [])
+  const {rows, endpoint} = JOB_TABLE_CONFIG
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
@@ -78,7 +66,6 @@ const CreateJobType = ({
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
-          console.log(values)
           handleUpdated()
           handleClose()
           resetForm()
