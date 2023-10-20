@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useEffect, useRef, useState} from 'react'
+import {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -49,20 +49,9 @@ const CreateJobType = ({
   const [requestMoreInformation, setRequestMoreInformation] = useState(
     data.request_more_information || false
   )
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [dataLoan, setDataLoan] = useState([])
+
   const {rows, endpoint} = JOB_TABLE_CONFIG
 
-  useEffect(() => {
-    request
-      .get(endpoint || '')
-      .then((response) => {
-        setDataLoan(response.data.data)
-      })
-      .catch((error) => {
-        console.error('Error:', error?.message)
-      })
-  }, [])
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {

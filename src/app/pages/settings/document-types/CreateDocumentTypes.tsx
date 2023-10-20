@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -45,20 +45,8 @@ const CreateDocumentType = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [status, setStatus] = useState(data.status || false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [dataLoan, setDataLoan] = useState([])
+  
   const {rows, endpoint} = DOCUMENT_TABLE_CONFIG
-
-  useEffect(() => {
-    request
-      .get(endpoint || '')
-      .then((response) => {
-        setDataLoan(response.data.data)
-      })
-      .catch((error) => {
-        console.error('Error:', error?.message)
-      })
-  }, [])
 
   const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
     initialValues: {
