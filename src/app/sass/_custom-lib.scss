@@ -1,0 +1,53 @@
+// Custom react checkbox tree
+.react-checkbox-tree {
+  > ol {
+    padding: 0 !important;
+  }
+
+  .rct-collapse.rct-collapse-btn {
+    border: none;
+    background-color: transparent;
+    color: var(--bs-grey);
+    padding: 0;
+    padding-right: 16px;
+  }
+
+  .rct-title {
+    margin-left: 8px;
+  }
+
+  .rct-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+
+    input[type='checkbox'] {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      align-self: center;
+      cursor: pointer;
+      outline: none;
+
+      &:checked {
+        background-color: var(--bs-primary);
+      }
+    }
+  }
+
+  ul,
+  ol {
+    list-style-type: none;
+    padding-left: 40px;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

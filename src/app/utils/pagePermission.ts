@@ -1,289 +1,121 @@
-export const PAGE_PERMISSION = {
+import {CheckboxTreeItem} from '../modules/auth'
+
+const ACTION_CONTROL = [
+  {
+    value: 'view',
+    label: 'View',
+    active: false,
+  },
+  {
+    value: 'add',
+    label: 'Add',
+    active: false,
+  },
+  {
+    value: 'edit',
+    label: 'Edit',
+    active: false,
+  },
+  {
+    value: 'delete',
+    label: 'Delete',
+    active: false,
+  },
+]
+
+export const PAGE_PERMISSION: {
+  setting: CheckboxTreeItem[]
+} = {
   setting: [
     {
-      root: 'Comapany Management',
-      children: [
-        {
-          name: 'Company Information',
-          path: '/settings/company-management',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-        {
-          name: 'Companies',
-          path: '/settings/companies',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-      ],
+      label: 'Company Information',
+      value: 'company-management',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Company Information`,
+      })),
     },
     {
-      root: 'User Management',
-      children: [
-        {
-          name: 'User Listing',
-          path: '/settings/users',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-        {
-          name: 'Roles',
-          path: '/settings/roles',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-      ],
+      label: 'Companies',
+      value: 'companies',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Companies`,
+      })),
     },
     {
-      root: 'Listing',
-      children: [
-        {
-          name: 'Document Type',
-          path: '/settings/document-type',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-        {
-          name: 'Loan Type',
-          path: '/settings/loan-type',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-        {
-          name: 'Job Type',
-          path: '/settings/job-type',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-        {
-          name: 'Address Type',
-          path: '/settings/address-type',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-        {
-          name: 'Marketing Type',
-          path: '/settings/marketing-type',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-        {
-          name: 'Rejection Type',
-          path: '/settings/rejection-type',
-          isAccess: false,
-          action: [
-            {
-              value: 'view',
-              label: 'View',
-              active: false,
-            },
-            {
-              value: 'add',
-              label: 'Add',
-              active: false,
-            },
-            {
-              value: 'edit',
-              label: 'Edit',
-              active: false,
-            },
-            {
-              value: 'delete',
-              label: 'Delete',
-              active: false,
-            },
-          ],
-        },
-      ],
+      label: 'User Listing',
+      value: 'users',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-User Listing`,
+      })),
+    },
+    {
+      label: 'Roles',
+      value: 'roles',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Roles`,
+      })),
+    },
+    {
+      label: 'Document Type',
+      value: 'document-type',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Document Type`,
+      })),
+    },
+    {
+      label: 'Loan Type',
+      value: 'loan-type',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Loan Type`,
+      })),
+    },
+    {
+      label: 'Job Type',
+      value: 'job-type',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Job Type`,
+      })),
+    },
+    {
+      label: 'Address Type',
+      value: 'address-type',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Address Type`,
+      })),
+    },
+    {
+      label: 'Marketing Type',
+      value: 'marketing-type',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Marketing Type`,
+      })),
+    },
+    {
+      label: 'Rejection Type',
+      value: 'rejection-type',
+      isAccess: false,
+      children: [...ACTION_CONTROL].map((item) => ({
+        ...item,
+        value: `${item.value}-Rejection Type`,
+      })),
     },
   ],
 }

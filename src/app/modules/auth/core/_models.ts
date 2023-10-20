@@ -157,3 +157,10 @@ type MenuChildren = {
   label: string
   priority: number[]
 }
+
+export type CheckboxTreeItem = {
+  value: string
+  label: string
+  children?: CheckboxTreeItem[]
+  active?: boolean
+} & {[key: string]: any}
