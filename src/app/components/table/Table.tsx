@@ -164,10 +164,10 @@ const Table: FC<Props> = ({
       const permission = JSON.parse(item)
       if (permission.setting) {
         const checked = (permission.setting || [])
-          .map((set) => {
+          .map((set: any) => {
             if (set.isAccess) return set.label
           })
-          .filter((el) => !!el)
+          .filter((el: any) => !!el)
         return checked
       }
     }
@@ -227,7 +227,7 @@ const Table: FC<Props> = ({
                             )
                           }
                           //HANDLE ADD PERMISSION DROPDOWN
-                          if (key == 'permissions') {
+                          if (key === 'permissions') {
                             return (
                               <td key={i}>
                                 <Component
