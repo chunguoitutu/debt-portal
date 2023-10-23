@@ -1,8 +1,10 @@
 import {ReactNode, SelectHTMLAttributes} from 'react'
 import ErrorMessage from '../error/ErrorMessage'
 
-interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
+interface Props extends Omit< SelectHTMLAttributes<HTMLSelectElement>, 'className' | 'name'> {
   label?: string
+  name: string
+  className?: string
   options?: {[key: string]: any}[]
   children?: ReactNode
   required?: boolean
@@ -21,7 +23,8 @@ const Select = ({
   fieldLabelOption = 'label',
   shouldShowError,
   errorMessage,
-  id,
+  name,
+  className = '',
   required = false,
   classShared = 'row mb-6',
   ...rest
@@ -29,13 +32,13 @@ const Select = ({
   return (
     <div className={`${classShared}`}>
       {label && (
-        <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
+        <label htmlFor={name} className='d-flex align-items-center fs-5 fw-semibold mb-2'>
           <span className={`${required ? 'required' : ''}`}>{label}</span>
         </label>
       )}
 
       <div className='fv-row'>
-        <select id={id} className='form-select form-select-solid form-select-lg fw-bold' {...rest}>
+        <select id={name} className={`form-select form-select-solid form-select-lg fw-bold ${className}`} {...rest}>
           {options?.map((o, i) => {
             return (
               <option value={o[fieldValueOption]} key={i}>

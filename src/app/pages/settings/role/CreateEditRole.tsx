@@ -334,6 +334,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
               if (key === 'priority')
                 return (
                   <Select
+                  name={key}
                     key={index}
                     options={DATA_ROLE_PRIORITY}
                     fieldLabelOption='label'
@@ -350,6 +351,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
               return (
                 <Select
+                name={key}
                   key={index}
                   options={DATA_ROLE_PRIORITY}
                   fieldLabelOption='label'

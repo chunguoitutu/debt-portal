@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
+import ApplicationsDetails from './applications-details/ApplicationsDetails'
 
 import StepApplication from './step/StepApplication'
 import BackgroundCheck from './background-check/BackgroundCheck'
@@ -31,8 +32,8 @@ export const Applications = () => {
   return (
     <>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
-      <div className='d-flex flex-row'>
-        <div className='border-4' style={{flex: '0 0 20%'}}>
+      <div className='row gx-3 gx-xl-6 gy-8'>
+        <div className='col-3 col-xxl-2 order-1'>
           <StepApplication
             stepError={[1, 2]}
             stepCompleted={stepCompleted}
@@ -40,10 +41,10 @@ export const Applications = () => {
             onGoToStep={handleChangeStep}
           />
         </div>
-        <div className='border-4' style={{flex: '0 0 60%'}}>
-          <span>row 2</span>
+        <div className='col-9 col-xxl-8 order-2'>
+        <ApplicationsDetails />
         </div>
-        <div className='border-4' style={{flex: '0 0 20%'}}>
+        <div className='d-none d-xxl-block col-xxl-2 order-0 order-xxl-3'>
           <div style={{paddingBottom: '30px'}}>
             <BackgroundCheck />
           </div>

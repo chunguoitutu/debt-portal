@@ -38,14 +38,14 @@ const StepApplication: FC<Props> = ({currentStep, stepCompleted, stepError, onGo
                   <span className='stepper-number'>{i + 1}</span>
                 </div>
 
-                <div className='stepper-label flex-grow-1'>
+                <div className='stepper-label'>
                   <h3 className='stepper-title text-capitalize'>
                     <span> {label}</span>
                     {stepError?.includes(i + 1) && (
                       <FontAwesomeIcon className='text-danger ms-2' icon={faTriangleExclamation} />
                     )}
                   </h3>
-                  <div className='stepper-desc text-capitalize text-truncate'>{desc}</div>
+                  <div className='stepper-desc text-capitalize'>{desc}</div>
                 </div>
               </div>
 
