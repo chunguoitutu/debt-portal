@@ -30,6 +30,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
   const [loading, setLoading] = useState<boolean>(false)
   const [checked, setChecked] = useState<string[]>([])
   const [expanded, setExpanded] = useState<string[]>([])
+  const [dataPermissionSetting, setDataPermissionSetting] = useState(PAGE_PERMISSION.setting)
   const {rows} = config || {}
 
   const {currentUser, priority} = useAuth()
@@ -55,6 +56,40 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  //HANDLE ADD PERMISSION DROPDOWN
+  useEffect(() => {
+    let tmpChecked: Array<any> = []
+    if (data && data.permissions) {
+      const permission = JSON.parse(data.permissions)
+      const mapping = Object.entries(permission).reduce((a, [key, values]) => {
+        if (Array.isArray(values)) {
+          const child = values.map((el: any) => {
+            if (el.isAccess) {
+              tmpChecked = [...tmpChecked, el.value]
+            }
+            return {
+              ...el,
+              children: (el.children || []).map((ele) => {
+                if (ele.active) {
+                  tmpChecked = [...tmpChecked, `${ele.value}-${el.label}`]
+                }
+                return {
+                  ...ele,
+                  value: `${ele.value}-${el.label}`,
+                }
+              }),
+            }
+          })
+          return (a[key] = child)
+        }
+        return a
+      }, {})
+
+      setChecked(tmpChecked)
+      setDataPermissionSetting(mapping['setting'])
+    }
+  }, [data])
 
   function handleSubmitForm(values: RoleInfo) {
     const {id, ...payload} = values
@@ -229,6 +264,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     expanded={expanded}
                     onCheck={handleCheck}
                     onExpand={handleExpand}
+                    isEdit={true}
+                    data={dataPermissionSetting}
                   />
                 )
               }

@@ -28,7 +28,6 @@ const MultipleSelectTree: FC<Props> = ({
   listCheckedShowTitle,
 }) => {
   const [showTree, setShowTree] = useState<boolean>(false)
-  console.log(nodes)
 
   const selectRef = useRef<HTMLDivElement>(null)
 

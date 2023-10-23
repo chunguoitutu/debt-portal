@@ -158,6 +158,22 @@ const Table: FC<Props> = ({
 
   if (!currentUser) return null
 
+  //HANDLE ADD PERMISSION DROPDOWN
+  function handlePermissionChecked(item: string | null) {
+    if (item) {
+      const permission = JSON.parse(item)
+      if (permission.setting) {
+        const checked = (permission.setting || [])
+          .map((set) => {
+            if (set.isAccess) return set.label
+          })
+          .filter((el) => !!el)
+        return checked
+      }
+    }
+    return []
+  }
+
   return (
     <div className='card'>
       <TableHelper config={config} handleAddNew={handleAddNew} />
@@ -206,6 +222,17 @@ const Table: FC<Props> = ({
                                 <Component
                                   color={value === 1 ? 'success' : 'danger'}
                                   title={value === 1 ? 'Active' : 'Disable'}
+                                />
+                              </td>
+                            )
+                          }
+                          //HANDLE ADD PERMISSION DROPDOWN
+                          if (key == 'permissions') {
+                            return (
+                              <td key={i}>
+                                <Component
+                                  tittle={''}
+                                  checked={handlePermissionChecked(item[key])}
                                 />
                               </td>
                             )
