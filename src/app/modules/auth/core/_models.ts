@@ -161,6 +161,6 @@ type MenuChildren = {
 export type CheckboxTreeItem = {
   value: string
   label: string
-  children?: CheckboxTreeItem[]
   active?: boolean
+  children?: CheckboxTreeItem[] & {[key: string]: any}
 } & {[key: string]: any}
