@@ -1,8 +1,13 @@
 import {useState} from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
+<<<<<<< Updated upstream
 import BackgroundCheck from './backgroundCheck'
 import PrintOptions from './PrintOptions'
 import StepApplication from './step/StepApplication'
+=======
+import PrintOptions from './print-options/PrintOptions'
+import BackgroundCheck from './background-check/BackgroundCheck'
+>>>>>>> Stashed changes
 
 const profileBreadCrumbs: Array<PageLink> = [
   {

@@ -6,7 +6,9 @@ interface row {
 }
 
 interface config {
+  classButton?: string
   classIcons?: string
+  classWrapper?: string
   title: string
   row: row[]
 }
@@ -18,15 +20,27 @@ const ContentListButton = ({config}: Props) => {
   return (
     <div className='card'>
       <div style={{borderBottom: '1px solid  #f1f1f2', padding: '30px'}} className='modal-header '>
-        <h2 style={{marginBottom: '0px'}}>{config?.title}</h2>
+        <h2
+          style={{
+            marginBottom: '0px',
+            fontSize: '20px',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: '24px',
+            textTransform: 'capitalize',
+            color: '#071437',
+          }}
+        >
+          {config?.title}
+        </h2>
       </div>
-      <div style={{padding: '16px 30px 16px 30px'}}>
-        {config?.row.map((data) => (
+      <div className={`${config?.classWrapper ? config.classWrapper : 'py-16px px-30px'}`}>
+        {config?.row.map((data, index) => (
           <button
-            className='py-3'
+            key={index}
+            className={`${config?.classButton ? config.classButton : 'py-12px px-4px'}`}
             onClick={data.onclick}
             style={{
-              width: '100%',
               border: 'none',
               backgroundColor: 'transparent',
               display: 'flex',
@@ -43,8 +57,9 @@ const ContentListButton = ({config}: Props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 background: data?.background,
+                flexShrink: '0',
               }}
-              className={`${config?.classIcons ? config.classIcons : 'h-45px w-45px me-5'}`}
+              className={`${config?.classIcons ? config.classIcons : 'h-48px w-48px me-5'}`}
             >
               {data.icon}
             </span>
@@ -55,6 +70,7 @@ const ContentListButton = ({config}: Props) => {
                 fontStyle: 'normal',
                 fontWeight: '500px',
                 lineHeight: '20px',
+                textAlign: 'start',
               }}
             >
               {data.value}

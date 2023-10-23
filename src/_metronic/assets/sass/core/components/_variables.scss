@@ -271,8 +271,17 @@ $spacers: (
     (
       $spacer * 5,
     ),
-  // 69px,
+  // 96px,
   96px: 96px,
+  48px: 48px,
+  36px: 36px,
+  12px: 12px,
+  4px: 4px,
+  8px: 8px,
+  0px: 0px,
+  16px: 16px,
+  30px: 30px,
+  22px: 22px,
 );
 
 // Position
@@ -555,7 +564,7 @@ $font-sizes: (
   // 88.25px
   7hx: $font-size-base * 7.5,
   // 91.5px
-  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,
+  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ) !default;
 
 $headings-font-weight: 600 !default;
@@ -1132,7 +1141,9 @@ $custom-sizes: (
   25px: 25px,
   30px: 30px,
   35px: 35px,
+  36px: 36px,
   40px: 40px,
+  48px: 48px,
   45px: 45px,
   50px: 50px,
   55px: 55px,
