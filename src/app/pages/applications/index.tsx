@@ -1,7 +1,8 @@
-import * as React from 'react'
+import {useState} from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import BackgroundCheck from './backgroundCheck'
 import PrintOptions from './PrintOptions'
+import StepApplication from './step/StepApplication'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -19,17 +20,29 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
+  const [currentStep, setCurrentStep] = useState<number>(4)
+  const [stepCompleted, setStepCompleted] = useState<number>(5)
+
+  function handleChangeStep(step: number) {
+    setCurrentStep(step)
+  }
+
   return (
     <>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
       <div className='d-flex flex-row'>
-        <div className='border-4 h-50' style={{height: '100%', flex: '0 0 20%'}}>
-          <span>col 1</span>
+        <div className='border-4' style={{flex: '0 0 20%'}}>
+          <StepApplication
+            stepError={[1, 2]}
+            stepCompleted={stepCompleted}
+            currentStep={currentStep}
+            onGoToStep={handleChangeStep}
+          />
         </div>
-        <div className='border-4 h-50' style={{height: '100%', flex: '0 0 60%'}}>
+        <div className='border-4' style={{flex: '0 0 60%'}}>
           <span>row 2</span>
         </div>
-        <div className='border-4 h-50' style={{height: '100%', flex: '0 0 20%'}}>
+        <div className='border-4' style={{flex: '0 0 20%'}}>
           <div style={{paddingBottom: '30px'}}>
             <BackgroundCheck />
           </div>
