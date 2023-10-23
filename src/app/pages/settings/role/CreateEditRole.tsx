@@ -12,7 +12,7 @@ import {Input} from '../../../components/inputs/input'
 import {ROLE_PRIORITY} from '../../../utils/globalConfig'
 import {PAGE_PERMISSION} from '../../../utils/pagePermission'
 import {isJson} from '../../../utils'
-import Select from '../../../components/selects/select'
+import Select from '../../../components/select/select'
 
 type Props = {
   data?: RoleInfo
@@ -36,7 +36,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   const {currentUser, priority} = useAuth()
 
-  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
+  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues} =
     useFormik<RoleInfo>({
       initialValues: {
         id: 0,
@@ -335,34 +335,32 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                 return (
                   <Select
                     key={index}
-                    datas={DATA_ROLE_PRIORITY}
-                    valueTitle='label'
-                    setValueTitle='value'
+                    options={DATA_ROLE_PRIORITY}
+                    fieldLabelOption='label'
+                    fieldValueOption='value'
                     required={true}
-                    title='Priority'
-                    id='priority'
-                    errors={errors.priority}
-                    touched={touched.priority}
-                    errorTitle={errors.priority}
+                    label='Priority'
+                    id={key}
+                    shouldShowError={!!(touched[key] && errors[key])}
+                    errorMessage={errors[key] as string}
                     value={values.priority || ''}
-                    onChange={setFieldValue}
+                    onChange={handleChange}
                   />
                 )
 
               return (
                 <Select
                   key={index}
-                  datas={DATA_ROLE_PRIORITY}
-                  valueTitle='label'
-                  setValueTitle='value'
+                  options={DATA_ROLE_PRIORITY}
+                  fieldLabelOption='label'
+                  fieldValueOption='value'
                   required={isRequired}
-                  title='Priority'
+                  label='Priority'
                   id='priority'
-                  errors={errors.priority}
-                  touched={touched.priority}
-                  errorTitle={errors.priority}
+                  shouldShowError={!!(touched[key] && errors[key])}
+                  errorMessage={errors[key] as string}
                   value={values.priority || ''}
-                  onChange={setFieldValue}
+                  onChange={handleChange}
                 />
               )
             } else {

@@ -19,7 +19,7 @@ import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 import Tab from 'react-bootstrap/Tab'
 import InputCheck from '../../../../components/inputs/InputCheck'
-import Select from '../../../components/selects/select'
+import Select from '../../../components/select/select'
 
 type Props = {
   config?: TableConfig
@@ -87,7 +87,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     return schema
   }, [data])
 
-  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues, setFieldValue} =
+  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues} =
     useFormik<any>({
       initialValues,
       validationSchema,
@@ -313,17 +313,17 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                           return (
                             <div className='col-6' key={i}>
                               <Select
+                                name={key}
                                 required={isRequired}
-                                datas={dataBranch}
-                                valueTitle={fieldLabelOption || key}
-                                setValueTitle={fieldValueOption || 'id'}
-                                title={name}
+                                options={dataBranch}
+                                fieldLabelOption={fieldLabelOption || key}
+                                fieldValueOption={fieldValueOption || 'id'}
+                                label={name}
                                 id={key}
-                                errors={errors[key]}
-                                touched={touched[key]}
-                                errorTitle={errors[key]}
+                                shouldShowError={!!(touched[key] && errors[key])}
+                                errorMessage={errors[key] as string}
                                 value={values[key]}
-                                onChange={setFieldValue}
+                                onChange={handleChange}
                               />
                             </div>
                           )
@@ -377,16 +377,15 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                           <div className='col-6' key={i}>
                             <Select
                               required={isRequired}
-                              datas={dataRole}
-                              valueTitle={fieldLabelOption || key}
-                              setValueTitle={fieldValueOption || 'id'}
-                              title={name}
+                              options={dataRole}
+                              fieldLabelOption={fieldLabelOption || key}
+                              fieldValueOption={fieldValueOption || 'id'}
+                              label={name}
                               id={key}
-                              errors={errors[key]}
-                              touched={touched[key]}
-                              errorTitle={errors[key]}
+                              shouldShowError={!!(touched[key] && errors[key])}
+                              errorMessage={errors[key] as string}
                               value={values[key]}
-                              onChange={setFieldValue}
+                              onChange={handleChange}
                             />
                           </div>
                         )
