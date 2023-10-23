@@ -22,27 +22,25 @@ export const DropDownRole: FC<Props> = ({
   onExpand,
 }) => {
   return (
-    <div>
-      <div className={`${classShared}`}>
-        <label className='d-flex align-items-center fs-5 fw-semibold mb-2' htmlFor={id}>
-          <span>{title}</span>
-        </label>
-        <MultipleSelectTree
-          placeholder='Select Permissions'
-          checked={checked}
-          listCheckedShowTitle={checked?.filter(
-            (item) =>
-              !item.startsWith('view-') &&
-              !item.startsWith('add-') &&
-              !item.startsWith('edit-') &&
-              !item.startsWith('delete-')
-          )}
-          onCheck={onCheck}
-          expanded={expanded}
-          onExpand={onExpand}
-          nodes={PAGE_PERMISSION.setting}
-        />
-      </div>
+    <div className={`${classShared}`}>
+      <label className='d-flex align-items-center fs-5 fw-semibold mb-2' htmlFor={id}>
+        <span>{title}</span>
+      </label>
+      <MultipleSelectTree
+        placeholder='Select Permissions'
+        checked={checked}
+        listCheckedShowTitle={checked?.filter(
+          (item) =>
+            !item.startsWith('view-') &&
+            !item.startsWith('add-') &&
+            !item.startsWith('edit-') &&
+            !item.startsWith('delete-')
+        )}
+        onCheck={onCheck}
+        expanded={expanded}
+        onExpand={onExpand}
+        nodes={PAGE_PERMISSION.setting}
+      />
     </div>
   )
 }

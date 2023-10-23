@@ -28,7 +28,6 @@ const MultipleSelectTree: FC<Props> = ({
   listCheckedShowTitle,
 }) => {
   const [showTree, setShowTree] = useState<boolean>(false)
-  console.log(nodes)
 
   const selectRef = useRef<HTMLDivElement>(null)
 
@@ -61,11 +60,11 @@ const MultipleSelectTree: FC<Props> = ({
 
   return (
     <div
-      className='multiple-select-tree d-flex align-item-centers form-control position-relative'
+      className='multiple-select-tree min-h-50px d-flex align-item-centers form-control form-control-lg form-control-solid position-relative bg-gray-100'
       ref={selectRef}
     >
       <div
-        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-600 w-100 cursor-pointer'
+        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-700 w-100 cursor-pointer'
         onClick={toggleTree}
       >
         <div className='d-flex align-items-center flex-wrap gap-3'>
@@ -75,7 +74,7 @@ const MultipleSelectTree: FC<Props> = ({
 
               if (!label) return <Fragment key={value}></Fragment>
               return (
-                <span className='badge badge-light fw-bold py-4 px-3' key={value}>
+                <span className='badge bg-gray-300 text-gray-700 fw-bold py-2 px-3' key={value}>
                   {label}
                 </span>
               )
