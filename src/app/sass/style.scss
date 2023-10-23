@@ -1,9 +1,10 @@
+@import 'custom-bootstrap';
+@import 'atomic';
+@import 'custom-lib';
+
 :root {
   --bg-gray-color: #f9f9f9;
 }
-
-@import 'custom-bootstrap';
-@import 'atomic';
 
 #root {
   height: 100%;
