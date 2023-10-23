@@ -22,24 +22,6 @@ type Props = {
   config?: TableConfig
 }
 
-const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-}
-const inputCheck = ({value = false}: any) => {
-  return (
-    <div className='form-check form-check-sm form-check-custom form-check-solid'>
-      <input className='form-check-input' type='checkbox' checked={value} onChange={() => {}} />
-    </div>
-  )
-}
-
 export const roleSchema = Yup.object().shape({
   role_name: Yup.string().required('Role name is required.'),
   priority: Yup.string().required('Priority is required.'),
