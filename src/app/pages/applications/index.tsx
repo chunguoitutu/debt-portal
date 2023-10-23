@@ -22,7 +22,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(4)
-  const [stepCompleted, setStepCompleted] = useState<number>(5)
+  const [stepCompleted] = useState<number>(5)
 
   function handleChangeStep(step: number) {
     setCurrentStep(step)

@@ -166,6 +166,7 @@ const Table: FC<Props> = ({
         const checked = (permission.setting || [])
           .map((set: any) => {
             if (set.isAccess) return set.label
+            return undefined
           })
           .filter((el: any) => !!el)
         return checked
