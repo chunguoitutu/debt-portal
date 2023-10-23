@@ -376,6 +376,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                         return (
                           <div className='col-6' key={i}>
                             <Select
+                            name={key}
                               required={isRequired}
                               options={dataRole}
                               fieldLabelOption={fieldLabelOption || key}
