@@ -35,7 +35,6 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
       informCreateEdit: {
         type: 'input',
         typeInput: 'text',
-        isRequired: true,
       },
     },
     {
