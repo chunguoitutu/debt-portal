@@ -45,7 +45,6 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       name: 'Permissions',
       component: DropDownRole,
       isCreateEdit: true,
-      isHide: true,
     },
   ],
 }

@@ -3,7 +3,6 @@ import CheckboxTree from 'react-checkbox-tree'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faChevronDown, faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import {CheckboxTreeItem} from '../../modules/auth'
-import {KTIcon} from '../../../_metronic/helpers'
 import useClickOutside from '../../hooks/useClickOutside'
 
 type Props = {
@@ -60,11 +59,11 @@ const MultipleSelectTree: FC<Props> = ({
 
   return (
     <div
-      className='multiple-select-tree min-h-50px d-flex align-item-centers form-control form-control-lg form-control-solid position-relative bg-gray-100'
+      className='multiple-select-tree min-h-50px d-flex align-items-center form-control form-control-lg form-control-solid position-relative bg-gray-100 py-0'
       ref={selectRef}
     >
       <div
-        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-700 w-100 cursor-pointer'
+        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-700 w-100 cursor-pointer h-100'
         onClick={toggleTree}
       >
         <div className='d-flex align-items-center flex-wrap gap-3'>
@@ -85,7 +84,7 @@ const MultipleSelectTree: FC<Props> = ({
             </>
           )}
         </div>
-        <KTIcon iconName='arrow-down' />
+        <FontAwesomeIcon className='text-gray-500' icon={faChevronDown} />
       </div>
 
       {showTree && (
@@ -96,18 +95,24 @@ const MultipleSelectTree: FC<Props> = ({
             left: '0',
           }}
         >
-          <CheckboxTree
-            nodes={nodes}
-            checked={checked}
-            expanded={expanded}
-            onCheck={onCheck}
-            onExpand={onExpand}
-            icons={{
-              expandClose: <FontAwesomeIcon icon={faChevronRight} />,
-              expandOpen: <FontAwesomeIcon icon={faChevronDown} />,
-            }}
-            noCascade
-          />
+          {isLoading || !nodes.length ? (
+            <span className='text-center text-gray-700'>
+              {isLoading ? 'Loading data, Please wait...' : ' No matching records found'}
+            </span>
+          ) : (
+            <CheckboxTree
+              nodes={nodes}
+              checked={checked}
+              expanded={expanded}
+              onCheck={onCheck}
+              onExpand={onExpand}
+              icons={{
+                expandClose: <FontAwesomeIcon icon={faChevronRight} />,
+                expandOpen: <FontAwesomeIcon icon={faChevronDown} />,
+              }}
+              noCascade
+            />
+          )}
         </div>
       )}
     </div>

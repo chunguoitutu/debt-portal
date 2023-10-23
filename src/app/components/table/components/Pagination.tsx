@@ -24,8 +24,9 @@ const mappedLabel = (label: string): string => {
 const Pagination = ({onChangePagePagination, isLoading, searchCriteria}: Props) => {
   const {total, currentPage, pageSize} = searchCriteria
 
+  // no item found will return 1
   const totalPagination = useMemo(() => {
-    return Math.ceil(total / pageSize)
+    return Math.ceil(total / pageSize) || 1
   }, [total, pageSize])
 
   const arrayPage = useMemo(() => {
