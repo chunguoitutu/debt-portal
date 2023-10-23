@@ -21,6 +21,7 @@ import {WithChildren} from '../../_metronic/helpers'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import SettingPageRouter from '../pages/settings/SettingPageRouter'
+import {Applications} from '../pages/applications'
 
 const AccountPage = lazy(() => import('../modules/profile/components/profile/AccountPage'))
 
@@ -53,6 +54,7 @@ const AppRoutes: FC = () => {
 
           <Route element={<MasterLayout />}>
             <Route path='dashboard' element={<DashboardWrapper />} />
+            <Route path='/applications' element={<Applications />} />
             <Route path='/loans' element={<BuilderPageWrapper />} />
             <Route path='/borrowers' element={<MenuTestPage />} />
             <Route path='/transactions' element={<MenuTestPage />} />
