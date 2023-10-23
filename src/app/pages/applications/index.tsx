@@ -1,5 +1,7 @@
 import * as React from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
+import BackgroundCheck from './backgroundCheck'
+import PrintOptions from './PrintOptions'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -28,7 +30,12 @@ export const Applications = () => {
           <span>row 2</span>
         </div>
         <div className='border-4 h-50' style={{height: '100%', flex: '0 0 20%'}}>
-          <span>row 3</span>
+          <div style={{paddingBottom: '30px'}}>
+            <BackgroundCheck />
+          </div>
+          <div>
+            <PrintOptions />
+          </div>
         </div>
       </div>
     </>

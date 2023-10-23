@@ -6,10 +6,11 @@ interface Props {
   show: boolean
   title: string
   children: ReactNode
+  className?: string
   onClose: () => void
 }
 
-const Modal: FC<Props> = ({show, title, onClose, children}) => {
+const Modal: FC<Props> = ({show, title, className = '', children, onClose}) => {
   return (
     <ModalBootstrap
       id='kt_modal_create_app'
@@ -28,7 +29,7 @@ const Modal: FC<Props> = ({show, title, onClose, children}) => {
       </div>
 
       <div
-        className='modal-body py-lg-10 px-lg-10 overflow-y-auto'
+        className={`modal-body py-lg-10 px-lg-10 overflow-y-auto ${className}`}
         style={{
           maxHeight: 'calc(100vh - 200px)',
         }}

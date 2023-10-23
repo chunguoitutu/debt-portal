@@ -26,7 +26,7 @@ export function HeaderWrapper() {
         )}
       >
         <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
-          <Link to='/dashboard'>
+          <Link to='/applications'>
             <>
               <img
                 alt='Logo'

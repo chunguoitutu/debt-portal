@@ -13,6 +13,15 @@ export const convertRoleToNumber = (roleName: string) => {
   }
 }
 
-export const convertErrorMessageResponse = (error: any) => {
+export function convertErrorMessageResponse(error: any) {
   return DEFAULT_MESSAGE_ERROR_500
+}
+
+export function isJson(str: string) {
+  try {
+    JSON.parse(str)
+    return true
+  } catch (e) {
+    return false
+  }
 }

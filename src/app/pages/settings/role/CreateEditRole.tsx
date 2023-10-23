@@ -10,8 +10,9 @@ import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
 import {Input} from '../../../components/inputs/input'
 import {ROLE_PRIORITY} from '../../../utils/globalConfig'
-import Select from '../../../components/selects/select'
 import {PAGE_PERMISSION} from '../../../utils/pagePermission'
+import {isJson} from '../../../utils'
+import Select from '../../../components/selects/select'
 
 type Props = {
   data?: RoleInfo
@@ -52,6 +53,29 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     if (!data) return
     setValues(data)
 
+    // handle edit permissions
+    if (!data?.permissions || !isJson(data?.permissions)) return
+    const nodes = JSON.parse(data?.permissions)
+    const {setting} = nodes || {}
+
+    if (Array.isArray(setting) && setting.length) {
+      const checked: any[] = []
+
+      // handle find list checked
+      setting.forEach((item) => {
+        const {isAccess, children = [], label, value} = item
+        if (isAccess) {
+          const valueChildrenChecked = children
+            .filter((ch: any) => ch.active)
+            .map((item: any) => `${item.value}-${label}`)
+
+          checked.push(...valueChildrenChecked, value)
+        }
+      })
+      setChecked(checked)
+    }
+
+    // Reset form data when component unmounted
     return () => resetForm()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,10 +142,10 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     const _PAGE_PERMISSION = {...PAGE_PERMISSION}
     const {setting} = _PAGE_PERMISSION
 
-    const permissions = setting.map((item) => {
+    const permissions = setting.map((item: any) => {
       const isAccess = checked.find((itemCheck) => itemCheck === item.value) ? true : false
 
-      const _newChild: any[] = []
+      const newChild: any[] = []
       const {children} = item
       children?.forEach((ch) => {
         let _childrenItem = {...ch, value: ch.value.split('-')?.[0]}
@@ -129,12 +153,12 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
           _childrenItem = {..._childrenItem, active: true}
         }
 
-        _newChild.push(_childrenItem)
+        newChild.push(_childrenItem)
       })
       return {
         ...item,
         isAccess,
-        children: _newChild,
+        children: newChild,
       }
     })
 
