@@ -1,6 +1,12 @@
 const ImgPrintOptions = () => {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'>
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='14.592px'
+      height='15.919px'
+      viewBox='0 0 18 18'
+      fill='none'
+    >
       <path
         d='M10.4128 1.21326V5.46479C10.4128 6.19836 11.0058 6.76213 11.7394 6.78336C13.5806 6.83642 16.2907 7.33387 16.2907 10.6436'
         stroke='#071437'

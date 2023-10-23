@@ -1,9 +1,11 @@
-import ImgPrintOptions from '../../images/ImgPrintOptions'
-import ContentListButton from './contentListButton'
+import ImgPrintOptions from '../../../images/ImgPrintOptions'
+import ContentListButton from '../ContentListButton'
 
 const configPrintOptions = {
   title: 'Print Options',
-  classIcons: 'h-35px w-35px me-5',
+  classIcons: 'h-36px w-36px me-5',
+  classButton: 'py-8px px-0px',
+  classWrapper: 'py-22px px-30px',
   row: [
     {
       value: 'Loan Application',
