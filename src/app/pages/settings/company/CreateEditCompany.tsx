@@ -33,7 +33,8 @@ export const newCompaniesSchema = Yup.object().shape({
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols'),
+    .max(50, 'Maximum 50 symbols')
+    .required('Email Uen is required.'),
   open_date: Yup.string().required('Open Date is required.'),
   street_1: Yup.string().required('Street 1 is required.'),
   city: Yup.string().required('City is required.'),

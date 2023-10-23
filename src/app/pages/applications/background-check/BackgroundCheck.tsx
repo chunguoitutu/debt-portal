@@ -1,6 +1,6 @@
+import ContentListButton from '../../../components/list-button/ContentListButton'
 import ImgCalendar from '../../../images/ImgCalendar'
 import ImgLoanCrossCheck from '../../../images/ImgLoanCrossCheck'
-import ContentListButton from '../ContentListButton'
 
 const configBackgroudCheck = {
   title: 'Background check',
