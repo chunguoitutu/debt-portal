@@ -5,7 +5,6 @@ import {InputTime} from '../../../components/inputs/inputTime'
 import Select from '../../../components/select/select'
 import './style.scss'
 
-
 const ApplicationsDetails = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false)
@@ -27,7 +26,6 @@ const ApplicationsDetails = () => {
     country: '',
     residential_type: '',
   })
-  
 
   const handleChange = (e: any) => {
     const {name, value} = e.target
@@ -36,18 +34,17 @@ const ApplicationsDetails = () => {
 
   const optionsAgent = [
     {
-     label: 'Anna Gau',
-     value: '1'
+      label: 'Anna Gau',
+      value: '1',
     },
     {
       label: 'Yua Mikami',
-      value: '2'
-     },
+      value: '2',
+    },
   ]
 
-
   return (
-    <div className='application-details-form card card-body h-100'>
+    <div className='application-details-form card card-body p-10'>
       {/* header */}
       <div>
         <div className='d-flex align-items-center justify-content-between height-custom-90'>
@@ -68,27 +65,30 @@ const ApplicationsDetails = () => {
         {/* body */}
         <div style={{paddingTop: 30}}>
           <div className='bg-check-text'>Background Check</div>
+          {/* Start form control */}
+          <div className='form-wrap p-6'>
+            {/* Name applicant */}
+            <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8 full'>
+              <div className='input-title-application left fs-3 text-start text-lg-end'>
+                Name Of Applicant
+              </div>
+              <Input
+                required={false}
+                title={''}
+                name='application_name'
+                id={'application_name'}
+                value={formValue.application_name}
+                onChange={handleChange}
+                className='input-custom-width-application w-100'
+                classShared='flex-grow-1 w-sm-300px'
+              />
+            </div>
 
-          <div className='p-3 d-flex align-items-center justify-content-between gap-8'>
-            <div className='input-title-application fs-3 flex-grow-1 text-end'>Name Of Applicant</div>
-            <Input
-              required={false}
-              title={''}
-              name='application_name'
-              id={'application_name'}
-              value={formValue.application_name}
-              onChange={handleChange}
-              className='input-custom-width-application '
-              style={{width: '818px'}}
-              classShared=''
-            />
-          </div>
-
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end'>
-                  Appliaction Number
+            {/* Application Number */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                  Application Number
                 </div>
                 <Input
                   required={false}
@@ -97,14 +97,15 @@ const ApplicationsDetails = () => {
                   id={'application_number'}
                   value={formValue.application_number}
                   onChange={handleChange}
-                  className='input-application-size'
-                  classShared=''
+                  classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>
+
+            {/* Application Date */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application left fs-3 text-start text-lg-end'>
                   Application Date
                 </div>
                 <InputTime
@@ -114,234 +115,249 @@ const ApplicationsDetails = () => {
                   name='application_date'
                   value={formValue.application_date}
                   onChange={handleChange}
-                  style={{width: 245}}
-                  classShared=''
+                  classShared=' select-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-          </div>
 
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>NRIC No.</div>
+            {/* NRIC No. */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                  NRIC No.
+                </div>
                 <Input
                   required={false}
+                  name='application_number'
                   title={''}
-                  id={'nric_no'}
-                  name='nric_no'
-                  value={formValue.nric_no}
+                  id={'application_number'}
+                  value={formValue.application_number}
                   onChange={handleChange}
-                  className='input-application-size'
-                  classShared=''
+                  classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Argent</div>
+
+            {/* Agent */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                  Agent
+                </div>
                 <Select
-                name='argent'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
                   value={formValue.argent}
-                  className='select-application-size'
-                  classShared=''
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-          </div>
 
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Loan Type</div>
+            {/* Loan Type */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                  Loan Type
+                </div>
                 <Select
-                name='loan_type'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  fieldValueOption='value'
                   title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Marketing Type</div>
-                <Select
-                name='marking_type'
-                  onChange={handleChange}
-                  options={optionsAgent}
-                  fieldValueOption='value'
-                  title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
-                />
-              </div>
-            </div>
-          </div>
 
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Customer Type</div>
+            {/* Marketing Type */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                  Marketing Type
+                </div>
                 <Select
-                name='customer_type'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  fieldValueOption='value'
                   title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>
+
+            {/* Customer Type */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                  Customer Type
+                </div>
+                <Select
+                  label=''
+                  name='argent'
+                  onChange={handleChange}
+                  options={optionsAgent}
+                  title=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+                />
+              </div>
+            </div>
+
+            {/*Identity Card Type  */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
                   Identity Card Type
                 </div>
                 <Select
-                name='identitycard_card'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  fieldValueOption='value'
                   title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-          </div>
 
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Gender</div>
+            {/* Gender */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                  Gender
+                </div>
                 <Select
-                  name='gender'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  fieldValueOption='value'
                   title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Date Of Birth</div>
+
+            {/* Date Of Birth */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                  Date Of Birth
+                </div>
                 <InputTime
                   required={false}
                   title={''}
-                  id={'name'}
-                  value={''}
+                  id={'application_date'}
+                  name='application_date'
+                  value={formValue.application_date}
                   onChange={handleChange}
-                  className='select-aoptionsAgentlication-size'
-                  style={{width: 245}}
-                  classShared=''
+                  classShared=' select-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-          </div>
 
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Singapore PR</div>
+            {/* Singapore PR */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                  Singapore PR
+                </div>
                 <Input
                   required={false}
+                  name='application_number'
                   title={''}
-                  id={'singapore_pr'}
-                  value={formValue.singapore_pr}
+                  id={'application_number'}
+                  value={formValue.application_number}
                   onChange={handleChange}
-                  className='input-application-size'
-                  classShared=''
-                  name='singapore_pr'
+                  classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Race</div>
+
+            {/* Race */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                  Race
+                </div>
                 <Input
                   required={false}
+                  name='application_number'
                   title={''}
-                  id={'race'}
-                  name='race'
-                  value={formValue.race}
+                  id={'application_number'}
+                  value={formValue.application_number}
                   onChange={handleChange}
-                  className='input-application-size'
-                  classShared=''
+                  classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-          </div>
 
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Nationality</div>
+            {/* Nationality */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                  Nationality
+                </div>
                 <Select
-                name='nationality'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  fieldValueOption='value'
                   title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>Country</div>
+
+            {/* Country */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                  Country
+                </div>
                 <Select
-                name='country'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  fieldValueOption='value'
                   title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
-          </div>
 
-          <div className='d-flex flex-row'>
-            <div className='border-4 col-6'>
-              <div className='w-100 p-3 d-flex align-items-center justify-content-between gap-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-end '>
+            {/* Residential Type */}
+            <div>
+              <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
                   Residential Type
                 </div>
                 <Select
-                  name='residential_type'
+                  label=''
+                  name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  fieldValueOption='value'
                   title=''
-                  value={''}
-                  className='select-application-size'
-                  classShared=''
+                  value={formValue.argent}
+                  classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
             </div>
+
+            {/* End form control */}
           </div>
         </div>
-
-        <div className=' d-flex justify-content-end px-6 py-6'>
+        <div className='d-flex flex-end'>
           <button
             type='button'
             className='btn btn-secondary align-self-center me-3'
@@ -360,6 +376,7 @@ const ApplicationsDetails = () => {
             )}
           </button>
         </div>
+
       </div>
     </div>
   )

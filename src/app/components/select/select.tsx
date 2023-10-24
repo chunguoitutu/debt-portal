@@ -37,7 +37,6 @@ const Select = ({
         </label>
       )}
 
-      <div className='fv-row'>
         <select id={name} className={`form-select form-select-solid form-select-lg fw-bold ${className}`} {...rest}>
           {options?.map((o, i) => {
             return (
@@ -52,7 +51,6 @@ const Select = ({
           <ErrorMessage shouldShowMessage={shouldShowError} message={errorMessage} />
         )}
       </div>
-    </div>
   )
 }
 export default Select
