@@ -82,6 +82,7 @@ export type SearchCriteria = {
   pageSize: number
   currentPage: number
   total: number
+  company_id?: string
 }
 
 export type TableRow = {
@@ -90,7 +91,7 @@ export type TableRow = {
   classNameTableHead?: string
   classNameTableBody?: string
   component?: any
-  componentProps?: {[key: string]: string}
+  componentCreateEdit?: any
   type?: 'datetime' | 'yes/no'
   isHide?: boolean
   isCreateEdit?: boolean

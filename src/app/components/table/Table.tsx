@@ -1,4 +1,4 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import {KTCardBody} from '../../../_metronic/helpers'
 import {SearchCriteria, TableConfig, useAuth} from '../../modules/auth'
 import moment from 'moment'
@@ -11,6 +11,7 @@ import Loading from './components/Loading'
 import Pagination from './components/Pagination'
 import ButtonViewDetail from '../button/ButtonViewDetail'
 import {convertErrorMessageResponse} from '../../utils'
+import Cookies from 'js-cookie'
 
 type Props = {
   config: TableConfig
@@ -43,13 +44,17 @@ const Table: FC<Props> = ({
     messageDeleteSuccess,
   } = settings
 
+  const currentCompanyId = useMemo(() => Cookies.get('company_cookie'), [])
+
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 1,
     total: 0,
+    company_id: currentCompanyId,
   })
+
   const {total, ...pagination} = searchCriteria
 
   const {currentUser} = useAuth()

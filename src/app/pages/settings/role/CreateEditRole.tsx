@@ -12,7 +12,6 @@ import {Input} from '../../../components/inputs/input'
 import {ROLE_PRIORITY} from '../../../utils/globalConfig'
 import {PAGE_PERMISSION} from '../../../utils/pagePermission'
 import {isJson} from '../../../utils'
-import Select from '../../../components/select/select'
 
 type Props = {
   data?: RoleInfo
@@ -273,11 +272,11 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         {(rows || [])
           .filter((item) => item.isCreateEdit)
           .map((item, index) => {
-            const {informCreateEdit, key, name, component} = item
+            const {informCreateEdit, key, name, component, componentCreateEdit} = item
             const {type, typeInput, isRequired} = informCreateEdit || {}
 
-            if (component) {
-              const Component = component
+            if (component || componentCreateEdit) {
+              const Component = componentCreateEdit || component
               if (key === 'permissions') {
                 return (
                   <Component
@@ -292,9 +291,26 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     data={dataPermissionSetting}
                   />
                 )
+              } else if (key === 'priority') {
+                return (
+                  <Component
+                    name={key}
+                    key={index}
+                    options={DATA_ROLE_PRIORITY}
+                    fieldLabelOption='label'
+                    fieldValueOption='value'
+                    required={isRequired}
+                    label='Priority'
+                    id='priority'
+                    shouldShowError={!!(touched[key] && errors[key])}
+                    errorMessage={errors[key] as string}
+                    value={values.priority || ''}
+                    onChange={handleChange}
+                  />
+                )
+              } else {
+                return <Component key={index} data={ROLE_PRIORITY} />
               }
-
-              return <Component key={index} data={ROLE_PRIORITY} />
             }
 
             if (type === 'input') {
@@ -329,41 +345,6 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     message={errors[key]}
                   />
                 </div>
-              )
-            } else if (type === 'select') {
-              if (key === 'priority')
-                return (
-                  <Select
-                  name={key}
-                    key={index}
-                    options={DATA_ROLE_PRIORITY}
-                    fieldLabelOption='label'
-                    fieldValueOption='value'
-                    required={true}
-                    label='Priority'
-                    id={key}
-                    shouldShowError={!!(touched[key] && errors[key])}
-                    errorMessage={errors[key] as string}
-                    value={values.priority || ''}
-                    onChange={handleChange}
-                  />
-                )
-
-              return (
-                <Select
-                name={key}
-                  key={index}
-                  options={DATA_ROLE_PRIORITY}
-                  fieldLabelOption='label'
-                  fieldValueOption='value'
-                  required={isRequired}
-                  label='Priority'
-                  id='priority'
-                  shouldShowError={!!(touched[key] && errors[key])}
-                  errorMessage={errors[key] as string}
-                  value={values.priority || ''}
-                  onChange={handleChange}
-                />
               )
             } else {
               return <Fragment key={index}></Fragment>
