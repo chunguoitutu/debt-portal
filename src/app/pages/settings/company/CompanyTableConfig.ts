@@ -31,6 +31,10 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
       name: 'Business UEN',
     },
     {
+      key: 'address',
+      name: 'Address',
+    },
+    {
       key: 'telephone',
       name: 'Telephone',
     },
@@ -38,10 +42,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
       key: 'email',
       name: 'Email',
     },
-    {
-      key: 'address',
-      name: 'Address',
-    },
+
     {
       key: 'open_date',
       name: 'Open Date',

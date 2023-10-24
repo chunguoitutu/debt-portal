@@ -19,6 +19,12 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       require: true,
     },
     {
+      key: 'address',
+      name: 'Address',
+      type: 'text',
+      require: true,
+    },
+    {
       key: 'telephone',
       name: 'Telephone',
       type: 'number',
@@ -35,13 +41,6 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       key: 'open_date',
       name: 'Open Date',
       type: 'datetime',
-      require: true,
-    },
-
-    {
-      key: 'address',
-      name: 'Address',
-      type: 'text',
       require: true,
     },
   ],
