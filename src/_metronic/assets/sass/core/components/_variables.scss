@@ -1186,6 +1186,7 @@ $custom-sizes: (
   900px: 900px,
   950px: 950px,
   1000px: 1000px,
+  modal: min(calc(100% - 48px), 1400px),
 ) !default;
 
 // Keenthemes symbol component

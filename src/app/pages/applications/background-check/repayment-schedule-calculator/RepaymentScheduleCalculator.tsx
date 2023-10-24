@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 import {createPortal} from 'react-dom'
-import {Modal} from 'react-bootstrap'
+import {Modal, Table} from 'react-bootstrap'
 import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG} from './config'
 import {InputTime} from '../../../../components/inputs/inputTime'
 import {Input} from '../../../../components/inputs/input'
@@ -9,6 +9,7 @@ import React, {useRef, useState} from 'react'
 import {useFormik} from 'formik'
 import Step from '../../../../components/step/Step'
 import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../constants/step'
+import './style.scss'
 
 type Props = {
   setLoadApi: any
@@ -33,6 +34,9 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   }
   const {rows} = REPAYMENT_SHEDULE_CALCULATOR_CONFIG
 
+  function handleChangeCalculator() {
+    setCurrentStep(2)
+  }
   const {values, touched, errors, handleChange, handleSubmit} = useFormik({
     initialValues: {
       amount_of_loan: '',
@@ -43,7 +47,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
     },
     validationSchema: RepaymentScheduleCalculatorSchema,
     onSubmit: async (values: any, actions: any) => {
-      console.log('kha')
+      handleChangeCalculator()
     },
   })
 
@@ -52,7 +56,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-modal'
       show={show}
       onHide={handleClose}
       backdrop={true}
@@ -88,8 +92,8 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       >
         <div ref={stepperRef}>
           <div style={{width: '100%'}} className=''>
-            <div style={{width: '100%'}} className=' d-flex '>
-              <div style={{width: '39.7%'}}>
+            <div style={{width: '100%'}} className=' d-flex  justify-content-between'>
+              <div>
                 <Step
                   data={STEP_REPAYMENT_SCHEDULE_CALCULATOR}
                   stepError={[1, 2]}
@@ -98,37 +102,137 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                   onGoToStep={handleChangeStep}
                 />
               </div>
-              <div style={{width: '60.3%'}} className='ps-30px'>
-                {rows.map((row) => (
-                  <div key={row.key}>
-                    {row.key === 'first_repayment_date' ? (
-                      <InputTime
-                        required={row?.require ? true : false}
-                        title={row.name}
-                        id={row.key}
-                        error={errors[row.key]}
-                        touched={touched[row.key]}
-                        errorTitle={errors[row.key]}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                      />
-                    ) : (
-                      <Input
-                        required={row?.require ? true : false}
-                        title={row.name}
-                        id={row.key}
-                        type={row.type}
-                        noThereAreCommas={row?.noThereAreCommas}
-                        error={errors[row.key]}
-                        touched={touched[row.key]}
-                        errorTitle={errors[row.key]}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                      />
-                    )}
+              {currentStep === 1 ? (
+                <>
+                  <div style={{width: '60.3%'}} className='ps-30px'>
+                    {rows.map((row) => (
+                      <div key={row.key}>
+                        {row.key === 'first_repayment_date' ? (
+                          <InputTime
+                            required={row?.require ? true : false}
+                            title={row.name}
+                            id={row.key}
+                            error={errors[row.key]}
+                            touched={touched[row.key]}
+                            errorTitle={errors[row.key]}
+                            value={values[row.key] || ''}
+                            onChange={handleChange}
+                          />
+                        ) : (
+                          <Input
+                            required={row?.require ? true : false}
+                            title={row.name}
+                            id={row.key}
+                            type={row.type}
+                            noThereAreCommas={row?.noThereAreCommas}
+                            error={errors[row.key]}
+                            touched={touched[row.key]}
+                            errorTitle={errors[row.key]}
+                            value={values[row.key] || ''}
+                            onChange={handleChange}
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    {/* information for calculator */}
+                    <div className='d-flex amount-header-calculator flex-row gap-10'>
+                      <div className='gap-1 p-6 ms-3' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium'>Amount Of Loan $</div>
+                        <div className='fs-3 fw-bold'>$25,000.00</div>
+                      </div>
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium'>No. Of Instalment</div>
+                        <div className='fs-3 fw-bold'>$25,000.00</div>
+                      </div>
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium'>Monthly Due Date</div>
+                        <div className='fs-3 fw-bold'>$25,000.00</div>
+                      </div>
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium'>Interest Per Month %</div>
+                        <div className='fs-3 fw-bold'>4.00</div>
+                      </div>
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium'>First Repayment Date</div>
+                        <div className='fs-3 fw-bold'>4.00</div>
+                      </div>
+                    </div>
+
+                    {/* calculator table */}
+                    <div className='pt-4 row algin-items-center justify-content-between '>
+                      <div className='col-6'>
+                        <Table className='table-bordered' responsive='sm'>
+                          <tbody className='border-calculator'>
+                            <tr>
+                              <td className='label-calculator'>Loan Amount</td>
+                              <td className='content-calculator'>$25,000.00</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Interest (Per Month)</td>
+                              <td className='content-calculator'>T4.00%</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Interest (Per Annum)</td>
+                              <td className='content-calculator'>48.00%</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Term</td>
+                              <td className='content-calculator'>1 Month (S)</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Principal (Per Month)</td>
+                              <td className='content-calculator'>$25,000.00</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Interest (Per Month)</td>
+                              <td className='content-calculator'>$1,000.00</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Monthly Instalment Amount</td>
+                              <td className='content-calculator'>$26,000.00</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Total Interest For Full Term</td>
+                              <td className='content-calculator'>$1,000.00</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                      </div>
+                      <div className='col-6 '>
+                        <Table responsive='sm' className='table-bordered'>
+                          <tbody>
+                            <tr>
+                              <td className='label-calculator'>Date</td>
+                              <td className='content-calculator'>12/08/2023</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Principal Repayment</td>
+                              <td className='content-calculator'>$25,000.00</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Interest Repayment</td>
+                              <td className='content-calculator'>$1,000.00</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Total Repayment</td>
+                              <td className='content-calculator'>$26,000.00</td>
+                            </tr>
+                            <tr>
+                              <td className='label-calculator'>Principal Balance</td>
+                              <td className='content-calculator'>$0.00</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className='d-flex flex-end pt-30px gap-8px'>

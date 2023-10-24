@@ -64,12 +64,11 @@ const ApplicationsDetails = () => {
         <div className='separator border-gray-200 py-0'></div>
         {/* body */}
         <div style={{paddingTop: 30}}>
-          <div className='bg-check-text'>Background Check</div>
           {/* Start form control */}
           <div className='form-wrap p-6'>
             {/* Name applicant */}
             <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8 full'>
-              <div className='input-title-application left fs-3 text-start text-lg-end'>
+              <div className='input-title-application left fs-4 text-start text-lg-end'>
                 Name Of Applicant
               </div>
               <Input
@@ -87,7 +86,7 @@ const ApplicationsDetails = () => {
             {/* Application Number */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                <div className='input-title-application left fs-4 text-start text-lg-end'>
                   Application Number
                 </div>
                 <Input
@@ -105,12 +104,13 @@ const ApplicationsDetails = () => {
             {/* Application Date */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                <div className='input-title-application left fs-4 text-start text-lg-end'>
                   Application Date
                 </div>
                 <InputTime
                   required={false}
                   title={''}
+                  type='date'
                   id={'application_date'}
                   name='application_date'
                   value={formValue.application_date}
@@ -123,7 +123,7 @@ const ApplicationsDetails = () => {
             {/* NRIC No. */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                <div className='input-title-application left fs-4 text-start text-lg-end'>
                   NRIC No.
                 </div>
                 <Input
@@ -141,7 +141,7 @@ const ApplicationsDetails = () => {
             {/* Agent */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Agent
                 </div>
                 <Select
@@ -159,7 +159,7 @@ const ApplicationsDetails = () => {
             {/* Loan Type */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Loan Type
                 </div>
                 <Select
@@ -178,7 +178,7 @@ const ApplicationsDetails = () => {
             {/* Marketing Type */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Marketing Type
                 </div>
                 <Select
@@ -197,7 +197,7 @@ const ApplicationsDetails = () => {
             {/* Customer Type */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Customer Type
                 </div>
                 <Select
@@ -216,7 +216,7 @@ const ApplicationsDetails = () => {
             {/*Identity Card Type  */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Identity Card Type
                 </div>
                 <Select
@@ -235,7 +235,7 @@ const ApplicationsDetails = () => {
             {/* Gender */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Gender
                 </div>
                 <Select
@@ -254,7 +254,7 @@ const ApplicationsDetails = () => {
             {/* Date Of Birth */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                <div className='input-title-application left fs-4 text-start text-lg-end'>
                   Date Of Birth
                 </div>
                 <InputTime
@@ -273,7 +273,7 @@ const ApplicationsDetails = () => {
             {/* Singapore PR */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application left fs-3 text-start text-lg-end'>
+                <div className='input-title-application left fs-4 text-start text-lg-end'>
                   Singapore PR
                 </div>
                 <Input
@@ -291,7 +291,7 @@ const ApplicationsDetails = () => {
             {/* Race */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application left fs-3 text-start text-lg-end'>Race</div>
+                <div className='input-title-application left fs-4 text-start text-lg-end'>Race</div>
                 <Input
                   required={false}
                   name='race'
@@ -307,7 +307,7 @@ const ApplicationsDetails = () => {
             {/* Nationality */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Nationality
                 </div>
                 <Select
@@ -326,7 +326,7 @@ const ApplicationsDetails = () => {
             {/* Country */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Country
                 </div>
                 <Select
@@ -345,7 +345,7 @@ const ApplicationsDetails = () => {
             {/* Residential Type */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application fs-3 flex-grow-1 text-start text-lg-end'>
+                <div className='input-title-application fs-4 flex-grow-1 text-start text-lg-end'>
                   Residential Type
                 </div>
                 <Select
