@@ -44,7 +44,6 @@ const Select = ({
           id={name}
           name={name}
           className={`form-select form-select-solid form-select-lg text-gray-700 ${className}`}
-          name={name}
           {...rest}
         >
           {isOptionDefault && <option value=''></option>}
