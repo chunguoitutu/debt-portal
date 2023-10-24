@@ -1,8 +1,6 @@
 import {Modal} from 'react-bootstrap'
 import {KTIcon} from '../../../../_metronic/helpers'
 import moment from 'moment'
-import {useEffect, useState} from 'react'
-import request from '../../../axios'
 import {showLable} from '../../../components/inputs/showLable'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
 
@@ -13,56 +11,15 @@ interface IProps {
   id: Number
 }
 
-const ADDRESS_TABLE_CONFIG_DETAIL = {
-  rows: [
-    {
-      key: 'street_1',
-      name: 'Street 1',
-    },
-    {
-      key: 'street_2',
-      name: 'Street 2',
-    },
-    {
-      key: 'city',
-      name: 'city',
-    },
-    {
-      key: 'state',
-      name: 'State',
-    },
-    {
-      key: 'zipcode',
-      name: 'Zip Code',
-    },
-    {
-      key: 'country',
-      name: 'Country',
-    },
-  ],
-}
-
 const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
   const {rows} = COMPANY_TABLE_CONFIG
-  const [dataCompany, setDataCompany] = useState<any>({})
-  useEffect(() => {
-    request
-      .get(`config/company/id/${data?.id}/address/${data?.address_id}`)
-      .then((response) => {
-        setDataCompany(response.data.data)
-      })
-      .catch((error) => {
-        console.error('Error: ', error?.message)
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <Modal
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
       animation={true}
@@ -73,13 +30,13 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
-      <div
-        style={{maxHeight: '500px', overflowY: 'auto', marginBottom: '20px'}}
-        className='d-flex justify-content-center gap-10 p-10 p'
-      >
-        <div style={{width: '47%'}}>
+      <div className='d-flex align-items-center justify-content-center '>
+        <div
+          style={{maxHeight: '500px', maxWidth: '900px', overflowY: 'auto'}}
+          className='card-body row gx-10 p-30px'
+        >
           {rows.map((row, index) => (
-            <>
+            <div key={row.key} style={{flex: '0 0 50%'}}>
               {row.key === 'open_date' || row.key === 'id' || row.key === 'status' ? (
                 <>
                   {row.key === 'open_date' && (
@@ -119,16 +76,6 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
                   )}
                 </>
               )}
-            </>
-          ))}
-        </div>
-        <div style={{width: '47%'}} className=''>
-          {ADDRESS_TABLE_CONFIG_DETAIL.rows.map((d: any, index) => (
-            <div key={index}>
-              {showLable({
-                title: d.name,
-                value: dataCompany.country,
-              })}
             </div>
           ))}
         </div>
