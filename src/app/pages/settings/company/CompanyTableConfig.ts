@@ -39,6 +39,10 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
       name: 'Email',
     },
     {
+      key: 'address',
+      name: 'Address',
+    },
+    {
       key: 'open_date',
       name: 'Open Date',
       type: 'datetime',

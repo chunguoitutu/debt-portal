@@ -1,5 +1,5 @@
 export const COMPANY_MANAGEMENT_CONFIG = {
-  endpoint: 'config/company/id/1/address/1',
+  endpoint: 'config/company/1',
   rows: [
     {
       key: 'company_name',
@@ -24,17 +24,7 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       type: 'number',
       require: true,
     },
-    {
-      key: 'street_1',
-      name: 'Street 1',
-      type: 'text',
-      require: true,
-    },
-    {
-      key: 'street_2',
-      type: 'text',
-      name: 'Street 2',
-    },
+
     {
       key: 'email',
       name: 'Email',
@@ -47,31 +37,11 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       type: 'datetime',
       require: true,
     },
-    {
-      key: 'city',
-      name: 'City',
-      type: 'text',
-      require: true,
-    },
-    {
-      key: 'state',
-      type: 'text',
 
-      name: 'State',
-      require: true,
-    },
     {
-      key: 'country',
-      name: 'Country',
+      key: 'address',
+      name: 'Address',
       type: 'text',
-
-      require: true,
-    },
-    {
-      key: 'zipcode',
-      type: 'text',
-
-      name: 'Zip Code',
       require: true,
     },
   ],
