@@ -25,38 +25,38 @@ export const Input: React.FC<IProps> = ({
   ...rest
 }) => {
   return (
-    <div>
-      <div className={`${classShared}`}>
+    <div className={`${classShared}`}>
+      {title && (
         <label
           className='d-flex align-items-center fs-5 fw-semibold mb-2 cursor-pointer'
           htmlFor={id}
         >
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
-        <input
-          onKeyPressCapture={(e) => {
-            if (type === 'number') {
-              handleKeyPress(e)
-            }
-          }}
-          onPaste={(e) => {
-            if (type === 'number') {
-              handlePaste(e)
-            }
-          }}
-          id={id}
-          {...rest}
-          name={name}
-          className='form-control form-control-lg form-control-solid'
-        />
-        {touched && error && (
-          <div className='fv-plugins-message-container'>
-            <div data-field='appname' data-validator='notEmpty' className='fv-help-block'>
-              {errorTitle}
-            </div>
+      )}
+      <input
+        onKeyPressCapture={(e) => {
+          if (type === 'number') {
+            handleKeyPress(e)
+          }
+        }}
+        onPaste={(e) => {
+          if (type === 'number') {
+            handlePaste(e)
+          }
+        }}
+        id={id}
+        {...rest}
+        name={name}
+        className='form-control form-control-lg form-control-solid'
+      />
+      {touched && error && (
+        <div className='fv-plugins-message-container'>
+          <div data-field='appname' data-validator='notEmpty' className='fv-help-block'>
+            {errorTitle}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

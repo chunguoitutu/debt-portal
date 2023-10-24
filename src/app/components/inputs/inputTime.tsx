@@ -20,24 +20,24 @@ export const InputTime: React.FC<IProps> = ({
   ...reset
 }) => {
   return (
-    <div>
-      <div className={`${classShared}`}>
+    <div className={`${classShared}`}>
+      {title && (
         <label className='d-flex align-items-center fs-5 fw-semibold mb-2'>
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
-        <input
-          type='datetime-local'
-          {...reset}
-          className='form-control form-control-lg form-control-solid'
-        />
-        {touched && error && (
-          <div className='fv-plugins-message-container'>
-            <div data-field='appname' data-validator='notEmpty' className='fv-help-block'>
-              {errorTitle}
-            </div>
+      )}
+      <input
+        type='datetime-local'
+        {...reset}
+        className='form-control form-control-lg form-control-solid'
+      />
+      {touched && error && (
+        <div className='fv-plugins-message-container'>
+          <div data-field='appname' data-validator='notEmpty' className='fv-help-block'>
+            {errorTitle}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
