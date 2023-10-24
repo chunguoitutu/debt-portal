@@ -258,6 +258,7 @@ const ApplicationsDetails = () => {
                   name='application_date'
                   value={formValue.application_date}
                   onChange={handleChange}
+                  type={'date'}
                   classShared=' select-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>

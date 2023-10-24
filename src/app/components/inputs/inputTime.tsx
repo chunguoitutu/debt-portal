@@ -8,6 +8,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   touched?: any
   required?: boolean
   classShared?: string
+  type?: string
 }
 
 export const InputTime: React.FC<IProps> = ({
@@ -17,6 +18,7 @@ export const InputTime: React.FC<IProps> = ({
   touched,
   required = false,
   classShared = 'fv-row mb-10',
+  type = 'datetime-local',
   ...reset
 }) => {
   return (
@@ -26,11 +28,7 @@ export const InputTime: React.FC<IProps> = ({
           <span className={`${required ? 'required' : ''}`}>{title}</span>
         </label>
       )}
-      <input
-        type='datetime-local'
-        {...reset}
-        className='form-control form-control-lg form-control-solid'
-      />
+      <input type={type} {...reset} className='form-control form-control-lg form-control-solid' />
       {touched && error && (
         <div className='fv-plugins-message-container'>
           <div data-field='appname' data-validator='notEmpty' className='fv-help-block'>
