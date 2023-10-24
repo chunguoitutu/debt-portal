@@ -1,4 +1,5 @@
 import {DropDownRole} from '../../../components/DropDownRole'
+import Select from '../../../components/select/select'
 import {TableConfig} from '../../../modules/auth'
 import Priority from './Priority'
 
@@ -38,7 +39,9 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     {
       key: 'priority',
       name: 'Priority',
+      isCreateEdit: true,
       component: Priority,
+      componentCreateEdit: Select,
     },
     {
       key: 'permissions',

@@ -36,6 +36,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       },
     },
     {
+      isHide: true,
       key: 'password',
       name: 'Password',
       isCreateEdit: true,

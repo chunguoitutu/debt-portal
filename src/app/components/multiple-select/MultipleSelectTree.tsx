@@ -59,11 +59,11 @@ const MultipleSelectTree: FC<Props> = ({
 
   return (
     <div
-      className='multiple-select-tree min-h-50px d-flex align-items-center form-control form-control-lg form-control-solid position-relative bg-gray-100 py-0'
+      className='multiple-select-tree min-h-50px d-flex align-items-center form-control form-control-lg form-control-solid position-relative bg-gray-100 p-0'
       ref={selectRef}
     >
       <div
-        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-700 w-100 cursor-pointer h-100'
+        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-700 w-100 cursor-pointer h-100 px-6 py-3'
         onClick={toggleTree}
       >
         <div className='d-flex align-items-center flex-wrap gap-3'>
