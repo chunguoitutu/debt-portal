@@ -37,6 +37,7 @@ export const Input: React.FC<IProps> = ({
         </label>
       )}
       <input
+        type={type}
         onKeyPressCapture={(e) => {
           if (type === 'number') {
             handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})

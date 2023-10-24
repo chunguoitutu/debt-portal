@@ -33,8 +33,8 @@ export const roleSchema = Yup.object().shape({
   firstname: Yup.string().required('First name is required.'),
   lastname: Yup.string().required('Last name is required.'),
   username: Yup.string().required('User name is required.'),
-  company_id: Yup.string().required('Branch is required.'),
-  role_id: Yup.string().required('Role is required.'),
+  company_id: Yup.string().required('Company is required.'),
+  role_id: Yup.string().required('Role name is required.'),
   email: Yup.string().email("Email isn't valid").required('Email is required.'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
@@ -49,9 +49,19 @@ export const passwordSchema = Yup.object().shape({
 interface ValuesCreateEdit
   extends Omit<
     UserInfo,
-    'priority' | 'role_name' | 'company_name' | 'id' | 'status' | 'permissions' | 'last_login_date'
+    | 'priority'
+    | 'role_name'
+    | 'company_name'
+    | 'id'
+    | 'status'
+    | 'permissions'
+    | 'last_login_date'
+    | 'role_id'
+    | 'company_id'
   > {
   password: string | undefined
+  role_id: string | number
+  company_id: string | number
 }
 
 const initialValues: ValuesCreateEdit = {
@@ -60,8 +70,8 @@ const initialValues: ValuesCreateEdit = {
   lastname: '',
   username: '',
   password: '',
-  company_id: 0,
-  role_id: 0,
+  company_id: '',
+  role_id: '',
   email: '',
   telephone: '',
   is_active: true,
@@ -69,7 +79,7 @@ const initialValues: ValuesCreateEdit = {
 
 const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [dataBranch, setDataBranch] = useState<BranchItem[]>([])
+  const [dataCompany, setDataCompany] = useState<BranchItem[]>([])
   const [dataRole, setDataRole] = useState<RoleInfo[]>([])
   const [active, setActive] = useState<boolean>(true)
 
@@ -101,7 +111,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       request
         .post<DataResponse<BranchItem[]>>(apiGetCompanyList)
         .then(({data}) => {
-          setDataBranch(data.data)
+          setDataCompany(data.data)
         })
         .catch((error) => {
           console.error('Error: ', error?.message)
@@ -315,7 +325,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                               <Select
                                 name={key}
                                 required={isRequired}
-                                options={dataBranch}
+                                options={dataCompany}
                                 fieldLabelOption={fieldLabelOption || key}
                                 fieldValueOption={fieldValueOption || 'id'}
                                 label={name}
@@ -376,7 +386,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                         return (
                           <div className='col-6' key={i}>
                             <Select
-                            name={key}
+                              name={key}
                               required={isRequired}
                               options={dataRole}
                               fieldLabelOption={fieldLabelOption || key}
