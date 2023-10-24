@@ -36,11 +36,7 @@ export const newCompaniesSchema = Yup.object().shape({
     .max(50, 'Maximum 50 symbols')
     .required('Email Uen is required.'),
   open_date: Yup.string().required('Open Date is required.'),
-  street_1: Yup.string().required('Street 1 is required.'),
-  city: Yup.string().required('City is required.'),
-  zipcode: Yup.string().required('Zip Code is required.'),
-  state: Yup.string().required('State is required.'),
-  country: Yup.string().required('Country is required.'),
+  address: Yup.string().required('Address is required.'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -62,7 +58,7 @@ const CreateEditCompanies = ({
 
   React.useEffect(() => {
     request
-      .get(`config/company/id/${data.id}/address/${data.address_id}`)
+      .get(`config/company/${data.id}`)
       .then(({data}) => {
         if (!data?.error) setInformation(data?.data)
       })
@@ -97,37 +93,20 @@ const CreateEditCompanies = ({
           business_uen: values.business_uen,
           telephone: values.telephone as string,
           email: values.email,
+          address: values.address,
           website: values.website,
           open_date: new Date(values.open_date),
         })
         .then((response) => {
-          request
-            .post('config/address/' + information?.address_id, {
-              address_type_id: 1,
-              street_1: values.street_1,
-              street_2: values.street_2,
-              city: values.city,
-              state: values.state,
-              zipcode: values.zipcode,
-              country: values.country,
+          if (!response.data?.error) {
+            swalToast.fire({
+              icon: 'success',
+              title: 'Company successfully updated',
             })
-            .then((response) => {
-              if (!response.data?.error) {
-                swalToast.fire({
-                  icon: 'success',
-                  title: 'Company successfully updated',
-                })
-              }
-              handleUpdated()
-              handleClose()
-              setLoadApi(!loadapi)
-            })
-            .catch((error) => {
-              swalToast.fire({
-                icon: 'error',
-                title: error?.message,
-              })
-            })
+          }
+          handleUpdated()
+          handleClose()
+          setLoadApi(!loadapi)
         })
         .catch((error) => {
           swalToast.fire({
