@@ -137,7 +137,7 @@ const CreateEditRejectionType = ({
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
-      <div style={{maxHeight: '600px', overflowY: 'auto'}} className='modal-body  '>
+      <div style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}} className='modal-body  '>
         <div
           ref={stepperRef}
           className='stepper stepper-pills stepper-column '

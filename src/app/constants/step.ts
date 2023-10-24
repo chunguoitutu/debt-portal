@@ -1,7 +1,4 @@
-type StepItem = {
-  label: string
-  desc: string
-}
+import {StepItem} from '../modules/auth'
 
 export const STEP_APPLICATION: StepItem[] = [
   {
@@ -31,5 +28,16 @@ export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Complete',
     desc: 'Review & Save Application.',
+  },
+]
+
+export const STEP_REPAYMENT_SCHEDULE_CALCULATOR: StepItem[] = [
+  {
+    label: 'Schedule Calculator',
+    desc: 'General information of loan application.',
+  },
+  {
+    label: 'Completed',
+    desc: 'Result of calculating debt repayment schedule.',
   },
 ]

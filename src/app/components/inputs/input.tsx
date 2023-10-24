@@ -22,7 +22,7 @@ export const Input: React.FC<IProps> = ({
   required = false,
   noThereAreCommas = true,
   name,
-  classShared = 'fv-row mb-8',
+  classShared = 'fv-row mb-16px',
   type = 'text',
   ...rest
 }) => {
@@ -30,10 +30,22 @@ export const Input: React.FC<IProps> = ({
     <div className={`${classShared}`}>
       {title && (
         <label
-          className='d-flex align-items-center fs-5 fw-semibold mb-2 cursor-pointer'
+          className='d-flex align-items-center fs-5 fw-semibold mb-8px cursor-pointer'
           htmlFor={id}
         >
-          <span className={`${required ? 'required' : ''}`}>{title}</span>
+          <span
+            style={{
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: '500',
+              lineHeight: '24px',
+              color: '#071437',
+              textTransform: 'capitalize',
+            }}
+            className={`${required ? 'required' : ''} `}
+          >
+            {title}
+          </span>
         </label>
       )}
       <input
