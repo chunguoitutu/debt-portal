@@ -147,7 +147,7 @@ const CreateEditCompanies = ({
         </div>
       </div>
 
-      <div style={{maxHeight: '500px', overflowY: 'auto'}} className='modal-body '>
+      <div style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}} className='modal-body '>
         <div
           ref={stepperRef}
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'

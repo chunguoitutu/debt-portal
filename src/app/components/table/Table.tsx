@@ -144,8 +144,8 @@ const Table: FC<Props> = ({
       })
     }
   }
-  async function handleChangePagination(pagination: Omit<SearchCriteria, 'total'>) {
-    await onFetchDataList(pagination)
+  async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
+    await onFetchDataList({...pagination, ...data})
   }
 
   function handleShowConfirmDelete(item: any) {

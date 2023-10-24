@@ -2,9 +2,10 @@ import {useState} from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import ApplicationsDetails from './applications-details/ApplicationsDetails'
 
-import StepApplication from './step/StepApplication'
 import BackgroundCheck from './background-check/BackgroundCheck'
 import PrintOptions from './print-options/PrintOptions'
+import Step from '../../components/step/Step'
+import {STEP_APPLICATION} from '../../constants/step'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -34,7 +35,8 @@ export const Applications = () => {
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
       <div className='row gx-3 gx-xl-6 gy-8'>
         <div className='col-3 col-xxl-2 order-1'>
-          <StepApplication
+          <Step
+            data={STEP_APPLICATION}
             stepError={[1, 2]}
             stepCompleted={stepCompleted}
             currentStep={currentStep}
@@ -42,7 +44,7 @@ export const Applications = () => {
           />
         </div>
         <div className='col-9 col-xxl-8 order-2'>
-        <ApplicationsDetails />
+          <ApplicationsDetails />
         </div>
         <div className='d-none d-xxl-block col-xxl-2 order-0 order-xxl-3'>
           <div style={{paddingBottom: '30px'}}>

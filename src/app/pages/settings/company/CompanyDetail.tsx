@@ -32,7 +32,7 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
       </div>
       <div className='d-flex align-items-center justify-content-center '>
         <div
-          style={{maxHeight: '500px', maxWidth: '900px', overflowY: 'auto'}}
+          style={{maxHeight: 'calc(100vh - 200px)', maxWidth: '900px', overflowY: 'auto'}}
           className='card-body row gx-10 p-30px'
         >
           {rows.map((row, index) => (

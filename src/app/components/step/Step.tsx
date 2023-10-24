@@ -1,16 +1,17 @@
 import {faTriangleExclamation} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {FC} from 'react'
-import {STEP_APPLICATION} from '../../../constants'
+import {StepItem} from '../../modules/auth'
 
 type Props = {
   currentStep: number
   onGoToStep: (step: number) => void
   stepCompleted: number
   stepError?: number[]
+  data: StepItem[]
 }
 
-const StepApplication: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep}) => {
+const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, data}) => {
   function handleGoToStep(step: number) {
     step <= stepCompleted && onGoToStep(step)
   }
@@ -18,7 +19,7 @@ const StepApplication: FC<Props> = ({currentStep, stepCompleted, stepError, onGo
   return (
     <div className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'>
       <div className='stepper-nav'>
-        {STEP_APPLICATION.map(({desc, label}, i) => {
+        {data.map(({desc, label}, i) => {
           const status =
             currentStep === i + 1
               ? 'current'
@@ -49,7 +50,7 @@ const StepApplication: FC<Props> = ({currentStep, stepCompleted, stepError, onGo
                 </div>
               </div>
 
-              {STEP_APPLICATION.length !== i + 1 && <div className='stepper-line h-40px'></div>}
+              {data.length !== i + 1 && <div className='stepper-line h-40px'></div>}
             </div>
           )
         })}
@@ -58,4 +59,4 @@ const StepApplication: FC<Props> = ({currentStep, stepCompleted, stepError, onGo
   )
 }
 
-export default StepApplication
+export default Step

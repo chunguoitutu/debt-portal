@@ -25,6 +25,11 @@ export type LoginResponse = {
   info: UserInfo
 }
 
+export type StepItem = {
+  label: string
+  desc: string
+}
+
 export type UserInfo = {
   username: string
   is_active: number | any
