@@ -10,6 +10,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   name?: string
   classShared?: string
   type?: string
+  noThereAreCommas?: boolean
 }
 
 export const Input: React.FC<IProps> = ({
@@ -19,6 +20,7 @@ export const Input: React.FC<IProps> = ({
   touched,
   errorTitle,
   required = false,
+  noThereAreCommas = true,
   name,
   classShared = 'fv-row mb-8',
   type = 'text',
@@ -37,12 +39,12 @@ export const Input: React.FC<IProps> = ({
       <input
         onKeyPressCapture={(e) => {
           if (type === 'number') {
-            handleKeyPress(e)
+            handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
           }
         }}
         onPaste={(e) => {
           if (type === 'number') {
-            handlePaste(e)
+            handlePaste({e: e, noThereAreCommas: noThereAreCommas})
           }
         }}
         id={id}

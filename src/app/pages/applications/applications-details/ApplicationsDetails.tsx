@@ -1,5 +1,4 @@
 import {useState} from 'react'
-
 import {Input} from '../../../components/inputs/input'
 import {InputTime} from '../../../components/inputs/inputTime'
 import Select from '../../../components/select/select'
@@ -285,9 +284,7 @@ const ApplicationsDetails = () => {
             {/* Race */}
             <div>
               <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
-                <div className='input-title-application left fs-3 text-start text-lg-end'>
-                  Race
-                </div>
+                <div className='input-title-application left fs-3 text-start text-lg-end'>Race</div>
                 <Input
                   required={false}
                   name='application_number'
@@ -376,7 +373,6 @@ const ApplicationsDetails = () => {
             )}
           </button>
         </div>
-
       </div>
     </div>
   )
