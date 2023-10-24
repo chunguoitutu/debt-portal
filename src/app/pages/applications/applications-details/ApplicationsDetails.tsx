@@ -28,6 +28,7 @@ const ApplicationsDetails = () => {
 
   const handleChange = (e: any) => {
     const {name, value} = e.target
+    console.log(name, value, 1)
     setFormValue({...formValue, [name]: value})
   }
 
@@ -127,10 +128,10 @@ const ApplicationsDetails = () => {
                 </div>
                 <Input
                   required={false}
-                  name='application_number'
+                  name='nric_nonric_no'
                   title={''}
-                  id={'application_number'}
-                  value={formValue.application_number}
+                  id={'nric_nonric_no'}
+                  value={formValue.nric_nonric_no}
                   onChange={handleChange}
                   classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
@@ -145,10 +146,10 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
+                  id='argent'
                   name='argent'
                   onChange={handleChange}
                   options={optionsAgent}
-                  title=''
                   value={formValue.argent}
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
@@ -163,11 +164,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='loan_type'
                   onChange={handleChange}
                   options={optionsAgent}
+                  id='loan_type'
                   title=''
-                  value={formValue.argent}
+                  value={formValue.loan_type}
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
@@ -181,11 +183,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='marketing_type'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
-                  value={formValue.argent}
+                  id='marketing_type'
+                  value={formValue.marketing_type}
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
@@ -199,11 +202,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='customer_type'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
-                  value={formValue.argent}
+                  value={formValue.customer_type}
+                  id='customer_type'
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
@@ -217,11 +221,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='identitycard_card'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
-                  value={formValue.argent}
+                  value={formValue.identitycard_card}
+                  id='identitycard_card'
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
@@ -235,11 +240,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='gender'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
-                  value={formValue.argent}
+                  value={formValue.gender}
+                  id='gender'
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
@@ -254,9 +260,9 @@ const ApplicationsDetails = () => {
                 <InputTime
                   required={false}
                   title={''}
-                  id={'application_date'}
-                  name='application_date'
-                  value={formValue.application_date}
+                  id={'date_of_birth'}
+                  name='date_of_birth'
+                  value={formValue.date_of_birth}
                   onChange={handleChange}
                   type={'date'}
                   classShared=' select-wrap flex-shrink-0 w-sm-300px w-xl-200px'
@@ -272,10 +278,10 @@ const ApplicationsDetails = () => {
                 </div>
                 <Input
                   required={false}
-                  name='application_number'
+                  name='singapore_pr'
                   title={''}
-                  id={'application_number'}
-                  value={formValue.application_number}
+                  id={'singapore_pr'}
+                  value={formValue.singapore_pr}
                   onChange={handleChange}
                   classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
@@ -288,10 +294,10 @@ const ApplicationsDetails = () => {
                 <div className='input-title-application left fs-3 text-start text-lg-end'>Race</div>
                 <Input
                   required={false}
-                  name='application_number'
+                  name='race'
                   title={''}
-                  id={'application_number'}
-                  value={formValue.application_number}
+                  id={'race'}
+                  value={formValue.race}
                   onChange={handleChange}
                   classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
@@ -306,11 +312,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='nationality'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
-                  value={formValue.argent}
+                  value={formValue.nationality}
+                  id='nationality'
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
@@ -324,11 +331,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='country'
+                  id='country'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
-                  value={formValue.argent}
+                  value={formValue.country}
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
@@ -342,11 +350,12 @@ const ApplicationsDetails = () => {
                 </div>
                 <Select
                   label=''
-                  name='argent'
+                  name='residential_type'
+                  id='residential_type'
                   onChange={handleChange}
                   options={optionsAgent}
                   title=''
-                  value={formValue.argent}
+                  value={formValue.residential_type}
                   classShared='input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
                 />
               </div>
