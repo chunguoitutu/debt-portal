@@ -50,19 +50,19 @@ export const REPAYMENT_SHEDULE_TABLES = {
     },
     {
       key: 'principal_per_month',
-      name: 'Principal (Per Month)',
+      name: 'Principal Repayment',
     },
     {
       key: 'interest_per_month',
-      name: 'Interest (Per Month)',
+      name: 'Interest Repayment',
     },
     {
       key: 'monthly_inst_amount',
-      name: 'Monthly Instalment Amount',
+      name: 'Total Repayment',
     },
     {
       key: 'balance_principal',
-      name: 'Total Interest For Full Term',
+      name: 'Principal Balance',
     },
   ],
 }

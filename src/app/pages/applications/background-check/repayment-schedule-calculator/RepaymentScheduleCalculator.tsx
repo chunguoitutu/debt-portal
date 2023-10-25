@@ -1,20 +1,21 @@
+import React, {useRef, useState} from 'react'
 import * as Yup from 'yup'
 import {createPortal} from 'react-dom'
 import {Modal, Table} from 'react-bootstrap'
-import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG, REPAYMENT_SHEDULE_TABLES} from './config'
+import {useFormik} from 'formik'
+import './style.scss'
+
 import {InputTime} from '../../../../components/inputs/inputTime'
 import {Input} from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../../_metronic/helpers'
-import React, {useRef, useState} from 'react'
-import {useFormik} from 'formik'
-import Step from '../../../../components/step/Step'
-import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../constants/step'
-import './style.scss'
-import request from './../../../../axios/index'
-import numeral from 'numeral'
-import Select from '../../../../components/select/select'
 import {MONTHLY_DUE_DATE} from '../../../../utils/globalConfig'
+import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../constants/step'
+import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG, REPAYMENT_SHEDULE_TABLES} from './config'
 import {swalToast} from '../../../../swal-notification'
+import {formatNumber} from '../../../../utils'
+import Step from '../../../../components/step/Step'
+import request from './../../../../axios/index'
+import Select from '../../../../components/select/select'
 
 type Props = {
   setLoadApi: any
@@ -104,7 +105,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       totalInterestFull: 0,
     }
   }, [dataRepayment])
-
   return createPortal(
     <Modal
       id='kt_modal_create_app'
@@ -207,6 +207,22 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                         )}
                       </div>
                     ))}
+                    <div className='d-flex flex-end pt-30px gap-8px'>
+                      <button
+                        onClick={handleClose}
+                        type='reset'
+                        className='btn btn-secondary align-self-center'
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => handleSubmit()}
+                        type='submit'
+                        className='btn btn-lg btn-primary '
+                      >
+                        Calculate
+                      </button>
+                    </div>
                   </div>
                 </>
               ) : (
@@ -228,7 +244,9 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>Interest Per Month %</div>
-                        <div className='fs-3 fw-bold'>{values.per_month_percent}%</div>
+                        <div className='fs-3 fw-bold'>
+                          {formatNumber(values.per_month_percent)}%
+                        </div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>First Repayment Date</div>
@@ -247,18 +265,20 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Month)</td>
-                              <td className='content-calculator'>{values.per_month_percent}%</td>
+                              <td className='content-calculator'>
+                                {formatNumber(values.per_month_percent)}%
+                              </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Annum)</td>
                               <td className='content-calculator'>
-                                {numeral(+values.per_month_percent * 12).format('0,0.00')}{' '}
+                                {formatNumber(+values.per_month_percent * 12)}%
                               </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Term</td>
-                              <td className='content-calculator'>
-                                {values.totalsMonthPayment} Month (s)
+                              <td className='content-calculator text-transform-none'>
+                                {values.totalsMonthPayment} Month(s)
                               </td>
                             </tr>
                           </tbody>
@@ -270,24 +290,32 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             <tr>
                               <td className='label-calculator'>Principal (Per Month)</td>
                               <td className='content-calculator'>
-                                $
-                                {numeral(+values.totalsAmount / +values.totalsMonthPayment).format(
-                                  '0,0.00'
-                                )}
+                                ${formatNumber(+values.totalsAmount / +values.totalsMonthPayment)}
                               </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Month)</td>
-                              <td className='content-calculator'>$123</td>
+                              <td className='content-calculator'>
+                                $
+                                {formatNumber(
+                                  dataFooterTable.totalInterest / +values.totalsMonthPayment
+                                )}
+                              </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Monthly Instalment Amount</td>
-                              <td className='content-calculator'>$26,000.00</td>
+                              <td className='content-calculator'>
+                                $
+                                {formatNumber(
+                                  dataFooterTable.totalInterest / +values.totalsMonthPayment +
+                                    +values.totalsAmount / +values.totalsMonthPayment
+                                )}
+                              </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Total Interest For Full Term</td>
                               <td className='content-calculator'>
-                                ${dataFooterTable.totalInterestFull}
+                                ${formatNumber(dataFooterTable.totalInterest)}
                               </td>
                             </tr>
                           </tbody>
@@ -307,57 +335,70 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                         </thead>
                         <tbody>
                           {dataRepayment.map((el) => {
-                            const {interest_per_month, principal_per_month} = el
+                            const {interest_per_month, principal_per_month, instalment_due_date} =
+                              el
                             const table = rowsTable.map((rt) => {
-                              if (rt.key == 'monthly_inst_amount') {
-                                return (
-                                  <td className='p-4 content-calculator fs-4'>
-                                    {(principal_per_month + interest_per_month).toFixed(2)}
-                                  </td>
-                                )
+                              switch (rt.key) {
+                                case 'instalment_due_date':
+                                  return (
+                                    <td className='p-4 content-calculator fs-4'>
+                                      {instalment_due_date}
+                                    </td>
+                                  )
+                                case 'monthly_inst_amount':
+                                  return (
+                                    <td className='p-4 content-calculator fs-4'>
+                                      {formatNumber(principal_per_month + interest_per_month)}
+                                    </td>
+                                  )
+                                default:
+                                  return (
+                                    <td className='p-4 content-calculator fs-4'>
+                                      ${formatNumber(el[rt.key])}
+                                    </td>
+                                  )
                               }
-                              return <td className='p-4 content-calculator fs-4'>{el[rt.key]}</td>
                             })
                             return <tr>{table}</tr>
                           })}
+
                           <tr style={{backgroundColor: '#F9F9F9'}}>
                             <td className='border-right-table p-4 label-calculator fs-4'>Total</td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              ${dataFooterTable.totalPrinciple}
+                              ${formatNumber(dataFooterTable.totalPrinciple)}
                             </td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              ${dataFooterTable.totalInterest}
+                              ${formatNumber(dataFooterTable.totalInterest)}
                             </td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              ${dataFooterTable.totalMonthlyInst}
+                              ${formatNumber(dataFooterTable.totalMonthlyInst)}
                             </td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              ${dataFooterTable.totalInterestFull}
+                              ${formatNumber(dataFooterTable.totalInterestFull)}
                             </td>
                           </tr>
                         </tbody>
                       </Table>
                     </div>
+                    <div className='d-flex flex-end pt-30px gap-8px'>
+                      <button
+                        onClick={handleClose}
+                        type='reset'
+                        className='btn btn-secondary align-self-center'
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => setCurrentStep(1)}
+                        type='submit'
+                        className='btn btn-lg btn-primary '
+                      >
+                        Recalculate
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
-            </div>
-
-            <div className='d-flex flex-end pt-30px gap-8px'>
-              <button
-                onClick={handleClose}
-                type='reset'
-                className='btn btn-secondary align-self-center'
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => handleSubmit()}
-                type='submit'
-                className='btn btn-lg btn-primary '
-              >
-                Calculate
-              </button>
             </div>
           </div>
         </div>
