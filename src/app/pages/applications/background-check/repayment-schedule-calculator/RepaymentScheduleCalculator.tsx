@@ -10,8 +10,11 @@ import {useFormik} from 'formik'
 import Step from '../../../../components/step/Step'
 import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../constants/step'
 import './style.scss'
-import request from './../../../../axios/index';
-import numeral from 'numeral';
+import request from './../../../../axios/index'
+import numeral from 'numeral'
+import Select from '../../../../components/select/select'
+import {MONTHLY_DUE_DATE} from '../../../../utils/globalConfig'
+import {swalToast} from '../../../../swal-notification'
 
 type Props = {
   setLoadApi: any
@@ -19,6 +22,7 @@ type Props = {
   show: boolean
   handleClose: () => void
 }
+
 export const RepaymentScheduleCalculatorSchema = Yup.object().shape({
   totalsAmount: Yup.string().required('Amount of Loan $ is required.'),
   per_month_percent: Yup.string().required('Interest per Month % is required.'),
@@ -49,15 +53,17 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
     },
     validationSchema: RepaymentScheduleCalculatorSchema,
     onSubmit: async (values: any, actions: any) => {
-        try {
-          await request.post('/calculate', {
-            ...values
-          })
-          handleChangeCalculator()
-          console.log(values)
-        } catch (error) {
-          console.log(error)
-        }
+      try {
+        await request.post('/calculate', {
+          ...values,
+        })
+        handleChangeCalculator()
+      } catch (error) {
+        swalToast.fire({
+          icon: 'error',
+          title: 'The system is having an error, please try again in a few minutes.',
+        })
+      }
     },
   })
 
@@ -106,7 +112,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
               <div>
                 <Step
                   data={STEP_REPAYMENT_SCHEDULE_CALCULATOR}
-                  stepError={[1, 2]}
+                  // stepError={[1, 2]}
                   stepCompleted={stepCompleted}
                   currentStep={currentStep}
                   onGoToStep={handleChangeStep}
@@ -117,18 +123,35 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                   <div style={{width: '60.3%'}} className='ps-30px'>
                     {rows.map((row) => (
                       <div key={row.key}>
-                        {row.key === 'first_repayment_date' ? (
-                          <InputTime
-                            required={row?.require ? true : false}
-                            title={row.name}
-                            id={row.key}
-                            error={errors[row.key]}
-                            touched={touched[row.key]}
-                            errorTitle={errors[row.key]}
-                            value={values[row.key] || ''}
-                            onChange={handleChange}
-                            type='date'
-                          />
+                        {row.key === 'first_repayment_date' || row.key === 'monthly_due_date' ? (
+                          <>
+                            {row.key === 'first_repayment_date' && (
+                              <InputTime
+                                required={row?.require ? true : false}
+                                title={row.name}
+                                id={row.key}
+                                error={errors[row.key]}
+                                touched={touched[row.key]}
+                                errorTitle={errors[row.key]}
+                                value={values[row.key] || ''}
+                                onChange={handleChange}
+                                type='date'
+                              />
+                            )}
+                            {row.key === 'monthly_due_date' && (
+                              <Select
+                                label={row.name}
+                                isOptionDefault={false}
+                                id={row.key}
+                                name={row.key}
+                                onChange={handleChange}
+                                errorMessage={errors[row.key]}
+                                shouldShowError={!!errors[row.key] && !!touched[row.key]}
+                                options={MONTHLY_DUE_DATE || []}
+                                value={values[row.key] || ''}
+                              />
+                            )}
+                          </>
                         ) : (
                           <Input
                             required={row?.require ? true : false}
@@ -189,11 +212,15 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Annum)</td>
-                              <td className='content-calculator'>  {numeral(+values.per_month_percent * 12).format('0,0.00')} </td>
+                              <td className='content-calculator'>
+                                {numeral(+values.per_month_percent * 12).format('0,0.00')}{' '}
+                              </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Term</td>
-                              <td className='content-calculator'>{values.totalsMonthPayment} Month (s)</td>
+                              <td className='content-calculator'>
+                                {values.totalsMonthPayment} Month (s)
+                              </td>
                             </tr>
                           </tbody>
                         </Table>
@@ -203,7 +230,12 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                           <tbody>
                             <tr>
                               <td className='label-calculator'>Principal (Per Month)</td>
-                              <td className='content-calculator'>${numeral(+values.totalsAmount / +values.totalsMonthPayment).format('0,0.00')}</td>
+                              <td className='content-calculator'>
+                                $
+                                {numeral(+values.totalsAmount / +values.totalsMonthPayment).format(
+                                  '0,0.00'
+                                )}
+                              </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Month)</td>
