@@ -27,6 +27,6 @@ export function isJson(str: string) {
   }
 }
 
-export const formatNumber = (num: number) => {
-  return numeral(num).format('0,0.00')
-}
+export const formatNumber = (num: any) => {
+  return numeral(num).format('0,0.00');
+};
