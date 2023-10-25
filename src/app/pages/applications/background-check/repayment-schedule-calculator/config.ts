@@ -2,21 +2,21 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
   endpoint: 'config/company/1',
   rows: [
     {
-      key: 'amount_of_loan',
+      key: 'totalsAmount',
       name: 'Amount of Loan $',
       type: 'number',
-      noThereAreCommas: true,
+      noThereAreCommas: false,
       require: true,
     },
     {
-      key: 'interest_per_month',
+      key: 'per_month_percent',
       type: 'number',
       name: 'Interest per Month %',
       require: true,
-      noThereAreCommas: true,
+      noThereAreCommas: false,
     },
     {
-      key: 'no_of_instalment',
+      key: 'totalsMonthPayment',
       name: 'No. of Instalment',
       type: 'number',
       noThereAreCommas: true,
