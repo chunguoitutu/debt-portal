@@ -184,6 +184,12 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                               <td className='label-calculator'>Term</td>
                               <td className='content-calculator'>1 Month (S)</td>
                             </tr>
+                          </tbody>
+                        </Table>
+                      </div>
+                      <div className='col-6 '>
+                        <Table responsive='sm' className='table-bordered'>
+                          <tbody>
                             <tr>
                               <td className='label-calculator'>Principal (Per Month)</td>
                               <td className='content-calculator'>$25,000.00</td>
@@ -199,32 +205,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             <tr>
                               <td className='label-calculator'>Total Interest For Full Term</td>
                               <td className='content-calculator'>$1,000.00</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </div>
-                      <div className='col-6 '>
-                        <Table responsive='sm' className='table-bordered'>
-                          <tbody>
-                            <tr>
-                              <td className='label-calculator'>Date</td>
-                              <td className='content-calculator'>12/08/2023</td>
-                            </tr>
-                            <tr>
-                              <td className='label-calculator'>Principal Repayment</td>
-                              <td className='content-calculator'>$25,000.00</td>
-                            </tr>
-                            <tr>
-                              <td className='label-calculator'>Interest Repayment</td>
-                              <td className='content-calculator'>$1,000.00</td>
-                            </tr>
-                            <tr>
-                              <td className='label-calculator'>Total Repayment</td>
-                              <td className='content-calculator'>$26,000.00</td>
-                            </tr>
-                            <tr>
-                              <td className='label-calculator'>Principal Balance</td>
-                              <td className='content-calculator'>$0.00</td>
                             </tr>
                           </tbody>
                         </Table>
