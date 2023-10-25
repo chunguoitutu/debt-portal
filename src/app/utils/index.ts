@@ -1,4 +1,5 @@
 import {DEFAULT_MESSAGE_ERROR_500} from '../constants/error-message'
+import numeral from 'numeral'
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -24,4 +25,8 @@ export function isJson(str: string) {
   } catch (e) {
     return false
   }
+}
+
+export const formatNumber = (num: number) => {
+  return numeral(num).format('0,0.00')
 }

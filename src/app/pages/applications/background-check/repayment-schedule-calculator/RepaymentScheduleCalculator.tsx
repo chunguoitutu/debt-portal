@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 import {createPortal} from 'react-dom'
 import {Modal, Table} from 'react-bootstrap'
-import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG} from './config'
+import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG, REPAYMENT_SHEDULE_TABLES} from './config'
 import {InputTime} from '../../../../components/inputs/inputTime'
 import {Input} from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../../_metronic/helpers'
@@ -23,6 +23,13 @@ type Props = {
   handleClose: () => void
 }
 
+type ResponseRepayment = {
+  balance_principal: number
+  instalment_due_date: string
+  instalment_no: number
+  interest_per_month: number
+  principal_per_month: number
+}
 export const RepaymentScheduleCalculatorSchema = Yup.object().shape({
   totalsAmount: Yup.string().required('Amount of Loan $ is required.'),
   per_month_percent: Yup.string().required('Interest per Month % is required.'),
@@ -35,10 +42,12 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [stepCompleted] = useState<number>(1)
+  const [dataRepayment, setDataRepayment] = useState<ResponseRepayment[]>([])
   function handleChangeStep(step: number) {
     setCurrentStep(step)
   }
   const {rows} = REPAYMENT_SHEDULE_CALCULATOR_CONFIG
+  const {rows: rowsTable} = REPAYMENT_SHEDULE_TABLES
 
   const {values, touched, errors, handleChange, handleSubmit} = useFormik({
     initialValues: {
@@ -51,10 +60,13 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
     validationSchema: RepaymentScheduleCalculatorSchema,
     onSubmit: async (values: any, actions: any) => {
       try {
-        await request.post('/calculate', {
+        const {data} = await request.post('/calculate', {
           ...values,
         })
-        setCurrentStep(2)
+        if (data.data) {
+          setDataRepayment(data.data)
+          setCurrentStep(2)
+        }
       } catch (error) {
         swalToast.fire({
           icon: 'error',
@@ -63,7 +75,35 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       }
     },
   })
-  console.log(errors)
+
+  const dataFooterTable = React.useMemo(() => {
+    if (dataRepayment) {
+      return dataRepayment.reduce(
+        (a, b) => {
+          const {balance_principal, interest_per_month, principal_per_month} = b
+          return {
+            totalPrinciple: a['totalPrinciple'] + principal_per_month,
+            totalInterest: a['totalInterest'] + interest_per_month,
+            totalMonthlyInst: a['totalMonthlyInst'] + (interest_per_month + principal_per_month),
+            totalInterestFull: a['totalInterestFull'] + balance_principal,
+          }
+        },
+        {
+          totalInterest: 0,
+          totalMonthlyInst: 0,
+          totalPrinciple: 0,
+          totalInterestFull: 0,
+        }
+      )
+    }
+
+    return {
+      totalInterest: 0,
+      totalMonthlyInst: 0,
+      totalPrinciple: 0,
+      totalInterestFull: 0,
+    }
+  }, [dataRepayment])
 
   return createPortal(
     <Modal
@@ -246,7 +286,9 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             </tr>
                             <tr>
                               <td className='label-calculator'>Total Interest For Full Term</td>
-                              <td className='content-calculator'>$1,000.00</td>
+                              <td className='content-calculator'>
+                                ${dataFooterTable.totalInterestFull}
+                              </td>
                             </tr>
                           </tbody>
                         </Table>
@@ -258,63 +300,39 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                       <Table responsive='sm' className='table-bordered'>
                         <thead style={{backgroundColor: '#F9F9F9'}}>
                           <tr>
-                            <th className='border-right-table p-4 label-calculator'>Date</th>
-                            <th className='border-right-table p-4 label-calculator'>
-                              Principal (Per Month)
-                            </th>
-                            <th className='border-right-table p-4 label-calculator'>
-                              Interest (Per Month)
-                            </th>
-                            <th className='border-right-table p-4 label-calculator'>
-                              Monthly Instalment Amount
-                            </th>
-                            <th className='border-right-table p-4 label-calculator'>
-                              Total Interest For Full Term
-                            </th>
+                            {rowsTable.map((el) => (
+                              <th className='border-right-table p-4 label-calculator'>{el.name}</th>
+                            ))}
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td className='p-4 content-calculator fs-4'>01/10/2023</td>
-                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
-                            <td className='p-4 content-calculator fs-4'>$572.75</td>
-                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
-                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
-                          </tr>
-                          <tr>
-                            <td className='p-4 content-calculator fs-4'>01/11/2023</td>
-                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
-                            <td className='p-4 content-calculator fs-4'>$572.75</td>
-                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
-                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
-                          </tr>
-                          <tr>
-                            <td className='p-4 content-calculator fs-4'>01/12/2023</td>
-                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
-                            <td className='p-4 content-calculator fs-4'>$572.75</td>
-                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
-                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
-                          </tr>
-                          <tr>
-                            <td className='p-4 content-calculator fs-4'>01/01/2023</td>
-                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
-                            <td className='p-4 content-calculator fs-4'>$572.75</td>
-                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
-                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
-                          </tr>
+                          {dataRepayment.map((el) => {
+                            const {interest_per_month, principal_per_month} = el
+                            const table = rowsTable.map((rt) => {
+                              if (rt.key == 'monthly_inst_amount') {
+                                return (
+                                  <td className='p-4 content-calculator fs-4'>
+                                    {(principal_per_month + interest_per_month).toFixed(2)}
+                                  </td>
+                                )
+                              }
+                              return <td className='p-4 content-calculator fs-4'>{el[rt.key]}</td>
+                            })
+                            return <tr>{table}</tr>
+                          })}
                           <tr style={{backgroundColor: '#F9F9F9'}}>
                             <td className='border-right-table p-4 label-calculator fs-4'>Total</td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              $2,083.33
+                              ${dataFooterTable.totalPrinciple}
                             </td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              $572.75
+                              ${dataFooterTable.totalInterest}
                             </td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              $2,656.07
+                              ${dataFooterTable.totalMonthlyInst}
                             </td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              $6,872.96
+                              ${dataFooterTable.totalInterestFull}
                             </td>
                           </tr>
                         </tbody>

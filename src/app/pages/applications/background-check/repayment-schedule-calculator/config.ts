@@ -41,3 +41,28 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
     },
   ],
 }
+
+export const REPAYMENT_SHEDULE_TABLES = {
+  rows: [
+    {
+      key: 'instalment_due_date',
+      name: 'Date',
+    },
+    {
+      key: 'principal_per_month',
+      name: 'Principal (Per Month)',
+    },
+    {
+      key: 'interest_per_month',
+      name: 'Interest (Per Month)',
+    },
+    {
+      key: 'monthly_inst_amount',
+      name: 'Monthly Instalment Amount',
+    },
+    {
+      key: 'balance_principal',
+      name: 'Total Interest For Full Term',
+    },
+  ],
+}
