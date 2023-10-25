@@ -10,6 +10,8 @@ import {useFormik} from 'formik'
 import Step from '../../../../components/step/Step'
 import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../constants/step'
 import './style.scss'
+import request from './../../../../axios/index';
+import numeral from 'numeral';
 
 type Props = {
   setLoadApi: any
@@ -18,9 +20,9 @@ type Props = {
   handleClose: () => void
 }
 export const RepaymentScheduleCalculatorSchema = Yup.object().shape({
-  amount_of_loan: Yup.string().required('Amount of Loan $ is required.'),
-  interest_per_month: Yup.string().required('Interest per Month % is required.'),
-  no_of_instalment: Yup.string().required('No. of Instalment is required.'),
+  totalsAmount: Yup.string().required('Amount of Loan $ is required.'),
+  per_month_percent: Yup.string().required('Interest per Month % is required.'),
+  totalsMonthPayment: Yup.string().required('No. of Instalment is required.'),
   first_repayment_date: Yup.string().required('First Repayment Date is required.'),
   monthly_due_date: Yup.string().required('Monthly Due Date is required.'),
 })
@@ -39,15 +41,23 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   }
   const {values, touched, errors, handleChange, handleSubmit} = useFormik({
     initialValues: {
-      amount_of_loan: '',
-      interest_per_month: '',
-      no_of_instalment: '',
+      totalsAmount: '',
+      per_month_percent: '',
+      totalsMonthPayment: '',
       first_repayment_date: '',
       monthly_due_date: '',
     },
     validationSchema: RepaymentScheduleCalculatorSchema,
     onSubmit: async (values: any, actions: any) => {
-      handleChangeCalculator()
+        try {
+          await request.post('/calculate', {
+            ...values
+          })
+          handleChangeCalculator()
+          console.log(values)
+        } catch (error) {
+          console.log(error)
+        }
     },
   })
 
@@ -117,6 +127,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             errorTitle={errors[row.key]}
                             value={values[row.key] || ''}
                             onChange={handleChange}
+                            type='date'
                           />
                         ) : (
                           <Input
@@ -143,23 +154,23 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                     <div className='d-flex amount-header-calculator flex-row gap-10'>
                       <div className='gap-1 p-6 ms-3' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>Amount Of Loan $</div>
-                        <div className='fs-3 fw-bold'>$25,000.00</div>
+                        <div className='fs-3 fw-bold'>${values.totalsAmount}</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>No. Of Instalment</div>
-                        <div className='fs-3 fw-bold'>$25,000.00</div>
+                        <div className='fs-3 fw-bold'>{values.totalsMonthPayment}</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>Monthly Due Date</div>
-                        <div className='fs-3 fw-bold'>$25,000.00</div>
+                        <div className='fs-3 fw-bold'>{values.monthly_due_date}</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>Interest Per Month %</div>
-                        <div className='fs-3 fw-bold'>4.00</div>
+                        <div className='fs-3 fw-bold'>{values.per_month_percent}%</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>First Repayment Date</div>
-                        <div className='fs-3 fw-bold'>4.00</div>
+                        <div className='fs-3 fw-bold'>{values.first_repayment_date}</div>
                       </div>
                     </div>
 
@@ -170,19 +181,19 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                           <tbody className='border-calculator'>
                             <tr>
                               <td className='label-calculator'>Loan Amount</td>
-                              <td className='content-calculator'>$25,000.00</td>
+                              <td className='content-calculator'>${values.totalsAmount}</td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Month)</td>
-                              <td className='content-calculator'>T4.00%</td>
+                              <td className='content-calculator'>{values.per_month_percent}%</td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Annum)</td>
-                              <td className='content-calculator'>48.00%</td>
+                              <td className='content-calculator'>  {numeral(+values.per_month_percent * 12).format('0,0.00')} </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Term</td>
-                              <td className='content-calculator'>1 Month (S)</td>
+                              <td className='content-calculator'>{values.totalsMonthPayment} Month (s)</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -192,11 +203,11 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                           <tbody>
                             <tr>
                               <td className='label-calculator'>Principal (Per Month)</td>
-                              <td className='content-calculator'>$25,000.00</td>
+                              <td className='content-calculator'>${numeral(+values.totalsAmount / +values.totalsMonthPayment).format('0,0.00')}</td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Month)</td>
-                              <td className='content-calculator'>$1,000.00</td>
+                              <td className='content-calculator'>$123</td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Monthly Instalment Amount</td>
