@@ -67,7 +67,7 @@ export function Login() {
         } else {
           Cookies.set('token', data.token)
           // after navigate -> master layout will get current user
-          navigate(`/${redirect ? redirect : 'applications'}`)
+          navigate(`/${redirect ? redirect : 'dashboard'}`)
         }
       }
     } catch (error) {
@@ -83,7 +83,7 @@ export function Login() {
       // after navigate -> master layout will get current user
       Cookies.set('token', dataInfo.token)
       Cookies.set('company_cookie', valueBranch)
-      navigate(`/${redirect ? redirect : 'applications'}`)
+      navigate(`/${redirect ? redirect : 'dashboard'}`)
     }
   }
 

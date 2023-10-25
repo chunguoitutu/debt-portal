@@ -85,7 +85,7 @@ const AppRoutes: FC = () => {
           </Route>
 
           {/* Not match any router */}
-          <Route path='/' element={<Navigate to={currentUser ? '/applications' : '/login'} />} />
+          <Route path='/' element={<Navigate to={currentUser ? '/dashboard' : '/login'} />} />
           <Route path='*' element={<Navigate to={currentUser ? '/error/404' : '/login'} />} />
         </Route>
       </Routes>
