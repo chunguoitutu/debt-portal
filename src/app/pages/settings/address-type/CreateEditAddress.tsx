@@ -151,32 +151,32 @@ const CreateEditAddress = ({
                     .map((row) => {
                       const {isRequired, typeInput} = row.informCreateEdit || {}
                       return (
-                        <div key={row.key} style={{flex: '0 0 50%'}}>
-                          {row.key === 'rejection_type_description' ? (
+                        <div key={row?.key} style={{flex: '0 0 50%'}}>
+                          {row?.key === 'rejection_type_description' ? (
                             <div className='mb-8'>
                               <TextArea
-                                title={row.name}
-                                name={row.key}
-                                value={values[row.key] || ''}
+                                title={row?.name}
+                                name={row?.key}
+                                value={values[row?.key] || ''}
                                 onChange={handleChange}
                               />
 
                               <ErrorMessage
                                 className='mt-2'
-                                shouldShowMessage={!!(errors[row.key] && touched[row.key])}
-                                message={errors[row.key] as string}
+                                shouldShowMessage={!!(errors[row?.key] && touched[row?.key])}
+                                message={errors[row?.key] as string}
                               />
                             </div>
                           ) : (
                             <Input
-                              required={isRequired ? true : false}
-                              title={row.name}
-                              id={row.key}
+                              required={!!isRequired ? true : false}
+                              title={row?.name}
+                              id={row?.key}
                               type={typeInput}
-                              error={errors[row.key]}
-                              touched={touched[row.key]}
-                              errorTitle={errors[row.key]}
-                              value={values[row.key] || ''}
+                              error={errors[row?.key]}
+                              touched={touched[row?.key]}
+                              errorTitle={errors[row?.key]}
+                              value={values[row?.key] || ''}
                               onChange={handleChange}
                             />
                           )}

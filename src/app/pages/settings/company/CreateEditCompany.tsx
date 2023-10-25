@@ -158,28 +158,28 @@ const CreateEditCompanies = ({
               {information ? (
                 <>
                   {rows.map((row) => (
-                    <div key={row.key} style={{flex: '0 0 50%'}}>
-                      {row.key === 'open_date' ? (
+                    <div key={row?.key} style={{flex: '0 0 50%'}}>
+                      {row?.key === 'open_date' ? (
                         <InputTime
                           required={row?.require ? true : false}
-                          title={row.name}
-                          id={row.key}
-                          error={errors[row.key]}
-                          touched={touched[row.key]}
-                          errorTitle={errors[row.key]}
-                          value={values[row.key] || ''}
+                          title={row?.name}
+                          id={row?.key}
+                          error={errors[row?.key]}
+                          touched={touched[row?.key]}
+                          errorTitle={errors[row?.key]}
+                          value={values[row?.key] || ''}
                           onChange={handleChange}
                         />
                       ) : (
                         <Input
                           required={row?.require ? true : false}
                           title={row.name}
-                          id={row.key}
-                          type={row.type}
-                          error={errors[row.key]}
-                          touched={touched[row.key]}
-                          errorTitle={errors[row.key]}
-                          value={values[row.key] || ''}
+                          id={row?.key}
+                          type={row?.type}
+                          error={errors[row?.key]}
+                          touched={touched[row?.key]}
+                          errorTitle={errors[row?.key]}
+                          value={values[row?.key] || ''}
                           onChange={handleChange}
                         />
                       )}
