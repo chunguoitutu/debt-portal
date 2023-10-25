@@ -34,11 +34,11 @@ const ApplicationsDetails = () => {
 
   const optionsAgent = [
     {
-      label: 'Anna Gau',
+      label: 'Andre Onana',
       value: '1',
     },
     {
-      label: 'Yua Mikami',
+      label: 'Harry Maguire',
       value: '2',
     },
   ]
