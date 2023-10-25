@@ -7,6 +7,7 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       type: 'number',
       noThereAreCommas: false,
       require: true,
+      typeText: 'input',
     },
     {
       key: 'per_month_percent',
@@ -14,6 +15,7 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       name: 'Interest per Month %',
       require: true,
       noThereAreCommas: false,
+      typeText: 'input',
     },
     {
       key: 'totalsMonthPayment',
@@ -21,18 +23,21 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       type: 'number',
       noThereAreCommas: true,
       require: true,
+      typeText: 'input',
     },
     {
       key: 'first_repayment_date',
       name: 'First Repayment Date',
       type: 'time',
       require: true,
+      typeText: 'inputTime',
     },
     {
       key: 'monthly_due_date',
       name: 'Monthly Due Date',
       type: 'text',
       require: true,
+      typeText: 'select',
     },
   ],
 }

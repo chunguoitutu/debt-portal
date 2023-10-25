@@ -121,48 +121,48 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
               {currentStep === 1 ? (
                 <>
                   <div style={{width: '60.3%'}} className='ps-30px'>
-                    {rows.map((row) => (
-                      <div key={row.key}>
-                        {row.key === 'first_repayment_date' || row.key === 'monthly_due_date' ? (
+                    {rows?.map((row) => (
+                      <div key={row?.key}>
+                        {row?.typeText === 'inputTime' || row?.typeText === 'select' ? (
                           <>
-                            {row.key === 'first_repayment_date' && (
+                            {row?.typeText === 'inputTime' && (
                               <InputTime
                                 required={row?.require ? true : false}
-                                title={row.name}
-                                id={row.key}
-                                error={errors[row.key]}
-                                touched={touched[row.key]}
-                                errorTitle={errors[row.key]}
-                                value={values[row.key] || ''}
+                                title={row?.name}
+                                id={row?.key}
+                                error={errors[row?.key]}
+                                touched={touched[row?.key]}
+                                errorTitle={errors[row?.key]}
+                                value={values[row?.key] || ''}
                                 onChange={handleChange}
                                 type='date'
                               />
                             )}
-                            {row.key === 'monthly_due_date' && (
+                            {row.typeText === 'select' && (
                               <Select
-                                label={row.name}
+                                label={row?.name}
                                 isOptionDefault={false}
-                                id={row.key}
+                                id={row?.key}
                                 name={row.key}
                                 onChange={handleChange}
-                                errorMessage={errors[row.key]}
-                                shouldShowError={!!errors[row.key] && !!touched[row.key]}
+                                errorMessage={errors[row?.key]}
+                                shouldShowError={!!errors[row?.key] && !!touched[row?.key]}
                                 options={MONTHLY_DUE_DATE || []}
-                                value={values[row.key] || ''}
+                                value={values[row?.key] || ''}
                               />
                             )}
                           </>
                         ) : (
                           <Input
                             required={row?.require ? true : false}
-                            title={row.name}
-                            id={row.key}
+                            title={row?.name}
+                            id={row?.key}
                             type={row.type}
                             noThereAreCommas={row?.noThereAreCommas}
-                            error={errors[row.key]}
-                            touched={touched[row.key]}
-                            errorTitle={errors[row.key]}
-                            value={values[row.key] || ''}
+                            error={errors[row?.key]}
+                            touched={touched[row?.key]}
+                            errorTitle={errors[row?.key]}
+                            value={values[row?.key] || ''}
                             onChange={handleChange}
                           />
                         )}
