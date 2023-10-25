@@ -40,16 +40,13 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   }
   const {rows} = REPAYMENT_SHEDULE_CALCULATOR_CONFIG
 
-  function handleChangeCalculator() {
-    setCurrentStep(2)
-  }
   const {values, touched, errors, handleChange, handleSubmit} = useFormik({
     initialValues: {
       totalsAmount: '',
       per_month_percent: '',
       totalsMonthPayment: '',
       first_repayment_date: '',
-      monthly_due_date: '',
+      monthly_due_date: 'last_day',
     },
     validationSchema: RepaymentScheduleCalculatorSchema,
     onSubmit: async (values: any, actions: any) => {
@@ -57,7 +54,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
         await request.post('/calculate', {
           ...values,
         })
-        handleChangeCalculator()
+        setCurrentStep(2)
       } catch (error) {
         swalToast.fire({
           icon: 'error',
@@ -66,6 +63,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       }
     },
   })
+  console.log(errors)
 
   return createPortal(
     <Modal
@@ -141,6 +139,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             {row.typeText === 'select' && (
                               <Select
                                 label={row?.name}
+                                required={!!row?.require}
                                 isOptionDefault={false}
                                 id={row?.key}
                                 name={row.key}
