@@ -1,4 +1,5 @@
-.amount-header-calculator {
+.table-calculator-style{
+  .amount-header-calculator {
     align-items: flex-start;
   
     align-self: stretch;
@@ -24,11 +25,16 @@
   .label-calculator {
     color: #78829D !important;
     font-family: Inter;
-    font-size: 15px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 24px; /* 150% */
     text-transform: capitalize;
+    
+  }
+
+  .border-right-table{
+    border-right: 1px solid #f1f1f2;
   }
   
   .content-calculator {
@@ -42,3 +48,4 @@
     text-transform: capitalize;
   }
   
+}

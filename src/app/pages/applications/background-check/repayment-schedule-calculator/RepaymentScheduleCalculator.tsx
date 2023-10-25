@@ -85,7 +85,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       </div>
 
       <div
-        className={`modal-body py-lg-10 px-lg-10 overflow-y-auto `}
+        className={`table-calculator-style modal-body py-lg-10 px-lg-10 overflow-y-auto `}
         style={{
           maxHeight: 'calc(100vh - 200px)',
         }}
@@ -164,7 +164,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                     </div>
 
                     {/* calculator table */}
-                    <div className='pt-4 row algin-items-center justify-content-between '>
+                    <div className='pt-7 row algin-items-center justify-content-between '>
                       <div className='col-6'>
                         <Table className='table-bordered' responsive='sm'>
                           <tbody className='border-calculator'>
@@ -209,6 +209,74 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                           </tbody>
                         </Table>
                       </div>
+                    </div>
+
+                    {/* table show charge per month */}
+                    <div className='overflow-y-auto pt-4'>
+                      <Table responsive='sm' className='table-bordered'>
+                        <thead style={{backgroundColor: '#F9F9F9'}}>
+                          <tr>
+                            <th className='border-right-table p-4 label-calculator'>Date</th>
+                            <th className='border-right-table p-4 label-calculator'>
+                              Principal (Per Month)
+                            </th>
+                            <th className='border-right-table p-4 label-calculator'>
+                              Interest (Per Month)
+                            </th>
+                            <th className='border-right-table p-4 label-calculator'>
+                              Monthly Instalment Amount
+                            </th>
+                            <th className='border-right-table p-4 label-calculator'>
+                              Total Interest For Full Term
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className='p-4 content-calculator fs-4'>01/10/2023</td>
+                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
+                            <td className='p-4 content-calculator fs-4'>$572.75</td>
+                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
+                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
+                          </tr>
+                          <tr>
+                            <td className='p-4 content-calculator fs-4'>01/11/2023</td>
+                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
+                            <td className='p-4 content-calculator fs-4'>$572.75</td>
+                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
+                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
+                          </tr>
+                          <tr>
+                            <td className='p-4 content-calculator fs-4'>01/12/2023</td>
+                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
+                            <td className='p-4 content-calculator fs-4'>$572.75</td>
+                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
+                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
+                          </tr>
+                          <tr>
+                            <td className='p-4 content-calculator fs-4'>01/01/2023</td>
+                            <td className='p-4 content-calculator fs-4'>$2,083.33</td>
+                            <td className='p-4 content-calculator fs-4'>$572.75</td>
+                            <td className='p-4 content-calculator fs-4'>$2,656.07</td>
+                            <td className='p-4 content-calculator fs-4'>$6,872.96</td>
+                          </tr>
+                          <tr style={{backgroundColor: '#F9F9F9'}}>
+                            <td className='border-right-table p-4 label-calculator fs-4'>Total</td>
+                            <td className='border-right-table p-4 label-calculator fs-4'>
+                              $2,083.33
+                            </td>
+                            <td className='border-right-table p-4 label-calculator fs-4'>
+                              $572.75
+                            </td>
+                            <td className='border-right-table p-4 label-calculator fs-4'>
+                              $2,656.07
+                            </td>
+                            <td className='border-right-table p-4 label-calculator fs-4'>
+                              $6,872.96
+                            </td>
+                          </tr>
+                        </tbody>
+                      </Table>
                     </div>
                   </div>
                 </>
