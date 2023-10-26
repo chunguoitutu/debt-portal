@@ -252,7 +252,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                     </div>
 
                     {/* calculator table */}
-                    <div className='pt-7 row algin-items-center justify-content-between '>
+                    <div className='pt-7 row algin-items-center justify-content-between'>
                       <div className='col-6'>
                         <Table className='table-bordered' responsive='sm'>
                           <tbody className='border-calculator'>
@@ -281,7 +281,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                           </tbody>
                         </Table>
                       </div>
-                      <div className='col-6 '>
+                      <div className='col-6'>
                         <Table responsive='sm' className='table-bordered'>
                           <tbody>
                             <tr>
@@ -326,37 +326,37 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                         <thead style={{backgroundColor: '#F9F9F9'}}>
                           <tr>
                             {rowsTable.map((el) => (
-                              <th className='border-right-table p-4 label-calculator'>{el.name}</th>
+                              <th key={el.name} className='border-right-table p-4 label-calculator'>{el.name}</th>
                             ))}
                           </tr>
                         </thead>
                         <tbody>
-                          {dataRepayment.map((el) => {
+                          {dataRepayment.map((el, index) => {
                             const {interest_per_month, principal_per_month, instalment_due_date} =
                               el
                             const table = rowsTable.map((rt) => {
                               switch (rt.key) {
                                 case 'instalment_due_date':
                                   return (
-                                    <td className='p-4 content-calculator fs-4'>
+                                    <td key={rt.key} className='p-4 content-calculator fs-4'>
                                       {instalment_due_date}
                                     </td>
                                   )
                                 case 'monthly_inst_amount':
                                   return (
-                                    <td className='p-4 content-calculator fs-4'>
+                                    <td key={rt.key} className='p-4 content-calculator fs-4'>
                                       {formatNumber(principal_per_month + interest_per_month)}
                                     </td>
                                   )
                                 default:
                                   return (
-                                    <td className='p-4 content-calculator fs-4'>
+                                    <td key={rt.key} className='p-4 content-calculator fs-4'>
                                       ${formatNumber(el[rt.key])}
                                     </td>
                                   )
                               }
                             })
-                            return <tr>{table}</tr>
+                            return <tr key={index}>{table}</tr>
                           })}
 
                           <tr style={{backgroundColor: '#F9F9F9'}}>
