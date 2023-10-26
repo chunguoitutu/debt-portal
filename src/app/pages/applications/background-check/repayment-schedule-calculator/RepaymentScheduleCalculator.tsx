@@ -81,19 +81,17 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
     if (dataRepayment) {
       return dataRepayment.reduce(
         (a, b) => {
-          const {balance_principal, interest_per_month, principal_per_month} = b
+          const { interest_per_month, principal_per_month} = b
           return {
             totalPrinciple: a['totalPrinciple'] + principal_per_month,
             totalInterest: a['totalInterest'] + interest_per_month,
             totalMonthlyInst: a['totalMonthlyInst'] + (interest_per_month + principal_per_month),
-            totalInterestFull: a['totalInterestFull'] + balance_principal,
           }
         },
         {
           totalInterest: 0,
           totalMonthlyInst: 0,
           totalPrinciple: 0,
-          totalInterestFull: 0,
         }
       )
     }
@@ -102,7 +100,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       totalInterest: 0,
       totalMonthlyInst: 0,
       totalPrinciple: 0,
-      totalInterestFull: 0,
     }
   }, [dataRepayment])
   return createPortal(
@@ -374,7 +371,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                               ${formatNumber(dataFooterTable.totalMonthlyInst)}
                             </td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
-                              ${formatNumber(dataFooterTable.totalInterestFull)}
                             </td>
                           </tr>
                         </tbody>
