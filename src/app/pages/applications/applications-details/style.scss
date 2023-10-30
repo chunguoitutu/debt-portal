@@ -25,7 +25,6 @@
     font-style: normal;
     font-weight: 600;
     line-height: 24px; /* 120% */
-    text-transform: capitalize;
     position: relative;
 
     &::before {
@@ -94,15 +93,22 @@
     font-style: normal;
     font-weight: 500;
     line-height: 24px; /* 150% */
-    text-transform: capitalize;
 
     &.left {
       width: $widthLabel;
     }
   }
 
+  .search-icon {
+    transition: all 0.2s linear;
+
+    &:hover {
+      color: var(--bs-black) !important;
+    }
+  }
+
   @media (max-width: 1400px) {
-  $widthLabel: 140px;
+    $widthLabel: 140px;
 
     .border-application {
       margin-left: -43px;
@@ -111,7 +117,7 @@
         border-width: 5px;
       }
     }
-  
+
     .input-title-application {
       &.left {
         width: $widthLabel;
@@ -119,7 +125,17 @@
     }
   }
 
-  @media (min-width: 1600px) {
+  @media (min-width: 1560px) {
+    .input-wrap {
+      width: 250px !important;
+    }
+
+    .select-wrap {
+      width: 250px !important;
+    }
+  }
+
+  @media (min-width: 1720px) {
     .input-wrap {
       width: 300px !important;
     }
