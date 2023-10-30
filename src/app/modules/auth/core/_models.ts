@@ -170,3 +170,8 @@ export type CheckboxTreeItem = {
   active?: boolean
   children?: CheckboxTreeItem[] & {[key: string]: any}
 } & {[key: string]: any}
+
+export type Option = {
+  label: string
+  value: string
+}

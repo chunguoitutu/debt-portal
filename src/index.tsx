@@ -17,6 +17,9 @@ import './_metronic/assets/keenicons/solid/style.css'
 import './_metronic/assets/sass/style.scss'
 import './_metronic/assets/sass/plugins.scss'
 
+// Tippy styles
+import 'tippy.js/dist/tippy.css'
+
 // My styles
 import './app/sass/style.scss'
 
