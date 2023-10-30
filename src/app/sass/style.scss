@@ -22,3 +22,17 @@ input[type='number']::-webkit-outer-spin-button {
   appearance: none;
   margin: 0;
 }
+
+.input-advance {
+  &:focus-within:has(input:focus) {
+    background-color: var(--bs-gray-200);
+    border-color: var(--bs-gray-200);
+    color: var(--bs-gray-700);
+    transition: color 0.2s ease;
+  }
+
+  &:focus,
+  &:active {
+    background-color: var(--bs-gray-100) !important;
+  }
+}

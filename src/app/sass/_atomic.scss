@@ -23,6 +23,50 @@
   color: #b5b5c3;
 }
 
-.text-transform-none{
+.text-transform-none {
   text-transform: none !important;
+}
+
+.outline-none {
+  outline: none;
+}
+
+.bg-none {
+  background: none !important;
+}
+
+.supplement-input-advance {
+  background-color: var(--bs-gray-200) !important;
+  border-style: solid !important;
+  border-color: var(--bs-gray-300) !important;
+
+  &.form-select.form-select-solid:focus {
+    border-color: var(--bs-gray-300) !important;
+  }
+}
+
+// It does center the selected option, but not the options inside the dropdown. (case: select element)
+.text-align-last-center {
+  text-align-last: center;
+  -moz-text-align-last: center;
+}
+
+.rounded-right-0 {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.rounded-left-0 {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.rounded-top-0 {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.rounded-bottom-0 {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
