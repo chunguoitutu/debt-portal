@@ -1,5 +1,7 @@
 import {StepItem} from '../modules/auth'
+import BankInfo from '../pages/applications/step-component/bank-info/BankInfo'
 import {
+  BANK_INFO_CONFIG,
   GENERAL_INFORMATION_CONFIG,
   LOAN_DETAILS_CONFIG,
 } from '../pages/applications/step-component/config'
@@ -28,8 +30,8 @@ export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Bank Information',
     desc: 'Customer Bank Information.',
-    component: GeneralInformation,
-    config: GENERAL_INFORMATION_CONFIG,
+    component: BankInfo,
+    config: BANK_INFO_CONFIG,
   },
   {
     label: 'Loan Application',

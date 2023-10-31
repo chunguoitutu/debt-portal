@@ -1,4 +1,4 @@
-import {FC, HTMLInputTypeAttribute} from 'react'
+import {Dispatch, FC, HTMLInputTypeAttribute, SetStateAction} from 'react'
 
 export type LoginInfo = {
   username: string
@@ -192,4 +192,15 @@ export type ApplicationConfig = {
   dependencyApi?: string
   required?: boolean
   options?: Option[]
+}
+
+export type PropsStepApplication = {
+  config: ApplicationConfig[]
+  formData: {[key: string]: string | any[]}
+  setFormData: Dispatch<
+    SetStateAction<{
+      [key: string]: string | any[]
+    }>
+  >
+  onNextStep: () => void
 }
