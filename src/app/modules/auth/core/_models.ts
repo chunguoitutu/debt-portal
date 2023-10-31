@@ -181,7 +181,7 @@ export type Option = {
 export type ApplicationConfig = {
   key: string
   data?: any[]
-  defaultValue?: string | number
+  defaultValue?: string | number | any[]
   component?: FC<any>
   label?: string
   isFullLayout?: boolean
