@@ -181,6 +181,7 @@ export type Option = {
 export type ApplicationConfig = {
   key: string
   data?: any[]
+  className?: string
   defaultValue?: string | number | any[]
   component?: FC<any>
   label?: string
@@ -189,4 +190,6 @@ export type ApplicationConfig = {
   isHide?: boolean
   typeInput?: string
   dependencyApi?: string
+  required?: boolean
+  options?: Option[]
 }

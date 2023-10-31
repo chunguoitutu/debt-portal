@@ -18,7 +18,7 @@ export const InputTime: React.FC<IProps> = ({
   touched,
   required = false,
   classShared = 'fv-row mb-10',
-  type = 'datetime-local',
+  type = 'date',
   ...reset
 }) => {
   return (

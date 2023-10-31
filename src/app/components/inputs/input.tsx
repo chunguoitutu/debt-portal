@@ -2,7 +2,7 @@ import React, {InputHTMLAttributes} from 'react'
 import {handleKeyPress, handlePaste} from '../enter-numbers-only'
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
-  title: string
+  title?: string
   error?: any
   errorTitle?: any
   touched?: any
@@ -14,9 +14,9 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input: React.FC<IProps> = ({
-  error = false,
   id,
   title,
+  error = false,
   touched,
   errorTitle,
   required = false,

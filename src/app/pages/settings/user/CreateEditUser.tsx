@@ -330,8 +330,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                                 fieldValueOption={fieldValueOption || 'id'}
                                 label={name}
                                 id={key}
-                                shouldShowError={!!(touched[key] && errors[key])}
-                                errorMessage={errors[key] as string}
+                                error={!!errors[key]}
+                                touched={!!touched[key]}
+                                errorTitle={errors[key] as string}
                                 value={values[key]}
                                 onChange={handleChange}
                               />
@@ -393,8 +394,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                               fieldValueOption={fieldValueOption || 'id'}
                               label={name}
                               id={key}
-                              shouldShowError={!!(touched[key] && errors[key])}
-                              errorMessage={errors[key] as string}
+                              error={!!errors[key]}
+                              touched={!!touched[key]}
+                              errorTitle={errors[key] as string}
                               value={values[key]}
                               onChange={handleChange}
                             />
