@@ -4,6 +4,7 @@ import {Input} from '../../../components/inputs/input'
 import {InputTime} from '../../../components/inputs/inputTime'
 import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
+import {YES_NO_OPTION} from '../../../constants/option'
 import {ApplicationConfig} from '../../../modules/auth'
 import {CUSTOMER_TYPE} from '../../../utils/globalConfig'
 
@@ -60,6 +61,16 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Marketing Type',
     className: 'justify-content-xl-end',
     required: true,
+    options: [
+      {
+        label: 'Male',
+        value: 'male',
+      },
+      {
+        label: 'Female',
+        value: 'female',
+      },
+    ],
   },
   {
     key: 'gender',
@@ -112,5 +123,54 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Input,
     column: 6,
     label: 'Address',
+  },
+]
+
+export const BANK_INFO_CONFIG = [
+  {
+    key: 'is_giro',
+    data: YES_NO_OPTION,
+    defaultValue: YES_NO_OPTION[0].value,
+    component: Radio,
+    label: 'Is it GIRO',
+  },
+  {
+    key: 'bank_name_1',
+    component: Input,
+    column: 6,
+    label: 'Bank Name 1',
+  },
+  {
+    key: 'bank_name_2',
+    component: Input,
+    column: 6,
+    label: 'Bank Name 2',
+    className: 'justify-content-xl-end',
+  },
+  {
+    key: 'bank_acc_1',
+    component: Input,
+    column: 6,
+    label: 'Bank Acc 1',
+  },
+  {
+    key: 'bank_acc_2',
+    component: Input,
+    column: 6,
+    label: 'Bank Acc 2',
+    className: 'justify-content-xl-end',
+  },
+  {
+    key: 'bank_code_1',
+    component: Input,
+    column: 6,
+    label: 'Bank Code 1',
+  },
+  {
+    key: 'bank_code_2',
+    component: Input,
+    column: 6,
+    label: 'Bank Code 2',
+    className: 'justify-content-xl-end',
   },
 ]

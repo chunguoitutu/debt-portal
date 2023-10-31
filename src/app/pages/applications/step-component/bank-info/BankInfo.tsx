@@ -1,51 +1,14 @@
-import clsx from 'clsx'
-import {Dispatch, FC, Fragment, SetStateAction, useMemo} from 'react'
-import * as Yup from 'yup'
+import {FC, Fragment} from 'react'
+import {Button} from 'react-bootstrap'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
-import Tippy from '@tippyjs/react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSearch} from '@fortawesome/free-solid-svg-icons'
-import {useFormik} from 'formik'
-import Button from '../../../../components/button/Button'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
+import clsx from 'clsx'
 
-export const schema = Yup.object().shape({
-  last_name: Yup.string().required('Last Name is required.').max(255, 'Maximum 255 symbols'),
-  first_name: Yup.string().required('First Name is required.').max(255, 'Maximum 255 symbols'),
-  middle_name: Yup.string().max(255, 'Maximum 255 symbols'),
-  id_type: Yup.string().required('ID Type is required.'),
-  nric_no: Yup.string().required('NRIC No./FIN is required.'),
-  residential_type: Yup.string().required('Residential Type is required.'),
-  marketing_type: Yup.string().required('Marketing Type is required.'),
-  gender: Yup.string().required('Gender is required.'),
-  date_of_birth: Yup.string().required('Date of Birth is required.'),
-  nationality: Yup.string().required('Nationality is required.'),
-})
-
-const GeneralInformation: FC<PropsStepApplication> = ({
-  formData,
-  setFormData,
-  config = [],
-  onNextStep,
-}) => {
-  const initialValues = useMemo(() => {
-    return config.reduce(
-      (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
-      {}
-    )
-  }, [config])
-
-  const {touched, errors, handleChange, handleSubmit} = useFormik({
-    initialValues,
-    validationSchema: schema,
-    onSubmit: onNextStep,
-  })
-
+const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [], onNextStep}) => {
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 
     // formik
-    handleChange(e)
+    // handleChange(e)
 
     if (type === 'checkbox') {
       return setFormData({
@@ -76,49 +39,10 @@ const GeneralInformation: FC<PropsStepApplication> = ({
     // nothing
     if (!Component) return
 
-    // Special cases should be checked in advance
-    if (key === 'first_name') {
-      return (
-        <Component
-          formData={formData}
-          onChange={handleChangeData}
-          errors={errors}
-          touched={touched}
-        />
-      )
-    }
-
-    if (key === 'nric_no') {
-      return (
-        <div className='d-flex flex-column'>
-          <Component
-            value={formData[key]}
-            onChange={handleChangeData}
-            name={key}
-            classShared={className}
-            insertRight={
-              <Tippy offset={[40, 0]} content='Lookup Customer'>
-                {/* Wrapper with a span tag to show tooltip */}
-                <div className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'>
-                  <FontAwesomeIcon icon={faSearch} />
-                </div>
-              </Tippy>
-            }
-          />
-
-          <ErrorMessage shouldShowMessage={errors[key] && touched[key]} message={errors[key]} />
-        </div>
-      )
-    }
-    // End special cases
-
     // handle for select
     if (Component.name === 'Select') {
       return (
         <Component
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
           value={formData[key]}
           onChange={handleChangeData}
           name={key}
@@ -161,9 +85,6 @@ const GeneralInformation: FC<PropsStepApplication> = ({
     if (Component.name === 'Input' || Component.name === 'InputTime') {
       return (
         <Component
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
           value={formData[key]}
           onChange={handleChangeData}
           name={key}
@@ -214,12 +135,10 @@ const GeneralInformation: FC<PropsStepApplication> = ({
         >
           Save Draft
         </Button>
-        <Button loading={false} disabled={false} onClick={() => handleSubmit()}>
-          Continue
-        </Button>
+        <Button onClick={() => onNextStep()}>Continue</Button>
       </div>
     </>
   )
 }
 
-export default GeneralInformation
+export default BankInfo
