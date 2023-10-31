@@ -1,8 +1,8 @@
-import {ForwardedRef, TextareaHTMLAttributes, forwardRef} from 'react'
+import {TextareaHTMLAttributes} from 'react'
 
 interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'id'> {
   className?: string
-  classNameContainer?: string
+  classShared?: string
   name: string
   title?: string
   isRequired?: boolean
@@ -13,14 +13,13 @@ const TextArea = (
     name,
     title,
     className = '',
-    classNameContainer = '',
+    classShared = '',
     isRequired = false,
     ...rest
   }: TextAreaProps,
-  ref: ForwardedRef<HTMLTextAreaElement>
 ) => {
   return (
-    <div className={`d-flex flex-column gap-2 ${classNameContainer}`}>
+    <div className={`d-flex flex-column gap-2 ${classShared}`}>
       {title && (
         <label className='d-flex align-items-center fs-5 fw-semibold' htmlFor={name}>
           {title} {isRequired && <span className='text-danger'>*</span>}
@@ -28,7 +27,6 @@ const TextArea = (
       )}
 
       <textarea
-        ref={ref}
         className='form-control form-control-lg form-control-solid form-control-flush min-h-100px'
         id={name}
         {...rest}
@@ -37,4 +35,4 @@ const TextArea = (
   )
 }
 
-export default forwardRef(TextArea)
+export default TextArea

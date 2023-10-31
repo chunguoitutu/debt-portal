@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {Dispatch, FC, Fragment, SetStateAction, useMemo} from 'react'
+import {FC, Fragment, useMemo} from 'react'
 import * as Yup from 'yup'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import Tippy from '@tippyjs/react'
