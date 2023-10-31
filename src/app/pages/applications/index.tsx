@@ -60,7 +60,7 @@ export const Applications = () => {
           />
         </div>
         <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-10 d-flex flex-column h-fit-content'>
-          <div className={`form-wrap`} style={currentStep === 2 ? {width: '94.8%'} : {}}>
+          <div className='form-wrap w-100'>
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config}
