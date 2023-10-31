@@ -2,9 +2,11 @@ import {StepItem} from '../modules/auth'
 import BankInfo from '../pages/applications/step-component/bank-info/BankInfo'
 import {
   BANK_INFO_CONFIG,
+  CONTRACT_INFORMATION,
   GENERAL_INFORMATION_CONFIG,
   LOAN_DETAILS_CONFIG,
 } from '../pages/applications/step-component/config'
+import ContactInformation from '../pages/applications/step-component/contract-information/ContactInformation'
 import GeneralInformation from '../pages/applications/step-component/general-information/GeneralInformation'
 import LoanDetails from '../pages/applications/step-component/loan-details/LoanDetails'
 
@@ -24,8 +26,8 @@ export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Workplace',
     desc: 'Customer Workplace Information.',
-    component: GeneralInformation,
-    config: GENERAL_INFORMATION_CONFIG,
+    component: ContactInformation,
+    config: CONTRACT_INFORMATION,
   },
   {
     label: 'Bank Information',

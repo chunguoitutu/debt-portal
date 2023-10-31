@@ -100,6 +100,20 @@ export const CUSTOMER_TYPE: BaseConfig[] = [
   },
 ]
 
+export const MLCB_CHECK: BaseConfig[] = [
+  {
+    value: '1',
+    label: 'Opt In Yes Consent to disclose information to MLCB and sMECB',
+  },
+]
+
+export const LANGUAGES_SPOKEN: BaseConfig[] = [
+  {
+    value: 'english',
+    label: 'English',
+  },
+]
+
 export const INCOME_DOCUMENT: BaseConfig[] = [
   {
     value: 'pay_slip',

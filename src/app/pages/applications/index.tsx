@@ -22,7 +22,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [currentStep, setCurrentStep] = useState<number>(2)
   const [stepCompleted, setStepCompleted] = useState<number>(1)
   const [formData, setFormData] = useState<{[key: string]: string | any[]}>(
     STEP_APPLICATION.flatMap((item) => item.config).reduce(
@@ -60,7 +60,7 @@ export const Applications = () => {
           />
         </div>
         <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-10 d-flex flex-column h-fit-content'>
-          <div className='form-wrap'>
+          <div className={`form-wrap`} style={currentStep === 2 ? {width: '94.8%'} : {}}>
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config}

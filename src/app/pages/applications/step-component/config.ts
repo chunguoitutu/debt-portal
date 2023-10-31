@@ -1,12 +1,15 @@
 import NameOfApplication from '../../../components/applications/NameOfApplication'
+import Checkbox from '../../../components/checkbox/Checkbox'
 import InputAdvance from '../../../components/inputs/InputAdvance'
 import {Input} from '../../../components/inputs/input'
 import {InputTime} from '../../../components/inputs/inputTime'
 import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
 import {YES_NO_OPTION} from '../../../constants/option'
+import TextArea from '../../../components/textarea/TextArea'
+import {COUNTRY_PHONE_CODE} from '../../../constants/option'
 import {ApplicationConfig} from '../../../modules/auth'
-import {CUSTOMER_TYPE} from '../../../utils/globalConfig'
+import {CUSTOMER_TYPE, MLCB_CHECK} from '../../../utils/globalConfig'
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -108,21 +111,116 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
 
 export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
   {
-    key: 'n_ric',
-    component: Input,
-    label: 'Nric',
+    key: 'mlcb_check',
+    data: MLCB_CHECK,
+    defaultValue: MLCB_CHECK[0].value,
+    component: Checkbox,
+    label: '',
+    isFullLayout: true,
   },
   {
-    key: 'telephone',
+    key: 'loan_type',
     component: Input,
-    column: 6,
-    label: 'Telephone',
+    label: 'Loan Type',
+    isFullLayout: true,
+    required: true
   },
   {
-    key: 'address',
+    key: 'loan_amount_required',
+    component: Input,
+    label: 'Loan Amount Required $',
+    isFullLayout: true,
+    required: true
+  },
+  {
+    key: 'reason_for_loan',
+    component: TextArea,
+    label: 'Reason For Loan',
+    required: true
+  },
+]
+
+export const CONTRACT_INFORMATION: ApplicationConfig[] = [
+  {
+    key: 'address_full',
+    component: Input,
+    label: 'Address Full',
+    isFullLayout: true,
+  },
+  {
+    key: 'postal_code',
     component: Input,
     column: 6,
-    label: 'Address',
+    label: 'Postal Code',
+  },
+  {
+    key: 'block_no',
+    component: Input,
+    column: 6,
+    label: 'Block/No',
+  },
+  {
+    key: 'street',
+    component: Input,
+    column: 6,
+    label: 'Street',
+  },
+  {
+    key: 'building',
+    component: Input,
+    column: 6,
+    label: 'Building',
+  },
+  {
+    key: 'mailing_address',
+    component: Input,
+    column: 6,
+    label: 'Mailing Address',
+  },
+  {
+    key: 'address_foreign',
+    component: Input,
+    column: 6,
+    label: 'Address (Foreign)',
+  },
+  {
+    key: 'mobile_1_nil',
+    component: InputAdvance,
+    label: 'Mobile 1(NIL)',
+    defaultValue: COUNTRY_PHONE_CODE[0].value,
+    column: 6,
+  },
+  {
+    key: 'mobile_2_nil',
+    component: InputAdvance,
+    label: 'Mobile 2(NIL)',
+    defaultValue: COUNTRY_PHONE_CODE[0].value,
+    column: 6,
+  },
+  {
+    key: 'home_no_nil',
+    component: Input,
+    column: 6,
+    label: 'Home No.(NIL)',
+  },
+  {
+    key: 'language_spoken',
+    component: Select,
+    data: [{label: 'English', value: 'English'}],
+    column: 6,
+    label: 'Language Spoken',
+  },
+  {
+    key: 'email',
+    component: Input,
+    column: 6,
+    label: 'Email',
+  },
+  {
+    key: 'alternate_email',
+    component: Input,
+    column: 6,
+    label: 'Alternate Email',
   },
 ]
 

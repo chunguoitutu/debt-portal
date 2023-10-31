@@ -1,6 +1,8 @@
 .application-details-form {
   $widthLabel: 165px;
 
+  $widthLabelCustom: 204px;
+
   .form-wrap {
     display: grid;
     grid-template-columns: repeat(2, auto);
@@ -100,6 +102,20 @@
     }
   }
 
+  .input-title-application-step2 {
+    color: #071437;
+    text-align: right;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+    flex-shrink: 0 !important;
+
+    &.left {
+      width: $widthLabelCustom;
+    }
+  }
+
   .search-icon {
     transition: all 0.2s linear;
 
@@ -122,6 +138,11 @@
     .input-title-application {
       &.left {
         width: $widthLabel;
+      }
+    }
+    .input-title-application-step2{
+      &.left {
+        width: $widthLabelCustom;
       }
     }
   }
@@ -158,6 +179,10 @@
 
     .input-title-application {
       width: $widthLabel !important;
+    }
+
+    .input-title-application-step2{
+      width: $widthLabelCustom !important;
     }
   }
 }
