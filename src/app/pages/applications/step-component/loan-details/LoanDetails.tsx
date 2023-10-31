@@ -1,22 +1,12 @@
 import clsx from 'clsx'
-import {Dispatch, FC, Fragment, SetStateAction, useMemo} from 'react'
+import { FC, Fragment,  useMemo} from 'react'
 import * as Yup from 'yup'
 
 
 import Button from '../../../../components/button/Button'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import { useFormik } from 'formik';
-
-interface Props {
-  config: any
-  formData: {[key: string]: string}
-  setFormData: Dispatch<
-    SetStateAction<{
-      [key: string]: string | any[]
-    }>
-  >
-  onNextStep: () => void
-}
+import { PropsStepApplication } from '../../../../modules/auth'
 
 export const schema = Yup.object().shape({
   loan_type: Yup.string().required('Loan Type is required.').max(255, 'Maximum 255 symbols'),
@@ -24,9 +14,14 @@ export const schema = Yup.object().shape({
   reason_for_loan: Yup.string().required('Reason For Loan is required.').max(255, 'Maximum 255 symbols'),
 })
 
-const LoanDetails: FC<Props> = ({formData, setFormData, config = []}, onNextStep) => {
+const LoanDetails: FC<PropsStepApplication> = ({
+  formData,
+  setFormData,
+  config = [],
+  onNextStep,
+}) => {
 
-  const initialValues = useMemo(() => {
+   const initialValues = useMemo(() => {
     return config.reduce(
       (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
       {}
