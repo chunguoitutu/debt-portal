@@ -100,6 +100,25 @@ export const CUSTOMER_TYPE: BaseConfig[] = [
   },
 ]
 
+export const INCOME_DOCUMENT: BaseConfig[] = [
+  {
+    value: 'pay_slip',
+    label: 'Pay Slip',
+  },
+  {
+    value: 'cpf',
+    label: 'CPF',
+  },
+  {
+    value: 'noa',
+    label: 'NOA',
+  },
+  {
+    value: 'others',
+    label: 'Others',
+  },
+]
+
 export const EMPLOYMENT_STATUS: BaseConfig[] = [
   {
     value: 'EMP',

@@ -6,10 +6,10 @@ import {SALUTATION_OPTION} from '../../../../constants/option'
 
 interface Props {
   config: any
-  formData: {[key: string]: string}
+  formData: {[key: string]: string | any[]}
   setFormData: Dispatch<
     SetStateAction<{
-      [key: string]: string
+      [key: string]: string | any[]
     }>
   >
 }
@@ -18,7 +18,19 @@ const GeneralInformation: FC<Props> = ({formData, setFormData, config = []}) => 
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 
-    setFormData({...formData, [name]: type === 'checkbox' ? checked : value})
+    if (type === 'checkbox') {
+      return setFormData({
+        ...formData,
+        [name]: Array.isArray(formData[name])
+          ? formData[name].includes(value) ? (Array.from(formData[name])).filter(item => item !== value) : [...Array.from(typeof formData[name] === 'string' ? '' : formData[name]), value]
+          : checked,
+      })
+    }
+    
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
   }
 
   function renderComponent(item) {
@@ -36,6 +48,20 @@ const GeneralInformation: FC<Props> = ({formData, setFormData, config = []}) => 
           name={key}
           label={item.label}
           checked={formData[key] === item.value}
+          value={item.value}
+          onChange={handleChangeData}
+        />
+      ))
+    }
+
+    if (Component.name === 'Checkbox') {
+      return data.map((item, i) => (
+        <Component
+          key={i}
+          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          name={key}
+          label={item.label}
+          checked={formData[key].includes(item.value)}
           value={item.value}
           onChange={handleChangeData}
         />
