@@ -81,7 +81,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
     if (dataRepayment) {
       return dataRepayment.reduce(
         (a, b) => {
-          const { interest_per_month, principal_per_month} = b
+          const {interest_per_month, principal_per_month} = b
           return {
             totalPrinciple: a['totalPrinciple'] + principal_per_month,
             totalInterest: a['totalInterest'] + interest_per_month,
@@ -181,8 +181,9 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                                 id={row?.key}
                                 name={row.key}
                                 onChange={handleChange}
-                                errorMessage={errors[row?.key]}
-                                shouldShowError={!!errors[row?.key] && !!touched[row?.key]}
+                                error={errors[row?.key]}
+                                touched={touched[row?.key]}
+                                errorTitle={errors[row?.key]}
                                 options={MONTHLY_DUE_DATE || []}
                                 value={values[row?.key] || ''}
                               />
@@ -326,7 +327,9 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                         <thead style={{backgroundColor: '#F9F9F9'}}>
                           <tr>
                             {rowsTable.map((el) => (
-                              <th key={el.name} className='border-right-table p-4 label-calculator'>{el.name}</th>
+                              <th key={el.name} className='border-right-table p-4 label-calculator'>
+                                {el.name}
+                              </th>
                             ))}
                           </tr>
                         </thead>
@@ -370,8 +373,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             <td className='border-right-table p-4 label-calculator fs-4'>
                               ${formatNumber(dataFooterTable.totalMonthlyInst)}
                             </td>
-                            <td className='border-right-table p-4 label-calculator fs-4'>
-                            </td>
+                            <td className='border-right-table p-4 label-calculator fs-4'></td>
                           </tr>
                         </tbody>
                       </Table>

@@ -1,4 +1,4 @@
-import {ReactNode, SelectHTMLAttributes} from 'react'
+import {FC, ReactNode, SelectHTMLAttributes} from 'react'
 import ErrorMessage from '../error/ErrorMessage'
 
 interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className' | 'name'> {
@@ -10,27 +10,29 @@ interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className
   required?: boolean
   fieldValueOption?: string
   fieldLabelOption?: string
-  shouldShowError?: boolean
-  errorMessage?: string
+  error?: boolean
+  touched?: boolean
+  errorTitle?: string
   classShared?: string
   isOptionDefault?: boolean
 }
 
-const Select = ({
+const Select: FC<Props> = ({
   label,
   options,
   children,
   fieldValueOption = 'value',
   fieldLabelOption = 'label',
-  shouldShowError,
-  errorMessage,
+  error = false,
+  touched,
+  errorTitle,
   name,
   className = '',
   isOptionDefault = true,
   required = false,
   classShared = 'row mb-6',
   ...rest
-}: Props) => {
+}) => {
   return (
     <div className={`${classShared}`}>
       {label && (
@@ -56,8 +58,8 @@ const Select = ({
           })}
           {children}
         </select>
-        {shouldShowError && (
-          <ErrorMessage shouldShowMessage={shouldShowError} message={errorMessage} />
+        {error && touched && (
+          <ErrorMessage shouldShowMessage={error && touched} message={errorTitle} />
         )}
       </div>
     </div>

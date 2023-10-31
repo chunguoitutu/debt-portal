@@ -302,8 +302,9 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     required={isRequired}
                     label='Priority'
                     id='priority'
-                    shouldShowError={!!(touched[key] && errors[key])}
-                    errorMessage={errors[key] as string}
+                    error={errors[key]}
+                    touched={touched[key]}
+                    errorTitle={errors[key]}
                     value={values.priority || ''}
                     onChange={handleChange}
                   />

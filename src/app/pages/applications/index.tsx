@@ -5,7 +5,6 @@ import PrintOptions from './print-options/PrintOptions'
 import Step from '../../components/step/Step'
 import {STEP_APPLICATION} from '../../constants/step'
 import './style.scss'
-import Button from '../../components/button/Button'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -67,21 +66,9 @@ export const Applications = () => {
                 config={STEP_APPLICATION[currentStep - 1].config}
                 formData={formData}
                 setFormData={setFormData}
+                onNextStep={handleContinue}
               />
             )}
-
-            <div className='d-flex flex-end mt-10 full'>
-              <Button
-                onClick={() => {}}
-                className='btn-secondary align-self-center me-3'
-                disabled={false}
-              >
-                Save Draft
-              </Button>
-              <Button type='submit' loading={false} disabled={false} onClick={handleContinue}>
-                Continue
-              </Button>
-            </div>
           </div>
         </div>
         <div className='d-none d-xxl-block col-xxl-2 order-0 order-xxl-3'>
