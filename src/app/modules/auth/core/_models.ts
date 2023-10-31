@@ -1,4 +1,4 @@
-import {HTMLInputTypeAttribute} from 'react'
+import {FC, HTMLInputTypeAttribute} from 'react'
 
 export type LoginInfo = {
   username: string
@@ -28,6 +28,8 @@ export type LoginResponse = {
 export type StepItem = {
   label: string
   desc: string
+  component?: FC<any>
+  config?: any
 }
 
 export type UserInfo = {
@@ -174,4 +176,17 @@ export type CheckboxTreeItem = {
 export type Option = {
   label: string
   value: string
+}
+
+export type ApplicationConfig = {
+  key: string
+  data?: any[]
+  defaultValue?: string | number
+  component?: FC<any>
+  label?: string
+  isFullLayout?: boolean
+  column?: 12 | 6
+  isHide?: boolean
+  typeInput?: string
+  dependencyApi?: string
 }

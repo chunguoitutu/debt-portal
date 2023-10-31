@@ -1,11 +1,11 @@
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import ApplicationsDetails from './applications-details/ApplicationsDetails'
-
 import BackgroundCheck from './background-check/BackgroundCheck'
 import PrintOptions from './print-options/PrintOptions'
 import Step from '../../components/step/Step'
 import {STEP_APPLICATION} from '../../constants/step'
+import './style.scss'
+import Button from '../../components/button/Button'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -23,11 +23,29 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(4)
-  const [stepCompleted] = useState<number>(5)
+  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [stepCompleted, setStepCompleted] = useState<number>(1)
+  const [formData, setFormData] = useState<{[key: string]: string}>(
+    STEP_APPLICATION.flatMap((item) => item.config).reduce(
+      (result, current) => ({
+        ...result,
+        [current.key]: current?.defaultValue || '',
+      }),
+      {}
+    )
+  )
+
+  const CurrentComponentControl = useMemo(() => {
+    return STEP_APPLICATION[currentStep - 1].component
+  }, [currentStep])
 
   function handleChangeStep(step: number) {
     setCurrentStep(step)
+  }
+
+  function handleContinue() {
+    setStepCompleted(currentStep)
+    setCurrentStep(currentStep + 1)
   }
 
   return (
@@ -37,14 +55,34 @@ export const Applications = () => {
         <div className='col-3 col-xxl-2 order-1'>
           <Step
             data={STEP_APPLICATION}
-            stepError={[1, 2]}
             stepCompleted={stepCompleted}
             currentStep={currentStep}
             onGoToStep={handleChangeStep}
           />
         </div>
-        <div className='col-9 col-xxl-8 order-2'>
-          <ApplicationsDetails />
+        <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-10 d-flex flex-column h-fit-content'>
+          <div className='form-wrap'>
+            {CurrentComponentControl && (
+              <CurrentComponentControl
+                config={STEP_APPLICATION[currentStep - 1].config}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            )}
+
+            <div className='d-flex flex-end mt-10 full'>
+              <Button
+                onClick={() => {}}
+                className='btn-secondary align-self-center me-3'
+                disabled={false}
+              >
+                Save Draft
+              </Button>
+              <Button type='submit' loading={false} disabled={false} onClick={handleContinue}>
+                Continue
+              </Button>
+            </div>
+          </div>
         </div>
         <div className='d-none d-xxl-block col-xxl-2 order-0 order-xxl-3'>
           <div style={{paddingBottom: '30px'}}>

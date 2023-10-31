@@ -71,6 +71,51 @@ const ApplicationsDetails = () => {
       </div>
       <div className='separator border-gray-200 py-0'></div>
 
+      {/* <div className='d-flex flex-wrap'>
+        <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+          <div className='input-title-application left fs-4 text-start text-lg-end'>
+            Application Number
+          </div>
+          <Input
+            required={false}
+            name='application_number'
+            title={''}
+            id={'application_number'}
+            value={formValue.application_number}
+            onChange={handleChange}
+            classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+          />
+        </div>
+
+        <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+          <div className='input-title-application left fs-4 text-start text-lg-end'>
+            Application Number
+          </div>
+          <Input
+            required={false}
+            name='application_number'
+            title={''}
+            id={'application_number'}
+            value={formValue.application_number}
+            onChange={handleChange}
+            classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+          />
+        </div>
+        <div className='d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8'>
+          <div className='input-title-application left fs-4 text-start text-lg-end'>
+            Application Number
+          </div>
+          <Input
+            required={false}
+            name='application_number'
+            title={''}
+            id={'application_number'}
+            value={formValue.application_number}
+            onChange={handleChange}
+            classShared=' input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+          />
+        </div>
+      </div> */}
       {/* body */}
       <div className='pt-9 flex-grow-1'>
         {/* Start form control */}

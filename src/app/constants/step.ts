@@ -1,33 +1,53 @@
 import {StepItem} from '../modules/auth'
+import {
+  GENERAL_INFORMATION_CONFIG,
+  LOAN_DETAILS_CONFIG,
+} from '../pages/applications/step-component/config'
+import GeneralInformation from '../pages/applications/step-component/general-information/GeneralInformation'
+import LoanDetails from '../pages/applications/step-component/loan-details/LoanDetails'
 
 export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Application Details',
     desc: 'General Information Of Loan Application.',
+    component: GeneralInformation,
+    config: GENERAL_INFORMATION_CONFIG,
   },
   {
-    label: 'Applicant Details',
+    label: 'Loan Details',
     desc: 'Detailed Customer Contact Information.',
+    component: LoanDetails,
+    config: LOAN_DETAILS_CONFIG,
   },
   {
     label: 'Workplace',
     desc: 'Customer Workplace Information.',
+    component: GeneralInformation,
+    config: GENERAL_INFORMATION_CONFIG,
   },
   {
     label: 'Bank Information',
     desc: 'Customer Bank Information.',
+    component: GeneralInformation,
+    config: GENERAL_INFORMATION_CONFIG,
   },
   {
     label: 'Loan Application',
     desc: 'Detailed Customer Loan Application.',
+    component: GeneralInformation,
+    config: GENERAL_INFORMATION_CONFIG,
   },
   {
     label: 'Guarantor',
     desc: 'Detailed Customer Loan Application.',
+    component: GeneralInformation,
+    config: GENERAL_INFORMATION_CONFIG,
   },
   {
     label: 'Complete',
     desc: 'Review & Save Application.',
+    component: GeneralInformation,
+    config: GENERAL_INFORMATION_CONFIG,
   },
 ]
 
