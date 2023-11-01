@@ -1,4 +1,5 @@
 import {Dispatch, FC, HTMLInputTypeAttribute, SetStateAction} from 'react'
+import {DropDownGroup} from '../../../utils/globalConfig'
 
 export type LoginInfo = {
   username: string
@@ -192,10 +193,12 @@ export type ApplicationConfig = {
   typeInput?: HTMLInputTypeAttribute & 'money'
   dependencyApi?: string
   required?: boolean
-  options?: {[key: string]: string | number}[]
+  options?: {[key: string]: string | number}[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
+  dropDownGroup?: boolean
+  labelError?: string
 }
 
 export type PropsStepApplication = {

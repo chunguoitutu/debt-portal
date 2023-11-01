@@ -10,15 +10,15 @@ type Props = {
 
 const data = [
   {
-    key: 'first_name',
+    key: 'firstname',
     placeholder: 'First Name',
   },
   {
-    key: 'middle_name',
+    key: 'middlename',
     placeholder: 'Middle Name',
   },
   {
-    key: 'last_name',
+    key: 'lastname',
     placeholder: 'Last Name',
   },
 ]

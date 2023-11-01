@@ -9,19 +9,28 @@ import {YES_NO_OPTION} from '../../../constants/option'
 import TextArea from '../../../components/textarea/TextArea'
 import {COUNTRY_PHONE_CODE} from '../../../constants/option'
 import {ApplicationConfig} from '../../../modules/auth'
-import {CUSTOMER_TYPE, EMPLOYMENT_STATUS, MLCB_CHECK} from '../../../utils/globalConfig'
+import {
+  CUSTOMER_TYPE,
+  EMPLOYMENT_STATUS,
+  ID_TYPE,
+  INCOME_DOCUMENT,
+  MARKETING_TYPE,
+  MLCB_CHECK,
+  RESIDENTIAL_TYPE,
+} from '../../../utils/globalConfig'
 import {COUNTRY_LIST} from '../../../constants/countries'
 import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
-    key: 'middle_name',
+    key: 'middlename',
     isHide: true,
   },
   {
-    key: 'last_name',
+    key: 'lastname',
     isHide: true,
     required: true,
+    label: 'Last Name',
   },
   {
     key: 'customer_type',
@@ -32,20 +41,22 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     isFullLayout: true,
   },
   {
-    key: 'first_name',
+    key: 'firstname',
     component: NameOfApplication,
     label: 'Name Of Applicant',
+    labelError: 'First Name',
     required: true,
   },
   {
-    key: 'id_type',
-    component: Input,
+    key: 'identification_type',
+    component: Select,
     column: 6,
     label: 'ID Type',
     required: true,
+    options: ID_TYPE,
   },
   {
-    key: 'nric_no',
+    key: 'identification_no',
     component: InputAdvance,
     column: 6,
     label: 'NRIC No./FIN',
@@ -54,10 +65,12 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'residential_type',
-    component: Input,
+    component: Select,
     column: 6,
     label: 'Residential Type',
     required: true,
+    options: RESIDENTIAL_TYPE,
+    dropDownGroup: true,
   },
   {
     key: 'marketing_type',
@@ -66,16 +79,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Marketing Type',
     className: 'justify-content-xl-end',
     required: true,
-    options: [
-      {
-        label: 'Male',
-        value: 'male',
-      },
-      {
-        label: 'Female',
-        value: 'female',
-      },
-    ],
+    options: MARKETING_TYPE,
   },
   {
     key: 'gender',
@@ -283,11 +287,13 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'monthly_income_2',
     isHide: true,
     required: true,
+    label: 'Monthly Income 2',
   },
   {
     key: 'monthly_income_3',
     isHide: true,
     required: true,
+    label: 'Monthly Income 3',
   },
   {
     key: 'employment',
@@ -329,6 +335,7 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'monthly_income_1',
     component: GrossMonthlyIncome,
     label: 'Gross Monthly Income',
+    labelError: 'Monthly Income 1',
     options: YES_NO_OPTION,
     required: true,
   },
@@ -350,5 +357,13 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     label: 'Annual Gross Income',
     typeInput: 'money',
     desc: 'include AWS and Bonus',
+  },
+  {
+    key: 'income_document',
+    data: INCOME_DOCUMENT,
+    defaultValue: [],
+    component: Checkbox,
+    label: 'Income Document',
+    className: 'no-center-label',
   },
 ]

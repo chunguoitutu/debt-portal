@@ -9,19 +9,6 @@ import {useFormik} from 'formik'
 import Button from '../../../../components/button/Button'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 
-export const schema = Yup.object().shape({
-  last_name: Yup.string().required('Last Name is required.').max(255, 'Maximum 255 symbols'),
-  first_name: Yup.string().required('First Name is required.').max(255, 'Maximum 255 symbols'),
-  middle_name: Yup.string().max(255, 'Maximum 255 symbols'),
-  id_type: Yup.string().required('ID Type is required.'),
-  nric_no: Yup.string().required('NRIC No./FIN is required.'),
-  residential_type: Yup.string().required('Residential Type is required.'),
-  marketing_type: Yup.string().required('Marketing Type is required.'),
-  gender: Yup.string().required('Gender is required.'),
-  date_of_birth: Yup.string().required('Date of Birth is required.'),
-  nationality: Yup.string().required('Nationality is required.'),
-})
-
 const GeneralInformation: FC<PropsStepApplication> = ({
   formData,
   setFormData,
@@ -33,6 +20,23 @@ const GeneralInformation: FC<PropsStepApplication> = ({
       (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
       {}
     )
+  }, [config])
+
+  const schema = useMemo(() => {
+    const schemaObject = config
+      .filter((item) => item.required)
+      .reduce(
+        (result, current) => ({
+          ...result,
+          [current.key]: Yup.string().required(
+            `${current.labelError || current.label} is required.`
+          ),
+        }),
+        {}
+      )
+    return Yup.object().shape(schemaObject)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
   const {touched, errors, handleChange, handleSubmit} = useFormik({
@@ -85,7 +89,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
     if (!Component) return
 
     // Special cases should be checked in advance
-    if (key === 'first_name') {
+    if (key === 'firstname') {
       return (
         <Component
           formData={formData}
@@ -96,7 +100,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
       )
     }
 
-    if (key === 'nric_no') {
+    if (key === 'identification_no') {
       return (
         <div className='d-flex flex-column'>
           <Component
@@ -134,6 +138,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           fieldLabelOption={keyLabelOfOptions}
           classShared={className}
           options={options}
+          dropDownGroup={item.dropDownGroup}
         />
       )
     }

@@ -1,11 +1,46 @@
-import {FC, Fragment} from 'react'
+import {FC, Fragment, useMemo} from 'react'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
 import Button from '../../../../components/button/Button'
+import * as Yup from 'yup'
+import {useFormik} from 'formik'
 
 const Employment: FC<PropsStepApplication> = ({formData, setFormData, config = [], onNextStep}) => {
+  const initialValues = useMemo(() => {
+    return config.reduce(
+      (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
+      {}
+    )
+  }, [config])
+
+  const schema = useMemo(() => {
+    const schemaObject = config
+      .filter((item) => item.required)
+      .reduce(
+        (result, current) => ({
+          ...result,
+          [current.key]: Yup.string().required(
+            `${current.labelError || current.label} is required.`
+          ),
+        }),
+        {}
+      )
+    return Yup.object().shape(schemaObject)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config])
+
+  const {touched, errors, handleChange, handleSubmit} = useFormik({
+    initialValues,
+    validationSchema: schema,
+    onSubmit: onNextStep,
+  })
+
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
+
+    // formik
+    handleChange(e)
 
     if (type === 'checkbox') {
       return setFormData({
@@ -39,7 +74,12 @@ const Employment: FC<PropsStepApplication> = ({formData, setFormData, config = [
     // Special cases should be checked in advance
     if (key === 'monthly_income_1') {
       return (
-        <Component formData={formData} onChange={handleChangeData} errors={true} touched={true} />
+        <Component
+          formData={formData}
+          onChange={handleChangeData}
+          errors={errors}
+          touched={touched}
+        />
       )
     }
     // End special cases
@@ -157,7 +197,7 @@ const Employment: FC<PropsStepApplication> = ({formData, setFormData, config = [
         >
           Save Draft
         </Button>
-        <Button onClick={() => onNextStep()}>Continue</Button>
+        <Button onClick={() => handleSubmit()}>Continue</Button>
       </div>
     </>
   )
