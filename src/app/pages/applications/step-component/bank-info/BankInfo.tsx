@@ -7,9 +7,6 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 
-    // formik
-    // handleChange(e)
-
     if (type === 'checkbox') {
       return setFormData({
         ...formData,
@@ -33,7 +30,7 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
 
     const className =
       isFullLayout || !column
-        ? 'flex-grow-1 w-sm-300px'
+        ? 'flex-grow-1 w-300px w-lg-unset'
         : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
     // nothing
@@ -75,7 +72,7 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
           classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key].includes(item.value)}
+          checked={formData[key].includes(item.value.toString())}
           value={item.value}
           onChange={handleChangeData}
         />

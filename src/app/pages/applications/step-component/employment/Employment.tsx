@@ -1,20 +1,11 @@
-import clsx from 'clsx'
 import {FC, Fragment, useMemo} from 'react'
-import * as Yup from 'yup'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
-import Tippy from '@tippyjs/react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSearch} from '@fortawesome/free-solid-svg-icons'
-import {useFormik} from 'formik'
+import clsx from 'clsx'
 import Button from '../../../../components/button/Button'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
+import * as Yup from 'yup'
+import {useFormik} from 'formik'
 
-const GeneralInformation: FC<PropsStepApplication> = ({
-  formData,
-  setFormData,
-  config = [],
-  onNextStep,
-}) => {
+const Employment: FC<PropsStepApplication> = ({formData, setFormData, config = [], onNextStep}) => {
   const initialValues = useMemo(() => {
     return config.reduce(
       (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
@@ -69,15 +60,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {
-      key,
-      data = [],
-      isFullLayout,
-      column,
-      options,
-      keyLabelOfOptions,
-      keyValueOfOptions,
-    } = item
+    const {key, data = [], isFullLayout, column, options, typeInput, desc} = item
     let Component: any = item?.component
 
     const className =
@@ -89,7 +72,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
     if (!Component) return
 
     // Special cases should be checked in advance
-    if (key === 'firstname') {
+    if (key === 'monthly_income_1') {
       return (
         <Component
           formData={formData}
@@ -99,46 +82,17 @@ const GeneralInformation: FC<PropsStepApplication> = ({
         />
       )
     }
-
-    if (key === 'identification_no') {
-      return (
-        <div className='d-flex flex-column'>
-          <Component
-            value={formData[key]}
-            onChange={handleChangeData}
-            name={key}
-            classShared={className}
-            insertRight={
-              <Tippy offset={[40, 0]} content='Lookup Customer'>
-                {/* Wrapper with a span tag to show tooltip */}
-                <div className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'>
-                  <FontAwesomeIcon icon={faSearch} />
-                </div>
-              </Tippy>
-            }
-          />
-
-          <ErrorMessage shouldShowMessage={errors[key] && touched[key]} message={errors[key]} />
-        </div>
-      )
-    }
     // End special cases
 
     // handle for select
     if (Component.name === 'Select') {
       return (
         <Component
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
           value={formData[key]}
           onChange={handleChangeData}
           name={key}
-          fieldValueOption={keyValueOfOptions}
-          fieldLabelOption={keyLabelOfOptions}
           classShared={className}
           options={options}
-          dropDownGroup={item.dropDownGroup}
         />
       )
     }
@@ -173,12 +127,26 @@ const GeneralInformation: FC<PropsStepApplication> = ({
       ))
     }
 
+    // handle for Input Advanced type input is money
+    if (Component.name === 'InputAdvance') {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={formData[key]}
+            onChange={handleChangeData}
+            name={key}
+            classShared={className}
+            typeInput={typeInput}
+          />
+
+          {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
+        </div>
+      )
+    }
+
     if (Component.name === 'Input' || Component.name === 'InputTime') {
       return (
         <Component
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
           value={formData[key]}
           onChange={handleChangeData}
           name={key}
@@ -229,12 +197,10 @@ const GeneralInformation: FC<PropsStepApplication> = ({
         >
           Save Draft
         </Button>
-        <Button loading={false} disabled={false} onClick={() => handleSubmit()}>
-          Continue
-        </Button>
+        <Button onClick={() => handleSubmit()}>Continue</Button>
       </div>
     </>
   )
 }
 
-export default GeneralInformation
+export default Employment

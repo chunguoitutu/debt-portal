@@ -1,4 +1,4 @@
-import {MenuSettingItem} from '../modules/auth'
+import {MenuSettingItem, Option} from '../modules/auth'
 import AddressType from '../pages/settings/address-type/AddressType'
 import {CompanyManagement} from '../pages/settings/company-management'
 import CompanyListing from '../pages/settings/company/CompanyManagement'
@@ -11,17 +11,13 @@ import RolePage from '../pages/settings/role/RoleManagement'
 import UserManagement from '../pages/settings/user/UserManagement'
 import {v4 as uuidv4} from 'uuid'
 
-export type BaseConfig = {
-  value: string | number
-  label: string
-}
-
 export type DropDownGroup = {
   name: string
-  options: BaseConfig[]
+  options: Option[]
 }
 
-export const ROLE_PRIORITY: BaseConfig[] = [
+export const ROLE_PRIORITY: Option[] = [
+
   {
     value: 1,
     label: 'Full-Access',
@@ -44,7 +40,7 @@ export const ROLE_PRIORITY: BaseConfig[] = [
   },
 ]
 
-export const ACCOUNT_DEPARTMENT: BaseConfig[] = [
+export const ACCOUNT_DEPARTMENT: Option[] = [
   {
     value: 'assets',
     label: 'ASSETS',
@@ -67,7 +63,7 @@ export const ACCOUNT_DEPARTMENT: BaseConfig[] = [
   },
 ]
 
-export const ACCOUNT_GROUP: BaseConfig[] = [
+export const ACCOUNT_GROUP: Option[] = [
   {
     value: 'H',
     label: 'H',
@@ -94,7 +90,7 @@ export const ACCOUNT_GROUP: BaseConfig[] = [
   },
 ]
 
-export const CUSTOMER_TYPE: BaseConfig[] = [
+export const CUSTOMER_TYPE: Option[] = [
   {
     value: 'new',
     label: 'New',
@@ -105,21 +101,21 @@ export const CUSTOMER_TYPE: BaseConfig[] = [
   },
 ]
 
-export const MLCB_CHECK: BaseConfig[] = [
+export const MLCB_CHECK: Option[] = [
   {
     value: '1',
     label: 'Opt In Yes Consent to disclose information to MLCB and sMECB',
   },
 ]
 
-export const LANGUAGES_SPOKEN: BaseConfig[] = [
+export const LANGUAGES_SPOKEN: Option[] = [
   {
     value: 'english',
     label: 'English',
   },
 ]
 
-export const INCOME_DOCUMENT: BaseConfig[] = [
+export const INCOME_DOCUMENT: Option[] = [
   {
     value: 'pay_slip',
     label: 'Pay Slip',
@@ -138,7 +134,7 @@ export const INCOME_DOCUMENT: BaseConfig[] = [
   },
 ]
 
-export const EMPLOYMENT_STATUS: BaseConfig[] = [
+export const EMPLOYMENT_STATUS: Option[] = [
   {
     value: 'EMP',
     label: 'Employed',
@@ -153,7 +149,7 @@ export const EMPLOYMENT_STATUS: BaseConfig[] = [
   },
 ]
 
-export const LANGUAGES: BaseConfig[] = [
+export const LANGUAGES: Option[] = [
   {
     value: 'english',
     label: 'English',
@@ -168,14 +164,14 @@ export const LANGUAGES: BaseConfig[] = [
   },
 ]
 
-export const PURPOSE_OF_LOAN: BaseConfig[] = [
+export const PURPOSE_OF_LOAN: Option[] = [
   {
     value: 'others',
     label: 'Others',
   },
 ]
 
-export const ID_TYPE: BaseConfig[] = [
+export const ID_TYPE: Option[] = [
   {
     value: 'singapore_nric_no',
     label: 'Singapore NRIC No',
@@ -186,7 +182,7 @@ export const ID_TYPE: BaseConfig[] = [
   },
 ]
 
-export const MARKETING_TYPE: BaseConfig[] = [
+export const MARKETING_TYPE: Option[] = [
   {
     value: 'yellow_pages',
     label: 'Yellow Pages',
@@ -319,7 +315,7 @@ export const MONTHLY_DUE_DATE: any = Array.from({length: 31}).reduce(
   ]
 )
 
-interface AdvanceConfig extends BaseConfig {
+interface AdvanceConfig extends Option {
   code: string
 }
 

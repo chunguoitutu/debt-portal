@@ -11,11 +11,16 @@ import {COUNTRY_PHONE_CODE} from '../../../constants/option'
 import {ApplicationConfig} from '../../../modules/auth'
 import {
   CUSTOMER_TYPE,
+  EMPLOYMENT_STATUS,
   ID_TYPE,
+  INCOME_DOCUMENT,
   MARKETING_TYPE,
   MLCB_CHECK,
   RESIDENTIAL_TYPE,
 } from '../../../utils/globalConfig'
+import {COUNTRY_LIST} from '../../../constants/countries'
+import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
+
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -26,6 +31,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     key: 'lastname',
     isHide: true,
     required: true,
+    label: 'Last Name',
   },
   {
     key: 'customer_type',
@@ -39,6 +45,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     key: 'firstname',
     component: NameOfApplication,
     label: 'Name Of Applicant',
+    labelError: 'First Name',
     required: true,
   },
   {
@@ -102,9 +109,12 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'nationality',
-    component: Input,
+    component: Select,
     column: 6,
     label: 'Nationality',
+    options: COUNTRY_LIST,
+    keyLabelOfOptions: 'name',
+    keyValueOfOptions: 'code',
     required: true,
   },
 ]
@@ -246,13 +256,13 @@ export const BANK_INFO_CONFIG = [
     className: 'justify-content-xl-end',
   },
   {
-    key: 'bank_acc_1',
+    key: 'account_number_1',
     component: Input,
     column: 6,
     label: 'Bank Acc 1',
   },
   {
-    key: 'bank_acc_2',
+    key: 'account_number_2',
     component: Input,
     column: 6,
     label: 'Bank Acc 2',
@@ -270,5 +280,91 @@ export const BANK_INFO_CONFIG = [
     column: 6,
     label: 'Bank Code 2',
     className: 'justify-content-xl-end',
+  },
+]
+
+export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
+  {
+    key: 'monthly_income_2',
+    isHide: true,
+    required: true,
+    label: 'Monthly Income 2',
+  },
+  {
+    key: 'monthly_income_3',
+    isHide: true,
+    required: true,
+    label: 'Monthly Income 3',
+  },
+  {
+    key: 'employment',
+    data: EMPLOYMENT_STATUS,
+    defaultValue: EMPLOYMENT_STATUS[0].value,
+    component: Radio,
+    label: ' ',
+  },
+  {
+    key: 'company_name',
+    component: Input,
+    label: 'Company Name',
+  },
+  {
+    key: 'address',
+    component: Input,
+    label: 'Address',
+  },
+  {
+    key: 'office_no',
+    component: Input,
+    label: 'Office No.(NIL)',
+    column: 6,
+  },
+  {
+    key: 'portal_code',
+    component: Input,
+    label: 'Company	Postal Code',
+    column: 6,
+    className: 'justify-content-xl-end',
+  },
+  {
+    key: 'specialization',
+    component: Select,
+    label: 'Specialization',
+    options: YES_NO_OPTION,
+  },
+  {
+    key: 'monthly_income_1',
+    component: GrossMonthlyIncome,
+    label: 'Gross Monthly Income',
+    labelError: 'Monthly Income 1',
+    options: YES_NO_OPTION,
+    required: true,
+  },
+  {
+    key: 'avg_income',
+    component: InputAdvance,
+    label: 'Average Monthly Income',
+    typeInput: 'money',
+  },
+  {
+    key: '6_months_income',
+    component: InputAdvance,
+    label: 'Past 6 Month Gross Income',
+    typeInput: 'money',
+  },
+  {
+    key: 'annual_income',
+    component: InputAdvance,
+    label: 'Annual Gross Income',
+    typeInput: 'money',
+    desc: 'include AWS and Bonus',
+  },
+  {
+    key: 'income_document',
+    data: INCOME_DOCUMENT,
+    defaultValue: [],
+    component: Checkbox,
+    label: 'Income Document',
+    className: 'no-center-label',
   },
 ]

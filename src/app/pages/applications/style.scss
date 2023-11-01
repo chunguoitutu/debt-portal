@@ -88,6 +88,14 @@
     line-height: 24px; /* 120% */
     text-transform: capitalize;
   }
+
+  .no-center-label {
+    .input-title-application {
+      position: static !important;
+      transform: none !important;
+    }
+  }
+
   .input-title-application {
     color: #071437;
     text-align: right;

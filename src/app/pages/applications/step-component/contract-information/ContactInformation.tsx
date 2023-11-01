@@ -72,7 +72,7 @@ const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => 
 
     const className =
       isFullLayout || !column
-        ? 'flex-grow-1 w-sm-300px'
+        ? 'flex-grow-1 w-300px w-lg-unset'
         : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
     if (Component.name === 'InputAdvance') {
