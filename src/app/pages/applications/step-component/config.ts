@@ -21,6 +21,7 @@ import {
 import {COUNTRY_LIST} from '../../../constants/countries'
 import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
 
+
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
     key: 'middlename',
