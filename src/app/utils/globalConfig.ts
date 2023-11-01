@@ -349,24 +349,16 @@ const nth = (d) => {
   }
 }
 
-export const MONTHLY_DUE_DATE: any = Array.from({length: 31}).reduce(
-  (a: any, _, i) => {
-    const value = [
-      ...a,
-      {
-        value: `${i + 1}`,
-        label: `${i + 1}${nth(i + 1)}`,
-      },
-    ]
-    return value
-  },
-  [
+export const MONTHLY_DUE_DATE: any = Array.from({length: 31}).reduce((a: any, _, i) => {
+  const value = [
+    ...a,
     {
-      value: 'last_day',
-      label: 'Last Day',
+      value: `${i + 1}`,
+      label: `${i + 1}${nth(i + 1)}`,
     },
   ]
-)
+  return value
+}, [])
 
 interface AdvanceConfig extends Option {
   code: string

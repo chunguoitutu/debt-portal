@@ -1,7 +1,7 @@
 import {FC, Fragment} from 'react'
-import {Button} from 'react-bootstrap'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
+import GeneralButton from '../GeneralButton'
 
 const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [], onNextStep}) => {
   function handleChangeData(e: React.ChangeEvent<any>) {
@@ -123,17 +123,7 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
           </div>
         )
       })}
-
-      <div className='d-flex flex-end mt-10 full'>
-        <Button
-          onClick={() => {}}
-          className='btn-secondary align-self-center me-3'
-          disabled={false}
-        >
-          Save Draft
-        </Button>
-        <Button onClick={() => onNextStep()}>Continue</Button>
-      </div>
+      <GeneralButton handleSubmit={onNextStep} />
     </>
   )
 }

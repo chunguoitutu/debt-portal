@@ -22,7 +22,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(2)
+  const [currentStep, setCurrentStep] = useState<number>(5)
   const [stepCompleted, setStepCompleted] = useState<number>(1)
   const [formData, setFormData] = useState<{[key: string]: string | any[]}>(
     STEP_APPLICATION.flatMap((item) => item.config).reduce(

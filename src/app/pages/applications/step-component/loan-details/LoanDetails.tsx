@@ -2,11 +2,10 @@ import clsx from 'clsx'
 import {FC, Fragment, useMemo} from 'react'
 import * as Yup from 'yup'
 
-import Button from '../../../../components/button/Button'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import {useFormik} from 'formik'
 import {PropsStepApplication} from '../../../../modules/auth'
-
+import GeneralButton from '../GeneralButton'
 
 const LoanDetails: FC<PropsStepApplication> = ({
   formData,
@@ -106,7 +105,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
         </div>
       )
     }
-    
+
     const className = isFullLayout || !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
 
     if (Component.name === 'Select') {
@@ -122,9 +121,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
             errors={errors}
           />
           <ErrorMessage
-              shouldShowMessage={!!errors[key] && !!touched[key]}
-              message={errors[key] as string}
-            />
+            shouldShowMessage={!!errors[key] && !!touched[key]}
+            message={errors[key] as string}
+          />
         </div>
       )
     }
@@ -153,12 +152,12 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
         return (
           <div
-          className={clsx([
-            'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
-            isFullLayout || !column ? 'full' : '',
-            className,
-          ])}
-          key={i}
+            className={clsx([
+              'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+              isFullLayout || !column ? 'full' : '',
+              className,
+            ])}
+            key={i}
           >
             <div
               className={clsx([
@@ -173,18 +172,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
           </div>
         )
       })}
-      <div className='d-flex flex-end mt-10 full'>
-        <Button
-          onClick={() => {}}
-          className='btn-secondary align-self-center me-3'
-          disabled={false}
-        >
-          Save Draft
-        </Button>
-        <Button loading={false} disabled={false} onClick={() => handleSubmit()}>
-          Continue
-        </Button>
-      </div>
+      <GeneralButton handleSubmit={handleSubmit} />
     </>
   )
 }

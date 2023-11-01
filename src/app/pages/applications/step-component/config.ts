@@ -250,6 +250,7 @@ export const BANK_INFO_CONFIG = [
     defaultValue: YES_NO_OPTION[0].value,
     component: Radio,
     label: 'Is it GIRO',
+    className: 'no-center-label',
   },
   {
     key: 'bank_name_1',

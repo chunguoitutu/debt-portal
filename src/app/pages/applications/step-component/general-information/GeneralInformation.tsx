@@ -6,8 +6,8 @@ import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import {useFormik} from 'formik'
-import Button from '../../../../components/button/Button'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
+import GeneralButton from '../GeneralButton'
 
 const GeneralInformation: FC<PropsStepApplication> = ({
   formData,
@@ -220,19 +220,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           </div>
         )
       })}
-
-      <div className='d-flex flex-end mt-10 full'>
-        <Button
-          onClick={() => {}}
-          className='btn-secondary align-self-center me-3'
-          disabled={false}
-        >
-          Save Draft
-        </Button>
-        <Button loading={false} disabled={false} onClick={() => handleSubmit()}>
-          Continue
-        </Button>
-      </div>
+      <GeneralButton handleSubmit={handleSubmit} />
     </>
   )
 }
