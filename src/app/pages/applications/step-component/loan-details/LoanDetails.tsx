@@ -7,15 +7,6 @@ import ErrorMessage from '../../../../components/error/ErrorMessage'
 import {useFormik} from 'formik'
 import {PropsStepApplication} from '../../../../modules/auth'
 
-export const schema = Yup.object().shape({
-  loan_type: Yup.string().required('Loan Type is required.').max(255, 'Maximum 255 symbols'),
-  loan_amount_required: Yup.string()
-    .required('Loan Amount Required is required.')
-    .max(255, 'Maximum 255 symbols'),
-  reason_for_loan: Yup.string()
-    .required('Reason For Loan is required.')
-    .max(255, 'Maximum 255 symbols'),
-})
 
 const LoanDetails: FC<PropsStepApplication> = ({
   formData,
@@ -28,6 +19,23 @@ const LoanDetails: FC<PropsStepApplication> = ({
       (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
       {}
     )
+  }, [config])
+
+  const schema = useMemo(() => {
+    const schemaObject = config
+      .filter((item) => item.required)
+      .reduce(
+        (result, current) => ({
+          ...result,
+          [current.key]: Yup.string().required(
+            `${current.labelError || current.label} is required.`
+          ),
+        }),
+        {}
+      )
+    return Yup.object().shape(schemaObject)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
   const {touched, errors, handleChange, handleSubmit} = useFormik({
@@ -60,7 +68,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item) {
-    const {key, data = [], isFullLayout, column} = item
+    const {key, data = [], isFullLayout, column, options} = item
     let Component = item?.component
 
     // nothing
@@ -98,8 +106,28 @@ const LoanDetails: FC<PropsStepApplication> = ({
         </div>
       )
     }
-
+    
     const className = isFullLayout || !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
+
+    if (Component.name === 'Select') {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={formData[key]}
+            onChange={handleChangeData}
+            name={key}
+            classShared={className}
+            options={options}
+            touched={touched}
+            errors={errors}
+          />
+          <ErrorMessage
+              shouldShowMessage={!!errors[key] && !!touched[key]}
+              message={errors[key] as string}
+            />
+        </div>
+      )
+    }
 
     return (
       <div className='d-flex flex-column w-100'>
@@ -119,16 +147,18 @@ const LoanDetails: FC<PropsStepApplication> = ({
   return (
     <>
       {config.map((item, i) => {
-        const {label, isFullLayout, column, isHide, required} = item
+        const {label, isFullLayout, column, isHide, required, className} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
         return (
           <div
-            className={`d-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8  ${
-              isFullLayout || !column ? 'full' : ''
-            }`}
-            key={i}
+          className={clsx([
+            'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+            isFullLayout || !column ? 'full' : '',
+            className,
+          ])}
+          key={i}
           >
             <div
               className={clsx([

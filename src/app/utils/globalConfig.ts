@@ -164,6 +164,45 @@ export const LANGUAGES: Option[] = [
   },
 ]
 
+export const LOAN_TYPE: Option[] = [
+  {
+    value: 'personal',
+    label: 'Personal Loan (PL)',
+  },
+  {
+    value: 'foreigner',
+    label: 'Foreigner Loan (FL)',
+  },
+  {
+    value: 'renovation',
+    label: 'Renovation Loan (RL)',
+  },
+  {
+    value: 'wedding',
+    label: 'Wedding Loan (WL)',
+  },
+  {
+    value: 'hire_purchase',
+    label: 'Hire Purchase Loan (HPL)',
+  },
+  {
+    value: 'auto_vehicle',
+    label: 'Auto Vehicle Loan (AVL)',
+  },
+  {
+    value: 'debt_consolidation',
+    label: 'Debt Consolidation (DCL)',
+  },
+  {
+    value: 'mortgage',
+    label: 'Mortgage Loan (ML)',
+  },
+  {
+    value: 'business',
+    label: 'Business Loan (BL)',
+  },
+]
+
 export const PURPOSE_OF_LOAN: Option[] = [
   {
     value: 'others',

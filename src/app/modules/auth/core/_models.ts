@@ -201,6 +201,7 @@ export type ApplicationConfig = {
   labelError?: string
 }
 
+
 export type PropsStepApplication = {
   config: ApplicationConfig[]
   formData: {[key: string]: string | any[]}
