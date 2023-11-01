@@ -36,9 +36,13 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
   const initialValues = useMemo(() => {
     return config.reduce(
-      (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
+      (result, current) => ({
+        ...result,
+        [current.key]: formData[current.key] || current.defaultValue || '',
+      }),
       {}
     )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
   const schema = useMemo(() => {
