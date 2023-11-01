@@ -5,6 +5,7 @@ import PrintOptions from './print-options/PrintOptions'
 import Step from '../../components/step/Step'
 import {STEP_APPLICATION} from '../../constants/step'
 import './style.scss'
+import Remark from './remark/Remark'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -76,7 +77,8 @@ export const Applications = () => {
             <BackgroundCheck />
           </div>
           <div>
-            <PrintOptions />
+            {/* <PrintOptions /> */}
+            <Remark />
           </div>
         </div>
       </div>

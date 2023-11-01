@@ -209,3 +209,9 @@
     }
   }
 }
+
+.remake-input:focus-visible {
+  border: 'none';
+  outline: none;
+  background: 'transparent';
+}

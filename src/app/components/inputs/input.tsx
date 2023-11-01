@@ -11,6 +11,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   classShared?: string
   type?: string
   noThereAreCommas?: boolean
+  classInput?: string
 }
 
 export const Input: React.FC<IProps> = ({
@@ -24,6 +25,7 @@ export const Input: React.FC<IProps> = ({
   name,
   classShared = 'fv-row mb-16px',
   type = 'text',
+  classInput = 'form-control form-control-lg form-control-solid',
   ...rest
 }) => {
   return (
@@ -49,6 +51,7 @@ export const Input: React.FC<IProps> = ({
         </label>
       )}
       <input
+        className={`${!!classInput ? classInput : ''}`}
         type={type}
         onKeyPressCapture={(e) => {
           if (type === 'number') {
@@ -63,7 +66,6 @@ export const Input: React.FC<IProps> = ({
         id={id}
         {...rest}
         name={name}
-        className='form-control form-control-lg form-control-solid'
       />
       {touched && error && (
         <div className='fv-plugins-message-container'>
