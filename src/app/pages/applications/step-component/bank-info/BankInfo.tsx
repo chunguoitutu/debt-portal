@@ -3,7 +3,7 @@ import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
 import GeneralButton from '../GeneralButton'
 
-const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [], onNextStep}) => {
+const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [], onGoToStep}) => {
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 
@@ -123,7 +123,7 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
           </div>
         )
       })}
-      <GeneralButton handleSubmit={onNextStep} />
+      <GeneralButton handleSubmit={onGoToStep} />
     </>
   )
 }
