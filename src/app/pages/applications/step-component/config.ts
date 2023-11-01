@@ -240,7 +240,7 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
   },
 ]
 
-export const BANK_INFO_CONFIG = [
+export const BANK_INFO_CONFIG: ApplicationConfig[] = [
   {
     key: 'is_giro',
     data: YES_NO_OPTION,

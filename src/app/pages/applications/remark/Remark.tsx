@@ -64,7 +64,7 @@ const Remark = () => {
         ref={contentRef}
       >
         {messages.map((message, index) => (
-          <div style={{display: 'flex', marginBottom: '16px'}}>
+          <div style={{display: 'flex', marginBottom: '16px'}} key={index}>
             <div
               style={{
                 background: '#EFF2F5',

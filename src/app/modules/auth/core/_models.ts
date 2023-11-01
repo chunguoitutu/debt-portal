@@ -1,4 +1,4 @@
-import {Dispatch, FC, HTMLInputTypeAttribute, SetStateAction} from 'react'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
 import {DropDownGroup} from '../../../utils/globalConfig'
 
 export type LoginInfo = {
@@ -28,9 +28,9 @@ export type LoginResponse = {
 
 export type StepItem = {
   label: string
-  desc: string
+  desc?: string | ReactNode
   component?: FC<any>
-  config?: any
+  config?: ApplicationConfig[]
 }
 
 export type UserInfo = {
@@ -200,7 +200,6 @@ export type ApplicationConfig = {
   dropDownGroup?: boolean
   labelError?: string
 }
-
 
 export type PropsStepApplication = {
   config: ApplicationConfig[]

@@ -46,7 +46,7 @@ const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, dat
                       <FontAwesomeIcon className='text-danger ms-2' icon={faTriangleExclamation} />
                     )}
                   </h3>
-                  <div className='stepper-desc text-capitalize'>{desc}</div>
+                  {desc && <div className='stepper-desc text-capitalize'>{desc}</div>}
                 </div>
               </div>
 
