@@ -27,6 +27,7 @@ const TextArea: FC<TextAreaProps> = ({
       <textarea
         className='form-control form-control-lg form-control-solid form-control-flush min-h-100px'
         id={name}
+        name={name}
         {...rest}
       />
     </div>

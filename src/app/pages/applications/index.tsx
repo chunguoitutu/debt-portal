@@ -1,7 +1,7 @@
 import {useMemo, useState} from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import BackgroundCheck from './background-check/BackgroundCheck'
-import PrintOptions from './print-options/PrintOptions'
+// import PrintOptions from './print-options/PrintOptions'
 import Step from '../../components/step/Step'
 import {STEP_APPLICATION} from '../../constants/step'
 import './style.scss'
