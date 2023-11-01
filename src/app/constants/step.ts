@@ -15,31 +15,26 @@ import LoanDetails from '../pages/applications/step-component/loan-details/LoanD
 export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Personal Information',
-    desc: 'Has been filled out 16/32 information fields.',
     component: GeneralInformation,
     config: GENERAL_INFORMATION_CONFIG,
   },
   {
     label: 'Loan Details',
-    desc: 'Has been filled out 16/32 information fields.',
     component: LoanDetails,
     config: LOAN_DETAILS_CONFIG,
   },
   {
     label: 'Contact Information',
-    desc: 'Has been filled out 16/32 information fields.',
     component: ContactInformation,
     config: CONTRACT_INFORMATION,
   },
   {
     label: 'Employment',
-    desc: 'Has been filled out 16/32 information fields.',
     component: Employment,
     config: EMPLOYMENT_CONFIG,
   },
   {
     label: 'Bank Information',
-    desc: 'Has been filled out 16/32 information fields.',
     component: BankInfo,
     config: BANK_INFO_CONFIG,
   },
