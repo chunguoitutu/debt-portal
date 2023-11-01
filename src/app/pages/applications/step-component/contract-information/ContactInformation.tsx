@@ -8,6 +8,7 @@ import Select from '../../../../components/select/select'
 import {COUNTRY_PHONE_CODE} from '../../../../utils/globalConfig'
 import {PropsStepApplication} from '../../../../modules/auth'
 import GeneralButton from '../GeneralButton'
+import {ApplicationConfig} from '../../../../modules/auth'
 
 const ContactInformation: FC<PropsStepApplication> = ({
   formData,
@@ -67,9 +68,9 @@ const ContactInformation: FC<PropsStepApplication> = ({
     })
   }
 
-  function renderComponent(item) {
+  function renderComponent(item: ApplicationConfig) {
     const {key, isFullLayout, column, options} = item
-    let Component = item?.component
+    let Component: any = item?.component
 
     // nothing
     if (!Component) return
@@ -85,7 +86,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
           classShared={className}
           className='w-100'
           name={key}
-          value={item.value}
+          value={formData[key]}
           onChange={handleChangeData}
           insertLeft={
             <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
@@ -121,7 +122,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
 
     return (
       <Component
-        value={item.value}
+        value={formData[key]}
         onChange={handleChangeData}
         name={key}
         classShared={className}

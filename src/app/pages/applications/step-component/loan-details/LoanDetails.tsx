@@ -6,6 +6,8 @@ import ErrorMessage from '../../../../components/error/ErrorMessage'
 import {useFormik} from 'formik'
 import {PropsStepApplication} from '../../../../modules/auth'
 import GeneralButton from '../GeneralButton'
+import { ApplicationConfig} from '../../../../modules/auth'
+
 
 const LoanDetails: FC<PropsStepApplication> = ({
   formData,
@@ -45,8 +47,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
+    console.log(value, name)
 
-    //formik
+    // formik
     handleChange(e)
 
     if (type === 'checkbox') {
@@ -66,9 +69,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
     })
   }
 
-  function renderComponent(item) {
+  function renderComponent(item: ApplicationConfig) {
     const {key, data = [], isFullLayout, column, options} = item
-    let Component = item?.component
+    let Component: any = item?.component
 
     // nothing
     if (!Component) return
@@ -80,19 +83,18 @@ const LoanDetails: FC<PropsStepApplication> = ({
           classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key].includes(item.value)}
+          checked={formData[key].includes(item.value.toString())}
           value={item.value}
           onChange={handleChangeData}
         />
       ))
     }
-
     if (Component.name === 'TextArea') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
             classShared='flex-grow-1'
-            value={item.value}
+            value={formData[key]}
             onChange={handleChangeData}
             name={key}
             touched={touched}
@@ -131,7 +133,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
     return (
       <div className='d-flex flex-column w-100'>
         <Component
-          value={item.value}
+          value={formData[key]}
           onChange={handleChangeData}
           name={key}
           classShared={className}

@@ -230,7 +230,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                     <div className='d-flex amount-header-calculator flex-row gap-10'>
                       <div className='gap-1 p-6 ms-3' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>Amount Of Loan $</div>
-                        <div className='fs-3 fw-bold'>${values.totalsAmount}</div>
+                        <div className='fs-3 fw-bold'>${formatNumber(values.totalsAmount)}</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                         <div className='fs-7 fw-medium'>No. Of Instalment</div>
@@ -259,7 +259,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                           <tbody className='border-calculator'>
                             <tr>
                               <td className='label-calculator'>Loan Amount</td>
-                              <td className='content-calculator'>${values.totalsAmount}</td>
+                              <td className='content-calculator'>${formatNumber(values.totalsAmount)}</td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Month)</td>

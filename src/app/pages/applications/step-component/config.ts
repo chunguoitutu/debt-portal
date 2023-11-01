@@ -124,8 +124,8 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
   {
     key: 'mlcb_check',
     data: MLCB_CHECK,
-    defaultValue: MLCB_CHECK[0].value,
     component: Checkbox,
+    defaultValue: [],
     label: '',
     isFullLayout: true,
   },
