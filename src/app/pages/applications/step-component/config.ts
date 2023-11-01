@@ -7,7 +7,6 @@ import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
 import {YES_NO_OPTION} from '../../../utils/globalConfig'
 import TextArea from '../../../components/textarea/TextArea'
-import {COUNTRY_PHONE_CODE} from '../../../utils/globalConfig'
 import {ApplicationConfig} from '../../../modules/auth'
 import {
   CUSTOMER_TYPE,
@@ -203,14 +202,12 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     key: 'mobile_1_nil',
     component: InputAdvance,
     label: 'Mobile 1(NIL)',
-    defaultValue: COUNTRY_PHONE_CODE[0].value,
     column: 6,
   },
   {
     key: 'mobile_2_nil',
     component: InputAdvance,
     label: 'Mobile 2(NIL)',
-    defaultValue: COUNTRY_PHONE_CODE[0].value,
     column: 6,
     className: 'justify-content-xl-end',
   },
