@@ -14,6 +14,8 @@ import {
   EMPLOYMENT_STATUS,
   ID_TYPE,
   INCOME_DOCUMENT,
+  LANGUAGES,
+  LOAN_TYPE,
   MARKETING_TYPE,
   MLCB_CHECK,
   RESIDENTIAL_TYPE,
@@ -129,14 +131,15 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     isFullLayout: true,
   },
   {
-    key: 'loan_type',
-    component: Input,
+    key: 'type_name',
+    component: Select,
     label: 'Loan Type',
     isFullLayout: true,
+    options: LOAN_TYPE,
     required: true,
   },
   {
-    key: 'loan_amount_required',
+    key: 'loan_amount',
     component: Input,
     label: 'Loan Amount Required $',
     isFullLayout: true,
@@ -162,12 +165,14 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     component: Input,
     column: 6,
     label: 'Postal Code',
+    required: true
   },
   {
     key: 'block_no',
     component: Input,
     column: 6,
     label: 'Block/No',
+    className: 'justify-content-xl-end',
   },
   {
     key: 'street',
@@ -180,6 +185,7 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     component: Input,
     column: 6,
     label: 'Building',
+    className: 'justify-content-xl-end',
   },
   {
     key: 'mailing_address',
@@ -192,6 +198,7 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     component: Input,
     column: 6,
     label: 'Address (Foreign)',
+    className: 'justify-content-xl-end',
   },
   {
     key: 'mobile_1_nil',
@@ -206,6 +213,7 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     label: 'Mobile 2(NIL)',
     defaultValue: COUNTRY_PHONE_CODE[0].value,
     column: 6,
+    className: 'justify-content-xl-end',
   },
   {
     key: 'home_no_nil',
@@ -216,9 +224,10 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
   {
     key: 'language_spoken',
     component: Select,
-    data: [{label: 'English', value: 'English'}],
+    options: LANGUAGES,
     column: 6,
     label: 'Language Spoken',
+    className: 'justify-content-xl-end',
   },
   {
     key: 'email',
@@ -231,6 +240,7 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     component: Input,
     column: 6,
     label: 'Alternate Email',
+    className: 'justify-content-xl-end',
   },
 ]
 

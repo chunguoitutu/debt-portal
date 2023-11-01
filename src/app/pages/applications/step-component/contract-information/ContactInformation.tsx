@@ -1,23 +1,56 @@
-import Tippy from '@tippyjs/react'
+import {FC, Fragment, useMemo} from 'react'
 import clsx from 'clsx'
-import {Dispatch, FC, Fragment, SetStateAction} from 'react'
+import * as Yup from 'yup'
+import {useFormik} from 'formik'
+import Tippy from '@tippyjs/react'
+
 import Select from '../../../../components/select/select'
 import {COUNTRY_PHONE_CODE} from '../../../../constants/option'
+import Button from '../../../../components/button/Button'
+import {PropsStepApplication} from '../../../../modules/auth'
 
-interface Props {
-  config: any
-  formData: {[key: string]: string | any[]}
-  setFormData: Dispatch<
-    SetStateAction<{
-      [key: string]: string | any[]
-    }>
-  >
-}
 
-const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => {
+const ContactInformation: FC<PropsStepApplication> = ({
+  formData,
+  setFormData,
+  config = [],
+  onNextStep,
+}) => {
+  const initialValues = useMemo(() => {
+    return config.reduce(
+      (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
+      {}
+    )
+  }, [config])
+
+  const schema = useMemo(() => {
+    const schemaObject = config
+      .filter((item) => item.required)
+      .reduce(
+        (result, current) => ({
+          ...result,
+          [current.key]: Yup.string().required(
+            `${current.labelError || current.label} is required.`
+          ),
+        }),
+        {}
+      )
+    return Yup.object().shape(schemaObject)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config])
+
+  const {touched, errors, handleChange, handleSubmit} = useFormik({
+    initialValues,
+    validationSchema: schema,
+    onSubmit: onNextStep,
+  })
+
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 
+    //formik
+    handleChange(e)
     if (type === 'checkbox') {
       return setFormData({
         ...formData,
@@ -36,39 +69,11 @@ const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => 
   }
 
   function renderComponent(item) {
-    const {key, data = [], isFullLayout, column} = item
+    const {key, isFullLayout, column, options} = item
     let Component = item?.component
 
     // nothing
     if (!Component) return
-
-    if (Component.name === 'Radio') {
-      return data.map((item, i) => (
-        <Component
-          key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
-          name={key}
-          label={item.label}
-          checked={formData[key] === item.value}
-          value={item.value}
-          onChange={handleChangeData}
-        />
-      ))
-    }
-
-    if (Component.name === 'Checkbox') {
-      return data.map((item, i) => (
-        <Component
-          key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
-          name={key}
-          label={item.label}
-          checked={formData[key].includes(item.value)}
-          value={item.value}
-          onChange={handleChangeData}
-        />
-      ))
-    }
 
     const className =
       isFullLayout || !column
@@ -84,7 +89,7 @@ const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => 
           value={item.value}
           onChange={handleChangeData}
           insertLeft={
-            <Tippy offset={[120, 0]} content='Please choose the phone number you prefer'>
+            <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
               {/* Wrapper with a span tag to show tooltip */}
               <span>
                 <Select
@@ -103,12 +108,27 @@ const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => 
       )
     }
 
+    if (Component.name === 'Select') {
+      return (
+        <Component
+          value={formData[key]}
+          onChange={handleChangeData}
+          name={key}
+          classShared={className}
+          options={options}
+        />
+      )
+    }
+
     return (
       <Component
         value={item.value}
         onChange={handleChangeData}
         name={key}
         classShared={className}
+        error={errors[key]}
+        touched={touched[key]}
+        errorTitle={errors[key]}
       />
     )
   }
@@ -116,23 +136,44 @@ const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => 
   return (
     <>
       {config.map((item, i) => {
-        const {label, isFullLayout, column, isHide} = item
+        const {label, isFullLayout, column, isHide, required, className} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
         return (
           <div
-            className={`d-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8 ${
-              isFullLayout || !column ? 'full' : ''
-            }`}
+            className={clsx([
+              'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+              isFullLayout || !column ? 'full' : '',
+              className,
+            ])}
             key={i}
           >
-            <div className='input-title-application left fs-4 text-start text-lg-end'>{label}</div>
+            <div
+              className={clsx([
+                'input-title-application left fs-4 text-start text-lg-end',
+                required && 'required',
+              ])}
+            >
+              {label}
+            </div>
 
             {renderComponent(item)}
           </div>
         )
       })}
+      <div className='d-flex flex-end mt-10 full'>
+        <Button 
+          onClick={() => {}}
+          className='btn-secondary align-self-center me-3'
+          disabled={false}
+        >
+          Save Draft
+        </Button>
+        <Button loading={false} disabled={false} onClick={() => handleSubmit()}>
+          Continue
+        </Button>
+      </div>
     </>
   )
 }

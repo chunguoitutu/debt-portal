@@ -122,7 +122,10 @@
     font-weight: 500;
     line-height: 24px; /* 150% */
     flex-shrink: 0 !important;
-
+    position: relative;
+    top: 23px;
+    transform: translateY(-50%);
+    height: fit-content;
     &.left {
       width: $widthLabelCustom;
     }
