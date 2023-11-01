@@ -15,7 +15,6 @@ interface Props {
 }
 
 const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => {
-
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 
@@ -123,7 +122,7 @@ const ContactInformation: FC<Props> = ({formData, setFormData, config = []}) => 
 
         return (
           <div
-            className={`d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8 ${
+            className={`d-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8 ${
               isFullLayout || !column ? 'full' : ''
             }`}
             key={i}

@@ -96,6 +96,10 @@
     font-weight: 500;
     line-height: 24px; /* 150% */
     flex-shrink: 0 !important;
+    position: relative;
+    top: 23px;
+    transform: translateY(-50%);
+    height: fit-content;
 
     &.left {
       width: $widthLabel;
@@ -140,7 +144,7 @@
         width: $widthLabel;
       }
     }
-    .input-title-application-step2{
+    .input-title-application-step2 {
       &.left {
         width: $widthLabelCustom;
       }
@@ -181,8 +185,16 @@
       width: $widthLabel !important;
     }
 
-    .input-title-application-step2{
+    .input-title-application-step2 {
       width: $widthLabelCustom !important;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .input-title-application {
+      width: unset !important;
+      position: static;
+      transform: unset;
     }
   }
 }
