@@ -1,9 +1,9 @@
 import {FC, Fragment} from 'react'
-import {Button} from 'react-bootstrap'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
+import Button from '../../../../components/button/Button'
 
-const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [], onNextStep}) => {
+const Employment: FC<PropsStepApplication> = ({formData, setFormData, config = [], onNextStep}) => {
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 
@@ -25,7 +25,7 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options} = item
+    const {key, data = [], isFullLayout, column, options, typeInput, desc} = item
     let Component: any = item?.component
 
     const className =
@@ -35,6 +35,14 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
 
     // nothing
     if (!Component) return
+
+    // Special cases should be checked in advance
+    if (key === 'monthly_income_1') {
+      return (
+        <Component formData={formData} onChange={handleChangeData} errors={true} touched={true} />
+      )
+    }
+    // End special cases
 
     // handle for select
     if (Component.name === 'Select') {
@@ -77,6 +85,23 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
           onChange={handleChangeData}
         />
       ))
+    }
+
+    // handle for Input Advanced type input is money
+    if (Component.name === 'InputAdvance') {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={formData[key]}
+            onChange={handleChangeData}
+            name={key}
+            classShared={className}
+            typeInput={typeInput}
+          />
+
+          {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
+        </div>
+      )
     }
 
     if (Component.name === 'Input' || Component.name === 'InputTime') {
@@ -138,4 +163,4 @@ const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [],
   )
 }
 
-export default BankInfo
+export default Employment

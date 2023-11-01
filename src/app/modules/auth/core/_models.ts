@@ -175,12 +175,13 @@ export type CheckboxTreeItem = {
 
 export type Option = {
   label: string
-  value: string
+  value: string | number
 }
 
+// type money use for input advanced
 export type ApplicationConfig = {
   key: string
-  data?: any[]
+  data?: Option[]
   className?: string
   defaultValue?: string | number | any[]
   component?: FC<any>
@@ -188,10 +189,13 @@ export type ApplicationConfig = {
   isFullLayout?: boolean
   column?: 12 | 6
   isHide?: boolean
-  typeInput?: string
+  typeInput?: HTMLInputTypeAttribute & 'money'
   dependencyApi?: string
   required?: boolean
-  options?: Option[]
+  options?: {[key: string]: string | number}[]
+  keyLabelOfOptions?: string
+  keyValueOfOptions?: string
+  desc?: string
 }
 
 export type PropsStepApplication = {

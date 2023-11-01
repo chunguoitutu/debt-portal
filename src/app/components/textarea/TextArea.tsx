@@ -1,4 +1,4 @@
-import {TextareaHTMLAttributes} from 'react'
+import {FC, TextareaHTMLAttributes} from 'react'
 
 interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'id'> {
   className?: string
@@ -8,16 +8,14 @@ interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>
   isRequired?: boolean
 }
 
-const TextArea = (
-  {
-    name,
-    title,
-    className = '',
-    classShared = '',
-    isRequired = false,
-    ...rest
-  }: TextAreaProps,
-) => {
+const TextArea: FC<TextAreaProps> = ({
+  name,
+  title,
+  className = '',
+  classShared = '',
+  isRequired = false,
+  ...rest
+}) => {
   return (
     <div className={`d-flex flex-column gap-2 ${classShared}`}>
       {title && (

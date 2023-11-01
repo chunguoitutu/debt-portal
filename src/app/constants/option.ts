@@ -13,6 +13,4 @@ export const YES_NO_OPTION: Option[] = [
   {label: 'No', value: '0'},
 ]
 
-export const COUNTRY_PHONE_CODE: Option[] = [
-  {label: '+65', value: '+65'},
-]
+export const COUNTRY_PHONE_CODE: Option[] = [{label: '+65', value: '+65'}]

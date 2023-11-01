@@ -3,10 +3,12 @@ import BankInfo from '../pages/applications/step-component/bank-info/BankInfo'
 import {
   BANK_INFO_CONFIG,
   CONTRACT_INFORMATION,
+  EMPLOYMENT_CONFIG,
   GENERAL_INFORMATION_CONFIG,
   LOAN_DETAILS_CONFIG,
 } from '../pages/applications/step-component/config'
 import ContactInformation from '../pages/applications/step-component/contract-information/ContactInformation'
+import Employment from '../pages/applications/step-component/employment/Employment'
 import GeneralInformation from '../pages/applications/step-component/general-information/GeneralInformation'
 import LoanDetails from '../pages/applications/step-component/loan-details/LoanDetails'
 
@@ -30,6 +32,12 @@ export const STEP_APPLICATION: StepItem[] = [
     config: CONTRACT_INFORMATION,
   },
   {
+    label: 'Employment',
+    desc: 'Detailed Customer Loan Application.',
+    component: Employment,
+    config: EMPLOYMENT_CONFIG,
+  },
+  {
     label: 'Bank Information',
     desc: 'Customer Bank Information.',
     component: BankInfo,
@@ -37,12 +45,6 @@ export const STEP_APPLICATION: StepItem[] = [
   },
   {
     label: 'Loan Application',
-    desc: 'Detailed Customer Loan Application.',
-    component: GeneralInformation,
-    config: GENERAL_INFORMATION_CONFIG,
-  },
-  {
-    label: 'Guarantor',
     desc: 'Detailed Customer Loan Application.',
     component: GeneralInformation,
     config: GENERAL_INFORMATION_CONFIG,

@@ -65,12 +65,20 @@ const GeneralInformation: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options} = item
+    const {
+      key,
+      data = [],
+      isFullLayout,
+      column,
+      options,
+      keyLabelOfOptions,
+      keyValueOfOptions,
+    } = item
     let Component: any = item?.component
 
     const className =
       isFullLayout || !column
-        ? 'flex-grow-1 w-sm-300px'
+        ? 'flex-grow-1 w-300px w-lg-unset'
         : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
     // nothing
@@ -122,6 +130,8 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           value={formData[key]}
           onChange={handleChangeData}
           name={key}
+          fieldValueOption={keyValueOfOptions}
+          fieldLabelOption={keyLabelOfOptions}
           classShared={className}
           options={options}
         />
@@ -151,7 +161,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key].includes(item.value)}
+          checked={formData[key].includes(item.value.toString())}
           value={item.value}
           onChange={handleChangeData}
         />
