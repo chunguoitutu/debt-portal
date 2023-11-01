@@ -1,17 +1,20 @@
 import clsx from 'clsx'
-import { FC, Fragment,  useMemo} from 'react'
+import {FC, Fragment, useMemo} from 'react'
 import * as Yup from 'yup'
-
 
 import Button from '../../../../components/button/Button'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
-import { useFormik } from 'formik';
-import { PropsStepApplication } from '../../../../modules/auth'
+import {useFormik} from 'formik'
+import {PropsStepApplication} from '../../../../modules/auth'
 
 export const schema = Yup.object().shape({
   loan_type: Yup.string().required('Loan Type is required.').max(255, 'Maximum 255 symbols'),
-  loan_amount_required: Yup.string().required('Loan Amount Required is required.').max(255, 'Maximum 255 symbols'),
-  reason_for_loan: Yup.string().required('Reason For Loan is required.').max(255, 'Maximum 255 symbols'),
+  loan_amount_required: Yup.string()
+    .required('Loan Amount Required is required.')
+    .max(255, 'Maximum 255 symbols'),
+  reason_for_loan: Yup.string()
+    .required('Reason For Loan is required.')
+    .max(255, 'Maximum 255 symbols'),
 })
 
 const LoanDetails: FC<PropsStepApplication> = ({
@@ -20,8 +23,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   config = [],
   onNextStep,
 }) => {
-
-   const initialValues = useMemo(() => {
+  const initialValues = useMemo(() => {
     return config.reduce(
       (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
       {}
@@ -34,10 +36,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
     onSubmit: onNextStep,
   })
 
-
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
-    
+
     //formik
     handleChange(e)
 
@@ -67,16 +68,15 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
     if (Component.name === 'Checkbox') {
       return data.map((item, i) => (
-          <Component
-            key={i}
-            classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
-            name={key}
-            label={item.label}
-            checked={formData[key].includes(item.value)}
-            value={item.value}
-            onChange={handleChangeData}
-          />
-        
+        <Component
+          key={i}
+          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          name={key}
+          label={item.label}
+          checked={formData[key].includes(item.value)}
+          value={item.value}
+          onChange={handleChangeData}
+        />
       ))
     }
 
@@ -88,18 +88,18 @@ const LoanDetails: FC<PropsStepApplication> = ({
             value={item.value}
             onChange={handleChangeData}
             name={key}
-            touched= {touched}
-            errors = {errors}
+            touched={touched}
+            errors={errors}
           />
-          <ErrorMessage shouldShowMessage={!!errors[key] && !!touched[key]} message={errors[key] as string} />
+          <ErrorMessage
+            shouldShowMessage={!!errors[key] && !!touched[key]}
+            message={errors[key] as string}
+          />
         </div>
       )
     }
 
-    const className =
-      isFullLayout || !column
-        ? 'flex-grow-1'
-        : 'input-wrap flex-shrink-0'
+    const className = isFullLayout || !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
 
     return (
       <div className='d-flex flex-column w-100'>
@@ -125,7 +125,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
         return (
           <div
-            className={`d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8  ${
+            className={`d-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8  ${
               isFullLayout || !column ? 'full' : ''
             }`}
             key={i}
@@ -135,7 +135,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
                 'input-title-application-step2 left fs-4 text-start text-lg-end',
                 required && 'required',
               ])}
-            >{label}</div>
+            >
+              {label}
+            </div>
 
             {renderComponent(item)}
           </div>
