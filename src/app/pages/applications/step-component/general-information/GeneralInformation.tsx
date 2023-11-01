@@ -186,7 +186,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
         return (
           <div
             className={clsx([
-              'd-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-8',
+              'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
               isFullLayout || !column ? 'full' : '',
               className,
             ])}
