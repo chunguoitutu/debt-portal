@@ -77,7 +77,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
     if (!Component) return
 
     // Special cases should be checked in advance
-    if (key === 'first_name') {
+    if (key === 'firstname') {
       return (
         <Component
           formData={formData}
@@ -88,7 +88,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
       )
     }
 
-    if (key === 'nric_no') {
+    if (key === 'identification_no') {
       return (
         <div className='d-flex flex-column'>
           <Component
@@ -124,6 +124,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           name={key}
           classShared={className}
           options={options}
+          dropDownGroup={item.dropDownGroup}
         />
       )
     }

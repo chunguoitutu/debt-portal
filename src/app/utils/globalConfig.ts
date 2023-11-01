@@ -11,9 +11,14 @@ import RolePage from '../pages/settings/role/RoleManagement'
 import UserManagement from '../pages/settings/user/UserManagement'
 import {v4 as uuidv4} from 'uuid'
 
-type BaseConfig = {
+export type BaseConfig = {
   value: string | number
   label: string
+}
+
+export type DropDownGroup = {
+  name: string
+  options: BaseConfig[]
 }
 
 export const ROLE_PRIORITY: BaseConfig[] = [
@@ -167,6 +172,115 @@ export const PURPOSE_OF_LOAN: BaseConfig[] = [
   {
     value: 'others',
     label: 'Others',
+  },
+]
+
+export const ID_TYPE: BaseConfig[] = [
+  {
+    value: 'singapore_nric_no',
+    label: 'Singapore NRIC No',
+  },
+  {
+    value: 'foreign_identification_number',
+    label: 'Foreign Identification Number',
+  },
+]
+
+export const MARKETING_TYPE: BaseConfig[] = [
+  {
+    value: 'yellow_pages',
+    label: 'Yellow Pages',
+  },
+  {
+    value: 'walk_in',
+    label: 'Walk-in',
+  },
+  {
+    value: 'internet',
+    label: 'Internet',
+  },
+  {
+    value: 'adbrandz',
+    label: 'Adbrandz',
+  },
+  {
+    value: 'referral',
+    label: 'Referral',
+  },
+  {
+    value: 'kst',
+    label: 'KST',
+  },
+  {
+    value: 'volunteer_welfare',
+    label: 'Volunteer Welfare Organisation',
+  },
+  {
+    value: 'others',
+    label: 'Others',
+  },
+]
+
+export const RESIDENTIAL_TYPE: DropDownGroup[] = [
+  {
+    name: 'HDB',
+    options: [
+      {
+        value: '1_Room',
+        label: '1 Room',
+      },
+      {
+        value: '2_Room',
+        label: '2 Room',
+      },
+      {
+        value: '3_Room',
+        label: '3 Room',
+      },
+      {
+        value: '4_Room',
+        label: '4 Room',
+      },
+      {
+        value: '5_Room',
+        label: '5 Room',
+      },
+    ],
+  },
+  {
+    name: 'EXECUTIVE',
+    options: [
+      {
+        value: 'exec',
+        label: 'Exec',
+      },
+    ],
+  },
+  {
+    name: 'PRIVATE',
+    options: [
+      {
+        value: 'apartment',
+        label: 'Apartment',
+      },
+      {
+        value: 'condo',
+        label: 'Condo',
+      },
+      {
+        value: 'landed',
+        label: 'Landed',
+      },
+    ],
+  },
+  {
+    name: 'NONE',
+    options: [
+      {
+        value: 'not_own',
+        label: 'Does not own any property',
+      },
+    ],
   },
 ]
 

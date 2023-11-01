@@ -1,4 +1,5 @@
 import {Dispatch, FC, HTMLInputTypeAttribute, SetStateAction} from 'react'
+import {BaseConfig, DropDownGroup} from '../../../utils/globalConfig'
 
 export type LoginInfo = {
   username: string
@@ -191,7 +192,8 @@ export type ApplicationConfig = {
   typeInput?: string
   dependencyApi?: string
   required?: boolean
-  options?: Option[]
+  options?: Option[] | BaseConfig[] | DropDownGroup[]
+  dropDownGroup?: boolean
 }
 
 export type PropsStepApplication = {

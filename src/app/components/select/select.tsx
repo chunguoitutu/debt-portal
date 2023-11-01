@@ -15,6 +15,7 @@ interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className
   errorTitle?: string
   classShared?: string
   isOptionDefault?: boolean
+  dropDownGroup?: boolean | undefined
 }
 
 const Select: FC<Props> = ({
@@ -31,6 +32,7 @@ const Select: FC<Props> = ({
   isOptionDefault = true,
   required = false,
   classShared = 'row mb-6',
+  dropDownGroup,
   ...rest
 }) => {
   return (
@@ -49,13 +51,25 @@ const Select: FC<Props> = ({
           {...rest}
         >
           {isOptionDefault && <option value=''></option>}
-          {options?.map((o, i) => {
-            return (
-              <option value={o[fieldValueOption]} key={i}>
-                {o[fieldLabelOption]}
-              </option>
-            )
-          })}
+          {dropDownGroup
+            ? options?.map((o, i) => {
+                return (
+                  <optgroup label={o.name} key={i}>
+                    {o.options.map((op) => (
+                      <option value={op.value} key={op.value}>
+                        {op.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                )
+              })
+            : options?.map((o, i) => {
+                return (
+                  <option value={o[fieldValueOption]} key={i}>
+                    {o[fieldLabelOption]}
+                  </option>
+                )
+              })}
           {children}
         </select>
         {error && touched && (
