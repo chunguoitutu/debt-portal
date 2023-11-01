@@ -17,7 +17,6 @@ export type DropDownGroup = {
 }
 
 export const ROLE_PRIORITY: Option[] = [
-
   {
     value: 1,
     label: 'Full-Access',
@@ -318,6 +317,21 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     ],
   },
 ]
+
+export const SALUTATION_OPTION: Option[] = [
+  {label: 'Mr', value: 'mr'},
+  {label: 'Ms', value: 'ms'},
+  {label: 'Mrs', value: 'mrs'},
+  {label: 'Mdm', value: 'mdm'},
+  {label: 'Dr', value: 'dr'},
+]
+
+export const YES_NO_OPTION: Option[] = [
+  {label: 'Yes', value: '1'},
+  {label: 'No', value: '0'},
+]
+
+export const COUNTRY_PHONE_CODE: Option[] = [{label: '+65', value: '+65'}]
 
 const nth = (d) => {
   const dString = String(d)

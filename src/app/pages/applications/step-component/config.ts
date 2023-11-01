@@ -5,9 +5,9 @@ import {Input} from '../../../components/inputs/input'
 import {InputTime} from '../../../components/inputs/inputTime'
 import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
-import {YES_NO_OPTION} from '../../../constants/option'
+import {YES_NO_OPTION} from '../../../utils/globalConfig'
 import TextArea from '../../../components/textarea/TextArea'
-import {COUNTRY_PHONE_CODE} from '../../../constants/option'
+import {COUNTRY_PHONE_CODE} from '../../../utils/globalConfig'
 import {ApplicationConfig} from '../../../modules/auth'
 import {
   CUSTOMER_TYPE,
@@ -22,7 +22,6 @@ import {
 } from '../../../utils/globalConfig'
 import {COUNTRY_LIST} from '../../../constants/countries'
 import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
-
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -165,7 +164,7 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     component: Input,
     column: 6,
     label: 'Postal Code',
-    required: true
+    required: true,
   },
   {
     key: 'block_no',

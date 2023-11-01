@@ -5,10 +5,9 @@ import {useFormik} from 'formik'
 import Tippy from '@tippyjs/react'
 
 import Select from '../../../../components/select/select'
-import {COUNTRY_PHONE_CODE} from '../../../../constants/option'
+import {COUNTRY_PHONE_CODE} from '../../../../utils/globalConfig'
 import Button from '../../../../components/button/Button'
 import {PropsStepApplication} from '../../../../modules/auth'
-
 
 const ContactInformation: FC<PropsStepApplication> = ({
   formData,
@@ -163,7 +162,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
         )
       })}
       <div className='d-flex flex-end mt-10 full'>
-        <Button 
+        <Button
           onClick={() => {}}
           className='btn-secondary align-self-center me-3'
           disabled={false}

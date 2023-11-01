@@ -1,4 +1,5 @@
 export const COUNTRY_LIST = [
+  {name: 'Singapore', code: 'SG'},
   {name: 'Afghanistan', code: 'AF'},
   {name: 'land Islands', code: 'AX'},
   {name: 'Albania', code: 'AL'},
@@ -195,7 +196,6 @@ export const COUNTRY_LIST = [
   {name: 'Serbia', code: 'RS'},
   {name: 'Seychelles', code: 'SC'},
   {name: 'Sierra Leone', code: 'SL'},
-  {name: 'Singapore', code: 'SG'},
   {name: 'Slovakia', code: 'SK'},
   {name: 'Slovenia', code: 'SI'},
   {name: 'Solomon Islands', code: 'SB'},
