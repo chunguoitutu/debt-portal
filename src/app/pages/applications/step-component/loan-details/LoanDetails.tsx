@@ -4,9 +4,8 @@ import * as Yup from 'yup'
 
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import {useFormik} from 'formik'
-import {PropsStepApplication} from '../../../../modules/auth'
+import {PropsStepApplication, ApplicationConfig} from '../../../../modules/auth'
 import GeneralButton from '../GeneralButton'
-import {ApplicationConfig} from '../../../../modules/auth'
 
 const LoanDetails: FC<PropsStepApplication> = ({
   changeStep,

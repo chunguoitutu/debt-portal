@@ -5,9 +5,8 @@ import {useFormik} from 'formik'
 import Tippy from '@tippyjs/react'
 import Select from '../../../../components/select/select'
 import {COUNTRY_PHONE_CODE} from '../../../../utils/globalConfig'
-import {PropsStepApplication} from '../../../../modules/auth'
+import {PropsStepApplication, ApplicationConfig} from '../../../../modules/auth'
 import GeneralButton from '../GeneralButton'
-import {ApplicationConfig} from '../../../../modules/auth'
 
 const ContactInformation: FC<PropsStepApplication> = ({
   changeStep,
@@ -119,7 +118,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
               <span>
                 <Select
                   onChange={handleChangeData}
-                  value={formData.country_phone_code}
+                  value={formData[key]}
                   isOptionDefault={false}
                   classShared='m-0'
                   className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
