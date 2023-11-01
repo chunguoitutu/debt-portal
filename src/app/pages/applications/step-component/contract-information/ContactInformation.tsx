@@ -1,9 +1,8 @@
-import {FC, Fragment, useMemo} from 'react'
+import {FC, Fragment, useEffect, useMemo} from 'react'
 import clsx from 'clsx'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import Tippy from '@tippyjs/react'
-
 import Select from '../../../../components/select/select'
 import {COUNTRY_PHONE_CODE} from '../../../../utils/globalConfig'
 import {PropsStepApplication} from '../../../../modules/auth'
@@ -11,16 +10,41 @@ import GeneralButton from '../GeneralButton'
 import {ApplicationConfig} from '../../../../modules/auth'
 
 const ContactInformation: FC<PropsStepApplication> = ({
+  changeStep,
   formData,
   setFormData,
   config = [],
-  onNextStep,
+  onGoToStep,
+  setChangeStep,
 }) => {
+  useEffect(() => {
+    if (!changeStep) return
+
+    validateForm().then((objectError) => {
+      if (Object.keys(objectError).length > 0) {
+        console.log(objectError)
+
+        setErrors(objectError)
+        setTouched(
+          Object.keys(objectError).reduce((result, current) => ({...result, [current]: true}), {})
+        )
+        setChangeStep(undefined)
+      } else {
+        onGoToStep(changeStep)
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changeStep])
+
   const initialValues = useMemo(() => {
     return config.reduce(
-      (result, current) => ({...result, [current.key]: current.defaultValue || ''}),
+      (result, current) => ({
+        ...result,
+        [current.key]: formData[current.key] || current.defaultValue || '',
+      }),
       {}
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
   const schema = useMemo(() => {
@@ -40,11 +64,12 @@ const ContactInformation: FC<PropsStepApplication> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
-  const {touched, errors, handleChange, handleSubmit} = useFormik({
-    initialValues,
-    validationSchema: schema,
-    onSubmit: onNextStep,
-  })
+  const {touched, errors, handleChange, handleSubmit, validateForm, setErrors, setTouched} =
+    useFormik({
+      initialValues,
+      validationSchema: schema,
+      onSubmit: () => onGoToStep(),
+    })
 
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target

@@ -210,5 +210,7 @@ export type PropsStepApplication = {
       [key: string]: string | any[]
     }>
   >
-  onNextStep: () => void
+  changeStep: number | undefined
+  setChangeStep: Dispatch<SetStateAction<number | undefined>>
+  onGoToStep: (a?: number) => void
 }

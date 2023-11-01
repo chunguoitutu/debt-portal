@@ -46,8 +46,8 @@ export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Completion',
     desc: 'Review & Save Application.',
-    component: GeneralInformation,
-    config: GENERAL_INFORMATION_CONFIG,
+    component: BankInfo,
+    config: BANK_INFO_CONFIG,
   },
 ]
 

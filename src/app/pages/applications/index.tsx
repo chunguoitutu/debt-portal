@@ -1,10 +1,11 @@
-import {useMemo, useState} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import BackgroundCheck from './background-check/BackgroundCheck'
-// import PrintOptions from './print-options/PrintOptions'
 import Step from '../../components/step/Step'
 import {STEP_APPLICATION} from '../../constants/step'
 import './style.scss'
+import HeaderApplication from '../../components/applications/HeaderApplication'
+import {PropsStepApplication} from '../../modules/auth'
 import Remark from './remark/Remark'
 
 const profileBreadCrumbs: Array<PageLink> = [
@@ -23,8 +24,9 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(5)
+  const [currentStep, setCurrentStep] = useState<number>(1)
   const [stepCompleted, setStepCompleted] = useState<number>(1)
+  const [changeStep, setChangeStep] = useState<number | undefined>()
   const [formData, setFormData] = useState<{[key: string]: string | any[]}>(
     STEP_APPLICATION.flatMap((item) => item.config).reduce(
       (result, current) => ({
@@ -35,17 +37,34 @@ export const Applications = () => {
     )
   )
 
-  const CurrentComponentControl = useMemo(() => {
+  const percentCompleted = useMemo(
+    () => (100 / STEP_APPLICATION.length) * (stepCompleted === 1 ? 0 : stepCompleted + 1),
+    [stepCompleted]
+  )
+
+  const CurrentComponentControl: FC<PropsStepApplication> | undefined = useMemo(() => {
     return STEP_APPLICATION[currentStep - 1].component
   }, [currentStep])
 
-  function handleChangeStep(step: number) {
-    setCurrentStep(step)
+  function handleValidateBeforeChangeStep(step: number) {
+    setChangeStep(step)
   }
 
-  function handleContinue() {
-    setStepCompleted(currentStep)
-    setCurrentStep(currentStep + 1)
+  function handleContinue(stepWantGoTo: number | undefined) {
+    // if argument undefined will go to next step
+    if (!stepWantGoTo) {
+      if (currentStep === STEP_APPLICATION.length) {
+        return alert('Completed fill form')
+      }
+
+      setStepCompleted(currentStep)
+      setCurrentStep(currentStep + 1)
+    } else {
+      setCurrentStep(stepWantGoTo)
+
+      // reset change step
+      setChangeStep(undefined)
+    }
   }
 
   return (
@@ -57,17 +76,25 @@ export const Applications = () => {
             data={STEP_APPLICATION}
             stepCompleted={stepCompleted}
             currentStep={currentStep}
-            onGoToStep={handleChangeStep}
+            onGoToStep={handleValidateBeforeChangeStep}
           />
         </div>
-        <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-10 d-flex flex-column h-fit-content'>
-          <div className='form-wrap w-100'>
+        <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-0 d-flex flex-column h-fit-content'>
+          <HeaderApplication
+            labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
+            percentCompleted={percentCompleted}
+            className='p-10'
+          />
+
+          <div className='form-wrap w-100 p-10'>
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config}
                 formData={formData}
                 setFormData={setFormData}
-                onNextStep={handleContinue}
+                onGoToStep={handleContinue}
+                changeStep={changeStep}
+                setChangeStep={setChangeStep}
               />
             )}
           </div>

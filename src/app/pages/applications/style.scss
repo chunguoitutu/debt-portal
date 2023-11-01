@@ -13,10 +13,29 @@
       grid-column: 1 / span 2;
     }
   }
+
+  .process {
+    border-radius: 50rem;
+    height: 8px;
+    position: relative;
+
+    .process-bar {
+      content: '';
+      position: absolute;
+      border-radius: inherit;
+      inset: 0;
+      background-color: var(--bs-gray-200);
+
+      &.percent-completed {
+        z-index: 1;
+        background-color: var(--bs-success);
+      }
+    }
+  }
+
   .border-application {
     $color-application-details: var(--bs-primary);
 
-    height: 56px;
     background-color: $color-application-details;
     border-radius: 8px 8px 8px 0px;
     padding: 16px;

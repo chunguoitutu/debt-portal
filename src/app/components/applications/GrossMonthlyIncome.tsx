@@ -43,7 +43,7 @@ const GrossMonthlyIncome: FC<Props> = ({errors = {}, touched = {}, formData = {}
 
           <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>
 
-          <ErrorMessage shouldShowMessage={errors[key] || touched[key]} message={errors[key]} />
+          <ErrorMessage shouldShowMessage={errors[key] && touched[key]} message={errors[key]} />
         </div>
       ))}
     </div>
