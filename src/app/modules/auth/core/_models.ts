@@ -190,7 +190,8 @@ export type ApplicationConfig = {
   isFullLayout?: boolean
   column?: 12 | 6
   isHide?: boolean
-  typeInput?: string
+  typeInput?: HTMLInputTypeAttribute,
+  typeInputAdvanced?: 'money',
   dependencyApi?: string
   required?: boolean
   options?: {[key: string]: string | number}[] | DropDownGroup[]

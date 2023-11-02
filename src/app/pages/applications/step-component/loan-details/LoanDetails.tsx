@@ -91,7 +91,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options, typeInput} = item
+    const {key, data = [], isFullLayout, column, options, typeInput, typeInputAdvanced} = item
     let Component: any = item?.component
 
     // nothing
@@ -130,6 +130,27 @@ const LoanDetails: FC<PropsStepApplication> = ({
     }
 
     const className = isFullLayout || !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
+
+    if (Component.name === 'InputAdvance') {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={formData[key]}
+            onChange={handleChangeData}
+            name={key}
+            classShared={className}
+            typeInput={typeInputAdvanced}
+            type= {typeInput}
+            noThereAreCommas= {false}
+          />
+          <ErrorMessage
+            shouldShowMessage={!!errors[key] && !!touched[key]}
+            message={errors[key] as string}
+          />
+        </div>
+      )
+    }
+
 
     if (Component.name === 'Select') {
       return (

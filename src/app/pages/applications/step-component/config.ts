@@ -138,11 +138,12 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'loan_amount_requested',
-    component: Input,
-    label: 'Loan Amount Required $',
+    component: InputAdvance,
+    label: 'Loan Amount Required',
     isFullLayout: true,
     required: true,
-    typeInput: 'number',
+    typeInputAdvanced: 'money',
+    typeInput: 'number'
   },
   {
     key: 'reason_for_loan',
@@ -351,19 +352,22 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'monthly_income',
     component: InputAdvance,
     label: 'Average Monthly Income',
-    typeInput: 'money',
+    typeInputAdvanced: 'money',
+    typeInput: 'number',
   },
   {
     key: '6_months_income',
     component: InputAdvance,
     label: 'Past 6 Month Gross Income',
-    typeInput: 'money',
+    typeInputAdvanced: 'money',
+    typeInput: 'number',
   },
   {
     key: 'annual_income',
     component: InputAdvance,
     label: 'Annual Gross Income',
-    typeInput: 'money',
+    typeInputAdvanced: 'money',
+    typeInput: 'number',
     desc: 'include AWS and Bonus',
   },
   {
