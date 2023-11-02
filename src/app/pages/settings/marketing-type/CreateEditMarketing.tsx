@@ -41,8 +41,9 @@ const CreatEditMarkettingType = ({
   const {rows, settings} = MAKETTING_TABLE_CONFIG
   const {swalToastTitle, endpoint} = settings
   const stepperRef = useRef<HTMLDivElement | null>(null)
+  console.log(data)
 
-  const [status, setStatus] = useState(data?.length > 0 ? data?.status : true)
+  const [status, setStatus] = useState(data?.status === 0 ? false : true)
 
   const generateField = React.useMemo(() => {
     if (data) {

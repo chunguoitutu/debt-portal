@@ -47,7 +47,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   async function onFetchDataList() {
     try {
       const endpoint = config.filter((data) => !!data.dependencyApi)
-      endpoint.map((d) => {
+      endpoint.forEach((d) => {
         request.post(d.dependencyApi || '', {status: true}).then((res) => {
           setdatas({...datas, [d.key]: res?.data?.data})
         })
