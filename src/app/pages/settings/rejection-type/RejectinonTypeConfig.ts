@@ -21,7 +21,7 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'rejection_type_name',
-      name: 'Rejection Type Name',
+      name: 'Rejection Type',
       informCreateEdit: {
         type: 'input',
         typeInput: 'text',
@@ -30,7 +30,7 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'rejection_type_code',
-      name: 'Rejection Type Code',
+      name: 'Code',
       informCreateEdit: {
         type: 'input',
         typeInput: 'text',
@@ -39,7 +39,7 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'rejection_type_description',
-      name: 'Rejection Type Description',
+      name: 'Description',
       informCreateEdit: {
         type: 'input',
         typeInput: 'text',

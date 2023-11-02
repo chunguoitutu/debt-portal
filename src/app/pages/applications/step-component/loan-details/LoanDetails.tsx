@@ -20,8 +20,6 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
     validateForm().then((objectError) => {
       if (Object.keys(objectError).length > 0) {
-        console.log(objectError)
-
         setErrors(objectError)
         setTouched(
           Object.keys(objectError).reduce((result, current) => ({...result, [current]: true}), {})
@@ -42,7 +40,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
       }),
       {}
     )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
   const schema = useMemo(() => {
@@ -71,7 +69,6 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
-    console.log(value, name)
 
     // formik
     handleChange(e)
@@ -94,7 +91,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options} = item
+    const {key, data = [], isFullLayout, column, options, typeInput} = item
     let Component: any = item?.component
 
     // nothing
@@ -164,6 +161,8 @@ const LoanDetails: FC<PropsStepApplication> = ({
           error={errors[key]}
           touched={touched[key]}
           errorTitle={errors[key]}
+          type={typeInput || 'text'}
+          noThereAreCommas={false}
         />
       </div>
     )

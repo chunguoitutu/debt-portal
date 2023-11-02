@@ -100,11 +100,11 @@ export type TableRow = {
   classNameTableBody?: string
   component?: any
   componentCreateEdit?: any
-  type?: 'datetime' | 'yes/no'
+  type?: string
   isHide?: boolean
   isCreateEdit?: boolean
   informCreateEdit?: {
-    type: 'input' | 'select' | 'textarea' | 'checkbox'
+    type: string
     typeInput?: HTMLInputTypeAttribute
     isRequired?: boolean
     fieldLabelOption?: string
@@ -190,7 +190,7 @@ export type ApplicationConfig = {
   isFullLayout?: boolean
   column?: 12 | 6
   isHide?: boolean
-  typeInput?: HTMLInputTypeAttribute & 'money'
+  typeInput?: string
   dependencyApi?: string
   required?: boolean
   options?: {[key: string]: string | number}[] | DropDownGroup[]
@@ -203,13 +203,135 @@ export type ApplicationConfig = {
 
 export type PropsStepApplication = {
   config: ApplicationConfig[]
-  formData: {[key: string]: string | any[]}
-  setFormData: Dispatch<
-    SetStateAction<{
-      [key: string]: string | any[]
-    }>
-  >
+  formData: ApplicationFormData
+  setFormData: Dispatch<SetStateAction<ApplicationFormData>>
   changeStep: number | undefined
   setChangeStep: Dispatch<SetStateAction<number | undefined>>
   onGoToStep: (a?: number) => void
+}
+
+export type ApplicationPayload = {
+  customer: {
+    id?: number
+    company_id: number
+    customer_no: string
+    identification_type: string
+    identification_no: string
+    gender: string
+    date_of_birth: string
+    country_id: number
+    firstname: string
+    lastname: string
+    prefix?: string
+    middlename?: string
+    telephone?: string
+    email?: string
+    username?: string
+    password?: string
+  }
+  borrower: {
+    id?: number
+    customer_id?: number
+    homephone?: string
+    mobilephone_1?: string
+    mobilephone_2?: string
+    mobilephone_3?: string
+    email_1?: string
+    email_2?: string
+    job_type_id?: number
+    employment_status?: string
+    monthly_income?: string
+    credit_score?: string
+    residential_type_id?: number
+    spoken_language?: string
+  }
+  application: {
+    id?: number
+    application_no?: string
+    status?: number
+    borrower_id?: string
+    loan_type_id?: string
+    application_date?: string
+    loan_amount_requested: number
+    application_notes?: string
+    loan_terms: number
+  }
+  bank_account: {
+    id?: number
+    borrower_id?: number
+    bank_name_1?: string
+    bank_code_1?: string
+    account_number_1?: string
+    bank_name_2?: string
+    bank_code_2?: string
+    account_number_2?: string
+  }
+  employment: {
+    id?: number
+    borrower_id?: number
+    company_name?: string
+    company_telephone?: string
+    specialization?: string
+    position?: string
+    occupation?: string
+    address?: string
+    portal_code?: string
+    monthly_income_1?: number
+    monthly_income_2?: number
+    monthly_income_3?: number
+    six_months_income?: number
+    annual_income?: string
+    pay_date?: string
+  }
+}
+
+export type ApplicationFormData = {
+  middlename: string
+  lastname: string
+  customer_type: string
+  firstname: string
+  identification_type: string
+  identification_no: string
+  residential_type: string
+  marketing_type: string
+  gender: string
+  date_of_birth: string
+  nationality: string
+  mlcb_check: string[]
+  loan_type_id: string
+  loan_amount_requested: string
+  reason_for_loan: string
+  address_full: string
+  postal_code: string
+  block_no: string
+  street: string
+  building: string
+  mailing_address: string
+  address_foreign: string
+  mobilephone_1: string
+  mobilephone_2: string
+  homephone: string
+  spoken_language: string
+  email_1: string
+  email_2: string
+  monthly_income_2: string
+  monthly_income_3: string
+  employment_status: string
+  company_name: string
+  address: string
+  office_no: string
+  portal_code: string
+  specialization: string
+  monthly_income_1: string
+  monthly_income: string
+  '6_months_income': string
+  annual_income: string
+  income_document: string[]
+  is_giro: string
+  bank_name_1: string
+  bank_name_2: string
+  account_number_1: string
+  account_number_2: string
+  bank_code_1: string
+  bank_code_2: string
 }
