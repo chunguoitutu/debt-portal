@@ -12,7 +12,7 @@ import {
   StepItem,
   useAuth,
 } from '../../modules/auth'
-import Remark from './remark/Remark'
+import Remark, {messages, send} from './remark/Remark'
 import Cookies from 'js-cookie'
 import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
@@ -34,6 +34,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
+  const [send, setSend] = useState<send[]>(messages)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [changeStep, setChangeStep] = useState<number | undefined>()
   const [formData, setFormData] = useState<ApplicationFormData>(
@@ -253,7 +254,7 @@ export const Applications = () => {
           </div>
           <div>
             {/* <PrintOptions /> */}
-            <Remark />
+            <Remark setSend={setSend} send={send} />
           </div>
         </div>
       </div>

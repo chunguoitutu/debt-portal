@@ -83,6 +83,7 @@ const CreateEditCompanies = ({
   const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik({
     initialValues: {
       ...generateField,
+      open_date: data ? data?.['open_date'].slice(0, 11) : '',
     },
     validationSchema: newCompaniesSchema,
     onSubmit: async (values: any, actions: any) => {
@@ -96,6 +97,7 @@ const CreateEditCompanies = ({
           address: values.address,
           website: values.website,
           open_date: new Date(values.open_date),
+          status: status ? 1 : 0,
         })
         .then((response) => {
           if (!response.data?.error) {
@@ -121,7 +123,7 @@ const CreateEditCompanies = ({
     if (information) {
       rows.forEach((row) => {
         if (row.key === 'open_date') {
-          setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DDTHH:mm'))
+          setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'))
         } else {
           setFieldValue(row.key, information[row.key])
         }
@@ -129,6 +131,7 @@ const CreateEditCompanies = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [information])
+  console.log(values)
 
   return createPortal(
     <Modal
@@ -167,7 +170,7 @@ const CreateEditCompanies = ({
                           error={errors[row?.key]}
                           touched={touched[row?.key]}
                           errorTitle={errors[row?.key]}
-                          value={values[row?.key] || ''}
+                          value={values[row?.key]}
                           onChange={handleChange}
                         />
                       ) : (

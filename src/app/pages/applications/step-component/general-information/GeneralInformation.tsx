@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {FC, Fragment, useEffect, useMemo} from 'react'
+import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import * as Yup from 'yup'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import Tippy from '@tippyjs/react'
@@ -8,6 +8,7 @@ import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import {useFormik} from 'formik'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import GeneralButton from '../GeneralButton'
+import request from '../../../../axios'
 
 const GeneralInformation: FC<PropsStepApplication> = ({
   formData,
@@ -17,6 +18,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
   onGoToStep,
   setChangeStep,
 }) => {
+  const [datas, setdatas] = useState({})
   useEffect(() => {
     if (!changeStep) return
 
@@ -33,6 +35,23 @@ const GeneralInformation: FC<PropsStepApplication> = ({
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changeStep])
+
+  async function onFetchDataList() {
+    try {
+      const endpoint = config.filter((data) => !!data.dependencyApi)
+      endpoint.map((d) => {
+        request.post(d.dependencyApi || '', {status: true}).then((res) => {
+          setdatas({...datas, [d.key]: res?.data?.data})
+        })
+      })
+    } catch (error) {
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    onFetchDataList()
+  }, [])
 
   const initialValues = useMemo(() => {
     return config.reduce(
@@ -101,6 +120,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
       options,
       keyLabelOfOptions,
       keyValueOfOptions,
+      dependencyApi,
     } = item
     let Component: any = item?.component
 
@@ -161,7 +181,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           fieldValueOption={keyValueOfOptions}
           fieldLabelOption={keyLabelOfOptions}
           classShared={className}
-          options={options}
+          options={!!dependencyApi ? datas[key] || [] : options}
           dropDownGroup={item.dropDownGroup}
         />
       )

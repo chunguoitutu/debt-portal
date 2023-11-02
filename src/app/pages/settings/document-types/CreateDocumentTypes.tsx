@@ -44,7 +44,7 @@ const CreateDocumentType = ({
   const stepperRef = useRef<HTMLDivElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
-  const [status, setStatus] = useState(data.status || false)
+  const [status, setStatus] = useState(data.status || true)
 
   const {rows, endpoint} = DOCUMENT_TABLE_CONFIG
 
