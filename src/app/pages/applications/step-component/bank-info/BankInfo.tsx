@@ -1,9 +1,22 @@
-import {FC, Fragment} from 'react'
+import {FC, Fragment, useEffect} from 'react'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
 import GeneralButton from '../GeneralButton'
 
-const BankInfo: FC<PropsStepApplication> = ({formData, setFormData, config = [], onGoToStep}) => {
+const BankInfo: FC<PropsStepApplication> = ({
+  formData,
+  setFormData,
+  config = [],
+  onGoToStep,
+  changeStep,
+}) => {
+  useEffect(() => {
+    if (!changeStep) return
+
+    onGoToStep(changeStep)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changeStep])
+
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
 

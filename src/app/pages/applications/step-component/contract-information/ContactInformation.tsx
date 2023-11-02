@@ -21,8 +21,6 @@ const ContactInformation: FC<PropsStepApplication> = ({
 
     validateForm().then((objectError) => {
       if (Object.keys(objectError).length > 0) {
-        console.log(objectError)
-
         setErrors(objectError)
         setTouched(
           Object.keys(objectError).reduce((result, current) => ({...result, [current]: true}), {})

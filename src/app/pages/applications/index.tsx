@@ -5,8 +5,17 @@ import Step from '../../components/step/Step'
 import {STEP_APPLICATION} from '../../constants/step'
 import './style.scss'
 import HeaderApplication from '../../components/applications/HeaderApplication'
-import {PropsStepApplication, StepItem} from '../../modules/auth'
+import {
+  ApplicationFormData,
+  ApplicationPayload,
+  PropsStepApplication,
+  StepItem,
+  useAuth,
+} from '../../modules/auth'
 import Remark from './remark/Remark'
+import Cookies from 'js-cookie'
+import {v4 as uuidv4} from 'uuid'
+import moment from 'moment'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -27,14 +36,14 @@ export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [changeStep, setChangeStep] = useState<number | undefined>()
-  const [formData, setFormData] = useState<{[key: string]: string | any[]}>(
+  const [formData, setFormData] = useState<ApplicationFormData>(
     STEP_APPLICATION.flatMap((item) => item.config).reduce(
       (result, current) => ({
         ...result,
         [current?.key as string]: current?.defaultValue || '',
       }),
       {}
-    )
+    ) as ApplicationFormData
   )
 
   const percentCompleted = useMemo(
@@ -43,6 +52,8 @@ export const Applications = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [stepCompleted]
   )
+
+  const {priority, currentUser} = useAuth()
 
   const CurrentComponentControl: FC<PropsStepApplication> | undefined = useMemo(() => {
     return STEP_APPLICATION[currentStep - 1].component
@@ -56,7 +67,7 @@ export const Applications = () => {
     // if argument undefined will go to next step
     if (!stepWantGoTo) {
       if (currentStep === STEP_APPLICATION.length) {
-        return alert('Completed fill form')
+        return handleSubmitForm()
       }
 
       setStepCompleted(currentStep)
@@ -67,6 +78,101 @@ export const Applications = () => {
       // reset change step
       setChangeStep(undefined)
     }
+  }
+
+  function handleSubmitForm() {
+    const {
+      identification_type,
+      identification_no,
+      date_of_birth,
+      firstname,
+      lastname,
+      middlename,
+      gender,
+      email_1,
+      email_2,
+      employment_status,
+      mobilephone_1,
+      mobilephone_2,
+      homephone,
+      monthly_income,
+      spoken_language,
+      loan_amount_requested,
+      loan_type_id,
+      account_number_1,
+      account_number_2,
+      bank_code_1,
+      bank_code_2,
+      bank_name_1,
+      bank_name_2,
+      monthly_income_1,
+      monthly_income_2,
+      monthly_income_3,
+      annual_income,
+      portal_code,
+      company_name,
+    } = formData
+
+    const company_id =
+      priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0
+
+    if (!+company_id)
+      return process.env.NODE_ENV === 'development' && console.warn('Missing company_id')
+
+    const payload: ApplicationPayload = {
+      customer: {
+        company_id: +company_id,
+        country_id: 1,
+        identification_type,
+        identification_no,
+        customer_no: uuidv4(),
+        date_of_birth,
+        firstname,
+        lastname,
+        middlename,
+        gender,
+      },
+      borrower: {
+        email_1,
+        email_2,
+        employment_status,
+        mobilephone_1,
+        mobilephone_2,
+        mobilephone_3: '',
+        homephone,
+        monthly_income,
+        job_type_id: 1,
+        spoken_language,
+      },
+      application: {
+        loan_terms: 12,
+        loan_amount_requested: +loan_amount_requested,
+        loan_type_id,
+        status: 1,
+        application_date: moment().format('L'),
+        application_notes: JSON.stringify([]),
+      },
+      bank_account: {
+        account_number_1,
+        account_number_2,
+        bank_code_1,
+        bank_code_2,
+        bank_name_1,
+        bank_name_2,
+      },
+      employment: {
+        portal_code,
+        annual_income,
+        address: '',
+        company_telephone: '',
+        company_name,
+        monthly_income_1: +monthly_income_1,
+        monthly_income_2: +monthly_income_2,
+        monthly_income_3: +monthly_income_3,
+      },
+    }
+
+    console.log(payload)
   }
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
@@ -128,7 +234,7 @@ export const Applications = () => {
             className='p-10'
           />
 
-          <div className='form-wrap w-100 p-10'>
+          <div className='form-wrap p-10'>
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config || []}
