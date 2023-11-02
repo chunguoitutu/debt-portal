@@ -89,7 +89,7 @@ const Employment: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options, typeInput, desc} = item
+    const {key, data = [], isFullLayout, column, options, typeInput, typeInputAdvanced, desc} = item
     let Component: any = item?.component
 
     const className =
@@ -165,7 +165,9 @@ const Employment: FC<PropsStepApplication> = ({
             onChange={handleChangeData}
             name={key}
             classShared={className}
-            typeInput={typeInput}
+            typeInput={typeInputAdvanced}
+            type= {typeInput}
+            noThereAreCommas= {false}
           />
 
           {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}

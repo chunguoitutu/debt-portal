@@ -39,6 +39,8 @@ const GrossMonthlyIncome: FC<Props> = ({errors = {}, touched = {}, formData = {}
             onChange={onChange}
             classShared='w-300px w-xl-unset'
             typeInput='money'
+            type = 'number'
+            noThereAreCommas= {false}
           />
 
           <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>
