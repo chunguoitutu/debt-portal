@@ -81,6 +81,9 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     className: 'justify-content-xl-end',
     required: true,
     options: MARKETING_TYPE,
+    keyLabelOfOptions: 'marketing_type_name',
+    keyValueOfOptions: 'id',
+    dependencyApi: 'config/marketing_type/listing',
   },
   {
     key: 'gender',
@@ -135,6 +138,9 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     isFullLayout: true,
     options: LOAN_TYPE,
     required: true,
+    keyLabelOfOptions: 'type_name',
+    keyValueOfOptions: 'id',
+    dependencyApi: '/config/loan_type/listing',
   },
   {
     key: 'loan_amount_requested',
@@ -143,7 +149,7 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     isFullLayout: true,
     required: true,
     typeInputAdvanced: 'money',
-    typeInput: 'number'
+    typeInput: 'number',
   },
   {
     key: 'reason_for_loan',

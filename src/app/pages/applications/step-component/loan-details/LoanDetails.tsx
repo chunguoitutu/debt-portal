@@ -1,11 +1,12 @@
 import clsx from 'clsx'
-import {FC, Fragment, useEffect, useMemo} from 'react'
+import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import * as Yup from 'yup'
 
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import {useFormik} from 'formik'
 import {PropsStepApplication, ApplicationConfig} from '../../../../modules/auth'
 import GeneralButton from '../GeneralButton'
+import request from '../../../../axios'
 
 const LoanDetails: FC<PropsStepApplication> = ({
   changeStep,
@@ -15,6 +16,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   onGoToStep,
   setChangeStep,
 }) => {
+  const [datas, setdatas] = useState({})
   useEffect(() => {
     if (!changeStep) return
 
@@ -42,6 +44,22 @@ const LoanDetails: FC<PropsStepApplication> = ({
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
+  async function onFetchDataList() {
+    try {
+      const endpoint = config.filter((data) => !!data.dependencyApi)
+      endpoint.map((d) => {
+        request.post(d.dependencyApi || '', {status: true}).then((res) => {
+          setdatas({...datas, [d.key]: res?.data?.data})
+        })
+      })
+    } catch (error) {
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    onFetchDataList()
+  }, [])
 
   const schema = useMemo(() => {
     const schemaObject = config
@@ -91,7 +109,18 @@ const LoanDetails: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options, typeInput, typeInputAdvanced} = item
+    const {
+      key,
+      data = [],
+      isFullLayout,
+      column,
+      options,
+      keyLabelOfOptions,
+      keyValueOfOptions,
+      typeInput,
+      typeInputAdvanced,
+      dependencyApi,
+    } = item
     let Component: any = item?.component
 
     // nothing
@@ -140,8 +169,8 @@ const LoanDetails: FC<PropsStepApplication> = ({
             name={key}
             classShared={className}
             typeInput={typeInputAdvanced}
-            type= {typeInput}
-            noThereAreCommas= {false}
+            type={typeInput}
+            noThereAreCommas={false}
           />
           <ErrorMessage
             shouldShowMessage={!!errors[key] && !!touched[key]}
@@ -151,7 +180,6 @@ const LoanDetails: FC<PropsStepApplication> = ({
       )
     }
 
-
     if (Component.name === 'Select') {
       return (
         <div className='d-flex flex-column w-100'>
@@ -160,7 +188,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
             onChange={handleChangeData}
             name={key}
             classShared={className}
-            options={options}
+            fieldValueOption={keyValueOfOptions}
+            fieldLabelOption={keyLabelOfOptions}
+            options={!!dependencyApi ? datas[key] || [] : options}
             touched={touched}
             errors={errors}
           />
