@@ -1,5 +1,6 @@
 import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
 import {DropDownGroup} from '../../../utils/globalConfig'
+import {number} from 'yup'
 
 export type LoginInfo = {
   username: string
@@ -190,8 +191,8 @@ export type ApplicationConfig = {
   isFullLayout?: boolean
   column?: 12 | 6
   isHide?: boolean
-  typeInput?: HTMLInputTypeAttribute,
-  typeInputAdvanced?: 'money',
+  typeInput?: HTMLInputTypeAttribute
+  typeInputAdvanced?: 'money'
   dependencyApi?: string
   required?: boolean
   options?: {[key: string]: string | number}[] | DropDownGroup[]
@@ -200,6 +201,7 @@ export type ApplicationConfig = {
   desc?: string
   dropDownGroup?: boolean
   labelError?: string
+  disabled?: boolean
 }
 
 export type PropsStepApplication = {
@@ -315,17 +317,17 @@ export type ApplicationFormData = {
   spoken_language: string
   email_1: string
   email_2: string
-  monthly_income_2: string
-  monthly_income_3: string
+  monthly_income_2: string | number
+  monthly_income_3: string | number
   employment_status: string
   company_name: string
   address: string
   office_no: string
   portal_code: string
   specialization: string
-  monthly_income_1: string
-  monthly_income: string
-  '6_months_income': string
+  monthly_income_1: string | number
+  monthly_income: string | number | any
+  '6_months_income': string | number
   annual_income: string
   income_document: string[]
   is_giro: string

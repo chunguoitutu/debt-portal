@@ -43,9 +43,8 @@ const CreateJobType = ({
   handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stepper, setStepper] = useState<StepperComponent | null>(null)
-  const [status, setStatus] = useState(data.status || true)
+  const [status, setStatus] = useState(data?.status === 0 ? false : true)
   const [requestMoreInformation, setRequestMoreInformation] = useState(
     data.request_more_information || false
   )

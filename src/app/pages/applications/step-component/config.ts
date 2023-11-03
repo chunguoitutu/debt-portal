@@ -302,13 +302,11 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
   {
     key: 'monthly_income_2',
     isHide: true,
-    required: true,
     label: 'Monthly Income 2',
   },
   {
     key: 'monthly_income_3',
     isHide: true,
-    required: true,
     label: 'Monthly Income 3',
   },
   {
@@ -348,17 +346,26 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     options: YES_NO_OPTION,
   },
   {
+    key: 'annual_income',
+    component: InputAdvance,
+    label: 'Annual Gross Income',
+    typeInputAdvanced: 'money',
+    typeInput: 'number',
+    required: true,
+    desc: 'include AWS and Bonus',
+  },
+  {
     key: 'monthly_income_1',
     component: GrossMonthlyIncome,
     label: 'Gross Monthly Income',
     labelError: 'Monthly Income 1',
-    required: true,
   },
   {
     key: 'monthly_income',
     component: InputAdvance,
     label: 'Average Monthly Income',
     typeInputAdvanced: 'money',
+    disabled: true,
     typeInput: 'number',
   },
   {
@@ -368,14 +375,7 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeInputAdvanced: 'money',
     typeInput: 'number',
   },
-  {
-    key: 'annual_income',
-    component: InputAdvance,
-    label: 'Annual Gross Income',
-    typeInputAdvanced: 'money',
-    typeInput: 'number',
-    desc: 'include AWS and Bonus',
-  },
+
   {
     key: 'income_document',
     data: INCOME_DOCUMENT,
