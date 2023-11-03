@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import {FC, Fragment, useEffect, useState} from 'react'
-
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import {PropsStepApplication, ApplicationConfig} from '../../../../modules/auth'
 import request from '../../../../axios'

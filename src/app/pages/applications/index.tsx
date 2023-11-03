@@ -20,6 +20,7 @@ import * as Yup from 'yup'
 import {BLOCK_ADDRESS_CONFIG} from './step-component/config'
 import {useFormik} from 'formik'
 import GeneralButton from './step-component/GeneralButton'
+import request from '../../axios'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -40,7 +41,6 @@ export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [send, setSend] = useState<send[]>(messages)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
-  const [changeStep, setChangeStep] = useState<number | undefined>()
 
   const initialValues: ApplicationFormData = useMemo(() => {
     return STEP_APPLICATION.flatMap((item) => item.config).reduce(
@@ -96,7 +96,7 @@ export const Applications = () => {
     initialValues,
     validationSchema: schema,
     validateOnMount: false,
-    onSubmit: () => handleContinue(),
+    onSubmit: () => {},
   })
 
   const percentCompleted = useMemo(
@@ -112,15 +112,36 @@ export const Applications = () => {
     return STEP_APPLICATION[currentStep - 1].component
   }, [currentStep])
 
-  function handleValidateBeforeChangeStep(step: number) {
-    setChangeStep(step)
+  function handleGoToStep(stepWantGoTo: number) {
+    // handle for block address
+    formik.validateForm(formik.values).then((errors) => {
+      if (Object.keys(errors).length > 0) {
+        formik.setErrors(errors)
+
+        const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
+        const errorBlockAddress = errors.address_contact_info
+          ? {
+              address_contact_info: ((errors?.address_contact_info as string[]) || [])?.map(
+                (item) => Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
+              ),
+            }
+          : {}
+
+        formik.setTouched({
+          ...error,
+          ...errorBlockAddress,
+        })
+      } else {
+        setCurrentStep(stepWantGoTo)
+      }
+    })
   }
 
-  function handleContinue(stepWantGoTo?: number) {
+  function handleContinue() {
     if (currentStep === STEP_APPLICATION.length) {
       handleSubmitForm()
     } else {
-      setStepCompleted(stepWantGoTo ? stepWantGoTo : currentStep)
+      currentStep > stepCompleted && setStepCompleted(currentStep)
       setCurrentStep(currentStep + 1)
     }
   }
@@ -173,7 +194,7 @@ export const Applications = () => {
         identification_type,
         identification_no,
         customer_no: uuidv4(),
-        date_of_birth,
+        date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
         firstname,
         lastname,
         middlename,
@@ -222,7 +243,11 @@ export const Applications = () => {
         address_type_id: +item.address_type_id,
       })),
     }
-    console.log(payload, 'hi')
+
+    request
+      .post('/application/create', payload)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.error(err))
   }
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
@@ -265,7 +290,7 @@ export const Applications = () => {
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [formik.values])
 
   return (
     <>
@@ -276,7 +301,7 @@ export const Applications = () => {
             data={_STEP_APPLICATION}
             stepCompleted={stepCompleted}
             currentStep={currentStep}
-            onGoToStep={handleValidateBeforeChangeStep}
+            onGoToStep={handleGoToStep}
           />
         </div>
         <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-0 d-flex flex-column h-fit-content'>
@@ -290,9 +315,6 @@ export const Applications = () => {
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config || []}
-                onGoToStep={handleContinue}
-                changeStep={changeStep}
-                setChangeStep={setChangeStep}
                 formik={formik}
               />
             )}
@@ -303,18 +325,23 @@ export const Applications = () => {
                   if (Object.keys(errors).length > 0) {
                     formik.setErrors(errors)
 
-                    // handle for block address
+                    const error = Object.keys(errors).reduce(
+                      (acc, curr) => ({...acc, [curr]: true}),
+                      {}
+                    )
+                    const errorBlockAddress = errors.address_contact_info
+                      ? {
+                          address_contact_info: (
+                            (errors?.address_contact_info as string[]) || []
+                          )?.map((item) =>
+                            Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
+                          ),
+                        }
+                      : {}
+
                     formik.setTouched({
-                      ...formik.touched,
-                      ...(errors.address_contact_info
-                        ? {
-                            address_contact_info: (
-                              (errors?.address_contact_info as string[]) || []
-                            )?.map((item) =>
-                              Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
-                            ),
-                          }
-                        : {}),
+                      ...error,
+                      ...errorBlockAddress,
                     })
                   } else {
                     handleContinue()

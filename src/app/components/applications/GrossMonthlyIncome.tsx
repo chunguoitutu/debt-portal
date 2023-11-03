@@ -28,7 +28,6 @@ const data = [
 
 const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) => {
   const {values, setFieldValue, handleChange, errors, touched} = formik
-  console.log(annualIncome)
 
   return (
     <div className='row w-100 gy-5'>
