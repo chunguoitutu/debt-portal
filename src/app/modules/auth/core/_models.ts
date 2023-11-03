@@ -111,6 +111,7 @@ export type TableRow = {
     fieldLabelOption?: string
     fieldValueOption?: string
   }
+  isShowInput?: boolean
 }
 
 export type TableConfig = {

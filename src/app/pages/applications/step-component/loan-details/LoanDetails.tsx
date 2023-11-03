@@ -1,11 +1,8 @@
 import clsx from 'clsx'
-import {FC, Fragment, useEffect, useMemo, useState} from 'react'
-import * as Yup from 'yup'
+import {FC, Fragment, useEffect, useState} from 'react'
 
 import ErrorMessage from '../../../../components/error/ErrorMessage'
-import {useFormik} from 'formik'
 import {PropsStepApplication, ApplicationConfig} from '../../../../modules/auth'
-import GeneralButton from '../GeneralButton'
 import request from '../../../../axios'
 
 const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
@@ -28,30 +25,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
     }
   }
 
-  const {values, touched, errors, handleChange, handleSubmit} = formik
-
-  // function handleChangeData(e: React.ChangeEvent<any>) {
-  //   const {value, type, checked, name} = e.target
-
-  //   // formik
-  //   handleChange(e)
-
-  //   if (type === 'checkbox') {
-  //     return setvalues({
-  //       ...values,
-  //       [name]: Array.isArray(values[name])
-  //         ? values[name].includes(value)
-  //           ? Array.from(values[name]).filter((item) => item !== value)
-  //           : [...Array.from(typeof values[name] === 'string' ? '' : values[name]), value]
-  //         : checked,
-  //     })
-  //   }
-
-  //   setvalues({
-  //     ...values,
-  //     [name]: value,
-  //   })
-  // }
+  const {values, touched, errors, handleChange} = formik
 
   function renderComponent(item: ApplicationConfig) {
     const {
