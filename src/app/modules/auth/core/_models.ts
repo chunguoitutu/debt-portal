@@ -1,5 +1,6 @@
 import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
 import {DropDownGroup} from '../../../utils/globalConfig'
+import {number} from 'yup'
 
 export type LoginInfo = {
   username: string
@@ -282,7 +283,7 @@ export type ApplicationPayload = {
     monthly_income_2?: number
     monthly_income_3?: number
     six_months_income?: number
-    annual_income?: string
+    annual_income?: string | number | any
     pay_date?: string
   }
   address: any
@@ -327,7 +328,7 @@ export type ApplicationFormData = {
   monthly_income_1: string | number
   monthly_income: string | number | any
   '6_months_income': string | number
-  annual_income: string
+  annual_income: string | number
   income_document: string[]
   is_giro: string
   bank_name_1: string
