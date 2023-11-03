@@ -8,42 +8,13 @@ import {PropsStepApplication, ApplicationConfig} from '../../../../modules/auth'
 import GeneralButton from '../GeneralButton'
 import request from '../../../../axios'
 
-const LoanDetails: FC<PropsStepApplication> = ({
-  changeStep,
-  formData,
-  setFormData,
-  config = [],
-  onGoToStep,
-  setChangeStep,
-}) => {
+const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   const [dataLoanType, setDataLoanType] = useState({})
+
   useEffect(() => {
-    if (!changeStep) return
-
-    validateForm().then((objectError) => {
-      if (Object.keys(objectError).length > 0) {
-        setErrors(objectError)
-        setTouched(
-          Object.keys(objectError).reduce((result, current) => ({...result, [current]: true}), {})
-        )
-        setChangeStep(undefined)
-      } else {
-        onGoToStep(changeStep)
-      }
-    })
+    onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changeStep])
-
-  const initialValues = useMemo(() => {
-    return config.reduce(
-      (result, current) => ({
-        ...result,
-        [current.key]: formData[current.key] || current.defaultValue || '',
-      }),
-      {}
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
+  }, [])
   async function onFetchDataList() {
     try {
       const endpoint = config.filter((data) => !!data.dependencyApi)
@@ -57,57 +28,30 @@ const LoanDetails: FC<PropsStepApplication> = ({
     }
   }
 
-  useEffect(() => {
-    onFetchDataList()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const {values, touched, errors, handleChange, handleSubmit} = formik
 
-  const schema = useMemo(() => {
-    const schemaObject = config
-      .filter((item) => item.required)
-      .reduce(
-        (result, current) => ({
-          ...result,
-          [current.key]: Yup.string().required(
-            `${current.labelError || current.label} is required.`
-          ),
-        }),
-        {}
-      )
-    return Yup.object().shape(schemaObject)
+  // function handleChangeData(e: React.ChangeEvent<any>) {
+  //   const {value, type, checked, name} = e.target
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
+  //   // formik
+  //   handleChange(e)
 
-  const {touched, errors, handleChange, handleSubmit, validateForm, setErrors, setTouched} =
-    useFormik({
-      initialValues,
-      validationSchema: schema,
-      onSubmit: () => onGoToStep(),
-    })
+  //   if (type === 'checkbox') {
+  //     return setvalues({
+  //       ...values,
+  //       [name]: Array.isArray(values[name])
+  //         ? values[name].includes(value)
+  //           ? Array.from(values[name]).filter((item) => item !== value)
+  //           : [...Array.from(typeof values[name] === 'string' ? '' : values[name]), value]
+  //         : checked,
+  //     })
+  //   }
 
-  function handleChangeData(e: React.ChangeEvent<any>) {
-    const {value, type, checked, name} = e.target
-
-    // formik
-    handleChange(e)
-
-    if (type === 'checkbox') {
-      return setFormData({
-        ...formData,
-        [name]: Array.isArray(formData[name])
-          ? formData[name].includes(value)
-            ? Array.from(formData[name]).filter((item) => item !== value)
-            : [...Array.from(typeof formData[name] === 'string' ? '' : formData[name]), value]
-          : checked,
-      })
-    }
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-  }
+  //   setvalues({
+  //     ...values,
+  //     [name]: value,
+  //   })
+  // }
 
   function renderComponent(item: ApplicationConfig) {
     const {
@@ -120,6 +64,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
       keyValueOfOptions,
       typeInput,
       typeInputAdvanced,
+      typeCheckbox,
       dependencyApi,
     } = item
     let Component: any = item?.component
@@ -131,12 +76,12 @@ const LoanDetails: FC<PropsStepApplication> = ({
       return data.map((item, i) => (
         <Component
           key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key].includes(item.value.toString())}
           value={item.value}
-          onChange={handleChangeData}
+          onChange={handleChange}
+          checked={typeCheckbox === 'array' ? undefined : values[key]}
         />
       ))
     }
@@ -145,8 +90,8 @@ const LoanDetails: FC<PropsStepApplication> = ({
         <div className='d-flex flex-column w-100'>
           <Component
             classShared='flex-grow-1'
-            value={formData[key]}
-            onChange={handleChangeData}
+            value={values[key]}
+            onChange={handleChange}
             name={key}
             touched={touched}
             errors={errors}
@@ -165,8 +110,8 @@ const LoanDetails: FC<PropsStepApplication> = ({
       return (
         <div className='d-flex flex-column w-100'>
           <Component
-            value={formData[key]}
-            onChange={handleChangeData}
+            value={values[key]}
+            onChange={handleChange}
             name={key}
             classShared={className}
             typeInput={typeInputAdvanced}
@@ -185,8 +130,8 @@ const LoanDetails: FC<PropsStepApplication> = ({
       return (
         <div className='d-flex flex-column w-100'>
           <Component
-            value={formData[key]}
-            onChange={handleChangeData}
+            value={values[key]}
+            onChange={handleChange}
             name={key}
             classShared={className}
             fieldValueOption={keyValueOfOptions}
@@ -206,8 +151,8 @@ const LoanDetails: FC<PropsStepApplication> = ({
     return (
       <div className='d-flex flex-column w-100'>
         <Component
-          value={formData[key]}
-          onChange={handleChangeData}
+          value={values[key]}
+          onChange={handleChange}
           name={key}
           classShared={className}
           error={errors[key]}
@@ -249,7 +194,6 @@ const LoanDetails: FC<PropsStepApplication> = ({
           </div>
         )
       })}
-      <GeneralButton handleSubmit={handleSubmit} />
     </>
   )
 }

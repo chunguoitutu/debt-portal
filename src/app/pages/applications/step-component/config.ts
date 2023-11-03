@@ -126,7 +126,7 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     key: 'mlcb_check',
     data: MLCB_CHECK,
     component: Checkbox,
-    defaultValue: [],
+    defaultValue: true,
     label: '',
     isFullLayout: true,
   },
@@ -159,22 +159,6 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
 ]
 
 export const CONTRACT_INFORMATION: ApplicationConfig[] = [
-  // {
-  //   key: 'address_contact_info',
-  //   isHide: true,
-  //   defaultValue: [
-  //     {
-  //       address_type_id: '',
-  //       address_label: '',
-  //       street_1: '',
-  //       street_2: '',
-  //       city: '',
-  //       state: '',
-  //       postal_code: '',
-  //       country: '',
-  //     },
-  //   ],
-  // },
   {
     key: 'mobilephone_1',
     component: InputAdvance,
@@ -355,10 +339,11 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
   {
     key: 'income_document',
     data: INCOME_DOCUMENT,
-    defaultValue: [],
+    defaultValue: ['pay_slip'],
     component: Checkbox,
     label: 'Income Document',
     className: 'no-center-label',
+    typeCheckbox: 'array',
   },
 ]
 

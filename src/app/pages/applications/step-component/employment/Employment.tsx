@@ -1,102 +1,14 @@
-import {FC, Fragment, useEffect, useMemo, useState} from 'react'
+import {FC, Fragment, useState} from 'react'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
-import Button from '../../../../components/button/Button'
-import * as Yup from 'yup'
-import {useFormik} from 'formik'
+
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 
-const Employment: FC<PropsStepApplication> = ({
-  changeStep,
-  formData,
-  setFormData,
-  config = [],
-  onGoToStep,
-  setChangeStep,
-}) => {
+const Employment: FC<PropsStepApplication> = (props) => {
+  const {config = [], formik} = props
   const [annualIncome, setAnnualIncome] = useState(0)
-  useEffect(() => {
-    if (!changeStep) return
 
-    validateForm().then((objectError) => {
-      if (Object.keys(objectError).length > 0) {
-        setErrors(objectError)
-        setTouched(
-          Object.keys(objectError).reduce((result, current) => ({...result, [current]: true}), {})
-        )
-        setChangeStep(undefined)
-      } else {
-        onGoToStep(changeStep)
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changeStep])
-
-  const initialValues = useMemo(() => {
-    return config.reduce(
-      (result, current) => ({
-        ...result,
-        [current.key]: formData[current.key] || current.defaultValue || '',
-      }),
-      {}
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
-
-  const schema = useMemo(() => {
-    const schemaObject = config
-      .filter((item) => item.required)
-      .reduce(
-        (result, current) => ({
-          ...result,
-          [current.key]: Yup.string().required(
-            `${current.labelError || current.label} is required.`
-          ),
-        }),
-        {}
-      )
-    return Yup.object().shape(schemaObject)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
-
-  const {
-    touched,
-    setFieldValue,
-    errors,
-    handleChange,
-    handleSubmit,
-    validateForm,
-    setErrors,
-    setTouched,
-  } = useFormik({
-    initialValues,
-    validationSchema: schema,
-    onSubmit: () => onGoToStep(),
-  })
-
-  function handleChangeData(e: React.ChangeEvent<any>) {
-    const {value, type, checked, name} = e.target
-
-    // formik
-    handleChange(e)
-
-    if (type === 'checkbox') {
-      return setFormData({
-        ...formData,
-        [name]: Array.isArray(formData[name])
-          ? formData[name].includes(value)
-            ? Array.from(formData[name]).filter((item) => item !== value)
-            : [...Array.from(typeof formData[name] === 'string' ? '' : formData[name]), value]
-          : checked,
-      })
-    }
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-  }
+  const {values, touched, setFieldValue, errors, handleChange} = formik
 
   function renderComponent(item: ApplicationConfig) {
     const {
@@ -109,6 +21,7 @@ const Employment: FC<PropsStepApplication> = ({
       typeInput,
       typeInputAdvanced,
       desc,
+      typeCheckbox,
     } = item
     let Component: any = item?.component
 
@@ -122,19 +35,7 @@ const Employment: FC<PropsStepApplication> = ({
 
     // Special cases should be checked in advance
     if (key === 'monthly_income_1') {
-      return (
-        <Component
-          formData={formData}
-          onChange={handleChangeData}
-          errors={errors}
-          setFormData={setFormData}
-          setFieldValue={setFieldValue}
-          handleChange={handleChange}
-          touched={touched}
-          annualIncome={annualIncome}
-          setAnnualIncome={setAnnualIncome}
-        />
-      )
+      return <Component {...props} annualIncome={annualIncome} setAnnualIncome={setAnnualIncome} />
     }
     // End special cases
 
@@ -142,8 +43,8 @@ const Employment: FC<PropsStepApplication> = ({
     if (Component.name === 'Select') {
       return (
         <Component
-          value={formData[key]}
-          onChange={handleChangeData}
+          value={values[key]}
+          onChange={handleChange}
           name={key}
           classShared={className}
           options={options}
@@ -156,12 +57,12 @@ const Employment: FC<PropsStepApplication> = ({
       return data.map((item, i) => (
         <Component
           key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key] === item.value}
+          checked={values[key] === item.value}
           value={item.value}
-          onChange={handleChangeData}
+          onChange={handleChange}
         />
       ))
     }
@@ -171,12 +72,22 @@ const Employment: FC<PropsStepApplication> = ({
       return data.map((item, i) => (
         <Component
           key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key].includes(item.value.toString())}
           value={item.value}
-          onChange={handleChangeData}
+          onChange={(e) => {
+            if (typeCheckbox === 'array') {
+              const {value, checked} = e.target
+
+              const _value = [...values[key]]
+              checked ? _value.push(value) : _value.filter((item) => item !== values)
+              setFieldValue(key, _value)
+            } else {
+              handleChange(e)
+            }
+          }}
+          checked={typeCheckbox === 'array' ? undefined : values[key]}
         />
       ))
     }
@@ -186,25 +97,19 @@ const Employment: FC<PropsStepApplication> = ({
       return (
         <div className='d-flex flex-column w-100'>
           <Component
-            value={formData[key]}
+            value={values[key]}
             onBlur={(e: any) => {
               setAnnualIncome(+(Number(e.target.value) / 12).toFixed(2))
-              setFormData({
-                ...formData,
-                '6_months_income': +(Number(e.target.value) / 2).toFixed(2),
-                monthly_income: +(Number(e.target.value) / 12).toFixed(2),
-                monthly_income_1: +(Number(e.target.value) / 12).toFixed(2),
-                monthly_income_2: +(Number(e.target.value) / 12).toFixed(2),
-                monthly_income_3: +(Number(e.target.value) / 12).toFixed(2),
-              })
+
               setFieldValue('6_months_income', +(Number(e.target.value) / 2).toFixed(2))
+              setFieldValue('monthly_income', +(Number(e.target.value) / 12).toFixed(2))
+              setFieldValue('monthly_income_1', +(Number(e.target.value) / 12).toFixed(2))
+              setFieldValue('monthly_income_2', +(Number(e.target.value) / 12).toFixed(2))
+              setFieldValue('monthly_income_3', +(Number(e.target.value) / 12).toFixed(2))
             }}
             onChange={(e) => {
-              setFormData({
-                ...formData,
-                annual_income: Number(e.target.value),
-              })
-              setFieldValue('6_months_income', +(Number(e.target.value) / 2).toFixed(2))
+              setFieldValue('6_months_income', Number(e.target.value) / 2)
+              setFieldValue('annual_income', +e.target.value)
               handleChange(e)
             }}
             name={key}
@@ -224,8 +129,8 @@ const Employment: FC<PropsStepApplication> = ({
       return (
         <div className='d-flex flex-column w-100'>
           <Component
-            value={formData[key]}
-            onChange={handleChangeData}
+            value={values[key]}
+            onChange={handleChange}
             name={key}
             classShared={className}
             typeInput={typeInputAdvanced}
@@ -241,12 +146,7 @@ const Employment: FC<PropsStepApplication> = ({
 
     if (Component.name === 'Input' || Component.name === 'InputTime') {
       return (
-        <Component
-          value={formData[key]}
-          onChange={handleChangeData}
-          name={key}
-          classShared={className}
-        />
+        <Component value={values[key]} onChange={handleChange} name={key} classShared={className} />
       )
     }
 
@@ -283,17 +183,6 @@ const Employment: FC<PropsStepApplication> = ({
           </div>
         )
       })}
-
-      <div className='d-flex flex-end mt-10 full'>
-        <Button
-          onClick={() => {}}
-          className='btn-secondary align-self-center me-3'
-          disabled={false}
-        >
-          Save Draft
-        </Button>
-        <Button onClick={() => handleSubmit()}>Continue</Button>
-      </div>
     </>
   )
 }
