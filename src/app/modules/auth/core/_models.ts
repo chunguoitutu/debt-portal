@@ -1,6 +1,5 @@
 import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
 import {DropDownGroup} from '../../../utils/globalConfig'
-import {number} from 'yup'
 
 export type LoginInfo = {
   username: string

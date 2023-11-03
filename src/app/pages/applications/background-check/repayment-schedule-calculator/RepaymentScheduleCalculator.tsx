@@ -348,7 +348,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                                 case 'monthly_inst_amount':
                                   return (
                                     <td key={rt.key} className='p-4 content-calculator fs-4'>
-                                      {formatNumber(principal_per_month + interest_per_month)}
+                                      ${formatNumber(principal_per_month + interest_per_month)}
                                     </td>
                                   )
                                 default:

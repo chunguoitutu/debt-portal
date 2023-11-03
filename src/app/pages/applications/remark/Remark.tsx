@@ -113,6 +113,7 @@ const Remark = ({setSend, send}) => {
                 >
                   {moment(message.time).format('hh:mm A - DD/MM/YYYY')}
                 </span>
+              </div>
                 <span
                   style={{
                     marginLeft: '4px',
@@ -126,7 +127,6 @@ const Remark = ({setSend, send}) => {
                 >
                   by {message.user}
                 </span>
-              </div>
             </div>
           </div>
         ))}

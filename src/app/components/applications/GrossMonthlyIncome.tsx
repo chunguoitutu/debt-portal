@@ -42,7 +42,6 @@ const GrossMonthlyIncome: FC<Props> = ({
   setAnnualIncome,
   annualIncome,
 }) => {
-  const checkSetValue = formData
   return (
     <div className='row w-100 gy-5'>
       {data.map(({key, placeholder, desc}, i) => (
