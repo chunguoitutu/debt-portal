@@ -114,19 +114,19 @@ const Remark = ({setSend, send}) => {
                   {moment(message.time).format('hh:mm A - DD/MM/YYYY')}
                 </span>
               </div>
-                <span
-                  style={{
-                    marginLeft: '4px',
-                    fontSize: '12px',
-                    fontWeight: '500px',
-                    lineHeight: '26px',
-                    fontStyle: 'normal',
-                    color: '#0D6EFD',
-                    textTransform: 'capitalize',
-                  }}
-                >
-                  by {message.user}
-                </span>
+              <span
+                style={{
+                  marginLeft: '4px',
+                  fontSize: '12px',
+                  fontWeight: '500px',
+                  lineHeight: '26px',
+                  fontStyle: 'normal',
+                  color: '#0D6EFD',
+                  textTransform: 'capitalize',
+                }}
+              >
+                by {message.user}
+              </span>
             </div>
           </div>
         ))}

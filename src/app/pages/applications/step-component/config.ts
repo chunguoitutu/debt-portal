@@ -13,7 +13,6 @@ import {
   EMPLOYMENT_STATUS,
   ID_TYPE,
   INCOME_DOCUMENT,
-  LANGUAGES,
   LOAN_TYPE,
   MARKETING_TYPE,
   MLCB_CHECK,
@@ -160,52 +159,22 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
 ]
 
 export const CONTRACT_INFORMATION: ApplicationConfig[] = [
-  {
-    key: 'address_full',
-    component: Input,
-    label: 'Address Full',
-    isFullLayout: true,
-  },
-  {
-    key: 'postal_code',
-    component: Input,
-    column: 6,
-    label: 'Postal Code',
-    required: true,
-  },
-  {
-    key: 'block_no',
-    component: Input,
-    column: 6,
-    label: 'Block/No',
-    className: 'justify-content-xl-end',
-  },
-  {
-    key: 'street',
-    component: Input,
-    column: 6,
-    label: 'Street',
-  },
-  {
-    key: 'building',
-    component: Input,
-    column: 6,
-    label: 'Building',
-    className: 'justify-content-xl-end',
-  },
-  {
-    key: 'mailing_address',
-    component: Input,
-    column: 6,
-    label: 'Mailing Address',
-  },
-  {
-    key: 'address_foreign',
-    component: Input,
-    column: 6,
-    label: 'Address (Foreign)',
-    className: 'justify-content-xl-end',
-  },
+  // {
+  //   key: 'address_contact_info',
+  //   isHide: true,
+  //   defaultValue: [
+  //     {
+  //       address_type_id: '',
+  //       address_label: '',
+  //       street_1: '',
+  //       street_2: '',
+  //       city: '',
+  //       state: '',
+  //       postal_code: '',
+  //       country: '',
+  //     },
+  //   ],
+  // },
   {
     key: 'mobilephone_1',
     component: InputAdvance,
@@ -220,17 +189,16 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     className: 'justify-content-xl-end',
   },
   {
+    key: 'mobilephone_3',
+    component: InputAdvance,
+    label: 'Mobile 3(NIL)',
+    column: 6,
+  },
+  {
     key: 'homephone',
     component: Input,
     column: 6,
-    label: 'Home No.(NIL)',
-  },
-  {
-    key: 'spoken_language',
-    component: Select,
-    options: LANGUAGES,
-    column: 6,
-    label: 'Language Spoken',
+    label: 'Home Phone(NIL)',
     className: 'justify-content-xl-end',
   },
   {
@@ -246,6 +214,14 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     label: 'Alternate Email',
     className: 'justify-content-xl-end',
   },
+  // {
+  //   key: 'spoken_language',
+  //   component: Select,
+  //   options: LANGUAGES,
+  //   column: 6,
+  //   label: 'Language Spoken',
+  //   className: 'justify-content-xl-end',
+  // },
 ]
 
 export const BANK_INFO_CONFIG: ApplicationConfig[] = [
@@ -383,5 +359,73 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     component: Checkbox,
     label: 'Income Document',
     className: 'no-center-label',
+  },
+]
+
+export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
+  {
+    key: 'address_type_id',
+    component: Select,
+    label: 'Address Type',
+    column: 6,
+    dependencyApi: '/config/address_type/listing',
+    keyLabelOfOptions: 'address_type_name',
+    keyValueOfOptions: 'id',
+    required: true,
+  },
+  {
+    key: 'address_label',
+    component: Input,
+    label: 'Address Label',
+    column: 6,
+    className: 'justify-content-xl-end',
+    required: true,
+  },
+  {
+    key: 'street_1',
+    component: Input,
+    label: 'Street 1',
+    column: 6,
+    required: true,
+  },
+  {
+    key: 'street_2',
+    component: Input,
+    label: 'Street 2',
+    column: 6,
+    className: 'justify-content-xl-end',
+  },
+  {
+    key: 'city',
+    component: Input,
+    label: 'City',
+    column: 6,
+    required: true,
+  },
+  {
+    key: 'state',
+    component: Input,
+    label: 'State',
+    column: 6,
+    className: 'justify-content-xl-end',
+    required: true,
+  },
+  {
+    key: 'postal_code',
+    component: Input,
+    label: 'Postal Code',
+    column: 6,
+    required: true,
+  },
+  {
+    key: 'country',
+    component: Select,
+    label: 'Country',
+    column: 6,
+    className: 'justify-content-xl-end',
+    options: COUNTRY_LIST,
+    keyLabelOfOptions: 'name',
+    keyValueOfOptions: 'code',
+    required: true,
   },
 ]

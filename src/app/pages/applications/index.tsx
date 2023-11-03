@@ -43,7 +43,20 @@ export const Applications = () => {
         ...result,
         [current?.key as string]: current?.defaultValue || '',
       }),
-      {}
+      {
+        address_contact_info: [
+          {
+            address_type_id: '',
+            address_label: '',
+            street_1: '',
+            street_2: '',
+            city: '',
+            state: '',
+            postal_code: '',
+            country: '',
+          },
+        ],
+      }
     ) as ApplicationFormData
   )
 
@@ -112,6 +125,7 @@ export const Applications = () => {
       annual_income,
       portal_code,
       company_name,
+      address_contact_info,
     } = formData
 
     const company_id =
@@ -145,14 +159,6 @@ export const Applications = () => {
         job_type_id: 1,
         spoken_language,
       },
-      application: {
-        loan_terms: 12,
-        loan_amount_requested: +loan_amount_requested,
-        loan_type_id,
-        status: 1,
-        application_date: moment().format('L'),
-        application_notes: JSON.stringify([]),
-      },
       bank_account: {
         account_number_1,
         account_number_2,
@@ -171,6 +177,18 @@ export const Applications = () => {
         monthly_income_2: +monthly_income_2,
         monthly_income_3: +monthly_income_3,
       },
+      application: {
+        loan_terms: 12,
+        loan_amount_requested: +loan_amount_requested,
+        loan_type_id,
+        status: 1,
+        application_date: moment().format('L'),
+        application_notes: JSON.stringify([]),
+      },
+      address: address_contact_info.map((item) => ({
+        ...item,
+        address_type_id: +item.address_type_id,
+      })),
     }
     console.log(payload, 'hi')
   }
