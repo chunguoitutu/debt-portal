@@ -1,40 +1,23 @@
 import clsx from 'clsx'
-import {FC, Fragment, useEffect, useMemo, useState} from 'react'
-import * as Yup from 'yup'
+import {FC, Fragment, useEffect, useState} from 'react'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
-import {useFormik} from 'formik'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
-import GeneralButton from '../GeneralButton'
 import request from '../../../../axios'
 
-const GeneralInformation: FC<PropsStepApplication> = ({
-  formData,
-  setFormData,
-  config = [],
-  changeStep,
-  onGoToStep,
-  setChangeStep,
-}) => {
-  const [dataMarketing, setDataMarketing] = useState({})
-  useEffect(() => {
-    if (!changeStep) return
+const GeneralInformation: FC<PropsStepApplication> = (props) => {
+  const {config = [], formik} = props
 
-    validateForm().then((objectError) => {
-      if (Object.keys(objectError).length > 0) {
-        setErrors(objectError)
-        setTouched(
-          Object.keys(objectError).reduce((result, current) => ({...result, [current]: true}), {})
-        )
-        setChangeStep(undefined)
-      } else {
-        onGoToStep(changeStep)
-      }
-    })
+  const [dataMarketing, setDataMarketing] = useState({})
+
+  const {values, touched, errors, handleChange} = formik
+
+  useEffect(() => {
+    onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changeStep])
+  }, [])
 
   async function onFetchDataList() {
     try {
@@ -47,69 +30,6 @@ const GeneralInformation: FC<PropsStepApplication> = ({
     } catch (error) {
     } finally {
     }
-  }
-
-  useEffect(() => {
-    onFetchDataList()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const initialValues = useMemo(() => {
-    return config.reduce(
-      (result, current) => ({
-        ...result,
-        [current.key]: formData[current.key] || current.defaultValue || '',
-      }),
-      {}
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
-
-  const schema = useMemo(() => {
-    const schemaObject = config
-      .filter((item) => item.required)
-      .reduce(
-        (result, current) => ({
-          ...result,
-          [current.key]: Yup.string().required(
-            `${current.labelError || current.label} is required.`
-          ),
-        }),
-        {}
-      )
-    return Yup.object().shape(schemaObject)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config])
-
-  const {touched, errors, handleChange, handleSubmit, validateForm, setErrors, setTouched} =
-    useFormik({
-      initialValues,
-      validationSchema: schema,
-      onSubmit: () => onGoToStep(),
-    })
-
-  function handleChangeData(e: React.ChangeEvent<any>) {
-    const {value, type, checked, name} = e.target
-
-    // formik
-    handleChange(e)
-
-    if (type === 'checkbox') {
-      return setFormData({
-        ...formData,
-        [name]: Array.isArray(formData[name])
-          ? formData[name].includes(value)
-            ? Array.from(formData[name]).filter((item) => item !== value)
-            : [...Array.from(typeof formData[name] === 'string' ? '' : formData[name]), value]
-          : checked,
-      })
-    }
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
   }
 
   function renderComponent(item: ApplicationConfig) {
@@ -135,22 +55,15 @@ const GeneralInformation: FC<PropsStepApplication> = ({
 
     // Special cases should be checked in advance
     if (key === 'firstname') {
-      return (
-        <Component
-          formData={formData}
-          onChange={handleChangeData}
-          errors={errors}
-          touched={touched}
-        />
-      )
+      return <Component {...props} />
     }
 
     if (key === 'identification_no') {
       return (
         <div className='d-flex flex-column'>
           <Component
-            value={formData[key]}
-            onChange={handleChangeData}
+            value={values[key]}
+            onChange={handleChange}
             name={key}
             classShared={className}
             insertRight={
@@ -163,7 +76,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
             }
           />
 
-          <ErrorMessage shouldShowMessage={errors[key] && touched[key]} message={errors[key]} />
+          <ErrorMessage shouldShowMessage={!!errors[key] && !!touched[key]} message={errors[key]} />
         </div>
       )
     }
@@ -176,8 +89,8 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           error={errors[key]}
           touched={touched[key]}
           errorTitle={errors[key]}
-          value={formData[key]}
-          onChange={handleChangeData}
+          value={values[key]}
+          onChange={handleChange}
           name={key}
           fieldValueOption={keyValueOfOptions}
           fieldLabelOption={keyLabelOfOptions}
@@ -193,27 +106,12 @@ const GeneralInformation: FC<PropsStepApplication> = ({
       return data.map((item, i) => (
         <Component
           key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key] === item.value}
+          checked={values[key] === item.value}
           value={item.value}
-          onChange={handleChangeData}
-        />
-      ))
-    }
-
-    // handle for checkbox
-    if (Component.name === 'Checkbox') {
-      return data.map((item, i) => (
-        <Component
-          key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
-          name={key}
-          label={item.label}
-          checked={formData[key].includes(item.value.toString())}
-          value={item.value}
-          onChange={handleChangeData}
+          onChange={handleChange}
         />
       ))
     }
@@ -224,8 +122,8 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           error={errors[key]}
           touched={touched[key]}
           errorTitle={errors[key]}
-          value={formData[key]}
-          onChange={handleChangeData}
+          value={values[key]}
+          onChange={handleChange}
           name={key}
           classShared={className}
         />
@@ -265,7 +163,6 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           </div>
         )
       })}
-      <GeneralButton handleSubmit={handleSubmit} />
     </>
   )
 }

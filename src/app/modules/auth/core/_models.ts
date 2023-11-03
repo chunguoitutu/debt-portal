@@ -1,6 +1,6 @@
 import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
 import {DropDownGroup} from '../../../utils/globalConfig'
-import {number} from 'yup'
+import {FormikProps} from 'formik'
 
 export type LoginInfo = {
   username: string
@@ -185,7 +185,7 @@ export type ApplicationConfig = {
   key: string
   data?: Option[]
   className?: string
-  defaultValue?: string | number | any[]
+  defaultValue?: string | number | any[] | boolean
   component?: FC<any>
   label?: string
   isFullLayout?: boolean
@@ -193,6 +193,7 @@ export type ApplicationConfig = {
   isHide?: boolean
   typeInput?: HTMLInputTypeAttribute
   typeInputAdvanced?: 'money'
+  typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
   options?: {[key: string]: string | number}[] | DropDownGroup[]
@@ -206,11 +207,10 @@ export type ApplicationConfig = {
 
 export type PropsStepApplication = {
   config: ApplicationConfig[]
-  formData: ApplicationFormData
-  setFormData: Dispatch<SetStateAction<ApplicationFormData>>
   changeStep: number | undefined
   setChangeStep: Dispatch<SetStateAction<number | undefined>>
   onGoToStep: (a?: number) => void
+  formik: FormikProps<ApplicationFormData>
 }
 
 export type ApplicationPayload = {
@@ -253,8 +253,8 @@ export type ApplicationPayload = {
     application_no?: string
     status?: number
     borrower_id?: string
-    loan_type_id?: string
-    application_date?: string
+    loan_type_id?: string | number
+    application_date?: any
     loan_amount_requested: number
     application_notes?: string
     loan_terms: number
@@ -345,5 +345,16 @@ export type ApplicationFormData = {
   state: string
   postal_code: string
   country: string
-  address_contact_info: any[]
+  address_contact_info: BlockAddress[]
+}
+
+export type BlockAddress = {
+  address_type_id: string | number
+  address_label: string
+  street_1: string
+  street_2: string
+  city: string
+  state: string
+  postal_code: string
+  country: string
 }

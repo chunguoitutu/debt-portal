@@ -15,7 +15,11 @@ import {
 import Remark, {messages, send} from './remark/Remark'
 import Cookies from 'js-cookie'
 import {v4 as uuidv4} from 'uuid'
-import moment from 'moment'
+import {INIT_BLOCK_ADDRESS} from '../../constants'
+import * as Yup from 'yup'
+import {BLOCK_ADDRESS_CONFIG} from './step-component/config'
+import {useFormik} from 'formik'
+import GeneralButton from './step-component/GeneralButton'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -37,28 +41,63 @@ export const Applications = () => {
   const [send, setSend] = useState<send[]>(messages)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [changeStep, setChangeStep] = useState<number | undefined>()
-  const [formData, setFormData] = useState<ApplicationFormData>(
-    STEP_APPLICATION.flatMap((item) => item.config).reduce(
+
+  const initialValues: ApplicationFormData = useMemo(() => {
+    return STEP_APPLICATION.flatMap((item) => item.config).reduce(
       (result, current) => ({
         ...result,
         [current?.key as string]: current?.defaultValue || '',
       }),
-      {
-        address_contact_info: [
-          {
-            address_type_id: '',
-            address_label: '',
-            street_1: '',
-            street_2: '',
-            city: '',
-            state: '',
-            postal_code: '',
-            country: '',
-          },
-        ],
-      }
+      {address_contact_info: [INIT_BLOCK_ADDRESS]}
     ) as ApplicationFormData
-  )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [STEP_APPLICATION])
+
+  const schema = useMemo(() => {
+    const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
+
+    if (!currentStepObj.config) return
+
+    const schemaObject = currentStepObj.config
+      ?.filter((item) => item.required)
+      .reduce(
+        (result, current) => ({
+          ...result,
+          [current.key]: Yup.string().required(
+            `${current.labelError || current.label} is required.`
+          ),
+        }),
+        {}
+      )
+
+    if (currentStepObj.label === 'Contact Information') {
+      const validationBlockAddress = BLOCK_ADDRESS_CONFIG.filter((item) => item.required).reduce(
+        (result, current) => ({
+          ...result,
+          [current.key]: Yup.string().required(
+            `${current.labelError || current.label} is required.`
+          ),
+        }),
+        {}
+      )
+      const schemaBlockAddress = Yup.object().shape({
+        address_contact_info: Yup.array().of(Yup.object().shape(validationBlockAddress)),
+      })
+
+      return Yup.object().shape(schemaObject).concat(schemaBlockAddress)
+    }
+
+    return Yup.object().shape(schemaObject)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep])
+
+  const formik = useFormik<ApplicationFormData>({
+    initialValues,
+    validationSchema: schema,
+    validateOnMount: false,
+    onSubmit: () => handleContinue(),
+  })
 
   const percentCompleted = useMemo(
     () => (100 / (STEP_APPLICATION.length - 1)) * stepCompleted,
@@ -77,20 +116,12 @@ export const Applications = () => {
     setChangeStep(step)
   }
 
-  function handleContinue(stepWantGoTo: number | undefined) {
-    // if argument undefined will go to next step
-    if (!stepWantGoTo) {
-      if (currentStep === STEP_APPLICATION.length) {
-        return handleSubmitForm()
-      }
-
-      setStepCompleted(currentStep)
-      setCurrentStep(currentStep + 1)
+  function handleContinue(stepWantGoTo?: number) {
+    if (currentStep === STEP_APPLICATION.length) {
+      handleSubmitForm()
     } else {
-      setCurrentStep(stepWantGoTo)
-
-      // reset change step
-      setChangeStep(undefined)
+      setStepCompleted(stepWantGoTo ? stepWantGoTo : currentStep)
+      setCurrentStep(currentStep + 1)
     }
   }
 
@@ -126,7 +157,8 @@ export const Applications = () => {
       portal_code,
       company_name,
       address_contact_info,
-    } = formData
+      address,
+    } = formik.values
 
     const company_id =
       priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0
@@ -169,8 +201,8 @@ export const Applications = () => {
       },
       employment: {
         portal_code,
-        annual_income,
-        address: '',
+        annual_income: +annual_income,
+        address,
         company_telephone: '',
         company_name,
         monthly_income_1: +monthly_income_1,
@@ -180,10 +212,10 @@ export const Applications = () => {
       application: {
         loan_terms: 12,
         loan_amount_requested: +loan_amount_requested,
-        loan_type_id,
+        loan_type_id: +loan_type_id,
         status: 1,
-        application_date: moment().format('L'),
-        application_notes: JSON.stringify([]),
+        application_date: new Date(),
+        application_notes: JSON.stringify(send),
       },
       address: address_contact_info.map((item) => ({
         ...item,
@@ -206,7 +238,7 @@ export const Applications = () => {
       const fieldDone = allFieldShow.reduce((acc, item) => {
         let isDone: boolean = true
 
-        const valueCheck = formData[item.key]
+        const valueCheck = formik.values[item.key]
 
         // Check array
         if (Array.isArray(valueCheck) && !(valueCheck.length > 0)) isDone = false
@@ -231,7 +263,9 @@ export const Applications = () => {
         ),
       }
     })
-  }, [formData])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -256,13 +290,38 @@ export const Applications = () => {
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config || []}
-                formData={formData}
-                setFormData={setFormData}
                 onGoToStep={handleContinue}
                 changeStep={changeStep}
                 setChangeStep={setChangeStep}
+                formik={formik}
               />
             )}
+
+            <GeneralButton
+              handleSubmit={() => {
+                formik.validateForm(formik.values).then((errors) => {
+                  if (Object.keys(errors).length > 0) {
+                    formik.setErrors(errors)
+
+                    // handle for block address
+                    formik.setTouched({
+                      ...formik.touched,
+                      ...(errors.address_contact_info
+                        ? {
+                            address_contact_info: (
+                              (errors?.address_contact_info as string[]) || []
+                            )?.map((item) =>
+                              Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
+                            ),
+                          }
+                        : {}),
+                    })
+                  } else {
+                    handleContinue()
+                  }
+                })
+              }}
+            />
           </div>
         </div>
         <div className='d-none d-xxl-block col-xxl-2 order-0 order-xxl-3'>

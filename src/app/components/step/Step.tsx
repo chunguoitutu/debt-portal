@@ -13,7 +13,7 @@ type Props = {
 
 const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, data}) => {
   function handleGoToStep(step: number) {
-    step <= stepCompleted && onGoToStep(step)
+    step <= stepCompleted + 1 && onGoToStep(step)
   }
 
   return (

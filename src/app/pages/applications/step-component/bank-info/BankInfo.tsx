@@ -1,42 +1,9 @@
-import {FC, Fragment, useEffect} from 'react'
+import {FC, Fragment} from 'react'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
-import GeneralButton from '../GeneralButton'
 
-const BankInfo: FC<PropsStepApplication> = ({
-  formData,
-  setFormData,
-  config = [],
-  onGoToStep,
-  changeStep,
-}) => {
-  useEffect(() => {
-    if (!changeStep) return
-
-    onGoToStep(changeStep)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changeStep])
-
-  function handleChangeData(e: React.ChangeEvent<any>) {
-    const {value, type, checked, name} = e.target
-
-    if (type === 'checkbox') {
-      return setFormData({
-        ...formData,
-        [name]: Array.isArray(formData[name])
-          ? formData[name].includes(value)
-            ? Array.from(formData[name]).filter((item) => item !== value)
-            : [...Array.from(typeof formData[name] === 'string' ? '' : formData[name]), value]
-          : checked,
-      })
-    }
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-  }
-
+const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
+  const {handleChange, values} = formik
   function renderComponent(item: ApplicationConfig) {
     const {key, data = [], isFullLayout, column, options} = item
     let Component: any = item?.component
@@ -53,8 +20,8 @@ const BankInfo: FC<PropsStepApplication> = ({
     if (Component.name === 'Select') {
       return (
         <Component
-          value={formData[key]}
-          onChange={handleChangeData}
+          value={values[key]}
+          onChange={handleChange}
           name={key}
           classShared={className}
           options={options}
@@ -67,39 +34,19 @@ const BankInfo: FC<PropsStepApplication> = ({
       return data.map((item, i) => (
         <Component
           key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}
-          checked={formData[key] === item.value}
+          checked={values[key] === item.value}
           value={item.value}
-          onChange={handleChangeData}
+          onChange={handleChange}
         />
       ))
     }
 
-    // handle for checkbox
-    if (Component.name === 'Checkbox') {
-      return data.map((item, i) => (
-        <Component
-          key={i}
-          classNameLabel={clsx([formData[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
-          name={key}
-          label={item.label}
-          checked={formData[key].includes(item.value.toString())}
-          value={item.value}
-          onChange={handleChangeData}
-        />
-      ))
-    }
-
-    if (Component.name === 'Input' || Component.name === 'InputTime') {
+    if (Component.name === 'Input') {
       return (
-        <Component
-          value={formData[key]}
-          onChange={handleChangeData}
-          name={key}
-          classShared={className}
-        />
+        <Component value={values[key]} onChange={handleChange} name={key} classShared={className} />
       )
     }
 
@@ -136,7 +83,6 @@ const BankInfo: FC<PropsStepApplication> = ({
           </div>
         )
       })}
-      <GeneralButton handleSubmit={onGoToStep} />
     </>
   )
 }
