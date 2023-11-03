@@ -4,7 +4,7 @@ import ErrorMessage from '../error/ErrorMessage'
 import {PropsStepApplication} from '../../modules/auth'
 
 interface Props extends PropsStepApplication {
-  annualIncome: number
+  annualIncome: any
   setAnnualIncome: any
 }
 
@@ -28,6 +28,7 @@ const data = [
 
 const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) => {
   const {values, setFieldValue, handleChange, errors, touched} = formik
+  console.log(annualIncome)
 
   return (
     <div className='row w-100 gy-5'>
@@ -38,15 +39,14 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
             value={values?.[key]}
             placeholder={placeholder}
             onBlur={(e) => {
-              if (+Number(e.target.value).toFixed(2) !== +Number(annualIncome).toFixed(2)) {
+              if (+Number(e.target.value).toFixed(2) !== +Number(annualIncome[key]).toFixed(2)) {
                 const sum_annual_income =
                   (Number(values.monthly_income_1) +
                     Number(values.monthly_income_2) +
                     Number(values.monthly_income_3)) *
                   4
-                setAnnualIncome(+e.target.value)
-
-                setFieldValue('annual_income', sum_annual_income)
+                setAnnualIncome({...annualIncome, [key]: +e.target.value})
+                setFieldValue('annual_income', +sum_annual_income.toFixed(2))
                 setFieldValue('6_months_income', (Number(sum_annual_income) / 2).toFixed(2))
                 setFieldValue('monthly_income', (Number(sum_annual_income) / 12).toFixed(2))
               }
