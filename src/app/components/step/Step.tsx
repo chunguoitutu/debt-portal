@@ -23,7 +23,7 @@ const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, dat
           const status =
             currentStep === i + 1
               ? 'current'
-              : i + 1 <= stepCompleted
+              : i + 1 <= stepCompleted + 1
               ? 'completed cursor-pointer'
               : ''
           return (

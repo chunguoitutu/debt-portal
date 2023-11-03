@@ -1,4 +1,4 @@
-import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
+import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
 import {DropDownGroup} from '../../../utils/globalConfig'
 import {FormikProps} from 'formik'
 
@@ -208,9 +208,6 @@ export type ApplicationConfig = {
 
 export type PropsStepApplication = {
   config: ApplicationConfig[]
-  changeStep: number | undefined
-  setChangeStep: Dispatch<SetStateAction<number | undefined>>
-  onGoToStep: (a?: number) => void
   formik: FormikProps<ApplicationFormData>
 }
 
@@ -222,7 +219,7 @@ export type ApplicationPayload = {
     identification_type: string
     identification_no: string
     gender: string
-    date_of_birth: string
+    date_of_birth: any
     country_id: number
     firstname: string
     lastname: string
