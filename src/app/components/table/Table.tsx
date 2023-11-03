@@ -12,6 +12,8 @@ import Pagination from './components/Pagination'
 import ButtonViewDetail from '../button/ButtonViewDetail'
 import {convertErrorMessageResponse} from '../../utils'
 import Cookies from 'js-cookie'
+import {Filter} from '../filter/Filter'
+import { Input } from '../inputs/input'
 
 type Props = {
   config: TableConfig
@@ -20,6 +22,8 @@ type Props = {
   isUpdated?: boolean
   setIsUpdated?: any
   handleAddNew: () => void
+  isShowFilter?: boolean
+  showInput?: boolean
 }
 
 const Table: FC<Props> = ({
@@ -29,6 +33,8 @@ const Table: FC<Props> = ({
   isUpdated,
   setIsUpdated,
   handleAddNew,
+  isShowFilter = false,
+  showInput= false
 }) => {
   const {settings, rows} = config
   const {
@@ -196,7 +202,10 @@ const Table: FC<Props> = ({
                   (row, i) =>
                     !row?.isHide && (
                       <th className={row.classNameTableHead} key={i}>
-                        {row.name}
+                        <div className='d-flex flex-row gap-3 cursor-pointer'>
+                          <span>{row.name}</span>
+                          {isShowFilter && <Filter />}
+                        </div>
                       </th>
                     )
                 )}
@@ -206,6 +215,9 @@ const Table: FC<Props> = ({
               </tr>
             </thead>
             <tbody className='text-gray-600 fw-bold'>
+              <tr>
+              {rows.some(item => item.isShowInput === true) && rows.map((item) => <td>{item.isShowInput && <Input />}</td>)}
+              </tr>
               {data.length > 0 ? (
                 data.map((item, idx) => {
                   return (

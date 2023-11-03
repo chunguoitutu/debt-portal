@@ -1,16 +1,20 @@
 import clsx from 'clsx'
 import {FC, Fragment, useEffect, useState} from 'react'
-import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
+
+import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import request from '../../../../axios'
+import LookupCustomer from './LookupCustomer'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
 
   const [dataMarketing, setDataMarketing] = useState({})
+  const [showPopup, setShowPopup] = useState(false)
+
 
   const {values, touched, errors, handleChange} = formik
 
@@ -30,6 +34,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     } catch (error) {
     } finally {
     }
+  }
+  
+  function handleShowPopup() {
+    setShowPopup(!showPopup)
   }
 
   function renderComponent(item: ApplicationConfig) {
@@ -69,7 +77,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             insertRight={
               <Tippy offset={[40, 0]} content='Lookup Customer'>
                 {/* Wrapper with a span tag to show tooltip */}
-                <div className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'>
+                <div
+                  className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'
+                  onClick={handleShowPopup}
+                >
                   <FontAwesomeIcon icon={faSearch} />
                 </div>
               </Tippy>
@@ -163,6 +174,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           </div>
         )
       })}
+
+      {showPopup && <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} />}
+
     </>
   )
 }

@@ -7,7 +7,10 @@ import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
 import {YES_NO_OPTION} from '../../../utils/globalConfig'
 import TextArea from '../../../components/textarea/TextArea'
-import {ApplicationConfig} from '../../../modules/auth'
+import {ApplicationConfig, TableConfig} from '../../../modules/auth'
+import {Filter} from "../../../components/filter/Filter"
+
+
 import {
   CUSTOMER_TYPE,
   EMPLOYMENT_STATUS,
@@ -20,6 +23,7 @@ import {
 } from '../../../utils/globalConfig'
 import {COUNTRY_LIST} from '../../../constants/countries'
 import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
+
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -414,3 +418,37 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     required: true,
   },
 ]
+
+export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
+  endpoint: '/ccc/ccc',
+  settings: {
+    endPointGetListing: '',
+    showViewButton: true,
+    showAddNewButton: false,
+  },
+  rows: [
+    {
+      key: 'id',
+      name: 'LN',
+      component: Filter,
+      isShowInput: false
+    },
+    {
+      key: 'nric_no',
+      name: 'NRIC',
+      component: Filter,
+      isShowInput: false
+    },
+    {
+      key: 'name',
+      name: 'Name',
+      component: Filter,
+      isShowInput: false
+    },
+    {
+      key: 'company_name',
+      name: 'Company Name',
+      component: Filter,
+    },
+  ]
+}
