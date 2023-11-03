@@ -172,8 +172,7 @@ export const Applications = () => {
         monthly_income_3: +monthly_income_3,
       },
     }
-
-    console.log(payload)
+console.log(payload, 'hi')
   }
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
