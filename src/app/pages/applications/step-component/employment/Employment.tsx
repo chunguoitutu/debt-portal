@@ -191,20 +191,20 @@ const Employment: FC<PropsStepApplication> = ({
               setAnnualIncome(+(Number(e.target.value) / 12).toFixed(2))
               setFormData({
                 ...formData,
-                '6_months_income': (Number(e.target.value) / 2).toFixed(2),
-                monthly_income: (Number(e.target.value) / 12).toFixed(2),
-                monthly_income_1: (Number(e.target.value) / 12).toFixed(2),
-                monthly_income_2: (Number(e.target.value) / 12).toFixed(2),
-                monthly_income_3: (Number(e.target.value) / 12).toFixed(2),
+                '6_months_income': +(Number(e.target.value) / 2).toFixed(2),
+                monthly_income: +(Number(e.target.value) / 12).toFixed(2),
+                monthly_income_1: +(Number(e.target.value) / 12).toFixed(2),
+                monthly_income_2: +(Number(e.target.value) / 12).toFixed(2),
+                monthly_income_3: +(Number(e.target.value) / 12).toFixed(2),
               })
-              setFieldValue('6_months_income', Number(e.target.value) / 2)
+              setFieldValue('6_months_income', +(Number(e.target.value) / 2).toFixed(2))
             }}
             onChange={(e) => {
               setFormData({
                 ...formData,
-                annual_income: e.target.value,
+                annual_income: Number(e.target.value),
               })
-              setFieldValue('6_months_income', Number(e.target.value) / 2)
+              setFieldValue('6_months_income', +(Number(e.target.value) / 2).toFixed(2))
               handleChange(e)
             }}
             name={key}
@@ -216,25 +216,6 @@ const Employment: FC<PropsStepApplication> = ({
 
           {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
           <ErrorMessage shouldShowMessage={!!touched[key] && !!errors[key]} message={errors[key]} />
-        </div>
-      )
-    }
-
-    if (Component.name === 'InputAdvance') {
-      return (
-        <div className='d-flex flex-column w-100'>
-          <Component
-            value={formData[key]}
-            onChange={handleChangeData}
-            name={key}
-            classShared={className}
-            typeInput={typeInputAdvanced}
-            disabled={disabled ? true : false}
-            type={typeInput}
-            noThereAreCommas={false}
-          />
-
-          {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
         </div>
       )
     }

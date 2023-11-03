@@ -51,7 +51,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
 
   useEffect(() => {
     onFetchDataList()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const initialValues = useMemo(() => {

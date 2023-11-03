@@ -225,7 +225,7 @@ export const Applications = () => {
             Has been filled out{' '}
             <span className='text-gray-900 fw-bold'>
               {fieldDone}/{totalField}
-            </span>
+            </span>{' '}
             information fields.
           </span>
         ),

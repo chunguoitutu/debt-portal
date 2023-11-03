@@ -60,9 +60,9 @@ const GrossMonthlyIncome: FC<Props> = ({
                 setAnnualIncome(+e.target.value)
                 setFormData({
                   ...formData,
-                  annual_income: sum_annual_income.toFixed(2),
-                  monthly_income: (Number(sum_annual_income) / 12).toFixed(2),
-                  '6_months_income': (Number(sum_annual_income) / 2).toFixed(2),
+                  annual_income: +sum_annual_income.toFixed(2),
+                  monthly_income: +(Number(sum_annual_income) / 12).toFixed(2),
+                  '6_months_income': +(Number(sum_annual_income) / 2).toFixed(2),
                 })
                 setFieldValue(
                   'annual_income',
