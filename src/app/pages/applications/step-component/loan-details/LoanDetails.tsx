@@ -16,7 +16,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   onGoToStep,
   setChangeStep,
 }) => {
-  const [datas, setdatas] = useState({})
+  const [dataLoanType, setDataLoanType] = useState({})
   useEffect(() => {
     if (!changeStep) return
 
@@ -49,7 +49,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
       const endpoint = config.filter((data) => !!data.dependencyApi)
       endpoint.forEach((d) => {
         request.post(d.dependencyApi || '', {status: true}).then((res) => {
-          setdatas({...datas, [d.key]: res?.data?.data})
+          setDataLoanType({...dataLoanType, [d.key]: res?.data?.data})
         })
       })
     } catch (error) {
@@ -59,6 +59,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
 
   useEffect(() => {
     onFetchDataList()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const schema = useMemo(() => {
@@ -190,7 +191,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
             classShared={className}
             fieldValueOption={keyValueOfOptions}
             fieldLabelOption={keyLabelOfOptions}
-            options={!!dependencyApi ? datas[key] || [] : options}
+            options={!!dependencyApi ? dataLoanType[key] || [] : options}
             touched={touched}
             errors={errors}
           />

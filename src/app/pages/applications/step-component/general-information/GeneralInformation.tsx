@@ -18,7 +18,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
   onGoToStep,
   setChangeStep,
 }) => {
-  const [datas, setdatas] = useState({})
+  const [dataMarketing, setDataMarketing] = useState({})
   useEffect(() => {
     if (!changeStep) return
 
@@ -41,9 +41,10 @@ const GeneralInformation: FC<PropsStepApplication> = ({
       const endpoint = config.filter((data) => !!data.dependencyApi)
       endpoint.forEach((d) => {
         request.post(d.dependencyApi || '', {status: true}).then((res) => {
-          setdatas({...datas, [d.key]: res?.data?.data})
+          setDataMarketing({...dataMarketing, [d.key]: res?.data?.data})
         })
       })
+      console.log(setDataMarketing, 'dataMarketing')
     } catch (error) {
     } finally {
     }
@@ -51,6 +52,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
 
   useEffect(() => {
     onFetchDataList()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const initialValues = useMemo(() => {
@@ -181,7 +183,7 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           fieldValueOption={keyValueOfOptions}
           fieldLabelOption={keyLabelOfOptions}
           classShared={className}
-          options={!!dependencyApi ? datas[key] || [] : options}
+          options={!!dependencyApi ? dataMarketing[key] || [] : options}
           dropDownGroup={item.dropDownGroup}
         />
       )
