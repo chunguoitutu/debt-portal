@@ -37,7 +37,6 @@ const Remark = ({setSend, send}) => {
   const [value, setValue] = useState<string>('')
   const [scroll, setScroll] = useState(false)
   const {currentUser} = useAuth()
-  console.log(currentUser)
 
   const contentRef = useRef<HTMLDivElement>(null)
 
