@@ -44,7 +44,6 @@ const GeneralInformation: FC<PropsStepApplication> = ({
           setDataMarketing({...dataMarketing, [d.key]: res?.data?.data})
         })
       })
-      console.log(setDataMarketing, 'dataMarketing')
     } catch (error) {
     } finally {
     }

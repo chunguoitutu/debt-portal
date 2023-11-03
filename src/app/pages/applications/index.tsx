@@ -33,7 +33,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(4)
+  const [currentStep, setCurrentStep] = useState<number>(1)
   const [send, setSend] = useState<send[]>(messages)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [changeStep, setChangeStep] = useState<number | undefined>()
@@ -172,6 +172,7 @@ export const Applications = () => {
         monthly_income_3: +monthly_income_3,
       },
     }
+    console.log(payload, 'hi')
   }
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
@@ -233,7 +234,7 @@ export const Applications = () => {
             className='p-10'
           />
 
-          <div className='form-wrap p-10'>
+          <div className='form-wrap p-10' style={currentStep === 2 ? {width: '91.5%'} : {}}>
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config || []}

@@ -62,7 +62,6 @@ const Employment: FC<PropsStepApplication> = ({
 
   const {
     touched,
-    values,
     setFieldValue,
     errors,
     handleChange,
