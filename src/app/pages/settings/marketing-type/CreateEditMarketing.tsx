@@ -42,7 +42,7 @@ const CreatEditMarkettingType = ({
   const {swalToastTitle, endpoint} = settings
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
-  const [status, setStatus] = useState(data?.length > 0 ? data?.status : true)
+  const [status, setStatus] = useState(data?.status === 0 ? false : true)
 
   const generateField = React.useMemo(() => {
     if (data) {
@@ -148,6 +148,7 @@ const CreatEditMarkettingType = ({
                     .filter((data) => !!data.informCreateEdit)
                     .map((row) => {
                       const {isRequired, typeInput} = row.informCreateEdit || {}
+
                       return (
                         <div key={row?.key} style={{flex: '0 0 50%'}}>
                           <Input

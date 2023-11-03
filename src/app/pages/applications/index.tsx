@@ -33,7 +33,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [currentStep, setCurrentStep] = useState<number>(4)
   const [send, setSend] = useState<send[]>(messages)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [changeStep, setChangeStep] = useState<number | undefined>()
@@ -172,7 +172,6 @@ export const Applications = () => {
         monthly_income_3: +monthly_income_3,
       },
     }
-console.log(payload, 'hi')
   }
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
@@ -207,7 +206,7 @@ console.log(payload, 'hi')
             Has been filled out{' '}
             <span className='text-gray-900 fw-bold'>
               {fieldDone}/{totalField}
-            </span>{' '}
+            </span>
             information fields.
           </span>
         ),

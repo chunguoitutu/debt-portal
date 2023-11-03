@@ -1,9 +1,10 @@
-import {FC, Fragment, useEffect, useMemo} from 'react'
+import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
 import Button from '../../../../components/button/Button'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
+import ErrorMessage from '../../../../components/error/ErrorMessage'
 
 const Employment: FC<PropsStepApplication> = ({
   changeStep,
@@ -13,6 +14,7 @@ const Employment: FC<PropsStepApplication> = ({
   onGoToStep,
   setChangeStep,
 }) => {
+  const [annualIncome, setAnnualIncome] = useState(0)
   useEffect(() => {
     if (!changeStep) return
 
@@ -58,12 +60,21 @@ const Employment: FC<PropsStepApplication> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
-  const {touched, errors, handleChange, handleSubmit, validateForm, setErrors, setTouched} =
-    useFormik({
-      initialValues,
-      validationSchema: schema,
-      onSubmit: () => onGoToStep(),
-    })
+  const {
+    touched,
+    values,
+    setFieldValue,
+    errors,
+    handleChange,
+    handleSubmit,
+    validateForm,
+    setErrors,
+    setTouched,
+  } = useFormik({
+    initialValues,
+    validationSchema: schema,
+    onSubmit: () => onGoToStep(),
+  })
 
   function handleChangeData(e: React.ChangeEvent<any>) {
     const {value, type, checked, name} = e.target
@@ -89,7 +100,17 @@ const Employment: FC<PropsStepApplication> = ({
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options, typeInput, typeInputAdvanced, desc} = item
+    const {
+      key,
+      data = [],
+      isFullLayout,
+      column,
+      options,
+      disabled,
+      typeInput,
+      typeInputAdvanced,
+      desc,
+    } = item
     let Component: any = item?.component
 
     const className =
@@ -107,7 +128,12 @@ const Employment: FC<PropsStepApplication> = ({
           formData={formData}
           onChange={handleChangeData}
           errors={errors}
+          setFormData={setFormData}
+          setFieldValue={setFieldValue}
+          handleChange={handleChange}
           touched={touched}
+          annualIncome={annualIncome}
+          setAnnualIncome={setAnnualIncome}
         />
       )
     }
@@ -157,6 +183,44 @@ const Employment: FC<PropsStepApplication> = ({
     }
 
     // handle for Input Advanced type input is money
+    if (Component.name === 'InputAdvance' && key === 'annual_income') {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={formData[key]}
+            onBlur={(e: any) => {
+              setAnnualIncome(+(Number(e.target.value) / 12).toFixed(2))
+              setFormData({
+                ...formData,
+                '6_months_income': (Number(e.target.value) / 2).toFixed(2),
+                monthly_income: (Number(e.target.value) / 12).toFixed(2),
+                monthly_income_1: (Number(e.target.value) / 12).toFixed(2),
+                monthly_income_2: (Number(e.target.value) / 12).toFixed(2),
+                monthly_income_3: (Number(e.target.value) / 12).toFixed(2),
+              })
+              setFieldValue('6_months_income', Number(e.target.value) / 2)
+            }}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                annual_income: e.target.value,
+              })
+              setFieldValue('6_months_income', Number(e.target.value) / 2)
+              handleChange(e)
+            }}
+            name={key}
+            classShared={className}
+            typeInput={typeInputAdvanced}
+            type={typeInput}
+            noThereAreCommas={false}
+          />
+
+          {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
+          <ErrorMessage shouldShowMessage={!!touched[key] && !!errors[key]} message={errors[key]} />
+        </div>
+      )
+    }
+
     if (Component.name === 'InputAdvance') {
       return (
         <div className='d-flex flex-column w-100'>
@@ -166,8 +230,28 @@ const Employment: FC<PropsStepApplication> = ({
             name={key}
             classShared={className}
             typeInput={typeInputAdvanced}
-            type= {typeInput}
-            noThereAreCommas= {false}
+            disabled={disabled ? true : false}
+            type={typeInput}
+            noThereAreCommas={false}
+          />
+
+          {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
+        </div>
+      )
+    }
+
+    if (Component.name === 'InputAdvance') {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={formData[key]}
+            onChange={handleChangeData}
+            name={key}
+            classShared={className}
+            typeInput={typeInputAdvanced}
+            disabled={disabled ? true : false}
+            type={typeInput}
+            noThereAreCommas={false}
           />
 
           {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}

@@ -131,7 +131,6 @@ const CreateEditCompanies = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [information])
-  console.log(values)
 
   return createPortal(
     <Modal
