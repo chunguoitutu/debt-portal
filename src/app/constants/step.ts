@@ -7,7 +7,7 @@ import {
   GENERAL_INFORMATION_CONFIG,
   LOAN_DETAILS_CONFIG,
 } from '../pages/applications/step-component/config'
-import ContactInformation from '../pages/applications/step-component/contract-information/ContactInformation'
+import ContactInformation from '../pages/applications/step-component/contact-information/ContactInformation'
 import Employment from '../pages/applications/step-component/employment/Employment'
 import GeneralInformation from '../pages/applications/step-component/general-information/GeneralInformation'
 import LoanDetails from '../pages/applications/step-component/loan-details/LoanDetails'

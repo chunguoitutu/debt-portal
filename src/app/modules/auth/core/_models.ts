@@ -29,8 +29,8 @@ export type LoginResponse = {
 export type StepItem = {
   label: string
   desc?: string | ReactNode
-  component?: FC<any>
-  config?: ApplicationConfig[]
+  readonly component?: FC<any>
+  readonly config?: ApplicationConfig[]
 }
 
 export type UserInfo = {
@@ -285,6 +285,7 @@ export type ApplicationPayload = {
     annual_income?: string
     pay_date?: string
   }
+  address: any
 }
 
 export type ApplicationFormData = {
@@ -304,7 +305,6 @@ export type ApplicationFormData = {
   loan_amount_requested: string
   reason_for_loan: string
   address_full: string
-  postal_code: string
   block_no: string
   street: string
   building: string
@@ -336,4 +336,13 @@ export type ApplicationFormData = {
   account_number_2: string
   bank_code_1: string
   bank_code_2: string
+  address_type_id: number
+  address_label: string
+  street_1: string
+  street_2: string
+  city: string
+  state: string
+  postal_code: string
+  country: string
+  address_contact_info: any[]
 }

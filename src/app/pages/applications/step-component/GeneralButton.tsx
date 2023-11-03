@@ -7,7 +7,7 @@ const GeneralButton = ({handleSubmit}) => {
       <Button onClick={() => {}} className='btn-secondary align-self-center me-3' disabled={false}>
         Save Draft
       </Button>
-      <Button loading={false} disabled={false} onClick={() => handleSubmit()}>
+      <Button type='submit' loading={false} disabled={false} onClick={() => handleSubmit()}>
         Continue
       </Button>
     </div>
