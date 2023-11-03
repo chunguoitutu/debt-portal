@@ -6,7 +6,11 @@ import ErrorMessage from '../../../../components/error/ErrorMessage'
 
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
-  const [annualIncome, setAnnualIncome] = useState(0)
+  const [annualIncome, setAnnualIncome] = useState({
+    monthly_income_1: 0,
+    monthly_income_2: 0,
+    monthly_income_3: 0,
+  })
 
   const {values, touched, setFieldValue, errors, handleChange} = formik
 
@@ -99,7 +103,11 @@ const Employment: FC<PropsStepApplication> = (props) => {
           <Component
             value={values[key]}
             onBlur={(e: any) => {
-              setAnnualIncome(+(Number(e.target.value) / 12).toFixed(2))
+              setAnnualIncome({
+                monthly_income_1: +(Number(e.target.value) / 12).toFixed(2),
+                monthly_income_2: +(Number(e.target.value) / 12).toFixed(2),
+                monthly_income_3: +(Number(e.target.value) / 12).toFixed(2),
+              })
 
               setFieldValue('6_months_income', +(Number(e.target.value) / 2).toFixed(2))
               setFieldValue('monthly_income', +(Number(e.target.value) / 12).toFixed(2))
