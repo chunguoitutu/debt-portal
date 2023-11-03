@@ -47,6 +47,22 @@ const Remark = ({setSend, send}) => {
       contentDiv.scrollTop = contentDiv.scrollHeight
     }
   }, [scroll])
+  const handleSubmit = () => {
+    if (value !== '') {
+      setSend([
+        ...send,
+        {
+          id: uuidv4(),
+          message: value,
+          time: Date.now(),
+          user: currentUser?.username,
+        },
+      ])
+    }
+    setValue('')
+    setScroll(!scroll)
+  }
+
   return (
     <div className='card'>
       <div style={{borderBottom: '1px solid  #f1f1f2', padding: '30px'}} className='modal-header '>
@@ -96,6 +112,7 @@ const Remark = ({setSend, send}) => {
                   fontStyle: 'normal',
                   color: '#4B5675',
                   marginBottom: '0px',
+                  wordBreak: 'break-all',
                 }}
               >
                 {message.message}
@@ -138,6 +155,12 @@ const Remark = ({setSend, send}) => {
             placeholder='Enter remark...'
             classShared=''
             value={value}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault() // Ngăn chặn xuống dòng trong ô input
+                handleSubmit()
+              }
+            }}
             onChange={(e) => setValue(e.target.value)}
             style={{
               width: '100%',
@@ -154,19 +177,7 @@ const Remark = ({setSend, send}) => {
           />
           <Button
             onClick={() => {
-              if (value !== '') {
-                setSend([
-                  ...send,
-                  {
-                    id: uuidv4(),
-                    message: value,
-                    time: Date.now(),
-                    user: currentUser?.username,
-                  },
-                ])
-              }
-              setValue('')
-              setScroll(!scroll)
+              handleSubmit()
             }}
             className='btn-primary p-8px rounded-pill'
           >
