@@ -21,7 +21,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
     const {
       key,
       data = [],
-      isFullLayout,
+
       column,
       options,
       disabled,
@@ -32,10 +32,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
     } = item
     let Component: any = item?.component
 
-    const className =
-      isFullLayout || !column
-        ? 'flex-grow-1 w-300px w-lg-unset'
-        : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+    const className = !column
+      ? 'flex-grow-1 w-300px w-lg-unset'
+      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
     // nothing
     if (!Component) return
@@ -119,8 +118,8 @@ const Employment: FC<PropsStepApplication> = (props) => {
           name={key}
           label={item.label}
           value={item.value}
-          onChange={(e) => {
-            if (typeCheckbox === 'array') {
+          onChange={(e: any) => {
+            if (typeCheckbox === 'array' && Array.isArray(values[key])) {
               const {value, checked} = e.target
 
               const _value = [...values[key]]
@@ -130,7 +129,11 @@ const Employment: FC<PropsStepApplication> = (props) => {
               handleChange(e)
             }
           }}
-          checked={typeCheckbox === 'array' ? undefined : values[key]}
+          checked={
+            typeCheckbox === 'array' && Array.isArray(values[key])
+              ? values[key].includes(item.value)
+              : values[key]
+          }
         />
       ))
     }
@@ -211,7 +214,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, isFullLayout, column, isHide, className, required} = item
+        const {label, column, isHide, className, required} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
@@ -219,7 +222,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
           <div
             className={clsx([
               'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
-              isFullLayout || !column ? 'full' : '',
+              !column ? 'full' : '',
               className,
             ])}
             key={i}

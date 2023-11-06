@@ -24,13 +24,13 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
     }
   }
 
-  const {values, touched, errors, handleChange} = formik
+  const {values, touched, errors, handleChange, setFieldValue} = formik
 
   function renderComponent(item: ApplicationConfig) {
     const {
       key,
       data = [],
-      isFullLayout,
+
       column,
       options,
       keyLabelOfOptions,
@@ -53,8 +53,22 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
           name={key}
           label={item.label}
           value={item.value}
-          onChange={handleChange}
-          checked={typeCheckbox === 'array' ? undefined : values[key]}
+          onChange={(e: any) => {
+            if (typeCheckbox === 'array' && Array.isArray(values[key])) {
+              const {value, checked} = e.target
+
+              const _value = [...values[key]]
+              checked ? _value.push(value) : _value.filter((item) => item !== values)
+              setFieldValue(key, _value)
+            } else {
+              handleChange(e)
+            }
+          }}
+          checked={
+            typeCheckbox === 'array' && Array.isArray(values[key])
+              ? values[key].includes(item.value)
+              : values[key]
+          }
         />
       ))
     }
@@ -77,7 +91,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       )
     }
 
-    const className = isFullLayout || !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
+    const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
 
     if (Component.name === 'InputAdvance') {
       return (
@@ -141,7 +155,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, isFullLayout, column, isHide, required, className} = item
+        const {label, column, isHide, required, className} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
@@ -149,7 +163,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
           <div
             className={clsx([
               'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
-              isFullLayout || !column ? 'full' : '',
+              !column ? 'full' : '',
               className,
             ])}
             key={i}

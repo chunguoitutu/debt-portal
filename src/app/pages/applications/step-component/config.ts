@@ -46,13 +46,11 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     defaultValue: CUSTOMER_TYPE[0].value,
     component: Radio,
     label: ' ',
-    isFullLayout: true,
   },
   {
     key: 'firstname',
     component: NameOfApplication,
     label: 'Name Of Applicant',
-    labelError: 'First Name',
     required: true,
     validationFormik: Yup.string()
       .max(255, convertMessageErrorMaximum(255))
@@ -151,13 +149,11 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Checkbox,
     defaultValue: true,
     label: '',
-    isFullLayout: true,
   },
   {
     key: 'loan_type_id',
     component: Select,
     label: 'Loan Type',
-    isFullLayout: true,
     options: LOAN_TYPE,
     required: true,
     keyLabelOfOptions: 'type_name',
@@ -169,7 +165,6 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     key: 'loan_amount_requested',
     component: InputAdvance,
     label: 'Loan Amount',
-    isFullLayout: true,
     required: true,
     typeInputAdvanced: 'money',
     typeInput: 'number',
@@ -179,7 +174,6 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     key: 'loan_terms',
     component: InputAdvance,
     label: 'Loan Terms (months)',
-    isFullLayout: true,
     required: true,
     typeInput: 'number',
     validationFormik: Yup.number()
@@ -220,7 +214,7 @@ export const CONTACT_INFORMATION: ApplicationConfig[] = [
   },
   {
     key: 'homephone',
-    component: Input,
+    component: InputAdvance,
     column: 6,
     label: 'Home Phone(NIL)',
     className: 'justify-content-xl-end',
@@ -383,7 +377,6 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'monthly_income_1',
     component: GrossMonthlyIncome,
     label: 'Gross Monthly Income',
-    labelError: 'Monthly Income 1',
   },
   {
     key: 'monthly_income',
