@@ -277,6 +277,12 @@ export const Applications = () => {
       address_contact_info,
       address,
       loan_terms,
+      marketing_type_id,
+      company_telephone,
+      occupation,
+      position,
+      specialization,
+      six_months_income,
     } = formik.values
 
     const company_id =
@@ -316,6 +322,7 @@ export const Applications = () => {
         monthly_income: +monthly_income || 0,
         job_type_id: 1,
         spoken_language,
+        marketing_type_id: +marketing_type_id,
       },
       bank_account: {
         account_number_1,
@@ -329,11 +336,15 @@ export const Applications = () => {
         portal_code,
         annual_income: +annual_income,
         address,
-        company_telephone: '',
+        company_telephone,
         company_name,
         monthly_income_1: +monthly_income_1,
         monthly_income_2: +monthly_income_2,
         monthly_income_3: +monthly_income_3,
+        occupation,
+        position,
+        specialization,
+        six_months_income: +six_months_income,
       },
       application: {
         loan_terms: +loan_terms,
