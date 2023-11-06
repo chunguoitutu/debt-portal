@@ -1,6 +1,6 @@
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
-// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-// import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 
 import {KTCardBody} from '../../../_metronic/helpers'
 import {SearchCriteria, TableConfig, useAuth} from '../../modules/auth'
@@ -211,27 +211,26 @@ const Table: FC<Props> = ({
                       </th>
                     )
                 )}
-                {showAction  && (showRefresh) && (
-                  <th className='text-center w-150px'>Action</th>
-                )}
+                {showAction && showRefresh && <th className='text-center w-150px'>Action</th>}
               </tr>
             </thead>
             <tbody className='text-gray-600 fw-bold'>
-              <tr style={{borderColor: '#fff'}}>
-                {rows.map((item, key) => (
-                  <td key={key}>{item.isShowInput && <Input />}</td>
-                ))}
-                {/* {showAction && !!showRefresh && (
-                  <td className='text-center'>
+              {rows.some((item) => item.isShowInput) && (
+                <tr style={{borderColor: '#fff'}}>
+                  {rows.map((item, key) => (
+                    <td key={key}>
+                      {rows.some((item) => item.isShowInput) && item.isShowInput && <Input classShared=''/>}
+                    </td>
+                  ))}
+                  {showAction && !!showRefresh && (
                     <div className='d-flex align-items-center justify-content-center gap-1'>
-                        <div className='p-2 mb-4 border cursor-pointer rounded'>
-                          <FontAwesomeIcon icon={faArrowsRotate} />
-                        </div>
+                      <div className='p-2 mt-4 border cursor-pointer rounded'>
+                        <FontAwesomeIcon icon={faArrowsRotate} />
+                      </div>
                     </div>
-                  </td>
-                )} */}
-
-              </tr>
+                  )}
+                </tr>
+              )}
               {data.length > 0 ? (
                 data.map((item, idx) => {
                   return (
