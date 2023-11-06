@@ -1,10 +1,11 @@
+import * as React from 'react'
 import {Modal} from 'react-bootstrap'
-
-import {KTIcon} from '../../../../../_metronic/helpers'
-import Table from '../../../../components/table/Table'
+import {KTCardBody, KTIcon} from '../../../../../_metronic/helpers'
 import {TABLE_LOOKUP_CUSTOMER} from '../config'
 import Button from '../../../../components/button/Button'
-import {useState} from 'react'
+import {SearchCriteria} from '../../../../modules/auth'
+import request from '../../../../axios'
+import Icons from '../../../../components/icons'
 
 type Props = {
   show?: boolean
@@ -12,15 +13,62 @@ type Props = {
 }
 
 const LookupCustomer = ({show, onClose}: Props) => {
-  const [showInput, setShowInput] = useState<boolean>(false)
+  const [showInput, setShowInput] = React.useState<boolean>(false)
+  const [data, setData] = React.useState([])
+  const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
+    pageSize: 10,
+    currentPage: 1,
+    total: 0,
+  })
+  const {settings, rows} = TABLE_LOOKUP_CUSTOMER
 
   function showInputFilter() {
     setShowInput(!showInput)
   }
-  console.log({
-    ...TABLE_LOOKUP_CUSTOMER,
-    rows: TABLE_LOOKUP_CUSTOMER.rows.map((row) => ({...row, isShowInput: showInput})),
-  })
+
+  async function onFetchDataList(body?: Omit<SearchCriteria, 'total'>) {
+    try {
+      const {data: response} = await request.post(settings.endPointGetListing + '/listing', body)
+
+      Array.isArray(response.data) && setData(response.data)
+
+      response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
+    } catch (error) {
+      // no thing
+    }
+  }
+
+  const renderRows = () => {
+    return data.map((item, idx) => {
+      return (
+        <tr key={idx}>
+          {rows.map(({key, component, classNameTableBody, isHide}, i) => {
+            if (isHide) {
+              return <React.Fragment key={i}></React.Fragment>
+            }
+            let Component = component || React.Fragment
+            let value = item[key]
+
+            if (key === 'id') {
+              return <td key={i}>{idx + 1}</td>
+            }
+
+            return (
+              <td key={i}>
+                {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
+              </td>
+            )
+          })}
+        </tr>
+      )
+    })
+  }
+
+  React.useEffect(() => {
+    onFetchDataList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Modal
       id='kt_modal_create_app'
@@ -29,17 +77,24 @@ const LookupCustomer = ({show, onClose}: Props) => {
       dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
       show={show}
       onHide={onClose}
-      //  onEntered={loadStepper}
       backdrop={true}
+      scrollable={true}
     >
       <>
-        <div className='modal-header'>
-          <h2>Lookup Customer</h2>
-          <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={() => onClose()}>
-            <KTIcon className='fs-1' iconName='cross' />
+        <Modal.Header>
+          <div className='flex-row-fluid'>
+            <div className='d-flex justify-content-between'>
+              <h2 className='m-0'>Lookup Customer</h2>
+              <div
+                className='btn btn-sm btn-icon btn-active-color-primary'
+                onClick={() => onClose()}
+              >
+                <KTIcon className='fs-1' iconName='cross' />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className='flex-row-fluid' style={{padding: 23}}>
+        </Modal.Header>
+        <Modal.Body>
           <div className='d-flex flex-row'>
             <div className='d-flex align-items-center position-relative my-1 flex-grow-1 mw-1000px'>
               <i className='ki-duotone ki-magnifier fs-1 position-absolute ms-6'>
@@ -60,38 +115,41 @@ const LookupCustomer = ({show, onClose}: Props) => {
                 style={{color: '#3E97FF', background: ''}}
                 disabled={false}
               >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='18'
-                  height='18'
-                  viewBox='0 0 18 18'
-                  fill='none'
-                  style={{marginRight: '8px'}}
-                >
-                  <path
-                    d='M2.33333 1.5H15.6667C15.8877 1.5 16.0996 1.5878 16.2559 1.74408C16.4122 1.90036 16.5 2.11232 16.5 2.33333V3.655C16.5 3.876 16.4121 4.08792 16.2558 4.24417L10.91 9.58917C10.754 9.74555 10.6665 9.95746 10.6667 10.1783V15.4325C10.6667 15.5592 10.6378 15.6842 10.5822 15.798C10.5267 15.9118 10.4459 16.0115 10.346 16.0894C10.2461 16.1674 10.1298 16.2215 10.0059 16.2477C9.88198 16.274 9.75371 16.2716 9.63083 16.2408L7.96417 15.8242C7.78396 15.779 7.62401 15.675 7.50971 15.5285C7.39542 15.3821 7.33334 15.2016 7.33333 15.0158V10.1783C7.33329 9.95734 7.24546 9.74541 7.08917 9.58917L1.74333 4.24417C1.58735 4.08779 1.49983 3.87588 1.5 3.655V2.33333C1.5 2.11232 1.5878 1.90036 1.74408 1.74408C1.90036 1.5878 2.11232 1.5 2.33333 1.5Z'
-                    stroke='#3E97FF'
-                    strokeWidth='1.5'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
+                <Icons name={'filterIcon'} />
                 Filter
               </Button>
             </div>
           </div>
-
-          <div className='mt-6'>
-            <Table
-              config={{
-                ...TABLE_LOOKUP_CUSTOMER,
-                rows: TABLE_LOOKUP_CUSTOMER.rows.map((row) => ({...row, isShowInput: showInput})),
-              }}
-              handleAddNew={() => {}}
-              isShowFilter={true}
-            />
-          </div>
-          <div className='d-flex flex-end mt-10 full'>
+          {data.length ? (
+            <KTCardBody className='py-4'>
+              <div className='table-responsive'>
+                <table
+                  id='kt_table_users'
+                  className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
+                >
+                  <thead>
+                    <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                      {rows.map(
+                        (row, i) =>
+                          !row?.isHide && (
+                            <th className={row?.classNameTableHead} key={i}>
+                              <div className='d-flex flex-row gap-3 cursor-pointer'>
+                                <span>{row.name}</span>
+                              </div>
+                            </th>
+                          )
+                      )}
+                      {<th className='text-center w-150px'>Action</th>}
+                    </tr>
+                  </thead>
+                  <tbody>{renderRows()}</tbody>
+                </table>
+              </div>
+            </KTCardBody>
+          ) : null}
+        </Modal.Body>
+        <Modal.Footer>
+          <div className='d-flex flex-end full'>
             <Button
               onClick={onClose}
               className='btn-secondary align-self-center me-3'
@@ -103,13 +161,10 @@ const LookupCustomer = ({show, onClose}: Props) => {
               Lookup
             </Button>
           </div>
-        </div>
+        </Modal.Footer>
       </>
     </Modal>
   )
 }
 
 export default LookupCustomer
-
-
-

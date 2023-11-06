@@ -8,7 +8,6 @@ import Select from '../../../components/select/select'
 import {GENDER, LANGUAGES, SPECIALIZATION, YES_NO_OPTION} from '../../../utils/globalConfig'
 import TextArea from '../../../components/textarea/TextArea'
 import {ApplicationConfig, TableConfig} from '../../../modules/auth'
-import {Filter} from '../../../components/filter/Filter'
 import * as Yup from 'yup'
 
 import {
@@ -494,9 +493,8 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
 ]
 
 export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
-  endpoint: '/ccc/ccc',
   settings: {
-    endPointGetListing: '',
+    endPointGetListing: '/application/lookup',
     showViewButton: true,
     showAddNewButton: false,
     showAction: true,
@@ -506,25 +504,21 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     {
       key: 'id',
       name: 'LN',
-      component: Filter,
       isShowInput: false,
     },
     {
-      key: 'nric_no',
+      key: 'identification_no',
       name: 'NRIC',
-      component: Filter,
       isShowInput: false,
     },
     {
-      key: 'name',
-      name: 'Name',
-      component: Filter,
+      key: 'firstname',
+      name: 'First Name',
       isShowInput: false,
     },
     {
-      key: 'company_name',
-      name: 'Company Name',
-      component: Filter,
+      key: 'lastname',
+      name: 'Last Name',
     },
   ],
 }
