@@ -133,6 +133,21 @@ export const INCOME_DOCUMENT: Option[] = [
   },
 ]
 
+export const GENDER: Option[] = [
+  {
+    label: 'Male',
+    value: 'male',
+  },
+  {
+    label: 'Female',
+    value: 'female',
+  },
+  {
+    label: 'Other',
+    value: 'other',
+  },
+]
+
 export const EMPLOYMENT_STATUS: Option[] = [
   {
     value: 'EMP',

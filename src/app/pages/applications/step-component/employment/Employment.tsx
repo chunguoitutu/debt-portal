@@ -109,7 +109,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
                 monthly_income_3: +(Number(e.target.value) / 12).toFixed(2),
               })
 
-              setFieldValue('6_months_income', +(Number(e.target.value) / 2).toFixed(2))
+              setFieldValue('six_months_income', +(Number(e.target.value) / 2).toFixed(2))
               setFieldValue('monthly_income', +(Number(e.target.value) / 12).toFixed(2))
               setFieldValue('monthly_income_1', +(Number(e.target.value) / 12).toFixed(2))
               setFieldValue('monthly_income_2', +(Number(e.target.value) / 12).toFixed(2))
@@ -153,7 +153,15 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     if (Component.name === 'Input' || Component.name === 'InputTime') {
       return (
-        <Component value={values[key]} onChange={handleChange} name={key} classShared={className} />
+        <Component
+          value={values[key]}
+          onChange={handleChange}
+          name={key}
+          classShared={className}
+          error={errors[key]}
+          touched={touched[key]}
+          errorTitle={errors[key]}
+        />
       )
     }
 

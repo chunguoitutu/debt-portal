@@ -5,11 +5,11 @@ import {Input} from '../../../components/inputs/input'
 import {InputTime} from '../../../components/inputs/inputTime'
 import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
-import {YES_NO_OPTION} from '../../../utils/globalConfig'
+import {GENDER, YES_NO_OPTION} from '../../../utils/globalConfig'
 import TextArea from '../../../components/textarea/TextArea'
 import {ApplicationConfig, TableConfig} from '../../../modules/auth'
-import {Filter} from "../../../components/filter/Filter"
-
+import {Filter} from '../../../components/filter/Filter'
+import * as Yup from 'yup'
 
 import {
   CUSTOMER_TYPE,
@@ -23,18 +23,22 @@ import {
 } from '../../../utils/globalConfig'
 import {COUNTRY_LIST} from '../../../constants/countries'
 import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
-
+import {convertMessageErrorMaximum, convertMessageErrorRequired} from '../../../utils'
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
     key: 'middlename',
     isHide: true,
+    validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'lastname',
     isHide: true,
     required: true,
     label: 'Last Name',
+    validationFormik: Yup.string()
+      .max(255, convertMessageErrorMaximum(255))
+      .required(convertMessageErrorRequired('Last Name')),
   },
   {
     key: 'customer_type',
@@ -50,6 +54,9 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Name Of Applicant',
     labelError: 'First Name',
     required: true,
+    validationFormik: Yup.string()
+      .max(255, convertMessageErrorMaximum(255))
+      .required(convertMessageErrorRequired('First Name')),
   },
   {
     key: 'identification_type',
@@ -58,6 +65,9 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'ID Type',
     required: true,
     options: ID_TYPE,
+    validationFormik: Yup.string()
+      .max(255, convertMessageErrorMaximum(255))
+      .required(convertMessageErrorRequired('ID Type')),
   },
   {
     key: 'identification_no',
@@ -66,15 +76,19 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'NRIC No./FIN',
     className: 'justify-content-xl-end',
     required: true,
+    validationFormik: Yup.string()
+      .max(64, convertMessageErrorMaximum(64))
+      .required(convertMessageErrorRequired('ID Type')),
   },
   {
-    key: 'residential_type',
+    key: 'residential_type_id',
     component: Select,
     column: 6,
     label: 'Residential Type',
     required: true,
     options: RESIDENTIAL_TYPE,
     dropDownGroup: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Residential Type')),
   },
   {
     key: 'marketing_type',
@@ -87,6 +101,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'marketing_type_name',
     keyValueOfOptions: 'id',
     dependencyApi: 'config/marketing_type/listing',
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Marketing Type')),
   },
   {
     key: 'gender',
@@ -94,16 +109,8 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Gender',
     required: true,
-    options: [
-      {
-        label: 'Male',
-        value: 'male',
-      },
-      {
-        label: 'Female',
-        value: 'female',
-      },
-    ],
+    options: GENDER,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Gender')),
   },
   {
     key: 'date_of_birth',
@@ -112,6 +119,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Date of Birth',
     required: true,
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Date of Birth')),
   },
   {
     key: 'nationality',
@@ -122,6 +130,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'name',
     keyValueOfOptions: 'code',
     required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Nationality')),
   },
 ]
 
@@ -144,30 +153,34 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'type_name',
     keyValueOfOptions: 'id',
     dependencyApi: '/config/loan_type/listing',
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Loan Type')),
   },
   {
     key: 'loan_amount_requested',
     component: InputAdvance,
-    label: 'Loan Amount Required',
+    label: 'Loan Amount',
     isFullLayout: true,
     required: true,
     typeInputAdvanced: 'money',
     typeInput: 'number',
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Loan Amount')),
   },
   {
     key: 'reason_for_loan',
     component: TextArea,
     label: 'Reason For Loan',
     required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Reason For Loan')),
   },
 ]
 
-export const CONTRACT_INFORMATION: ApplicationConfig[] = [
+export const CONTACT_INFORMATION: ApplicationConfig[] = [
   {
     key: 'mobilephone_1',
     component: InputAdvance,
     label: 'Mobile 1(NIL)',
     column: 6,
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'mobilephone_2',
@@ -175,12 +188,14 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     label: 'Mobile 2(NIL)',
     column: 6,
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'mobilephone_3',
     component: InputAdvance,
     label: 'Mobile 3(NIL)',
     column: 6,
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'homephone',
@@ -188,12 +203,16 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     column: 6,
     label: 'Home Phone(NIL)',
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'email_1',
     component: Input,
     column: 6,
     label: 'Email',
+    validationFormik: Yup.string()
+      .email('Email invalid.')
+      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'email_2',
@@ -201,6 +220,9 @@ export const CONTRACT_INFORMATION: ApplicationConfig[] = [
     column: 6,
     label: 'Alternate Email',
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string()
+      .email('Alternate Email invalid.')
+      .max(255, convertMessageErrorMaximum(255)),
   },
   // {
   //   key: 'spoken_language',
@@ -226,6 +248,7 @@ export const BANK_INFO_CONFIG: ApplicationConfig[] = [
     component: Input,
     column: 6,
     label: 'Bank Name 1',
+    validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
   },
   {
     key: 'bank_name_2',
@@ -233,12 +256,14 @@ export const BANK_INFO_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Bank Name 2',
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
   },
   {
     key: 'account_number_1',
     component: Input,
     column: 6,
     label: 'Bank Acc 1',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'account_number_2',
@@ -246,12 +271,14 @@ export const BANK_INFO_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Bank Acc 2',
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'bank_code_1',
     component: Input,
     column: 6,
     label: 'Bank Code 1',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'bank_code_2',
@@ -259,6 +286,7 @@ export const BANK_INFO_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Bank Code 2',
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
 ]
 
@@ -284,16 +312,25 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'company_name',
     component: Input,
     label: 'Company Name',
+    validationFormik: Yup.string().max(100, convertMessageErrorMaximum(100)),
   },
   {
     key: 'address',
     component: Input,
     label: 'Address',
+    validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
   },
+  // {
+  //   key: 'office_no',
+  //   component: Input,
+  //   label: 'Office No.(NIL)',
+  //   column: 6,
+  // },
   {
-    key: 'office_no',
-    component: Input,
-    label: 'Office No.(NIL)',
+    key: 'specialization',
+    component: Select,
+    label: 'Specialization',
+    options: YES_NO_OPTION,
     column: 6,
   },
   {
@@ -303,12 +340,7 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     column: 6,
     className: 'justify-content-xl-end',
   },
-  {
-    key: 'specialization',
-    component: Select,
-    label: 'Specialization',
-    options: YES_NO_OPTION,
-  },
+
   {
     key: 'annual_income',
     component: InputAdvance,
@@ -317,6 +349,7 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     desc: 'include AWS and Bonus',
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Annual Gross Income')),
   },
   {
     key: 'monthly_income_1',
@@ -333,7 +366,7 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
   },
   {
-    key: '6_months_income',
+    key: 'six_months_income',
     component: InputAdvance,
     label: 'Past 6 Month Gross Income',
     typeInputAdvanced: 'money',
@@ -361,6 +394,7 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'address_type_name',
     keyValueOfOptions: 'id',
     required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Address Type')),
   },
   {
     key: 'address_label',
@@ -369,6 +403,9 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     column: 6,
     className: 'justify-content-xl-end',
     required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Address Label'))
+      .max(1024, convertMessageErrorMaximum(1024)),
   },
   {
     key: 'street_1',
@@ -376,6 +413,9 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Street 1',
     column: 6,
     required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Street 1'))
+      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'street_2',
@@ -383,6 +423,7 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Street 2',
     column: 6,
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'city',
@@ -390,6 +431,9 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'City',
     column: 6,
     required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('City'))
+      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'state',
@@ -398,6 +442,9 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     column: 6,
     className: 'justify-content-xl-end',
     required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('State'))
+      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'postal_code',
@@ -405,6 +452,9 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Postal Code',
     column: 6,
     required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Postal Code'))
+      .max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'country',
@@ -416,6 +466,9 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'name',
     keyValueOfOptions: 'code',
     required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Country'))
+      .max(255, convertMessageErrorMaximum(255)),
   },
 ]
 
@@ -431,24 +484,24 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
       key: 'id',
       name: 'LN',
       component: Filter,
-      isShowInput: false
+      isShowInput: false,
     },
     {
       key: 'nric_no',
       name: 'NRIC',
       component: Filter,
-      isShowInput: false
+      isShowInput: false,
     },
     {
       key: 'name',
       name: 'Name',
       component: Filter,
-      isShowInput: false
+      isShowInput: false,
     },
     {
       key: 'company_name',
       name: 'Company Name',
       component: Filter,
     },
-  ]
+  ],
 }

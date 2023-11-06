@@ -1,6 +1,7 @@
 import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
 import {DropDownGroup} from '../../../utils/globalConfig'
 import {FormikProps} from 'formik'
+import {Schema} from 'yup'
 
 export type LoginInfo = {
   username: string
@@ -204,6 +205,7 @@ export type ApplicationConfig = {
   dropDownGroup?: boolean
   labelError?: string
   disabled?: boolean
+  validationFormik?: Schema
 }
 
 export type PropsStepApplication = {
@@ -241,9 +243,9 @@ export type ApplicationPayload = {
     email_2?: string
     job_type_id?: number
     employment_status?: string
-    monthly_income?: string
+    monthly_income?: number
     credit_score?: string
-    residential_type_id?: number
+    residential_type_id?: string
     spoken_language?: string
   }
   application: {
@@ -256,6 +258,7 @@ export type ApplicationPayload = {
     loan_amount_requested: number
     application_notes?: string
     loan_terms: number
+    is_draft: 1 | 0
   }
   bank_account: {
     id?: number
@@ -294,7 +297,7 @@ export type ApplicationFormData = {
   firstname: string
   identification_type: string
   identification_no: string
-  residential_type: string
+  residential_type_id: string
   marketing_type: string
   gender: string
   date_of_birth: string
@@ -325,7 +328,7 @@ export type ApplicationFormData = {
   specialization: string
   monthly_income_1: string | number
   monthly_income: string | number | any
-  '6_months_income': string | number
+  six_months_income: string | number
   annual_income: string | number
   income_document: string[]
   is_giro: string
@@ -343,6 +346,7 @@ export type ApplicationFormData = {
   state: string
   postal_code: string
   country: string
+  mobilephone_3: string
   address_contact_info: BlockAddress[]
 }
 

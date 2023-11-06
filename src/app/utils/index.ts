@@ -28,5 +28,13 @@ export function isJson(str: string) {
 }
 
 export const formatNumber = (num: any) => {
-  return numeral(num).format('0,0.00');
-};
+  return numeral(num).format('0,0.00')
+}
+
+export function convertMessageErrorMaximum(maxChar: number) {
+  return `Maximum ${maxChar} symbols.`
+}
+
+export function convertMessageErrorRequired(fieldLabel?: string) {
+  return `${fieldLabel ? fieldLabel : 'This field'} is required.`
+}

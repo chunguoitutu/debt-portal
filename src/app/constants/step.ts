@@ -2,7 +2,7 @@ import {StepItem} from '../modules/auth'
 import BankInfo from '../pages/applications/step-component/bank-info/BankInfo'
 import {
   BANK_INFO_CONFIG,
-  CONTRACT_INFORMATION,
+  CONTACT_INFORMATION,
   EMPLOYMENT_CONFIG,
   GENERAL_INFORMATION_CONFIG,
   LOAN_DETAILS_CONFIG,
@@ -26,7 +26,7 @@ export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Contact Information',
     component: ContactInformation,
-    config: CONTRACT_INFORMATION,
+    config: CONTACT_INFORMATION,
   },
   {
     label: 'Employment',

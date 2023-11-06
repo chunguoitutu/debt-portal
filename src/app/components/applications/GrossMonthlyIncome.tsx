@@ -46,7 +46,7 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
                   4
                 setAnnualIncome({...annualIncome, [key]: +e.target.value})
                 setFieldValue('annual_income', +sum_annual_income.toFixed(2))
-                setFieldValue('6_months_income', (Number(sum_annual_income) / 2).toFixed(2))
+                setFieldValue('six_months_income', (Number(sum_annual_income) / 2).toFixed(2))
                 setFieldValue('monthly_income', (Number(sum_annual_income) / 12).toFixed(2))
               }
             }}

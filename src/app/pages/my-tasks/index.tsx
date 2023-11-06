@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-function MyTasks({}: Props) {
+function MyTasks() {
   return <div></div>
 }
 
