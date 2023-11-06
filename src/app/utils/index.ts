@@ -31,8 +31,8 @@ export const formatNumber = (num: any) => {
   return numeral(num).format('0,0.00')
 }
 
-export function convertMessageErrorMaximum(maxChar: number) {
-  return `Maximum ${maxChar} symbols.`
+export function convertMessageErrorMaximum(maxChar: number, isNumber?: boolean) {
+  return `Maximum ${maxChar}` + (isNumber ? ' for this field.' : ' symbols.')
 }
 
 export function convertMessageErrorRequired(fieldLabel?: string) {

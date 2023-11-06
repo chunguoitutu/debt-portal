@@ -142,9 +142,96 @@ export const GENDER: Option[] = [
     label: 'Female',
     value: 'female',
   },
+]
+
+export const SPECIALIZATION: Option[] = [
   {
-    label: 'Other',
-    value: 'other',
+    value: 'AAF',
+    label: 'Agriculture and Fishing',
+  },
+  {
+    value: 'MAQ',
+    label: 'Mining and Quarrying',
+  },
+  {
+    value: 'MANUFACT',
+    label: 'Manufacturing',
+  },
+  {
+    value: 'EGSACP',
+    label: 'Electricity, Gas, Steam and Air-Conditioning Suppl',
+  },
+  {
+    value: 'WSWMRA',
+    label: 'Water Supply; Sewerage, Waste Management and Remed',
+  },
+  {
+    value: 'CONS',
+    label: 'Construction',
+  },
+  {
+    value: 'WRT',
+    label: 'Wholesale and Retail Trade',
+  },
+  {
+    value: 'TAS',
+    label: 'Transportation and Storage',
+  },
+  {
+    value: 'AFSA',
+    label: 'Accommodation and Food Service Activities',
+  },
+  {
+    value: 'ITCOM',
+    label: 'Information and Communications',
+  },
+  {
+    value: 'FININS',
+    label: 'Financial and Insurance Activities',
+  },
+  {
+    value: 'REA',
+    label: 'Real Estate Activities',
+  },
+  {
+    value: 'PSTA',
+    label: 'Professional, Scientific and Technical Activities',
+  },
+  {
+    value: 'ASSA',
+    label: 'Administrative and Support Service Activities',
+  },
+  {
+    value: 'PAD',
+    label: 'Public Administration and Defence',
+  },
+  {
+    value: 'EDU',
+    label: 'Education',
+  },
+  {
+    value: 'HSS',
+    label: 'Health and Social Services',
+  },
+  {
+    value: 'AER',
+    label: 'Arts, Entertainment and Recreation',
+  },
+  {
+    value: 'OTHERS',
+    label: 'Other Service Activities',
+  },
+  {
+    value: 'HEDP',
+    label: 'Activities of Households as Employers of Domestic',
+  },
+  {
+    value: 'ETOB',
+    label: 'Activities of Extra-Territorial Organisations and',
+  },
+  {
+    value: 'NAD',
+    label: 'Activities Not Adequately Defined',
   },
 ]
 

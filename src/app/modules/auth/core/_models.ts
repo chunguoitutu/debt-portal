@@ -248,6 +248,7 @@ export type ApplicationPayload = {
     credit_score?: string
     residential_type_id?: string
     spoken_language?: string
+    marketing_type_id: number
   }
   application: {
     id?: number
@@ -288,7 +289,7 @@ export type ApplicationPayload = {
     annual_income?: string | number | any
     pay_date?: string
   }
-  address: any
+  address: BlockAddress[]
 }
 
 export type ApplicationFormData = {
@@ -329,7 +330,7 @@ export type ApplicationFormData = {
   specialization: string
   monthly_income_1: string | number
   monthly_income: string | number | any
-  six_months_income: string | number
+  six_months_income: number
   annual_income: string | number
   income_document: string[]
   is_giro: string
@@ -350,6 +351,10 @@ export type ApplicationFormData = {
   mobilephone_3: string
   address_contact_info: BlockAddress[]
   loan_terms: number
+  marketing_type_id: number
+  company_telephone: string
+  position: string
+  occupation: string
 }
 
 export type BlockAddress = {

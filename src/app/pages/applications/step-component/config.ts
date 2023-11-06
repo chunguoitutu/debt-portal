@@ -5,7 +5,7 @@ import {Input} from '../../../components/inputs/input'
 import {InputTime} from '../../../components/inputs/inputTime'
 import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
-import {GENDER, YES_NO_OPTION} from '../../../utils/globalConfig'
+import {GENDER, LANGUAGES, SPECIALIZATION, YES_NO_OPTION} from '../../../utils/globalConfig'
 import TextArea from '../../../components/textarea/TextArea'
 import {ApplicationConfig, TableConfig} from '../../../modules/auth'
 import {Filter} from '../../../components/filter/Filter'
@@ -91,7 +91,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     validationFormik: Yup.string().required(convertMessageErrorRequired('Residential Type')),
   },
   {
-    key: 'marketing_type',
+    key: 'marketing_type_id',
     component: Select,
     column: 6,
     label: 'Marketing Type',
@@ -132,6 +132,16 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     required: true,
     validationFormik: Yup.string().required(convertMessageErrorRequired('Nationality')),
   },
+  {
+    key: 'spoken_language',
+    component: Select,
+    options: LANGUAGES,
+    column: 6,
+    label: 'Language Spoken',
+    className: 'justify-content-xl-end',
+    required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Language Spoken')),
+  },
 ]
 
 export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
@@ -168,10 +178,13 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
   {
     key: 'loan_terms',
     component: InputAdvance,
-    label: 'Loan Terms',
+    label: 'Loan Terms (months)',
     isFullLayout: true,
     required: true,
     typeInput: 'number',
+    validationFormik: Yup.number()
+      .required(convertMessageErrorRequired('Loan Terms'))
+      .max(100, convertMessageErrorMaximum(100, true)),
   },
   {
     key: 'reason_for_loan',
@@ -232,14 +245,6 @@ export const CONTACT_INFORMATION: ApplicationConfig[] = [
       .email('Alternate Email invalid.')
       .max(255, convertMessageErrorMaximum(255)),
   },
-  // {
-  //   key: 'spoken_language',
-  //   component: Select,
-  //   options: LANGUAGES,
-  //   column: 6,
-  //   label: 'Language Spoken',
-  //   className: 'justify-content-xl-end',
-  // },
 ]
 
 export const BANK_INFO_CONFIG: ApplicationConfig[] = [
@@ -328,18 +333,12 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     label: 'Address',
     validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
   },
-  // {
-  //   key: 'office_no',
-  //   component: Input,
-  //   label: 'Office No.(NIL)',
-  //   column: 6,
-  // },
   {
-    key: 'specialization',
-    component: Select,
-    label: 'Specialization',
-    options: YES_NO_OPTION,
+    key: 'company_telephone',
+    component: InputAdvance,
+    label: 'Company Telephone',
     column: 6,
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'portal_code',
@@ -347,8 +346,29 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     label: 'Company	Postal Code',
     column: 6,
     className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
-
+  {
+    key: 'position',
+    component: Input,
+    label: 'Position',
+    column: 6,
+    validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
+  },
+  {
+    key: 'occupation',
+    component: Input,
+    label: 'Occupation',
+    column: 6,
+    className: 'justify-content-xl-end',
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+  },
+  {
+    key: 'specialization',
+    component: Select,
+    label: 'Specialization',
+    options: SPECIALIZATION,
+  },
   {
     key: 'annual_income',
     component: InputAdvance,
@@ -487,7 +507,7 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     showViewButton: true,
     showAddNewButton: false,
     showAction: true,
-    showRefresh: true
+    showRefresh: true,
   },
   rows: [
     {
