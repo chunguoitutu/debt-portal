@@ -334,6 +334,7 @@ const Table: FC<Props> = ({
           isLoading={loading}
           searchCriteria={searchCriteria}
         />
+
         {loading && <Loading />}
       </KTCardBody>
     </div>
