@@ -8,6 +8,7 @@ import Button from '../../../../components/button/Button'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
 import {INIT_BLOCK_ADDRESS} from './../../../../constants/index'
 import request from '../../../../axios'
+import ErrorMessage from '../../../../components/error/ErrorMessage'
 
 const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
@@ -59,29 +60,35 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
     if (Component.name === 'InputAdvance') {
       return (
-        <Component
-          classShared={className}
-          className='w-100'
-          name={key}
-          value={values[key]}
-          onChange={handleChange}
-          insertLeft={
-            <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
-              {/* Wrapper with a span tag to show tooltip */}
-              <span>
-                <Select
-                  onChange={handleChange}
-                  value={values[key]}
-                  isOptionDefault={false}
-                  classShared='m-0'
-                  className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
-                  name='country_phone_code'
-                  options={COUNTRY_PHONE_CODE}
-                />
-              </span>
-            </Tippy>
-          }
-        />
+        <div className='d-flex flex-column'>
+          <Component
+            classShared={className}
+            className='w-100'
+            name={key}
+            value={values[key]}
+            onChange={handleChange}
+            insertLeft={
+              <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                {/* Wrapper with a span tag to show tooltip */}
+                <span>
+                  <Select
+                    onChange={handleChange}
+                    value={values[key]}
+                    isOptionDefault={false}
+                    classShared='m-0'
+                    className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                    name='country_phone_code'
+                    options={COUNTRY_PHONE_CODE}
+                  />
+                </span>
+              </Tippy>
+            }
+          />
+
+          {errors[key] && touched[key] && (
+            <ErrorMessage shouldShowMessage={errors[key] && touched[key]} message={errors[key]} />
+          )}
+        </div>
       )
     }
 

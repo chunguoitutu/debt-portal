@@ -21,6 +21,8 @@ import {BLOCK_ADDRESS_CONFIG} from './step-component/config'
 import {useFormik} from 'formik'
 import GeneralButton from './step-component/GeneralButton'
 import request from '../../axios'
+import {swalToast} from '../../swal-notification'
+import {DEFAULT_MSG_ERROR} from '../../constants/error-message'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -39,6 +41,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
+  const [isDraft, setIsDraft] = useState<boolean>(false)
   const [send, setSend] = useState<send[]>(messages)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
 
@@ -59,13 +62,11 @@ export const Applications = () => {
     if (!currentStepObj.config) return
 
     const schemaObject = currentStepObj.config
-      ?.filter((item) => item.required)
+      ?.filter((item) => item.validationFormik)
       .reduce(
         (result, current) => ({
           ...result,
-          [current.key]: Yup.string().required(
-            `${current.labelError || current.label} is required.`
-          ),
+          [current.key]: current.validationFormik,
         }),
         {}
       )
@@ -74,9 +75,7 @@ export const Applications = () => {
       const validationBlockAddress = BLOCK_ADDRESS_CONFIG.filter((item) => item.required).reduce(
         (result, current) => ({
           ...result,
-          [current.key]: Yup.string().required(
-            `${current.labelError || current.label} is required.`
-          ),
+          [current.key]: current.validationFormik,
         }),
         {}
       )
@@ -92,13 +91,6 @@ export const Applications = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep])
 
-  const formik = useFormik<ApplicationFormData>({
-    initialValues,
-    validationSchema: schema,
-    validateOnMount: false,
-    onSubmit: () => {},
-  })
-
   const percentCompleted = useMemo(
     () => (100 / (STEP_APPLICATION.length - 1)) * stepCompleted,
 
@@ -106,149 +98,18 @@ export const Applications = () => {
     [stepCompleted]
   )
 
-  const {priority, currentUser} = useAuth()
-
   const CurrentComponentControl: FC<PropsStepApplication> | undefined = useMemo(() => {
     return STEP_APPLICATION[currentStep - 1].component
   }, [currentStep])
 
-  function handleGoToStep(stepWantGoTo: number) {
-    // handle for block address
-    formik.validateForm(formik.values).then((errors) => {
-      if (Object.keys(errors).length > 0) {
-        formik.setErrors(errors)
+  const formik = useFormik<ApplicationFormData>({
+    initialValues,
+    validationSchema: schema,
+    validateOnMount: false,
+    onSubmit: () => {},
+  })
 
-        const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
-        const errorBlockAddress = errors.address_contact_info
-          ? {
-              address_contact_info: ((errors?.address_contact_info as string[]) || [])?.map(
-                (item) => Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
-              ),
-            }
-          : {}
-
-        formik.setTouched({
-          ...error,
-          ...errorBlockAddress,
-        })
-      } else {
-        setCurrentStep(stepWantGoTo)
-      }
-    })
-  }
-
-  function handleContinue() {
-    if (currentStep === STEP_APPLICATION.length) {
-      handleSubmitForm()
-    } else {
-      currentStep > stepCompleted && setStepCompleted(currentStep)
-      setCurrentStep(currentStep + 1)
-    }
-  }
-
-  function handleSubmitForm() {
-    const {
-      identification_type,
-      identification_no,
-      date_of_birth,
-      firstname,
-      lastname,
-      middlename,
-      gender,
-      email_1,
-      email_2,
-      employment_status,
-      mobilephone_1,
-      mobilephone_2,
-      homephone,
-      monthly_income,
-      spoken_language,
-      loan_amount_requested,
-      loan_type_id,
-      account_number_1,
-      account_number_2,
-      bank_code_1,
-      bank_code_2,
-      bank_name_1,
-      bank_name_2,
-      monthly_income_1,
-      monthly_income_2,
-      monthly_income_3,
-      annual_income,
-      portal_code,
-      company_name,
-      address_contact_info,
-      address,
-    } = formik.values
-
-    const company_id =
-      priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0
-
-    if (!+company_id)
-      return process.env.NODE_ENV === 'development' && console.warn('Missing company_id')
-
-    const payload: ApplicationPayload = {
-      customer: {
-        company_id: +company_id,
-        country_id: 1,
-        identification_type,
-        identification_no,
-        customer_no: uuidv4(),
-        date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
-        firstname,
-        lastname,
-        middlename,
-        gender,
-      },
-      borrower: {
-        email_1,
-        email_2,
-        employment_status,
-        mobilephone_1,
-        mobilephone_2,
-        mobilephone_3: '',
-        homephone,
-        monthly_income,
-        job_type_id: 1,
-        spoken_language,
-      },
-      bank_account: {
-        account_number_1,
-        account_number_2,
-        bank_code_1,
-        bank_code_2,
-        bank_name_1,
-        bank_name_2,
-      },
-      employment: {
-        portal_code,
-        annual_income: +annual_income,
-        address,
-        company_telephone: '',
-        company_name,
-        monthly_income_1: +monthly_income_1,
-        monthly_income_2: +monthly_income_2,
-        monthly_income_3: +monthly_income_3,
-      },
-      application: {
-        loan_terms: 12,
-        loan_amount_requested: +loan_amount_requested,
-        loan_type_id: +loan_type_id,
-        status: 1,
-        application_date: new Date(),
-        application_notes: JSON.stringify(send),
-      },
-      address: address_contact_info.map((item) => ({
-        ...item,
-        address_type_id: +item.address_type_id,
-      })),
-    }
-
-    request
-      .post('/application/create', payload)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err))
-  }
+  const {priority, currentUser} = useAuth()
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
     const lengthStep = STEP_APPLICATION.length
@@ -292,6 +153,222 @@ export const Applications = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
 
+  function handleGoToStep(stepWantGoTo: number) {
+    // handle for block address
+    formik.validateForm(formik.values).then((errors) => {
+      if (Object.keys(errors).length > 0) {
+        formik.setErrors(errors)
+
+        const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
+        const errorBlockAddress = errors.address_contact_info
+          ? {
+              address_contact_info: ((errors?.address_contact_info as string[]) || [])?.map(
+                (item) => Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
+              ),
+            }
+          : {}
+
+        formik.setTouched({
+          ...formik.touched,
+          ...error,
+          ...errorBlockAddress,
+        })
+      } else {
+        setCurrentStep(stepWantGoTo)
+      }
+    })
+  }
+
+  function handleSaveDraft() {
+    setIsDraft(true)
+
+    formik.validateForm(formik.values).then((errors) => {
+      if (Object.keys(errors).length > 0) {
+        formik.setErrors(errors)
+
+        const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
+        const errorBlockAddress = errors.address_contact_info
+          ? {
+              address_contact_info: ((errors?.address_contact_info as string[]) || [])?.map(
+                (item) => Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
+              ),
+            }
+          : {}
+
+        formik.setTouched({
+          ...formik.touched,
+          ...error,
+          ...errorBlockAddress,
+        })
+
+        setIsDraft(false)
+      } else {
+        handleSubmitForm()
+      }
+    })
+  }
+
+  function handleBeforeSubmit() {
+    formik.validateForm(formik.values).then((errors) => {
+      if (Object.keys(errors).length > 0) {
+        formik.setErrors(errors)
+
+        const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
+        const errorBlockAddress = errors.address_contact_info
+          ? {
+              address_contact_info: ((errors?.address_contact_info as string[]) || [])?.map(
+                (item) => Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
+              ),
+            }
+          : {}
+
+        formik.setTouched({
+          ...formik.touched,
+          ...error,
+          ...errorBlockAddress,
+        })
+      } else {
+        handleContinue()
+      }
+    })
+  }
+
+  function handleContinue() {
+    if (currentStep === STEP_APPLICATION.length) {
+      handleSubmitForm()
+    } else {
+      currentStep > stepCompleted && setStepCompleted(currentStep)
+      setCurrentStep(currentStep + 1)
+    }
+  }
+
+  async function handleSubmitForm() {
+    const {
+      identification_type,
+      identification_no,
+      date_of_birth,
+      firstname,
+      lastname,
+      middlename,
+      gender,
+      email_1,
+      email_2,
+      employment_status,
+      mobilephone_1,
+      mobilephone_2,
+      mobilephone_3,
+      homephone,
+      monthly_income,
+      spoken_language,
+      loan_amount_requested,
+      loan_type_id,
+      account_number_1,
+      account_number_2,
+      bank_code_1,
+      bank_code_2,
+      bank_name_1,
+      bank_name_2,
+      monthly_income_1,
+      monthly_income_2,
+      monthly_income_3,
+      annual_income,
+      portal_code,
+      company_name,
+      address_contact_info,
+      address,
+    } = formik.values
+
+    const company_id =
+      priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0
+
+    if (!+company_id)
+      return process.env.NODE_ENV === 'development' && console.warn('Missing company_id')
+
+    const addressList = address_contact_info
+      .filter((item) => item.address_type_id)
+      .map((item) => ({
+        ...item,
+        address_type_id: +item.address_type_id,
+      }))
+
+    const payload: ApplicationPayload = {
+      customer: {
+        company_id: +company_id,
+        country_id: 1,
+        identification_type,
+        identification_no,
+        customer_no: uuidv4(),
+        date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
+        firstname,
+        lastname,
+        middlename,
+        gender,
+      },
+      borrower: {
+        email_1,
+        email_2,
+        employment_status,
+        mobilephone_1,
+        mobilephone_2,
+        mobilephone_3,
+        homephone,
+        monthly_income: +monthly_income || 0,
+        job_type_id: 1,
+        spoken_language,
+      },
+      bank_account: {
+        account_number_1,
+        account_number_2,
+        bank_code_1,
+        bank_code_2,
+        bank_name_1,
+        bank_name_2,
+      },
+      employment: {
+        portal_code,
+        annual_income: +annual_income,
+        address,
+        company_telephone: '',
+        company_name,
+        monthly_income_1: +monthly_income_1,
+        monthly_income_2: +monthly_income_2,
+        monthly_income_3: +monthly_income_3,
+      },
+      application: {
+        loan_terms: 12,
+        loan_amount_requested: +loan_amount_requested,
+        loan_type_id: +loan_type_id,
+        status: 1,
+        application_date: new Date(),
+        application_notes: JSON.stringify(send),
+        is_draft: isDraft ? 1 : 0,
+      },
+      address: addressList,
+    }
+
+    try {
+      formik.setSubmitting(true)
+
+      await request.post('/application/create', payload)
+
+      swalToast.fire({
+        title: isDraft
+          ? 'Application draft successfully created'
+          : 'Application successfully created',
+        icon: 'success',
+      })
+    } catch (error: any) {
+      const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
+
+      swalToast.fire({
+        title: message,
+        icon: 'error',
+      })
+    } finally {
+      formik.setSubmitting(false)
+    }
+  }
+
   return (
     <>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
@@ -320,34 +397,11 @@ export const Applications = () => {
             )}
 
             <GeneralButton
-              handleSubmit={() => {
-                formik.validateForm(formik.values).then((errors) => {
-                  if (Object.keys(errors).length > 0) {
-                    formik.setErrors(errors)
-
-                    const error = Object.keys(errors).reduce(
-                      (acc, curr) => ({...acc, [curr]: true}),
-                      {}
-                    )
-                    const errorBlockAddress = errors.address_contact_info
-                      ? {
-                          address_contact_info: (
-                            (errors?.address_contact_info as string[]) || []
-                          )?.map((item) =>
-                            Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
-                          ),
-                        }
-                      : {}
-
-                    formik.setTouched({
-                      ...error,
-                      ...errorBlockAddress,
-                    })
-                  } else {
-                    handleContinue()
-                  }
-                })
-              }}
+              handleSaveDraft={handleSaveDraft}
+              handleSubmit={handleBeforeSubmit}
+              config={STEP_APPLICATION[currentStep - 1].config || []}
+              formik={formik}
+              isDraft={isDraft}
             />
           </div>
         </div>

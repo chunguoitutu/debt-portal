@@ -4,8 +4,11 @@ import clsx from 'clsx'
 
 const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
   const {handleChange, values} = formik
+
+  const {touched, errors} = formik
+
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], isFullLayout, column, options} = item
+    const {key, data = [], isFullLayout, column} = item
     let Component: any = item?.component
 
     const className =
@@ -15,19 +18,6 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     // nothing
     if (!Component) return
-
-    // handle for select
-    if (Component.name === 'Select') {
-      return (
-        <Component
-          value={values[key]}
-          onChange={handleChange}
-          name={key}
-          classShared={className}
-          options={options}
-        />
-      )
-    }
 
     // handle for radio
     if (Component.name === 'Radio') {
@@ -46,7 +36,15 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     if (Component.name === 'Input') {
       return (
-        <Component value={values[key]} onChange={handleChange} name={key} classShared={className} />
+        <Component
+          value={values[key]}
+          onChange={handleChange}
+          name={key}
+          classShared={className}
+          error={errors[key]}
+          touched={touched[key]}
+          errorTitle={errors[key]}
+        />
       )
     }
 
