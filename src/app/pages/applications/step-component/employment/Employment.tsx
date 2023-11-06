@@ -116,7 +116,6 @@ const Employment: FC<PropsStepApplication> = (props) => {
               setFieldValue('monthly_income_3', +(Number(e.target.value) / 12).toFixed(2))
             }}
             onChange={(e) => {
-              setFieldValue('6_months_income', Number(e.target.value) / 2)
               setFieldValue('annual_income', +e.target.value)
               handleChange(e)
             }}
