@@ -56,6 +56,7 @@ const Table: FC<Props> = ({
 
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+
   const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 1,
@@ -218,16 +219,16 @@ const Table: FC<Props> = ({
               {rows.some((item) => item.isShowInput) && (
                 <tr style={{borderColor: '#fff'}}>
                   {rows.map((item, key) => (
-                    <td key={key}>
-                      {rows.some((item) => item.isShowInput) && item.isShowInput && <Input classShared=''/>}
-                    </td>
+                    <td key={key}>{item.isShowInput && <Input classShared='' />}</td>
                   ))}
                   {showAction && !!showRefresh && (
-                    <div className='d-flex align-items-center justify-content-center gap-1'>
-                      <div className='p-2 mt-4 border cursor-pointer rounded'>
-                        <FontAwesomeIcon icon={faArrowsRotate} />
+                    <td className='p-0'>
+                      <div className='d-flex align-items-center justify-content-center gap-1'>
+                        <div className='p-2 border cursor-pointer rounded'>
+                          <FontAwesomeIcon icon={faArrowsRotate} />
+                        </div>
                       </div>
-                    </div>
+                    </td>
                   )}
                 </tr>
               )}
