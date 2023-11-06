@@ -15,7 +15,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const [dataMarketing, setDataMarketing] = useState({})
   const [showPopup, setShowPopup] = useState(false)
 
-
   const {values, touched, errors, handleChange} = formik
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     } finally {
     }
   }
-  
+
   function handleShowPopup() {
     setShowPopup(!showPopup)
   }
@@ -44,7 +43,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     const {
       key,
       data = [],
-      isFullLayout,
+
       column,
       options,
       keyLabelOfOptions,
@@ -53,10 +52,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     } = item
     let Component: any = item?.component
 
-    const className =
-      isFullLayout || !column
-        ? 'flex-grow-1 w-300px w-lg-unset'
-        : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+    const className = !column
+      ? 'flex-grow-1 w-300px w-lg-unset'
+      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
     // nothing
     if (!Component) return
@@ -148,7 +146,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, isFullLayout, column, isHide, className, required} = item
+        const {label, column, isHide, className, required} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
@@ -156,7 +154,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           <div
             className={clsx([
               'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
-              isFullLayout || !column ? 'full' : '',
+              !column ? 'full' : '',
               className,
             ])}
             key={i}
@@ -176,7 +174,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       })}
 
       {showPopup && <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} />}
-
     </>
   )
 }

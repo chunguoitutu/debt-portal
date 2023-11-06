@@ -47,16 +47,15 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, isFullLayout, column, options, keyLabelOfOptions, keyValueOfOptions} = item
+    const {key, column, options, keyLabelOfOptions, keyValueOfOptions} = item
     let Component: any = item?.component
 
     // nothing
     if (!Component) return
 
-    const className =
-      isFullLayout || !column
-        ? 'flex-grow-1 w-300px w-lg-unset'
-        : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+    const className = !column
+      ? 'flex-grow-1 w-300px w-lg-unset'
+      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
     if (Component.name === 'InputAdvance') {
       return (
@@ -167,7 +166,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   return (
     <>
       {config?.map((item, i) => {
-        const {label, isFullLayout, column, isHide, required, className} = item
+        const {label, column, isHide, required, className} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
@@ -176,7 +175,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
             <div
               className={clsx([
                 'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
-                isFullLayout || !column ? 'full' : '',
+                !column ? 'full' : '',
                 className,
               ])}
             >
@@ -200,7 +199,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
         return BLOCK_ADDRESS_CONFIG.map((item, i) => {
           const {
             label,
-            isFullLayout,
+
             column,
             isHide,
             required,
@@ -216,10 +215,9 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
           let Component = component
 
-          const classNameComponent =
-            isFullLayout || !column
-              ? 'flex-grow-1 w-300px w-lg-unset'
-              : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+          const classNameComponent = !column
+            ? 'flex-grow-1 w-300px w-lg-unset'
+            : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
           return (
             <Fragment key={i}>
@@ -227,7 +225,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
               <div
                 className={clsx([
                   'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
-                  isFullLayout || !column ? 'full' : '',
+                  !column ? 'full' : '',
                   className,
                 ])}
               >

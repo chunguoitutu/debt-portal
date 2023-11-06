@@ -191,7 +191,6 @@ export type ApplicationConfig = {
   defaultValue?: string | number | any[] | boolean
   component?: FC<any>
   label?: string
-  isFullLayout?: boolean
   column?: 12 | 6
   isHide?: boolean
   typeInput?: HTMLInputTypeAttribute
@@ -204,7 +203,6 @@ export type ApplicationConfig = {
   keyValueOfOptions?: string
   desc?: string
   dropDownGroup?: boolean
-  labelError?: string
   disabled?: boolean
   validationFormik?: Schema
 }
