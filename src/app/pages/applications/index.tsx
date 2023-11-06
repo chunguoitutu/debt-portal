@@ -276,6 +276,7 @@ export const Applications = () => {
       company_name,
       address_contact_info,
       address,
+      loan_terms
     } = formik.values
 
     const company_id =
@@ -335,7 +336,7 @@ export const Applications = () => {
         monthly_income_3: +monthly_income_3,
       },
       application: {
-        loan_terms: 12,
+        loan_terms: +loan_terms,
         loan_amount_requested: +loan_amount_requested,
         loan_type_id: +loan_type_id,
         status: 1,

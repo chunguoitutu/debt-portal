@@ -1,4 +1,7 @@
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+// import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
+
 import {KTCardBody} from '../../../_metronic/helpers'
 import {SearchCriteria, TableConfig, useAuth} from '../../modules/auth'
 import moment from 'moment'
@@ -13,7 +16,7 @@ import ButtonViewDetail from '../button/ButtonViewDetail'
 import {convertErrorMessageResponse} from '../../utils'
 import Cookies from 'js-cookie'
 import {Filter} from '../filter/Filter'
-import { Input } from '../inputs/input'
+import {Input} from '../inputs/input'
 
 type Props = {
   config: TableConfig
@@ -23,7 +26,6 @@ type Props = {
   setIsUpdated?: any
   handleAddNew: () => void
   isShowFilter?: boolean
-  showInput?: boolean
 }
 
 const Table: FC<Props> = ({
@@ -34,7 +36,6 @@ const Table: FC<Props> = ({
   setIsUpdated,
   handleAddNew,
   isShowFilter = false,
-  showInput= false
 }) => {
   const {settings, rows} = config
   const {
@@ -42,6 +43,7 @@ const Table: FC<Props> = ({
     showDeleteButton = true,
     showEditButton = true,
     showViewButton = true,
+    showRefresh = false,
     textConfirmDelete,
     endPointDelete,
     endPointGetListing,
@@ -209,14 +211,26 @@ const Table: FC<Props> = ({
                       </th>
                     )
                 )}
-                {showAction && (showDeleteButton || showEditButton || showViewButton) && (
+                {showAction  && (showRefresh) && (
                   <th className='text-center w-150px'>Action</th>
                 )}
               </tr>
             </thead>
             <tbody className='text-gray-600 fw-bold'>
-              <tr>
-              {rows.some(item => item.isShowInput === true) && rows.map((item) => <td>{item.isShowInput && <Input />}</td>)}
+              <tr style={{borderColor: '#fff'}}>
+                {rows.map((item, key) => (
+                  <td key={key}>{item.isShowInput && <Input />}</td>
+                ))}
+                {/* {showAction && !!showRefresh && (
+                  <td className='text-center'>
+                    <div className='d-flex align-items-center justify-content-center gap-1'>
+                        <div className='p-2 mb-4 border cursor-pointer rounded'>
+                          <FontAwesomeIcon icon={faArrowsRotate} />
+                        </div>
+                    </div>
+                  </td>
+                )} */}
+
               </tr>
               {data.length > 0 ? (
                 data.map((item, idx) => {

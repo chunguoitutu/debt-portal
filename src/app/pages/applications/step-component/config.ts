@@ -166,6 +166,14 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     validationFormik: Yup.number().required(convertMessageErrorRequired('Loan Amount')),
   },
   {
+    key: 'loan_terms',
+    component: InputAdvance,
+    label: 'Loan Terms',
+    isFullLayout: true,
+    required: true,
+    typeInput: 'number',
+  },
+  {
     key: 'reason_for_loan',
     component: TextArea,
     label: 'Reason For Loan',
@@ -478,6 +486,8 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     endPointGetListing: '',
     showViewButton: true,
     showAddNewButton: false,
+    showAction: true,
+    showRefresh: true
   },
   rows: [
     {
