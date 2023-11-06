@@ -84,6 +84,7 @@ const Remark = ({setSend, send}) => {
         className={`py-30px px-30px`}
         style={{
           maxHeight: '250px',
+          minHeight: '150px',
           overflowY: 'auto',
         }}
         ref={contentRef}
@@ -157,7 +158,7 @@ const Remark = ({setSend, send}) => {
             value={value}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
-                event.preventDefault() // Ngăn chặn xuống dòng trong ô input
+                event.preventDefault()
                 handleSubmit()
               }
             }}

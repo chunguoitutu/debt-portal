@@ -12,7 +12,7 @@ import {
   StepItem,
   useAuth,
 } from '../../modules/auth'
-import Remark, {messages, send} from './remark/Remark'
+import Remark, {send} from './remark/Remark'
 import Cookies from 'js-cookie'
 import {v4 as uuidv4} from 'uuid'
 import {INIT_BLOCK_ADDRESS} from '../../constants'
@@ -42,7 +42,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [isDraft, setIsDraft] = useState<boolean>(false)
-  const [send, setSend] = useState<send[]>(messages)
+  const [send, setSend] = useState<send[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
 
   const initialValues: ApplicationFormData = useMemo(() => {
@@ -276,7 +276,7 @@ export const Applications = () => {
       company_name,
       address_contact_info,
       address,
-      loan_terms
+      loan_terms,
     } = formik.values
 
     const company_id =
