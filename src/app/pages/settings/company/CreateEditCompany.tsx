@@ -4,14 +4,14 @@ import {Modal} from 'react-bootstrap'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import {Input} from '../../../components/inputs/input'
-import InputCheck from '../../../components/inputs/inputCheck'
+import InputCheck from '../../../components/input/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
 import moment from 'moment'
 import {swalToast} from '../../../swal-notification'
 import request from '../../../axios'
-import {InputTime} from '../../../components/inputs/inputTime'
 import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
+import Input from '../../../components/input'
+import ErrorMessage from '../../../components/error/ErrorMessage'
 
 type Props = {
   setLoadApi: any
@@ -161,30 +161,20 @@ const CreateEditCompanies = ({
                 <>
                   {rows.map((row) => (
                     <div key={row?.key} style={{flex: '0 0 50%'}}>
-                      {row?.key === 'open_date' ? (
-                        <InputTime
-                          required={row?.require ? true : false}
-                          title={row?.name}
-                          id={row?.key}
-                          error={errors[row?.key]}
-                          touched={touched[row?.key]}
-                          errorTitle={errors[row?.key]}
-                          value={values[row?.key]}
-                          onChange={handleChange}
-                        />
-                      ) : (
+                      <div className='d-flex flex-column mb-16px'>
                         <Input
                           required={row?.require ? true : false}
                           title={row.name}
-                          id={row?.key}
-                          type={row?.type}
-                          error={errors[row?.key]}
-                          touched={touched[row?.key]}
-                          errorTitle={errors[row?.key]}
+                          name={row?.key}
+                          type={row?.type || 'text'}
                           value={values[row?.key] || ''}
                           onChange={handleChange}
                         />
-                      )}
+
+                        {errors[row?.key] && touched[row?.key] && (
+                          <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                        )}
+                      </div>
                     </div>
                   ))}
                 </>

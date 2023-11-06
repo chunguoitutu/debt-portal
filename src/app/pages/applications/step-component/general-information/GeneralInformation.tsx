@@ -43,12 +43,12 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     const {
       key,
       data = [],
-
       column,
       options,
       keyLabelOfOptions,
       keyValueOfOptions,
       dependencyApi,
+      typeInput,
     } = item
     let Component: any = item?.component
 
@@ -62,32 +62,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // Special cases should be checked in advance
     if (key === 'firstname') {
       return <Component {...props} />
-    }
-
-    if (key === 'identification_no') {
-      return (
-        <div className='d-flex flex-column'>
-          <Component
-            value={values[key]}
-            onChange={handleChange}
-            name={key}
-            classShared={className}
-            insertRight={
-              <Tippy offset={[40, 0]} content='Lookup Customer'>
-                {/* Wrapper with a span tag to show tooltip */}
-                <div
-                  className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'
-                  onClick={handleShowPopup}
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </div>
-              </Tippy>
-            }
-          />
-
-          <ErrorMessage shouldShowMessage={!!errors[key] && !!touched[key]} message={errors[key]} />
-        </div>
-      )
     }
     // End special cases
 
@@ -125,17 +99,32 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       ))
     }
 
-    if (Component.name === 'Input' || Component.name === 'InputTime') {
+    if (Component.name === 'Input') {
       return (
-        <Component
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
-          value={values[key]}
-          onChange={handleChange}
-          name={key}
-          classShared={className}
-        />
+        <div className='d-flex flex-column'>
+          <Component
+            value={values[key]}
+            onChange={handleChange}
+            type={typeInput}
+            name={key}
+            classShared={className}
+            insertRight={
+              key === 'identification_no' ? (
+                <Tippy offset={[40, 0]} content='Lookup Customer'>
+                  {/* Wrapper with a span tag to show tooltip */}
+                  <div
+                    className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'
+                    onClick={handleShowPopup}
+                  >
+                    <FontAwesomeIcon icon={faSearch} />
+                  </div>
+                </Tippy>
+              ) : undefined
+            }
+          />
+
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
+        </div>
       )
     }
 

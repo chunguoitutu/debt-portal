@@ -6,12 +6,13 @@ import {Modal} from 'react-bootstrap'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import {Input} from '../../../components/inputs/input'
-import InputCheck from '../../../components/inputs/inputCheck'
+import InputCheck from '../../../components/input/inputCheck'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
 import {swalToast} from '../../../swal-notification'
 import {MAKETTING_TABLE_CONFIG} from './MarketingConfig'
+import ErrorMessage from '../../../components/error/ErrorMessage'
+import Input from '../../../components/input'
 
 type Props = {
   setLoadApi: any
@@ -151,17 +152,20 @@ const CreatEditMarkettingType = ({
 
                       return (
                         <div key={row?.key} style={{flex: '0 0 50%'}}>
-                          <Input
-                            required={!!isRequired ? true : false}
-                            title={row?.name}
-                            id={row?.key}
-                            type={typeInput}
-                            error={errors[row?.key]}
-                            touched={touched[row?.key]}
-                            errorTitle={errors[row?.key]}
-                            value={values[row?.key] || ''}
-                            onChange={handleChange}
-                          />
+                          <div className='d-flex flex-column mb-16px'>
+                            <Input
+                              required={!!isRequired ? true : false}
+                              title={row?.name}
+                              name={row?.key}
+                              type={typeInput}
+                              value={values[row?.key] || ''}
+                              onChange={handleChange}
+                            />
+
+                            {errors[row?.key] && touched[row?.key] && (
+                              <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                            )}
+                          </div>
                         </div>
                       )
                     })}

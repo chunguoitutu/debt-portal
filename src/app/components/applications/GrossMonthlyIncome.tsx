@@ -1,7 +1,7 @@
-import React, {FC} from 'react'
-import InputAdvance from '../inputs/InputAdvance'
+import {FC} from 'react'
 import ErrorMessage from '../error/ErrorMessage'
 import {PropsStepApplication} from '../../modules/auth'
+import Input from '../input'
 
 interface Props extends PropsStepApplication {
   annualIncome: any
@@ -33,7 +33,7 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
     <div className='row w-100 gy-5'>
       {data.map(({key, placeholder, desc}, i) => (
         <div className='col-12 col-xl-4 d-flex flex-column' key={i}>
-          <InputAdvance
+          <Input
             name={key}
             value={values?.[key]}
             placeholder={placeholder}
@@ -55,14 +55,13 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
               handleChange(e)
             }}
             classShared='w-300px w-xl-unset'
-            typeInput='money'
             type='number'
             noThereAreCommas={false}
           />
 
           <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>
 
-          <ErrorMessage shouldShowMessage={errors[key] && touched[key]} message={errors[key]} />
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key]} />}
         </div>
       ))}
     </div>

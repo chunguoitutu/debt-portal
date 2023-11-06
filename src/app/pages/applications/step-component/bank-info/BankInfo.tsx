@@ -1,6 +1,7 @@
 import {FC, Fragment} from 'react'
 import {ApplicationConfig, PropsStepApplication} from '../../../../modules/auth'
 import clsx from 'clsx'
+import ErrorMessage from '../../../../components/error/ErrorMessage'
 
 const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
   const {handleChange, values} = formik
@@ -35,15 +36,15 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     if (Component.name === 'Input') {
       return (
-        <Component
-          value={values[key]}
-          onChange={handleChange}
-          name={key}
-          classShared={className}
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
-        />
+        <div className='d-flex flex-column'>
+          <Component
+            value={values[key]}
+            onChange={handleChange}
+            name={key}
+            classShared={className}
+          />
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key]} />}
+        </div>
       )
     }
 

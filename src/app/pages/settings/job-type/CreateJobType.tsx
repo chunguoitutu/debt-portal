@@ -7,14 +7,15 @@ import {useFormik} from 'formik'
 import * as Yup from 'yup'
 
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
-import {Input} from '../../../components/inputs/input'
 import {KTIcon} from '../../../../_metronic/helpers'
 import request from '../../../axios'
-import InputCheck from '../../../components/inputs/InputCheckRounded'
+import InputCheck from '../../../components/input/InputCheckRounded'
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
 import TextArea from '../../../components/textarea/TextArea'
 import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
 import {swalToast} from '../../../swal-notification'
+import Input from '../../../components/input'
+import ErrorMessage from '../../../components/error/ErrorMessage'
 
 type Props = {
   setLoadApi: any
@@ -152,16 +153,19 @@ const CreateJobType = ({
                       />
                     </div>
                   ) : (
-                    <Input
-                      title={row.name}
-                      id={row.key}
-                      error={errors[row.key]}
-                      touched={touched[row.key]}
-                      errorTitle={errors[row.key]}
-                      value={values[row.key] || ''}
-                      onChange={handleChange}
-                      required={isRequired}
-                    />
+                    <div className='d-flex flex-column mb-16px'>
+                      <Input
+                        title={row.name}
+                        name={row.key}
+                        value={values[row.key] || ''}
+                        onChange={handleChange}
+                        required={isRequired}
+                      />
+
+                      {errors[row?.key] && touched[row?.key] && (
+                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                      )}
+                    </div>
                   )}
                 </div>
               )

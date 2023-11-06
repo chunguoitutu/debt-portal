@@ -16,7 +16,8 @@ import ButtonViewDetail from '../button/ButtonViewDetail'
 import {convertErrorMessageResponse} from '../../utils'
 import Cookies from 'js-cookie'
 import {Filter} from '../filter/Filter'
-import {Input} from '../inputs/input'
+import Input from '../input'
+
 type Props = {
   config: TableConfig
   onEditItem?: (data: any) => void
@@ -218,7 +219,9 @@ const Table: FC<Props> = ({
               {rows.some((item) => item.isShowInput) && (
                 <tr style={{borderColor: '#fff'}}>
                   {rows.map((item, key) => (
-                    <td key={key}>{item.isShowInput && <Input classShared='' />}</td>
+                    <td key={key}>
+                      {item.isShowInput && <Input classShared='' name={item[key]} />}
+                    </td>
                   ))}
                   {showAction && !!showRefresh && (
                     <td className='p-0'>

@@ -40,7 +40,7 @@ export const COMPANY_MANAGEMENT_CONFIG = {
     {
       key: 'open_date',
       name: 'Open Date',
-      type: 'datetime',
+      type: 'date',
       require: true,
     },
   ],

@@ -13,13 +13,12 @@ interface Props
   classShared?: string
   insertLeft?: ReactNode
   insertRight?: ReactNode
-  type?: HTMLInputTypeAttribute
+  type?: HTMLInputTypeAttribute | 'money'
   noThereAreCommas?: boolean
-  typeInput?: 'money'
   symbolMoney?: string
 }
 
-const InputAdvance: FC<Props> = ({
+const Input: FC<Props> = ({
   name,
   title,
   insertLeft,
@@ -28,8 +27,7 @@ const InputAdvance: FC<Props> = ({
   noThereAreCommas = true,
   required = false,
   className = '',
-  classShared = 'fv-row mb-16px',
-  typeInput,
+  classShared = '',
   symbolMoney = '$',
   ...rest
 }) => {
@@ -56,7 +54,7 @@ const InputAdvance: FC<Props> = ({
         </label>
       )}
       <div className='input-advance form-control form-control-lg form-control-solid p-0 border-0 d-flex align-items-center h-100 overflow-hidden'>
-        {typeInput === 'money' ? (
+        {type === 'money' ? (
           <span className='ps-5 text-gray-600'>{symbolMoney}</span>
         ) : (
           insertLeft && insertLeft
@@ -72,7 +70,7 @@ const InputAdvance: FC<Props> = ({
               handlePaste({e: e, noThereAreCommas: noThereAreCommas})
             }
           }}
-          type={typeInput === 'money' ? 'number' : type}
+          type={type === 'money' ? 'number' : type}
           className={`form-control-lg px-4 w-100 bg-transparent outline-none h-100 border-0 ${className}`}
           name={name}
           {...rest}
@@ -83,4 +81,4 @@ const InputAdvance: FC<Props> = ({
   )
 }
 
-export default InputAdvance
+export default Input

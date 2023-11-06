@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from 'react'
 import ImgSend from '../../../images/ImgSend'
 import Button from '../../../components/button/Button'
-import {Input} from '../../../components/inputs/input'
 import ImgAvataRemark from '../../../images/ImgAvataRemark'
 import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
 import {useAuth} from '../../../modules/auth'
+import Input from '../../../components/input'
 
 export interface send {
   id: number
@@ -152,7 +152,8 @@ const Remark = ({setSend, send}) => {
       <div className={`py-30px px-30px`} style={{borderTop: '1px solid  #f1f1f2'}}>
         <div className='d-flex '>
           <Input
-            classInput='remake-input'
+            name='message'
+            className='remake-input'
             placeholder='Enter remark...'
             classShared=''
             value={value}

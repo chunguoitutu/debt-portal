@@ -18,18 +18,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
   const {values, touched, setFieldValue, errors, handleChange} = formik
 
   function renderComponent(item: ApplicationConfig) {
-    const {
-      key,
-      data = [],
-
-      column,
-      options,
-      disabled,
-      typeInput,
-      typeInputAdvanced,
-      desc,
-      typeCheckbox,
-    } = item
+    const {key, data = [], column, options, disabled, typeInput, desc, typeCheckbox} = item
     let Component: any = item?.component
 
     const className = !column
@@ -42,42 +31,6 @@ const Employment: FC<PropsStepApplication> = (props) => {
     // Special cases should be checked in advance
     if (key === 'monthly_income_1') {
       return <Component {...props} annualIncome={annualIncome} setAnnualIncome={setAnnualIncome} />
-    }
-    if (key === 'company_telephone') {
-      return (
-        <div className='d-flex flex-column'>
-          <Component
-            classShared={className}
-            className='w-100'
-            name={key}
-            value={values[key]}
-            onChange={handleChange}
-            insertLeft={
-              <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
-                {/* Wrapper with a span tag to show tooltip */}
-                <span>
-                  <Select
-                    onChange={handleChange}
-                    value={values[key]}
-                    isOptionDefault={false}
-                    classShared='m-0'
-                    className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
-                    name='country_phone_code'
-                    options={COUNTRY_PHONE_CODE}
-                  />
-                </span>
-              </Tippy>
-            }
-          />
-
-          {errors[key] && touched[key] && (
-            <ErrorMessage
-              shouldShowMessage={!!errors[key] && !!touched[key]}
-              message={errors[key]}
-            />
-          )}
-        </div>
-      )
     }
     // End special cases
 
@@ -138,72 +91,55 @@ const Employment: FC<PropsStepApplication> = (props) => {
       ))
     }
 
-    // handle for Input Advanced type input is money
-    if (Component.name === 'InputAdvance' && key === 'annual_income') {
-      return (
-        <div className='d-flex flex-column w-100'>
-          <Component
-            value={values[key]}
-            onBlur={(e: any) => {
-              setAnnualIncome({
-                monthly_income_1: +(Number(e.target.value) / 12).toFixed(2),
-                monthly_income_2: +(Number(e.target.value) / 12).toFixed(2),
-                monthly_income_3: +(Number(e.target.value) / 12).toFixed(2),
-              })
-
-              setFieldValue('six_months_income', +(Number(e.target.value) / 2).toFixed(2))
-              setFieldValue('monthly_income', +(Number(e.target.value) / 12).toFixed(2))
-              setFieldValue('monthly_income_1', +(Number(e.target.value) / 12).toFixed(2))
-              setFieldValue('monthly_income_2', +(Number(e.target.value) / 12).toFixed(2))
-              setFieldValue('monthly_income_3', +(Number(e.target.value) / 12).toFixed(2))
-            }}
-            onChange={(e) => {
-              setFieldValue('annual_income', +e.target.value)
-              handleChange(e)
-            }}
-            name={key}
-            classShared={className}
-            typeInput={typeInputAdvanced}
-            type={typeInput}
-            noThereAreCommas={false}
-          />
-
-          {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
-          <ErrorMessage shouldShowMessage={!!touched[key] && !!errors[key]} message={errors[key]} />
-        </div>
-      )
-    }
-
-    if (Component.name === 'InputAdvance') {
+    if (Component.name === 'Input') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
             value={values[key]}
             onChange={handleChange}
             name={key}
+            type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
             classShared={className}
-            typeInput={typeInputAdvanced}
-            disabled={disabled ? true : false}
-            type={typeInput}
-            noThereAreCommas={false}
+            disabled={disabled}
+            onBlur={(e: any) => {
+              if (key === 'annual_income') {
+                setAnnualIncome({
+                  monthly_income_1: +(Number(e.target.value) / 12).toFixed(2),
+                  monthly_income_2: +(Number(e.target.value) / 12).toFixed(2),
+                  monthly_income_3: +(Number(e.target.value) / 12).toFixed(2),
+                })
+
+                setFieldValue('six_months_income', +(Number(e.target.value) / 2).toFixed(2))
+                setFieldValue('monthly_income', +(Number(e.target.value) / 12).toFixed(2))
+                setFieldValue('monthly_income_1', +(Number(e.target.value) / 12).toFixed(2))
+                setFieldValue('monthly_income_2', +(Number(e.target.value) / 12).toFixed(2))
+                setFieldValue('monthly_income_3', +(Number(e.target.value) / 12).toFixed(2))
+              }
+            }}
+            insertLeft={
+              typeInput === 'phone' ? (
+                <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                  {/* Wrapper with a span tag to show tooltip */}
+                  <span>
+                    <Select
+                      onChange={handleChange}
+                      value={values[key]}
+                      isOptionDefault={false}
+                      classShared='m-0'
+                      className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                      name='country_phone_code'
+                      options={COUNTRY_PHONE_CODE}
+                    />
+                  </span>
+                </Tippy>
+              ) : undefined
+            }
           />
 
           {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
-        </div>
-      )
-    }
 
-    if (Component.name === 'Input' || Component.name === 'InputTime') {
-      return (
-        <Component
-          value={values[key]}
-          onChange={handleChange}
-          name={key}
-          classShared={className}
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
-        />
+          {errors[key] && touched[key] && <ErrorMessage className='mt-2' message={errors[key]} />}
+        </div>
       )
     }
 

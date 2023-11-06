@@ -47,7 +47,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, column, options, keyLabelOfOptions, keyValueOfOptions} = item
+    const {key, column, options, keyLabelOfOptions, keyValueOfOptions, typeInput} = item
     let Component: any = item?.component
 
     // nothing
@@ -56,40 +56,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
       : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
-
-    if (Component.name === 'InputAdvance') {
-      return (
-        <div className='d-flex flex-column'>
-          <Component
-            classShared={className}
-            className='w-100'
-            name={key}
-            value={values[key]}
-            onChange={handleChange}
-            insertLeft={
-              <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
-                {/* Wrapper with a span tag to show tooltip */}
-                <span>
-                  <Select
-                    onChange={handleChange}
-                    value={values[key]}
-                    isOptionDefault={false}
-                    classShared='m-0'
-                    className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
-                    name='country_phone_code'
-                    options={COUNTRY_PHONE_CODE}
-                  />
-                </span>
-              </Tippy>
-            }
-          />
-
-          {errors[key] && touched[key] && (
-            <ErrorMessage shouldShowMessage={errors[key] && touched[key]} message={errors[key]} />
-          )}
-        </div>
-      )
-    }
 
     if (Component.name === 'Select') {
       return (
@@ -111,29 +77,40 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
     if (Component.name === 'Input') {
       return (
-        <Component
-          value={values[key]}
-          onChange={handleChange}
-          name={key}
-          classShared={className}
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
-        />
+        <div className='d-flex flex-column'>
+          <Component
+            value={values[key]}
+            onChange={handleChange}
+            name={key}
+            classShared={className}
+            type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
+            insertLeft={
+              typeInput === 'phone' ? (
+                <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                  {/* Wrapper with a span tag to show tooltip */}
+                  <span>
+                    <Select
+                      onChange={handleChange}
+                      value={values[key]}
+                      isOptionDefault={false}
+                      classShared='m-0'
+                      className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                      name='country_phone_code'
+                      options={COUNTRY_PHONE_CODE}
+                    />
+                  </span>
+                </Tippy>
+              ) : undefined
+            }
+          />
+
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key]} />}
+        </div>
       )
     }
 
-    return (
-      <Component
-        value={values[key]}
-        onChange={handleChange}
-        name={key}
-        classShared={className}
-        error={errors[key]}
-        touched={touched[key]}
-        errorTitle={errors[key]}
-      />
-    )
+    // unexpected
+    return <Component />
   }
 
   function handleAddBlock() {
@@ -162,6 +139,8 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       ),
     })
   }
+
+  console.log(values.mobilephone_1)
 
   return (
     <>
@@ -253,15 +232,21 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                       fieldLabelOption={keyLabelOfOptions || 'value'}
                     />
                   ) : (
-                    <Component
-                      value={values['address_contact_info']?.[indexParent]?.[key]}
-                      onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}
-                      name={key}
-                      classShared={classNameComponent}
-                      error={errors['address_contact_info']?.[indexParent]?.[key]}
-                      touched={touched['address_contact_info']?.[indexParent]?.[key]}
-                      errorTitle={errors['address_contact_info']?.[indexParent]?.[key]}
-                    />
+                    <div className='d-flex flex-column'>
+                      <Component
+                        value={values['address_contact_info']?.[indexParent]?.[key]}
+                        onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}
+                        name={key}
+                        classShared={classNameComponent}
+                      />
+
+                      {errors['address_contact_info']?.[indexParent]?.[key] &&
+                        touched['address_contact_info']?.[indexParent]?.[key] && (
+                          <ErrorMessage
+                            message={errors['address_contact_info']?.[indexParent]?.[key]}
+                          />
+                        )}
+                    </div>
                   ))}
               </div>
 

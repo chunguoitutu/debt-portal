@@ -193,8 +193,7 @@ export type ApplicationConfig = {
   label?: string
   column?: 12 | 6
   isHide?: boolean
-  typeInput?: HTMLInputTypeAttribute
-  typeInputAdvanced?: 'money'
+  typeInput?: HTMLInputTypeAttribute | 'money' | 'phone'
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
@@ -205,6 +204,7 @@ export type ApplicationConfig = {
   dropDownGroup?: boolean
   disabled?: boolean
   validationFormik?: Schema
+  noThereAreCommas?: boolean
 }
 
 export type PropsStepApplication = {

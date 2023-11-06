@@ -30,13 +30,12 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
     const {
       key,
       data = [],
-
+      noThereAreCommas,
       column,
       options,
       keyLabelOfOptions,
       keyValueOfOptions,
       typeInput,
-      typeInputAdvanced,
       typeCheckbox,
       dependencyApi,
     } = item
@@ -44,6 +43,8 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     // nothing
     if (!Component) return
+
+    const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
 
     if (Component.name === 'Checkbox') {
       return data.map((item, i) => (
@@ -83,17 +84,13 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             touched={touched}
             errors={errors}
           />
-          <ErrorMessage
-            shouldShowMessage={!!errors[key] && !!touched[key]}
-            message={errors[key] as string}
-          />
+
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
         </div>
       )
     }
 
-    const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
-
-    if (Component.name === 'InputAdvance') {
+    if (Component.name === 'Input') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
@@ -101,14 +98,11 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             onChange={handleChange}
             name={key}
             classShared={className}
-            typeInput={typeInputAdvanced}
             type={typeInput}
-            noThereAreCommas={false}
+            noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
           />
-          <ErrorMessage
-            shouldShowMessage={!!errors[key] && !!touched[key]}
-            message={errors[key] as string}
-          />
+
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
         </div>
       )
     }
@@ -127,29 +121,12 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             touched={touched}
             errors={errors}
           />
-          <ErrorMessage
-            shouldShowMessage={!!errors[key] && !!touched[key]}
-            message={errors[key] as string}
-          />
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
         </div>
       )
     }
 
-    return (
-      <div className='d-flex flex-column w-100'>
-        <Component
-          value={values[key]}
-          onChange={handleChange}
-          name={key}
-          classShared={className}
-          error={errors[key]}
-          touched={touched[key]}
-          errorTitle={errors[key]}
-          type={typeInput || 'text'}
-          noThereAreCommas={false}
-        />
-      </div>
-    )
+    return <Component />
   }
 
   return (
