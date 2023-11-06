@@ -3,12 +3,12 @@ import {Modal} from 'react-bootstrap'
 import {KTCardBody, KTIcon} from '../../../../../_metronic/helpers'
 import {TABLE_LOOKUP_CUSTOMER} from '../config'
 import Button from '../../../../components/button/Button'
-import {SearchCriteria} from '../../../../modules/auth'
+import {ResponeLookupListing, SearchCriteria} from '../../../../modules/auth'
 import request from '../../../../axios'
 import Icons from '../../../../components/icons'
-import {Input} from '../../../../components/inputs/input'
 import RowPerPage from '../../../../components/row-per-page'
 import PaginationArrow from '../../../../components/pagination.tsx'
+import Input from '../../../../components/input'
 
 type Props = {
   show?: boolean
@@ -17,7 +17,7 @@ type Props = {
 
 const LookupCustomer = ({show, onClose}: Props) => {
   const [showInput, setShowInput] = React.useState<boolean>(false)
-  const [data, setData] = React.useState<any[]>([])
+  const [data, setData] = React.useState<ResponeLookupListing[]>([])
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 2,
@@ -25,11 +25,10 @@ const LookupCustomer = ({show, onClose}: Props) => {
   })
 
   async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
-    // await onFetchDataList({...pagination, ...data})
     setSearchCriteria({...searchCriteria, ...data})
   }
 
-  const [dataFilters, setDataFilter] = React.useState<Partial<any>>({})
+  const [dataFilters, setDataFilter] = React.useState<Partial<ResponeLookupListing>>({})
   const {settings, rows} = TABLE_LOOKUP_CUSTOMER
   function showInputFilter() {
     setShowInput(!showInput)

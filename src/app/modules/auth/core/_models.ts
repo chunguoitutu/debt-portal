@@ -95,6 +95,22 @@ export type SearchCriteria = {
   company_id?: string
 }
 
+export type ResponeLookupListing = {
+  id: number
+  company_id: number
+  customer_no: string
+  identification_type: string
+  identification_no: string
+  prefix: string | null
+  firstname: string | null
+  middlename: string | null
+  lastname: string | null
+  telephone: string | null
+  gender: string | null
+  date_of_birth: Date
+  country_id: number
+}
+
 export type TableRow = {
   key: string
   name: string

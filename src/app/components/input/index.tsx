@@ -6,7 +6,7 @@ interface Props
     InputHTMLAttributes<HTMLInputElement>,
     'className' | 'id' | 'type' | 'required' | 'name'
   > {
-  name: string
+  name?: string
   title?: string
   required?: boolean
   className?: string
