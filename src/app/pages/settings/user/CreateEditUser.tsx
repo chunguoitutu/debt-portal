@@ -12,14 +12,15 @@ import {useFormik} from 'formik'
 import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
-import {Input} from '../../../components/inputs/input'
 import request from '../../../axios'
 import Col from 'react-bootstrap/Col'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 import Tab from 'react-bootstrap/Tab'
-import InputCheck from '../../../components/inputs/InputCheckRounded'
+import InputCheck from '../../../components/input/InputCheckRounded'
 import Select from '../../../components/select/select'
+import Input from '../../../components/input'
+import ErrorMessage from '../../../components/error/ErrorMessage'
 
 type Props = {
   config?: TableConfig
@@ -306,17 +307,20 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                         if (type === 'input') {
                           return (
                             <div className='col-6' key={i}>
-                              <Input
-                                type={typeInput}
-                                title={name}
-                                id={key}
-                                error={errors[key]}
-                                touched={touched[key]}
-                                errorTitle={errors[key]}
-                                value={values[key] || ''}
-                                onChange={handleChange}
-                                required={isRequired}
-                              />
+                              <div className='d-flex flex-column mb-16px'>
+                                <Input
+                                  type={typeInput}
+                                  title={name}
+                                  name={key}
+                                  value={values[key] || ''}
+                                  onChange={handleChange}
+                                  required={isRequired}
+                                />
+
+                                {errors[key] && touched[key] && (
+                                  <ErrorMessage className='mt-2' message={errors[key] as string} />
+                                )}
+                              </div>
                             </div>
                           )
                         } else if (type === 'select') {
@@ -370,17 +374,20 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                       if (type === 'input') {
                         return (
                           <div className='col-6' key={i}>
-                            <Input
-                              type={typeInput}
-                              title={name}
-                              id={key}
-                              error={errors[key]}
-                              touched={touched[key]}
-                              errorTitle={errors[key]}
-                              value={values[key] || ''}
-                              onChange={handleChange}
-                              required={isRequired}
-                            />
+                            <div className='d-flex flex-column mb-16px'>
+                              <Input
+                                type={typeInput}
+                                title={name}
+                                name={key}
+                                value={values[key] || ''}
+                                onChange={handleChange}
+                                required={isRequired}
+                              />
+
+                              {errors[key] && touched[key] && (
+                                <ErrorMessage className='mt-2' message={errors[key] as string} />
+                              )}
+                            </div>
                           </div>
                         )
                       } else if (type === 'select') {

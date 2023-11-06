@@ -8,10 +8,10 @@ import {createNewRole, updateRole} from '../../../modules/auth/core/_requests'
 import {swalToast} from '../../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../constants/error-message'
 import * as Yup from 'yup'
-import {Input} from '../../../components/inputs/input'
 import {ROLE_PRIORITY} from '../../../utils/globalConfig'
 import {PAGE_PERMISSION} from '../../../utils/pagePermission'
 import {isJson} from '../../../utils'
+import Input from '../../../components/input'
 
 type Props = {
   data?: RoleInfo
@@ -316,22 +316,25 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
             if (type === 'input') {
               return (
-                <Input
-                  key={index}
-                  title={name}
-                  type={typeInput || 'text'}
-                  id={key}
-                  error={errors[key]}
-                  touched={touched[key]}
-                  errorTitle={errors[key]}
-                  value={values[key] || ''}
-                  onChange={handleChange}
-                  required={isRequired}
-                />
+                <div className='d-flex flex-column mb-16px'>
+                  <Input
+                    key={index}
+                    title={name}
+                    type={typeInput || 'text'}
+                    name={key}
+                    value={values[key] || ''}
+                    onChange={handleChange}
+                    required={isRequired}
+                  />
+
+                  {errors[key] && touched[key] && (
+                    <ErrorMessage className='mt-2' message={errors[key] as string} />
+                  )}
+                </div>
               )
             } else if (type === 'textarea') {
               return (
-                <div className='mb-8' key={index}>
+                <div className='mb-16px' key={index}>
                   <TextArea
                     title={name}
                     name={key}
@@ -340,11 +343,9 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     isRequired={isRequired}
                   />
 
-                  <ErrorMessage
-                    className='mt-2'
-                    shouldShowMessage={!!(errors[key] && touched[key])}
-                    message={errors[key]}
-                  />
+                  {errors[key] && touched[key] && (
+                    <ErrorMessage className='mt-2' message={errors[key]} />
+                  )}
                 </div>
               )
             } else {
