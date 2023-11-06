@@ -6,6 +6,9 @@ import Button from '../../../../components/button/Button'
 import {SearchCriteria} from '../../../../modules/auth'
 import request from '../../../../axios'
 import Icons from '../../../../components/icons'
+import {Input} from '../../../../components/inputs/input'
+import RowPerPage from '../../../../components/row-per-page'
+import PaginationArrow from '../../../../components/pagination.tsx'
 
 type Props = {
   show?: boolean
@@ -14,61 +17,61 @@ type Props = {
 
 const LookupCustomer = ({show, onClose}: Props) => {
   const [showInput, setShowInput] = React.useState<boolean>(false)
-  const [data, setData] = React.useState([])
+  const [data, setData] = React.useState<any[]>([])
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
-    currentPage: 1,
-    total: 0,
+    currentPage: 2,
+    total: 20,
   })
-  const {settings, rows} = TABLE_LOOKUP_CUSTOMER
 
+  async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
+    // await onFetchDataList({...pagination, ...data})
+    setSearchCriteria({...searchCriteria, ...data})
+  }
+
+  const [dataFilters, setDataFilter] = React.useState<Partial<any>>({})
+  const {settings, rows} = TABLE_LOOKUP_CUSTOMER
   function showInputFilter() {
     setShowInput(!showInput)
   }
-
   async function onFetchDataList(body?: Omit<SearchCriteria, 'total'>) {
     try {
       const {data: response} = await request.post(settings.endPointGetListing + '/listing', body)
-
       Array.isArray(response.data) && setData(response.data)
-
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {
       // no thing
     }
   }
-
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
-        <tr key={idx}>
-          {rows.map(({key, component, classNameTableBody, isHide}, i) => {
-            if (isHide) {
-              return <React.Fragment key={i}></React.Fragment>
-            }
-            let Component = component || React.Fragment
-            let value = item[key]
-
-            if (key === 'id') {
-              return <td key={i}>{idx + 1}</td>
-            }
-
-            return (
-              <td key={i}>
-                {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
-              </td>
-            )
-          })}
-        </tr>
+        <>
+          <tr key={idx}>
+            {rows.map(({key, component, classNameTableBody, isHide}, i) => {
+              if (isHide) {
+                return <React.Fragment key={i}></React.Fragment>
+              }
+              let Component = component || React.Fragment
+              let value = item[key]
+              if (key === 'id') {
+                return <td key={i}>{idx + 1}</td>
+              }
+              return (
+                <td key={i}>
+                  {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
+                </td>
+              )
+            })}
+          </tr>
+        </>
       )
     })
   }
-
   React.useEffect(() => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
   return (
     <Modal
       id='kt_modal_create_app'
@@ -142,12 +145,52 @@ const LookupCustomer = ({show, onClose}: Props) => {
                       {<th className='text-center w-150px'>Action</th>}
                     </tr>
                   </thead>
-                  <tbody>{renderRows()}</tbody>
+                  <tbody>
+                    {showInput ? (
+                      <tr>
+                        {rows.map((row, i) => {
+                          if (row.key === 'id')
+                            return (
+                              <td key={i}>
+                                <React.Fragment />
+                              </td>
+                            )
+                          return (
+                            <td key={i}>
+                              <Input
+                                onChange={(e: React.ChangeEvent<any>) => {
+                                  setDataFilter((prev) => ({
+                                    ...prev,
+                                    [row.key]: e.target.value,
+                                  }))
+                                }}
+                              />
+                            </td>
+                          )
+                        })}
+                      </tr>
+                    ) : null}
+                    {renderRows()}
+                  </tbody>
                 </table>
               </div>
             </KTCardBody>
           ) : null}
         </Modal.Body>
+        <div style={{padding: '22.75px', display: 'flex', justifyContent: 'space-between'}}>
+          <RowPerPage
+            lenghtData={searchCriteria.total}
+            limit={searchCriteria.pageSize}
+            page={searchCriteria.currentPage}
+            setLimit={(e: any) =>
+              setSearchCriteria({...searchCriteria, pageSize: e.target.value, currentPage: 1})
+            }
+          />
+          <PaginationArrow
+            onChangePagePagination={handleChangePagination}
+            searchCriteria={searchCriteria}
+          />
+        </div>
         <Modal.Footer>
           <div className='d-flex flex-end full'>
             <Button
@@ -166,5 +209,4 @@ const LookupCustomer = ({show, onClose}: Props) => {
     </Modal>
   )
 }
-
 export default LookupCustomer

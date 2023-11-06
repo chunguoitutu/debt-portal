@@ -17,7 +17,6 @@ import {convertErrorMessageResponse} from '../../utils'
 import Cookies from 'js-cookie'
 import {Filter} from '../filter/Filter'
 import {Input} from '../inputs/input'
-
 type Props = {
   config: TableConfig
   onEditItem?: (data: any) => void
@@ -332,6 +331,7 @@ const Table: FC<Props> = ({
           isLoading={loading}
           searchCriteria={searchCriteria}
         />
+
         {loading && <Loading />}
       </KTCardBody>
     </div>
