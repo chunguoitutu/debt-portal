@@ -1,20 +1,15 @@
 import {FC} from 'react'
 
 type Props = {
-  shouldShowMessage?: boolean
   message?: string
   className?: string
 }
 
-const ErrorMessage: FC<Props> = ({shouldShowMessage = false, message, className = ''}) => {
+const ErrorMessage: FC<Props> = ({message, className = ''}) => {
   return (
-    <>
-      {shouldShowMessage && (
-        <div className='fv-plugins-message-container'>
-          <span className={`fv-help-block ${className}`}>{message}</span>
-        </div>
-      )}
-    </>
+    <div className='fv-plugins-message-container'>
+      <span className={`fv-help-block ${className}`}>{message}</span>
+    </div>
   )
 }
 

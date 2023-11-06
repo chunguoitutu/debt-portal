@@ -1,7 +1,7 @@
 import {Modal} from 'react-bootstrap'
 import {KTIcon} from '../../../../_metronic/helpers'
 import moment from 'moment'
-import {showLable} from '../../../components/inputs/showLable'
+import {showLable} from '../../../components/input/showLable'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
 
 interface IProps {

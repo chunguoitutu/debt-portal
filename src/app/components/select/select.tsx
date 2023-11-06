@@ -72,9 +72,7 @@ const Select: FC<Props> = ({
               })}
           {children}
         </select>
-        {error && touched && (
-          <ErrorMessage shouldShowMessage={error && touched} message={errorTitle} />
-        )}
+        {error && touched && <ErrorMessage message={errorTitle} />}
       </div>
     </div>
   )

@@ -4,9 +4,9 @@ import {COMPANY_MANAGEMENT_CONFIG} from './config'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import {swalToast} from '../../../swal-notification'
-import {Input} from '../../../components/inputs/input'
-import {InputTime} from '../../../components/inputs/inputTime'
 import moment from 'moment'
+import Input from '../../../components/input'
+import ErrorMessage from '../../../components/error/ErrorMessage'
 
 export const CompanyManagement = () => {
   const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG
@@ -126,29 +126,20 @@ export const CompanyManagement = () => {
           <>
             {rows.map((row) => (
               <div key={row.key} style={{flex: '0 0 50%'}}>
-                {row.key === 'open_date' ? (
-                  <InputTime
-                    required={row?.require ? true : false}
-                    title={row.name}
-                    id={row.key}
-                    error={errors[row.key]}
-                    touched={touched[row.key]}
-                    errorTitle={errors[row.key]}
-                    value={values[row.key] || ''}
-                    onChange={handleChange}
-                  />
-                ) : (
+                <div className='d-flex flex-column'>
                   <Input
                     required={row?.require ? true : false}
                     title={row.name}
-                    id={row.key}
-                    error={errors[row.key]}
-                    touched={touched[row.key]}
-                    errorTitle={errors[row.key]}
+                    name={row.key}
                     value={values[row.key] || ''}
                     onChange={handleChange}
+                    type={row.type}
                   />
-                )}
+
+                  {errors[row?.key] && touched[row?.key] && (
+                    <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                  )}
+                </div>
               </div>
             ))}
           </>

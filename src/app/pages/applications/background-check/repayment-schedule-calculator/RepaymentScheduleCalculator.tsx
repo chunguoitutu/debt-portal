@@ -4,9 +4,6 @@ import {createPortal} from 'react-dom'
 import {Modal, Table} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import './style.scss'
-
-import {InputTime} from '../../../../components/inputs/inputTime'
-import {Input} from '../../../../components/inputs/input'
 import {KTIcon} from '../../../../../_metronic/helpers'
 import {MONTHLY_DUE_DATE} from '../../../../utils/globalConfig'
 import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../constants/step'
@@ -16,6 +13,8 @@ import {formatNumber} from '../../../../utils'
 import Step from '../../../../components/step/Step'
 import request from './../../../../axios/index'
 import Select from '../../../../components/select/select'
+import Input from '../../../../components/input'
+import ErrorMessage from '../../../../components/error/ErrorMessage'
 
 type Props = {
   setLoadApi: any
@@ -158,20 +157,23 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                   <div style={{width: '60.3%'}} className='ps-30px'>
                     {rows?.map((row) => (
                       <div key={row?.key}>
-                        {row?.typeText === 'inputTime' || row?.typeText === 'select' ? (
+                        {row?.typeText === 'date' || row?.typeText === 'select' ? (
                           <>
-                            {row?.typeText === 'inputTime' && (
-                              <InputTime
-                                required={row?.require ? true : false}
-                                title={row?.name}
-                                id={row?.key}
-                                error={errors[row?.key]}
-                                touched={touched[row?.key]}
-                                errorTitle={errors[row?.key]}
-                                value={values[row?.key] || ''}
-                                onChange={handleChange}
-                                type='date'
-                              />
+                            {row?.typeText === 'date' && (
+                              <div className='d-flex flex-column'>
+                                <Input
+                                  required={row?.require ? true : false}
+                                  title={row?.name}
+                                  name={row?.key}
+                                  value={values[row?.key] || ''}
+                                  onChange={handleChange}
+                                  type='date'
+                                />
+
+                                {errors[row.key] && touched[row.key] && (
+                                  <ErrorMessage message={errors[row.key]} />
+                                )}
+                              </div>
                             )}
                             {row.typeText === 'select' && (
                               <Select
@@ -190,18 +192,21 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             )}
                           </>
                         ) : (
-                          <Input
-                            required={row?.require ? true : false}
-                            title={row?.name}
-                            id={row?.key}
-                            type={row.type}
-                            noThereAreCommas={row?.noThereAreCommas}
-                            error={errors[row?.key]}
-                            touched={touched[row?.key]}
-                            errorTitle={errors[row?.key]}
-                            value={values[row?.key] || ''}
-                            onChange={handleChange}
-                          />
+                          <div className='d-flex flex-column'>
+                            <Input
+                              required={row?.require ? true : false}
+                              title={row?.name}
+                              name={row?.key}
+                              type={row.type}
+                              noThereAreCommas={row?.noThereAreCommas}
+                              value={values[row?.key] || ''}
+                              onChange={handleChange}
+                            />
+
+                            {errors[row.key] && touched[row.key] && (
+                              <ErrorMessage message={errors[row.key]} />
+                            )}
+                          </div>
                         )}
                       </div>
                     ))}
@@ -259,7 +264,9 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                           <tbody className='border-calculator'>
                             <tr>
                               <td className='label-calculator'>Loan Amount</td>
-                              <td className='content-calculator'>${formatNumber(values.totalsAmount)}</td>
+                              <td className='content-calculator'>
+                                ${formatNumber(values.totalsAmount)}
+                              </td>
                             </tr>
                             <tr>
                               <td className='label-calculator'>Interest (Per Month)</td>

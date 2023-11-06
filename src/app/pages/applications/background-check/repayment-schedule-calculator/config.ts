@@ -30,7 +30,7 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       name: 'First Repayment Date',
       type: 'time',
       require: true,
-      typeText: 'inputTime',
+      typeText: 'date',
     },
     {
       key: 'monthly_due_date',

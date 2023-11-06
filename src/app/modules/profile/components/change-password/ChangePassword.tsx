@@ -143,10 +143,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                   id='old_password'
                   {...getFieldProps('old_password')}
                 />
-                <ErrorMessage
-                  shouldShowMessage={!!(touched.old_password && errors.old_password)}
-                  message={errors.old_password}
-                />
+
+                {touched.old_password && errors.old_password && (
+                  <ErrorMessage message={errors.old_password} />
+                )}
               </div>
             </div>
           )}
@@ -163,10 +163,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                 id='new_password'
                 {...getFieldProps('new_password')}
               />
-              <ErrorMessage
-                shouldShowMessage={!!(touched.new_password && errors.new_password)}
-                message={errors.new_password}
-              />
+
+              {touched.new_password && errors.new_password && (
+                <ErrorMessage message={errors.new_password} />
+              )}
             </div>
           </div>
 
@@ -183,9 +183,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                 {...getFieldProps('confirm_new_password')}
               />
               {touched.confirm_new_password && errors.confirm_new_password && (
-                <div className='fv-plugins-message-container'>
-                  <div className='fv-help-block'>{errors.confirm_new_password}</div>
-                </div>
+                <ErrorMessage message={errors.confirm_new_password} />
               )}
             </div>
           </div>
