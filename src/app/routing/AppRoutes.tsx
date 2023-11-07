@@ -26,6 +26,7 @@ import Loans from '../pages/loans'
 import Borrowers from '../pages/borrowers'
 import Transactions from '../pages/transactions'
 import MyTasks from '../pages/my-tasks'
+import ApplicationListing from '../pages/applications/application-listings/ApplicationListings'
 
 const AccountPage = lazy(() => import('../modules/profile/components/profile/AccountPage'))
 
@@ -59,6 +60,7 @@ const AppRoutes: FC = () => {
           <Route element={<MasterLayout />}>
             <Route path='dashboard' element={<Dashboard />} />
             <Route path='/applications' element={<Applications />} />
+            <Route path='/application-listings' element={<ApplicationListing />} />
             <Route path='/loans' element={<Loans />} />
             <Route path='/borrowers' element={<Borrowers />} />
             <Route path='/transactions' element={<Transactions />} />
