@@ -9,7 +9,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
   const {touched, errors} = formik
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], column} = item
+    const {key, data = [], column, typeComponent} = item
     let Component: any = item?.component
 
     const className = !column
@@ -20,7 +20,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
     if (!Component) return
 
     // handle for radio
-    if (Component.name === 'Radio') {
+    if (typeComponent === 'Radio') {
       return data.map((item, i) => (
         <Component
           key={i}
@@ -34,7 +34,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
       ))
     }
 
-    if (Component.name === 'Input') {
+    if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column'>
           <Component

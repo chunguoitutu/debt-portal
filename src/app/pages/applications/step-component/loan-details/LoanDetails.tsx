@@ -38,6 +38,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       typeInput,
       typeCheckbox,
       dependencyApi,
+      typeComponent,
     } = item
     let Component: any = item?.component
 
@@ -46,7 +47,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
 
-    if (Component.name === 'Checkbox') {
+    if (typeComponent === 'Checkbox') {
       return data.map((item, i) => (
         <Component
           key={i}
@@ -73,7 +74,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
         />
       ))
     }
-    if (Component.name === 'TextArea') {
+    if (typeComponent === 'TextArea') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
@@ -90,7 +91,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       )
     }
 
-    if (Component.name === 'Input') {
+    if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
@@ -107,7 +108,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       )
     }
 
-    if (Component.name === 'Select') {
+    if (typeComponent === 'Select') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component

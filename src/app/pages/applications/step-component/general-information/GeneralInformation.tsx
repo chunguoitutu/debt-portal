@@ -49,6 +49,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       keyValueOfOptions,
       dependencyApi,
       typeInput,
+      typeComponent,
     } = item
     let Component: any = item?.component
 
@@ -66,7 +67,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // End special cases
 
     // handle for select
-    if (Component.name === 'Select') {
+    if (typeComponent === 'Select') {
+      console.log(1234567)
       return (
         <Component
           error={errors[key]}
@@ -85,7 +87,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
 
     // handle for radio
-    if (Component.name === 'Radio') {
+    if (typeComponent === 'Radio') {
       return data.map((item, i) => (
         <Component
           key={i}
@@ -99,7 +101,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       ))
     }
 
-    if (Component.name === 'Input') {
+    if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column'>
           <Component

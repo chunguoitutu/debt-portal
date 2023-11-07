@@ -47,7 +47,8 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, column, options, keyLabelOfOptions, keyValueOfOptions, typeInput} = item
+    const {key, column, options, keyLabelOfOptions, keyValueOfOptions, typeInput, typeComponent} =
+      item
     let Component: any = item?.component
 
     // nothing
@@ -57,7 +58,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       ? 'flex-grow-1 w-300px w-lg-unset'
       : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
-    if (Component.name === 'Select') {
+    if (typeComponent === 'Select') {
       return (
         <Component
           value={values[key]}
@@ -75,7 +76,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       )
     }
 
-    if (Component.name === 'Input') {
+    if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column'>
           <Component
@@ -188,6 +189,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
             keyLabelOfOptions,
             keyValueOfOptions,
             options,
+            typeComponent,
           } = item
 
           if (isHide) return <Fragment key={i}></Fragment>
@@ -218,7 +220,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                 </div>
 
                 {Component &&
-                  (Component.name === 'Select' ? (
+                  (typeComponent === 'Select' ? (
                     <Component
                       value={values['address_contact_info']?.[indexParent]?.[key]}
                       onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}

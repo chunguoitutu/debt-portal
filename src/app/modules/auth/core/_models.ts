@@ -207,6 +207,7 @@ export type ApplicationConfig = {
   className?: string
   defaultValue?: string | number | any[] | boolean
   component?: FC<any>
+  typeComponent?: string
   label?: string
   column?: 12 | 6
   isHide?: boolean

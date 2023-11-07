@@ -18,7 +18,17 @@ const Employment: FC<PropsStepApplication> = (props) => {
   const {values, touched, setFieldValue, errors, handleChange} = formik
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, data = [], column, options, disabled, typeInput, desc, typeCheckbox} = item
+    const {
+      key,
+      data = [],
+      column,
+      options,
+      disabled,
+      typeInput,
+      desc,
+      typeCheckbox,
+      typeComponent,
+    } = item
     let Component: any = item?.component
 
     const className = !column
@@ -35,7 +45,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
     // End special cases
 
     // handle for select
-    if (Component.name === 'Select') {
+    if (typeComponent === 'Select') {
       return (
         <Component
           value={values[key]}
@@ -48,7 +58,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
     }
 
     // handle for radio
-    if (Component.name === 'Radio') {
+    if (typeComponent === 'Radio') {
       return data.map((item, i) => (
         <Component
           key={i}
@@ -63,7 +73,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
     }
 
     // handle for checkbox
-    if (Component.name === 'Checkbox') {
+    if (typeComponent === 'Checkbox') {
       return data.map((item, i) => (
         <Component
           key={i}
@@ -91,7 +101,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
       ))
     }
 
-    if (Component.name === 'Input') {
+    if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
