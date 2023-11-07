@@ -68,7 +68,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
     // handle for select
     if (typeComponent === 'Select') {
-      console.log(1234567)
       return (
         <Component
           error={errors[key]}

@@ -141,8 +141,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     })
   }
 
-  console.log(values.mobilephone_1)
-
   return (
     <>
       {config?.map((item, i) => {
