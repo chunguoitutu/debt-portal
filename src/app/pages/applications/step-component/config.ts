@@ -243,7 +243,7 @@ export const CONTACT_INFORMATION: ApplicationConfig[] = [
     typeInput: 'phone',
     label: 'Home Phone(NIL)',
     className: 'justify-content-xl-end',
-    validationFormik: Yup.number().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'email_1',
