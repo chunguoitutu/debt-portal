@@ -21,6 +21,14 @@ import {
 import {COUNTRY_LIST} from '../../../constants/countries'
 import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
 import {convertMessageErrorMaximum, convertMessageErrorRequired} from '../../../utils'
+import FullName from './completion/FullName'
+import Address from './completion/Address'
+import GrossMonthlyIncomeCompletion from './completion/GrossMonthlyIncomeCompletion'
+import LableOptions from './completion/LableOptions'
+import SpecialZation from './completion/SpecialZation'
+import RenderOptionsApi from './completion/RenderOptionsApi'
+import RenderOptionsApiAddress from './completion/AddressType'
+import LableOptionsCountry from './completion/Country'
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -576,3 +584,336 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     },
   ],
 }
+
+export const COMPLETION_CONFIG = [
+  {
+    col: 'col-12',
+    title: 'Personal Information',
+    config: [
+      [
+        {
+          key: 'name_of_applicant',
+          value: 'Name of applicant',
+          Component: FullName,
+        },
+        {
+          key: 'identification_no',
+          value: 'NRIC No./FIN',
+        },
+        {
+          key: 'date_of_birth',
+          value: 'Date of Birth',
+        },
+      ],
+      [
+        {
+          key: 'gender',
+          value: 'Gender',
+          options: GENDER,
+          Component: LableOptions,
+          keyFilter: 'value',
+        },
+        {
+          key: 'nationality',
+          value: 'nationality',
+          options: COUNTRY_LIST,
+          Component: LableOptions,
+          keyFilter: 'code',
+          lable: 'name',
+        },
+        {
+          key: 'identification_type',
+          value: 'ID Type',
+          options: ID_TYPE,
+          Component: LableOptions,
+          keyFilter: 'value',
+        },
+      ],
+      [
+        {
+          key: 'customer_type',
+          value: 'Customer Type',
+        },
+        {
+          key: 'residential_type_id',
+          value: 'Residential Type',
+          options: RESIDENTIAL_TYPE,
+          Component: SpecialZation,
+          keyFilter: 'value',
+        },
+        {
+          key: 'marketing_type_id',
+          value: 'Marketing type',
+          dependencyApi: '/config/marketing_type/listing',
+          Component: RenderOptionsApi,
+          keyFilter: 'id',
+          lable: 'marketing_type_name',
+        },
+      ],
+      [
+        {
+          key: 'spoken_language',
+          value: 'Language Spoken',
+          options: LANGUAGES,
+          Component: LableOptions,
+          keyFilter: 'value',
+        },
+      ],
+    ],
+  },
+  {
+    col: 'col-6',
+    title: 'Loan Details',
+    config: [
+      [
+        {
+          key: 'loan_terms',
+          value: 'Consent',
+        },
+        {
+          key: 'loan_type_id',
+          value: 'Loan type',
+          dependencyApi: '/config/loan_type/listing',
+          Component: RenderOptionsApi,
+          keyFilter: 'id',
+          lable: 'type_name',
+        },
+        {
+          key: 'loan_amount_requested',
+          value: 'Loan amount required',
+        },
+      ],
+      [
+        {
+          key: 'loan_terms',
+          value: 'Loan Terms (months)',
+        },
+        {
+          key: 'reason_for_loan',
+          value: 'Reason For Loan',
+        },
+      ],
+    ],
+  },
+  {
+    col: 'col-6',
+    title: 'Contact Information',
+    config: [
+      [
+        {
+          key: 'mobilephone_1',
+          value: 'Mobile 1 (NIL)',
+        },
+        {
+          key: 'mobilephone_2',
+          value: 'Mobile 2 (NIL)',
+        },
+        {
+          key: 'mobilephone_3',
+          value: 'Mobile 1 (NIL)',
+        },
+      ],
+      [
+        {
+          key: 'homephone',
+          value: 'Home Phone (NIL)',
+        },
+        {
+          key: 'email_1',
+          value: 'Email',
+        },
+        {
+          key: 'email_2',
+          value: 'Alternate Email',
+        },
+      ],
+    ],
+  },
+  {
+    col: 'col-6',
+    title: 'Address',
+    Component: Address,
+    config: [
+      [
+        {
+          key: 'address_type_id',
+          value: 'Address Type',
+          dependencyApi: '/config/address_type/listing',
+          Component: RenderOptionsApiAddress,
+          keyFilter: 'id',
+          lable: 'address_type_name',
+        },
+        {
+          key: 'street_1',
+          value: 'Street 1',
+        },
+        {
+          key: 'city',
+          value: 'City',
+        },
+        {
+          key: 'postal_code',
+          value: 'Postal Code',
+        },
+      ],
+      [
+        {
+          key: 'address_label',
+          value: 'Address Label',
+        },
+        {
+          key: 'street_2',
+          value: 'Street 2',
+        },
+        {
+          key: 'state',
+          value: 'State',
+        },
+        {
+          key: 'country',
+          value: 'Country',
+          options: COUNTRY_LIST,
+          Component: LableOptionsCountry,
+          keyFilter: 'code',
+          lable: 'name',
+        },
+      ],
+    ],
+  },
+  {
+    col: 'col-9',
+    title: 'Workplace',
+    config: [
+      [
+        {
+          key: 'employment_status',
+          value: 'employment Status',
+        },
+        {
+          key: 'company_name',
+          value: 'Company Name',
+        },
+        {
+          key: 'company_telephone',
+          value: 'Company Telephone',
+        },
+        {
+          key: 'portal_code',
+          value: 'Company Postal Code',
+        },
+      ],
+      [
+        {
+          key: 'address',
+          value: 'Address',
+        },
+        {
+          key: 'position',
+          value: 'Position',
+        },
+        {
+          key: 'occupation',
+          value: 'Occupation',
+        },
+        {
+          key: 'specialization',
+          value: 'Specialization',
+          options: SPECIALIZATION,
+          Component: LableOptions,
+          keyFilter: 'value',
+        },
+      ],
+      [
+        {
+          key: 'monthly_income_1',
+          value: 'Gross Monthly Income',
+          Component: GrossMonthlyIncomeCompletion,
+        },
+        {
+          key: 'monthly_income',
+          value: 'Average Monthly Income',
+          dollars: '$',
+        },
+        {
+          key: 'six_months_income',
+          value: 'Past 6 Month Gross Income',
+          dollars: '$',
+        },
+        {
+          key: 'annual_income',
+          value: 'Annual Gross Income',
+          dollars: '$',
+        },
+      ],
+    ],
+  },
+  {
+    col: 'col-3',
+    title: 'Bank Information',
+    config: [
+      [
+        {
+          key: 'is_giro',
+          value: 'Is It GIRO',
+          options: YES_NO_OPTION,
+          Component: LableOptions,
+          keyFilter: 'value',
+        },
+        {
+          key: 'bank_name_1',
+          value: 'Bank Name 1',
+        },
+        {
+          key: 'account_number_1',
+          value: 'Bank Acc 1',
+        },
+        {
+          key: 'bank_code_1',
+          value: 'Bank Code 1',
+        },
+        {},
+      ],
+      [
+        {
+          key: 'bank_name_2',
+          value: 'Bank Name 2',
+        },
+        {
+          key: 'account_number_2',
+          value: 'Bank Acc 2',
+        },
+        {
+          key: 'bank_code_2',
+          value: 'Bank Code 2',
+        },
+      ],
+    ],
+  },
+  {
+    col: 'col-12',
+    title: 'Income Document',
+    config: [
+      [
+        {
+          key: 'is_giro',
+          value: '',
+          img: true,
+        },
+      ],
+      [
+        {
+          key: 'bank_name_2',
+          value: 'Bank Name 2',
+          img: true,
+        },
+      ],
+      [
+        {
+          key: 'bank_name_2',
+          value: 'Bank Name 2',
+          img: true,
+        },
+      ],
+    ],
+  },
+]

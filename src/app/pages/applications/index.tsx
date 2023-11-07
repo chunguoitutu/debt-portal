@@ -400,7 +400,10 @@ export const Applications = () => {
             className='p-10'
           />
 
-          <div className='form-wrap p-10' style={currentStep === 2 ? {width: '91.5%'} : {}}>
+          <div
+            className={`${currentStep !== 6 ? 'form-wrap p-10' : ''}`}
+            style={currentStep === 2 ? {width: '91.5%'} : {}}
+          >
             {CurrentComponentControl && (
               <CurrentComponentControl
                 config={STEP_APPLICATION[currentStep - 1].config || []}

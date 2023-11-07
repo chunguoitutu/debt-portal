@@ -140,7 +140,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       ),
     })
   }
-
+  
   return (
     <>
       {config?.map((item, i) => {
