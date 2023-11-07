@@ -149,8 +149,8 @@ const Remark = ({setSend, send}) => {
           </div>
         ))}
       </div>
-      <div className={`py-30px px-30px`} style={{borderTop: '1px solid  #f1f1f2'}}>
-        <div className='d-flex '>
+      <div style={{borderTop: '1px solid  #f1f1f2', padding: '14px'}}>
+        <div className='d-flex' style={{}}>
           <Input
             name='message'
             className='remake-input'
@@ -178,6 +178,7 @@ const Remark = ({setSend, send}) => {
             }}
           />
           <Button
+            style={{display: 'flex', flexShrink: '0', width: '32px', height: '32px'}}
             onClick={() => {
               handleSubmit()
             }}

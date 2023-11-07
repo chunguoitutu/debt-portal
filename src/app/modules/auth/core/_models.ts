@@ -32,7 +32,7 @@ export type StepItem = {
   label: string
   desc?: string | ReactNode
   readonly component?: FC<any>
-  readonly config?: ApplicationConfig[]
+  readonly config?: ApplicationConfig[] | any
 }
 
 export type UserInfo = {

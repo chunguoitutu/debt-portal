@@ -1,7 +1,9 @@
 import {StepItem} from '../modules/auth'
+import Completion from '../pages/applications/step-component/completion'
 import BankInfo from '../pages/applications/step-component/bank-info/BankInfo'
 import {
   BANK_INFO_CONFIG,
+  COMPLETION_CONFIG,
   CONTACT_INFORMATION,
   EMPLOYMENT_CONFIG,
   GENERAL_INFORMATION_CONFIG,
@@ -41,8 +43,8 @@ export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Completion',
     desc: 'Review & Save Application.',
-    component: BankInfo,
-    config: BANK_INFO_CONFIG,
+    component: Completion,
+    config: COMPLETION_CONFIG,
   },
 ]
 
