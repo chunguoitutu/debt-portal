@@ -20,20 +20,19 @@ const LookupCustomer = ({show, onClose}: Props) => {
   const [data, setData] = React.useState<ResponeLookupListing[]>([])
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
-    currentPage: 2,
-    total: 20,
+    currentPage: 1,
+    total: 0,
   })
-
-  async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
-    setSearchCriteria({...searchCriteria, ...data})
-  }
 
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponeLookupListing>>({})
   const {settings, rows} = TABLE_LOOKUP_CUSTOMER
   function showInputFilter() {
     setShowInput(!showInput)
   }
-  async function onFetchDataList(body?: Omit<SearchCriteria, 'total'>) {
+
+  async function onFetchDataList(
+    body?: Omit<SearchCriteria<Partial<ResponeLookupListing>>, 'total'>
+  ) {
     try {
       const {data: response} = await request.post(settings.endPointGetListing + '/listing', body)
       Array.isArray(response.data) && setData(response.data)
@@ -42,35 +41,47 @@ const LookupCustomer = ({show, onClose}: Props) => {
       // no thing
     }
   }
+
+  async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
+    onFetchDataList({...searchCriteria, ...data, filters: dataFilters})
+  }
+
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
-        <>
-          <tr key={idx}>
-            {rows.map(({key, component, classNameTableBody, isHide}, i) => {
-              if (isHide) {
-                return <React.Fragment key={i}></React.Fragment>
-              }
-              let Component = component || React.Fragment
-              let value = item[key]
-              if (key === 'id') {
-                return <td key={i}>{idx + 1}</td>
-              }
-              return (
-                <td key={i}>
-                  {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
-                </td>
-              )
-            })}
-          </tr>
-        </>
+        <tr key={idx}>
+          {rows.map(({key, component, classNameTableBody, isHide}, i) => {
+            if (isHide) {
+              return <React.Fragment key={i}></React.Fragment>
+            }
+            let Component = component || React.Fragment
+            let value = item[key]
+            if (key === 'id') {
+              return <td key={i}>{idx + 1}</td>
+            }
+            return (
+              <td key={i}>
+                {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
+              </td>
+            )
+          })}
+        </tr>
       )
     })
   }
+
+  const handleLookup = async () => {
+    onFetchDataList({
+      ...searchCriteria,
+      filters: dataFilters,
+    })
+  }
+
   React.useEffect(() => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <Modal
       id='kt_modal_create_app'
@@ -122,67 +133,80 @@ const LookupCustomer = ({show, onClose}: Props) => {
               </Button>
             </div>
           </div>
-          {data.length ? (
-            <KTCardBody className='py-4'>
-              <div className='table-responsive'>
-                <table
-                  id='kt_table_users'
-                  className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-                >
-                  <thead>
-                    <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                      {rows.map(
-                        (row, i) =>
-                          !row?.isHide && (
-                            <th className={row?.classNameTableHead} key={i}>
-                              <div className='d-flex flex-row gap-3 cursor-pointer'>
-                                <span>{row.name}</span>
-                              </div>
-                            </th>
-                          )
-                      )}
-                      {<th className='text-center w-150px'>Action</th>}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {showInput ? (
-                      <tr>
-                        {rows.map((row, i) => {
-                          if (row.key === 'id')
-                            return (
-                              <td key={i}>
-                                <React.Fragment />
-                              </td>
-                            )
+          <KTCardBody className='py-4'>
+            <div className='table-responsive'>
+              <table
+                id='kt_table_users'
+                className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
+              >
+                <thead>
+                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                    {rows.map(
+                      (row, i) =>
+                        !row?.isHide && (
+                          <th className={row?.classNameTableHead} key={i}>
+                            <div className='d-flex flex-row gap-3 cursor-pointer'>
+                              <span>{row.name}</span>
+                            </div>
+                          </th>
+                        )
+                    )}
+                    {<th className='text-center w-150px'>Action</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {showInput ? (
+                    <tr>
+                      {rows.map((row, i) => {
+                        if (row.key === 'id')
                           return (
                             <td key={i}>
-                              <Input
-                                onChange={(e: React.ChangeEvent<any>) => {
-                                  setDataFilter((prev) => ({
-                                    ...prev,
-                                    [row.key]: e.target.value,
-                                  }))
-                                }}
-                              />
+                              <React.Fragment />
                             </td>
                           )
-                        })}
-                      </tr>
-                    ) : null}
-                    {renderRows()}
-                  </tbody>
-                </table>
-              </div>
-            </KTCardBody>
-          ) : null}
+                        return (
+                          <td key={i}>
+                            <Input
+                              onChange={(e: React.ChangeEvent<any>) => {
+                                setDataFilter((prev) => ({
+                                  ...prev,
+                                  [row.key]: e.target.value,
+                                }))
+                              }}
+                            />
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  ) : null}
+                  {data.length ? (
+                    renderRows()
+                  ) : (
+                    <tr>
+                      <td colSpan={7}>
+                        <div className='d-flex text-center w-100 align-content-center justify-content-center'>
+                          No matching records found
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </KTCardBody>
         </Modal.Body>
-        <div style={{padding: '22.75px', display: 'flex', justifyContent: 'space-between'}}>
+        <div style={{padding: '10px 22.75px', display: 'flex', justifyContent: 'space-between'}}>
           <RowPerPage
             lenghtData={searchCriteria.total}
             limit={searchCriteria.pageSize}
             page={searchCriteria.currentPage}
             setLimit={(e: any) =>
-              setSearchCriteria({...searchCriteria, pageSize: e.target.value, currentPage: 1})
+              onFetchDataList({
+                ...searchCriteria,
+                pageSize: e.target.value,
+                currentPage: 1,
+                filters: dataFilters,
+              })
             }
           />
           <PaginationArrow
@@ -199,7 +223,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
             >
               Cancel
             </Button>
-            <Button type='submit' loading={false} disabled={false} onClick={() => {}}>
+            <Button type='submit' loading={false} disabled={false} onClick={handleLookup}>
               Lookup
             </Button>
           </div>

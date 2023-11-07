@@ -54,7 +54,7 @@ const PaginationArrow = ({onChangePagePagination, isLoading, searchCriteria}: Pr
             next: true,
           })}
         >
-          <a
+          <button
             onClick={() => onChangePagePagination({pageSize, currentPage: currentPage - 1})}
             className={clsx('page-link', {
               'page-text': true,
@@ -64,7 +64,7 @@ const PaginationArrow = ({onChangePagePagination, isLoading, searchCriteria}: Pr
             <MdOutlineKeyboardArrowLeft
               style={{color: isLoading || currentPage === 1 ? '#6b748d' : '#000', fontSize: '20px'}}
             />
-          </a>
+          </button>
         </li>
         {arrayPage.map((pageNumber) => {
           return (
@@ -75,7 +75,7 @@ const PaginationArrow = ({onChangePagePagination, isLoading, searchCriteria}: Pr
                 disabled: isLoading,
               })}
             >
-              <a
+              <button
                 className={clsx('page-link')}
                 onClick={() => {
                   onChangePagePagination({pageSize, currentPage: pageNumber})
@@ -83,7 +83,7 @@ const PaginationArrow = ({onChangePagePagination, isLoading, searchCriteria}: Pr
                 style={{cursor: 'pointer'}}
               >
                 {pageNumber}
-              </a>
+              </button>
             </li>
           )
         })}
@@ -93,7 +93,7 @@ const PaginationArrow = ({onChangePagePagination, isLoading, searchCriteria}: Pr
             next: true,
           })}
         >
-          <a
+          <button
             onClick={() => onChangePagePagination({pageSize, currentPage: currentPage + 1})}
             className={clsx('page-link', {
               'page-text': true,
@@ -106,7 +106,7 @@ const PaginationArrow = ({onChangePagePagination, isLoading, searchCriteria}: Pr
                 fontSize: '20px',
               }}
             />
-          </a>
+          </button>
         </li>
       </ul>
     </div>

@@ -1,6 +1,4 @@
-import {useMemo, useState} from 'react'
 import Select from '../select/select'
-import {right} from '@popperjs/core'
 
 type Props = {limit: number; lenghtData: number; page: number; setLimit?: any}
 
@@ -28,6 +26,7 @@ const RowPerPage = ({limit = 10, page = 1, lenghtData = 0, setLimit}: Props) => 
           isOptionDefault={false}
           value={limit}
           options={[
+            {value: 5, label: 5},
             {value: 10, label: 10},
             {value: 20, label: 20},
             {value: 30, label: 30},

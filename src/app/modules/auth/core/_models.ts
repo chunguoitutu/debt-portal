@@ -88,11 +88,12 @@ export type UpdateById<T = any> = {
   data: T
 }
 
-export type SearchCriteria = {
+export type SearchCriteria<T = any> = {
   pageSize: number
   currentPage: number
   total: number
   company_id?: string
+  filters?: T
 }
 
 export type ResponeLookupListing = {
