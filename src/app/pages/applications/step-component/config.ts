@@ -190,7 +190,7 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
-      .max(100, convertMessageErrorMaximum(100, true)),
+      .max(1000, convertMessageErrorMaximum(1000, true)),
   },
   {
     key: 'reason_for_loan',
@@ -211,7 +211,10 @@ export const CONTACT_INFORMATION: ApplicationConfig[] = [
     label: 'Mobile 1(NIL)',
     column: 6,
     typeInput: 'phone',
-    validationFormik: Yup.number().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string()
+      .max(64, convertMessageErrorMaximum(64))
+      .required(convertMessageErrorRequired('Mobile 1(NIL)')),
+    required: true,
   },
   {
     key: 'mobilephone_2',
@@ -221,7 +224,7 @@ export const CONTACT_INFORMATION: ApplicationConfig[] = [
     column: 6,
     typeInput: 'phone',
     className: 'justify-content-xl-end',
-    validationFormik: Yup.number().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'mobilephone_3',
@@ -230,7 +233,7 @@ export const CONTACT_INFORMATION: ApplicationConfig[] = [
     label: 'Mobile 3(NIL)',
     column: 6,
     typeInput: 'phone',
-    validationFormik: Yup.number().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
     key: 'homephone',
