@@ -84,9 +84,6 @@ const MenuItem: FC<Props> = ({
           style={{
             position: 'relative',
           }}
-          className={clsx('menu-link py-3', {
-            'active menu-here': checkIsActive('application-listings', to),
-          })}
         >
           <ApplicationsMenu />
         </div>
