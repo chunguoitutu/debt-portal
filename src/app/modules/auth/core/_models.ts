@@ -143,12 +143,14 @@ export type TableRow = {
   }
   isShowInput?: boolean
   infoFilter?: {
+    isFromTo?: boolean
     typeComponent: 'select' | 'input'
     typeInput?: HTMLInputTypeAttribute
     component: any
     fieldLabelOption?: string
     fieldValueOption?: string
     dependencyApi?: string
+    noThereAreCommas?: boolean
   }
 }
 

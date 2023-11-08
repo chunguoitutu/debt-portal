@@ -14,6 +14,9 @@ import numeral from 'numeral'
 import Badge from '../../../components/badge/Badge'
 import ButtonEdit from '../../../components/button/ButtonEdit'
 import Checkbox from '../../../components/checkbox/Checkbox'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -35,7 +38,7 @@ const ApplicationListing = () => {
   const {showAction = true, showEditButton} = settings || {}
 
   const [showInput, setShowInput] = React.useState<boolean>(false)
-  const [dataFilter, setDataFilter] = React.useState({})
+  const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>({})
   const [data, setData] = React.useState<ApplicationItem[]>([])
   const [listIdChecked, setListIdChecked] = React.useState<number[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
@@ -101,58 +104,72 @@ const ApplicationListing = () => {
         <tr key={idx}>
           <td>
             <Checkbox
-              name={'a'}
+              name=''
               checked={listIdChecked.includes(item.id)}
               onChange={(e) => handleCheckItem(e, item)}
             />
           </td>
-          {rows.map(({key, component, classNameTableBody, isHide, type}, i) => {
-            if (isHide) {
-              return <React.Fragment key={i}></React.Fragment>
-            }
-            let Component = component || React.Fragment
-            let value = item[key]
+          {rows.map(
+            ({key, component, classNameTableBody, isHide, type, options, infoFilter}, i) => {
+              const {fieldLabelOption, fieldValueOption} = infoFilter || {}
 
-            if (type === 'date') {
-              value = moment(item[key]).format('MMM D, YYYY')
-            }
+              if (isHide) {
+                return <React.Fragment key={i}></React.Fragment>
+              }
+              let Component = component || React.Fragment
+              let value = item[key]
 
-            if (type === 'money') {
-              value = numeral(item[key]).format('$0,0.00')
-            }
+              if (type === 'date') {
+                value = moment(item[key]).format('MMM D, YYYY')
+              }
 
-            if (key === 'status') {
-              let title: string = ''
-              let color: string = ''
+              if (type === 'money') {
+                value = numeral(item[key]).format('$0,0.00')
+              }
 
-              if (item[key] === 1) {
-                title = 'Awaiting Approval'
-                color = 'warning'
-              } else if (item[key] === 0) {
-                title = 'Rejected'
-                color = 'danger'
-              } else {
-                title = 'Approved'
-                color = 'success'
+              // handle for select
+              if (dataOption[key] || options) {
+                const currentItem =
+                  (options || dataOption[key]).find(
+                    (item) => item[fieldValueOption || 'value'] === value
+                  ) || {}
+
+                value = currentItem[fieldLabelOption || 'label'] || ''
+              }
+
+              if (key === 'status') {
+                let title: string = ''
+                let color: string = ''
+
+                if (item[key] === 1) {
+                  title = 'Awaiting Approval'
+                  color = 'warning'
+                } else if (item[key] === 0) {
+                  title = 'Rejected'
+                  color = 'danger'
+                } else {
+                  title = 'Approved'
+                  color = 'success'
+                }
+
+                return (
+                  <td key={i} className={classNameTableBody}>
+                    <Badge color={color as any} title={title as any} key={i} />
+                  </td>
+                )
               }
 
               return (
                 <td key={i} className={classNameTableBody}>
-                  <Badge color={color as any} title={title as any} key={i} />
+                  {component ? (
+                    <Component />
+                  ) : (
+                    <span className='text-gray-600 fw-semibold'>{value}</span>
+                  )}
                 </td>
               )
             }
-
-            return (
-              <td key={i} className={classNameTableBody}>
-                {component ? (
-                  <Component />
-                ) : (
-                  <span className='text-gray-600 fw-semibold'>{value}</span>
-                )}
-              </td>
-            )
-          })}
+          )}
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
@@ -204,6 +221,21 @@ const ApplicationListing = () => {
   function handleChangeFilter(e: React.ChangeEvent<any>) {
     const {value, name} = e.target
     setDataFilter({...dataFilter, [name]: value})
+  }
+
+  function handleChangeFromToFilter(key: 'gte' | 'lte', e: React.ChangeEvent<HTMLInputElement>) {
+    const {value, name} = e.target
+    setDataFilter({
+      ...dataFilter,
+      [name]: {
+        ...dataFilter[name],
+        [key]: value,
+      },
+    })
+  }
+
+  function handleResetFilter() {
+    setDataFilter({})
   }
 
   return (
@@ -281,19 +313,19 @@ const ApplicationListing = () => {
                     {rows.map((row, i) => {
                       if (!row.infoFilter) return <td key={i}></td>
                       const {infoFilter, key, options, classNameTableBody} = row || {}
-                      const {component, typeComponent, typeInput} = infoFilter || {}
+                      const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
 
                       const Component = component
                       let props: {[key: string]: any} = {
                         name: key,
-                        value: dataFilter[key],
+                        value: dataFilter[key] || '',
+                        onChange: handleChangeFilter,
                       }
 
                       if (typeComponent === 'select') {
                         props = {
                           ...props,
                           options: options || dataOption[key],
-                          onChange: handleChangeFilter,
                           fieldLabelOption: infoFilter?.fieldLabelOption || 'label',
                           fieldValueOption: infoFilter?.fieldValueOption || 'value',
                         }
@@ -306,11 +338,44 @@ const ApplicationListing = () => {
                       }
 
                       return (
-                        <td key={i} className={classNameTableBody}>
-                          <Component classShared={''} className='form-control-sm' {...props} />
+                        <td key={i} className={clsx(['align-top', classNameTableBody])}>
+                          {isFromTo ? (
+                            <div className='d-flex flex-column gap-3'>
+                              <Component
+                                {...props}
+                                placeholder='from'
+                                value={dataFilter[key]?.['gte'] || ''}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                  handleChangeFromToFilter('gte', e)
+                                }}
+                              />
+                              <Component
+                                {...props}
+                                placeholder='to'
+                                value={dataFilter[key]?.['lte'] || ''}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                  handleChangeFromToFilter('lte', e)
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <Component classShared={''} {...props} />
+                          )}
                         </td>
                       )
                     })}
+
+                    {/* td refresh */}
+                    <td className='text-center align-top'>
+                      <div className='d-flex align-items-center justify-content-center gap-1'>
+                        <div
+                          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
+                          onClick={() => handleResetFilter()}
+                        >
+                          <FontAwesomeIcon icon={faArrowsRotate} />
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 ) : null}
                 {data.length ? (

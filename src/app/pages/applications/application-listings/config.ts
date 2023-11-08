@@ -66,7 +66,9 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       classNameTableBody: 'text-end pe-0',
       classNameTableHead: 'text-end',
       infoFilter: {
+        isFromTo: true,
         typeComponent: 'input',
+        typeInput: 'number',
         component: Input,
       },
     },
