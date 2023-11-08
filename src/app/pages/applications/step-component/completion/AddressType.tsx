@@ -4,8 +4,6 @@ import request from '../../../../axios'
 type Props = {config?: any; data?: any; options?: any; keyData?: number}
 
 const RenderOptionsApiAddress = ({config, data, keyData}: Props) => {
-  console.log(keyData)
-
   const [dataLoanType, setDataLoanType] = useState([])
 
   useEffect(() => {

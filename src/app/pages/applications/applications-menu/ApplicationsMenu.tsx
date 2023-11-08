@@ -9,21 +9,20 @@ const ApplicationsMenu: FC = () => {
         <div className='dropdown-fixed'>
           <div className='menu-item px-5 my-1'>
             <Link
-              id='application'
-              to='/application'
+              id='application-listings'
+              to='/application/listing'
               className='menu-link fs-5 px-4 menu-item-child mt-2'
             >
-              Application Form
+              Application Listing
             </Link>
           </div>
-
           <div className='menu-item px-5'>
             <Link
-              id='application-listing'
-              to='/application-listing'
+              id='applications'
+              to='/application/create'
               className='menu-link fs-5 px-4 menu-item-child mb-3'
             >
-              Applications Listing
+              Application Form
             </Link>
           </div>
         </div>
