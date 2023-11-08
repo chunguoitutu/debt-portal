@@ -112,6 +112,17 @@ export type ResponeLookupListing = {
   country_id: number
 }
 
+export type ResponseApplicationListing = {
+  id: number
+  application_number: number
+  application_name: string
+  id_type: string
+  loan_type: string
+  loan_amount: number
+  application_date: Date
+  status: number
+}
+
 export type TableRow = {
   key: string
   name: string
