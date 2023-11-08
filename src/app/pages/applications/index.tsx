@@ -14,7 +14,6 @@ import {
 } from '../../modules/auth'
 import Remark, {send} from './remark/Remark'
 import Cookies from 'js-cookie'
-import {v4 as uuidv4} from 'uuid'
 import {INIT_BLOCK_ADDRESS} from '../../constants'
 import * as Yup from 'yup'
 import {BLOCK_ADDRESS_CONFIG} from './step-component/config'
@@ -40,7 +39,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [currentStep, setCurrentStep] = useState<number>(6)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [send, setSend] = useState<send[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
@@ -256,7 +255,6 @@ export const Applications = () => {
       employment_status,
       mobilephone_1,
       mobilephone_2,
-      mobilephone_3,
       homephone,
       monthly_income,
       spoken_language,

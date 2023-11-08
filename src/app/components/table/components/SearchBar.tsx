@@ -24,7 +24,7 @@ const SearchBar = () => {
   )
 
   return (
-    <div className='card-title'>
+    <div className='card-title w-100'>
       {/* begin::Search */}
       <div className='d-flex align-items-center position-relative my-1'>
         <KTIcon iconName='magnifier' className='fs-1 position-absolute ms-6' />

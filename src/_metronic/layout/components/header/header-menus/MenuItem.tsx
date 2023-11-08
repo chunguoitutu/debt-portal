@@ -26,7 +26,6 @@ const MenuItem: FC<Props> = ({
 }) => {
   const {pathname} = useLocation()
 
-  console.log(pathname);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const handleMouseEnter = () => {
