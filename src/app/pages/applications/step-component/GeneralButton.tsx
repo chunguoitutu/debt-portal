@@ -18,7 +18,10 @@ const GeneralButton: FC<Props> = ({
 }) => {
   const {isSubmitting} = formik
   return (
-    <div className='d-flex flex-end mt-10 full'>
+    <div
+      className='d-flex flex-end mt-10 full'
+      style={{padding: currentStep === 6 ? '0px 30px 30px 0px' : '0px'}}
+    >
       <Button
         loading={isSubmitting && isDraft}
         onClick={() => handleSaveDraft()}

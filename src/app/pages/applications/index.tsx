@@ -428,20 +428,14 @@ export const Applications = () => {
               />
             )}
 
-            <div
-              style={{
-                padding: currentStep === 6 ? '0px 30px 30px 0px' : '',
-              }}
-            >
-              <GeneralButton
-                handleSaveDraft={handleSaveDraft}
-                handleSubmit={handleBeforeSubmit}
-                config={STEP_APPLICATION[currentStep - 1].config || []}
-                formik={formik}
-                isDraft={isDraft}
-                currentStep={currentStep}
-              />
-            </div>
+            <GeneralButton
+              handleSaveDraft={handleSaveDraft}
+              handleSubmit={handleBeforeSubmit}
+              config={STEP_APPLICATION[currentStep - 1].config || []}
+              formik={formik}
+              isDraft={isDraft}
+              currentStep={currentStep}
+            />
           </div>
         </div>
         <div className='d-none d-xxl-block col-xxl-2 order-0 order-xxl-3'>
