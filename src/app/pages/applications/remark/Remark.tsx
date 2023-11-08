@@ -13,26 +13,7 @@ export interface send {
   time: string
   user: string
 }
-export const messages: send[] = [
-  {
-    id: 1,
-    message: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    time: '2023-11-01 03:59:27',
-    user: 'Jogn Walles',
-  },
-  {
-    id: 2,
-    message: 'Lorem ipsum dolor sit amet.',
-    time: '2023-11-01 03:59:27',
-    user: 'Jogn Walles',
-  },
-  {
-    id: 3,
-    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent cursus.',
-    time: '2023-11-01 03:59:27',
-    user: 'Jogn Walles',
-  },
-]
+
 const Remark = ({setSend, send}) => {
   const [value, setValue] = useState<string>('')
   const [scroll, setScroll] = useState(false)
@@ -70,7 +51,6 @@ const Remark = ({setSend, send}) => {
           style={{
             marginBottom: '0px',
             fontSize: '20px',
-            fontStyle: 'normal',
             fontWeight: '600',
             lineHeight: '24px',
             textTransform: 'capitalize',
@@ -100,7 +80,7 @@ const Remark = ({setSend, send}) => {
                 marginRight: '14px',
                 flexShrink: '0',
               }}
-              className='w-36px   h-36px rounded-pill '
+              className='w-36px h-36px rounded-pill '
             >
               <ImgAvataRemark />
             </div>
@@ -150,7 +130,7 @@ const Remark = ({setSend, send}) => {
         ))}
       </div>
       <div style={{borderTop: '1px solid  #f1f1f2', padding: '14px'}}>
-        <div className='d-flex' style={{}}>
+        <div className='d-flex align-items-center gap-3' style={{}}>
           <Input
             name='message'
             className='remake-input'

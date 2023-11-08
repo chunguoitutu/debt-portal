@@ -38,3 +38,10 @@ export function convertMessageErrorMaximum(maxChar: number, isNumber?: boolean) 
 export function convertMessageErrorRequired(fieldLabel?: string) {
   return `${fieldLabel ? fieldLabel : 'This field'} is required.`
 }
+
+export function filterObjectKeyNotEmpty(object: {[key: string]: any}) {
+  const keys = Object.keys(object)
+  return keys
+    .filter((key) => !!object[key] === true)
+    .reduce((acc, key) => ({...acc, [key]: object[key]}), {})
+}
