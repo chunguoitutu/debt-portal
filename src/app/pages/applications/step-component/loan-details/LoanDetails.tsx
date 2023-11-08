@@ -60,8 +60,11 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
               const {value, checked} = e.target
 
               const _value = [...values[key]]
-              checked ? _value.push(value) : _value.filter((item) => item !== values)
-              setFieldValue(key, _value)
+              const newValue = checked
+                ? [..._value, value]
+                : _value.filter((item) => item !== value)
+
+              setFieldValue(key, newValue)
             } else {
               handleChange(e)
             }

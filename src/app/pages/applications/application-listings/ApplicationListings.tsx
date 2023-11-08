@@ -116,7 +116,7 @@ const ApplicationListing = () => {
               Filter
             </Button>
 
-            <Link to='/applications'>
+            <Link to='/application/create'>
               <Button
                 className='btn-primary align-self-center m-2 fs-6'
                 style={{color: '#fff', background: ''}}
