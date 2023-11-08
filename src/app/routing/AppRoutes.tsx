@@ -59,8 +59,8 @@ const AppRoutes: FC = () => {
 
           <Route element={<MasterLayout />}>
             <Route path='dashboard' element={<Dashboard />} />
-            <Route path='/applications' element={<Applications />} />
-            <Route path='/application-listings' element={<ApplicationListing />} />
+            <Route path='/application' element={<Applications />} />
+            <Route path='/application-listing' element={<ApplicationListing />} />
             <Route path='/loans' element={<Loans />} />
             <Route path='/borrowers' element={<Borrowers />} />
             <Route path='/transactions' element={<Transactions />} />

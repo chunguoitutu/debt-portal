@@ -564,8 +564,8 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
   },
   rows: [
     {
-      key: 'id',
-      name: 'LN',
+      key: 'customer_no',
+      name: 'Customer No.',
       isShowInput: false,
     },
     {
