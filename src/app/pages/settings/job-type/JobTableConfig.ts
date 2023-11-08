@@ -21,7 +21,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
     {
       key: 'job_type_name',
       name: 'Job Type',
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
@@ -34,7 +34,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
     {
       key: 'request_more_information',
       name: 'Need More Information',
-      type: 'yes/no'
+      type: 'yes/no',
     },
     {
       key: 'status',

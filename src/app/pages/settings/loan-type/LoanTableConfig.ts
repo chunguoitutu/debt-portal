@@ -21,7 +21,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     {
       key: 'type_name',
       name: 'Loan Type',
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,

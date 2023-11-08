@@ -21,7 +21,7 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
     {
       key: 'type_name',
       name: 'Document Type',
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,

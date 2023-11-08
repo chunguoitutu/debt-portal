@@ -3,13 +3,17 @@ import {Button} from 'react-bootstrap'
 import Icons from '../../../components/icons'
 import {KTCardBody} from '../../../../_metronic/helpers'
 import {APPLICATION_LISTING_CONFIG} from './config'
-import React from 'react'
-import Input from '../../../components/input'
+import React, {useMemo, useState} from 'react'
 import RowPerPage from '../../../components/row-per-page'
-import {ResponseApplicationListing, SearchCriteria} from '../../../modules/auth'
+import {ApplicationItem, ResponseApplicationListing, SearchCriteria} from '../../../modules/auth'
 import request from '../../../axios'
 import PaginationArrow from '../../../components/pagination.tsx'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import moment from 'moment'
+import numeral from 'numeral'
+import Badge from '../../../components/badge/Badge'
+import ButtonEdit from '../../../components/button/ButtonEdit'
+import Checkbox from '../../../components/checkbox/Checkbox'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -27,12 +31,40 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 const ApplicationListing = () => {
-  const {settings, rows} = APPLICATION_LISTING_CONFIG
-  const [showInput, setShowInput] = React.useState<boolean>(false)
+  const {settings, rows} = APPLICATION_LISTING_CONFIG || {}
+  const {showAction = true, showEditButton} = settings || {}
 
-  function showInputFilter() {
-    setShowInput(!showInput)
-  }
+  const [showInput, setShowInput] = React.useState<boolean>(false)
+  const [dataFilter, setDataFilter] = React.useState({})
+  const [data, setData] = React.useState<ApplicationItem[]>([])
+  const [listIdChecked, setListIdChecked] = React.useState<number[]>([])
+  const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
+
+  React.useEffect(() => {
+    onFetchDataList()
+
+    const allApi = rows
+      .filter((item) => item?.infoFilter?.dependencyApi)
+      .map((item) => request.post(item?.infoFilter?.dependencyApi as string), {
+        status: true,
+      })
+
+    Promise.all(allApi).then((res) => {
+      let result: {[key: string]: any[]} = {}
+
+      res.forEach((res) => {
+        const configItem = rows.find((item) => item.infoFilter?.dependencyApi === res.config.url)
+
+        const data = res.data.data
+        result = {...result, [configItem?.key as string]: data}
+
+        if (!configItem) return
+      })
+
+      setDataOption(result)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
@@ -40,28 +72,94 @@ const ApplicationListing = () => {
     total: 0,
   })
 
-  const [dataFilters, setDataFilter] = React.useState({})
-  const [data, setData] = React.useState([])
+  const navigate = useNavigate()
+
+  const isCheckedAll = useMemo(() => {
+    const listIdCurrentPage = data.map((item) => item.id)
+
+    // If all id current page not include listIdChecked return false
+    if (listIdChecked.some((id) => listIdCurrentPage.includes(id))) {
+      return data.every((item) => listIdChecked.includes(item.id))
+    } else {
+      return false
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listIdChecked])
+
+  function handleEditApplication(item: ApplicationItem) {
+    navigate(`/application/edit/${item.id}`)
+  }
+
+  function showInputFilter() {
+    setShowInput(!showInput)
+  }
 
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
         <tr key={idx}>
-          {rows.map(({key, component, classNameTableBody, isHide}, i) => {
+          <td>
+            <Checkbox
+              name={'a'}
+              checked={listIdChecked.includes(item.id)}
+              onChange={(e) => handleCheckItem(e, item)}
+            />
+          </td>
+          {rows.map(({key, component, classNameTableBody, isHide, type}, i) => {
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
             }
             let Component = component || React.Fragment
             let value = item[key]
-            if (key === 'id') {
-              return <td key={i}>{idx + 1}</td>
+
+            if (type === 'date') {
+              value = moment(item[key]).format('MMM D, YYYY')
             }
+
+            if (type === 'money') {
+              value = numeral(item[key]).format('$0,0.00')
+            }
+
+            if (key === 'status') {
+              let title: string = ''
+              let color: string = ''
+
+              if (item[key] === 1) {
+                title = 'Awaiting Approval'
+                color = 'warning'
+              } else if (item[key] === 0) {
+                title = 'Rejected'
+                color = 'danger'
+              } else {
+                title = 'Approved'
+                color = 'success'
+              }
+
+              return (
+                <td key={i} className={classNameTableBody}>
+                  <Badge color={color as any} title={title as any} key={i} />
+                </td>
+              )
+            }
+
             return (
-              <td key={i}>
-                {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
+              <td key={i} className={classNameTableBody}>
+                {component ? (
+                  <Component />
+                ) : (
+                  <span className='text-gray-600 fw-semibold'>{value}</span>
+                )}
               </td>
             )
           })}
+          {showAction && showEditButton && (
+            <td className='text-center'>
+              <div className='d-flex align-items-center justify-content-center gap-1'>
+                {showEditButton && <ButtonEdit onClick={() => handleEditApplication(item)} />}
+              </div>
+            </td>
+          )}
         </tr>
       )
     })
@@ -80,12 +178,33 @@ const ApplicationListing = () => {
   }
 
   async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
-    onFetchDataList({...searchCriteria, ...data, filters: dataFilters})
+    onFetchDataList({...searchCriteria, ...data, filters: dataFilter})
   }
 
-  React.useEffect(() => {
-    onFetchDataList()
-  }, [])
+  function handleCheckItem(e: React.ChangeEvent<HTMLInputElement>, item: ApplicationItem) {
+    if (e.target.checked) {
+      setListIdChecked([...listIdChecked, item.id])
+    } else {
+      setListIdChecked(listIdChecked.filter((id) => id !== item.id))
+    }
+  }
+
+  function handleToggleCheckAll(e: React.ChangeEvent<HTMLInputElement>) {
+    const listIdCurrentPage = data.map((item) => item.id)
+
+    if (e.target.checked) {
+      const newListId = Array.from(new Set([...listIdChecked, ...listIdCurrentPage]))
+      setListIdChecked(newListId)
+    } else {
+      // if page 1 deselect still list id page 2
+      setListIdChecked(listIdChecked.filter((id) => !listIdCurrentPage.includes(id)))
+    }
+  }
+
+  function handleChangeFilter(e: React.ChangeEvent<any>) {
+    const {value, name} = e.target
+    setDataFilter({...dataFilter, [name]: value})
+  }
 
   return (
     <div className='card p-5 h-fit-content'>
@@ -136,39 +255,59 @@ const ApplicationListing = () => {
             >
               <thead>
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                  <td>
+                    {!!data.length && (
+                      <Checkbox name='' checked={isCheckedAll} onChange={handleToggleCheckAll} />
+                    )}
+                  </td>
                   {rows.map(
                     (row, i) =>
                       !row?.isHide && (
                         <th className={row?.classNameTableHead} key={i}>
-                          <div className='d-flex flex-row gap-3 cursor-pointer'>
+                          <div className='cursor-pointer'>
                             <span>{row.name}</span>
                           </div>
                         </th>
                       )
                   )}
-                  {<th className='text-center w-150px'>Action</th>}
+                  {showAction && <th className='text-center w-150px'>Action</th>}
                 </tr>
               </thead>
               <tbody>
                 {showInput ? (
                   <tr>
+                    {/* td checkbox */}
+                    <td></td>
                     {rows.map((row, i) => {
-                      if (row.key === 'id')
-                        return (
-                          <td key={i}>
-                            <React.Fragment />
-                          </td>
-                        )
+                      if (!row.infoFilter) return <td key={i}></td>
+                      const {infoFilter, key, options, classNameTableBody} = row || {}
+                      const {component, typeComponent, typeInput} = infoFilter || {}
+
+                      const Component = component
+                      let props: {[key: string]: any} = {
+                        name: key,
+                        value: dataFilter[key],
+                      }
+
+                      if (typeComponent === 'select') {
+                        props = {
+                          ...props,
+                          options: options || dataOption[key],
+                          onChange: handleChangeFilter,
+                          fieldLabelOption: infoFilter?.fieldLabelOption || 'label',
+                          fieldValueOption: infoFilter?.fieldValueOption || 'value',
+                        }
+                      } else {
+                        // type input
+                        props = {
+                          ...props,
+                          type: typeInput || 'text',
+                        }
+                      }
+
                       return (
-                        <td key={i}>
-                          <Input
-                            onChange={(e: React.ChangeEvent<any>) => {
-                              setDataFilter((prev) => ({
-                                ...prev,
-                                [row.key]: e.target.value,
-                              }))
-                            }}
-                          />
+                        <td key={i} className={classNameTableBody}>
+                          <Component classShared={''} className='form-control-sm' {...props} />
                         </td>
                       )
                     })}
@@ -200,7 +339,7 @@ const ApplicationListing = () => {
                 ...searchCriteria,
                 pageSize: e.target.value,
                 currentPage: 1,
-                filters: dataFilters,
+                filters: dataFilter,
               })
             }
           />

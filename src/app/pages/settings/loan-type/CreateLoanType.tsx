@@ -133,8 +133,8 @@ const CreateLoanType = ({
         <div className='flex-row-fluid' style={{padding: 23}}>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
             {rows.map((row) => {
-              const {informCreateEdit} = row
-              const {isRequired} = informCreateEdit || {}
+              const {infoCreateEdit} = row
+              const {isRequired} = infoCreateEdit || {}
               if (['id', 'status'].includes(row.key)) {
                 return null
               }

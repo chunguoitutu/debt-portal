@@ -29,7 +29,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'username',
       name: 'User Name',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
@@ -40,7 +40,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'password',
       name: 'Password',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'password',
         isRequired: true,
@@ -55,7 +55,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       name: 'Role',
       isCreateEdit: true,
       isHide: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'select',
         isRequired: true,
         fieldLabelOption: 'role_name',
@@ -65,7 +65,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'firstname',
       name: 'First Name',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
@@ -75,7 +75,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'middlename',
       name: 'Middle Name',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
       },
@@ -84,7 +84,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'lastname',
       name: 'Last Name',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
@@ -94,7 +94,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'telephone',
       name: 'Telephone',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
         isRequired: true,
@@ -104,7 +104,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'email',
       name: 'Email',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'email',
         isRequired: true,
@@ -115,7 +115,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       name: 'Company',
       isHide: true,
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'select',
         fieldLabelOption: 'company_name',
         isRequired: true,
@@ -126,7 +126,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       name: 'Status',
       isCreateEdit: true,
       component: Badge,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'checkbox',
       },
     },

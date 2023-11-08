@@ -63,6 +63,7 @@ const AppRoutes: FC = () => {
               <Route index element={<ApplicationListing />} />
               <Route path='listing' element={<ApplicationListing />} />
               <Route path='create' element={<Applications />} />
+              <Route path='edit/:applicationId' element={<Applications />} />
             </Route>
             <Route path='/loans' element={<Loans />} />
             <Route path='/borrowers' element={<Borrowers />} />

@@ -23,7 +23,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       key: 'role_name',
       name: 'Role Name',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         isRequired: true,
       },
@@ -32,7 +32,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       key: 'description',
       name: 'Description',
       isCreateEdit: true,
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'textarea',
       },
     },

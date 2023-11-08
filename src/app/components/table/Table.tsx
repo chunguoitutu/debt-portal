@@ -212,7 +212,7 @@ const Table: FC<Props> = ({
                       </th>
                     )
                 )}
-                {showAction && showRefresh && <th className='text-center w-150px'>Action</th>}
+                {(showAction || showRefresh) && <th className='text-center w-150px'>Action</th>}
               </tr>
             </thead>
             <tbody className='text-gray-600 fw-bold'>
@@ -223,7 +223,7 @@ const Table: FC<Props> = ({
                       {item.isShowInput && <Input classShared='' name={item[key]} />}
                     </td>
                   ))}
-                  {showAction && !!showRefresh && (
+                  {(showAction || showRefresh) && (
                     <td className='p-0'>
                       <div className='d-flex align-items-center justify-content-center gap-1'>
                         <div className='p-2 border cursor-pointer rounded'>
