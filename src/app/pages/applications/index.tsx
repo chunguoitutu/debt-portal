@@ -40,7 +40,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(3)
+  const [currentStep, setCurrentStep] = useState<number>(1)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [send, setSend] = useState<send[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
