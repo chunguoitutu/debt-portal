@@ -22,6 +22,7 @@ import GeneralButton from './step-component/GeneralButton'
 import request from '../../axios'
 import {swalToast} from '../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../constants/error-message'
+import {filterObjectKeyNotEmpty} from '../../utils'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -39,7 +40,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [currentStep, setCurrentStep] = useState<number>(3)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [send, setSend] = useState<send[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
@@ -118,9 +119,26 @@ export const Applications = () => {
         return item
       }
 
+      const blockAddress = formik?.values?.address_contact_info || []
       const allFieldShow = item.config || []
-      const totalField = allFieldShow.length
-      const fieldDone = allFieldShow.reduce((acc, item) => {
+      let totalField = allFieldShow.length
+      let number = 0
+
+      if (
+        item.label === 'Contact Information' &&
+        Array.isArray(blockAddress) &&
+        blockAddress.length
+      ) {
+        totalField += blockAddress?.length * Object.keys(blockAddress?.[0]).length
+
+        number += blockAddress.reduce((acc, item) => {
+          const objectHasValue = filterObjectKeyNotEmpty(item)
+
+          return acc + Object.keys(objectHasValue).length
+        }, 0)
+      }
+
+      const fieldDone = allFieldShow.reduce((acc: any, item: any) => {
         let isDone: boolean = true
 
         const valueCheck = formik.values[item.key]
@@ -133,7 +151,7 @@ export const Applications = () => {
 
         // convert boolean to return 1 or 0
         return acc + +isDone
-      }, 0)
+      }, number)
 
       return {
         ...item,
@@ -255,6 +273,7 @@ export const Applications = () => {
       employment_status,
       mobilephone_1,
       mobilephone_2,
+      mobilephone_3,
       homephone,
       monthly_income,
       spoken_language,
@@ -315,7 +334,7 @@ export const Applications = () => {
         employment_status,
         mobilephone_1: String(mobilephone_1),
         mobilephone_2: String(mobilephone_2),
-        mobilephone_3: String(mobilephone_2),
+        mobilephone_3: String(mobilephone_3),
         homephone: String(homephone),
         monthly_income: +monthly_income || 0,
         job_type_id: 1,
