@@ -6,9 +6,16 @@ interface Props extends PropsStepApplication {
   handleSubmit: () => void
   handleSaveDraft: () => void
   isDraft: boolean
+  currentStep: number
 }
 
-const GeneralButton: FC<Props> = ({handleSubmit, handleSaveDraft, formik, isDraft}) => {
+const GeneralButton: FC<Props> = ({
+  handleSubmit,
+  handleSaveDraft,
+  formik,
+  isDraft,
+  currentStep,
+}) => {
   const {isSubmitting} = formik
   return (
     <div className='d-flex flex-end mt-10 full'>
@@ -26,7 +33,7 @@ const GeneralButton: FC<Props> = ({handleSubmit, handleSaveDraft, formik, isDraf
         disabled={isSubmitting}
         onClick={() => handleSubmit()}
       >
-        Continue
+        {currentStep === 6 ? 'Save' : 'Continue'}
       </Button>
     </div>
   )

@@ -30,6 +30,7 @@ const Address = ({config, data}: Props) => {
               justifyContent: 'space-between',
               padding: '24px',
               width: '100%',
+              gap: '16px',
               borderBottom: i < data?.address_contact_info.length - 1 ? '1px solid #D4D4D4' : '',
             }}
           >
@@ -82,7 +83,6 @@ const Address = ({config, data}: Props) => {
                                 fontStyle: 'normal',
                                 fontSize: '14px',
                                 color: '#071437',
-                                maxWidth: '200px',
                                 margin: '0px',
                               }}
                             >
