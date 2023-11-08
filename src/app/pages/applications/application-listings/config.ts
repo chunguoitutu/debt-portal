@@ -10,19 +10,18 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     showDeleteButton: true,
     showViewButton: true,
     endPointGetListing: '',
-    buttonAddNew: 'New Application',
     showFilter: true,
     showSearch: true,
   },
   rows: [
     {
       key: 'id',
-      name: 'Checkbox',
-      component: Checkbox
+      name: '',
+      component: Checkbox,
     },
     {
       key: 'application_id',
-      name: 'Application Number',
+           name: 'Application Number',
     },
     {
       key: 'application_name',

@@ -13,8 +13,8 @@ import {Link} from 'react-router-dom'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Application Listings',
-    path: '/application-listings',
+    title: 'Application Listing',
+    path: '/application/listing',
     isSeparator: false,
     isActive: false,
   },
