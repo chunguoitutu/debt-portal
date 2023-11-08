@@ -22,7 +22,7 @@ const ApplicationsMenu: FC = () => {
               to='/application/create'
               className='menu-link fs-5 px-4 menu-item-child mb-3'
             >
-              Application Form
+              Create Application
             </Link>
           </div>
         </div>
