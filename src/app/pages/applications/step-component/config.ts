@@ -29,6 +29,8 @@ import SpecialZation from './completion/SpecialZation'
 import RenderOptionsApi from './completion/RenderOptionsApi'
 import RenderOptionsApiAddress from './completion/AddressType'
 import LableOptionsCountry from './completion/Country'
+import MLCBCheck from './completion/MLCBCheck'
+import EmploymentStatus from './completion/EmploymentStatus'
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -587,7 +589,7 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
 
 export const COMPLETION_CONFIG = [
   {
-    col: 'col-12',
+    col: 'col-xl-12',
     title: 'Personal Information',
     config: [
       [
@@ -662,13 +664,14 @@ export const COMPLETION_CONFIG = [
     ],
   },
   {
-    col: 'col-6',
+    col: 'col-xl-6',
     title: 'Loan Details',
     config: [
       [
         {
-          key: 'loan_terms',
+          key: 'mlcb_check',
           value: 'Consent',
+          Component: MLCBCheck,
         },
         {
           key: 'loan_type_id',
@@ -687,6 +690,7 @@ export const COMPLETION_CONFIG = [
         {
           key: 'loan_terms',
           value: 'Loan Terms (months)',
+          elBehind: 'Months',
         },
         {
           key: 'reason_for_loan',
@@ -696,27 +700,32 @@ export const COMPLETION_CONFIG = [
     ],
   },
   {
-    col: 'col-6',
+    col: 'col-xl-6',
     title: 'Contact Information',
     config: [
       [
         {
           key: 'mobilephone_1',
           value: 'Mobile 1 (NIL)',
+          dollars: '+65',
         },
         {
           key: 'mobilephone_2',
           value: 'Mobile 2 (NIL)',
+          dollars: '+65',
         },
         {
           key: 'mobilephone_3',
           value: 'Mobile 1 (NIL)',
+          dollars: '+65',
         },
+        {},
       ],
       [
         {
           key: 'homephone',
           value: 'Home Phone (NIL)',
+          dollars: '+65',
         },
         {
           key: 'email_1',
@@ -730,7 +739,7 @@ export const COMPLETION_CONFIG = [
     ],
   },
   {
-    col: 'col-6',
+    col: 'col-xl-6',
     title: 'Address',
     Component: Address,
     config: [
@@ -781,13 +790,14 @@ export const COMPLETION_CONFIG = [
     ],
   },
   {
-    col: 'col-9',
+    col: 'col-xxl-9',
     title: 'Workplace',
     config: [
       [
         {
           key: 'employment_status',
-          value: 'employment Status',
+          value: 'Employment Status',
+          Component: EmploymentStatus,
         },
         {
           key: 'company_name',
@@ -796,6 +806,7 @@ export const COMPLETION_CONFIG = [
         {
           key: 'company_telephone',
           value: 'Company Telephone',
+          dollars: '+65',
         },
         {
           key: 'portal_code',
@@ -848,7 +859,7 @@ export const COMPLETION_CONFIG = [
     ],
   },
   {
-    col: 'col-3',
+    col: 'col-xxl-3',
     title: 'Bank Information',
     config: [
       [
@@ -890,7 +901,7 @@ export const COMPLETION_CONFIG = [
     ],
   },
   {
-    col: 'col-12',
+    col: 'col-xl-12',
     title: 'Income Document',
     config: [
       [

@@ -9,13 +9,11 @@ const GrossMonthlyIncomeCompletion = ({data}: Props) => {
         style={{
           textAlign: 'start',
           padding: '0px',
-          lineHeight: '20px',
-          minHeight: '20px',
+          lineHeight: '19px',
           fontWeight: '500px',
           fontStyle: 'normal',
           fontSize: '14px',
           color: '#071437',
-          maxWidth: '200px',
           margin: '0px',
         }}
       >
@@ -25,8 +23,7 @@ const GrossMonthlyIncomeCompletion = ({data}: Props) => {
         style={{
           textAlign: 'start',
           padding: '0px',
-          lineHeight: '20px',
-          minHeight: '20px',
+          lineHeight: '19px',
           fontWeight: '500px',
           fontStyle: 'normal',
           fontSize: '14px',
@@ -41,8 +38,7 @@ const GrossMonthlyIncomeCompletion = ({data}: Props) => {
         style={{
           textAlign: 'start',
           padding: '0px',
-          lineHeight: '20px',
-          minHeight: '20px',
+          lineHeight: '18px',
           fontWeight: '500px',
           fontStyle: 'normal',
           fontSize: '14px',

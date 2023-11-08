@@ -4,6 +4,7 @@ export interface element_config {
   img?: boolean
   Component?: any
   dollars?: string
+  elBehind?: string
 }
 
 type Props = {
@@ -33,7 +34,13 @@ function TableRender({title, config = [], data}: Props) {
         </h1>
       )}
       <div
-        style={{display: 'flex', justifyContent: 'space-between', padding: '24px', width: '100%'}}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '24px',
+          width: '100%',
+          gap: '16px',
+        }}
       >
         {config?.map((children_config: element_config[], index: number) => {
           return (
@@ -64,6 +71,7 @@ function TableRender({title, config = [], data}: Props) {
                             color: '#B5B5C3',
                             margin: '0px',
                             textTransform: 'capitalize',
+                            whiteSpace: 'nowrap',
                           }}
                         >
                           {element_config.value}
@@ -91,17 +99,18 @@ function TableRender({title, config = [], data}: Props) {
                               textAlign: !!element_config.img ? 'center' : 'start',
                               padding: '0px',
                               lineHeight: '20px',
-                              minHeight: '20px',
+                              height: '20px',
                               fontWeight: '500px',
                               fontStyle: 'normal',
                               fontSize: '14px',
                               color: '#071437',
-                              maxWidth: '200px',
                               margin: '0px',
+                              wordBreak: 'break-all',
                             }}
                           >
-                            {!!element_config?.dollars && element_config?.dollars}{' '}
-                            {data[element_config.key]}
+                            {!!element_config?.dollars && element_config?.dollars}
+                            {data[element_config.key]}{' '}
+                            {!!element_config?.elBehind && element_config?.elBehind}
                           </p>
                         </>
                       )}

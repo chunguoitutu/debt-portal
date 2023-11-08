@@ -14,7 +14,6 @@ const LableOptionsCountry = ({config, keyData}: Props) => {
         fontStyle: 'normal',
         fontSize: '14px',
         color: '#071437',
-        maxWidth: '200px',
         margin: '0px',
       }}
     >

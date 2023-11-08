@@ -1,15 +1,16 @@
 type Props = {
   data: any
+  config?: any
 }
 
-function FullName({data}: Props) {
+const MLCBCheck = ({data, config}: Props) => {
   return (
     <div
       style={{
         textAlign: 'start',
         padding: '0px',
-        lineHeight: '20px',
-        minHeight: '20px',
+        lineHeight: '18px',
+        minHeight: '56px',
         fontWeight: '500px',
         fontStyle: 'normal',
         fontSize: '14px',
@@ -17,9 +18,9 @@ function FullName({data}: Props) {
         margin: '0px',
       }}
     >
-      {data.lastname} {data.middlename} {data.firstname}
+      {!!data[config.key] ? 'Opt In consent to disclose information to MLCB and SMECB' : ''}
     </div>
   )
 }
 
-export default FullName
+export default MLCBCheck

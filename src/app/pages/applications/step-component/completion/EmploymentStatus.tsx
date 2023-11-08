@@ -1,8 +1,9 @@
-type Props = {config?: any; data?: any; options?: any}
+type Props = {
+  data: any
+  config?: any
+}
 
-const LableOptions = ({config, data}: Props) => {
-  const lable = config?.options.filter((d: any) => d[config.keyFilter] === data[config.key])
-
+const EmploymentStatus = ({data, config}: Props) => {
   return (
     <div
       style={{
@@ -17,9 +18,11 @@ const LableOptions = ({config, data}: Props) => {
         margin: '0px',
       }}
     >
-      {!!config.lable ? lable[0]?.[config.lable] : lable[0]?.label}
+      {data[config.key] === 'EMP' && 'Employed'}
+      {data[config.key] === 'UNEMPINC' && 'Unemployed with income'}
+      {data[config.key] === 'UNEMP' && 'Unemployed without income'}
     </div>
   )
 }
 
-export default LableOptions
+export default EmploymentStatus
