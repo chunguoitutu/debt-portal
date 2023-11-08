@@ -133,7 +133,8 @@ export type TableRow = {
   type?: string
   isHide?: boolean
   isCreateEdit?: boolean
-  informCreateEdit?: {
+  options?: Option[]
+  infoCreateEdit?: {
     type: string
     typeInput?: HTMLInputTypeAttribute
     isRequired?: boolean
@@ -141,6 +142,14 @@ export type TableRow = {
     fieldValueOption?: string
   }
   isShowInput?: boolean
+  infoFilter?: {
+    typeComponent: 'select' | 'input'
+    typeInput?: HTMLInputTypeAttribute
+    component: any
+    fieldLabelOption?: string
+    fieldValueOption?: string
+    dependencyApi?: string
+  }
 }
 
 export type TableConfig = {
@@ -393,4 +402,25 @@ export type BlockAddress = {
   state: string
   postal_code: string
   country: string
+}
+
+export type BadgeProps = {
+  color: 'primary' | 'success' | 'warning' | 'danger'
+  title: string
+}
+
+export type ApplicationItem = {
+  id: number
+  application_no: null | string
+  status: number
+  borrower_id: number
+  loan_type_id: number
+  application_date: string
+  loan_amount_requested: string
+  loan_terms: number
+  is_draft: null | 1 | 0
+  identification_type: string
+  identification_no: string
+  fullname: string
+  loan_type: string
 }

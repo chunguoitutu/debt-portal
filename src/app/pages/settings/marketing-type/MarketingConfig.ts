@@ -22,7 +22,7 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     {
       key: 'marketing_type_name',
       name: 'Marketing Type',
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,

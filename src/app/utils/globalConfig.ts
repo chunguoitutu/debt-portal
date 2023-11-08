@@ -322,6 +322,21 @@ export const ID_TYPE: Option[] = [
   },
 ]
 
+export const STATUS_APPLICATION_FILTER: Option[] = [
+  {
+    value: '1',
+    label: 'Awaiting Approval',
+  },
+  {
+    value: '0',
+    label: 'Rejected',
+  },
+  {
+    value: '0',
+    label: 'Approved',
+  },
+]
+
 export const MARKETING_TYPE: Option[] = [
   {
     value: 'yellow_pages',

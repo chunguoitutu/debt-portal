@@ -50,7 +50,7 @@ const CreateEditAddress = ({
   const generateField = React.useMemo(() => {
     if (data) {
       return rows
-        .filter((row) => !!row.informCreateEdit)
+        .filter((row) => !!row.infoCreateEdit)
         .reduce((a, b) => {
           a[b.key] = data[b.key] || ''
           return a
@@ -147,9 +147,9 @@ const CreateEditAddress = ({
               {data ? (
                 <>
                   {rows
-                    .filter((data) => !!data.informCreateEdit)
+                    .filter((data) => !!data.infoCreateEdit)
                     .map((row) => {
-                      const {isRequired, typeInput} = row.informCreateEdit || {}
+                      const {isRequired, typeInput} = row.infoCreateEdit || {}
                       return (
                         <div key={row?.key} style={{flex: '0 0 50%'}}>
                           {row?.key === 'rejection_type_description' ? (

@@ -272,8 +272,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         {(rows || [])
           .filter((item) => item.isCreateEdit)
           .map((item, index) => {
-            const {informCreateEdit, key, name, component, componentCreateEdit} = item
-            const {type, typeInput, isRequired} = informCreateEdit || {}
+            const {infoCreateEdit, key, name, component, componentCreateEdit} = item
+            const {type, typeInput, isRequired} = infoCreateEdit || {}
 
             if (component || componentCreateEdit) {
               const Component = componentCreateEdit || component

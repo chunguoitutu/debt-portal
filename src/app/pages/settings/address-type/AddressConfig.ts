@@ -23,7 +23,7 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     {
       key: 'address_type_name',
       name: 'Address Type',
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
@@ -32,7 +32,7 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     {
       key: 'description',
       name: 'Description',
-      informCreateEdit: {
+      infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
       },

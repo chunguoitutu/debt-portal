@@ -301,9 +301,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                           !['username', 'password', 'role_id'].includes(item.key)
                       )
                       .map((item, i) => {
-                        const {informCreateEdit, key, name} = item
+                        const {infoCreateEdit, key, name} = item
                         const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
-                          informCreateEdit || {}
+                          infoCreateEdit || {}
                         if (type === 'input') {
                           return (
                             <div className='col-6' key={i}>
@@ -368,9 +368,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                         item.isCreateEdit && ['username', 'password', 'role_id'].includes(item.key)
                     )
                     .map((item, i) => {
-                      const {informCreateEdit, key, name} = item
+                      const {infoCreateEdit, key, name} = item
                       const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
-                        informCreateEdit || {}
+                        infoCreateEdit || {}
                       if (type === 'input') {
                         return (
                           <div className='col-6' key={i}>

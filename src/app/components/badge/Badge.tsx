@@ -1,9 +1,5 @@
 import {FC, useMemo} from 'react'
-
-interface Props {
-  color: 'primary' | 'success' | 'warning' | 'danger'
-  title: string
-}
+import {BadgeProps} from '../../modules/auth'
 
 const statusClass = {
   primary: 'badge-light-primary',
@@ -12,7 +8,7 @@ const statusClass = {
   danger: 'badge-light-danger',
 }
 
-const Badge: FC<Props> = ({color, title}) => {
+const Badge: FC<BadgeProps> = ({color, title}) => {
   const statusClassName = useMemo(() => statusClass[color], [color])
 
   return <span className={`badge fs-7 fw-semibold ${statusClassName}`}>{title}</span>
