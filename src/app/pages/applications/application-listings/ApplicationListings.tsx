@@ -71,7 +71,7 @@ const ApplicationListing = () => {
     body?: Omit<SearchCriteria<Partial<ResponseApplicationListing>>, 'total'>
   ) {
     try {
-      const {data: response} = await request.post(settings.endPointGetListing + '/listing', body)
+      const {data: response} = await request.post(settings.endPointGetListing, body)
       Array.isArray(response.data) && setData(response.data)
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {
@@ -82,6 +82,10 @@ const ApplicationListing = () => {
   async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
     onFetchDataList({...searchCriteria, ...data, filters: dataFilters})
   }
+
+  React.useEffect(() => {
+    onFetchDataList()
+  }, [])
 
   return (
     <div className='card p-5 h-fit-content'>
@@ -110,16 +114,6 @@ const ApplicationListing = () => {
             >
               <Icons name={'filterIcon'} />
               Filter
-            </Button>
-
-            <Button
-              onClick={() => {}}
-              className='btn-secondary align-self-center m-2 fs-6'
-              style={{color: '#3E97FF', background: ''}}
-              disabled={false}
-            >
-              <Icons name={'ExportIcon'} />
-              Export
             </Button>
 
             <Link to='/applications'>
@@ -184,7 +178,7 @@ const ApplicationListing = () => {
                   renderRows()
                 ) : (
                   <tr>
-                    <td colSpan={7}>
+                    <td colSpan={rows.length + 1}>
                       <div className='d-flex text-center w-100 align-content-center justify-content-center'>
                         No matching records found
                       </div>

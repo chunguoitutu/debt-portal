@@ -9,7 +9,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     showEditButton: true,
     showDeleteButton: true,
     showViewButton: true,
-    endPointGetListing: '',
+    endPointGetListing: '/application/listing',
     showFilter: true,
     showSearch: true,
   },
@@ -20,15 +20,15 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       component: Checkbox,
     },
     {
-      key: 'application_id',
-           name: 'Application Number',
+      key: 'application_no',
+      name: 'Application Number',
     },
     {
-      key: 'application_name',
+      key: 'fullname',
       name: 'APPLICATION NAME',
     },
     {
-      key: 'id_type',
+      key: 'identification_type',
       name: 'ID TYPE',
     },
     {
@@ -36,7 +36,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       name: 'LOAN TYPE',
     },
     {
-      key: 'loan_amount_required',
+      key: 'loan_amount_requested',
       name: 'LOAN AMOUNT REQUIRED',
     },
     {
