@@ -393,6 +393,8 @@ export type ApplicationFormData = {
   company_telephone: string
   position: string
   occupation: string
+  customer_no?: string
+  application_date?: any
 }
 
 export type BlockAddress = {

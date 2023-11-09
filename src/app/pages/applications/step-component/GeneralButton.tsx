@@ -16,7 +16,7 @@ const GeneralButton: FC<Props> = ({
   isDraft,
   currentStep,
 }) => {
-  const {isSubmitting} = formik
+  const {isSubmitting, values} = formik
   return (
     <div
       className='d-flex flex-end mt-10 full'
@@ -36,7 +36,7 @@ const GeneralButton: FC<Props> = ({
         disabled={isSubmitting}
         onClick={() => handleSubmit()}
       >
-        {currentStep === 6 ? 'Save' : 'Continue'}
+        {currentStep === 6 ? (values.customer_no ? 'Update' : 'Save') : 'Continue'}
       </Button>
     </div>
   )
