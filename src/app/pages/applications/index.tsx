@@ -1,5 +1,5 @@
 import {FC, useEffect, useMemo, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useLocation, useParams} from 'react-router-dom'
 import moment from 'moment'
 import './style.scss'
 
@@ -52,6 +52,7 @@ export const Applications = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [customerId, setCustomerId] = useState<number | null>(null)
   const [borrowerId, setBorrowerId] = useState<number | null>(null)
+  const {pathname} = useLocation()
 
   const initialValues: ApplicationFormData = useMemo(() => {
     return STEP_APPLICATION.flatMap((item) => item.config).reduce(
@@ -96,6 +97,11 @@ export const Applications = () => {
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationId])
+
+  useEffect(() => {
+    formik.resetForm()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
 
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
@@ -345,6 +351,7 @@ export const Applications = () => {
       six_months_income,
       is_existing,
       residential_type,
+      loan_reason,
     } = formik.values
 
     const company_id =
@@ -419,6 +426,7 @@ export const Applications = () => {
         is_draft: isDraft ? 1 : 0,
         is_existing,
         company_id: +company_id,
+        loan_reason,
       },
       address: addressList,
     }

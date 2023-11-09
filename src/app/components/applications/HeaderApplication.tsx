@@ -11,7 +11,6 @@ type Props = {
 }
 
 const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, info}) => {
-  console.log()
   return (
     <>
       <div

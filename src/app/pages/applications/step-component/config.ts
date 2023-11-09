@@ -203,12 +203,10 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
       .max(1000, convertMessageErrorMaximum(1000, true)),
   },
   {
-    key: 'reason_for_loan',
+    key: 'reason_loan',
     component: TextArea,
     typeComponent: 'TextArea',
     label: 'Reason For Loan',
-    required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Reason For Loan')),
   },
 ]
 

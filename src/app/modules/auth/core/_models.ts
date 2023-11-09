@@ -301,6 +301,7 @@ export type ApplicationPayload = {
     is_draft: 1 | 0
     is_existing: string
     company_id: number
+    loan_reason?: string
   }
   bank_account: {
     id?: number
@@ -349,7 +350,7 @@ export type ApplicationFormData = {
   mlcb_check: string[]
   loan_type_id: string
   loan_amount_requested: string
-  reason_for_loan: string
+  loan_reason: string
   address_full: string
   block_no: string
   street: string
