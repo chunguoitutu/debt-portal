@@ -1,9 +1,12 @@
-import {FC, useMemo, useState} from 'react'
+import {FC, useEffect, useMemo, useState} from 'react'
+import {useParams} from 'react-router-dom'
+import moment from 'moment'
+import './style.scss'
+
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import BackgroundCheck from './background-check/BackgroundCheck'
 import Step from '../../components/step/Step'
 import {STEP_APPLICATION} from '../../constants/step'
-import './style.scss'
 import HeaderApplication from '../../components/applications/HeaderApplication'
 import {
   ApplicationFormData,
@@ -23,6 +26,7 @@ import request from '../../axios'
 import {swalToast} from '../../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../constants/error-message'
 import {filterObjectKeyNotEmpty} from '../../utils'
+import NotFoundPage from '../not-found-page/NotFoundPage'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -44,6 +48,8 @@ export const Applications = () => {
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [send, setSend] = useState<send[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
+  const [errorLoading, setErrorLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const initialValues: ApplicationFormData = useMemo(() => {
     return STEP_APPLICATION.flatMap((item) => item.config).reduce(
@@ -55,6 +61,37 @@ export const Applications = () => {
     ) as ApplicationFormData
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [STEP_APPLICATION])
+
+  const {applicationId} = useParams()
+
+  useEffect(() => {
+    if (!applicationId) return setIsLoading(false)
+    request
+      .get(`/application/detail/${applicationId}`)
+      .then((response) => {
+        const dataEdit = response.data.data
+        const formattedDateOfBirth = moment(dataEdit?.customer.date_of_birth).format('YYYY-MM-DD')
+
+        formik.setValues({
+          ...formik.values,
+          ...dataEdit?.borrower,
+          ...dataEdit?.application,
+          ...dataEdit?.customer,
+          ...dataEdit?.bank_info,
+          ...dataEdit?.employment,
+          address_contact_info: [...dataEdit.address],
+          date_of_birth: formattedDateOfBirth,
+        })
+      })
+      .catch((error) => {
+        setErrorLoading(true)
+        console.log(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [applicationId])
 
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
@@ -374,9 +411,19 @@ export const Applications = () => {
       },
       address: addressList,
     }
+    console.log(payload, 'payload')
 
     try {
       formik.setSubmitting(true)
+      if (applicationId) {
+        await request.put('/hihihihi')
+        swalToast.fire({
+          title: isDraft
+            ? 'Application draft successfully updated'
+            : 'Application successfully updated',
+          icon: 'success',
+        })
+      }
 
       await request.post('/application/create', payload)
 
@@ -398,6 +445,12 @@ export const Applications = () => {
     }
   }
 
+  if (isLoading) return null
+
+  if (errorLoading) {
+    return <NotFoundPage />
+  }
+
   return (
     <>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
@@ -413,6 +466,10 @@ export const Applications = () => {
         <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-0 d-flex flex-column h-fit-content'>
           <HeaderApplication
             labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
+            info={{
+              initialValues: formik.values.customer_no,
+              date: formik.values.application_date,
+            }}
             percentCompleted={percentCompleted}
             className='p-10'
           />
