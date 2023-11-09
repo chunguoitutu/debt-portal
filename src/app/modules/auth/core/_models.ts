@@ -336,6 +336,7 @@ export type ApplicationPayload = {
 }
 
 export type ApplicationFormData = {
+  country_id: number
   middlename: string
   lastname: string
   is_existing: string
