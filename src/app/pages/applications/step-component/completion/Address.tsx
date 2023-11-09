@@ -21,13 +21,14 @@ const Address = ({config, data}: Props) => {
       >
         {config?.title}
       </h1>
-      <div style={{display: 'flex', flexDirection: 'column', padding: '24px', width: '100%'}}>
+      <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
         {data?.address_contact_info.map((e, i: number) => (
           <div
             key={i}
             style={{
               display: 'flex',
               justifyContent: 'space-between',
+              padding: '24px',
               width: '100%',
               gap: '16px',
               borderBottom: i < data?.address_contact_info.length - 1 ? '1px solid #D4D4D4' : '',
