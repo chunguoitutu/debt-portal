@@ -3,6 +3,26 @@ import TableRender from '../../../../components/table-render'
 import TitleComponent from '../../../../components/title-component'
 import {PropsStepApplication} from '../../../../modules/auth'
 
+export interface DEF_completion {
+  key?: string
+  value?: string
+  Component?: any
+  options?: any[]
+  keyFilter?: string
+  lable?: string
+  dependencyApi?: string
+  elBehind?: string
+  dollars?: string
+}
+
+export interface children_config_completion {
+  col?: string
+  title: string
+  Component?: any
+  config?: DEF_completion[][]
+  options?: any[]
+}
+
 const Completion: FC<PropsStepApplication> = (Props) => {
   const {config} = Props
   const data = Props.formik.values
@@ -13,7 +33,7 @@ const Completion: FC<PropsStepApplication> = (Props) => {
       </div>
       <div className='container'>
         <div className='row'>
-          {config.map((children_config: any, index) => {
+          {config.map((children_config: any, index: number) => {
             const Component = children_config.Component
             const col = children_config.col
             const options = children_config.options

@@ -5,7 +5,6 @@ import ImgAvataRemark from '../../../images/ImgAvataRemark'
 import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
 import {useAuth} from '../../../modules/auth'
-import Input from '../../../components/input'
 
 export interface send {
   id: number
@@ -63,7 +62,7 @@ const Remark = ({setSend, send}) => {
       <div
         className={`py-30px px-30px`}
         style={{
-          maxHeight: '250px',
+          maxHeight: '330px',
           minHeight: '150px',
           overflowY: 'auto',
         }}
@@ -131,11 +130,8 @@ const Remark = ({setSend, send}) => {
       </div>
       <div style={{borderTop: '1px solid  #f1f1f2', padding: '14px'}}>
         <div className='d-flex align-items-center gap-3' style={{}}>
-          <Input
-            name='message'
-            className='remake-input'
+          <input
             placeholder='Enter remark...'
-            classShared=''
             value={value}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
@@ -155,10 +151,11 @@ const Remark = ({setSend, send}) => {
               background: 'transparent',
               lineHeight: '21.45px',
               paddingRight: '10px',
+              outline: 'none',
             }}
           />
           <Button
-            style={{display: 'flex', flexShrink: '0', width: '32px', height: '32px'}}
+            style={{display: 'flex', flexShrink: '0'}}
             onClick={() => {
               handleSubmit()
             }}

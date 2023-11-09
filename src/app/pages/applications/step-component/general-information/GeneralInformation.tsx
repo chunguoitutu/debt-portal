@@ -17,23 +17,32 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
   const {values, touched, errors, handleChange} = formik
 
-  useEffect(() => {
-    onFetchDataList()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   async function onFetchDataList() {
     try {
+      const updatedDataMarketing = {...dataMarketing}
       const endpoint = config.filter((data) => !!data.dependencyApi)
-      endpoint.forEach((d) => {
-        request.post(d.dependencyApi || '', {status: true}).then((res) => {
-          setDataMarketing({...dataMarketing, [d.key]: res?.data?.data})
-        })
+
+      const requests = endpoint.map((d) =>
+        request.post(d.dependencyApi || '', {status: true, pageSize: 99999, currentPage: 1})
+      )
+
+      const responses = await Promise.all(requests)
+
+      responses.forEach((res, index) => {
+        const key = endpoint[index].key
+        updatedDataMarketing[key] = res?.data?.data
       })
+
+      setDataMarketing(updatedDataMarketing)
     } catch (error) {
     } finally {
     }
   }
+
+  useEffect(() => {
+    onFetchDataList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function handleShowPopup() {
     setShowPopup(!showPopup)

@@ -14,7 +14,6 @@ import {
   ID_TYPE,
   INCOME_DOCUMENT,
   LOAN_TYPE,
-  MARKETING_TYPE,
   MLCB_CHECK,
   RESIDENTIAL_TYPE,
 } from '../../../utils/globalConfig'
@@ -28,9 +27,12 @@ import LableOptions from './completion/LableOptions'
 import SpecialZation from './completion/SpecialZation'
 import RenderOptionsApi from './completion/RenderOptionsApi'
 import RenderOptionsApiAddress from './completion/AddressType'
-import LableOptionsCountry from './completion/Country'
 import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
+import FileDocument from './employment/FileDocument'
+import RenderFileDocument from './completion/RenderFileDocument'
+import {children_config_completion} from './completion'
+import LableOptionsCountry from './completion/Country'
 
 export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -108,7 +110,6 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Marketing Type',
     className: 'justify-content-xl-end',
     required: true,
-    options: MARKETING_TYPE,
     keyLabelOfOptions: 'marketing_type_name',
     keyValueOfOptions: 'id',
     dependencyApi: 'config/marketing_type/listing',
@@ -143,7 +144,8 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Nationality',
     options: COUNTRY_LIST,
     keyLabelOfOptions: 'name',
-    keyValueOfOptions: 'code',
+    keyValueOfOptions: 'id',
+    dependencyApi: 'config/country/listing',
     required: true,
     validationFormik: Yup.string().required(convertMessageErrorRequired('Nationality')),
   },
@@ -456,6 +458,11 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     className: 'no-center-label',
     typeCheckbox: 'array',
   },
+  {
+    key: 'file_document',
+    component: FileDocument,
+    defaultValue: [],
+  },
 ]
 
 export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
@@ -544,9 +551,9 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Country',
     column: 6,
     className: 'justify-content-xl-end',
-    options: COUNTRY_LIST,
     keyLabelOfOptions: 'name',
-    keyValueOfOptions: 'code',
+    keyValueOfOptions: 'id',
+    dependencyApi: 'config/country/listing',
     required: true,
     validationFormik: Yup.string()
       .required(convertMessageErrorRequired('Country'))
@@ -585,7 +592,7 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
   ],
 }
 
-export const COMPLETION_CONFIG = [
+export const COMPLETION_CONFIG: children_config_completion[] = [
   {
     col: 'col-xl-12',
     title: 'Personal Information',
@@ -616,9 +623,9 @@ export const COMPLETION_CONFIG = [
         {
           key: 'nationality',
           value: 'nationality',
-          options: COUNTRY_LIST,
-          Component: LableOptions,
-          keyFilter: 'code',
+          dependencyApi: 'config/country/listing',
+          Component: RenderOptionsApi,
+          keyFilter: 'id',
           lable: 'name',
         },
         {
@@ -631,11 +638,11 @@ export const COMPLETION_CONFIG = [
       ],
       [
         {
-          key: 'customer_type',
+          key: 'is_existing',
           value: 'Customer Type',
         },
         {
-          key: 'residential_type_id',
+          key: 'residential_type',
           value: 'Residential Type',
           options: RESIDENTIAL_TYPE,
           Component: SpecialZation,
@@ -779,16 +786,16 @@ export const COMPLETION_CONFIG = [
         {
           key: 'country',
           value: 'Country',
-          options: COUNTRY_LIST,
+          dependencyApi: 'config/country/listing',
           Component: LableOptionsCountry,
-          keyFilter: 'code',
+          keyFilter: 'id',
           lable: 'name',
         },
       ],
     ],
   },
   {
-    col: 'col-xxl-9',
+    col: 'col-xxl-8',
     title: 'Workplace',
     config: [
       [
@@ -857,7 +864,7 @@ export const COMPLETION_CONFIG = [
     ],
   },
   {
-    col: 'col-xxl-3',
+    col: 'col-xxl-4',
     title: 'Bank Information',
     config: [
       [
@@ -901,28 +908,6 @@ export const COMPLETION_CONFIG = [
   {
     col: 'col-xl-12',
     title: 'Income Document',
-    config: [
-      [
-        {
-          key: 'is_giro',
-          value: '',
-          img: true,
-        },
-      ],
-      [
-        {
-          key: 'bank_name_2',
-          value: 'Bank Name 2',
-          img: true,
-        },
-      ],
-      [
-        {
-          key: 'bank_name_2',
-          value: 'Bank Name 2',
-          img: true,
-        },
-      ],
-    ],
+    Component: RenderFileDocument,
   },
 ]
