@@ -114,6 +114,9 @@ export const Applications = () => {
           applicationId: application?.id || 0,
           bankInfoId: bank_info?.id || 0,
         })
+
+        const applicationNotes = JSON.parse(application?.application_notes) || []
+        setSend(applicationNotes)
       })
       .catch((error) => {
         setErrorLoading(true)
@@ -465,11 +468,10 @@ export const Applications = () => {
     try {
       formik.setSubmitting(true)
       if (applicationId) {
-        // await request.put('/application/detail/' + applicationId, {
-        //   ...payload,
-        //   customerId,
-        //   borrowerId,
-        // })
+        await request.put('/application/detail/' + applicationId, {
+          ...payload,
+          borrowerId,
+        })
         swalToast.fire({
           title: isDraft
             ? 'Application draft successfully updated'
