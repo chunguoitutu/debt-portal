@@ -17,6 +17,8 @@ import Checkbox from '../../../components/checkbox/Checkbox'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import {filterObjectKeyNotEmpty} from '../../../utils'
+import Loading from '../../../components/table/components/Loading'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -42,6 +44,7 @@ const ApplicationListing = () => {
   const [data, setData] = React.useState<ApplicationItem[]>([])
   const [listIdChecked, setListIdChecked] = React.useState<number[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
+  const [loading, setLoading] = useState<boolean>(false)
 
   React.useEffect(() => {
     onFetchDataList()
@@ -185,12 +188,15 @@ const ApplicationListing = () => {
   async function onFetchDataList(
     body?: Omit<SearchCriteria<Partial<ResponseApplicationListing>>, 'total'>
   ) {
+    setLoading(true)
     try {
       const {data: response} = await request.post(settings.endPointGetListing, body)
       Array.isArray(response.data) && setData(response.data)
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {
       // no thing
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -236,6 +242,49 @@ const ApplicationListing = () => {
 
   function handleResetFilter() {
     setDataFilter({})
+  }
+
+  function handleFilter() {
+    const newDataFilter = Object.keys(dataFilter).reduce((acc, key) => {
+      // Check value object
+      if (
+        typeof dataFilter[key] === 'object' &&
+        !Number.isNaN(dataFilter[key]) &&
+        !Array.isArray(dataFilter[key])
+      ) {
+        const objectHasValue = filterObjectKeyNotEmpty(dataFilter[key])
+
+        if (Object.keys(objectHasValue).length) {
+          if (key === 'application_date') {
+            // add 1 days if key = lte
+            const objectDate = Object.keys(objectHasValue).reduce(
+              (acc, key) => ({
+                ...acc,
+                [key]: new Date(
+                  key === 'lte'
+                    ? moment(objectHasValue[key], 'YYYY-MM-DD').add(1, 'days')
+                    : objectHasValue[key]
+                ),
+              }),
+              {}
+            )
+            return {...acc, [key]: objectDate}
+          }
+          return {...acc, [key]: objectHasValue}
+        } else {
+          return {...acc}
+        }
+      }
+
+      if (dataFilter[key]) return {...acc, [key]: dataFilter[key]}
+
+      return {...acc}
+    }, {})
+
+    onFetchDataList({
+      ...searchCriteria,
+      filters: newDataFilter,
+    })
   }
 
   return (
@@ -367,13 +416,15 @@ const ApplicationListing = () => {
 
                     {/* td refresh */}
                     <td className='text-center align-top'>
-                      <div className='d-flex align-items-center justify-content-center gap-1'>
+                      <div className='d-flex align-items-center justify-content-center gap-3'>
                         <div
                           className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
                           onClick={() => handleResetFilter()}
                         >
                           <FontAwesomeIcon icon={faArrowsRotate} />
                         </div>
+
+                        <Button onClick={handleFilter}>Filter</Button>
                       </div>
                     </td>
                   </tr>
@@ -412,6 +463,8 @@ const ApplicationListing = () => {
             onChangePagePagination={handleChangePagination}
             searchCriteria={searchCriteria}
           />
+
+          {loading && <Loading />}
         </div>
       </div>
     </div>
