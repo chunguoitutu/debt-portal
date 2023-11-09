@@ -1,5 +1,5 @@
 import ContentListButton from '../../../components/list-button/ContentListButton'
-import ImgPrintOptions from '../../../images/ImgPrintOptions'
+import ImgPrintOptions from '../../../components/icons/ImgPrintOptions'
 
 const configPrintOptions = {
   title: 'Print Options',

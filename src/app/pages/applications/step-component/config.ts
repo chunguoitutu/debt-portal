@@ -638,6 +638,9 @@ export const COMPLETION_CONFIG: children_config_completion[] = [
         {
           key: 'is_existing',
           value: 'Customer Type',
+          options: CUSTOMER_TYPE,
+          Component: LableOptions,
+          keyFilter: 'value',
         },
         {
           key: 'residential_type',
