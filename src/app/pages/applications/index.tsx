@@ -52,7 +52,7 @@ interface ListIdEdit {
 }
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(6)
+  const [currentStep, setCurrentStep] = useState<number>(1)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [send, setSend] = useState<send[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
@@ -387,6 +387,7 @@ export const Applications = () => {
       is_existing,
       residential_type,
       loan_reason,
+      country_id,
     } = formik.values
 
     const company_id =
@@ -408,7 +409,7 @@ export const Applications = () => {
       customer: {
         ...(customerId && applicationIdEdit ? {id: customerId} : {}),
         company_id: +company_id,
-        country_id: 1,
+        country_id: +country_id,
         identification_type,
         identification_no,
         customer_no: '',
@@ -475,11 +476,8 @@ export const Applications = () => {
 
     try {
       formik.setSubmitting(true)
-      if (applicationId) {
-        await request.put('/application/detail/' + applicationId, {
-          ...payload,
-          borrowerId,
-        })
+      if (applicationIdEdit) {
+        await request.put('/application/detail/' + applicationIdEdit, payload)
         swalToast.fire({
           title: isDraft
             ? 'Application draft successfully updated'

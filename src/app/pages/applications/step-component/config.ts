@@ -17,7 +17,6 @@ import {
   MLCB_CHECK,
   RESIDENTIAL_TYPE,
 } from '../../../utils/globalConfig'
-import {COUNTRY_LIST} from '../../../constants/countries'
 import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
 import {convertMessageErrorMaximum, convertMessageErrorRequired} from '../../../utils'
 import FullName from './completion/FullName'
@@ -137,12 +136,11 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     validationFormik: Yup.string().required(convertMessageErrorRequired('Date of Birth')),
   },
   {
-    key: 'nationality',
+    key: 'country_id',
     component: Select,
     typeComponent: 'Select',
     column: 6,
     label: 'Nationality',
-    options: COUNTRY_LIST,
     keyLabelOfOptions: 'name',
     keyValueOfOptions: 'id',
     dependencyApi: 'config/country/listing',
@@ -621,7 +619,7 @@ export const COMPLETION_CONFIG: children_config_completion[] = [
           keyFilter: 'value',
         },
         {
-          key: 'nationality',
+          key: 'country_id',
           value: 'nationality',
           dependencyApi: 'config/country/listing',
           Component: RenderOptionsApi,
