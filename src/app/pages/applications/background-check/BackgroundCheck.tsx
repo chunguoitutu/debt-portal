@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import ContentListButton from '../../../components/list-button/ContentListButton'
-import ImgCalendar from '../../../images/ImgCalendar'
-import ImgLoanCrossCheck from '../../../images/ImgLoanCrossCheck'
+
 import RepaymentScheduleCalculator from './repayment-schedule-calculator/RepaymentScheduleCalculator'
+import ImgCalendar from '../../../components/icons/ImgCalendar'
+import ImgLoanCrossCheck from '../../../components/icons/ImgLoanCrossCheck'
 
 const BackgroundCheck = () => {
   const [show, setShow] = useState<boolean>(false)

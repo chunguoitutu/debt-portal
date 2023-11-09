@@ -1,10 +1,10 @@
 import {useEffect, useRef, useState} from 'react'
-import ImgSend from '../../../images/ImgSend'
 import Button from '../../../components/button/Button'
-import ImgAvataRemark from '../../../images/ImgAvataRemark'
 import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
 import {useAuth} from '../../../modules/auth'
+import ImgAvataRemark from '../../../components/icons/ImgAvataRemark'
+import ImgSend from '../../../components/icons/ImgSend'
 
 export interface send {
   id: number

@@ -4,7 +4,7 @@ import Input from '../../../components/input'
 import Radio from '../../../components/radio/Radio'
 import Select from '../../../components/select/select'
 import {GENDER, LANGUAGES, SPECIALIZATION, YES_NO_OPTION} from '../../../utils/globalConfig'
-import TextArea from '../../../components/textarea/TextArea'
+import TextArea from '../../../components/icons/textarea/TextArea'
 import {ApplicationConfig, TableConfig} from '../../../modules/auth'
 import * as Yup from 'yup'
 
