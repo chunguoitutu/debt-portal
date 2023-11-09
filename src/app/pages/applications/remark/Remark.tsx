@@ -1,19 +1,18 @@
-import {useEffect, useRef, useState} from 'react'
+import {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
 import Button from '../../../components/button/Button'
 import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
-import {useAuth} from '../../../modules/auth'
+import {RemarkItem, useAuth} from '../../../modules/auth'
 import ImgAvataRemark from '../../../components/icons/ImgAvataRemark'
 import ImgSend from '../../../components/icons/ImgSend'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faClose} from '@fortawesome/free-solid-svg-icons'
 
-export interface send {
-  id: number
-  message: string
-  time: string
-  user: string
+type Props = {
+  remarkList: RemarkItem[]
+  setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
 }
-
-const Remark = ({setSend, send}) => {
+const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
   const [value, setValue] = useState<string>('')
   const [scroll, setScroll] = useState(false)
   const {currentUser} = useAuth()
@@ -29,18 +28,20 @@ const Remark = ({setSend, send}) => {
   }, [scroll])
   const handleSubmit = () => {
     if (value !== '') {
-      setSend([
-        ...send,
-        {
-          id: uuidv4(),
-          message: value,
-          time: Date.now(),
-          user: currentUser?.username,
-        },
-      ])
+      const newRemark: RemarkItem = {
+        id: uuidv4(),
+        message: value,
+        time: Date.now(),
+        user: currentUser?.username || '',
+      }
+      setRemarkList([...remarkList, newRemark])
     }
     setValue('')
     setScroll(!scroll)
+  }
+
+  function handleRemoveRemark(item: RemarkItem) {
+    setRemarkList(remarkList.filter((remark) => remark.id !== item.id))
   }
 
   return (
@@ -59,72 +60,28 @@ const Remark = ({setSend, send}) => {
           remark
         </h2>
       </div>
-      <div
-        className={`py-30px px-30px`}
-        style={{
-          maxHeight: '330px',
-          minHeight: '150px',
-          overflowY: 'auto',
-        }}
-        ref={contentRef}
-      >
-        {send?.map((message: any, index: number) => (
-          <div style={{display: 'flex', marginBottom: '16px'}} key={index}>
-            <div
-              style={{
-                background: '#EFF2F5',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: '14px',
-                flexShrink: '0',
-              }}
-              className='w-36px h-36px rounded-pill '
-            >
+      <div className='p-30px min-h-150px mh-325px overflow-y-auto' ref={contentRef}>
+        {remarkList?.map((message, index: number) => (
+          <div className='remark-item d-flex mb-5' key={index}>
+            <div className='w-36px h-36px rounded-pill me-4 d-flex align-items-center justify-content-center flex-shrink-0 bg-gray-200'>
               <ImgAvataRemark />
             </div>
             <div>
-              <p
-                style={{
-                  fontSize: '14px',
-                  fontWeight: '500px',
-                  lineHeight: '20px',
-                  fontStyle: 'normal',
-                  color: '#4B5675',
-                  marginBottom: '0px',
-                  wordBreak: 'break-all',
-                }}
-              >
-                {message.message}
-              </p>
+              <p className='mb-0 fs-5 fw-semibold text-break'>{message.message}</p>
               <div>
-                <span
-                  style={{
-                    fontSize: '12px',
-                    fontWeight: '500px',
-                    lineHeight: '26px',
-                    fontStyle: 'normal',
-                    color: '#B5B5C3',
-                    textTransform: 'capitalize',
-                  }}
-                >
+                <span className='fs-sm fw-semibold text-capitalize text-gray-400 me-2'>
                   {moment(message.time).format('hh:mm A - DD/MM/YYYY')}
                 </span>
+                <span className='fs-sm fw-semibold text-capitalize text-primary'>
+                  by {message.user}
+                </span>
               </div>
-              <span
-                style={{
-                  marginLeft: '4px',
-                  fontSize: '12px',
-                  fontWeight: '500px',
-                  lineHeight: '26px',
-                  fontStyle: 'normal',
-                  color: '#0D6EFD',
-                  textTransform: 'capitalize',
-                }}
-              >
-                by {message.user}
-              </span>
             </div>
+            <FontAwesomeIcon
+              icon={faClose}
+              className='align-self-center text-gray-600 text-hover-danger cursor-pointer p-1 close-remark-icon'
+              onClick={() => handleRemoveRemark(message)}
+            />
           </div>
         ))}
       </div>

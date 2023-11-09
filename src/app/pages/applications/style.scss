@@ -244,3 +244,13 @@
 .close:hover .icon {
   color: black;
 }
+
+.remark-item {
+  .close-remark-icon {
+    visibility: hidden;
+  }
+
+  &:hover .close-remark-icon {
+    visibility: visible;
+  }
+}
