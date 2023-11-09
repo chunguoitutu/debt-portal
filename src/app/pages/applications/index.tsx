@@ -343,7 +343,6 @@ export const Applications = () => {
       setCurrentStep(currentStep + 1)
     }
   }
-
   async function handleSubmitForm() {
     const {
       identification_type,
@@ -564,7 +563,6 @@ export const Applications = () => {
             <BackgroundCheck />
           </div>
           <div>
-            {/* <PrintOptions /> */}
             <Remark setSend={setSend} send={send} />
           </div>
         </div>

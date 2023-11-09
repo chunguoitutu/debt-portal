@@ -48,10 +48,10 @@ function TableRender({title, config = [], data}: Props) {
               key={index}
               style={{display: 'flex', flexDirection: 'column', gap: '16px', width: '100%'}}
             >
-              {children_config?.map((element_config: element_config) => {
+              {children_config?.map((element_config: element_config, indx) => {
                 const {Component} = element_config
                 return (
-                  <div key={element_config.key}>
+                  <div key={indx}>
                     <div
                       style={{
                         display: 'flex',

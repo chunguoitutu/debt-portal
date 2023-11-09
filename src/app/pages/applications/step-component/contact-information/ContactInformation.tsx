@@ -17,40 +17,50 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
   const {values, touched, errors, handleChange, setValues, setFieldValue} = formik
 
+  async function onFetchDataList() {
+    try {
+      const updatedDataMarketing = {...dataOption}
+      const endpoint = [...config, ...BLOCK_ADDRESS_CONFIG].filter((data) => !!data.dependencyApi)
+
+      const requests = endpoint.map((d) =>
+        request.post(d.dependencyApi || '', {status: true, pageSize: 99999, currentPage: 1})
+      )
+
+      const responses = await Promise.all(requests)
+
+      responses.forEach((res, index) => {
+        const key = endpoint[index].key
+        updatedDataMarketing[key] = res?.data?.data
+      })
+
+      setDataOption(updatedDataMarketing)
+    } catch (error) {
+    } finally {
+    }
+  }
+
   useEffect(() => {
-    const allApi = [...config, ...BLOCK_ADDRESS_CONFIG]
-      .filter((item) => item.dependencyApi)
-      .map((item) => request.post(item.dependencyApi as string), {
-        status: true,
-      })
-
-    Promise.all(allApi).then((res) => {
-      let result: {[key: string]: any[]} = {}
-
-      res.forEach((res) => {
-        const configItem = [...config, ...BLOCK_ADDRESS_CONFIG].find(
-          (item) => item.dependencyApi === res.config.url
-        )
-        const data = res.data.data
-        result = {...result, [configItem?.key as string]: data}
-
-        if (!configItem) return
-      })
-
-      setDataOption(result)
-    })
-
+    onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleChangeBlockAddress(e: React.ChangeEvent<any>, index: number, key: string) {
     const {value} = e.target
+
     setFieldValue(`address_contact_info[${index}][${key}]`, value)
   }
 
   function renderComponent(item: ApplicationConfig) {
-    const {key, column, options, keyLabelOfOptions, keyValueOfOptions, typeInput, typeComponent} =
-      item
+    const {
+      key,
+      column,
+      options,
+      keyLabelOfOptions,
+      dependencyApi,
+      keyValueOfOptions,
+      typeInput,
+      typeComponent,
+    } = item
     let Component: any = item?.component
 
     // nothing
@@ -67,13 +77,12 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
           onChange={handleChange}
           name={key}
           classShared={className}
-          options={options || dataOption['address_type_id'] || []}
-          isOptionDefault={key === 'address_type_id' ? false : true}
+          options={!!dependencyApi ? dataOption[key] || [] : options}
           error={errors[key]}
           touched={touched[key]}
           errorTitle={errors[key]}
-          fieldValueOption={keyValueOfOptions || 'label'}
-          fieldLabelOption={keyLabelOfOptions || 'value'}
+          fieldValueOption={keyValueOfOptions}
+          fieldLabelOption={keyLabelOfOptions}
         />
       )
     }
@@ -202,16 +211,15 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
         return BLOCK_ADDRESS_CONFIG.map((item, i) => {
           const {
             label,
-
             column,
             isHide,
             required,
             className,
             key,
+            dependencyApi,
             component,
             keyLabelOfOptions,
             keyValueOfOptions,
-            options,
             typeComponent,
           } = item
 
@@ -249,7 +257,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                       onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}
                       name={key}
                       classShared={classNameComponent}
-                      options={options || dataOption['address_type_id'] || []}
+                      options={!!dependencyApi ? dataOption[key] || [] : ''}
                       error={errors['address_contact_info']?.[indexParent]?.[key]}
                       touched={touched['address_contact_info']?.[indexParent]?.[key]}
                       errorTitle={errors['address_contact_info']?.[indexParent]?.[key]}

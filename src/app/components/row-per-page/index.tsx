@@ -43,8 +43,10 @@ const RowPerPage = ({limit = 10, page = 1, lenghtData = 0, setLimit}: Props) => 
           marginBottom: '0px',
         }}
       >
-        {page * Number(limit) - (Number(limit) - 1)}-
-        {page * Number(limit) > lenghtData ? lenghtData : page * Number(limit)} of {lenghtData}
+        {page * Number(limit) - (Number(limit) - 1) < lenghtData
+          ? page * Number(limit) - (Number(limit) - 1)
+          : lenghtData}
+        -{page * Number(limit) > lenghtData ? lenghtData : page * Number(limit)} of {lenghtData}
       </p>
     </div>
   )

@@ -9,6 +9,7 @@ import {COUNTRY_PHONE_CODE} from '../../../../utils/globalConfig'
 
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
+
   const [annualIncome, setAnnualIncome] = useState({
     monthly_income_1: 0,
     monthly_income_2: 0,
@@ -157,7 +158,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
     }
 
     // unexpected
-    return <Component />
+    return <Component props={{...props}} />
   }
 
   return (

@@ -12,9 +12,11 @@ const RenderOptionsApi = ({config, data}: Props) => {
   }, [])
   async function onFetchDataList() {
     try {
-      request.post(config.dependencyApi || '', {status: true}).then((res) => {
-        setDataLoanType(res.data.data)
-      })
+      request
+        .post(config.dependencyApi || '', {status: true, pageSize: 99999, currentPage: 1})
+        .then((res) => {
+          setDataLoanType(res.data.data)
+        })
     } catch (error) {
     } finally {
     }
