@@ -242,6 +242,7 @@ const ApplicationListing = () => {
 
   function handleResetFilter() {
     setDataFilter({})
+    onFetchDataList({...searchCriteria})
   }
 
   function handleFilter() {
@@ -276,13 +277,22 @@ const ApplicationListing = () => {
         }
       }
 
-      if (dataFilter[key]) return {...acc, [key]: dataFilter[key]}
+      if (dataFilter[key]) {
+        let value = dataFilter[key]
+
+        if (key === 'loan_type_id') {
+          value = +value
+        }
+
+        return {...acc, [key]: value}
+      }
 
       return {...acc}
     }, {})
 
     onFetchDataList({
       ...searchCriteria,
+      currentPage: 1,
       filters: newDataFilter,
     })
   }
