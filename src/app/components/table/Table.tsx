@@ -256,6 +256,10 @@ const Table: FC<Props> = ({
                           return <td key={i}>{idx + 1}</td>
                         }
 
+                        if (key === 'open_date') {
+                          return <td key={i}>{moment(value).format('YYYY-MM-DD')}</td>
+                        }
+
                         if (component) {
                           if (key === 'status' || key === 'is_active') {
                             return (

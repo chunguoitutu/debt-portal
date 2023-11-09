@@ -17,7 +17,7 @@ const GrossMonthlyIncomeCompletion = ({data}: Props) => {
           margin: '0px',
         }}
       >
-        Last month -: ${data?.monthly_income_1}
+        Last month: ${data?.monthly_income_1}
       </p>
       <p
         style={{

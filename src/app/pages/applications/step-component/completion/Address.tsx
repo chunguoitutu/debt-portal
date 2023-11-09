@@ -28,7 +28,6 @@ const Address = ({config, data}: Props) => {
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              padding: '24px',
               width: '100%',
               gap: '16px',
               borderBottom: i < data?.address_contact_info.length - 1 ? '1px solid #D4D4D4' : '',
