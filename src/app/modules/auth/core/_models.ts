@@ -92,7 +92,7 @@ export type SearchCriteria<T = any> = {
   pageSize: number
   currentPage: number
   total: number
-  company_id?: string
+  company_id?: number
   filters?: T
 }
 
@@ -284,7 +284,7 @@ export type ApplicationPayload = {
     employment_status?: string
     monthly_income?: number
     credit_score?: string
-    residential_type_id?: string
+    residential_type?: string
     spoken_language?: string
     marketing_type_id: number
   }
@@ -299,6 +299,8 @@ export type ApplicationPayload = {
     application_notes?: string
     loan_terms: number
     is_draft: 1 | 0
+    is_existing: string
+    company_id: number
   }
   bank_account: {
     id?: number
@@ -333,11 +335,11 @@ export type ApplicationPayload = {
 export type ApplicationFormData = {
   middlename: string
   lastname: string
-  customer_type: string
+  is_existing: string
   firstname: string
   identification_type: string
   identification_no: string
-  residential_type_id: string
+  residential_type: string
   marketing_type: string
   gender: string
   date_of_birth: string

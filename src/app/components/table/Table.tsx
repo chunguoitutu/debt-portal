@@ -52,7 +52,13 @@ const Table: FC<Props> = ({
     messageDeleteSuccess,
   } = settings
 
-  const currentCompanyId = useMemo(() => Cookies.get('company_cookie'), [])
+  const {currentUser, priority} = useAuth()
+
+  const company_id = useMemo(
+    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser]
+  )
 
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -61,12 +67,9 @@ const Table: FC<Props> = ({
     pageSize: 10,
     currentPage: 1,
     total: 0,
-    company_id: currentCompanyId,
   })
 
   const {total, ...pagination} = searchCriteria
-
-  const {currentUser} = useAuth()
 
   useEffect(() => {
     if (!currentUser) return
@@ -77,6 +80,7 @@ const Table: FC<Props> = ({
   useEffect(() => {
     const handleRefresh = async () => {
       await onFetchDataList(pagination)
+
       setIsUpdated(false)
     }
 
@@ -113,7 +117,10 @@ const Table: FC<Props> = ({
   async function onFetchDataList(body: Omit<SearchCriteria, 'total'>) {
     setLoading(true)
     try {
-      const {data} = await request.post(endPointGetListing + '/listing', body)
+      const {data} = await request.post(endPointGetListing + '/listing', {
+        ...body,
+        company_id: +company_id,
+      })
 
       Array.isArray(data.data) && setData(data.data)
 
