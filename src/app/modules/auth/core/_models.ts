@@ -435,3 +435,10 @@ export type ApplicationItem = {
   fullname: string
   loan_type: string
 }
+
+export type RemarkItem = {
+  id: string
+  message: string
+  time: number
+  user: string
+}

@@ -12,10 +12,11 @@ import {
   ApplicationFormData,
   ApplicationPayload,
   PropsStepApplication,
+  RemarkItem,
   StepItem,
   useAuth,
 } from '../../modules/auth'
-import Remark, {send} from './remark/Remark'
+import Remark from './remark/Remark'
 import Cookies from 'js-cookie'
 import {INIT_BLOCK_ADDRESS} from '../../constants'
 import * as Yup from 'yup'
@@ -54,7 +55,7 @@ interface ListIdEdit {
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [isDraft, setIsDraft] = useState<boolean>(false)
-  const [send, setSend] = useState<send[]>([])
+  const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -116,7 +117,7 @@ export const Applications = () => {
         })
 
         const applicationNotes = JSON.parse(application?.application_notes) || []
-        setSend(applicationNotes)
+        setRemarkList(applicationNotes)
       })
       .catch((error) => {
         setErrorLoading(true)
@@ -465,7 +466,7 @@ export const Applications = () => {
         loan_type_id: +loan_type_id,
         status: 1,
         application_date: new Date(),
-        application_notes: JSON.stringify(send),
+        application_notes: JSON.stringify(remarkList),
         is_draft: isDraft ? 1 : 0,
         is_existing,
         company_id: +company_id,
@@ -561,7 +562,7 @@ export const Applications = () => {
             <BackgroundCheck />
           </div>
           <div>
-            <Remark setSend={setSend} send={send} />
+            <Remark setRemarkList={setRemarkList} remarkList={remarkList} />
           </div>
         </div>
       </div>
