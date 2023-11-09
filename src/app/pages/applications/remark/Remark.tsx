@@ -4,9 +4,9 @@ import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
 import {RemarkItem, useAuth} from '../../../modules/auth'
 import ImgAvataRemark from '../../../components/icons/ImgAvataRemark'
-import ImgSend from '../../../components/icons/ImgSend'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faClose} from '@fortawesome/free-solid-svg-icons'
+import Icons from '../../../components/icons'
 
 type Props = {
   remarkList: RemarkItem[]
@@ -118,7 +118,7 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
             }}
             className='btn-primary p-8px rounded-pill'
           >
-            <ImgSend />
+            <Icons name='ImgSend' />
           </Button>
         </div>
       </div>

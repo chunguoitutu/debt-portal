@@ -1,8 +1,7 @@
 import {useEffect, useState} from 'react'
 
 import {AiOutlineClose} from 'react-icons/ai'
-import ImgFoder from '../../../../components/icons/ImgFoder'
-import ImgUploadFile from '../../../../components/icons/ImgUploadFile'
+import Icons from '../../../../components/icons'
 
 export interface file {
   nameFile: string
@@ -25,8 +24,11 @@ const FileInput = (props: any) => {
 
   const [selectedFiles, setSelectedFiles] = useState<any>([])
   const handleFileChange = (event: any) => {
-    const files = event.target.files
-    setSelectedFiles([...files])
+    const files: FileList | null = event.target.files
+    if (files) {
+      const pdfFiles = Array.from(files).filter((file) => file.type === 'application/pdf')
+      setSelectedFiles(pdfFiles)
+    }
     event.target.value = ''
   }
 
@@ -103,7 +105,7 @@ const FileInput = (props: any) => {
                       flexShrink: '0',
                     }}
                   >
-                    <ImgFoder />
+                    <Icons name={'ImgFoder'} />
                   </div>
                 )}
 
@@ -198,7 +200,7 @@ const FileInput = (props: any) => {
           }}
         >
           <div style={{cursor: 'pointer', width: '40px', height: '40px', flexShrink: '0'}}>
-            <ImgUploadFile />
+            <Icons name={'ImgUploadFile'} />
           </div>
           <div style={{cursor: 'pointer'}}>
             <h1
@@ -227,7 +229,8 @@ const FileInput = (props: any) => {
                 margin: '0',
               }}
             >
-              Drag & Drop and choose files from compute (File upload maximum 200MB).
+              Drag & Drop and choose files from compute (File upload maximum 200MB and only upload
+              files in .PDF format).
             </p>
           </div>
         </div>
