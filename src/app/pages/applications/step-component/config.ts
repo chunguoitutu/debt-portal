@@ -203,7 +203,7 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
       .max(1000, convertMessageErrorMaximum(1000, true)),
   },
   {
-    key: 'reason_loan',
+    key: 'loan_reason',
     component: TextArea,
     typeComponent: 'TextArea',
     label: 'Reason For Loan',

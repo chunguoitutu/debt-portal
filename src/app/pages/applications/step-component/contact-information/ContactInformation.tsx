@@ -3,12 +3,14 @@ import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
 import Select from '../../../../components/select/select'
 import {COUNTRY_PHONE_CODE} from '../../../../utils/globalConfig'
-import {PropsStepApplication, ApplicationConfig} from '../../../../modules/auth'
+import {PropsStepApplication, ApplicationConfig, BlockAddress} from '../../../../modules/auth'
 import Button from '../../../../components/button/Button'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
 import {INIT_BLOCK_ADDRESS} from './../../../../constants/index'
 import request from '../../../../axios'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
+import {swalConfirmDelete, swalToast} from '../../../../swal-notification'
+import {DEFAULT_MESSAGE_ERROR_500} from '../../../../constants/error-message'
 
 const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
@@ -124,23 +126,46 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     )
   }
 
-  function handleRemoveBlockAddress(index: number) {
-    setValues(
-      {
-        ...values,
-        address_contact_info: values.address_contact_info.filter((_, i) => i !== index),
-      },
-      false
-    )
+  function handleShowConfirmDelete(item: BlockAddress, index: number) {
+    if (!item.id) return handleRemoveBlockAddress(item, index)
 
-    formik.setErrors({
-      ...errors,
-      address_contact_info: (errors?.address_contact_info as string[])?.filter(
-        (_, i) => i !== index
-      ),
-    })
+    swalConfirmDelete
+      .fire({
+        title: 'Are you sure?',
+        text: `You won't be able to revert this.`,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          handleRemoveBlockAddress(item, index)
+        }
+      })
   }
-  
+
+  async function handleRemoveBlockAddress(item: BlockAddress, index: number) {
+    try {
+      item.id && (await request.delete(`/address/${item.id}`))
+      setValues(
+        {
+          ...values,
+          address_contact_info: values.address_contact_info.filter((_, i) => i !== index),
+        },
+        false
+      )
+
+      formik.setErrors({
+        ...errors,
+        address_contact_info: (errors?.address_contact_info as string[])?.filter(
+          (_, i) => i !== index
+        ),
+      })
+    } catch (error) {
+      swalToast.fire({
+        title: DEFAULT_MESSAGE_ERROR_500,
+        icon: 'error',
+      })
+    }
+  }
+
   return (
     <>
       {config?.map((item, i) => {
@@ -173,7 +198,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       })}
 
       {/* Block address */}
-      {values.address_contact_info.map((_, indexParent) => {
+      {values.address_contact_info.map((blockAddress, indexParent) => {
         return BLOCK_ADDRESS_CONFIG.map((item, i) => {
           const {
             label,
@@ -262,7 +287,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                   {indexParent > 0 && (
                     <Button
                       className='btn-sm btn-light-danger'
-                      onClick={() => handleRemoveBlockAddress(indexParent)}
+                      onClick={() => handleShowConfirmDelete(blockAddress, indexParent)}
                     >
                       Close Block
                     </Button>

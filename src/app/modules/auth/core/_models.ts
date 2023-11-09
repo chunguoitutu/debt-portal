@@ -403,6 +403,7 @@ export type ApplicationFormData = {
 }
 
 export type BlockAddress = {
+  id?: number
   address_type_id: string | number
   address_label: string
   street_1: string

@@ -43,6 +43,14 @@ const profileBreadCrumbs: Array<PageLink> = [
   },
 ]
 
+interface ListIdEdit {
+  customerId: number
+  borrowerId: number
+  employmentId: number
+  applicationId: number
+  bankInfoId: number
+}
+
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [isDraft, setIsDraft] = useState<boolean>(false)
@@ -50,8 +58,13 @@ export const Applications = () => {
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [customerId, setCustomerId] = useState<number | null>(null)
-  const [borrowerId, setBorrowerId] = useState<number | null>(null)
+  const [listIdEdit, setListIdEdit] = useState<ListIdEdit>({
+    customerId: 0,
+    borrowerId: 0,
+    employmentId: 0,
+    applicationId: 0,
+    bankInfoId: 0,
+  })
   const {pathname} = useLocation()
 
   const initialValues: ApplicationFormData = useMemo(() => {
@@ -65,38 +78,51 @@ export const Applications = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [STEP_APPLICATION])
 
-  const {applicationId} = useParams()
+  const {applicationIdEdit} = useParams()
 
   useEffect(() => {
-    if (!applicationId) return setIsLoading(false)
+    if (!applicationIdEdit) return setIsLoading(false)
     request
-      .get(`/application/detail/${applicationId}`)
+      .get(`/application/detail/${applicationIdEdit}`)
       .then((response) => {
         const dataEdit = response.data.data
         const formattedDateOfBirth = moment(dataEdit?.customer.date_of_birth).format('YYYY-MM-DD')
+        const {borrower, application, customer, bank_info, employment, address} = dataEdit || {}
 
         formik.setValues({
           ...formik.values,
-          ...dataEdit?.borrower,
-          ...dataEdit?.application,
-          ...dataEdit?.customer,
-          ...dataEdit?.bank_info,
-          ...dataEdit?.employment,
-          address_contact_info: [...dataEdit.address],
+          ...borrower,
+          ...application,
+          ...customer,
+          ...bank_info,
+          ...employment,
+          address_contact_info:
+            Array.isArray(address) && address.length
+              ? [...address]
+              : formik.values.address_contact_info,
           date_of_birth: formattedDateOfBirth,
         })
-        setCustomerId(dataEdit?.borrower?.customer_id)
-        setBorrowerId(dataEdit?.borrower?.id)
+
+        if (application?.is_draft !== 1) {
+          setStepCompleted(STEP_APPLICATION.length - 1)
+        }
+
+        setListIdEdit({
+          customerId: customer?.id || 0,
+          borrowerId: borrower?.id || 0,
+          employmentId: employment?.id || 0,
+          applicationId: application?.id || 0,
+          bankInfoId: bank_info?.id || 0,
+        })
       })
       .catch((error) => {
         setErrorLoading(true)
-        console.log(error)
       })
       .finally(() => {
         setIsLoading(false)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applicationId])
+  }, [applicationIdEdit])
 
   useEffect(() => {
     formik.resetForm()
@@ -155,8 +181,6 @@ export const Applications = () => {
     validateOnMount: false,
     onSubmit: () => {},
   })
-
-  console.log(1234, formik.values)
 
   const {priority, currentUser} = useAuth()
 
@@ -367,8 +391,11 @@ export const Applications = () => {
         address_type_id: +item.address_type_id,
       }))
 
+    const {applicationId, bankInfoId, borrowerId, customerId, employmentId} = listIdEdit
+
     const payload: ApplicationPayload = {
       customer: {
+        ...(customerId && applicationIdEdit ? {id: customerId} : {}),
         company_id: +company_id,
         country_id: 1,
         identification_type,
@@ -381,6 +408,7 @@ export const Applications = () => {
         gender,
       },
       borrower: {
+        ...(borrowerId && applicationIdEdit ? {id: borrowerId} : {}),
         email_1,
         email_2,
         employment_status,
@@ -395,6 +423,7 @@ export const Applications = () => {
         residential_type,
       },
       bank_account: {
+        ...(bankInfoId && applicationIdEdit ? {id: bankInfoId} : {}),
         account_number_1,
         account_number_2,
         bank_code_1,
@@ -403,6 +432,7 @@ export const Applications = () => {
         bank_name_2,
       },
       employment: {
+        ...(employmentId && applicationIdEdit ? {id: employmentId} : {}),
         portal_code,
         annual_income: +annual_income,
         address,
@@ -417,6 +447,7 @@ export const Applications = () => {
         six_months_income: +six_months_income,
       },
       application: {
+        ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
         loan_terms: +loan_terms,
         loan_amount_requested: +loan_amount_requested,
         loan_type_id: +loan_type_id,
@@ -439,7 +470,6 @@ export const Applications = () => {
         //   customerId,
         //   borrowerId,
         // })
-        console.log(payload)
         swalToast.fire({
           title: isDraft
             ? 'Application draft successfully updated'
