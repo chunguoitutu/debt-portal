@@ -330,6 +330,8 @@ export type ApplicationPayload = {
     pay_date?: string
   }
   address: BlockAddress[]
+  customerId?: number
+  borrowerId?: number
 }
 
 export type ApplicationFormData = {

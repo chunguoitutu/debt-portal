@@ -50,6 +50,8 @@ export const Applications = () => {
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [customerId, setCustomerId] = useState<number | null>(null)
+  const [borrowerId, setBorrowerId] = useState<number | null>(null)
 
   const initialValues: ApplicationFormData = useMemo(() => {
     return STEP_APPLICATION.flatMap((item) => item.config).reduce(
@@ -82,6 +84,8 @@ export const Applications = () => {
           address_contact_info: [...dataEdit.address],
           date_of_birth: formattedDateOfBirth,
         })
+        setCustomerId(dataEdit?.borrower?.customer_id)
+        setBorrowerId(dataEdit?.borrower?.id)
       })
       .catch((error) => {
         setErrorLoading(true)
@@ -145,6 +149,8 @@ export const Applications = () => {
     validateOnMount: false,
     onSubmit: () => {},
   })
+
+  console.log(1234, formik.values)
 
   const {priority, currentUser} = useAuth()
 
@@ -416,28 +422,32 @@ export const Applications = () => {
       },
       address: addressList,
     }
-    console.log(payload, 'payload')
 
     try {
       formik.setSubmitting(true)
       if (applicationId) {
-        await request.put('/hihihihi')
+        // await request.put('/application/detail/' + applicationId, {
+        //   ...payload,
+        //   customerId,
+        //   borrowerId,
+        // })
+        console.log(payload)
         swalToast.fire({
           title: isDraft
             ? 'Application draft successfully updated'
             : 'Application successfully updated',
           icon: 'success',
         })
+      } else {
+        await request.post('/application/create', payload)
+
+        swalToast.fire({
+          title: isDraft
+            ? 'Application draft successfully created'
+            : 'Application successfully created',
+          icon: 'success',
+        })
       }
-
-      await request.post('/application/create', payload)
-
-      swalToast.fire({
-        title: isDraft
-          ? 'Application draft successfully created'
-          : 'Application successfully created',
-        icon: 'success',
-      })
     } catch (error: any) {
       const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
 
