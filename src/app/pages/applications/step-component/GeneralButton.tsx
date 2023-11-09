@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import Button from '../../../components/button/Button'
 import {PropsStepApplication} from '../../../modules/auth'
+import {useParams} from 'react-router-dom'
 
 interface Props extends PropsStepApplication {
   handleSubmit: () => void
@@ -16,7 +17,9 @@ const GeneralButton: FC<Props> = ({
   isDraft,
   currentStep,
 }) => {
-  const {isSubmitting, values} = formik
+  const {isSubmitting} = formik
+
+  const {applicationIdEdit} = useParams()
 
   return (
     <div
@@ -25,21 +28,23 @@ const GeneralButton: FC<Props> = ({
         padding: currentStep === 6 ? '0px 30px 30px 0px' : '',
       }}
     >
-      <Button
-        loading={isSubmitting && isDraft}
-        onClick={() => handleSaveDraft()}
-        className='btn-secondary align-self-center me-3'
-        disabled={isSubmitting}
-      >
-        Save Draft
-      </Button>
+      {!applicationIdEdit && (
+        <Button
+          loading={isSubmitting && isDraft}
+          onClick={handleSaveDraft}
+          className='btn-secondary align-self-center me-3 d-flex none'
+          disabled={isSubmitting}
+        >
+          Save Draft
+        </Button>
+      )}
       <Button
         type='submit'
         loading={isSubmitting && !isDraft}
         disabled={isSubmitting}
         onClick={handleSubmit}
       >
-        {currentStep === 6 ? (values.customer_no ? 'Update' : 'Save') : 'Continue'}
+        {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
       </Button>
     </div>
   )
