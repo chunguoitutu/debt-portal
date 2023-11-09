@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react'
-import ImgUploadFile from '../../../../images/ImgUploadFile'
-import ImgFoder from '../../../../images/ImgFoder'
+
 import {AiOutlineClose} from 'react-icons/ai'
+import ImgFoder from '../../../../components/icons/ImgFoder'
+import ImgUploadFile from '../../../../components/icons/ImgUploadFile'
 
 export interface file {
   nameFile: string
@@ -44,6 +45,7 @@ const FileInput = (props: any) => {
         formik.setFieldValue('file_document', [...formik?.values?.file_document, ...base])
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFiles])
 
   return (

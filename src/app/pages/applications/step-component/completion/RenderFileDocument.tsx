@@ -1,4 +1,4 @@
-import ImgFoder from '../../../../images/ImgFoder'
+import ImgFoder from '../../../../components/icons/ImgFoder'
 import {TruncateText, file} from '../employment/FileDocument'
 
 type Props = {
