@@ -202,12 +202,21 @@ export const Applications = () => {
         Array.isArray(blockAddress) &&
         blockAddress.length
       ) {
-        totalField += blockAddress?.length * Object.keys(blockAddress?.[0]).length
+        totalField +=
+          blockAddress?.length *
+          Object.keys(blockAddress?.[0]).filter(
+            (key) => !['property_type', 'borrower_id', 'id'].includes(key)
+          ).length
 
         number += blockAddress.reduce((acc, item) => {
           const objectHasValue = filterObjectKeyNotEmpty(item)
 
-          return acc + Object.keys(objectHasValue).length
+          return (
+            acc +
+            Object.keys(objectHasValue).filter(
+              (key) => !['property_type', 'borrower_id', 'id'].includes(key)
+            ).length
+          )
         }, 0)
       }
 
