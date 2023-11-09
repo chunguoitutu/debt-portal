@@ -31,6 +31,15 @@ const CompanyListing = (props: Props) => {
   return (
     <>
       <div>
+        {showCreateAppModal && (
+          <CreateEditCompanies
+            setLoadApi={setLoadApi}
+            loadapi={loadapi}
+            show={showCreateAppModal}
+            handleClose={() => setShowCreateAppModal(false)}
+            handleUpdated={() => setIsUpdated(true)}
+          />
+        )}
         <Table
           config={COMPANY_TABLE_CONFIG}
           onEditItem={handleShowEdit}

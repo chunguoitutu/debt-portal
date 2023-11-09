@@ -57,14 +57,16 @@ const CreateEditCompanies = ({
   const [status, setStatus] = useState(data ? data?.status : true)
 
   React.useEffect(() => {
-    request
-      .get(`config/company/${data.id}`)
-      .then(({data}) => {
-        if (!data?.error) setInformation(data?.data)
-      })
-      .catch((error) => {
-        console.error('Error: ', error?.message)
-      })
+    if (data?.id) {
+      request
+        .get(`config/company/${data.id}`)
+        .then(({data}) => {
+          if (!data?.error) setInformation(data?.data)
+        })
+        .catch((error) => {
+          console.error('Error: ', error?.message)
+        })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -87,35 +89,67 @@ const CreateEditCompanies = ({
     },
     validationSchema: newCompaniesSchema,
     onSubmit: async (values: any, actions: any) => {
-      await request
-        .post('config/company/' + information?.id, {
-          company_name: values.company_name,
-          company_code: values.company_code,
-          business_uen: values.business_uen,
-          telephone: values.telephone as string,
-          email: values.email,
-          address: values.address,
-          website: values.website,
-          open_date: new Date(values.open_date),
-          status: status ? 1 : 0,
-        })
-        .then((response) => {
-          if (!response.data?.error) {
-            swalToast.fire({
-              icon: 'success',
-              title: 'Company successfully updated',
-            })
-          }
-          handleUpdated()
-          handleClose()
-          setLoadApi(!loadapi)
-        })
-        .catch((error) => {
-          swalToast.fire({
-            icon: 'error',
-            title: error?.message,
+      if (!information?.id) {
+        await request
+          .post('config/company', {
+            company_name: values.company_name,
+            company_code: values.company_code,
+            business_uen: values.business_uen,
+            telephone: String(values.telephone),
+            email: values.email,
+            address: values.address,
+            website: values.website,
+            open_date: new Date(values.open_date),
+            status: status ? 1 : 0,
           })
-        })
+          .then((response) => {
+            if (!response.data?.error) {
+              swalToast.fire({
+                icon: 'success',
+                title: 'Company successfully created',
+              })
+            }
+            handleUpdated()
+            handleClose()
+            setLoadApi(!loadapi)
+          })
+          .catch((error) => {
+            swalToast.fire({
+              icon: 'error',
+              title: error?.message,
+            })
+          })
+      } else {
+        await request
+          .post('config/company/' + information?.id, {
+            company_name: values.company_name,
+            company_code: values.company_code,
+            business_uen: values.business_uen,
+            telephone: String(values.telephone),
+            email: values.email,
+            address: values.address,
+            website: values.website,
+            open_date: new Date(values.open_date),
+            status: status ? 1 : 0,
+          })
+          .then((response) => {
+            if (!response.data?.error) {
+              swalToast.fire({
+                icon: 'success',
+                title: 'Company successfully updated',
+              })
+            }
+            handleUpdated()
+            handleClose()
+            setLoadApi(!loadapi)
+          })
+          .catch((error) => {
+            swalToast.fire({
+              icon: 'error',
+              title: error?.message,
+            })
+          })
+      }
     },
   })
 
@@ -157,28 +191,26 @@ const CreateEditCompanies = ({
         >
           <div className=''>
             <div className='card-body  px-lg-7 row gx-10'>
-              {information ? (
-                <>
-                  {rows.map((row) => (
-                    <div key={row?.key} style={{flex: '0 0 50%'}}>
-                      <div className='d-flex flex-column mb-16px'>
-                        <Input
-                          required={row?.require ? true : false}
-                          title={row.name}
-                          name={row?.key}
-                          type={row?.type || 'text'}
-                          value={values[row?.key] || ''}
-                          onChange={handleChange}
-                        />
+              <>
+                {rows.map((row) => (
+                  <div key={row?.key} style={{flex: '0 0 50%'}}>
+                    <div className='d-flex flex-column mb-16px'>
+                      <Input
+                        required={row?.require ? true : false}
+                        title={row.name}
+                        name={row?.key}
+                        type={row?.type || 'text'}
+                        value={values[row?.key] || ''}
+                        onChange={handleChange}
+                      />
 
-                        {errors[row?.key] && touched[row?.key] && (
-                          <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                        )}
-                      </div>
+                      {errors[row?.key] && touched[row?.key] && (
+                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                      )}
                     </div>
-                  ))}
-                </>
-              ) : null}
+                  </div>
+                ))}
+              </>
               <InputCheck
                 title='Status'
                 checked={status}
