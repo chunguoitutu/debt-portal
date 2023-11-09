@@ -3,9 +3,14 @@ import {Button} from 'react-bootstrap'
 import Icons from '../../../components/icons'
 import {KTCardBody} from '../../../../_metronic/helpers'
 import {APPLICATION_LISTING_CONFIG} from './config'
-import React, {useMemo, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import RowPerPage from '../../../components/row-per-page'
-import {ApplicationItem, ResponseApplicationListing, SearchCriteria} from '../../../modules/auth'
+import {
+  ApplicationItem,
+  ResponseApplicationListing,
+  SearchCriteria,
+  useAuth,
+} from '../../../modules/auth'
 import request from '../../../axios'
 import PaginationArrow from '../../../components/pagination.tsx'
 import {Link, useNavigate} from 'react-router-dom'
@@ -19,6 +24,7 @@ import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import {filterObjectKeyNotEmpty} from '../../../utils'
 import Loading from '../../../components/table/components/Loading'
+import Cookies from 'js-cookie'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -39,16 +45,27 @@ const ApplicationListing = () => {
   const {settings, rows} = APPLICATION_LISTING_CONFIG || {}
   const {showAction = true, showEditButton} = settings || {}
 
+  const {currentUser, priority} = useAuth()
+
+  const company_id = useMemo(
+    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser]
+  )
+
   const [showInput, setShowInput] = React.useState<boolean>(false)
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>({})
   const [data, setData] = React.useState<ApplicationItem[]>([])
   const [listIdChecked, setListIdChecked] = React.useState<number[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
+  const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
+    pageSize: 10,
+    currentPage: 1,
+    total: 0,
+  })
 
   React.useEffect(() => {
-    onFetchDataList()
-
     const allApi = rows
       .filter((item) => item?.infoFilter?.dependencyApi)
       .map((item) => request.post(item?.infoFilter?.dependencyApi as string), {
@@ -72,11 +89,12 @@ const ApplicationListing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
-    pageSize: 10,
-    currentPage: 1,
-    total: 0,
-  })
+  useEffect(() => {
+    if (!+company_id) return
+    onFetchDataList()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company_id])
 
   const navigate = useNavigate()
 
@@ -190,7 +208,10 @@ const ApplicationListing = () => {
   ) {
     setLoading(true)
     try {
-      const {data: response} = await request.post(settings.endPointGetListing, body)
+      const {data: response} = await request.post(settings.endPointGetListing, {
+        ...body,
+        company_id: +company_id,
+      })
       Array.isArray(response.data) && setData(response.data)
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {

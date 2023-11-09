@@ -48,7 +48,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
       .required(convertMessageErrorRequired('Last Name')),
   },
   {
-    key: 'customer_type',
+    key: 'is_existing',
     data: CUSTOMER_TYPE,
     defaultValue: CUSTOMER_TYPE[0].value,
     component: Radio,
@@ -90,7 +90,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
       .required(convertMessageErrorRequired('ID Type')),
   },
   {
-    key: 'residential_type_id',
+    key: 'residential_type',
     component: Select,
     typeComponent: 'Select',
     column: 6,

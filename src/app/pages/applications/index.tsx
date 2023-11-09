@@ -337,6 +337,8 @@ export const Applications = () => {
       position,
       specialization,
       six_months_income,
+      is_existing,
+      residential_type,
     } = formik.values
 
     const company_id =
@@ -377,6 +379,7 @@ export const Applications = () => {
         job_type_id: 1,
         spoken_language,
         marketing_type_id: +marketing_type_id,
+        residential_type,
       },
       bank_account: {
         account_number_1,
@@ -408,6 +411,8 @@ export const Applications = () => {
         application_date: new Date(),
         application_notes: JSON.stringify(send),
         is_draft: isDraft ? 1 : 0,
+        is_existing,
+        company_id: +company_id,
       },
       address: addressList,
     }
