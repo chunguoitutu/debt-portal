@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import {AiOutlineClose} from 'react-icons/ai'
 import Icons from '../../../../components/icons'
 
-export interface file {
+export interface File {
   nameFile: string
   base64: string
   size: string
@@ -44,7 +44,7 @@ const FileInput = (props: any) => {
           size: file.size,
           type: file.type,
         })
-        formik.setFieldValue('file_document', [...formik?.values?.file_document, ...base])
+        formik.setFieldValue('file_documents', [...formik?.values?.file_documents, ...base])
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +60,7 @@ const FileInput = (props: any) => {
           gap: '24px',
         }}
       >
-        {formik?.values?.file_document.map((data: file, index: number) => {
+        {formik?.values?.file_documents.map((data: File, index: number) => {
           return (
             <div
               key={index}
@@ -123,9 +123,9 @@ const FileInput = (props: any) => {
                     fontSize: '16px',
                   }}
                   onClick={() => {
-                    const updatedFiles = [...formik?.values?.file_document]
+                    const updatedFiles = [...formik?.values?.file_documents]
                     updatedFiles.splice(index, 1)
-                    formik.setFieldValue('file_document', updatedFiles)
+                    formik.setFieldValue('file_documents', updatedFiles)
                   }}
                 >
                   <AiOutlineClose className='icon' />

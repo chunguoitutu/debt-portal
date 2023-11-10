@@ -457,7 +457,7 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeCheckbox: 'array',
   },
   {
-    key: 'file_document',
+    key: 'file_documents',
     component: FileDocument,
     defaultValue: [],
   },

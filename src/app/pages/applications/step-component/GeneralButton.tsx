@@ -23,7 +23,7 @@ const GeneralButton: FC<Props> = ({
 
   return (
     <div
-      className='d-flex flex-end mt-10 full'
+      className='d-flex flex-end mt-10 full gap-5'
       style={{
         padding: currentStep === 6 ? '0px 30px 30px 0px' : '',
       }}
@@ -32,7 +32,7 @@ const GeneralButton: FC<Props> = ({
         <Button
           loading={isSubmitting && isDraft}
           onClick={handleSaveDraft}
-          className='btn-secondary align-self-center me-3 d-flex none'
+          className='btn-secondary align-self-center d-flex none'
           disabled={isSubmitting}
         >
           Save Draft
@@ -46,6 +46,12 @@ const GeneralButton: FC<Props> = ({
       >
         {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
       </Button>
+
+      {currentStep === 6 ? (
+        <Button type='submit' disabled={isSubmitting} onClick={() => {}}>
+          Approve
+        </Button>
+      ) : null}
     </div>
   )
 }

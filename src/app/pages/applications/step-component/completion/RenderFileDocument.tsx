@@ -1,5 +1,5 @@
 import Icons from '../../../../components/icons'
-import {TruncateText, file} from '../employment/FileDocument'
+import {TruncateText, File} from '../employment/FileDocument'
 
 type Props = {
   config?: any
@@ -7,8 +7,6 @@ type Props = {
 }
 
 const RenderFileDocument = ({config, data}: Props) => {
-  console.log(data?.file_document)
-
   return (
     <div style={{width: '100%', border: '1px solid #D4D4D4', padding: '0px'}}>
       <h1
@@ -34,7 +32,7 @@ const RenderFileDocument = ({config, data}: Props) => {
           gap: '57px',
         }}
       >
-        {data?.file_document.map((e: file, i: number) => (
+        {data?.file_documents.map((e: File, i: number) => (
           <div
             onClick={() => {
               fetch(e.base64)
