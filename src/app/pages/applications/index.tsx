@@ -389,6 +389,7 @@ export const Applications = () => {
       residential_type,
       loan_reason,
       country_id,
+      file_documents,
     } = formik.values
 
     const company_id =
@@ -473,6 +474,7 @@ export const Applications = () => {
         loan_reason,
       },
       address: addressList,
+      file_documents,
     }
 
     try {

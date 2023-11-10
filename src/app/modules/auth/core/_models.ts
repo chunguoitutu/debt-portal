@@ -333,6 +333,7 @@ export type ApplicationPayload = {
   address: BlockAddress[]
   customerId?: number
   borrowerId?: number
+  file_documents?: any
 }
 
 export type ApplicationFormData = {
@@ -401,6 +402,7 @@ export type ApplicationFormData = {
   occupation: string
   customer_no?: string
   application_date?: any
+  file_documents?: any
 }
 
 export type BlockAddress = {
