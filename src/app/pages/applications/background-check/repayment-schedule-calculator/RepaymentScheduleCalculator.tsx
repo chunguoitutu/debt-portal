@@ -15,14 +15,12 @@ import request from './../../../../axios/index'
 import Select from '../../../../components/select/select'
 import Input from '../../../../components/input'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
-
 type Props = {
   setLoadApi: any
   loadapi: boolean
   show: boolean
   handleClose: () => void
 }
-
 type ResponseRepayment = {
   balance_principal: number
   instalment_due_date: string
@@ -48,7 +46,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   }
   const {rows} = REPAYMENT_SHEDULE_CALCULATOR_CONFIG
   const {rows: rowsTable} = REPAYMENT_SHEDULE_TABLES
-
   const {values, touched, errors, handleChange, handleSubmit} = useFormik({
     initialValues: {
       totalsAmount: '',
@@ -75,7 +72,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       }
     },
   })
-
   const dataFooterTable = React.useMemo(() => {
     if (dataRepayment) {
       return dataRepayment.reduce(
@@ -94,7 +90,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
         }
       )
     }
-
     return {
       totalInterest: 0,
       totalMonthlyInst: 0,
@@ -133,7 +128,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
-
       <div
         className={`table-calculator-style modal-body py-lg-10 px-lg-10 overflow-y-auto `}
         style={{
@@ -143,7 +137,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
         <div ref={stepperRef}>
           <div style={{width: '100%'}} className=''>
             <div style={{width: '100%'}} className=' d-flex  justify-content-between'>
-              <div>
+              <div className='step-repayment-schedule'>
                 <Step
                   data={STEP_REPAYMENT_SCHEDULE_CALCULATOR}
                   // stepError={[1, 2]}
@@ -160,7 +154,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                         {row?.typeText === 'date' || row?.typeText === 'select' ? (
                           <>
                             {row?.typeText === 'date' && (
-                              <div className='d-flex flex-column'>
+                              <div className='d-flex flex-column mb-16px'>
                                 <Input
                                   required={row?.require ? true : false}
                                   title={row?.name}
@@ -169,7 +163,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                                   onChange={handleChange}
                                   type='date'
                                 />
-
                                 {errors[row.key] && touched[row.key] && (
                                   <ErrorMessage message={errors[row.key]} />
                                 )}
@@ -192,7 +185,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             )}
                           </>
                         ) : (
-                          <div className='d-flex flex-column'>
+                          <div className='d-flex flex-column mb-16px'>
                             <Input
                               required={row?.require ? true : false}
                               title={row?.name}
@@ -202,7 +195,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                               value={values[row?.key] || ''}
                               onChange={handleChange}
                             />
-
                             {errors[row.key] && touched[row.key] && (
                               <ErrorMessage message={errors[row.key]} />
                             )}
@@ -256,7 +248,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                         <div className='fs-3 fw-bold'>{values.first_repayment_date}</div>
                       </div>
                     </div>
-
                     {/* calculator table */}
                     <div className='pt-7 row algin-items-center justify-content-between'>
                       <div className='col-6'>
@@ -327,7 +318,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                         </Table>
                       </div>
                     </div>
-
                     {/* table show charge per month */}
                     <div className='overflow-y-auto pt-4'>
                       <Table responsive='sm' className='table-bordered'>
@@ -368,7 +358,6 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                             })
                             return <tr key={index}>{table}</tr>
                           })}
-
                           <tr style={{backgroundColor: '#F9F9F9'}}>
                             <td className='border-right-table p-4 label-calculator fs-4'>Total</td>
                             <td className='border-right-table p-4 label-calculator fs-4'>
@@ -412,5 +401,4 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
     modalsRoot
   )
 }
-
 export default RepaymentScheduleCalculator
