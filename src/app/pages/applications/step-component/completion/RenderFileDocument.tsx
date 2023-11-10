@@ -1,4 +1,4 @@
-import ImgFoder from '../../../../components/icons/ImgFoder'
+import Icons from '../../../../components/icons'
 import {TruncateText, file} from '../employment/FileDocument'
 
 type Props = {
@@ -7,6 +7,8 @@ type Props = {
 }
 
 const RenderFileDocument = ({config, data}: Props) => {
+  console.log(data?.file_document)
+
   return (
     <div style={{width: '100%', border: '1px solid #D4D4D4', padding: '0px'}}>
       <h1
@@ -34,6 +36,18 @@ const RenderFileDocument = ({config, data}: Props) => {
       >
         {data?.file_document.map((e: file, i: number) => (
           <div
+            onClick={() => {
+              fetch(e.base64)
+                .then((response) => response.blob())
+                .then((blob) => {
+                  const blobUrl = URL.createObjectURL(blob)
+
+                  window.open(blobUrl, '_blank')
+                })
+                .catch((error) => {
+                  console.error('Lỗi khi mở PDF:', error)
+                })
+            }}
             key={i}
             style={{
               display: 'flex',
@@ -44,6 +58,8 @@ const RenderFileDocument = ({config, data}: Props) => {
               minWidth: '100px',
               borderRadius: '5px',
               position: 'relative',
+              outline: 'none',
+              cursor: 'pointer',
             }}
           >
             <div
@@ -58,20 +74,7 @@ const RenderFileDocument = ({config, data}: Props) => {
                 height: '100px',
               }}
             >
-              {['jpg', 'jpeg', 'png', 'webp'].includes(e.type.split('/').reverse()[0]) ? (
-                <img
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    flexShrink: '0',
-                  }}
-                  src={e.base64}
-                  alt={e?.nameFile}
-                />
-              ) : (
-                <ImgFoder />
-              )}
+              <Icons name={'ImgFoder'} />
             </div>
             <div
               style={{

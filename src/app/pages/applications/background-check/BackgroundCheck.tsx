@@ -2,8 +2,7 @@ import {useState} from 'react'
 import ContentListButton from '../../../components/list-button/ContentListButton'
 
 import RepaymentScheduleCalculator from './repayment-schedule-calculator/RepaymentScheduleCalculator'
-import ImgCalendar from '../../../components/icons/ImgCalendar'
-import ImgLoanCrossCheck from '../../../components/icons/ImgLoanCrossCheck'
+import Icons from '../../../components/icons'
 
 const BackgroundCheck = () => {
   const [show, setShow] = useState<boolean>(false)
@@ -14,7 +13,7 @@ const BackgroundCheck = () => {
     row: [
       {
         value: 'Repayment Schedule Calculator',
-        icon: <ImgCalendar />,
+        icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
         onclick: () => {
           setShow(true)
@@ -22,7 +21,7 @@ const BackgroundCheck = () => {
       },
       {
         value: 'Loan Cross Check',
-        icon: <ImgLoanCrossCheck />,
+        icon: <Icons name={'ImgLoanCrossCheck'} />,
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
           alert('Loan Cross Check')

@@ -1,5 +1,5 @@
+import Icons from '../../../components/icons'
 import ContentListButton from '../../../components/list-button/ContentListButton'
-import ImgPrintOptions from '../../../components/icons/ImgPrintOptions'
 
 const configPrintOptions = {
   title: 'Print Options',
@@ -9,7 +9,7 @@ const configPrintOptions = {
   row: [
     {
       value: 'Loan Application',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('Loan Application')
@@ -17,7 +17,7 @@ const configPrintOptions = {
     },
     {
       value: 'Loan Cross Check',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('Loan Cross Check')
@@ -25,7 +25,7 @@ const configPrintOptions = {
     },
     {
       value: 'Loan Contract',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('Loan Contract')
@@ -33,7 +33,7 @@ const configPrintOptions = {
     },
     {
       value: 'SOA',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('SOA')
@@ -41,7 +41,7 @@ const configPrintOptions = {
     },
     {
       value: 'Retention Vocer Letter',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('Retention Vocer Letter')
@@ -49,7 +49,7 @@ const configPrintOptions = {
     },
     {
       value: 'Retention Vocer Letter - All',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('Retention Vocer Letter - All')
@@ -57,7 +57,7 @@ const configPrintOptions = {
     },
     {
       value: 'Loan Completion Letter',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('Loan Completion Letter')
@@ -65,7 +65,7 @@ const configPrintOptions = {
     },
     {
       value: 'SOA Form 2',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('SOA Form 2')
@@ -73,7 +73,7 @@ const configPrintOptions = {
     },
     {
       value: 'SOA Form 3',
-      icon: <ImgPrintOptions />,
+      icon: <Icons name={'ImgPrintOptions'} />,
       background: '#F8F5FF',
       onclick: () => {
         alert('SOA Form 3')
