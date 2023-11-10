@@ -9,6 +9,8 @@ import Icons from '../../../../components/icons'
 import RowPerPage from '../../../../components/row-per-page'
 import PaginationArrow from '../../../../components/pagination.tsx'
 import Input from '../../../../components/input'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   show?: boolean
@@ -81,6 +83,29 @@ const LookupCustomer = ({show, onClose}: Props) => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  function handleFilter() {
+    const newDataFilter = Object.keys(dataFilters).reduce((acc, key) => {
+      if (dataFilters[key]) {
+        let value = dataFilters[key]
+
+        return {...acc, [key]: value}
+      }
+
+      return {...acc}
+    }, {})
+
+    onFetchDataList({
+      ...searchCriteria,
+      currentPage: 1,
+      filters: newDataFilter,
+    })
+  }
+
+  function handleResetFilter() {
+    setDataFilter({})
+    onFetchDataList({...searchCriteria})
+  }
 
   return (
     <Modal
@@ -167,6 +192,8 @@ const LookupCustomer = ({show, onClose}: Props) => {
                         return (
                           <td key={i}>
                             <Input
+                              name={row.key}
+                              value={dataFilters[row.key] || ''}
                               onChange={(e: React.ChangeEvent<any>) => {
                                 setDataFilter((prev) => ({
                                   ...prev,
@@ -177,6 +204,18 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </td>
                         )
                       })}
+                      <td className='text-center align-top'>
+                        <div className='d-flex align-items-center justify-content-center gap-3'>
+                          <div
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
+                            onClick={() => handleResetFilter()}
+                          >
+                            <FontAwesomeIcon icon={faArrowsRotate} />
+                          </div>
+
+                          <Button onClick={handleFilter}>Filter</Button>
+                        </div>
+                      </td>
                     </tr>
                   ) : null}
                   {data.length ? (
