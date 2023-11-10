@@ -121,7 +121,7 @@ export const CompanyManagement = () => {
 
   return (
     <div className='card'>
-      <div className='card-body row gx-10'>
+      <div className='card-body row g-10'>
         {information ? (
           <>
             {rows.map((row) => (
