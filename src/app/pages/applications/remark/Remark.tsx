@@ -60,7 +60,7 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
           remark
         </h2>
       </div>
-      <div className='p-30px min-h-150px mh-325px overflow-y-auto' ref={contentRef}>
+      <div className='p-30px min-h-325px mh-700px overflow-y-auto' ref={contentRef}>
         {remarkList?.map((message, index: number) => (
           <div className='remark-item d-flex mb-5' key={index}>
             <div className='w-36px h-36px rounded-pill me-4 d-flex align-items-center justify-content-center flex-shrink-0 bg-gray-200'>

@@ -39,7 +39,6 @@ const modalsRoot = document.getElementById('root-modals') || document.body
 const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const [currentStep, setCurrentStep] = useState<number>(1)
-  const [stepCompleted] = useState<number>(1)
   const [dataRepayment, setDataRepayment] = useState<ResponseRepayment[]>([])
   function handleChangeStep(step: number) {
     setCurrentStep(step)
@@ -52,7 +51,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       per_month_percent: '',
       totalsMonthPayment: '',
       first_repayment_date: '',
-      monthly_due_date: 'last_day',
+      monthly_due_date: '1',
     },
     validationSchema: RepaymentScheduleCalculatorSchema,
     onSubmit: async (values: any, actions: any) => {
@@ -140,8 +139,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
               <div className='step-repayment-schedule'>
                 <Step
                   data={STEP_REPAYMENT_SCHEDULE_CALCULATOR}
-                  // stepError={[1, 2]}
-                  stepCompleted={stepCompleted}
+                  stepCompleted={0}
                   currentStep={currentStep}
                   onGoToStep={handleChangeStep}
                 />

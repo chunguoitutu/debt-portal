@@ -88,7 +88,8 @@ export const Applications = () => {
       .then((response) => {
         const dataEdit = response.data.data
         const formattedDateOfBirth = moment(dataEdit?.customer.date_of_birth).format('YYYY-MM-DD')
-        const {borrower, application, customer, bank_info, employment, address} = dataEdit || {}
+        const {borrower, application, customer, bank_info, employment, address, file_documents} =
+          dataEdit || {}
 
         formik.setValues({
           ...formik.values,
@@ -102,6 +103,10 @@ export const Applications = () => {
               ? [...address]
               : formik.values.address_contact_info,
           date_of_birth: formattedDateOfBirth,
+          file_documents:
+            file_documents.map((data) => {
+              return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
+            }) || [],
         })
 
         if (application?.is_draft !== 1) {
@@ -130,6 +135,7 @@ export const Applications = () => {
 
   useEffect(() => {
     formik.resetForm()
+    setStepCompleted(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
@@ -390,6 +396,7 @@ export const Applications = () => {
       loan_reason,
       country_id,
       file_documents,
+      customer_no,
     } = formik.values
 
     const company_id =
@@ -412,9 +419,9 @@ export const Applications = () => {
         ...(customerId && applicationIdEdit ? {id: customerId} : {}),
         company_id: +company_id,
         country_id: +country_id,
+        customer_no: customer_no || '',
         identification_type,
         identification_no,
-        customer_no: '',
         date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
         firstname,
         lastname,

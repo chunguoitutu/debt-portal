@@ -2,23 +2,20 @@ import {useEffect, useState} from 'react'
 
 import {AiOutlineClose} from 'react-icons/ai'
 import Icons from '../../../../components/icons'
+import {swalConfirmDelete, swalToast} from '../../../../swal-notification'
+import request from '../../../../axios'
 
-export interface File {
-  nameFile: string
+export interface file {
+  id?: Number
+  borrower_id?: number
+  document_name: string
+  document_path: string
+  description?: string
   base64: string
   size: string
   type: string
 }
-export function TruncateText({text, maxLength}: {text: string; maxLength: number}) {
-  const fileName = text.split('.')[0]
-  if (fileName.length <= maxLength) {
-    return <>{fileName}</>
-  }
 
-  const truncatedText = fileName.slice(0, maxLength) + '...'
-
-  return <>{truncatedText}</>
-}
 const FileInput = (props: any) => {
   const {formik} = props.props
 
@@ -39,7 +36,7 @@ const FileInput = (props: any) => {
       fileReader.readAsDataURL(file)
       fileReader.onload = function (e) {
         base.push({
-          nameFile: file.name || '',
+          document_name: file.name || '',
           base64: e.target?.result,
           size: file.size,
           type: file.type,
@@ -60,7 +57,7 @@ const FileInput = (props: any) => {
           gap: '24px',
         }}
       >
-        {formik?.values?.file_documents.map((data: File, index: number) => {
+        {formik?.values?.file_documents.map((data: file, index: number) => {
           return (
             <div
               key={index}
@@ -82,32 +79,19 @@ const FileInput = (props: any) => {
                   padding: '24px 0px 8px 0px',
                 }}
               >
-                {['jpg', 'jpeg', 'png', 'webp'].includes(data.type.split('/').reverse()[0]) ? (
-                  <img
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      objectFit: 'cover',
-                      flexShrink: '0',
-                    }}
-                    alt={data?.nameFile}
-                    src={data.base64}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      objectFit: 'cover',
-                      flexShrink: '0',
-                    }}
-                  >
-                    <Icons name={'ImgFoder'} />
-                  </div>
-                )}
+                <div
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    objectFit: 'cover',
+                    flexShrink: '0',
+                  }}
+                >
+                  <Icons name={'ImgFoder'} />
+                </div>
 
                 <button
                   className='close'
@@ -123,9 +107,38 @@ const FileInput = (props: any) => {
                     fontSize: '16px',
                   }}
                   onClick={() => {
-                    const updatedFiles = [...formik?.values?.file_documents]
-                    updatedFiles.splice(index, 1)
-                    formik.setFieldValue('file_documents', updatedFiles)
+                    if (!!data?.id) {
+                      swalConfirmDelete
+                        .fire({
+                          title: 'Are you sure?',
+                          text: `You won't be able to revert this.`,
+                        })
+                        .then((result) => {
+                          if (result.isConfirmed) {
+                            request
+                              .delete('/borrower-document/' + data?.id)
+                              .then((res) => {
+                                const updatedFiles = [...formik?.values?.file_documents]
+                                updatedFiles.splice(index, 1)
+                                formik.setFieldValue('file_documents', updatedFiles)
+                                swalToast.fire({
+                                  icon: 'success',
+                                  title: 'Deleted success!',
+                                })
+                              })
+                              .catch(() => {
+                                swalToast.fire({
+                                  icon: 'error',
+                                  title: 'Something went wrong!',
+                                })
+                              })
+                          }
+                        })
+                    } else {
+                      const updatedFiles = [...formik?.values?.file_documents]
+                      updatedFiles.splice(index, 1)
+                      formik.setFieldValue('file_documents', updatedFiles)
+                    }
                   }}
                 >
                   <AiOutlineClose className='icon' />
@@ -152,8 +165,7 @@ const FileInput = (props: any) => {
                     margin: '0',
                   }}
                 >
-                  <TruncateText text={data?.nameFile} maxLength={15} />.
-                  {data.type.split('/').reverse()[0]}
+                  {data?.document_name}
                 </p>
                 <p
                   style={{

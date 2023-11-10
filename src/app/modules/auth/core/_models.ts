@@ -256,7 +256,7 @@ export type ApplicationPayload = {
   customer: {
     id?: number
     company_id: number
-    customer_no: string
+    customer_no?: string
     identification_type: string
     identification_no: string
     gender: string
