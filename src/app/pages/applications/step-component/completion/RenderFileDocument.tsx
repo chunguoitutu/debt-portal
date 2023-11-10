@@ -1,5 +1,5 @@
 import Icons from '../../../../components/icons'
-import {TruncateText, File} from '../employment/FileDocument'
+import {file} from '../employment/FileDocument'
 
 type Props = {
   config?: any
@@ -32,7 +32,7 @@ const RenderFileDocument = ({config, data}: Props) => {
           gap: '57px',
         }}
       >
-        {data?.file_documents.map((e: File, i: number) => (
+        {data?.file_documents.map((e: file, i: number) => (
           <div
             onClick={() => {
               fetch(e.base64)
@@ -42,9 +42,7 @@ const RenderFileDocument = ({config, data}: Props) => {
 
                   window.open(blobUrl, '_blank')
                 })
-                .catch((error) => {
-                  console.error('Lỗi khi mở PDF:', error)
-                })
+                .catch((error) => {})
             }}
             key={i}
             style={{
@@ -95,8 +93,7 @@ const RenderFileDocument = ({config, data}: Props) => {
                   margin: '0',
                 }}
               >
-                <TruncateText text={e?.nameFile} maxLength={30} />.{e.type.split('/').reverse()[0]}{' '}
-                - {(Number(e.size) / (1024 * 1024)).toFixed(2)}
+                {e?.document_name}- {(Number(e.size) / (1024 * 1024)).toFixed(2)}
                 MB
               </p>
               <p
