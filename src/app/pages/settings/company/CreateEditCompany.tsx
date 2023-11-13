@@ -12,6 +12,7 @@ import request from '../../../axios'
 import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
 import Input from '../../../components/input'
 import ErrorMessage from '../../../components/error/ErrorMessage'
+import Button from '../../../components/button/Button'
 
 type Props = {
   setLoadApi: any
@@ -82,7 +83,16 @@ const CreateEditCompanies = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [information])
 
-  const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik({
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    setSubmitting,
+  } = useFormik({
     initialValues: {
       ...generateField,
       open_date: data ? data?.['open_date'].slice(0, 11) : '',
@@ -119,6 +129,7 @@ const CreateEditCompanies = ({
               title: error?.message,
             })
           })
+          .finally(() => setSubmitting(false))
       } else {
         await request
           .post('config/company/' + information?.id, {
@@ -149,6 +160,7 @@ const CreateEditCompanies = ({
               title: error?.message,
             })
           })
+          .finally(() => setSubmitting(false))
       }
     },
   })
@@ -220,13 +232,14 @@ const CreateEditCompanies = ({
             </div>
 
             <div className='d-flex flex-end pt-10'>
-              <button
-                onClick={() => handleSubmit()}
+              <Button
+                className='btn-lg btn-primary'
                 type='submit'
-                className='btn btn-lg btn-primary'
+                loading={isSubmitting}
+                onClick={() => handleSubmit()}
               >
                 {titleLable === 'Edit' ? 'Update' : 'Create'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

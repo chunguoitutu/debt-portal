@@ -16,6 +16,7 @@ import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
 import {swalToast} from '../../../swal-notification'
 import Input from '../../../components/input'
 import ErrorMessage from '../../../components/error/ErrorMessage'
+import Button from '../../../components/button/Button'
 
 type Props = {
   setLoadApi: any
@@ -53,7 +54,16 @@ const CreateJobType = ({
 
   const {rows, endpoint} = JOB_TABLE_CONFIG
 
-  const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    resetForm,
+    setSubmitting,
+  } = useFormik({
     initialValues: {
       job_type_name: data.job_type_name || '',
       description: data.description || '',
@@ -85,6 +95,8 @@ const CreateJobType = ({
             text: DEFAULT_MESSAGE_ERROR_500,
             timer: 1500,
           })
+        } finally {
+          setSubmitting(false)
         }
       } else {
         try {
@@ -106,6 +118,8 @@ const CreateJobType = ({
             title: 'Error',
             text: DEFAULT_MESSAGE_ERROR_500,
           })
+        } finally {
+          setSubmitting(false)
         }
       }
     },
@@ -187,10 +201,10 @@ const CreateJobType = ({
               />
             </div>
             <div className='d-flex justify-content-end pt-4'>
-              <button type='submit' className='btn btn-lg btn-primary'>
+              <Button type='submit' className='btn-lg btn-primary' loading={isSubmitting}>
                 {title === 'New' ? 'Create' : 'Update'}
-              </button>
-            </div>{' '}
+              </Button>
+            </div>
           </form>
         </div>
       </>

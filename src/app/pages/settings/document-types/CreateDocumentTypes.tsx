@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useRef, useState} from 'react'
+import {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -15,6 +15,7 @@ import {DEFAULT_MESSAGE_ERROR_500} from '../../../constants/error-message'
 import {swalToast} from '../../../swal-notification'
 import ErrorMessage from '../../../components/error/ErrorMessage'
 import Input from '../../../components/input'
+import Button from '../../../components/button/Button'
 
 type Props = {
   setLoadApi: any
@@ -49,7 +50,16 @@ const CreateDocumentType = ({
 
   const {rows, endpoint} = DOCUMENT_TABLE_CONFIG
 
-  const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    resetForm,
+    setSubmitting,
+  } = useFormik({
     initialValues: {
       type_name: data.type_name || '',
       description: data.description || '',
@@ -80,6 +90,8 @@ const CreateDocumentType = ({
             title: 'Error',
             text: DEFAULT_MESSAGE_ERROR_500,
           })
+        } finally {
+          setSubmitting(false)
         }
       } else {
         try {
@@ -104,6 +116,8 @@ const CreateDocumentType = ({
             title: 'Error',
             text: DEFAULT_MESSAGE_ERROR_500,
           })
+        } finally {
+          setSubmitting(false)
         }
       }
     },
@@ -166,10 +180,10 @@ const CreateDocumentType = ({
               />
             </div>
             <div className='d-flex justify-content-end pt-4'>
-              <button type='submit' className='btn btn-lg btn-primary'>
+              <Button type='submit' loading={isSubmitting} className='btn-lg btn-primary'>
                 {title === 'New' ? 'Create' : 'Update'}
-              </button>
-            </div>{' '}
+              </Button>
+            </div>
           </form>
         </div>
       </>

@@ -28,14 +28,12 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       key: 'telephone',
       name: 'Telephone',
       type: 'number',
-      require: true,
     },
 
     {
       key: 'email',
       name: 'Email',
       type: 'text',
-      require: true,
     },
     {
       key: 'open_date',

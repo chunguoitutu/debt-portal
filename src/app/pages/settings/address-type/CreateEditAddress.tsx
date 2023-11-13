@@ -14,6 +14,7 @@ import TextArea from '../../../components/icons/textarea/TextArea'
 import ErrorMessage from '../../../components/error/ErrorMessage'
 import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
 import Input from '../../../components/input'
+import Button from '../../../components/button/Button'
 
 type Props = {
   setLoadApi: any
@@ -60,7 +61,16 @@ const CreateEditAddress = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
-  const {values, touched, errors, handleChange, handleSubmit, resetForm} = useFormik({
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    resetForm,
+    setSubmitting,
+  } = useFormik({
     initialValues: {
       ...generateField,
     },
@@ -91,6 +101,9 @@ const CreateEditAddress = ({
               title: e?.message,
             })
           })
+          .finally(() => {
+            setSubmitting(false)
+          })
       }
 
       if (titleLable === 'Edit') {
@@ -115,6 +128,9 @@ const CreateEditAddress = ({
               icon: 'error',
               title: error?.message,
             })
+          })
+          .finally(() => {
+            setSubmitting(false)
           })
       }
     },
@@ -199,9 +215,9 @@ const CreateEditAddress = ({
                 id='Status'
               />
               <div className='d-flex flex-end pt-10'>
-                <button type='submit' className='btn btn-lg btn-primary'>
+                <Button type='submit' className='btn-lg btn-primary' loading={isSubmitting}>
                   {titleLable === 'Edit' ? 'Update' : 'Create'}
-                </button>
+                </Button>
               </div>
             </form>
           </div>
