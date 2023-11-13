@@ -11,6 +11,7 @@ import PaginationArrow from '../../../../components/pagination.tsx'
 import Input from '../../../../components/input'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
+import Checkbox from '../../../../components/checkbox/Checkbox'
 
 type Props = {
   show?: boolean
@@ -25,6 +26,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
     currentPage: 1,
     total: 0,
   })
+  const [listIdChecked, setListIdChecked] = React.useState<number[]>([])
 
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponeLookupListing>>({})
   const {settings, rows} = TABLE_LOOKUP_CUSTOMER
@@ -48,10 +50,50 @@ const LookupCustomer = ({show, onClose}: Props) => {
     onFetchDataList({...searchCriteria, ...data, filters: dataFilters})
   }
 
+  const isCheckedAll = React.useMemo(() => {
+    const listIdCurrentPage = data.map((item) => item.id)
+
+    // If all id current page not include listIdChecked return false
+    if (listIdChecked.some((id) => listIdCurrentPage.includes(id))) {
+      return data.every((item) => listIdChecked.includes(item.id))
+    } else {
+      return false
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listIdChecked])
+
+  function handleCheckItem(e: React.ChangeEvent<HTMLInputElement>, item: ResponeLookupListing) {
+    if (e.target.checked) {
+      setListIdChecked([...listIdChecked, item.id])
+    } else {
+      setListIdChecked(listIdChecked.filter((id) => id !== item.id))
+    }
+  }
+
+  function handleToggleCheckAll(e: React.ChangeEvent<HTMLInputElement>) {
+    const listIdCurrentPage = data.map((item) => item.id)
+
+    if (e.target.checked) {
+      const newListId = Array.from(new Set([...listIdChecked, ...listIdCurrentPage]))
+      setListIdChecked(newListId)
+    } else {
+      // if page 1 deselect still list id page 2
+      setListIdChecked(listIdChecked.filter((id) => !listIdCurrentPage.includes(id)))
+    }
+  }
+
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
         <tr key={idx}>
+          <td>
+            <Checkbox
+              name=''
+              checked={listIdChecked.includes(item.id)}
+              onChange={(e) => handleCheckItem(e, item)}
+            />
+          </td>
           {rows.map(({key, component, classNameTableBody, isHide}, i) => {
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
@@ -166,6 +208,11 @@ const LookupCustomer = ({show, onClose}: Props) => {
               >
                 <thead>
                   <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                    <td>
+                      {!!data.length && (
+                        <Checkbox name='' checked={isCheckedAll} onChange={handleToggleCheckAll} />
+                      )}
+                    </td>
                     {rows.map(
                       (row, i) =>
                         !row?.isHide && (
