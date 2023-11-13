@@ -7,6 +7,7 @@ import {swalToast} from '../../../swal-notification'
 import moment from 'moment'
 import Input from '../../../components/input'
 import ErrorMessage from '../../../components/error/ErrorMessage'
+import Button from '../../../components/button/Button'
 
 export const CompanyManagement = () => {
   const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG
@@ -25,17 +26,24 @@ export const CompanyManagement = () => {
       .min(3, 'Minimum 3 symbols')
       .max(50, 'Maximum 50 symbols'),
     open_date: Yup.string().required('Open Date is required.'),
-    street_1: Yup.string().required('Street 1 is required.'),
-    city: Yup.string().required('City is required.'),
-    zipcode: Yup.string().required('Zip Code is required.'),
-    state: Yup.string().required('State is required.'),
-    country: Yup.string().required('Country is required.'),
+    address: Yup.string().required('Address is required.'),
   })
+
   React.useEffect(() => {
     request
       .get(endpoint)
       .then(({data}) => {
         if (!data?.error) setInformation(data?.data)
+
+        const information = data?.data
+
+        rows.forEach((row) => {
+          if (row.key === 'open_date') {
+            setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'), false)
+          } else {
+            setFieldValue(row.key, information[row.key], false)
+          }
+        }, {})
       })
       .catch((error) => {
         console.error('Error: ', error?.message)
@@ -43,26 +51,12 @@ export const CompanyManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadapi])
 
-  const generateField = React.useMemo(() => {
-    if (information) {
-      return rows.reduce((a, b) => {
-        a[b.key] = information[b.key] || ''
-        return a
-      }, {})
-    }
-    return {}
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [information])
-
-  const {values, touched, errors, handleChange, handleSubmit, setFieldValue} = useFormik({
-    initialValues: {
-      ...generateField,
-    },
+  const formik = useFormik({
+    initialValues: {},
     validationSchema: newCompaniesSchema,
     onSubmit: async (values: any, actions: any) => {
       await request
-        .post('config/company/' + information?.id, {
+        .post('config/company/1', {
           company_name: values.company_name,
           company_code: values.company_code,
           business_uen: values.business_uen,
@@ -72,52 +66,33 @@ export const CompanyManagement = () => {
           open_date: new Date(values.open_date),
         })
         .then((response) => {
-          request
-            .post('config/address/' + information?.address_id, {
-              address_type_id: 1,
-              street_1: values.street_1,
-              street_2: values.street_2,
-              city: values.city,
-              state: values.state,
-              zipcode: values.zipcode,
-              country: values.country,
+          if (!response.data?.error) {
+            swalToast.fire({
+              icon: 'success',
+              title: 'Company successfully updated',
             })
-            .then((response) => {
-              if (!response.data?.error) {
-                swalToast.fire({
-                  icon: 'success',
-                  title: 'Company successfully updated',
-                })
-              }
-            })
-            .catch((error) => {
-              swalToast.fire({
-                icon: 'error',
-                title: error?.message,
-              })
-            })
+          }
         })
-        .catch((error) => {
+        .catch((error) =>
           swalToast.fire({
             icon: 'error',
             title: error?.message,
           })
-        })
+        )
+        .finally(() => setSubmitting(false))
     },
   })
 
-  React.useEffect(() => {
-    if (information) {
-      rows.forEach((row) => {
-        if (row.key === 'open_date') {
-          setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'))
-        } else {
-          setFieldValue(row.key, information[row.key])
-        }
-      }, {})
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [information])
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    setSubmitting,
+  } = formik
 
   return (
     <div className='card'>
@@ -152,9 +127,15 @@ export const CompanyManagement = () => {
           >
             Discard
           </button>
-          <button className='btn btn-lg btn-primary' onClick={() => handleSubmit()}>
+
+          <Button
+            className='btn-lg btn-primary'
+            disabled={isSubmitting}
+            loading={isSubmitting}
+            onClick={() => handleSubmit()}
+          >
             Update
-          </button>
+          </Button>
         </div>
       </div>
     </div>

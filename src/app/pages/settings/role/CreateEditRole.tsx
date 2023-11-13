@@ -12,6 +12,7 @@ import {ROLE_PRIORITY} from '../../../utils/globalConfig'
 import {PAGE_PERMISSION} from '../../../utils/pagePermission'
 import {isJson} from '../../../utils'
 import Input from '../../../components/input'
+import Button from '../../../components/button/Button'
 
 type Props = {
   data?: RoleInfo
@@ -27,7 +28,6 @@ export const roleSchema = Yup.object().shape({
 })
 
 const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
-  const [loading, setLoading] = useState<boolean>(false)
   const [checked, setChecked] = useState<string[]>([])
   const [expanded, setExpanded] = useState<string[]>([])
   const [dataPermissionSetting, setDataPermissionSetting] = useState(PAGE_PERMISSION.setting)
@@ -35,18 +35,27 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   const {currentUser, priority} = useAuth()
 
-  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues} =
-    useFormik<RoleInfo>({
-      initialValues: {
-        id: 0,
-        role_name: '',
-        description: '',
-        permissions: '',
-        priority: 0,
-      },
-      validationSchema: roleSchema,
-      onSubmit: handleSubmitForm,
-    })
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    resetForm,
+    setValues,
+    setSubmitting,
+  } = useFormik<RoleInfo>({
+    initialValues: {
+      id: 0,
+      role_name: '',
+      description: '',
+      permissions: '',
+      priority: 0,
+    },
+    validationSchema: roleSchema,
+    onSubmit: handleSubmitForm,
+  })
 
   useEffect(() => {
     if (!data) return
@@ -165,8 +174,6 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
   }
 
   async function onCreateNewRole(payload: Omit<RoleInfo, 'id'>) {
-    setLoading(true)
-
     try {
       await createNewRole({...payload, company_id: currentUser?.company_id || 0})
 
@@ -185,15 +192,13 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'error',
       })
     } finally {
-      setLoading(false)
+      setSubmitting(false)
     }
   }
 
   async function onUpdateRole(payload: UpdateById<Omit<RoleInfo, 'id'>>) {
     // Pass if id = 0
     if (!payload.id) return
-
-    setLoading(true)
 
     try {
       await updateRole(payload)
@@ -213,7 +218,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'error',
       })
     } finally {
-      setLoading(false)
+      setSubmitting(false)
     }
   }
 
@@ -316,9 +321,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
             if (type === 'input') {
               return (
-                <div className='d-flex flex-column mb-16px'>
+                <div className='d-flex flex-column mb-16px' key={index}>
                   <Input
-                    key={index}
                     title={name}
                     type={typeInput || 'text'}
                     name={key}
@@ -354,16 +358,9 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
           })}
 
         <div className='d-flex flex-end'>
-          <button type='submit' className='btn btn-lg btn-primary'>
-            {loading ? (
-              <>
-                Please wait...
-                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-              </>
-            ) : (
-              <span>{data ? 'Update' : 'Create'}</span>
-            )}
-          </button>
+          <Button className='btn-lg btn-primary' type='submit' loading={isSubmitting}>
+            {data ? 'Update' : 'Create'}
+          </Button>
         </div>
       </form>
     </Modal>

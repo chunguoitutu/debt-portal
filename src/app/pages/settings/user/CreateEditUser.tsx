@@ -21,6 +21,7 @@ import InputCheck from '../../../components/input/InputCheckRounded'
 import Select from '../../../components/select/select'
 import Input from '../../../components/input'
 import ErrorMessage from '../../../components/error/ErrorMessage'
+import Button from '../../../components/button/Button'
 
 type Props = {
   config?: TableConfig
@@ -79,7 +80,6 @@ const initialValues: ValuesCreateEdit = {
 }
 
 const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
-  const [loading, setLoading] = useState<boolean>(false)
   const [dataCompany, setDataCompany] = useState<BranchItem[]>([])
   const [dataRole, setDataRole] = useState<RoleInfo[]>([])
   const [active, setActive] = useState<boolean>(true)
@@ -98,12 +98,21 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     return schema
   }, [data])
 
-  const {values, touched, errors, handleChange, handleSubmit, resetForm, setValues} =
-    useFormik<any>({
-      initialValues,
-      validationSchema,
-      onSubmit: handleSubmitForm,
-    })
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    resetForm,
+    setValues,
+    setSubmitting,
+  } = useFormik<any>({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmitForm,
+  })
 
   useEffect(() => {
     if (!currentUser) return
@@ -181,8 +190,6 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
   }
 
   async function handleCreateUser(payload: ValuesCreateEdit) {
-    setLoading(true)
-
     try {
       const {data} = await request.post(apiCreateUser, payload)
 
@@ -208,15 +215,13 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'error',
       })
     } finally {
-      setLoading(false)
+      setSubmitting(false)
     }
   }
 
   async function onUpdateUser(payload: ValuesCreateEdit) {
     // Pass if id = 0
     if (!data?.id) return
-
-    setLoading(true)
 
     try {
       const {data: dataRes} = await request.post(apiUpdateUser + `/${data.id}`, payload)
@@ -239,7 +244,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'error',
       })
     } finally {
-      setLoading(false)
+      setSubmitting(false)
     }
   }
 
@@ -421,16 +426,14 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       </Tab.Container>
 
       <div className='d-flex flex-end pt-4'>
-        <button type='button' className='btn btn-lg btn-primary' onClick={() => handleSubmit()}>
-          {loading ? (
-            <>
-              Please wait...
-              <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-            </>
-          ) : (
-            <span>{data ? 'Update' : 'Create'}</span>
-          )}
-        </button>
+        <Button
+          className='btn-lg btn-primary'
+          type='submit'
+          loading={isSubmitting}
+          onClick={() => handleSubmit()}
+        >
+          {data ? 'Update' : 'Create'}
+        </Button>
       </div>
     </Modal>
   )
