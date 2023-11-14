@@ -1,5 +1,5 @@
 import Icons from '../../../../components/icons'
-import {file} from '../employment/FileDocument'
+import {convertSize, file} from '../employment/FileDocument'
 
 type Props = {
   config?: any
@@ -33,83 +33,86 @@ const RenderFileDocument = ({config, data}: Props) => {
         }}
       >
         {data?.file_documents.map((e: file, i: number) => (
-          <div
-            onClick={() => {
-              fetch(e.base64)
-                .then((response) => response.blob())
-                .then((blob) => {
-                  const blobUrl = URL.createObjectURL(blob)
+          <>
+            {!!e?.base64 && (
+              <div
+                onClick={() => {
+                  fetch(e.base64)
+                    .then((response) => response.blob())
+                    .then((blob) => {
+                      const blobUrl = URL.createObjectURL(blob)
 
-                  window.open(blobUrl, '_blank')
-                })
-                .catch((error) => {})
-            }}
-            key={i}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '180px',
-              minWidth: '100px',
-              borderRadius: '5px',
-              position: 'relative',
-              outline: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '8px',
-                borderRadius: '5px',
-                border: '1px solid #F1F1F2',
-                width: '100px',
-                height: '100px',
-              }}
-            >
-              <Icons name={'ImgFoder'} />
-            </div>
-            <div
-              style={{
-                padding: '4px 16px 16px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-              }}
-            >
-              <p
+                      window.open(blobUrl, '_blank')
+                    })
+                    .catch((error) => {})
+                }}
+                key={i}
                 style={{
-                  maxWidth: '180px',
-                  textAlign: 'center',
-                  color: '#071437',
-                  fontSize: '12px',
-                  fontWeight: '500',
-                  lineHeight: '16px',
-                  padding: '0',
-                  margin: '0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '180px',
+                  minWidth: '100px',
+                  borderRadius: '5px',
+                  position: 'relative',
+                  outline: 'none',
+                  cursor: 'pointer',
                 }}
               >
-                {e?.document_name}- {(Number(e.size) / (1024 * 1024)).toFixed(2)}
-                MB
-              </p>
-              <p
-                style={{
-                  width: '100%',
-                  textAlign: 'center',
-                  color: '#B5B5C3',
-                  fontSize: '12px',
-                  fontWeight: '500',
-                  lineHeight: '16px',
-                  padding: '0',
-                  margin: '0',
-                }}
-              ></p>
-            </div>
-          </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '8px',
+                    borderRadius: '5px',
+                    border: '1px solid #F1F1F2',
+                    width: '100px',
+                    height: '100px',
+                  }}
+                >
+                  <Icons name={'ImgFoder'} />
+                </div>
+                <div
+                  style={{
+                    padding: '4px 16px 16px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <p
+                    style={{
+                      maxWidth: '180px',
+                      textAlign: 'center',
+                      color: '#071437',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      lineHeight: '16px',
+                      padding: '0',
+                      margin: '0',
+                    }}
+                  >
+                    {e?.document_name}- {convertSize(Number(e.size) || 0)}
+                  </p>
+                  <p
+                    style={{
+                      width: '100%',
+                      textAlign: 'center',
+                      color: '#B5B5C3',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      lineHeight: '16px',
+                      padding: '0',
+                      margin: '0',
+                    }}
+                  ></p>
+                </div>
+              </div>
+            )}
+          </>
         ))}
       </div>
     </div>
