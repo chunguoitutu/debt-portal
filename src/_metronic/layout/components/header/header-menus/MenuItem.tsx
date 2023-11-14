@@ -3,7 +3,7 @@ import {useLocation} from 'react-router'
 import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {checkIsActive, KTIcon} from '../../../../helpers'
-import { ApplicationsMenu } from '../../../../../app/pages/applications/applications-menu/ApplicationsMenu'
+import {ApplicationsMenu} from '../../../../../pages/applications/applications-menu/ApplicationsMenu'
 
 type Props = {
   to: string
@@ -78,7 +78,6 @@ const MenuItem: FC<Props> = ({
         {hasArrow && <span className='menu-arrow'></span>}
       </Link>
       {hasDropdown && isDropdownOpen && (
-        
         <div
           style={{
             position: 'relative',

@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
 import {Accordion} from 'react-bootstrap'
 import {NavLink, useLocation} from 'react-router-dom'
-import {useAuth} from '../../app/modules/auth'
 import {MENU_SETTING_LISTING} from '../../app/utils/globalConfig'
+import {useAuth} from '../../app/context/AuthContext'
 
 const SettingMenu = () => {
   const [activeKey, setActiveKey] = useState<string>('')

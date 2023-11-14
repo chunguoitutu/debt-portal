@@ -23,11 +23,11 @@ import 'tippy.js/dist/tippy.css'
 // My styles
 import './app/sass/style.scss'
 
-import {AppRoutes} from './app/routing/AppRoutes'
-import {AuthProvider} from './app/modules/auth'
+import {AppRoutes} from './routing/AppRoutes'
 import {MetronicI18nProvider} from './_metronic/i18n/Metronici18n'
 import {PrimeReactProvider} from 'primereact/api'
 import 'primereact/resources/themes/lara-light-indigo/theme.css'
+import {AuthProvider} from './app/context/AuthContext'
 /**
  * Creates `axios-mock-adapter` instance for provided `axios` instance, add
  * basic Metronic mocks and returns it.
