@@ -1,5 +1,5 @@
 import {FC, useEffect, useMemo, useState} from 'react'
-import {useLocation, useParams} from 'react-router-dom'
+import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import moment from 'moment'
 import './style.scss'
 import BackgroundCheck from './background-check/BackgroundCheck'
@@ -27,6 +27,7 @@ import {useAuth} from '../../app/context/AuthContext'
 import {filterObjectKeyNotEmpty} from '../../app/utils'
 import {DEFAULT_MSG_ERROR} from '../../app/constants/error-message'
 import {swalToast} from '../../app/swal-notification'
+import {CreateSuccessResponse} from '../../app/types/response'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -80,60 +81,16 @@ export const Applications = () => {
 
   const {applicationIdEdit} = useParams()
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (!applicationIdEdit) return setIsLoading(false)
-    request
-      .get(`/application/detail/${applicationIdEdit}`)
-      .then((response) => {
-        const dataEdit = response.data.data
-        const formattedDateOfBirth = moment(dataEdit?.customer.date_of_birth).format('YYYY-MM-DD')
-        const {borrower, application, customer, bank_info, employment, address, file_documents} =
-          dataEdit || {}
-
-        formik.setValues({
-          ...formik.values,
-          ...borrower,
-          ...application,
-          ...customer,
-          ...bank_info,
-          ...employment,
-          address_contact_info:
-            Array.isArray(address) && address.length
-              ? [...address]
-              : formik.values.address_contact_info,
-          date_of_birth: formattedDateOfBirth,
-          file_documents:
-            file_documents.map((data) => {
-              return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
-            }) || [],
-        })
-
-        if (application?.is_draft !== 1) {
-          setStepCompleted(STEP_APPLICATION.length - 1)
-        }
-
-        setListIdEdit({
-          customerId: customer?.id || 0,
-          borrowerId: borrower?.id || 0,
-          employmentId: employment?.id || 0,
-          applicationId: application?.id || 0,
-          bankInfoId: bank_info?.id || 0,
-        })
-
-        const applicationNotes = JSON.parse(application?.application_notes) || []
-        setRemarkList(applicationNotes)
-      })
-      .catch((error) => {
-        setErrorLoading(true)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+    handleGetApplicationById()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationIdEdit])
 
   useEffect(() => {
-    formik.resetForm()
+    resetForm()
     setStepCompleted(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
@@ -190,6 +147,16 @@ export const Applications = () => {
     validateOnMount: false,
     onSubmit: () => {},
   })
+  const {
+    values,
+    touched,
+    validateForm,
+    setErrors,
+    setValues,
+    setTouched,
+    setSubmitting,
+    resetForm,
+  } = formik
 
   const {priority, currentUser} = useAuth()
 
@@ -232,7 +199,7 @@ export const Applications = () => {
       const fieldDone = allFieldShow.reduce((acc: any, item: any) => {
         let isDone: boolean = true
 
-        const valueCheck = formik.values[item.key]
+        const valueCheck = values[item.key]
 
         // Check array
         if (Array.isArray(valueCheck) && !(valueCheck.length > 0)) isDone = false
@@ -259,13 +226,58 @@ export const Applications = () => {
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values])
+  }, [values])
+
+  async function handleGetApplicationById() {
+    try {
+      const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
+
+      const {borrower, application, customer, bank_info, employment, address, file_documents} =
+        data.data || {}
+      const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
+
+      setValues({
+        ...values,
+        ...borrower,
+        ...application,
+        ...customer,
+        ...bank_info,
+        ...employment,
+        address_contact_info:
+          Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
+        date_of_birth: formattedDateOfBirth,
+        file_documents:
+          file_documents.map((data) => {
+            return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
+          }) || [],
+      })
+
+      if (application?.is_draft !== 1) {
+        setStepCompleted(STEP_APPLICATION.length - 1)
+      }
+
+      setListIdEdit({
+        customerId: customer?.id || 0,
+        borrowerId: borrower?.id || 0,
+        employmentId: employment?.id || 0,
+        applicationId: application?.id || 0,
+        bankInfoId: bank_info?.id || 0,
+      })
+
+      const applicationNotes = JSON.parse(application?.application_notes) || []
+      setRemarkList(applicationNotes)
+    } catch (error) {
+      setErrorLoading(true)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   function handleGoToStep(stepWantGoTo: number) {
     // handle for block address
-    formik.validateForm(formik.values).then((errors) => {
+    validateForm(values).then((errors) => {
       if (Object.keys(errors).length > 0) {
-        formik.setErrors(errors)
+        setErrors(errors)
 
         const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
         const errorBlockAddress = errors.address_contact_info
@@ -276,8 +288,8 @@ export const Applications = () => {
             }
           : {}
 
-        formik.setTouched({
-          ...formik.touched,
+        setTouched({
+          ...touched,
           ...error,
           ...errorBlockAddress,
         })
@@ -290,9 +302,9 @@ export const Applications = () => {
   function handleSaveDraft() {
     setIsDraft(true)
 
-    formik.validateForm(formik.values).then((errors) => {
+    validateForm(values).then((errors) => {
       if (Object.keys(errors).length > 0) {
-        formik.setErrors(errors)
+        setErrors(errors)
 
         const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
         const errorBlockAddress = errors.address_contact_info
@@ -303,8 +315,8 @@ export const Applications = () => {
             }
           : {}
 
-        formik.setTouched({
-          ...formik.touched,
+        setTouched({
+          ...touched,
           ...error,
           ...errorBlockAddress,
         })
@@ -317,9 +329,9 @@ export const Applications = () => {
   }
 
   function handleBeforeSubmit() {
-    formik.validateForm(formik.values).then((errors) => {
+    validateForm(values).then((errors) => {
       if (Object.keys(errors).length > 0) {
-        formik.setErrors(errors)
+        setErrors(errors)
 
         const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
         const errorBlockAddress = errors.address_contact_info
@@ -330,8 +342,8 @@ export const Applications = () => {
             }
           : {}
 
-        formik.setTouched({
-          ...formik.touched,
+        setTouched({
+          ...touched,
           ...error,
           ...errorBlockAddress,
         })
@@ -396,7 +408,7 @@ export const Applications = () => {
       country_id,
       file_documents,
       customer_no,
-    } = formik.values
+    } = values
 
     const company_id =
       priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0
@@ -484,9 +496,13 @@ export const Applications = () => {
     }
 
     try {
-      formik.setSubmitting(true)
+      setSubmitting(true)
       if (applicationIdEdit) {
         await request.put('/application/detail/' + applicationIdEdit, payload)
+
+        handleGetApplicationById()
+        setCurrentStep(1)
+
         swalToast.fire({
           title: isDraft
             ? 'Application draft successfully updated'
@@ -494,7 +510,14 @@ export const Applications = () => {
           icon: 'success',
         })
       } else {
-        await request.post('/application/create', payload)
+        const {data} = await request.post<CreateSuccessResponse>('/application/create', payload)
+        const {id} = data || {}
+
+        if (id) {
+          navigate(`/application/edit/${id}`)
+          resetForm()
+          setCurrentStep(1)
+        }
 
         swalToast.fire({
           title: isDraft
@@ -511,7 +534,7 @@ export const Applications = () => {
         icon: 'error',
       })
     } finally {
-      formik.setSubmitting(false)
+      setSubmitting(false)
     }
   }
 
@@ -537,8 +560,8 @@ export const Applications = () => {
           <HeaderApplication
             labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
             info={{
-              initialValues: formik.values.customer_no,
-              date: formik.values.application_date,
+              initialValues: values.customer_no,
+              date: values.application_date,
             }}
             percentCompleted={percentCompleted}
             className='p-10'
