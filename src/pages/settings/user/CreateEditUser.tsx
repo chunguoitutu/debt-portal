@@ -265,7 +265,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     fontSize: '16px',
                     fontWeight: '500',
                     color: active ? 'white' : '#071437',
-                    background: active ? '#3e97ff' : '',
+                    background: active ? '#1B84FF' : '',
                   }}
                 >
                   Information
@@ -279,7 +279,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     fontSize: '16px',
                     fontWeight: '500',
                     color: active ? '#071437' : 'white',
-                    background: active ? '' : '#3e97ff',
+                    background: active ? '' : '#1B84FF',
                     marginBottom: '30px',
                   }}
                 >

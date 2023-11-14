@@ -150,7 +150,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
               <Button
                 onClick={showInputFilter}
                 className='btn-secondary align-self-center m-2 fs-6'
-                style={{color: '#3E97FF', background: ''}}
+                style={{color: '#1B84FF', background: ''}}
                 disabled={false}
               >
                 <Icons name={'filterIcon'} />

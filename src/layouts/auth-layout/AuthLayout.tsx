@@ -13,8 +13,16 @@ const AuthLayout = () => {
   return (
     <div className='d-flex flex-column flex-lg-row flex-column-fluid h-100'>
       <div className='d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center bg-auth w-100 h-100 object-fit-cover'>
-        <div className='d-flex flex-column justify-content-center gap-5 gap-lg-9 px-10 px-sm-15 px-xl-96px py-9'>
-          <img src={logo} alt='logo' className='w-50px w-lg-100px mw-100 object-fit-contain' />
+        <div className='d-flex flex-column justify-content-center gap-5 gap-lg-32px px-10 px-sm-15 px-xl-96px py-9'>
+          <img
+            src={logo}
+            alt='logo'
+            style={{
+              backgroundBlendMode: 'overlay',
+              mixBlendMode: 'overlay',
+            }}
+            className='w-50px w-lg-140px  mw-100 object-fit-contain'
+          />
           <div>
             <img className='mw-100 object-fit-contain' src={welcomeText} alt='welcome' />
             <h1 className='text-capitalize text-white m-0 fw-normal fs-xl-2tx'>
@@ -34,7 +42,7 @@ const AuthLayout = () => {
           </div>
         </div>
         <span className='mt-auto text-gray d-none d-lg-block fw-semibold'>
-          Copy Right©2023 MC Dynamics Pte Ltd.All rights reserved
+          Copy Right©2023 MC Dynamics Pte Ltd.All Rights reserved
         </span>
       </div>
     </div>
