@@ -130,7 +130,7 @@ export function Login() {
       ) : (
         <form className='form w-100' onSubmit={handleSubmit} noValidate id='kt_login_signin_form'>
           <div className='text-start mb-11'>
-            <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
+            <h1 className='text-dark fw-semibold mb-3'>Sign In</h1>
             <div className='text-gray-500 fw-bold fs-6'>Please Sign In With Your Account</div>
           </div>
 
@@ -196,9 +196,13 @@ export function Login() {
               type='submit'
               id='kt_sign_in_submit'
               className='btn btn-primary'
-              disabled={loading}
+              disabled={
+                loading ||
+                !!(touched.password && errors.password) ||
+                !!(touched.username && errors.username)
+              }
             >
-              {!loading && <span className='indicator-label'>Sign In</span>}
+              {!loading && <span className='indicator-label'>Continue</span>}
               {loading && (
                 <span className='indicator-progress' style={{display: 'block'}}>
                   Please wait...

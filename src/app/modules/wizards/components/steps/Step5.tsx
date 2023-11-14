@@ -11,7 +11,6 @@ const Step5: FC = () => {
         <div className='text-gray-400 fw-bold fs-6'>
           If you need more info, please
           <Link to='/auth/login' className='link-primary fw-bolder'>
-            {' '}
             Sign In
           </Link>
           .
