@@ -1,5 +1,6 @@
+import {convertSize} from '../../../../app/utils'
 import Icons from '../../../../components/icons'
-import {convertSize, file} from '../employment/FileDocument'
+import {file} from '../employment/FileDocument'
 
 type Props = {
   config?: any

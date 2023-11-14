@@ -54,3 +54,13 @@ export function filterObjectKeyNotEmpty(object: {[key: string]: any}) {
     .filter((key) => !!object[key] === true)
     .reduce((acc, key) => ({...acc, [key]: object[key]}), {})
 }
+
+export function convertSize(sizeInBytes) {
+  const KB = 1024
+  const MB = KB ** 2
+  if (sizeInBytes < MB) {
+    return (sizeInBytes / KB).toFixed(2) + ' KB'
+  } else {
+    return (sizeInBytes / MB).toFixed(2) + ' MB'
+  }
+}
