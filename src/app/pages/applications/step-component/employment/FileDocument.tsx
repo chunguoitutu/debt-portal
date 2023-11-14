@@ -5,6 +5,15 @@ import Icons from '../../../../components/icons'
 import {swalConfirmDelete, swalToast} from '../../../../swal-notification'
 import request from '../../../../axios'
 
+export function convertSize(sizeInBytes) {
+  const KB = 1024
+  const MB = KB ** 2
+  if (sizeInBytes < MB) {
+    return (sizeInBytes / KB).toFixed(2) + ' KB'
+  } else {
+    return (sizeInBytes / MB).toFixed(2) + ' MB'
+  }
+}
 export interface file {
   id?: Number
   borrower_id?: number
@@ -59,130 +68,134 @@ const FileInput = (props: any) => {
       >
         {formik?.values?.file_documents.map((data: file, index: number) => {
           return (
-            <div
-              key={index}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '185px',
-                minWidth: '100px',
-                borderRadius: '5px',
-                border: '1px solid #B5B5C3',
-                position: 'relative',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  padding: '24px 0px 8px 0px',
-                }}
-              >
+            <>
+              {!!data?.base64 && (
                 <div
+                  key={index}
                   style={{
-                    width: '60px',
-                    height: '60px',
                     display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    objectFit: 'cover',
-                    flexShrink: '0',
+                    flexDirection: 'column',
+                    width: '185px',
+                    minWidth: '100px',
+                    borderRadius: '5px',
+                    border: '1px solid #B5B5C3',
+                    position: 'relative',
                   }}
                 >
-                  <Icons name={'ImgFoder'} />
-                </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '24px 0px 8px 0px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '60px',
+                        height: '60px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        objectFit: 'cover',
+                        flexShrink: '0',
+                      }}
+                    >
+                      <Icons name={'ImgFoder'} />
+                    </div>
 
-                <button
-                  className='close'
-                  style={{
-                    cursor: 'position',
-                    top: '16px',
-                    right: '15.5px',
-                    position: 'absolute',
-                    outline: 'none',
-                    border: 'none',
-                    backgroundColor: 'transparent',
-                    color: '#B5B5C3',
-                    fontSize: '16px',
-                  }}
-                  onClick={() => {
-                    if (!!data?.id) {
-                      swalConfirmDelete
-                        .fire({
-                          title: 'Are you sure?',
-                          text: `You won't be able to revert this.`,
-                        })
-                        .then((result) => {
-                          if (result.isConfirmed) {
-                            request
-                              .delete('/borrower-document/' + data?.id)
-                              .then((res) => {
-                                const updatedFiles = [...formik?.values?.file_documents]
-                                updatedFiles.splice(index, 1)
-                                formik.setFieldValue('file_documents', updatedFiles)
-                                swalToast.fire({
-                                  icon: 'success',
-                                  title: 'Deleted success!',
-                                })
-                              })
-                              .catch(() => {
-                                swalToast.fire({
-                                  icon: 'error',
-                                  title: 'Something went wrong!',
-                                })
-                              })
-                          }
-                        })
-                    } else {
-                      const updatedFiles = [...formik?.values?.file_documents]
-                      updatedFiles.splice(index, 1)
-                      formik.setFieldValue('file_documents', updatedFiles)
-                    }
-                  }}
-                >
-                  <AiOutlineClose className='icon' />
-                </button>
-              </div>
-              <div
-                style={{
-                  padding: '4px 16px 16px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                }}
-              >
-                <p
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    color: '#071437',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    lineHeight: '16px',
-                    padding: '0',
-                    margin: '0',
-                  }}
-                >
-                  {data?.document_name}
-                </p>
-                <p
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    color: '#B5B5C3',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    lineHeight: '16px',
-                    padding: '0',
-                    margin: '0',
-                  }}
-                >
-                  {(Number(data.size) / (1024 * 1024)).toFixed(2)}MB
-                </p>
-              </div>
-            </div>
+                    <button
+                      className='close'
+                      style={{
+                        cursor: 'position',
+                        top: '16px',
+                        right: '15.5px',
+                        position: 'absolute',
+                        outline: 'none',
+                        border: 'none',
+                        backgroundColor: 'transparent',
+                        color: '#B5B5C3',
+                        fontSize: '16px',
+                      }}
+                      onClick={() => {
+                        if (!!data?.id) {
+                          swalConfirmDelete
+                            .fire({
+                              title: 'Are you sure?',
+                              text: `You won't be able to revert this.`,
+                            })
+                            .then((result) => {
+                              if (result.isConfirmed) {
+                                request
+                                  .delete('/borrower-document/' + data?.id)
+                                  .then((res) => {
+                                    const updatedFiles = [...formik?.values?.file_documents]
+                                    updatedFiles.splice(index, 1)
+                                    formik.setFieldValue('file_documents', updatedFiles)
+                                    swalToast.fire({
+                                      icon: 'success',
+                                      title: 'Deleted success!',
+                                    })
+                                  })
+                                  .catch(() => {
+                                    swalToast.fire({
+                                      icon: 'error',
+                                      title: 'Something went wrong!',
+                                    })
+                                  })
+                              }
+                            })
+                        } else {
+                          const updatedFiles = [...formik?.values?.file_documents]
+                          updatedFiles.splice(index, 1)
+                          formik.setFieldValue('file_documents', updatedFiles)
+                        }
+                      }}
+                    >
+                      <AiOutlineClose className='icon' />
+                    </button>
+                  </div>
+                  <div
+                    style={{
+                      padding: '4px 16px 16px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <p
+                      style={{
+                        width: '100%',
+                        textAlign: 'center',
+                        color: '#071437',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        lineHeight: '16px',
+                        padding: '0',
+                        margin: '0',
+                      }}
+                    >
+                      {data?.document_name}
+                    </p>
+                    <p
+                      style={{
+                        width: '100%',
+                        textAlign: 'center',
+                        color: '#B5B5C3',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        lineHeight: '16px',
+                        padding: '0',
+                        margin: '0',
+                      }}
+                    >
+                      {convertSize(Number(data.size) || 0)}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </>
           )
         })}
       </div>
