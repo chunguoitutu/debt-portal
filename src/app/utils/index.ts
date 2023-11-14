@@ -1,5 +1,7 @@
+import axios, {AxiosError} from 'axios'
 import {DEFAULT_MESSAGE_ERROR_500} from '../constants/error-message'
 import numeral from 'numeral'
+import {ErrorResponse} from '../types/common'
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -15,7 +17,14 @@ export const convertRoleToNumber = (roleName: string) => {
 }
 
 export function convertErrorMessageResponse(error: any) {
-  return DEFAULT_MESSAGE_ERROR_500
+  const err = error as AxiosError<ErrorResponse>
+
+  if (axios.isAxiosError(err)) {
+    const message = err?.response?.data?.message || err.message || DEFAULT_MESSAGE_ERROR_500
+    return message
+  } else {
+    return DEFAULT_MESSAGE_ERROR_500
+  }
 }
 
 export function isJson(str: string) {

@@ -3,11 +3,12 @@ import {Modal} from 'react-bootstrap'
 import {KTIcon} from '../../../../../_metronic/helpers'
 import {FormikHelpers, useFormik} from 'formik'
 import * as Yup from 'yup'
-import {updatePasswordCurrentUser} from '../../../auth/core/_requests'
-import {UpdatePasswordInfo, useAuth} from '../../../auth'
 import {swalToast} from '../../../../swal-notification'
+import {useAuth} from '../../../../context/AuthContext'
+import {UpdatePasswordInfo} from '../../../../types/common'
+import {updatePasswordCurrentUser} from '../../../../axios/request'
 import {convertErrorMessageResponse} from '../../../../utils'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
+import ErrorMessage from '../../../../../components/error/ErrorMessage'
 
 type Props = {
   show: boolean

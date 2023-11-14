@@ -1,20 +1,16 @@
-import {MenuSettingItem, Option} from '../modules/auth'
-import AddressType from '../pages/settings/address-type/AddressType'
-import {CompanyManagement} from '../pages/settings/company-management'
-import CompanyListing from '../pages/settings/company/CompanyManagement'
-import DocumentTypes from '../pages/settings/document-types/DocumentTypes'
-import JobType from '../pages/settings/job-type/JobType'
-import LoanTypes from '../pages/settings/loan-type/LoanType'
-import MarkettingType from '../pages/settings/marketing-type/MarketingType'
-import RejectionType from '../pages/settings/rejection-type/RejectionType'
-import RolePage from '../pages/settings/role/RoleManagement'
-import UserManagement from '../pages/settings/user/UserManagement'
-import {v4 as uuidv4} from 'uuid'
+import RejectionType from '../../pages/settings/rejection-type/RejectionType'
+import RolePage from '../../pages/settings/role/RoleManagement'
+import UserManagement from '../../pages/settings/user/UserManagement'
 
-export type DropDownGroup = {
-  name: string
-  options: Option[]
-}
+import {v4 as uuidv4} from 'uuid'
+import {DropDownGroup, MenuSettingItem, Option} from '../types/common'
+import {CompanyManagement} from '../../pages/settings/company-management'
+import CompanyListing from '../../pages/settings/company/CompanyManagement'
+import DocumentTypes from '../../pages/settings/document-types/DocumentTypes'
+import LoanTypes from '../../pages/settings/loan-type/LoanType'
+import JobType from '../../pages/settings/job-type/JobType'
+import AddressType from '../../pages/settings/address-type/AddressType'
+import MarkettingType from '../../pages/settings/marketing-type/MarketingType'
 
 export const ROLE_PRIORITY: Option[] = [
   {

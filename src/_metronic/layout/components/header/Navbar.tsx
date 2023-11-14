@@ -5,9 +5,9 @@ import {IoMdNotificationsOutline} from 'react-icons/io'
 import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link, useLocation} from 'react-router-dom'
-import {useAuth} from '../../../../app/modules/auth'
 import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
 import {useMemo} from 'react'
+import {useAuth} from '../../../../app/context/AuthContext'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =

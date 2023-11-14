@@ -3,8 +3,8 @@ import React from 'react'
 import {KTIcon} from '../../../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
-import {useAuth} from '../../../auth'
 import AvatarHeader from './AvatarHeader'
+import {useAuth} from '../../../../context/AuthContext'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()
