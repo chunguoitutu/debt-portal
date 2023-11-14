@@ -80,7 +80,7 @@ const Navbar = () => {
           <div
             style={{
               paddingLeft: '12px',
-              paddingRight: '16px',
+              paddingRight: '12px',
               paddingTop: '4px',
               paddingBottom: '4px',
               display: 'flex',
@@ -101,7 +101,7 @@ const Navbar = () => {
                 objectFit: 'cover',
               }}
             />
-            <div style={{marginLeft: '16px'}} className='d-none d-lg-block'>
+            <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
               <p
                 style={{
                   wordWrap: 'break-word',
