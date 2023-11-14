@@ -68,10 +68,9 @@ const FileInput = (props: any) => {
       >
         {formik?.values?.file_documents.map((data: file, index: number) => {
           return (
-            <>
+            <div key={index}>
               {!!data?.base64 && (
                 <div
-                  key={index}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -195,7 +194,7 @@ const FileInput = (props: any) => {
                   </div>
                 </div>
               )}
-            </>
+            </div>
           )
         })}
       </div>

@@ -33,7 +33,7 @@ const RenderFileDocument = ({config, data}: Props) => {
         }}
       >
         {data?.file_documents.map((e: file, i: number) => (
-          <>
+          <div key={i}>
             {!!e?.base64 && (
               <div
                 onClick={() => {
@@ -112,7 +112,7 @@ const RenderFileDocument = ({config, data}: Props) => {
                 </div>
               </div>
             )}
-          </>
+          </div>
         ))}
       </div>
     </div>
