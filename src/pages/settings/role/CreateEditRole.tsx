@@ -225,7 +225,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   const DATA_ROLE_PRIORITY = ROLE_PRIORITY.filter((rolePriority) =>
     priority === 1
-      ? Number(rolePriority.value) >= Number(priority)
+      ? Number(rolePriority.value) > Number(priority)
       : Number(rolePriority.value) > Number(priority)
   )
 
