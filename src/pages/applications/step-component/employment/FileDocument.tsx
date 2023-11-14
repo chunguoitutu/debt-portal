@@ -4,16 +4,8 @@ import {AiOutlineClose} from 'react-icons/ai'
 import Icons from '../../../../components/icons'
 import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
 import request from '../../../../app/axios'
+import {convertSize} from '../../../../app/utils'
 
-export function convertSize(sizeInBytes) {
-  const KB = 1024
-  const MB = KB ** 2
-  if (sizeInBytes < MB) {
-    return (sizeInBytes / KB).toFixed(2) + ' KB'
-  } else {
-    return (sizeInBytes / MB).toFixed(2) + ' MB'
-  }
-}
 export interface file {
   id?: Number
   borrower_id?: number
