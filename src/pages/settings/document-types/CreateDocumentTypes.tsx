@@ -79,7 +79,6 @@ const CreateDocumentType = ({
             title: 'Document type successfully created',
           })
         } catch (error) {
-          console.error(error)
           swalToast.fire({
             timer: 1500,
             icon: 'error',
