@@ -527,7 +527,7 @@ export const Applications = () => {
         })
       }
     } catch (error: any) {
-      const message = error?.response?.data?.message || DEFAULT_MSG_ERROR
+      const message = DEFAULT_MSG_ERROR
 
       swalToast.fire({
         title: message,

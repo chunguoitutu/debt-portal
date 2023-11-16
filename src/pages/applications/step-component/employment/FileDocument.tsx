@@ -5,6 +5,7 @@ import Icons from '../../../../components/icons'
 import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
 import request from '../../../../app/axios'
 import {convertSize} from '../../../../app/utils'
+import {DEFAULT_MSG_ERROR} from '../../../../app/constants/error-message'
 
 export interface file {
   id?: Number
@@ -131,7 +132,7 @@ const FileInput = (props: any) => {
                                   .catch(() => {
                                     swalToast.fire({
                                       icon: 'error',
-                                      title: 'Something went wrong!',
+                                      title: DEFAULT_MSG_ERROR,
                                     })
                                   })
                               }

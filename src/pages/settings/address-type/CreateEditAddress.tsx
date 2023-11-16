@@ -15,6 +15,7 @@ import Button from '../../../components/button/Button'
 import {KTIcon} from '../../../_metronic/helpers'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
+import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 
 type Props = {
   setLoadApi: any
@@ -98,7 +99,7 @@ const CreateEditAddress = ({
           .catch((e) => {
             swalToast.fire({
               icon: 'error',
-              title: e?.message,
+              title: DEFAULT_MSG_ERROR,
             })
           })
           .finally(() => {

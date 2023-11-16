@@ -6,6 +6,7 @@ import ChangePassword from '../change-password/ChangePassword'
 import {swalToast} from '../../../../swal-notification'
 import {useAuth} from '../../../../context/AuthContext'
 import {updateInfoUser} from '../../../../axios/request'
+import {DEFAULT_MSG_ERROR} from '../../../../constants/error-message'
 
 const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),
@@ -79,7 +80,7 @@ const Settings: React.FC = () => {
       })
     } catch (error) {
       swalToast.fire({
-        title: 'Something went wrong. Please try again!',
+        title: DEFAULT_MSG_ERROR,
         icon: 'error',
       })
     } finally {

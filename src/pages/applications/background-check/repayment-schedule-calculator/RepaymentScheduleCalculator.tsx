@@ -15,6 +15,7 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../app/constants/step'
 import {MONTHLY_DUE_DATE} from '../../../../app/utils/globalConfig'
 import {formatNumber} from '../../../../app/utils'
+import {DEFAULT_MSG_ERROR} from '../../../../app/constants/error-message'
 type Props = {
   setLoadApi: any
   loadapi: boolean
@@ -66,7 +67,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       } catch (error) {
         swalToast.fire({
           icon: 'error',
-          title: 'The system is having an error, please try again in a few minutes.',
+          title: DEFAULT_MSG_ERROR,
         })
       }
     },

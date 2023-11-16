@@ -8,6 +8,7 @@ import ErrorMessage from '../../../components/error/ErrorMessage'
 import Button from '../../../components/button/Button'
 import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
+import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 
 export const CompanyManagement = () => {
   const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG
@@ -76,7 +77,7 @@ export const CompanyManagement = () => {
         .catch((error) =>
           swalToast.fire({
             icon: 'error',
-            title: error?.message,
+            title: DEFAULT_MSG_ERROR,
           })
         )
         .finally(() => setSubmitting(false))

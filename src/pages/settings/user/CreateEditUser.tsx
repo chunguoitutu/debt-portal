@@ -15,7 +15,7 @@ import {BranchItem, DataResponse, RoleInfo, TableConfig, UserInfo} from '../../.
 import {useAuth} from '../../../app/context/AuthContext'
 import {useFormik} from 'formik'
 import {swalToast} from '../../../app/swal-notification'
-import {DEFAULT_MESSAGE_ERROR_500} from '../../../app/constants/error-message'
+import {DEFAULT_MESSAGE_ERROR_500, DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 
 type Props = {
   config?: TableConfig
@@ -197,7 +197,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         })
       } else {
         swalToast.fire({
-          title: "Can't create user. Please try again!",
+          title: DEFAULT_MSG_ERROR,
           icon: 'error',
         })
       }

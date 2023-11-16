@@ -186,10 +186,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'success',
       })
     } catch (error: any) {
-      const message = error?.response?.data?.message || DEFAULT_MESSAGE_ERROR_500
-
       swalToast.fire({
-        title: message,
+        title: DEFAULT_MESSAGE_ERROR_500,
         icon: 'error',
       })
     } finally {
@@ -212,10 +210,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'success',
       })
     } catch (error: any) {
-      const message = error?.response?.data?.message || DEFAULT_MESSAGE_ERROR_500
-
       swalToast.fire({
-        title: message,
+        title: DEFAULT_MESSAGE_ERROR_500,
         icon: 'error',
       })
     } finally {
