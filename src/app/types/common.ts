@@ -179,6 +179,7 @@ export type TableConfig = {
     dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
+    showMessageTitle?: string
     showFilter?: boolean
     endpoint?: string
     swalToastTitle?: string

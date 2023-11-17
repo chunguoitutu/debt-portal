@@ -84,11 +84,14 @@ const CreateEditAddress = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
-            const address = values.address_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Address ${address} successfully created`,
+                title:
+                  (swalToastTitle || '').replace(
+                    /\/%\//g,
+                    response?.data?.data['address_type_name']
+                  ) + ' created',
               })
             }
             handleUpdated()
@@ -119,7 +122,11 @@ const CreateEditAddress = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Address ${address} successfully updated`,
+                title:
+                  (swalToastTitle || '').replace(
+                    /\/%\//g,
+                    response?.data?.data['address_type_name']
+                  ) + ' updated',
               })
             }
             handleUpdated()

@@ -26,18 +26,18 @@ type Props = {
 
 export const newCompaniesSchema = Yup.object().shape({
   company_name: Yup.string().required('Company Name is required'),
+  company_code: Yup.string().required('Company Code is required'),
   business_uen: Yup.string().required('Business Uen is required'),
-  telephone: Yup.string()
-    .min(6, 'Minimum 6 symbols')
-    .max(11, 'Maximum 11 symbols')
-    .required('Telephone is required'),
+  // telephone: Yup.string()
+  //   .min(6, 'Minimum 6 symbols')
+  //   .max(11, 'Maximum 11 symbols')
+  //   .required('Telephone is required'),
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email Uen is required'),
+    .max(50, 'Maximum 50 symbols'),
+  // .required('Email Uen is required'),
   open_date: Yup.string().required('Open Date is required'),
-  address: Yup.string().required('Address is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -108,7 +108,11 @@ const CreateEditCompanies = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Company successfully created',
+                title: `Company${
+                  !!response?.data?.data?.company_name
+                    ? ' ' + response?.data?.data?.company_name + ' '
+                    : ' '
+                }successfully created`,
               })
             }
             handleUpdated()
@@ -138,7 +142,11 @@ const CreateEditCompanies = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: 'Company successfully updated',
+                title: `Company${
+                  !!response?.data?.data?.company_name
+                    ? ' ' + response?.data?.data?.company_name + ' '
+                    : ' '
+                }successfully updated`,
               })
             }
             handleUpdated()

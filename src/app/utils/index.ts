@@ -64,3 +64,26 @@ export function convertSize(sizeInBytes) {
     return (sizeInBytes / MB).toFixed(2) + ' MB'
   }
 }
+///convert to string all
+export function stringifyObject(obj: object) {
+  const result = {}
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      result[key] = String(obj[key])
+    }
+  }
+
+  return result
+}
+//compare object
+export function areObjectsEqual(obj1: any, obj2: any, excludedFields: any) {
+  const obj1Copy = {...obj1}
+  const obj2Copy = {...obj2}
+
+  excludedFields.forEach((field: any) => {
+    delete obj1Copy[field]
+    delete obj2Copy[field]
+  })
+  return JSON.stringify(obj1Copy) === JSON.stringify(obj2Copy)
+}

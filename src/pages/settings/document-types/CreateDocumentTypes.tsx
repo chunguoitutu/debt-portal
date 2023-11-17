@@ -64,7 +64,7 @@ const CreateDocumentType = ({
     onSubmit: async (values: any, actions: any) => {
       if (title === 'New') {
         try {
-          await request.post(endpoint || '', {
+          const response = await request.post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
           })
@@ -91,7 +91,7 @@ const CreateDocumentType = ({
         }
       } else {
         try {
-          await request.post(endpoint + '/' + data?.id, {
+          const response = await request.post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
           })

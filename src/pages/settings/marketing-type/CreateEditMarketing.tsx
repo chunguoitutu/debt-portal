@@ -43,7 +43,7 @@ const CreatEditMarkettingType = ({
   handleUpdated,
 }: Props) => {
   const {rows, settings} = MAKETTING_TABLE_CONFIG
-  const {endpoint} = settings
+  const {endpoint, swalToastTitle} = settings
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
   const [status, setStatus] = useState(data?.status === 0 ? false : true)
@@ -113,11 +113,14 @@ const CreatEditMarkettingType = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
-            const marketing_name = values.marketing_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Marketing ${marketing_name} successfully updated`,
+                title:
+                  (swalToastTitle || '').replace(
+                    /\/%\//g,
+                    response?.data?.data['marketing_type_name']
+                  ) + ' updated',
               })
             }
             handleUpdated()

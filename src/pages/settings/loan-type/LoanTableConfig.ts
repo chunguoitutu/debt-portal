@@ -10,8 +10,9 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     showViewButton: false,
     endPointDelete: '/config/loan_type',
     endPointGetListing: '/config/loan_type',
-    messageDeleteSuccess: 'Loan Type successfully deleted',
+    messageDeleteSuccess: 'Loan Type /%/ successfully deleted',
     buttonAddNew: 'New Loan Type',
+    showMessageTitle: 'type_name',
   },
   rows: [
     {

@@ -6,6 +6,7 @@ import {useAuth} from '../../../../app/context/AuthContext'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout} = useAuth()
+
   return (
     <div
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
@@ -28,6 +29,9 @@ const HeaderUserMenu: FC = () => {
             </div>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
               {currentUser?.email}
+            </a>
+            <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
+              {currentUser?.company_name}
             </a>
           </div>
         </div>

@@ -27,15 +27,19 @@ type Props = {
   setIsUpdated?: any
   handleAddNew: () => void
   isShowFilter?: boolean
+  setSearchCriterias?: any
+  setSttTable?: any
 }
 
 const Table: FC<Props> = ({
   config,
   onEditItem,
+  setSearchCriterias,
   onViewDetail,
   isUpdated,
   setIsUpdated,
   handleAddNew,
+  setSttTable,
   isShowFilter = false,
 }) => {
   const {settings, rows} = config
@@ -51,6 +55,7 @@ const Table: FC<Props> = ({
     fieldDelete,
     messageDeleteError,
     messageDeleteSuccess,
+    showMessageTitle,
   } = settings
 
   const {currentUser, priority} = useAuth()
@@ -97,7 +102,9 @@ const Table: FC<Props> = ({
 
     switch (type) {
       case 'datetime':
-        return moment(value).format('lll') === 'Invalid date' ? value : moment(value).format('lll')
+        return moment(value).format('DD-MM-YYYY') === 'Invalid date'
+          ? value
+          : moment(value).format('DD-MM-YYYY')
       case 'yes/no':
         return value === 1 ? 'Yes' : 'No'
       default:
@@ -110,7 +117,8 @@ const Table: FC<Props> = ({
     onEditItem(item)
   }
 
-  function handleViewDetailItem(item: any) {
+  function handleViewDetailItem(item: any, idx: number) {
+    setSttTable(idx)
     if (typeof onViewDetail !== 'function') return
     onViewDetail(item)
   }
@@ -126,6 +134,7 @@ const Table: FC<Props> = ({
       Array.isArray(data.data) && setData(data.data)
 
       data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
+      data?.searchCriteria && setSearchCriterias(data?.searchCriteria)
     } catch (error) {
       // no thing
     } finally {
@@ -157,7 +166,9 @@ const Table: FC<Props> = ({
       // handle refresh data
       await onFetchDataList({...pagination, currentPage: 1})
       swalToast.fire({
-        title: messageDeleteSuccess || 'Delete Successfully',
+        title:
+          (messageDeleteSuccess || '').replace(/\/%\//g, data?.data[showMessageTitle || '']) ||
+          'Delete Successfully',
         icon: 'success',
       })
     } catch (error: any) {
@@ -262,11 +273,19 @@ const Table: FC<Props> = ({
                         let value = item[key]
 
                         if (key === 'id') {
-                          return <td key={i}>{idx + 1}</td>
+                          return (
+                            <td key={i}>
+                              {Number(idx) +
+                                1 +
+                                (Number(searchCriteria.currentPage) *
+                                  Number(searchCriteria.pageSize) -
+                                  Number(searchCriteria.pageSize))}
+                            </td>
+                          )
                         }
 
                         if (key === 'open_date') {
-                          return <td key={i}>{moment(value).format('YYYY-MM-DD')}</td>
+                          return <td key={i}>{moment(value).format('DD-MM-YYYY')}</td>
                         }
 
                         if (component) {
@@ -323,7 +342,11 @@ const Table: FC<Props> = ({
                         <td className='text-center'>
                           <div className='d-flex align-items-center justify-content-center gap-1'>
                             {showViewButton && (
-                              <ButtonViewDetail onClick={() => handleViewDetailItem(item)} />
+                              <ButtonViewDetail
+                                onClick={() => {
+                                  handleViewDetailItem(item, idx)
+                                }}
+                              />
                             )}
 
                             {showEditButton && <ButtonEdit onClick={() => handleEditItem(item)} />}

@@ -11,6 +11,7 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       key: 'company_code',
       type: 'text',
       name: 'Company Code',
+      require: true,
     },
     {
       key: 'business_uen',
@@ -22,7 +23,6 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       key: 'address',
       name: 'Address',
       type: 'text',
-      require: true,
     },
     {
       key: 'telephone',

@@ -72,7 +72,7 @@ const Input: FC<Props> = ({
               handlePaste({e: e, noThereAreCommas: noThereAreCommas})
             }
           }}
-          type={type === 'money' ? 'number' : type}
+          type={type === 'money' ? 'number' : type === 'number' ? 'text' : type}
           className={`form-control-lg px-4 w-100 bg-transparent outline-none h-100 border-0 ${className}`}
           id={id || name}
           name={name}

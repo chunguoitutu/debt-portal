@@ -9,9 +9,11 @@ interface IProps {
   data: any
   handleClose: () => void
   id: Number
+  searchCriterias?: any
+  sttTable?: number
 }
 
-const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
+const CompanyDetail = ({data = {}, handleClose, show, id, searchCriterias, sttTable}: IProps) => {
   const {rows} = COMPANY_TABLE_CONFIG
 
   return (
@@ -59,7 +61,13 @@ const CompanyDetail = ({data = {}, handleClose, show, id}: IProps) => {
                     <div key={index}>
                       {showLable({
                         title: row.name,
-                        value: JSON.stringify(id),
+                        value: JSON.stringify(
+                          Number(sttTable) +
+                            1 +
+                            (Number(searchCriterias.currentPage) *
+                              Number(searchCriterias.pageSize) -
+                              Number(searchCriterias.pageSize))
+                        ),
                       })}
                     </div>
                   )}

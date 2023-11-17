@@ -4,14 +4,21 @@ import {CreateEditCompanies} from './CreateEditCompany'
 import Table from '../../../components/table/Table'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
 import CompanyDetail from './CompanyDetail'
+import {SearchCriteria} from '../../../app/types/common'
 
 type Props = {}
 
 const CompanyListing = (props: Props) => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
   const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [searchCriterias, setSearchCriterias] = useState<SearchCriteria>({
+    pageSize: 10,
+    currentPage: 1,
+    total: 0,
+  })
   const [id, setId] = useState<Number>(1)
   const [loadapi, setLoadApi] = useState<boolean>(false)
+  const [sttTable, setSttTable] = useState(1)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
   const [dataItem, setDataItem] = useState({})
 
@@ -41,9 +48,11 @@ const CompanyListing = (props: Props) => {
           />
         )}
         <Table
+          setSearchCriterias={setSearchCriterias}
           config={COMPANY_TABLE_CONFIG}
           onEditItem={handleShowEdit}
           onViewDetail={handleViewDetail}
+          setSttTable={setSttTable}
           isUpdated={isUpdated}
           setIsUpdated={setIsUpdated}
           handleAddNew={() => setShowCreateAppModal(!showCreateAppModal)}
@@ -51,7 +60,9 @@ const CompanyListing = (props: Props) => {
       </div>
       {showDetail && (
         <CompanyDetail
+          searchCriterias={searchCriterias}
           data={dataItem}
+          sttTable={sttTable}
           show={showDetail}
           id={id}
           handleClose={() => setShowDetail(false)}
