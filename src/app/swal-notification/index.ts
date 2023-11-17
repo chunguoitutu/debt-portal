@@ -6,7 +6,7 @@ export const swalToast = Swal.mixin({
   showConfirmButton: false,
   timer: 3000,
   customClass: {
-    title: 'fs-3',
+    title: 'fs-4',
   },
 })
 

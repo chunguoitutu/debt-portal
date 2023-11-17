@@ -1,33 +1,50 @@
-import {StepItem} from '../modules/auth'
+import GeneralInformation from '../../pages/applications/step-component/general-information/GeneralInformation'
+import {
+  BANK_INFO_CONFIG,
+  COMPLETION_CONFIG,
+  CONTACT_INFORMATION,
+  EMPLOYMENT_CONFIG,
+  GENERAL_INFORMATION_CONFIG,
+  LOAN_DETAILS_CONFIG,
+} from '../../pages/applications/step-component/config'
+import LoanDetails from '../../pages/applications/step-component/loan-details/LoanDetails'
+import ContactInformation from '../../pages/applications/step-component/contact-information/ContactInformation'
+import Employment from '../../pages/applications/step-component/employment/Employment'
+import {StepItem} from '../types/common'
+import BankInfo from '../../pages/applications/step-component/bank-info/BankInfo'
+import Completion from '../../pages/applications/step-component/completion'
 
 export const STEP_APPLICATION: StepItem[] = [
   {
-    label: 'Application Details',
-    desc: 'General Information Of Loan Application.',
+    label: 'Personal Information',
+    component: GeneralInformation,
+    config: GENERAL_INFORMATION_CONFIG,
   },
   {
-    label: 'Applicant Details',
-    desc: 'Detailed Customer Contact Information.',
+    label: 'Loan Details',
+    component: LoanDetails,
+    config: LOAN_DETAILS_CONFIG,
   },
   {
-    label: 'Workplace',
-    desc: 'Customer Workplace Information.',
+    label: 'Contact Information',
+    component: ContactInformation,
+    config: CONTACT_INFORMATION,
+  },
+  {
+    label: 'Employment',
+    component: Employment,
+    config: EMPLOYMENT_CONFIG,
   },
   {
     label: 'Bank Information',
-    desc: 'Customer Bank Information.',
+    component: BankInfo,
+    config: BANK_INFO_CONFIG,
   },
   {
-    label: 'Loan Application',
-    desc: 'Detailed Customer Loan Application.',
-  },
-  {
-    label: 'Guarantor',
-    desc: 'Detailed Customer Loan Application.',
-  },
-  {
-    label: 'Complete',
+    label: 'Completion',
     desc: 'Review & Save Application.',
+    component: Completion,
+    config: COMPLETION_CONFIG,
   },
 ]
 

@@ -1,4 +1,4 @@
-import {CheckboxTreeItem} from '../modules/auth'
+import {CheckboxTreeItem} from '../types/common'
 
 const ACTION_CONTROL = [
   {

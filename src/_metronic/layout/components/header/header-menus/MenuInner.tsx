@@ -3,7 +3,7 @@ import {MenuItem} from './MenuItem'
 export function MenuInner() {
   return (
     <>
-      <MenuItem title={'Applications'} to='/applications' />
+      <MenuItem hasDropdown={true} title='Applications' to='/application' />
       <MenuItem title='Loans' to='/loans' />
       <MenuItem title='Borrowers' to='/borrowers' />
       <MenuItem title='My Tasks' to='/my-tasks' />

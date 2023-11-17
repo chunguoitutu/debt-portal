@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC} from 'react'
 import {Link} from 'react-router-dom'
-import {useAuth} from '../../../../app/modules/auth'
 import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
+import {useAuth} from '../../../../app/context/AuthContext'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout} = useAuth()
@@ -36,7 +36,7 @@ const HeaderUserMenu: FC = () => {
       <div className='separator my-2'></div>
 
       <div className='menu-item px-5 my-1'>
-        <Link to='/account/overview' className='menu-link px-5'>
+        <Link to='/account/overview' className='menu-link px-5 fs-6'>
           Account Settings
         </Link>
       </div>
@@ -44,7 +44,7 @@ const HeaderUserMenu: FC = () => {
       <div className='separator my-2'></div>
 
       <div className='menu-item px-5'>
-        <a onClick={logout} className='menu-link px-5'>
+        <a onClick={logout} className='menu-link px-5 fs-6'>
           Sign Out
         </a>
       </div>

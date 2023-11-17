@@ -3,11 +3,12 @@ import {Modal} from 'react-bootstrap'
 import {KTIcon} from '../../../../../_metronic/helpers'
 import {FormikHelpers, useFormik} from 'formik'
 import * as Yup from 'yup'
-import {updatePasswordCurrentUser} from '../../../auth/core/_requests'
-import {UpdatePasswordInfo, useAuth} from '../../../auth'
 import {swalToast} from '../../../../swal-notification'
+import {useAuth} from '../../../../context/AuthContext'
+import {UpdatePasswordInfo} from '../../../../types/common'
+import {updatePasswordCurrentUser} from '../../../../axios/request'
 import {convertErrorMessageResponse} from '../../../../utils'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
+import ErrorMessage from '../../../../../components/error/ErrorMessage'
 
 type Props = {
   show: boolean
@@ -32,17 +33,17 @@ const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]
 
 const passwordFormValidationSchema = Yup.object().shape({
   new_password: Yup.string()
-    .matches(regexPassword, 'New Password must be at least 8 character and contain symbols')
+    .matches(regexPassword, 'New Password must be at least 8 character. Include at least one letter, one number and one special character.')
     .required('New Password is required'),
   confirm_new_password: Yup.string()
-    .matches(regexPassword, 'Confirm New Password must be at least 8 character and contain symbols')
+    .matches(regexPassword, 'Confirm New Password must be at least 8 character. Include at least one letter, one number and one special character.')
     .required('Confirm New Password is required')
     .oneOf([Yup.ref('new_password')], 'Confirm New Password must match'),
 })
 
 const oldPasswordValidationSchema = Yup.object().shape({
   old_password: Yup.string()
-    .matches(regexPassword, 'Current Password must be at least 8 character and contain symbols')
+    .matches(regexPassword, 'Current Password must be at least 8 character. Include at least one letter, one number and one special character.')
     .required('Current Password is required'),
 })
 
@@ -143,10 +144,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                   id='old_password'
                   {...getFieldProps('old_password')}
                 />
-                <ErrorMessage
-                  shouldShowMessage={!!(touched.old_password && errors.old_password)}
-                  message={errors.old_password}
-                />
+
+                {touched.old_password && errors.old_password && (
+                  <ErrorMessage message={errors.old_password} />
+                )}
               </div>
             </div>
           )}
@@ -163,10 +164,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                 id='new_password'
                 {...getFieldProps('new_password')}
               />
-              <ErrorMessage
-                shouldShowMessage={!!(touched.new_password && errors.new_password)}
-                message={errors.new_password}
-              />
+
+              {touched.new_password && errors.new_password && (
+                <ErrorMessage message={errors.new_password} />
+              )}
             </div>
           </div>
 
@@ -183,9 +184,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
                 {...getFieldProps('confirm_new_password')}
               />
               {touched.confirm_new_password && errors.confirm_new_password && (
-                <div className='fv-plugins-message-container'>
-                  <div className='fv-help-block'>{errors.confirm_new_password}</div>
-                </div>
+                <ErrorMessage message={errors.confirm_new_password} />
               )}
             </div>
           </div>

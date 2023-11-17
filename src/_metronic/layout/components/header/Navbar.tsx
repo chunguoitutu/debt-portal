@@ -5,9 +5,9 @@ import {IoMdNotificationsOutline} from 'react-icons/io'
 import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link, useLocation} from 'react-router-dom'
-import {useAuth} from '../../../../app/modules/auth'
 import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
 import {useMemo} from 'react'
+import {useAuth} from '../../../../app/context/AuthContext'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -80,7 +80,7 @@ const Navbar = () => {
           <div
             style={{
               paddingLeft: '12px',
-              paddingRight: '16px',
+              paddingRight: '12px',
               paddingTop: '4px',
               paddingBottom: '4px',
               display: 'flex',
@@ -101,7 +101,7 @@ const Navbar = () => {
                 objectFit: 'cover',
               }}
             />
-            <div style={{marginLeft: '16px'}} className='d-none d-lg-block'>
+            <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
               <p
                 style={{
                   wordWrap: 'break-word',

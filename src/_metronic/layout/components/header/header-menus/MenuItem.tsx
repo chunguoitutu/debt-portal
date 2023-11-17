@@ -1,8 +1,9 @@
-import {FC} from 'react'
+import React, {FC, useState} from 'react'
 import {useLocation} from 'react-router'
 import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {checkIsActive, KTIcon} from '../../../../helpers'
+import {ApplicationsMenu} from '../../../../../pages/applications/applications-menu/ApplicationsMenu'
 
 type Props = {
   to: string
@@ -11,13 +12,43 @@ type Props = {
   fontIcon?: string
   hasArrow?: boolean
   hasBullet?: boolean
+  hasDropdown?: boolean
 }
 
-const MenuItem: FC<Props> = ({to, title, icon, fontIcon, hasArrow = false, hasBullet = false}) => {
+const MenuItem: FC<Props> = ({
+  to,
+  title,
+  icon,
+  fontIcon,
+  hasArrow = false,
+  hasBullet = false,
+  hasDropdown,
+}) => {
   const {pathname} = useLocation()
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  const handleMouseEnter = () => {
+    if (title === 'Applications') {
+      setIsDropdownOpen(true)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (title === 'Applications') {
+      setIsDropdownOpen(false)
+    }
+  }
+
   return (
-    <div className='menu-item me-lg-1'>
+    <div
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className='menu-item me-lg-1'
+      style={{
+        position: 'relative',
+      }}
+    >
       <Link
         className={clsx('menu-link py-3', {
           'active menu-here': checkIsActive(pathname, to),
@@ -46,6 +77,15 @@ const MenuItem: FC<Props> = ({to, title, icon, fontIcon, hasArrow = false, hasBu
 
         {hasArrow && <span className='menu-arrow'></span>}
       </Link>
+      {hasDropdown && isDropdownOpen && (
+        <div
+          style={{
+            position: 'relative',
+          }}
+        >
+          <ApplicationsMenu />
+        </div>
+      )}
     </div>
   )
 }
