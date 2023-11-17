@@ -1,15 +1,14 @@
 .dropdown-menu-application {
-
-    @keyframes dropdownAnimation {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+  @keyframes dropdownAnimation {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   .dropdown-fixed {
     display: flex;
@@ -21,8 +20,8 @@
     left: -100px;
     width: 200px;
     height: fit-content;
-     animation: dropdownAnimation 0.3s ease;
-     box-shadow:rgba(82, 63, 105, 0.15) 0px 0px 50px 0px;
+    animation: dropdownAnimation 0.3s ease;
+    box-shadow: rgba(82, 63, 105, 0.15) 0px 0px 50px 0px;
     &:hover {
       display: flex;
       height: fit-content;
@@ -30,8 +29,8 @@
   }
 
   .menu-item-child {
-    &:hover{
-        background-color: #F9F9F9;
+    &:hover {
+      background-color: #f9f9f9;
     }
   }
 }

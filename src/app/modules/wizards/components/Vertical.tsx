@@ -11,7 +11,7 @@ import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizard
 
 const Vertical = () => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const [ stepper, setStepper ] = useState<StepperComponent | null>(null)
+  const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [currentSchema, setCurrentSchema] = useState(createAccountSchemas[0])
   const [initValues] = useState<ICreateAccount>(inits)
 
@@ -237,10 +237,8 @@ const Vertical = () => {
                 <div>
                   <button type='submit' className='btn btn-lg btn-primary me-3'>
                     <span className='indicator-label'>
-                      {stepper?.currentStepIndex !==
-                        stepper?.totalStepsNumber! - 1 && 'Continue'}
-                      {stepper?.currentStepIndex ===
-                        stepper?.totalStepsNumber! - 1 && 'Submit'}
+                      {stepper?.currentStepIndex !== stepper?.totalStepsNumber! - 1 && 'Continue'}
+                      {stepper?.currentStepIndex === stepper?.totalStepsNumber! - 1 && 'Submit'}
                       <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />
                     </span>
                   </button>

@@ -146,7 +146,7 @@ const ProfileHeader: React.FC = () => {
                 }
                 to='/crafted/pages/profile/overview'
               >
-                Overview 
+                Overview
               </Link>
             </li>
             <li className='nav-item'>
