@@ -10,8 +10,9 @@ export const JOB_TABLE_CONFIG: TableConfig = {
     showViewButton: false,
     endPointDelete: '/config/job_type',
     endPointGetListing: '/config/job_type',
-    messageDeleteSuccess: 'Job type successfully deleted',
+    messageDeleteSuccess: 'Job type /%/ successfully deleted',
     buttonAddNew: 'New Job',
+    showMessageTitle: 'job_type_name',
   },
   rows: [
     {

@@ -9,6 +9,7 @@ import Button from '../../../components/button/Button'
 import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
+import {areObjectsEqual, stringifyObject} from '../../../app/utils'
 
 export const CompanyManagement = () => {
   const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG
@@ -52,8 +53,8 @@ export const CompanyManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadapi])
 
-  const formik = useFormik({
-    initialValues: {},
+  const formik = useFormik<any>({
+    initialValues: {} as any,
     validationSchema: newCompaniesSchema,
     onSubmit: async (values: any, actions: any) => {
       await request
@@ -68,9 +69,14 @@ export const CompanyManagement = () => {
         })
         .then((response) => {
           if (!response.data?.error) {
+            setLoadApi(!loadapi)
             swalToast.fire({
               icon: 'success',
-              title: 'Company successfully updated',
+              title: `Company${
+                !!response?.data?.data?.company_name
+                  ? ' ' + response?.data?.data?.company_name + ' '
+                  : ' '
+              }successfully updated`,
             })
           }
         })
@@ -131,7 +137,20 @@ export const CompanyManagement = () => {
 
           <Button
             className='btn-lg btn-primary'
-            disabled={isSubmitting}
+            disabled={
+              isSubmitting ||
+              (areObjectsEqual(stringifyObject(information) || {}, stringifyObject(values) || {}, [
+                'id',
+                'delete_at',
+                'parent_id',
+                'status',
+                'deleted',
+                'open_date',
+                'telephone',
+              ]) &&
+                Number(information?.telephone) ===
+                  Number(!!values?.telephone ? values?.telephone : 0))
+            }
             loading={isSubmitting}
             onClick={() => handleSubmit()}
           >

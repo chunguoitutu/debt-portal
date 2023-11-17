@@ -20,10 +20,11 @@ export const USER_TABLE_CONFIG: TableConfig = {
       apiUpdateUser: 'config/user',
     },
     endPointGetListing: '/user',
-    messageDeleteSuccess: 'User successfully deleted',
-    messageEditSuccess: 'User successfully updated',
-    messageCreateSuccess: 'User successfully created',
+    messageDeleteSuccess: 'User /%/ successfully deleted',
+    messageEditSuccess: 'User /%/ successfully updated',
+    messageCreateSuccess: 'User /%/ successfully created',
     buttonAddNew: 'New User',
+    showMessageTitle: 'username',
   },
   rows: [
     {

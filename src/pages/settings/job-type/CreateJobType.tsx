@@ -66,7 +66,7 @@ const CreateJobType = ({
     onSubmit: async (values: any, actions: any) => {
       if (title === 'New') {
         try {
-          await request.post(endpoint || '', {
+          const response = await request.post(endpoint || '', {
             ...values,
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
@@ -80,6 +80,7 @@ const CreateJobType = ({
           swalToast.fire({
             icon: 'success',
             title: `Job ${job_name} successfully created`,
+
             timer: 1500,
           })
         } catch (error) {
@@ -95,7 +96,7 @@ const CreateJobType = ({
         }
       } else {
         try {
-          await request.post(endpoint + '/' + data?.id, {
+          const response = await request.post(endpoint + '/' + data?.id, {
             ...values,
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,

@@ -586,7 +586,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       {
         id: uuidv4(),
         to: '/settings/companies',
-        label: 'Companies',
+        label: 'Companies Listing',
         priority: [1],
       },
     ],

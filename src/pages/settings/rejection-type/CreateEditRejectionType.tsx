@@ -86,11 +86,14 @@ const CreateEditRejectionType = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
-            const rejection_name = values.rejection_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Rejection ${rejection_name} successfully created`,
+                title:
+                  (swalToastTitle || '').replace(
+                    /\/%\//g,
+                    response?.data?.data['rejection_type_name']
+                  ) + ' created',
               })
             }
             handleUpdated()
@@ -115,11 +118,14 @@ const CreateEditRejectionType = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
-            const rejection_name = values.rejection_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Rejection ${rejection_name} successfully updated`,
+                title:
+                  (swalToastTitle || '').replace(
+                    /\/%\//g,
+                    response?.data?.data['rejection_type_name']
+                  ) + ' updated',
               })
             }
             handleUpdated()

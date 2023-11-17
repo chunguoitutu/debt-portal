@@ -184,6 +184,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       onClose()
       swalToast.fire({
         title: `Role ${role_name} successfully created`,
+
         icon: 'success',
       })
     } catch (error: any) {
@@ -201,7 +202,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     if (!payload.id) return
 
     try {
-      await updateRole(payload)
+      const response = await updateRole(payload)
 
       // handle after update successfully
       await onRefreshListing()
@@ -209,6 +210,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       onClose()
       swalToast.fire({
         title: `Role ${role_name} successfully updated`,
+
         icon: 'success',
       })
     } catch (error: any) {
