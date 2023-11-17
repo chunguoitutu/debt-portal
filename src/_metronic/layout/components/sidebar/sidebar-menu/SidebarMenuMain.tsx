@@ -108,12 +108,12 @@ const SidebarMenuMain = () => {
         <a
           target='_blank'
           className='menu-link'
-          href={process.env.REACT_APP_PREVIEW_DOCS_URL + '/docs/changelog'}
+          href={import.meta.env.VITE_REACT_APP_PREVIEW_DOCS_URL + '/docs/changelog'}
         >
           <span className='menu-icon'>
             <KTIcon iconName='code' className='fs-2' />
           </span>
-          <span className='menu-title'>Changelog {process.env.REACT_APP_VERSION}</span>
+          <span className='menu-title'>Changelog {import.meta.env.VITE_REACT_APP_VERSION}</span>
         </a>
       </div>
     </>

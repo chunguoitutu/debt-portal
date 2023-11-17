@@ -1,7 +1,7 @@
 import {ILayout, ILayoutCSSClasses, ILayoutCSSVariables, ILayoutHTMLAttributes} from './_Models'
 import {DefaultConfig} from './_LayoutConfig'
 
-const LAYOUT_CONFIG_KEY = process.env.REACT_APP_BASE_LAYOUT_CONFIG_KEY || 'LayoutConfig'
+const LAYOUT_CONFIG_KEY = import.meta.env.VITE_REACT_APP_BASE_LAYOUT_CONFIG_KEY || 'LayoutConfig'
 
 const getLayoutFromLocalStorage = (): ILayout => {
   const ls = localStorage.getItem(LAYOUT_CONFIG_KEY)
@@ -130,7 +130,7 @@ class LayoutSetup {
       }
     }
 
-    LayoutSetup.initHeaderSettigs(updatedConfig);
+    LayoutSetup.initHeaderSettigs(updatedConfig)
 
     return updatedConfig
   }
@@ -160,11 +160,11 @@ class LayoutSetup {
   }
 
   private static initHeaderSettigs(config: ILayout) {
-    const container = config.app?.header?.default?.container;
+    const container = config.app?.header?.default?.container
     if (container === 'fluid') {
-      this.classes.headerContainer.push("container-fluid");
+      this.classes.headerContainer.push('container-fluid')
     } else {
-      this.classes.headerContainer.push("container-xxl");
+      this.classes.headerContainer.push('container-xxl')
     }
   }
 

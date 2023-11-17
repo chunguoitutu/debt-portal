@@ -12,11 +12,7 @@ import {
   updateUserInfo,
 } from '../types/common'
 
-export const API_URL =
-  process.env.NODE_ENV === 'development'
-    ? process.env.REACT_APP_LOCAL_BASE_URL
-    : process.env.REACT_APP_API_URL
-export const REACT_APP_BASE_URL_API = process.env.REACT_APP_BASE_URL_API
+export const API_URL = import.meta.env.VITE_REACT_APP_API_URL
 export const GET_USER_BY_ACCESSTOKEN_URL = `${API_URL}/verify_token`
 export const REGISTER_URL = `${API_URL}/register`
 export const REQUEST_PASSWORD_URL = `${API_URL}/forgot_password`

@@ -1,7 +1,7 @@
 import {useLayout} from '../layout/core'
 import {ThemeModeComponent} from '../assets/ts/layout'
 
-export const toAbsoluteUrl = (pathname: string) => process.env.PUBLIC_URL + pathname
+export const toAbsoluteUrl = (pathname: string) => import.meta.env.VITE_PUBLIC_URL + pathname
 
 export const useIllustrationsPath = (illustrationName: string): string => {
   const {config} = useLayout()
