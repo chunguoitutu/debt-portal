@@ -29,8 +29,8 @@ type Props = {
 }
 
 export const CreateEditRejectionTypeSchema = Yup.object().shape({
-  rejection_type_name: Yup.string().required('Rejection Type is required.'),
-  rejection_type_code: Yup.string().required('Code is required.'),
+  rejection_type_name: Yup.string().required('Rejection Type is required'),
+  rejection_type_code: Yup.string().required('Code is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body

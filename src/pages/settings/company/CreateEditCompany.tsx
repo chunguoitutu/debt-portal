@@ -25,19 +25,19 @@ type Props = {
 }
 
 export const newCompaniesSchema = Yup.object().shape({
-  company_name: Yup.string().required('Company Name is required.'),
-  business_uen: Yup.string().required('Business Uen is required.'),
+  company_name: Yup.string().required('Company Name is required'),
+  business_uen: Yup.string().required('Business Uen is required'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
     .max(11, 'Maximum 11 symbols')
-    .required('Telephone is required.'),
+    .required('Telephone is required'),
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
-    .required('Email Uen is required.'),
-  open_date: Yup.string().required('Open Date is required.'),
-  address: Yup.string().required('Address is required.'),
+    .required('Email Uen is required'),
+  open_date: Yup.string().required('Open Date is required'),
+  address: Yup.string().required('Address is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
