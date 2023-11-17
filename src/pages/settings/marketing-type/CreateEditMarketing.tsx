@@ -28,7 +28,7 @@ type Props = {
 }
 
 export const NewEditMarkettingSchema = Yup.object().shape({
-  marketing_type_name: Yup.string().required('Marketing Type name is required.'),
+  marketing_type_name: Yup.string().required('Marketing Type name is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body

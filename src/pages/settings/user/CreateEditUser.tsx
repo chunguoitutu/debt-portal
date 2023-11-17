@@ -26,20 +26,20 @@ type Props = {
 }
 
 export const roleSchema = Yup.object().shape({
-  firstname: Yup.string().required('First name is required.'),
-  lastname: Yup.string().required('Last name is required.'),
-  username: Yup.string().required('User name is required.'),
-  company_id: Yup.string().required('Company is required.'),
-  role_id: Yup.string().required('Role name is required.'),
-  email: Yup.string().email("Email isn't valid").required('Email is required.'),
+  firstname: Yup.string().required('First name is required'),
+  lastname: Yup.string().required('Last name is required'),
+  username: Yup.string().required('User name is required'),
+  company_id: Yup.string().required('Company is required'),
+  role_id: Yup.string().required('Role name is required'),
+  email: Yup.string().email("Email isn't valid").required('Email is required'),
   telephone: Yup.string()
     .min(6, 'Minimum 6 symbols')
     .max(11, 'Maximum 11 symbols')
-    .required('Telephone is required.'),
+    .required('Telephone is required'),
 })
 
 export const passwordSchema = Yup.object().shape({
-  password: Yup.string().required('Password is required.'),
+  password: Yup.string().required('Password is required'),
 })
 
 interface ValuesCreateEdit

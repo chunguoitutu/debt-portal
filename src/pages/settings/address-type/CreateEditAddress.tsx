@@ -28,7 +28,7 @@ type Props = {
 }
 
 export const CreateEditAddressSchema = Yup.object().shape({
-  address_type_name: Yup.string().required('Address Type name is required.'),
+  address_type_name: Yup.string().required('Address Type name is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body

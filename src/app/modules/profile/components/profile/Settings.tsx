@@ -12,10 +12,10 @@ const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),
   lastname: Yup.string().required('Last Name is required'),
   email: Yup.string()
-    .required('Email Name is required')
+    .required('Contract Email is required')
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      'Invalid email format. Must contain @ in the format'
+      "Invalid email format. It must contain '@' symbol and the domain extension"
     ),
   telephone: Yup.string().required('Contact Phone is required'),
 })
@@ -140,7 +140,7 @@ const Settings: React.FC = () => {
                       />
                       {formik.touched.firstname && formik.errors.firstname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block' style={{fontSize: 12}}>
+                          <div className='fv-help-block' style={{fontSize: 13}}>
                             {formik.errors.firstname}
                           </div>
                         </div>
@@ -165,7 +165,7 @@ const Settings: React.FC = () => {
                       />
                       {formik.touched.lastname && formik.errors.lastname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block' style={{fontSize: 12}}>
+                          <div className='fv-help-block' style={{fontSize: 13}}>
                             {formik.errors.lastname}
                           </div>
                         </div>
@@ -184,12 +184,12 @@ const Settings: React.FC = () => {
                   <input
                     type='tel'
                     className='form-control form-control-lg form-control-solid'
-                    placeholder='Phone number'
+                    placeholder='Contact Phone'
                     {...formik.getFieldProps('telephone')}
                   />
                   {formik.touched.telephone && formik.errors.telephone && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block' style={{fontSize: 12}}>
+                      <div className='fv-help-block' style={{fontSize: 13}}>
                         {formik.errors.telephone}
                       </div>
                     </div>
@@ -198,19 +198,21 @@ const Settings: React.FC = () => {
               </div>
 
               <div className='row mb-6 p-1'>
-                <label className='col-lg-4 col-form-label required fw-bold fs-6'>Email</label>
+                <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                  Contract Email
+                </label>
 
                 <div className='col-lg-8 fv-row'>
                   <input
                     type='email'
                     className='form-control form-control-lg form-control-solid'
-                    placeholder='Email name'
+                    placeholder='Contact Email'
                     {...formik.getFieldProps('email')}
                     pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
                   />
                   {formik.touched.email && formik.errors.email && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block' style={{fontSize: 12}}>
+                      <div className='fv-help-block' style={{fontSize: 13}}>
                         {formik.errors.email}
                       </div>
                     </div>

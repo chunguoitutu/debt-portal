@@ -23,7 +23,7 @@ export function Overview() {
 
         <div className='card-body p-9'>
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-semibold text-muted'>Full Name</label>
+            <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>
@@ -35,7 +35,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-semibold text-muted'>Company Name</label>
+            <label className='col-lg-4 fw-bold text-muted'>Company Name</label>
 
             <div className='col-lg-8 fv-row'>
               <span className='fw-bold fs-6'>{currentUser?.company_name}</span>
@@ -43,7 +43,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-semibold text-muted'>Contact Phone</label>
+            <label className='col-lg-4 fw-bold text-muted'>Contact Phone</label>
 
             <div className='col-lg-8 d-flex align-items-center'>
               <span className='fw-bolder fs-6 me-2'>{currentUser?.telephone}</span>
@@ -51,7 +51,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-semibold text-muted'>Role</label>
+            <label className='col-lg-4 fw-bold text-muted'>Role</label>
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>{currentUser?.role_name}</span>
@@ -59,7 +59,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-semibold text-muted'>Contact Email</label>
+            <label className='col-lg-4 fw-bold text-muted'>Contact Email</label>
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>{currentUser?.email}</span>
@@ -67,7 +67,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-10'>
-            <label className='col-lg-4 fw-semibold text-muted'>Status</label>
+            <label className='col-lg-4 fw-bold text-muted'>Status</label>
 
             <div className='col-lg-8'>
               <span className='fw-bold fs-6'>
