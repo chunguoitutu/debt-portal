@@ -47,7 +47,7 @@ const Select: FC<Props> = ({
         <select
           id={name}
           name={name}
-          className={`form-select form-select-solid form-select-lg text-gray-700 ${className}`}
+          className={`form-select form-select-solid form-select-lg text-gray-700 px-4 ${className}`}
           {...rest}
         >
           {isOptionDefault && <option value=''></option>}

@@ -26,8 +26,6 @@ const LableOptionsCountry = ({config, keyData}: Props) => {
     (d: any) => Number(d[config.keyFilter]) === Number(keyData)
   )
 
-  console.log(lable)
-
   return (
     <div
       style={{

@@ -98,11 +98,13 @@ const Settings: React.FC = () => {
     }
   }
 
+  console.log(currentUser)
+
   return (
     <>
       {currentUser && isShowResetPassword && (
         <ChangePassword
-          username={currentUser.username}
+          id={currentUser.id}
           onClose={toggleResetPassword}
           show={isShowResetPassword}
         />

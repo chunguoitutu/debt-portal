@@ -9,11 +9,12 @@ import {UpdatePasswordInfo} from '../../../../types/common'
 import {updatePasswordCurrentUser} from '../../../../axios/request'
 import {convertErrorMessageResponse} from '../../../../utils'
 import ErrorMessage from '../../../../../components/error/ErrorMessage'
+// import {regexPassword} from 'src/app/constants'
 
 type Props = {
   show: boolean
   ignoreOldPassword?: boolean
-  username: string
+  id: number
   onClose: () => void
 }
 
@@ -56,7 +57,7 @@ const oldPasswordValidationSchema = Yup.object().shape({
     .required('Current Password is required'),
 })
 
-const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, username}) => {
+const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id}) => {
   const [loading, setLoading] = useState(false)
   const {logout} = useAuth()
 
@@ -84,7 +85,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
     if (!ignoreOldPassword) {
       onUpdatePasswordCurrentUser(
         {
-          username,
+          id,
           old_password,
           new_password,
         },
