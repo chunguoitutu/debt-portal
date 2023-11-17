@@ -11,7 +11,7 @@ import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizard
 
 const Horizontal: FC = () => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const [ stepper, setStepper ] = useState<StepperComponent | null>(null)
+  const [stepper, setStepper] = useState<StepperComponent | null>(null)
   const [currentSchema, setCurrentSchema] = useState(createAccountSchemas[0])
   const [initValues] = useState<ICreateAccount>(inits)
   const [isSubmitButton, setSubmitButton] = useState(false)

@@ -71,6 +71,7 @@ const CreateJobType = ({
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
+          const job_name = values.job_type_name
           handleUpdated()
           handleClose()
           resetForm()
@@ -78,7 +79,7 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           swalToast.fire({
             icon: 'success',
-            title: `Job type successfully created.`,
+            title: `Job ${job_name} successfully created`,
             timer: 1500,
           })
         } catch (error) {
@@ -99,12 +100,13 @@ const CreateJobType = ({
             request_more_information: requestMoreInformation ? 1 : 0,
             status: status ? 1 : 0,
           })
+          const job_name = values.job_type_name
           handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
           swalToast.fire({
             icon: 'success',
-            title: `Job type successfully updated.`,
+            title: `Job ${job_name} successfully updated`,
           })
         } catch (error) {
           swalToast.fire({
@@ -124,7 +126,7 @@ const CreateJobType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
       backdrop={true}

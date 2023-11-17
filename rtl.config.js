@@ -1,11 +1,11 @@
-const path = require('path');
-const WebpackRTLPlugin = require('webpack-rtl-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const RemovePlugin = require('remove-files-webpack-plugin');
+const path = require('path')
+const WebpackRTLPlugin = require('webpack-rtl-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const RemovePlugin = require('remove-files-webpack-plugin')
 
 // global variables
-const distPath = `${path.resolve(__dirname)}/src/_metronic/assets/rtl`;
-const entries = { style: './src/_metronic/assets/sass/style.scss' };
+const distPath = `${path.resolve(__dirname)}/src/_metronic/assets/rtl`
+const entries = {style: './src/_metronic/assets/sass/style.scss'}
 
 module.exports = {
   entry: entries,

@@ -223,7 +223,7 @@ class DrawerComponent {
         this.overlayElement.classList.add(overlayClassOption.toString())
       }
 
-      if(!this._getOption('permanent')){
+      if (!this._getOption('permanent')) {
         this.overlayElement.addEventListener('click', (e) => {
           e.preventDefault()
           this._hide()

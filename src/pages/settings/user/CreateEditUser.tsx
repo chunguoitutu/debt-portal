@@ -67,7 +67,6 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   const {apiGetCompanyList, apiGetRoleList, apiCreateUser, apiUpdateUser} =
     config?.settings?.dependencies || {}
-  const {messageCreateSuccess, messageEditSuccess} = config?.settings || {}
   const {rows = []} = config || {}
 
   const {priority, currentUser} = useAuth()
@@ -203,8 +202,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       if (!data?.error) {
         await onRefreshListing()
         onClose()
+        const user_name = values.username
         swalToast.fire({
-          title: messageCreateSuccess,
+          title: `User ${user_name} successfully created`,
           icon: 'success',
         })
       } else {
@@ -236,9 +236,10 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       })
       if (!dataRes?.error) {
         await onRefreshListing()
+        const user_name = values.username
         onClose()
         swalToast.fire({
-          title: messageEditSuccess,
+          title: `User ${user_name} successfully updated`,
           icon: 'success',
         })
       } else {

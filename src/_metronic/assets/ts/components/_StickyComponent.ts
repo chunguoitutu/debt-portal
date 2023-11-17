@@ -255,9 +255,9 @@ class StickyComponent {
 
   // Create Instances
   public static createInstances(selector: string) {
-    DataUtil.getAllInstancesByKey("sticky").forEach((stickyInst) => {
-      window.removeEventListener("scroll", stickyInst.scroll);
-    });
+    DataUtil.getAllInstancesByKey('sticky').forEach((stickyInst) => {
+      window.removeEventListener('scroll', stickyInst.scroll)
+    })
 
     const elements = document.body.querySelectorAll(selector)
     elements.forEach((element) => {

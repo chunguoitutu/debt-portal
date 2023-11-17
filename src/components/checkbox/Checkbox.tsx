@@ -1,8 +1,7 @@
 import {FC, InputHTMLAttributes, useId} from 'react'
 import clsx from 'clsx'
 
-interface Props
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {
+interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {
   name: string
   label?: string
   desc?: string
