@@ -144,7 +144,15 @@ const Table: FC<Props> = ({
 
     try {
       const endPoint = endPointDelete + `/${idRemove}`
-      await request.delete(endPoint)
+      const {data} = await request.delete(endPoint)
+      if (data.error) {
+        return swalToast.fire({
+          title:
+            data.message ||
+            `Can't delete this Loan Type, because it has been assigned to one or more applications`,
+          icon: 'error',
+        })
+      }
 
       // handle refresh data
       await onFetchDataList({...pagination, currentPage: 1})
