@@ -17,6 +17,7 @@ import {KTIcon} from '../../../_metronic/helpers'
 import {DEFAULT_MESSAGE_ERROR_500} from '../../../app/constants/error-message'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
+import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -82,12 +83,11 @@ const CreateLoanType = ({
             title: `Loan ${loan_name} successfully created`,
           })
         } catch (error) {
-          console.error(error)
+          const message = convertErrorMessageResponse(error)
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: 'Error',
-            text: DEFAULT_MESSAGE_ERROR_500,
+            title: message,
           })
         } finally {
           setSubmitting(false)
