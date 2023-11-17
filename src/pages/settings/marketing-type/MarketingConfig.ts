@@ -12,7 +12,6 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     messageDeleteSuccess: 'Marketing Type successfully deleted',
     buttonAddNew: 'New Marketing Type',
     endpoint: 'config/marketing_type',
-    swalToastTitle: 'Marketing type successfully',
   },
   rows: [
     {

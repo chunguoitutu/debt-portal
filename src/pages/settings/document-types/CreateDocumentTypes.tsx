@@ -68,6 +68,7 @@ const CreateDocumentType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          const document_name = values.type_name
           handleUpdated()
           handleClose()
           resetForm()
@@ -76,7 +77,7 @@ const CreateDocumentType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Document type successfully created',
+            title: `Document ${document_name} successfully created`,
           })
         } catch (error) {
           swalToast.fire({
@@ -94,13 +95,14 @@ const CreateDocumentType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          const document_name = values.type_name
           handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Document type successfully update',
+            title: `Document ${document_name} successfully updated`,
           })
         } catch (error) {
           console.error(error)
@@ -123,7 +125,7 @@ const CreateDocumentType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
       backdrop={true}

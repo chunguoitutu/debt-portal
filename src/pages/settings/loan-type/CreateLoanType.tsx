@@ -29,7 +29,7 @@ type Props = {
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
-  type_name: Yup.string().required('Loan Type Name is required'),
+  type_name: Yup.string().required('Loan Type is required'),
   description: Yup.string().max(45, 'Description must be at most 45 characters'),
 })
 
@@ -70,6 +70,7 @@ const CreateLoanType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          const loan_name = values.type_name
           handleUpdated()
           handleClose()
           resetForm()
@@ -78,7 +79,7 @@ const CreateLoanType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Loan type successfully created.`,
+            title: `Loan ${loan_name} successfully created`,
           })
         } catch (error) {
           console.error(error)
@@ -97,13 +98,14 @@ const CreateLoanType = ({
             ...values,
             status: status ? 1 : 0,
           })
+          const loan_name = values.type_name
           handleUpdated()
           handleClose()
           setLoadApi(!loadApi)
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Loan type successfully updated`,
+            title: `Loan ${loan_name} successfully updated`,
           })
         } catch (error) {
           swalToast.fire({
@@ -124,7 +126,7 @@ const CreateLoanType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
       backdrop={true}
@@ -154,6 +156,9 @@ const CreateLoanType = ({
                         value={values[row.key] || ''}
                         onChange={handleChange}
                       />
+                      {errors[row?.key] && touched[row?.key] && (
+                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                      )}
                     </div>
                   ) : (
                     <div className='d-flex flex-column mb-16px'>
