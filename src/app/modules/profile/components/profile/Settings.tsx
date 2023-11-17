@@ -15,7 +15,7 @@ const profileDetailsSchema = Yup.object().shape({
     .required('Contract Email is required')
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      'Invalid email format. Must contain @ in the format'
+      "Invalid email format. It must contain '@' symbol and the domain extension"
     ),
   telephone: Yup.string().required('Contact Phone is required'),
 })
@@ -184,7 +184,7 @@ const Settings: React.FC = () => {
                   <input
                     type='tel'
                     className='form-control form-control-lg form-control-solid'
-                    placeholder='Phone number'
+                    placeholder='Contact Phone'
                     {...formik.getFieldProps('telephone')}
                   />
                   {formik.touched.telephone && formik.errors.telephone && (
@@ -206,7 +206,7 @@ const Settings: React.FC = () => {
                   <input
                     type='email'
                     className='form-control form-control-lg form-control-solid'
-                    placeholder='Email name'
+                    placeholder='Contact Email'
                     {...formik.getFieldProps('email')}
                     pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
                   />

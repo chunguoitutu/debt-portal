@@ -71,18 +71,6 @@ const CreateEditCompanies = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const generateField = React.useMemo(() => {
-    if (information) {
-      return rows.reduce((a, b) => {
-        a[b.key] = information[b.key] || ''
-        return a
-      }, {})
-    }
-    return {}
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [information])
-
   const {
     values,
     touched,
@@ -94,7 +82,12 @@ const CreateEditCompanies = ({
     setSubmitting,
   } = useFormik({
     initialValues: {
-      ...generateField,
+      company_name: data ? data?.['company_name'] : '',
+      company_code: data ? data?.['company_code'] : '',
+      business_uen: data ? data?.['business_uen'] : '',
+      telephone: information ? String(information?.telephone) : '',
+      email: data ? data?.['email'] : '',
+      address: data ? data?.['address'] : '',
       open_date: data ? data?.['open_date'].slice(0, 11) : '',
     },
     validationSchema: newCompaniesSchema,
@@ -108,7 +101,6 @@ const CreateEditCompanies = ({
             telephone: String(values.telephone),
             email: values.email,
             address: values.address,
-            website: values.website,
             open_date: new Date(values.open_date),
             status: status ? 1 : 0,
           })
@@ -139,7 +131,6 @@ const CreateEditCompanies = ({
             telephone: String(values.telephone),
             email: values.email,
             address: values.address,
-            website: values.website,
             open_date: new Date(values.open_date),
             status: status ? 1 : 0,
           })
