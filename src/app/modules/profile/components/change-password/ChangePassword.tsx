@@ -33,17 +33,26 @@ const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]
 
 const passwordFormValidationSchema = Yup.object().shape({
   new_password: Yup.string()
-    .matches(regexPassword, 'New Password must be at least 8 character. Include at least one letter, one number and one special character.')
+    .matches(
+      regexPassword,
+      'New Password must be at least 8 character. Include at least one letter, one number and one special character.'
+    )
     .required('New Password is required'),
   confirm_new_password: Yup.string()
-    .matches(regexPassword, 'Confirm New Password must be at least 8 character. Include at least one letter, one number and one special character.')
+    .matches(
+      regexPassword,
+      'Confirm New Password must be at least 8 character. Include at least one letter, one number and one special character.'
+    )
     .required('Confirm New Password is required')
     .oneOf([Yup.ref('new_password')], 'Confirm New Password must match'),
 })
 
 const oldPasswordValidationSchema = Yup.object().shape({
   old_password: Yup.string()
-    .matches(regexPassword, 'Current Password must be at least 8 character. Include at least one letter, one number and one special character.')
+    .matches(
+      regexPassword,
+      'Current Password must be at least 8 character. Include at least one letter, one number and one special character.'
+    )
     .required('Current Password is required'),
 })
 
@@ -106,7 +115,11 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, us
       logout()
     } catch (error: any) {
       const message = convertErrorMessageResponse(error)
-      setStatus(message)
+
+      swalToast.fire({
+        icon: 'error',
+        title: message,
+      })
     } finally {
       setLoading(false)
     }
