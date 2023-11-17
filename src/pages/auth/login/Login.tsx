@@ -92,7 +92,9 @@ export function Login() {
       if (isAdmin) {
         const {data} = await request.post(
           'config/company/listing',
-          {},
+          {
+            status: true,
+          },
           {
             headers: {
               authorization: 'Bearer ' + dataInfo.token,
