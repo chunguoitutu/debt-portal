@@ -1,4 +1,4 @@
-import {Option} from '../modules/auth'
+import {Option} from '../types/common'
 
 export const SALUTATION_OPTION: Option[] = [
   {label: 'Mr', value: 'mr'},
