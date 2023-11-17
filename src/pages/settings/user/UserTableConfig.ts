@@ -1,5 +1,10 @@
+// import {regexPassword} from '../../../app/constants'
 import {TableConfig} from '../../../app/types/common'
+import {convertMessageErrorMaximum} from '../../../app/utils'
 import Badge from '../../../components/badge/Badge'
+import * as Yup from 'yup'
+
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/gi
 
 export const USER_TABLE_CONFIG: TableConfig = {
   settings: {
@@ -27,13 +32,16 @@ export const USER_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'username',
-      name: 'User Name',
+      name: 'Username',
       isCreateEdit: true,
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
       },
+      validationFormik: Yup.string()
+        .required('Username is required')
+        .max(64, convertMessageErrorMaximum(64)),
     },
     {
       isHide: true,
@@ -45,10 +53,14 @@ export const USER_TABLE_CONFIG: TableConfig = {
         typeInput: 'password',
         isRequired: true,
       },
+      validationFormik: Yup.string().matches(
+        regexPassword,
+        'Password must be at least 8 character. Include at least one letter, one number and one special character.'
+      ),
     },
     {
       key: 'role_name',
-      name: 'Role Name',
+      name: 'Role',
     },
     {
       key: 'role_id',
@@ -60,6 +72,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
         isRequired: true,
         fieldLabelOption: 'role_name',
       },
+      validationFormik: Yup.string().required('Role name is required'),
     },
     {
       key: 'firstname',
@@ -70,15 +83,20 @@ export const USER_TABLE_CONFIG: TableConfig = {
         typeInput: 'text',
         isRequired: true,
       },
+      validationFormik: Yup.string()
+        .required('First name is required')
+        .max(255, convertMessageErrorMaximum(255)),
     },
     {
       key: 'middlename',
       name: 'Middle Name',
       isCreateEdit: true,
+      isHide: true,
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
       },
+      validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
     },
     {
       key: 'lastname',
@@ -89,6 +107,9 @@ export const USER_TABLE_CONFIG: TableConfig = {
         typeInput: 'text',
         isRequired: true,
       },
+      validationFormik: Yup.string()
+        .required('Last name is required')
+        .max(255, convertMessageErrorMaximum(255)),
     },
     {
       key: 'telephone',
@@ -97,8 +118,10 @@ export const USER_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
-        isRequired: true,
       },
+      validationFormik: Yup.string()
+        .min(6, 'Minimum 6 symbols')
+        .max(11, convertMessageErrorMaximum(11)),
     },
     {
       key: 'email',
@@ -107,8 +130,10 @@ export const USER_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'input',
         typeInput: 'email',
-        isRequired: true,
       },
+      validationFormik: Yup.string()
+        .email('Email is not in valid format')
+        .max(255, convertMessageErrorMaximum(255)),
     },
     {
       key: 'company_id',
@@ -120,6 +145,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
         fieldLabelOption: 'company_name',
         isRequired: true,
       },
+      validationFormik: Yup.string().required('Company is required'),
     },
     {
       key: 'is_active',

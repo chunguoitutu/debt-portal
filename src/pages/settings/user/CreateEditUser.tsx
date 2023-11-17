@@ -16,6 +16,8 @@ import {useAuth} from '../../../app/context/AuthContext'
 import {useFormik} from 'formik'
 import {swalToast} from '../../../app/swal-notification'
 import {DEFAULT_MESSAGE_ERROR_500, DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
+import {convertErrorMessageResponse} from 'src/app/utils'
+import Cookies from 'js-cookie'
 
 type Props = {
   config?: TableConfig
@@ -25,22 +27,7 @@ type Props = {
   onRefreshListing: () => Promise<void>
 }
 
-export const roleSchema = Yup.object().shape({
-  firstname: Yup.string().required('First name is required'),
-  lastname: Yup.string().required('Last name is required'),
-  username: Yup.string().required('User name is required'),
-  company_id: Yup.string().required('Company is required'),
-  role_id: Yup.string().required('Role name is required'),
-  email: Yup.string().email("Email isn't valid").required('Email is required'),
-  telephone: Yup.string()
-    .min(6, 'Minimum 6 symbols')
-    .max(11, 'Maximum 11 symbols')
-    .required('Telephone is required'),
-})
-
-export const passwordSchema = Yup.object().shape({
-  password: Yup.string().required('Password is required'),
-})
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/gi
 
 interface ValuesCreateEdit
   extends Omit<
@@ -81,15 +68,37 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
   const {apiGetCompanyList, apiGetRoleList, apiCreateUser, apiUpdateUser} =
     config?.settings?.dependencies || {}
   const {messageCreateSuccess, messageEditSuccess} = config?.settings || {}
-  const {rows} = config || {}
+  const {rows = []} = config || {}
 
   const {priority, currentUser} = useAuth()
 
-  const validationSchema = useMemo(() => {
-    let schema = roleSchema
-    if (!data) return schema.concat(passwordSchema)
+  const company_id = useMemo(
+    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser]
+  )
 
-    return schema
+  // Rep
+  const validationSchema = useMemo(() => {
+    const schemaObj = rows
+      .filter((row) =>
+        data ? row.validationFormik : row.validationFormik && row.key !== 'password'
+      )
+      .reduce((acc, {key, validationFormik}) => ({[key]: validationFormik, ...acc}), {
+        ...(!data
+          ? {
+              password: Yup.string()
+                .required('Password is required')
+                .matches(
+                  regexPassword,
+                  'Password must be at least 8 character. Include at least one letter, one number and one special character.'
+                ),
+            }
+          : {}),
+      })
+
+    return Yup.object().shape(schemaObj)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
   const {
@@ -185,7 +194,10 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   async function handleCreateUser(payload: ValuesCreateEdit) {
     try {
-      const {data} = await request.post(apiCreateUser, payload)
+      const {data} = await request.post(apiCreateUser, {
+        ...payload,
+        company_id: +company_id,
+      })
 
       // handle after create successfully
       if (!data?.error) {
@@ -202,7 +214,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         })
       }
     } catch (error: any) {
-      const message = DEFAULT_MESSAGE_ERROR_500
+      const message = convertErrorMessageResponse(error)
 
       swalToast.fire({
         title: message,
@@ -218,7 +230,10 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     if (!data?.id) return
 
     try {
-      const {data: dataRes} = await request.post(apiUpdateUser + `/${data.id}`, payload)
+      const {data: dataRes} = await request.post(apiUpdateUser + `/${data.id}`, {
+        ...payload,
+        company_id: +company_id,
+      })
       if (!dataRes?.error) {
         await onRefreshListing()
         onClose()
@@ -243,11 +258,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
   }
 
   return (
-    <Modal
-      title={data ? `Edit User "${data.username}"` : 'Create New User'}
-      show={show}
-      onClose={onClose}
-    >
+    <Modal title={data ? `Edit User "${data.username}"` : 'New User'} show={show} onClose={onClose}>
       <Tab.Container id='left-tabs-example' defaultActiveKey='first'>
         <Row>
           <Col>
@@ -258,7 +269,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                 }}
               >
                 <Nav.Link
-                  onClick={() => setActive(true)}
+                  onClick={() => {
+                    setActive(true)
+                  }}
                   eventKey='first'
                   style={{
                     width: '100%',
@@ -380,7 +393,8 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                                 name={key}
                                 value={values[key] || ''}
                                 onChange={handleChange}
-                                required={isRequired}
+                                required={key === 'password' ? (!data ? true : false) : isRequired}
+                                disabled={key === 'username' && data ? true : false}
                               />
 
                               {errors[key] && touched[key] && (

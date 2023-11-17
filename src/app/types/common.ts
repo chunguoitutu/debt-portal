@@ -8,7 +8,7 @@ export type LoginInfo = {
 }
 
 export type UpdatePasswordInfo = {
-  username: string
+  id: number
   old_password: string
   new_password: string
 }
@@ -156,6 +156,7 @@ export type TableRow = {
     dependencyApi?: string
     noThereAreCommas?: boolean
   }
+  validationFormik?: Schema
 }
 
 export type TableConfig = {

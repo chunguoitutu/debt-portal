@@ -53,6 +53,8 @@
 }
 
 // custom swal
-.swal2-popup {
-  display: flex !important;
+.swal2-top-end {
+  .swal2-popup {
+    display: flex !important;
+  }
 }
