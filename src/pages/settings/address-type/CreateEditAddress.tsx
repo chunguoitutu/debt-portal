@@ -84,10 +84,11 @@ const CreateEditAddress = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
+            const address = values.address_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: swalToastTitle + ' created',
+                title: `Address ${address} successfully created`,
               })
             }
             handleUpdated()
@@ -114,10 +115,11 @@ const CreateEditAddress = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
+            const address = values.address_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: swalToastTitle + ' updated',
+                title: `Address ${address} successfully updated`,
               })
             }
             handleUpdated()
@@ -142,7 +144,7 @@ const CreateEditAddress = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-600px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
       backdrop={true}

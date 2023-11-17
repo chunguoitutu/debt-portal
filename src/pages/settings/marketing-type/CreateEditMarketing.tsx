@@ -43,7 +43,7 @@ const CreatEditMarkettingType = ({
   handleUpdated,
 }: Props) => {
   const {rows, settings} = MAKETTING_TABLE_CONFIG
-  const {swalToastTitle, endpoint} = settings
+  const {endpoint} = settings
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
   const [status, setStatus] = useState(data?.status === 0 ? false : true)
@@ -84,10 +84,11 @@ const CreatEditMarkettingType = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
+            const marketing_name = values.marketing_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: swalToastTitle + ' created',
+                title: `Marketing ${marketing_name} successfully created`,
               })
             }
             resetForm()
@@ -112,10 +113,11 @@ const CreatEditMarkettingType = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
+            const marketing_name = values.marketing_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: swalToastTitle + ' updated',
+                title: `Marketing ${marketing_name} successfully updated`,
               })
             }
             handleUpdated()
@@ -138,7 +140,7 @@ const CreatEditMarkettingType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-600px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
       backdrop={true}

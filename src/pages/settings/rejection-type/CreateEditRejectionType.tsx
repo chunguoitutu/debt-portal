@@ -86,10 +86,11 @@ const CreateEditRejectionType = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
+            const rejection_name = values.rejection_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: swalToastTitle + ' created',
+                title: `Rejection ${rejection_name} successfully created`,
               })
             }
             handleUpdated()
@@ -114,10 +115,11 @@ const CreateEditRejectionType = ({
             status: status ? 1 : 0,
           })
           .then((response) => {
+            const rejection_name = values.rejection_type_name
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: swalToastTitle + ' updated',
+                title: `Rejection ${rejection_name} successfully updated`,
               })
             }
             handleUpdated()
@@ -140,7 +142,7 @@ const CreateEditRejectionType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-600px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
       show={show}
       onHide={handleClose}
       backdrop={true}
