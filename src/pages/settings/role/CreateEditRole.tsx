@@ -24,8 +24,8 @@ type Props = {
 }
 
 export const roleSchema = Yup.object().shape({
-  role_name: Yup.string().required('Role name is required.'),
-  priority: Yup.number().min(1, 'Priority is required.').required('Priority is required.'),
+  role_name: Yup.string().required('Role name is required'),
+  priority: Yup.number().min(1, 'Priority is required').required('Priority is required'),
 })
 
 const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {

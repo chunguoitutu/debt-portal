@@ -31,8 +31,8 @@ const AccountHeader: React.FC = () => {
                 <div className='d-flex align-items-center mb-2'>
                   <a
                     href='#'
-                    className='text-gray-900 text-hover-primary fs-3 me-1'
-                    style={{fontWeight: 600}}
+                    className='text-hover-primary'
+                    style={{fontWeight: 700, fontSize: 20, color: '#252F4A'}}
                   >
                     {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
                       currentUser?.lastname || ''
@@ -43,14 +43,14 @@ const AccountHeader: React.FC = () => {
                 <div className='d-flex flex-wrap fw-bold fs-6 mb-3 mt-0 pe-2'>
                   <a
                     href='#'
-                    className='d-flex align-items-center text-gray-400 text-hover-primary me-2 mb-2'
+                    className='d-flex align-items-center text-gray-400 text-hover-primary me-4 mb-2'
                   >
                     <KTIcon iconName='sms' className='fs-4 me-1' />
                     {currentUser?.email}
                   </a>
                   <a
                     href='#'
-                    className='d-flex align-items-center text-gray-400 text-hover-primary me-2 mb-2'
+                    className='d-flex align-items-center text-gray-400 text-hover-primary me-4 mb-2'
                   >
                     <KTIcon iconName='phone' className='fs-4 me-1' />
                     {currentUser?.telephone}
@@ -93,7 +93,7 @@ const AccountHeader: React.FC = () => {
             <li className='nav-item'>
               <Link
                 className={
-                  `nav-link text-active-primary me-6 ` +
+                  `nav-link text-active-primary me-6 fw-bolder ` +
                   (location.pathname === '/account/overview' && 'active')
                 }
                 to='/account/overview'
@@ -104,7 +104,7 @@ const AccountHeader: React.FC = () => {
             <li className='nav-item'>
               <Link
                 className={
-                  `nav-link text-active-primary me-6 ` +
+                  `nav-link text-active-primary me-6 fw-bolder ` +
                   (location.pathname === '/account/settings' && 'active')
                 }
                 to='/account/settings'
