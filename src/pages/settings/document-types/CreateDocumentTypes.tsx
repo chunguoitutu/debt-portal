@@ -15,6 +15,8 @@ import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
 import {DEFAULT_MESSAGE_ERROR_500} from '../../../app/constants/error-message'
 import {KTIcon} from '../../../_metronic/helpers'
+import TextArea from 'src/components/icons/textarea/TextArea'
+import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -27,7 +29,7 @@ type Props = {
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
-  type_name: Yup.string().required('Document Type Name is required'),
+  type_name: Yup.string().required('Document Type is required'),
   description: Yup.string().max(1024, 'Description must be at most 1024 characters'),
 })
 
@@ -77,14 +79,14 @@ const CreateDocumentType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Document ${document_name} successfully created`,
+            title: `Document Type ${document_name} successfully created`,
           })
         } catch (error) {
+          const message = convertErrorMessageResponse(error)
           swalToast.fire({
-            timer: 1500,
             icon: 'error',
-            title: 'Error',
-            text: DEFAULT_MESSAGE_ERROR_500,
+            title: message,
+            timer: 1500,
           })
         } finally {
           setSubmitting(false)
@@ -102,16 +104,14 @@ const CreateDocumentType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Document ${document_name} successfully updated`,
+            title: `Document Type ${document_name} successfully updated`,
           })
         } catch (error) {
-          console.error(error)
-          console.error(error)
+          const message = convertErrorMessageResponse(error)
           swalToast.fire({
-            timer: 1500,
             icon: 'error',
-            title: 'Error',
-            text: DEFAULT_MESSAGE_ERROR_500,
+            title: message,
+            timer: 1500,
           })
         } finally {
           setSubmitting(false)
@@ -147,19 +147,33 @@ const CreateDocumentType = ({
               }
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
-                  <div className='d-flex flex-column mb-16px'>
-                    <Input
-                      title={row.name}
-                      name={row.key}
-                      value={values[row.key] || ''}
-                      onChange={handleChange}
-                      required={isRequired}
-                    />
+                  {row.key === 'description' ? (
+                    <div>
+                      <TextArea
+                        title={row.name}
+                        name={row.key}
+                        value={values[row.key] || ''}
+                        onChange={handleChange}
+                      />
+                      {errors[row?.key] && touched[row?.key] && (
+                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                      )}
+                    </div>
+                  ) : (
+                    <div className='d-flex flex-column mb-16px'>
+                      <Input
+                        title={row.name}
+                        name={row.key}
+                        value={values[row.key] || ''}
+                        onChange={handleChange}
+                        required={isRequired}
+                      />
 
-                    {errors[row?.key] && touched[row?.key] && (
-                      <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                    )}
-                  </div>
+                      {errors[row?.key] && touched[row?.key] && (
+                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                      )}
+                    </div>
+                  )}
                 </div>
               )
             })}

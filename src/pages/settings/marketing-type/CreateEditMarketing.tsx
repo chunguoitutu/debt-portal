@@ -16,6 +16,7 @@ import {KTIcon} from '../../../_metronic/helpers'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
 import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
+import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -88,7 +89,7 @@ const CreatEditMarkettingType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Marketing ${marketing_name} successfully created`,
+                title: `Marketing Type ${marketing_name} successfully created`,
               })
             }
             resetForm()
@@ -97,10 +98,12 @@ const CreatEditMarkettingType = ({
             handleClose()
             setLoadApi(!loadapi)
           })
-          .catch((e) => {
+          .catch((error) => {
+            const message = convertErrorMessageResponse(error)
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title: message,
+              timer: 1500,
             })
           })
           .finally(() => setSubmitting(false))
@@ -128,9 +131,11 @@ const CreatEditMarkettingType = ({
             setLoadApi(!loadapi)
           })
           .catch((error) => {
+            const message = convertErrorMessageResponse(error)
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title: message,
+              timer: 1500,
             })
           })
           .finally(() => setSubmitting(false))

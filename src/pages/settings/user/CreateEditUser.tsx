@@ -395,7 +395,6 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                                 value={values[key] || ''}
                                 onChange={handleChange}
                                 required={key === 'password' ? (!data ? true : false) : isRequired}
-                                disabled={key === 'username' && data ? true : false}
                               />
 
                               {errors[key] && touched[key] && (

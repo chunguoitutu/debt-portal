@@ -17,6 +17,7 @@ import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
 import {KTIcon} from '../../../_metronic/helpers'
 import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
+import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -102,10 +103,12 @@ const CreateEditRejectionType = ({
             setStatus(false)
             setLoadApi(!loadapi)
           })
-          .catch((e) => {
+          .catch((error) => {
+            const message = convertErrorMessageResponse(error)
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title: message,
+              timer: 1500,
             })
           })
           .finally(() => setSubmitting(false))
@@ -133,9 +136,11 @@ const CreateEditRejectionType = ({
             setLoadApi(!loadapi)
           })
           .catch((error) => {
+            const message = convertErrorMessageResponse(error)
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title: message,
+              timer: 1500,
             })
           })
           .finally(() => setSubmitting(false))
