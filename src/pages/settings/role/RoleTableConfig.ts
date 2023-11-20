@@ -1,7 +1,9 @@
+import Badge from 'src/components/badge/Badge'
 import {TableConfig} from '../../../app/types/common'
 import {DropDownRole} from '../../../components/DropDownRole'
 import Select from '../../../components/select/select'
 import Priority from './Priority'
+import InputCheck from 'src/components/input/inputCheck'
 
 export const ROLE_TABLE_CONFIG: TableConfig = {
   settings: {
@@ -30,6 +32,8 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
+      classNameTableHead: 'w-50 min-w-200px',
+      classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
       isCreateEdit: true,
@@ -43,11 +47,22 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       isCreateEdit: true,
       component: Priority,
       componentCreateEdit: Select,
+      infoCreateEdit: {
+        type: 'input',
+        isRequired: true,
+      },
     },
     {
       key: 'permissions',
       name: 'Permissions',
       component: DropDownRole,
+      isCreateEdit: true,
+    },
+    {
+      key: 'status',
+      name: 'Status',
+      component: Badge,
+      componentCreateEdit: InputCheck,
       isCreateEdit: true,
     },
   ],

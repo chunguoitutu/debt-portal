@@ -605,7 +605,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       {
         id: uuidv4(),
         to: '/settings/roles',
-        label: 'Roles',
+        label: 'Role Listing',
         priority: [1, 2],
       },
     ],

@@ -1,4 +1,4 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {ChangeEvent, FC, Fragment, useEffect, useMemo, useState} from 'react'
 import Modal from '../../../components/modal/Modal'
 import {useFormik} from 'formik'
 import TextArea from '../../../components/icons/textarea/TextArea'
@@ -9,11 +9,12 @@ import Button from '../../../components/button/Button'
 import {RoleInfo, TableConfig, UpdateById} from '../../../app/types/common'
 import {PAGE_PERMISSION} from '../../../app/utils/pagePermission'
 import {useAuth} from '../../../app/context/AuthContext'
-import {isJson} from '../../../app/utils'
+import {convertErrorMessageResponse, isJson} from '../../../app/utils'
 import {createNewRole, updateRole} from '../../../app/axios/request'
 import {swalToast} from '../../../app/swal-notification'
 import {DEFAULT_MESSAGE_ERROR_500} from '../../../app/constants/error-message'
 import {ROLE_PRIORITY} from '../../../app/utils/globalConfig'
+import Cookies from 'js-cookie'
 
 type Props = {
   data?: RoleInfo
@@ -36,15 +37,23 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   const {currentUser, priority} = useAuth()
 
+  const company_id = useMemo(
+    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser]
+  )
+
   const {
     values,
     touched,
     errors,
     isSubmitting,
     handleChange,
+    handleBlur,
     handleSubmit,
     resetForm,
     setValues,
+    setFieldValue,
     setSubmitting,
   } = useFormik<RoleInfo>({
     initialValues: {
@@ -52,6 +61,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       role_name: '',
       description: '',
       permissions: '',
+      status: 1,
       priority: 0,
     },
     validationSchema: roleSchema,
@@ -176,7 +186,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   async function onCreateNewRole(payload: Omit<RoleInfo, 'id'>) {
     try {
-      await createNewRole({...payload, company_id: currentUser?.company_id || 0})
+      await createNewRole({...payload, company_id: +company_id || 0})
 
       // handle after create successfully
       await onRefreshListing()
@@ -188,8 +198,9 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'success',
       })
     } catch (error: any) {
+      const message = convertErrorMessageResponse(error)
       swalToast.fire({
-        title: DEFAULT_MESSAGE_ERROR_500,
+        title: message,
         icon: 'error',
       })
     } finally {
@@ -214,8 +225,9 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         icon: 'success',
       })
     } catch (error: any) {
+      const message = convertErrorMessageResponse(error)
       swalToast.fire({
-        title: DEFAULT_MESSAGE_ERROR_500,
+        title: message,
         icon: 'error',
       })
     } finally {
@@ -268,9 +280,13 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     setExpanded(e)
   }
 
+  function handleChangeStatus(e: ChangeEvent<HTMLInputElement>) {
+    setFieldValue('status', e.target.checked ? 1 : 0)
+  }
+
   return (
     <Modal
-      title={data ? `Edit Role "${data.role_name}"` : 'Create New Role'}
+      title={data ? `Edit Role "${data.role_name}"` : 'New Role'}
       show={show}
       onClose={onClose}
     >
@@ -283,6 +299,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
             if (component || componentCreateEdit) {
               const Component = componentCreateEdit || component
+
               if (key === 'permissions') {
                 return (
                   <Component
@@ -313,6 +330,17 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     errorTitle={errors[key]}
                     value={values.priority || ''}
                     onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                )
+              } else if (key === 'status') {
+                return (
+                  <Component
+                    checked={!!values.status}
+                    onChange={handleChangeStatus}
+                    id='status'
+                    title='Status'
+                    key={index}
                   />
                 )
               } else {
@@ -329,6 +357,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     name={key}
                     value={values[key] || ''}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     required={isRequired}
                   />
 
@@ -345,6 +374,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     name={key}
                     value={values[key] || ''}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     isRequired={isRequired}
                   />
 
