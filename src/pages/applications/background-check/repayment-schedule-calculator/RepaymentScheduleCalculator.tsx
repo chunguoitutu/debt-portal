@@ -106,7 +106,12 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       onHide={handleClose}
       backdrop={true}
     >
-      <div className='modal-header p-30px d-flex align-items-center justify-content-between'>
+      <div
+        style={{
+          padding: '30px',
+        }}
+        className='modal-header p-30px d-flex align-items-center justify-content-between'
+      >
         <h2
           style={{
             fontSize: '20px',

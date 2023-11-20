@@ -388,7 +388,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
             }
           })}
 
-        <div className='d-flex flex-end'>
+        <div className='d-flex flex-end pt-30px'>
           <button
             type='reset'
             onClick={() => onClose()}

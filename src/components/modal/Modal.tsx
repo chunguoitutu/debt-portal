@@ -21,7 +21,12 @@ const Modal: FC<Props> = ({show, title, className = '', children, onClose}) => {
       onHide={onClose}
       animation
     >
-      <div className='modal-header d-flex align-items-center gap-3'>
+      <div
+        style={{
+          padding: '30px',
+        }}
+        className='modal-header d-flex align-items-center gap-3'
+      >
         <h2 className='text-truncate'>{title}</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClose}>
           <KTIcon className='fs-1' iconName='cross' />
