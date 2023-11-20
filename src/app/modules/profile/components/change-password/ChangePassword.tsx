@@ -36,13 +36,13 @@ const passwordFormValidationSchema = Yup.object().shape({
   new_password: Yup.string()
     .matches(
       regexPassword,
-      'New Password must be at least 8 character. Include at least one letter, one number and one special character.'
+      'New Password must be at least 8 characters including at least one letter, one number, and one special character.'
     )
     .required('New Password is required'),
   confirm_new_password: Yup.string()
     .matches(
       regexPassword,
-      'Confirm New Password must be at least 8 character. Include at least one letter, one number and one special character.'
+      'Confirm New Password must be at least 8 characters including at least one letter, one number, and one special character.'
     )
     .required('Confirm New Password is required')
     .oneOf([Yup.ref('new_password')], 'Confirm New Password must match'),
@@ -52,7 +52,7 @@ const oldPasswordValidationSchema = Yup.object().shape({
   old_password: Yup.string()
     .matches(
       regexPassword,
-      'Current Password must be at least 8 character. Include at least one letter, one number and one special character.'
+      'Current Password must be at least 8 characters including at least one letter, one number, and one special character.'
     )
     .required('Current Password is required'),
 })
