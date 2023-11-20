@@ -16,6 +16,7 @@ import {KTIcon} from '../../../_metronic/helpers'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
 import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
+import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -100,10 +101,12 @@ const CreateEditAddress = ({
             setStatus(false)
             setLoadApi(!loadapi)
           })
-          .catch((e) => {
+          .catch((error) => {
+            const message = convertErrorMessageResponse(error)
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title: message,
+              timer: 1500,
             })
           })
           .finally(() => {
@@ -134,9 +137,11 @@ const CreateEditAddress = ({
             setLoadApi(!loadapi)
           })
           .catch((error) => {
+            const message = convertErrorMessageResponse(error)
             swalToast.fire({
               icon: 'error',
-              title: error?.message,
+              title: message,
+              timer: 1500,
             })
           })
           .finally(() => {

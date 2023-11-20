@@ -290,6 +290,10 @@ const Table: FC<Props> = ({
                           return <td key={i}>{moment(value).format('DD-MM-YYYY')}</td>
                         }
 
+                        if (key === 'created_date') {
+                          return <td key={i}>{moment(value).format('DD-MM-YYYY')}</td>
+                        }
+
                         if (component) {
                           if (key === 'status' || key === 'is_active') {
                             return (

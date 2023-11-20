@@ -14,6 +14,7 @@ import {DEFAULT_MESSAGE_ERROR_500} from '../../../app/constants/error-message'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
 import {KTIcon} from '../../../_metronic/helpers'
+import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -79,16 +80,15 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           swalToast.fire({
             icon: 'success',
-            title: `Job ${job_name} successfully created`,
+            title: `Job Type ${job_name} successfully created`,
 
             timer: 1500,
           })
         } catch (error) {
-          console.error(error)
+          const message = convertErrorMessageResponse(error)
           swalToast.fire({
             icon: 'error',
-            title: 'Error',
-            text: DEFAULT_MESSAGE_ERROR_500,
+            title: message,
             timer: 1500,
           })
         } finally {
@@ -107,13 +107,14 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           swalToast.fire({
             icon: 'success',
-            title: `Job ${job_name} successfully updated`,
+            title: `Job Type ${job_name} successfully updated`,
           })
         } catch (error) {
+          const message = convertErrorMessageResponse(error)
           swalToast.fire({
             icon: 'error',
-            title: 'Error',
-            text: DEFAULT_MESSAGE_ERROR_500,
+            title: message,
+            timer: 1500,
           })
         } finally {
           setSubmitting(false)

@@ -13,7 +13,7 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     showMessageTitle: 'marketing_type_name',
     buttonAddNew: 'New Marketing Type',
     endpoint: 'config/marketing_type',
-    swalToastTitle: 'Marketing type /%/ successfully',
+    swalToastTitle: 'Marketing Type /%/ successfully',
   },
   rows: [
     {

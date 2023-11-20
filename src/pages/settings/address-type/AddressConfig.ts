@@ -9,11 +9,11 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     showViewButton: false,
     endPointDelete: '/config/address_type',
     endPointGetListing: '/config/address_type',
-    messageDeleteSuccess: 'Address /%/ successfully deleted',
+    messageDeleteSuccess: 'Address Type /%/ successfully deleted',
     buttonAddNew: 'New Address',
     endpoint: 'config/address_type',
     showMessageTitle: 'address_type_name',
-    swalToastTitle: 'Address type /%/ successfully',
+    swalToastTitle: 'Address Type /%/ successfully',
   },
   rows: [
     {
