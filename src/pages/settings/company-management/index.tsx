@@ -149,7 +149,9 @@ export const CompanyManagement = () => {
                 'telephone',
               ]) &&
                 Number(information?.telephone) ===
-                  Number(!!values?.telephone ? values?.telephone : 0))
+                  Number(!!values?.telephone ? values?.telephone : 0) &&
+                moment(information?.['open_date']).format('YYYY-MM-DD') ===
+                  moment(values?.['open_date']).format('YYYY-MM-DD'))
             }
             loading={isSubmitting}
             onClick={() => handleSubmit()}
