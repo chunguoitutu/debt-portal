@@ -137,7 +137,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
       animation={true}
     >
       <div className='modal-header'>
-        <h3 className='mb-0'>Change Password</h3>
+        <h2 className='mb-0'>Change Password</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClosePopup}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -148,7 +148,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
           {!ignoreOldPassword && (
             <div className='col-12'>
               <div className='fv-row mb-0'>
-                <label htmlFor='old_password' className='form-label fs-6 fw-bold mb-3'>
+                <label htmlFor='old_password' className='form-label fs-4 fw-semibold mb-3'>
                   Current Password
                 </label>
                 <input
@@ -168,7 +168,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
 
           <div className='col-12'>
             <div className='fv-row mb-0'>
-              <label htmlFor='new_password' className='form-label fs-6 fw-bold mb-3'>
+              <label htmlFor='new_password' className='form-label fs-4 fw-semibold mb-3'>
                 New Password
               </label>
               <input
@@ -187,7 +187,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
 
           <div className='col-12'>
             <div className='fv-row mb-0'>
-              <label htmlFor='confirm_new_password' className='form-label fs-6 fw-bold mb-3'>
+              <label htmlFor='confirm_new_password' className='form-label fs-4 fw-semibold mb-3'>
                 Confirm New Password
               </label>
               <input
@@ -208,6 +208,16 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
           <button
             type='button'
             id='kt_sign_in_submit'
+            className='btn btn-secondary'
+            onClick={onClosePopup}
+            disabled={loading}
+          >
+            Cancel
+          </button>
+
+          <button
+            type='button'
+            id='kt_sign_in_submit'
             className='btn btn-primary'
             onClick={() => handleSubmit()}
             disabled={loading}
@@ -219,16 +229,6 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}
-          </button>
-
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-color-gray-400 btn-active-light-primary'
-            onClick={onClosePopup}
-            disabled={loading}
-          >
-            Cancel
           </button>
         </div>
       </div>
