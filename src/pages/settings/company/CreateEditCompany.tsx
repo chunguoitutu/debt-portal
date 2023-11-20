@@ -233,6 +233,13 @@ const CreateEditCompanies = ({
             </div>
 
             <div className='d-flex flex-end pt-10'>
+              <button
+                type='reset'
+                onClick={() => handleClose()}
+                className='btn btn-secondary align-self-center me-3'
+              >
+                Cancel
+              </button>
               <Button
                 className='btn-lg btn-primary'
                 type='submit'

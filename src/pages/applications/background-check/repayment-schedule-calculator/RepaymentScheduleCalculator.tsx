@@ -46,7 +46,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   }
   const {rows} = REPAYMENT_SHEDULE_CALCULATOR_CONFIG
   const {rows: rowsTable} = REPAYMENT_SHEDULE_TABLES
-  const {values, touched, errors, handleChange, handleSubmit} = useFormik({
+  const {values, touched, errors, handleChange, handleSubmit, handleBlur} = useFormik({
     initialValues: {
       totalsAmount: '',
       per_month_percent: '',
@@ -159,6 +159,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                                   title={row?.name}
                                   name={row?.key}
                                   value={values[row?.key] || ''}
+                                  onBlur={handleBlur}
                                   onChange={handleChange}
                                   type='date'
                                 />
@@ -176,6 +177,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                                 name={row.key}
                                 onChange={handleChange}
                                 error={errors[row?.key]}
+                                onBlur={handleBlur}
                                 touched={touched[row?.key]}
                                 errorTitle={errors[row?.key]}
                                 options={MONTHLY_DUE_DATE || []}
@@ -189,6 +191,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                               required={row?.require ? true : false}
                               title={row?.name}
                               name={row?.key}
+                              onBlur={handleBlur}
                               type={row.type}
                               noThereAreCommas={row?.noThereAreCommas}
                               value={values[row?.key] || ''}

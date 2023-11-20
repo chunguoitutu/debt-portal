@@ -389,6 +389,13 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
           })}
 
         <div className='d-flex flex-end'>
+          <button
+            type='reset'
+            onClick={() => onClose()}
+            className='btn btn-secondary align-self-center me-3'
+          >
+            Cancel
+          </button>
           <Button className='btn-lg btn-primary' type='submit' loading={isSubmitting}>
             {data ? 'Update' : 'Create'}
           </Button>

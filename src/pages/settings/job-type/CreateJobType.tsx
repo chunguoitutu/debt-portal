@@ -56,7 +56,6 @@ const CreateJobType = ({
     isSubmitting,
     handleChange,
     handleSubmit,
-    handleBlur,
     resetForm,
     setSubmitting,
   } = useFormik({
@@ -156,7 +155,6 @@ const CreateJobType = ({
                       <TextArea
                         title={row.name}
                         name={row.key}
-                        onBlur={handleBlur}
                         value={values[row.key] || ''}
                         onChange={handleChange}
                       />
@@ -171,7 +169,6 @@ const CreateJobType = ({
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
-                        onBlur={handleBlur}
                         required={isRequired}
                       />
 
@@ -200,6 +197,13 @@ const CreateJobType = ({
               />
             </div>
             <div className='d-flex justify-content-end pt-4'>
+              <button
+                type='reset'
+                onClick={() => handleClose()}
+                className='btn btn-secondary align-self-center me-3'
+              >
+                Cancel
+              </button>
               <Button type='submit' className='btn-lg btn-primary' loading={isSubmitting}>
                 {title === 'New' ? 'Create' : 'Update'}
               </Button>

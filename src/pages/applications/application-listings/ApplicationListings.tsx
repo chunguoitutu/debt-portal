@@ -174,7 +174,11 @@ const ApplicationListing = () => {
                 }
 
                 return (
-                  <td key={i} className={classNameTableBody}>
+                  <td
+                    style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
+                    key={i}
+                    className={classNameTableBody}
+                  >
                     <Badge color={color as any} title={title as any} key={i} />
                   </td>
                 )
@@ -185,7 +189,12 @@ const ApplicationListing = () => {
                   {component ? (
                     <Component />
                   ) : (
-                    <span className='text-gray-600 fw-semibold'>{value}</span>
+                    <span
+                      style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
+                      className='fw-semibold'
+                    >
+                      {value}
+                    </span>
                   )}
                 </td>
               )
@@ -377,12 +386,14 @@ const ApplicationListing = () => {
                       !row?.isHide && (
                         <th className={row?.classNameTableHead} key={i}>
                           <div className='cursor-pointer'>
-                            <span>{row.name}</span>
+                            <span style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}>
+                              {row.name}
+                            </span>
                           </div>
                         </th>
                       )
                   )}
-                  {showAction && <th className='text-center w-150px'>Action</th>}
+                  {showAction && <th className='text-center w-150px'>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -476,7 +487,13 @@ const ApplicationListing = () => {
           </div>
         </KTCardBody>
 
-        <div style={{padding: '10px 22.75px', display: 'flex', justifyContent: 'space-between'}}>
+        <div
+          style={{
+            padding: '10px 22.75px',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
           <RowPerPage
             lenghtData={searchCriteria.total}
             limit={searchCriteria.pageSize}

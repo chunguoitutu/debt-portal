@@ -9,6 +9,7 @@ import ImgLoanCrossCheck from './ImgLoanCrossCheck'
 import ImgPrintOptions from './ImgPrintOptions'
 import ImgSend from './ImgSend'
 import ImgUploadFile from './ImgUploadFile'
+import Close from './Close'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -22,6 +23,7 @@ const icons = {
   ImgPrintOptions: ImgPrintOptions,
   ImgSend: ImgSend,
   ImgUploadFile: ImgUploadFile,
+  Close: Close,
 }
 
 const Icons = ({name}) => {

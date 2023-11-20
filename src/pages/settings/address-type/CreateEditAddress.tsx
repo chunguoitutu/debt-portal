@@ -15,7 +15,6 @@ import Button from '../../../components/button/Button'
 import {KTIcon} from '../../../_metronic/helpers'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
-import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
@@ -29,7 +28,7 @@ type Props = {
 }
 
 export const CreateEditAddressSchema = Yup.object().shape({
-  address_type_name: Yup.string().required('Address Type name is required'),
+  address_type_name: Yup.string().required('Address Type is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -233,6 +232,13 @@ const CreateEditAddress = ({
                 id='Status'
               />
               <div className='d-flex flex-end pt-10'>
+                <button
+                  type='reset'
+                  onClick={() => handleClose()}
+                  className='btn btn-secondary align-self-center me-3'
+                >
+                  Cancel
+                </button>
                 <Button type='submit' className='btn-lg btn-primary' loading={isSubmitting}>
                   {titleLable === 'Edit' ? 'Update' : 'Create'}
                 </Button>

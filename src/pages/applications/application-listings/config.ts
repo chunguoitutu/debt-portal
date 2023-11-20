@@ -89,7 +89,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'status',
       name: 'STATUS',
       classNameTableBody: 'text-center',
-      classNameTableHead: 'text-center',
+      classNameTableHead: 'text-center pe-3',
       options: STATUS_APPLICATION_FILTER,
       infoFilter: {
         typeComponent: 'select',
