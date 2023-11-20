@@ -136,18 +136,18 @@ export const USER_TABLE_CONFIG: TableConfig = {
         .email('Email is not in valid format')
         .max(255, convertMessageErrorMaximum(255)),
     },
-    {
-      key: 'company_id',
-      name: 'Company',
-      isHide: true,
-      isCreateEdit: true,
-      infoCreateEdit: {
-        type: 'select',
-        fieldLabelOption: 'company_name',
-        isRequired: true,
-      },
-      validationFormik: Yup.string().required('Company is required'),
-    },
+    // {
+    //   key: 'company_id',
+    //   name: 'Company',
+    //   isHide: true,
+    //   isCreateEdit: true,
+    //   infoCreateEdit: {
+    //     type: 'select',
+    //     fieldLabelOption: 'company_name',
+    //     isRequired: true,
+    //   },
+    //   validationFormik: Yup.string().required('Company is required'),
+    // },
     {
       key: 'is_active',
       name: 'Status',

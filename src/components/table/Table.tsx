@@ -69,7 +69,7 @@ const Table: FC<Props> = ({
   const [loading, setLoading] = useState<boolean>(true)
 
   const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
-    pageSize: 6,
+    pageSize: 10,
     currentPage: 1,
     total: 0,
   })
@@ -135,7 +135,11 @@ const Table: FC<Props> = ({
       data?.searchCriteria &&
         setSearchCriteria((prev) => ({...prev, total: data?.total_count || 0}))
       data?.searchCriteria &&
-        setSearchCriterias((prev) => ({...prev, total: data?.total_count || 0}))
+        setSearchCriterias((prev) => ({
+          ...prev,
+          total: data?.total_count || 0,
+          currentPage: data?.searchCriteria?.currentPage,
+        }))
     } catch (error) {
       // no thing
     } finally {
@@ -183,6 +187,7 @@ const Table: FC<Props> = ({
   }
   async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
     setSearchCriteria((prev) => ({...prev, ...data}))
+    setSearchCriterias((prev) => ({...prev, ...data}))
     await onFetchDataList({...pagination, ...data})
   }
 

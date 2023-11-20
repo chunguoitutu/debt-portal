@@ -63,7 +63,7 @@ const MultipleSelectTree: FC<Props> = ({
       ref={selectRef}
     >
       <div
-        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-700 w-100 cursor-pointer h-100 px-6 py-3'
+        className='d-flex align-items-center justify-content-between gap-5 h-100 text-gray-700 w-100 cursor-pointer h-100 px-4 py-3'
         onClick={toggleTree}
       >
         <div className='d-flex align-items-center flex-wrap gap-3'>
@@ -84,15 +84,16 @@ const MultipleSelectTree: FC<Props> = ({
             </>
           )}
         </div>
-        <FontAwesomeIcon className='text-gray-500' icon={faChevronDown} />
+        <FontAwesomeIcon className='text-gray-600 fs-sm' icon={faChevronDown} />
       </div>
 
       {showTree && (
         <div
-          className='card card-body position-absolute w-100 z-index-1 p-8'
+          className='card card-body position-absolute z-index-1 p-8'
           style={{
             top: 'calc(100% + 8px)',
             left: '0',
+            width: 'calc(100% + 1px)',
           }}
         >
           {isLoading || !nodes.length ? (

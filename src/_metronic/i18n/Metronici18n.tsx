@@ -11,7 +11,6 @@ const initialState: Props = {
 }
 
 function getConfig(): Props {
-  console.log()
   const ls = localStorage.getItem(I18N_CONFIG_KEY)
   if (ls) {
     try {

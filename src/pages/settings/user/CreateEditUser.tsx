@@ -44,7 +44,6 @@ interface ValuesCreateEdit
   > {
   password: string | undefined
   role_id: string | number
-  company_id: string | number
 }
 
 const initialValues: ValuesCreateEdit = {
@@ -53,7 +52,6 @@ const initialValues: ValuesCreateEdit = {
   lastname: '',
   username: '',
   password: '',
-  company_id: '',
   role_id: '',
   email: '',
   telephone: '',
@@ -132,7 +130,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
     apiGetRoleList &&
       request
-        .post<DataResponse<RoleInfo[]>>(apiGetRoleList)
+        .post<DataResponse<RoleInfo[]>>(apiGetRoleList, {
+          company_id: +company_id || 0,
+        })
         .then(({data}) => {
           let roleList = Array.isArray(data.data) ? [...data.data] : []
 
@@ -146,17 +146,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         })
 
     if (!data) return
-    const {
-      firstname,
-      middlename,
-      lastname,
-      username,
-      company_id,
-      role_id,
-      email,
-      telephone,
-      is_active,
-    } = data
+    const {firstname, middlename, lastname, username, role_id, email, telephone, is_active} = data
 
     setValues({
       ...values,
@@ -164,7 +154,6 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       middlename,
       lastname,
       username,
-      company_id,
       role_id,
       email,
       telephone,
@@ -180,7 +169,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     const mappingPayload = {
       ...values,
       is_active: values.is_active ? 1 : 0,
-      company_id: +values.company_id,
+      company_id: +company_id || 0,
       role_id: +values.role_id,
       telephone: values.telephone.toString(),
       password: values.password || undefined,
