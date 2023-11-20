@@ -188,14 +188,22 @@ const CreateEditCompanies = ({
       onHide={handleClose}
       backdrop={true}
     >
-      <div className='modal-header'>
+      <div
+        style={{
+          padding: '30px',
+        }}
+        className='modal-header'
+      >
         <h2>{titleLable} Company</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
 
-      <div style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}} className='modal-body '>
+      <div
+        style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
+        className='modal-body  p-30px'
+      >
         <div
           ref={stepperRef}
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
@@ -232,7 +240,7 @@ const CreateEditCompanies = ({
               />
             </div>
 
-            <div className='d-flex flex-end pt-10'>
+            <div className='d-flex flex-end pt-30px'>
               <button
                 type='reset'
                 onClick={() => handleClose()}
