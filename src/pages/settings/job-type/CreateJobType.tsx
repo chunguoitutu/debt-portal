@@ -26,7 +26,7 @@ type Props = {
 }
 
 export const CreateJobTypeSchema = Yup.object().shape({
-  job_type_name: Yup.string().required('Job Type Name is required'),
+  job_type_name: Yup.string().required('Job Type is required'),
   description: Yup.string().max(45, 'Description must be at most 45 characters'),
 })
 
@@ -157,6 +157,9 @@ const CreateJobType = ({
                         value={values[row.key] || ''}
                         onChange={handleChange}
                       />
+                      {errors[row?.key] && touched[row?.key] && (
+                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
+                      )}
                     </div>
                   ) : (
                     <div className='d-flex flex-column mb-16px'>

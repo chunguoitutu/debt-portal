@@ -154,10 +154,10 @@ const Table: FC<Props> = ({
     try {
       const endPoint = endPointDelete + `/${idRemove}`
       const {data} = await request.delete(endPoint)
-      if (data.error) {
+      if (data?.error) {
         return swalToast.fire({
           title:
-            data.message ||
+            data?.message ||
             `Can't delete this Loan Type, because it has been assigned to one or more applications`,
           icon: 'error',
         })
