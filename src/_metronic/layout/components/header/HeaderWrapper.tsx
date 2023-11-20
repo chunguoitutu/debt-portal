@@ -17,6 +17,8 @@ export function HeaderWrapper() {
       <div
         style={{
           width: '100%',
+          position: 'sticky',
+          top: '0',
         }}
         id='kt_app_header_container'
         className={clsx(

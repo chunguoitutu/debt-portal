@@ -9,6 +9,7 @@
 
 :root {
   --bg-gray-color: #f9f9f9;
+  --height-header: 80px;
 }
 
 #root {
@@ -52,5 +53,19 @@ input[type='number']::-webkit-outer-spin-button {
   &:focus,
   &:active {
     background-color: var(--bs-gray-100) !important;
+  }
+}
+
+#kt_app_header_container {
+  height: 80px;
+}
+
+@media (min-width: 1024px) {
+  .app-container {
+    height: calc(100vh - 140px);
+  }
+
+  .app-root-view-height {
+    overflow-y: hidden !important;
   }
 }

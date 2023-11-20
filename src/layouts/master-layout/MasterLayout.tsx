@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useEffect, useMemo} from 'react'
 import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom'
 import {HeaderWrapper} from '../../_metronic/layout/components/header'
 import {ScrollTop} from '../../_metronic/layout/components/scroll-top'
@@ -11,6 +11,7 @@ import {ToolbarWrapper} from '../../_metronic/layout/components/toolbar'
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 import {useAuth} from '../../app/context/AuthContext'
+import clsx from 'clsx'
 
 interface iJwtDecode {
   iat: number
@@ -62,9 +63,20 @@ const MasterLayout = () => {
     return <Navigate to='/login' />
   }
 
+  const isViewHeight = useMemo(() => {
+    const arrCheck = ['loans', 'application/create']
+    return arrCheck.some((el) => pathname.includes(el))
+  }, [pathname])
+
   return (
     <PageDataProvider>
-      <div className='d-flex flex-column flex-root app-root' id='kt_app_root'>
+      <div
+        className={clsx([
+          'd-flex flex-column flex-root app-root min-vh-100 vh-100',
+          isViewHeight && 'app-root-view-height',
+        ])}
+        id='kt_app_root'
+      >
         <div className='app-page flex-column flex-column-fluid' id='kt_app_page'>
           <HeaderWrapper />
           <div className='app-wrapper flex-column flex-row-fluid' id='kt_app_wrapper'>
