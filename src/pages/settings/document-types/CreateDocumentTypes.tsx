@@ -189,6 +189,13 @@ const CreateDocumentType = ({
               />
             </div>
             <div className='d-flex justify-content-end pt-4'>
+              <button
+                type='reset'
+                onClick={() => handleClose()}
+                className='btn btn-secondary align-self-center me-3'
+              >
+                Cancel
+              </button>
               <Button type='submit' loading={isSubmitting} className='btn-lg btn-primary'>
                 {title === 'New' ? 'Create' : 'Update'}
               </Button>

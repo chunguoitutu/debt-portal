@@ -16,7 +16,6 @@ import {KTIcon} from '../../../_metronic/helpers'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
 import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
-import {convertErrorMessageResponse} from 'src/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -90,7 +89,7 @@ const CreatEditMarkettingType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Marketing Type ${marketing_name} successfully created`,
+                title: `Marketing ${marketing_name} successfully created`,
               })
             }
             resetForm()
@@ -99,12 +98,10 @@ const CreatEditMarkettingType = ({
             handleClose()
             setLoadApi(!loadapi)
           })
-          .catch((error) => {
-            const message = convertErrorMessageResponse(error)
+          .catch((e) => {
             swalToast.fire({
               icon: 'error',
-              title: message,
-              timer: 1500,
+              title: DEFAULT_MSG_ERROR,
             })
           })
           .finally(() => setSubmitting(false))
@@ -132,11 +129,9 @@ const CreatEditMarkettingType = ({
             setLoadApi(!loadapi)
           })
           .catch((error) => {
-            const message = convertErrorMessageResponse(error)
             swalToast.fire({
               icon: 'error',
-              title: message,
-              timer: 1500,
+              title: DEFAULT_MSG_ERROR,
             })
           })
           .finally(() => setSubmitting(false))
@@ -204,6 +199,13 @@ const CreatEditMarkettingType = ({
                 id='Status'
               />
               <div className='d-flex flex-end pt-10'>
+                <button
+                  type='reset'
+                  onClick={() => handleClose()}
+                  className='btn btn-secondary align-self-center me-3'
+                >
+                  Cancel
+                </button>
                 <Button type='submit' className='btn-lg btn-primary' loading={isSubmitting}>
                   {titleLable === 'Edit' ? 'Update' : 'Create'}
                 </Button>

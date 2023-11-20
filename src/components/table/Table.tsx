@@ -238,15 +238,41 @@ const Table: FC<Props> = ({
                 {rows.map(
                   (row, i) =>
                     !row?.isHide && (
-                      <th className={row.classNameTableHead} key={i} style={{maxWidth: '500px'}}>
-                        <div className='d-flex flex-row gap-3 cursor-pointer'>
-                          <span>{row.name}</span>
+                      <th
+                        className={row.classNameTableHead}
+                        key={i}
+                        style={{
+                          maxWidth: '500px',
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: '100%',
+                            display: row.name === 'Status' ? 'flex' : '',
+                            justifyContent: row.name === 'Status' ? 'center' : '',
+                            alignItems: row.name === 'Status' ? 'center' : '',
+                            paddingRight: row.name === 'Status' ? '9.75px' : '',
+                          }}
+                          className={`d-flex flex-row gap-3 cursor-pointer ${
+                            row.name === 'STATUS' ? 'w-100' : ''
+                          }`}
+                        >
+                          <span style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}>
+                            {row.name}
+                          </span>
                           {isShowFilter && <Filter />}
                         </div>
                       </th>
                     )
                 )}
-                {(showAction || showRefresh) && <th className='text-center w-150px'>Action</th>}
+                {(showAction || showRefresh) && (
+                  <th
+                    style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}
+                    className='text-center w-150px'
+                  >
+                    Actions
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody className='text-gray-600 fw-bold'>
@@ -281,7 +307,15 @@ const Table: FC<Props> = ({
 
                         if (key === 'id') {
                           return (
-                            <td key={i} style={{maxWidth: '500px'}}>
+                            <td
+                              key={i}
+                              style={{
+                                maxWidth: '500px',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                              }}
+                            >
                               {Number(idx) +
                                 1 +
                                 (Number(searchCriteria.currentPage) *
@@ -293,20 +327,46 @@ const Table: FC<Props> = ({
 
                         if (key === 'open_date') {
                           return (
-                            <td style={{maxWidth: '500px'}} key={i}>
+                            <td
+                              style={{
+                                maxWidth: '500px',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                              }}
+                              key={i}
+                            >
                               {moment(value).format('DD-MM-YYYY')}
                             </td>
                           )
                         }
 
                         if (key === 'created_date') {
-                          return <td key={i}>{moment(value).format('DD-MM-YYYY')}</td>
+                          return (
+                            <td
+                              key={i}
+                              style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
+                            >
+                              {moment(value).format('DD-MM-YYYY')}
+                            </td>
+                          )
                         }
 
                         if (component) {
                           if (key === 'status' || key === 'is_active') {
                             return (
-                              <td key={i} style={{maxWidth: '500px'}}>
+                              <td
+                                key={i}
+                                style={{
+                                  maxWidth: '500px',
+                                  fontSize: '14px',
+                                  fontWeight: '500',
+                                  lineHeight: '20px',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}
+                              >
                                 <Component
                                   color={value === 1 ? 'success' : 'danger'}
                                   title={value === 1 ? 'Active' : 'Disable'}
@@ -327,7 +387,15 @@ const Table: FC<Props> = ({
                           }
 
                           return (
-                            <td key={i} style={{maxWidth: '500px'}}>
+                            <td
+                              key={i}
+                              style={{
+                                maxWidth: '500px',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                              }}
+                            >
                               <>
                                 <Component
                                   data={item}
@@ -348,7 +416,16 @@ const Table: FC<Props> = ({
                             {component ? (
                               <Component />
                             ) : (
-                              <span className={classNameTableBody}>{value}</span>
+                              <span
+                                style={{
+                                  fontSize: '14px',
+                                  fontWeight: '500',
+                                  lineHeight: '20px',
+                                }}
+                                className={classNameTableBody}
+                              >
+                                {value}
+                              </span>
                             )}
                           </td>
                         )
@@ -378,7 +455,10 @@ const Table: FC<Props> = ({
               ) : (
                 <tr>
                   <td colSpan={rows.length}>
-                    <div className='d-flex text-center w-100 align-content-center justify-content-center'>
+                    <div
+                      style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
+                      className='d-flex text-center w-100 align-content-center justify-content-center'
+                    >
                       No matching records found
                     </div>
                   </td>

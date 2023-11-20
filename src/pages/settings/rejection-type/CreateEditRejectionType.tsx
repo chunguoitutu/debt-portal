@@ -230,6 +230,13 @@ const CreateEditRejectionType = ({
                 id='Status'
               />
               <div className='d-flex flex-end pt-10'>
+                <button
+                  type='reset'
+                  onClick={() => handleClose()}
+                  className='btn btn-secondary align-self-center me-3'
+                >
+                  Cancel
+                </button>
                 <Button type='submit' className='btn-lg btn-primary' loading={isSubmitting}>
                   {titleLable === 'Edit' ? 'Update' : 'Create'}
                 </Button>

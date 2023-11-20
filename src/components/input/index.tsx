@@ -73,7 +73,7 @@ const Input: FC<Props> = ({
             }
           }}
           type={type === 'money' ? 'number' : type === 'number' ? 'text' : type}
-          className={`form-control-lg px-4 w-100 bg-transparent outline-none h-100 border-0 ${className}`}
+          className={`form-control-lg p-12px w-100 bg-transparent outline-none h-100 border-0 ${className}`}
           id={id || name}
           name={name}
           {...rest}
