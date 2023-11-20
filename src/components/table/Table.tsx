@@ -1,7 +1,6 @@
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
-
 import moment from 'moment'
 import ButtonDelete from '../button/ButtonDelete'
 import ButtonEdit from '../button/ButtonEdit'
@@ -34,7 +33,7 @@ type Props = {
 const Table: FC<Props> = ({
   config,
   onEditItem,
-  setSearchCriterias,
+  setSearchCriterias = () => {},
   onViewDetail,
   isUpdated,
   setIsUpdated,
@@ -70,7 +69,7 @@ const Table: FC<Props> = ({
   const [loading, setLoading] = useState<boolean>(true)
 
   const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
-    pageSize: 10,
+    pageSize: 6,
     currentPage: 1,
     total: 0,
   })
@@ -133,8 +132,10 @@ const Table: FC<Props> = ({
 
       Array.isArray(data.data) && setData(data.data)
 
-      data?.searchCriteria && setSearchCriteria(data?.searchCriteria)
-      data?.searchCriteria && setSearchCriterias(data?.searchCriteria)
+      data?.searchCriteria &&
+        setSearchCriteria((prev) => ({...prev, total: data?.total_count || 0}))
+      data?.searchCriteria &&
+        setSearchCriterias((prev) => ({...prev, total: data?.total_count || 0}))
     } catch (error) {
       // no thing
     } finally {
@@ -181,6 +182,7 @@ const Table: FC<Props> = ({
     }
   }
   async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
+    setSearchCriteria((prev) => ({...prev, ...data}))
     await onFetchDataList({...pagination, ...data})
   }
 

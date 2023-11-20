@@ -98,8 +98,6 @@ const Settings: React.FC = () => {
     }
   }
 
-  console.log(currentUser)
-
   return (
     <>
       {currentUser && isShowResetPassword && (
