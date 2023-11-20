@@ -132,13 +132,13 @@ const CreateDocumentType = ({
       backdrop={true}
     >
       <>
-        <div className='modal-header'>
+        <div className='modal-header' style={{padding: 30}}>
           <h2>{title} Document Type</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>
         </div>
-        <div className='flex-row-fluid' style={{padding: 23}}>
+        <div className='flex-row-fluid' style={{padding: 30}}>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
             {rows.map((row) => {
               const {infoCreateEdit} = row
@@ -180,7 +180,7 @@ const CreateDocumentType = ({
                 </div>
               )
             })}
-            <div className='mt-6'>
+            <div className='mt-16px'>
               <InputCheck
                 checked={status}
                 onChange={() => setStatus(!status)}
@@ -188,19 +188,26 @@ const CreateDocumentType = ({
                 title='Status'
               />
             </div>
-            <div className='d-flex justify-content-end pt-4'>
-              <button
-                type='reset'
-                onClick={() => handleClose()}
-                className='btn btn-secondary align-self-center me-3'
-              >
-                Cancel
-              </button>
-              <Button type='submit' loading={isSubmitting} className='btn-lg btn-primary'>
-                {title === 'New' ? 'Create' : 'Update'}
-              </Button>
-            </div>
           </form>
+        </div>
+        <div style={{borderTop: '1px solid #F1F1F2'}}>
+          <div className='d-flex justify-content-end' style={{padding: 30}}>
+            <button
+              type='reset'
+              onClick={() => handleClose()}
+              className='btn btn-secondary align-self-center me-3'
+            >
+              Cancel
+            </button>
+            <Button
+              type='submit'
+              className='btn-lg btn-primary'
+              onClick={() => handleSubmit()}
+              loading={isSubmitting}
+            >
+              {title === 'New' ? 'Create' : 'Update'}
+            </Button>
+          </div>
         </div>
       </>
     </Modal>,

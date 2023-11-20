@@ -24,14 +24,14 @@ const SearchBar = () => {
   )
 
   return (
-    <div className='card-title w-100'>
+    <div className='card-title  w-100'>
       {/* begin::Search */}
       <div className='d-flex align-items-center position-relative my-1'>
         <KTIcon iconName='magnifier' className='fs-1 position-absolute ms-6' />
         <input
           type='text'
           data-kt-user-table-filter='search'
-          className='form-control form-control-solid w-250px ps-14'
+          className='form-control form-control-solid w-100 ps-14'
           placeholder='Search here'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
