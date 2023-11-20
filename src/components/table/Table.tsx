@@ -297,7 +297,7 @@ const Table: FC<Props> = ({
               {data.length > 0 ? (
                 data.map((item, idx) => {
                   return (
-                    <tr key={idx}>
+                    <tr key={idx} className='fw-medium'>
                       {rows.map(({key, component, type, classNameTableBody, isHide}, i) => {
                         if (isHide) {
                           return <Fragment key={i}></Fragment>

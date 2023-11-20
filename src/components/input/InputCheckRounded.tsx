@@ -15,7 +15,7 @@ const InputCheck = ({title = '', label, checked = false, onChange, ...rest}: Pro
     <div>
       <div className='form-check form-check-custom form-check-solid form-switch'>
         {title !== '' && (
-          <label htmlFor={id} className='fs-5 fw-semibold cursor-grab'>
+          <label htmlFor={id} className='d-flex fw-semibold' style={{fontSize: 16}}>
             {title}
           </label>
         )}
@@ -31,9 +31,18 @@ const InputCheck = ({title = '', label, checked = false, onChange, ...rest}: Pro
               {...rest}
               id={id}
             />
+
+            <label htmlFor={id} className='fw-bold ps-2 fs-6 cursor-grab'>
+              {checked ? (
+                <span className='text-gray-500'>Active</span>
+              ) : (
+                <span className='text-gray-500'>Disabled</span>
+              )}
+            </label>
+
             {label && (
               <label htmlFor={id} className='fw-bold ps-2 fs-6 cursor-grab'>
-                {label}
+                {checked ? 'Active' : 'Disabled'}
               </label>
             )}
           </div>

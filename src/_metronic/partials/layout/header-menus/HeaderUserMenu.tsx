@@ -9,7 +9,7 @@ const HeaderUserMenu: FC = () => {
 
   return (
     <div
-      className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
+      className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-300px'
       data-kt-menu='true'
     >
       <div className='menu-item px-3'>
@@ -27,7 +27,7 @@ const HeaderUserMenu: FC = () => {
                 currentUser?.lastname || ''
               } `}
             </div>
-            <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
+            <a href='#' className='fw-bold text-muted text-hover-primary fs-7 two-line'>
               {currentUser?.email}
             </a>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
