@@ -46,7 +46,7 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
   }
 
   return (
-    <div className='card'>
+    <div className='card h-100'>
       <div style={{borderBottom: '1px solid  #f1f1f2', padding: '30px'}} className='modal-header '>
         <h2
           style={{
@@ -61,9 +61,12 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
           remark
         </h2>
       </div>
-      <div className='p-30px min-h-150px h-325px overflow-y-auto' ref={contentRef}>
+      <div className='p-30px min-h-150px overflow-y-auto' ref={contentRef}>
         {remarkList?.map((message, index: number) => (
-          <div className='remark-item d-flex mb-5' key={index}>
+          <div
+            className={`remark-item d-flex mb-${remarkList.length === index + 1 ? '0' : '5'}`}
+            key={index}
+          >
             <div className='w-36px h-36px rounded-pill me-4 d-flex align-items-center justify-content-center flex-shrink-0 bg-gray-200'>
               <ImgAvataRemark />
             </div>
@@ -86,7 +89,7 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
           </div>
         ))}
       </div>
-      <div style={{borderTop: '1px solid  #f1f1f2', padding: '14px'}}>
+      <div className='mt-auto' style={{borderTop: '1px solid  #f1f1f2', padding: '14px'}}>
         <div className='d-flex align-items-center gap-3' style={{}}>
           <input
             placeholder='Enter remark...'

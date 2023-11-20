@@ -1,12 +1,13 @@
 .application-details-form {
   $widthLabel: 180px;
-
   $widthLabelCustom: 204px;
+  height: 100%;
 
   .form-wrap {
     display: grid;
     grid-template-columns: repeat(2, auto);
     width: fit-content;
+    height: fit-content;
     min-width: min(100%, 1000px);
     gap: 24px;
 

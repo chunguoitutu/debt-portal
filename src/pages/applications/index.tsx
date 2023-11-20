@@ -53,7 +53,7 @@ interface ListIdEdit {
 }
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [currentStep, setCurrentStep] = useState<number>(3)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)
@@ -547,15 +547,70 @@ export const Applications = () => {
   return (
     <>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
-      <div className='row gx-3 gx-xl-6 gy-8'>
-        <div className='col-3 col-xxl-2 order-1'>
-          <Step
-            data={_STEP_APPLICATION}
-            stepCompleted={stepCompleted}
-            currentStep={currentStep}
-            onGoToStep={handleGoToStep}
-          />
+      <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden'>
+        <div className='col-3 col-xxl-2 order-1 h-fit-content align-self-start align-self-lg-center overflow-y-lg-auto'>
+          <div className='h-fit-content'>
+            <Step
+              data={_STEP_APPLICATION}
+              stepCompleted={stepCompleted}
+              currentStep={currentStep}
+              onGoToStep={handleGoToStep}
+            />
+          </div>
         </div>
+        <div className='col-9 col-xxl-8 order-2 d-flex flex-column h-100 m-0'>
+          <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
+            <HeaderApplication
+              labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
+              info={{
+                initialValues: values.customer_no,
+                date: values.application_date,
+              }}
+              percentCompleted={percentCompleted}
+              className='p-10'
+            />
+
+            <div className='overflow-lg-auto p-10 flex-grow-1'>
+              <div
+                className={`${currentStep !== 6 ? 'form-wrap' : ''}`}
+                style={currentStep === 2 ? {width: '91.5%'} : {}}
+              >
+                {CurrentComponentControl && (
+                  <CurrentComponentControl
+                    config={STEP_APPLICATION[currentStep - 1].config || []}
+                    formik={formik}
+                  />
+                )}
+
+                <GeneralButton
+                  handleSaveDraft={handleSaveDraft}
+                  handleSubmit={handleBeforeSubmit}
+                  config={STEP_APPLICATION[currentStep - 1].config || []}
+                  formik={formik}
+                  isDraft={isDraft}
+                  currentStep={currentStep}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='d-none d-xxl-flex flex-column col-xxl-2 order-0 order-xxl-3 h-100 overflow-y-hidden mt-0'>
+          <div style={{paddingBottom: '30px'}}>
+            <BackgroundCheck />
+          </div>
+          <div className='overflow-y-hidden flex-grow-1'>
+            <Remark setRemarkList={setRemarkList} remarkList={remarkList} />
+          </div>
+        </div>
+      </div>
+      {/* <div className='application-wrap d-flex flex-column overflow-y-hidden'>
+        <Step
+          data={_STEP_APPLICATION}
+          stepCompleted={stepCompleted}
+          currentStep={currentStep}
+          onGoToStep={handleGoToStep}
+        />
+
         <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-0 d-flex flex-column h-fit-content'>
           <HeaderApplication
             labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
@@ -588,15 +643,7 @@ export const Applications = () => {
             />
           </div>
         </div>
-        <div className='d-none d-xxl-block col-xxl-2 order-0 order-xxl-3'>
-          <div style={{paddingBottom: '30px'}}>
-            <BackgroundCheck />
-          </div>
-          <div>
-            <Remark setRemarkList={setRemarkList} remarkList={remarkList} />
-          </div>
-        </div>
-      </div>
+      </div> */}
     </>
   )
 }
