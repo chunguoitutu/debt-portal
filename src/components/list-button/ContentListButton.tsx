@@ -19,7 +19,10 @@ type Props = {
 const ContentListButton = ({config}: Props) => {
   return (
     <div className='card'>
-      <div style={{borderBottom: '1px solid  #f1f1f2', padding: '30px'}} className='modal-header '>
+      <div
+        style={{borderBottom: '1px solid  #f1f1f2', padding: '30px'}}
+        className='modal-header p-5'
+      >
         <h2
           style={{
             marginBottom: '0px',
@@ -34,7 +37,7 @@ const ContentListButton = ({config}: Props) => {
           {config?.title}
         </h2>
       </div>
-      <div className={`${config?.classWrapper ? config.classWrapper : 'py-16px px-30px'}`}>
+      <div className={`${config?.classWrapper ? config.classWrapper : 'py-16px px-5'}`}>
         {config?.row.map((data, index) => (
           <button
             key={index}
