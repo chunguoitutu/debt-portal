@@ -12,7 +12,7 @@ const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),
   lastname: Yup.string().required('Last Name is required'),
   email: Yup.string()
-    .required('Contract Email is required')
+    .required('Contact Email is required')
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
       "Invalid email format. It must contain '@' symbol and the domain extension"
@@ -199,7 +199,7 @@ const Settings: React.FC = () => {
 
               <div className='row mb-6 p-1'>
                 <label className='col-lg-4 col-form-label required fw-bold fs-6'>
-                  Contract Email
+                  Contact Email
                 </label>
 
                 <div className='col-lg-8 fv-row'>
