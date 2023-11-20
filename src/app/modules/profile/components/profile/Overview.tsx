@@ -15,7 +15,7 @@ export function Overview() {
           <Link
             to='/account/settings'
             className='btn btn-primary align-self-center'
-            style={{fontSize: 12}}
+            style={{fontSize: 14}}
           >
             Edit Profile
           </Link>
