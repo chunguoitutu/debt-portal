@@ -547,7 +547,7 @@ export const Applications = () => {
   return (
     <>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
-      <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden'>
+      <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1'>
         <div className='col-3 col-xxl-2 order-1 h-fit-content align-self-start align-self-lg-center overflow-y-lg-auto'>
           <div className='h-fit-content'>
             <Step
@@ -594,12 +594,14 @@ export const Applications = () => {
             </div>
           </div>
         </div>
-        <div className='d-none d-xxl-flex flex-column col-xxl-2 order-0 order-xxl-3 h-100 overflow-y-hidden mt-0'>
-          <div style={{paddingBottom: '30px'}}>
-            <BackgroundCheck />
-          </div>
-          <div className='overflow-y-hidden flex-grow-1'>
-            <Remark setRemarkList={setRemarkList} remarkList={remarkList} />
+        <div className='d-none d-xxl-flex col-xxl-2 order-0 order-xxl-3 h-100 mt-0'>
+          <div className='d-flex flex-column h-100'>
+            <div className='pb-6'>
+              <BackgroundCheck />
+            </div>
+            <div className='flex-grow-1 overflow-hidden'>
+              <Remark setRemarkList={setRemarkList} remarkList={remarkList} />
+            </div>
           </div>
         </div>
       </div>

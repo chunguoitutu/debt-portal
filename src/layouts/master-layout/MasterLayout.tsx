@@ -64,7 +64,7 @@ const MasterLayout = () => {
   }
 
   const isViewHeight = useMemo(() => {
-    const arrCheck = ['loans', 'application/create']
+    const arrCheck = ['loans', 'application/create', 'application/edit']
     return arrCheck.some((el) => pathname.includes(el))
   }, [pathname])
 
@@ -72,8 +72,8 @@ const MasterLayout = () => {
     <PageDataProvider>
       <div
         className={clsx([
-          'd-flex flex-column flex-root app-root min-vh-100 vh-100',
-          isViewHeight && 'app-root-view-height',
+          'd-flex flex-column flex-root app-root min-vh-100',
+          isViewHeight && 'app-root-view-height vh-100',
         ])}
         id='kt_app_root'
       >
@@ -82,7 +82,12 @@ const MasterLayout = () => {
           <div className='app-wrapper flex-column flex-row-fluid' id='kt_app_wrapper'>
             <Sidebar />
             <div className='app-main flex-column flex-row-fluid' id='kt_app_main'>
-              <div className='d-flex flex-column flex-column-fluid app-container'>
+              <div
+                className={clsx([
+                  'd-flex flex-column flex-column-fluid app-container flex-grow-1',
+                  isViewHeight && 'app-main-content',
+                ])}
+              >
                 <ToolbarWrapper />
                 <Outlet />
               </div>

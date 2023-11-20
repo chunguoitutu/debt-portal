@@ -27,7 +27,7 @@ const Completion: FC<PropsStepApplication> = (Props) => {
   const {config} = Props
   const data = Props.formik.values
   return (
-    <div style={{padding: '30px 30px 0px 30px'}}>
+    <div>
       <div style={{paddingBottom: '30px'}}>
         <TitleComponent titleFather='PERSONAL LOAN APPLICATION' titleChild='Confidential' />
       </div>
