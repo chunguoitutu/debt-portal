@@ -78,6 +78,7 @@ const CreateEditCompanies = ({
     isSubmitting,
     handleChange,
     handleSubmit,
+    handleBlur,
     setFieldValue,
     setSubmitting,
   } = useFormik({
@@ -209,6 +210,7 @@ const CreateEditCompanies = ({
                       <Input
                         required={row?.require ? true : false}
                         title={row.name}
+                        onBlur={handleBlur}
                         name={row?.key}
                         type={row?.type || 'text'}
                         value={values[row?.key] || ''}

@@ -54,6 +54,7 @@ const CreateDocumentType = ({
     errors,
     isSubmitting,
     handleChange,
+    handleBlur,
     handleSubmit,
     resetForm,
     setSubmitting,
@@ -151,6 +152,7 @@ const CreateDocumentType = ({
                     <div>
                       <TextArea
                         title={row.name}
+                        onBlur={handleBlur}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
@@ -166,6 +168,7 @@ const CreateDocumentType = ({
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         required={isRequired}
                       />
 

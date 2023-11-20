@@ -132,8 +132,8 @@ export function Login() {
       ) : (
         <form className='form w-100' onSubmit={handleSubmit} noValidate id='kt_login_signin_form'>
           <div className='text-start mb-11'>
-            <h1 className='text-dark fw-semibold mb-3'>Sign In</h1>
-            <div className='text-gray-500 fw-bold fs-6'>Please Sign In With Your Account</div>
+            <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
+            <div className='text-gray-500 fw-semibold fs-6'>Please Sign In With Your Account</div>
           </div>
 
           {status && (

@@ -15,8 +15,8 @@ const InputCheck = ({title = '', checked = false, onChange, id}: Props) => {
       <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-start align-content-center mt-xl-6 '>
         {title !== '' && (
           <label
-            style={{marginRight: '10px'}}
-            className=' col-form-label fw-bold fs-6 cursor-pointer'
+            style={{marginRight: '10px', fontSize: '16px'}}
+            className=' col-form-label  cursor-pointer'
             htmlFor={ids}
           >
             {title}

@@ -233,7 +233,7 @@ const Table: FC<Props> = ({
                 {rows.map(
                   (row, i) =>
                     !row?.isHide && (
-                      <th className={row.classNameTableHead} key={i}>
+                      <th className={row.classNameTableHead} key={i} style={{maxWidth: '500px'}}>
                         <div className='d-flex flex-row gap-3 cursor-pointer'>
                           <span>{row.name}</span>
                           {isShowFilter && <Filter />}
@@ -276,7 +276,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'id') {
                           return (
-                            <td key={i}>
+                            <td key={i} style={{maxWidth: '500px'}}>
                               {Number(idx) +
                                 1 +
                                 (Number(searchCriteria.currentPage) *
@@ -287,7 +287,11 @@ const Table: FC<Props> = ({
                         }
 
                         if (key === 'open_date') {
-                          return <td key={i}>{moment(value).format('DD-MM-YYYY')}</td>
+                          return (
+                            <td style={{maxWidth: '500px'}} key={i}>
+                              {moment(value).format('DD-MM-YYYY')}
+                            </td>
+                          )
                         }
 
                         if (key === 'created_date') {
@@ -297,7 +301,7 @@ const Table: FC<Props> = ({
                         if (component) {
                           if (key === 'status' || key === 'is_active') {
                             return (
-                              <td key={i}>
+                              <td key={i} style={{maxWidth: '500px'}}>
                                 <Component
                                   color={value === 1 ? 'success' : 'danger'}
                                   title={value === 1 ? 'Active' : 'Disable'}
@@ -308,7 +312,7 @@ const Table: FC<Props> = ({
                           //HANDLE ADD PERMISSION DROPDOWN
                           if (key === 'permissions') {
                             return (
-                              <td key={i}>
+                              <td key={i} style={{maxWidth: '500px'}}>
                                 <Component
                                   tittle={''}
                                   checked={handlePermissionChecked(item[key])}
@@ -318,7 +322,7 @@ const Table: FC<Props> = ({
                           }
 
                           return (
-                            <td key={i}>
+                            <td key={i} style={{maxWidth: '500px'}}>
                               <>
                                 <Component
                                   data={item}
@@ -335,7 +339,7 @@ const Table: FC<Props> = ({
                         }
 
                         return (
-                          <td key={i}>
+                          <td key={i} style={{maxWidth: '500px'}}>
                             {component ? (
                               <Component />
                             ) : (

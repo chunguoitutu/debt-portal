@@ -19,7 +19,11 @@ const TextArea: FC<TextAreaProps> = ({
   return (
     <div className={`d-flex flex-column gap-2 ${classShared}`}>
       {title && (
-        <label className='d-flex align-items-center fs-5 fw-semibold' htmlFor={name}>
+        <label
+          style={{fontSize: '16px'}}
+          className='d-flex align-items-center  fw-semibold'
+          htmlFor={name}
+        >
           {title} {isRequired && <span className='text-danger'>*</span>}
         </label>
       )}
