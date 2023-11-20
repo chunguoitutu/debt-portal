@@ -108,6 +108,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     handleChange,
     handleSubmit,
     resetForm,
+    handleBlur,
     setValues,
     setSubmitting,
   } = useFormik<any>({
@@ -322,6 +323,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                             <div className='col-6' key={i}>
                               <div className='d-flex flex-column mb-16px'>
                                 <Input
+                                  onBlur={handleBlur}
                                   type={typeInput}
                                   title={name}
                                   name={key}
@@ -346,6 +348,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                                 fieldLabelOption={fieldLabelOption || key}
                                 fieldValueOption={fieldValueOption || 'id'}
                                 label={name}
+                                onBlur={handleBlur}
                                 id={key}
                                 error={!!errors[key]}
                                 touched={!!touched[key]}
@@ -394,6 +397,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                                 name={key}
                                 value={values[key] || ''}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
                                 required={key === 'password' ? (!data ? true : false) : isRequired}
                               />
 
@@ -414,6 +418,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                               fieldValueOption={fieldValueOption || 'id'}
                               label={name}
                               id={key}
+                              onBlur={handleBlur}
                               error={!!errors[key]}
                               touched={!!touched[key]}
                               errorTitle={errors[key] as string}

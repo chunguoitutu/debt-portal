@@ -72,6 +72,7 @@ const CreateEditAddress = ({
     handleSubmit,
     resetForm,
     setSubmitting,
+    handleBlur,
   } = useFormik({
     initialValues: {
       ...generateField,
@@ -183,9 +184,10 @@ const CreateEditAddress = ({
                       const {isRequired, typeInput} = row.infoCreateEdit || {}
                       return (
                         <div key={row?.key} style={{flex: '0 0 50%'}}>
-                          {row?.key === 'rejection_type_description' ? (
+                          {row?.key === 'description' ? (
                             <div className='mb-16px'>
                               <TextArea
+                                onBlur={handleBlur}
                                 title={row?.name}
                                 name={row?.key}
                                 value={values[row?.key] || ''}
@@ -202,6 +204,7 @@ const CreateEditAddress = ({
                           ) : (
                             <div className='d-flex flex-column mb-16px'>
                               <Input
+                                onBlur={handleBlur}
                                 required={!!isRequired ? true : false}
                                 title={row?.name}
                                 name={row?.key}

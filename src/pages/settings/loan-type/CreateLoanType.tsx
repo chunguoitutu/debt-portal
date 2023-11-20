@@ -58,6 +58,7 @@ const CreateLoanType = ({
     handleSubmit,
     resetForm,
     setSubmitting,
+    handleBlur,
   } = useFormik({
     initialValues: {
       type_name: data.type_name || '',
@@ -152,6 +153,7 @@ const CreateLoanType = ({
                     <div>
                       <TextArea
                         title={row.name}
+                        onBlur={handleBlur}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
@@ -163,6 +165,7 @@ const CreateLoanType = ({
                   ) : (
                     <div className='d-flex flex-column mb-16px'>
                       <Input
+                        onBlur={handleBlur}
                         title={row.name}
                         name={row.key}
                         value={values[row.key] || ''}

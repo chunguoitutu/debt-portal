@@ -29,7 +29,7 @@ type Props = {
 }
 
 export const NewEditMarkettingSchema = Yup.object().shape({
-  marketing_type_name: Yup.string().required('Marketing Type name is required'),
+  marketing_type_name: Yup.string().required('Marketing Type is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -72,6 +72,7 @@ const CreatEditMarkettingType = ({
     handleSubmit,
     resetForm,
     setSubmitting,
+    handleBlur,
   } = useFormik({
     initialValues: {
       ...generateField,
@@ -182,6 +183,7 @@ const CreatEditMarkettingType = ({
                               title={row?.name}
                               name={row?.key}
                               type={typeInput}
+                              onBlur={handleBlur}
                               value={values[row?.key] || ''}
                               onChange={handleChange}
                             />

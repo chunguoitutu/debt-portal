@@ -74,6 +74,7 @@ const CreateEditRejectionType = ({
     handleSubmit,
     resetForm,
     setSubmitting,
+    handleBlur,
   } = useFormik({
     initialValues: {
       ...generateField,
@@ -187,6 +188,7 @@ const CreateEditRejectionType = ({
                                 name={row?.key}
                                 value={values[row?.key] || ''}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
                               />
 
                               {errors[row?.key] && touched[row?.key] && (
@@ -205,6 +207,7 @@ const CreateEditRejectionType = ({
                                 type={typeInput}
                                 value={values[row?.key] || ''}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
                               />
 
                               {errors[row?.key] && touched[row?.key] && (
