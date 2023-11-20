@@ -13,7 +13,7 @@ const InputCheck = ({title = '', checked = false, onChange, id, showlabelCheck =
   const ids = useId()
   return (
     <div>
-      <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-start align-content-center mt-xl-6 '>
+      <div className='form-check form-switch form-switch-sm form-check-custom form-check-solid d-flex justify-content-start align-content-center mt-xl-16px '>
         {title !== '' && (
           <label
             style={{marginRight: '10px', fontSize: '16px', lineHeight: '24px', fontWeight: '500'}}

@@ -427,7 +427,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         </Row>
       </Tab.Container>
 
-      <div className='d-flex flex-end pt-4'>
+      <div className='d-flex flex-end pt-30px'>
         <button
           type='reset'
           onClick={() => onClose()}
