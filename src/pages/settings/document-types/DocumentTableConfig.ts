@@ -29,6 +29,8 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       },
     },
     {
+      classNameTableHead: 'w-50 min-w-200px',
+      classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
     },
