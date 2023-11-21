@@ -363,8 +363,10 @@ const Table: FC<Props> = ({
                                   fontWeight: '500',
                                   lineHeight: '20px',
                                   display: 'flex',
+                                  borderBottom: 'none',
                                   justifyContent: 'center',
                                   alignItems: 'center',
+                                  marginTop: '8px',
                                 }}
                               >
                                 <Component
