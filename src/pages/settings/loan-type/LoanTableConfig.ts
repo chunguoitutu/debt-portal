@@ -16,10 +16,12 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
+      classNameTableHead: 'min-w-50px',
       key: 'id',
       name: 'ID',
     },
     {
+      classNameTableHead: 'min-w-200px',
       key: 'type_name',
       name: 'Loan Type',
       infoCreateEdit: {

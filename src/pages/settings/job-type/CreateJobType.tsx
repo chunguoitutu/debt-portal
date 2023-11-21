@@ -186,6 +186,7 @@ const CreateJobType = ({
                 checked={requestMoreInformation}
                 id='request_more_information'
                 title='Need More Information'
+                request_info
               />
             </div>
             <div className='mt-16px'>

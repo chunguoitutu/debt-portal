@@ -16,10 +16,12 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
+      classNameTableHead: 'min-w-70px',
       key: 'id',
       name: 'ID',
     },
     {
+      classNameTableHead: 'min-w-200px',
       key: 'type_name',
       name: 'Document Type',
       infoCreateEdit: {

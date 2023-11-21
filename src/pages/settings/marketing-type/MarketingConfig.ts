@@ -17,6 +17,7 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
+      classNameTableHead: 'min-w-20px',
       key: 'id',
       name: 'ID',
     },

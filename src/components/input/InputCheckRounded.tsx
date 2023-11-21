@@ -6,6 +6,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   id?: string
   showlabelCheck?: boolean
+  request_info?: boolean //just apply for table Job Type
 }
 
 const InputCheck = ({
@@ -13,6 +14,7 @@ const InputCheck = ({
   checked = false,
   showlabelCheck = true,
   onChange,
+  request_info = false,
   ...rest
 }: Props) => {
   const id = useId()
@@ -43,7 +45,21 @@ const InputCheck = ({
             />
           </div>
         </div>
-        {showlabelCheck && (
+        {showlabelCheck && request_info && (
+          <div
+            style={{
+              color: '#99A1B7',
+              fontSize: '16px',
+              fontWeight: '500',
+              lineHeight: '24px',
+              marginLeft: '8px',
+            }}
+          >
+            {checked ? 'Yes' : 'No'}
+          </div>
+        )}
+
+        {showlabelCheck && !request_info && (
           <div
             style={{
               color: '#99A1B7',
