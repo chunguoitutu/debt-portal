@@ -3,7 +3,6 @@ import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import InputCheck from '../../../components/input/inputCheck'
 import moment from 'moment'
 import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
 import Input from '../../../components/input'
@@ -13,6 +12,7 @@ import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
 import {KTIcon} from '../../../_metronic/helpers'
 import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
+import InputCheck from 'src/components/input/InputCheckRounded'
 
 type Props = {
   setLoadApi: any
