@@ -547,15 +547,17 @@ export const Applications = () => {
   return (
     <>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
-      <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1'>
-        <div className='col-3 col-xxl-2 order-1 h-fit-content align-self-start align-self-lg-center overflow-y-lg-auto'>
-          <div className='h-fit-content'>
-            <Step
-              data={_STEP_APPLICATION}
-              stepCompleted={stepCompleted}
-              currentStep={currentStep}
-              onGoToStep={handleGoToStep}
-            />
+      <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1 m-0'>
+        <div className='col-3 col-xxl-2 order-1 d-flex flex-column overflow-hidden h-100 m-0'>
+          <div className='card bg-white h-100 align-self-start align-self-lg-center overflow-y-auto p-10 m-0'>
+            <div className='h-fit-content'>
+              <Step
+                data={_STEP_APPLICATION}
+                stepCompleted={stepCompleted}
+                currentStep={currentStep}
+                onGoToStep={handleGoToStep}
+              />
+            </div>
           </div>
         </div>
         <div className='col-9 col-xxl-8 order-2 d-flex flex-column h-100 m-0'>
@@ -594,7 +596,7 @@ export const Applications = () => {
             </div>
           </div>
         </div>
-        <div className='d-none d-xxl-flex col-xxl-2 order-0 order-xxl-3 h-100 mt-0'>
+        <div className='d-none d-xxl-flex col-xxl-2 order-0 order-xxl-3 h-100 m-0'>
           <div className='d-flex flex-column h-100'>
             <div className='pb-6'>
               <BackgroundCheck />
@@ -605,47 +607,6 @@ export const Applications = () => {
           </div>
         </div>
       </div>
-      {/* <div className='application-wrap d-flex flex-column overflow-y-hidden'>
-        <Step
-          data={_STEP_APPLICATION}
-          stepCompleted={stepCompleted}
-          currentStep={currentStep}
-          onGoToStep={handleGoToStep}
-        />
-
-        <div className='application-details-form card card-body col-9 col-xxl-8 order-2 p-0 d-flex flex-column h-fit-content'>
-          <HeaderApplication
-            labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
-            info={{
-              initialValues: values.customer_no,
-              date: values.application_date,
-            }}
-            percentCompleted={percentCompleted}
-            className='p-10'
-          />
-
-          <div
-            className={`${currentStep !== 6 ? 'form-wrap p-10' : ''}`}
-            style={currentStep === 2 ? {width: '91.5%'} : {}}
-          >
-            {CurrentComponentControl && (
-              <CurrentComponentControl
-                config={STEP_APPLICATION[currentStep - 1].config || []}
-                formik={formik}
-              />
-            )}
-
-            <GeneralButton
-              handleSaveDraft={handleSaveDraft}
-              handleSubmit={handleBeforeSubmit}
-              config={STEP_APPLICATION[currentStep - 1].config || []}
-              formik={formik}
-              isDraft={isDraft}
-              currentStep={currentStep}
-            />
-          </div>
-        </div>
-      </div> */}
     </>
   )
 }
