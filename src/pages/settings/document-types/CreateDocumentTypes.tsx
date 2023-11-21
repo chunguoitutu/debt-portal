@@ -192,13 +192,13 @@ const CreateDocumentType = ({
         </div>
         <div style={{borderTop: '1px solid #F1F1F2'}}>
           <div className='d-flex justify-content-end' style={{padding: 30}}>
-            <button
+            <Button
               type='reset'
               onClick={() => handleClose()}
-              className='btn btn-secondary align-self-center me-3'
+              className='btn btn-secondary align-self-center me-8px'
             >
               Cancel
-            </button>
+            </Button>
             <Button
               type='submit'
               className='btn-lg btn-primary'

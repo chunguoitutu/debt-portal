@@ -127,13 +127,13 @@ export const CompanyManagement = () => {
           </>
         ) : null}
         <div className='d-flex flex-end pt-10'>
-          <button
+          <Button
             type='reset'
             onClick={() => setLoadApi(!loadapi)}
-            className='btn btn-secondary align-self-center me-3'
+            className='btn-secondary align-self-center me-8px'
           >
             Discard
-          </button>
+          </Button>
 
           <Button
             className='btn-lg btn-primary'

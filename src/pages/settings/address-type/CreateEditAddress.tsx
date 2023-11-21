@@ -246,21 +246,26 @@ const CreateEditAddress = ({
                 onChange={() => setStatus(!status)}
                 id='Status'
               />
-              <div className='d-flex flex-end pt-30px'>
-                <button
-                  type='reset'
-                  onClick={() => handleClose()}
-                  className='btn btn-secondary align-self-center me-3'
-                >
-                  Cancel
-                </button>
-                <Button type='submit' className='btn-lg btn-primary' loading={isSubmitting}>
-                  {titleLable === 'Edit' ? 'Update' : 'Create'}
-                </Button>
-              </div>
             </form>
           </div>
         </div>
+      </div>
+      <div style={{borderTop: '1px solid #F1F1F2'}} className='d-flex flex-end p-30px'>
+        <Button
+          type='reset'
+          onClick={() => handleClose()}
+          className='btn btn-secondary align-self-center me-8px'
+        >
+          Cancel
+        </Button>
+        <Button
+          type='submit'
+          className='btn-lg btn-primary'
+          loading={isSubmitting}
+          onClick={() => handleSubmit()}
+        >
+          {titleLable === 'Edit' ? 'Update' : 'Create'}
+        </Button>
       </div>
     </Modal>,
     modalsRoot
