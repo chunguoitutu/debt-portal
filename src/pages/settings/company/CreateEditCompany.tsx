@@ -27,16 +27,11 @@ type Props = {
 export const newCompaniesSchema = Yup.object().shape({
   company_name: Yup.string().required('Company Name is required'),
   company_code: Yup.string().required('Company Code is required'),
-  business_uen: Yup.string().required('Business Uen is required'),
-  // telephone: Yup.string()
-  //   .min(6, 'Minimum 6 symbols')
-  //   .max(11, 'Maximum 11 symbols')
-  //   .required('Telephone is required'),
+  business_uen: Yup.string().required('Business UEN is required'),
   email: Yup.string()
-    .email('Wrong email format')
+    .email('Email is not in valid format')
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols'),
-  // .required('Email Uen is required'),
   open_date: Yup.string().required('Open Date is required'),
 })
 
@@ -88,6 +83,7 @@ const CreateEditCompanies = ({
       business_uen: data ? data?.['business_uen'] : '',
       telephone: information ? String(information?.telephone) : '',
       email: data ? data?.['email'] : '',
+      contact_person: data ? data?.['contact_person'] : '',
       address: data ? data?.['address'] : '',
       open_date: data ? data?.['open_date'].slice(0, 11) : '',
     },
@@ -99,6 +95,7 @@ const CreateEditCompanies = ({
             company_name: values.company_name,
             company_code: values.company_code,
             business_uen: values.business_uen,
+            contact_person: values.contact_person,
             telephone: String(values.telephone),
             email: values.email,
             address: values.address,
@@ -123,7 +120,9 @@ const CreateEditCompanies = ({
           .catch((error) => {
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title:
+                error?.response?.data?.message ||
+                'The system is having an error, please try again in a few minutes',
             })
           })
           .finally(() => setSubmitting(false))
@@ -134,6 +133,7 @@ const CreateEditCompanies = ({
             company_code: values.company_code,
             business_uen: values.business_uen,
             telephone: String(values.telephone),
+            contact_person: values.contact_person,
             email: values.email,
             address: values.address,
             open_date: new Date(values.open_date),
@@ -157,7 +157,9 @@ const CreateEditCompanies = ({
           .catch((error) => {
             swalToast.fire({
               icon: 'error',
-              title: error?.message,
+              title:
+                error?.response?.data?.message ||
+                'The system is having an error, please try again in a few minutes',
             })
           })
           .finally(() => setSubmitting(false))
@@ -246,7 +248,7 @@ const CreateEditCompanies = ({
         <Button
           type='reset'
           onClick={() => handleClose()}
-          className='btn btn-secondary align-self-center me-8px'
+          className='btn-lg btn-secondary align-self-center me-8px'
         >
           Cancel
         </Button>

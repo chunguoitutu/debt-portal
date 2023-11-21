@@ -20,6 +20,11 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       require: true,
     },
     {
+      key: 'contact_person',
+      name: 'Contract Person',
+      type: 'text',
+    },
+    {
       key: 'address',
       name: 'Address',
       type: 'text',

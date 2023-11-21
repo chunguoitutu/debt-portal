@@ -23,6 +23,7 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'rejection_type_name',
+      color: '#252F4A',
       name: 'Rejection Type',
       infoCreateEdit: {
         type: 'input',

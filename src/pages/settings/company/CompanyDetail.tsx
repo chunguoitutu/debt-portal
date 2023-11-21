@@ -45,7 +45,7 @@ const CompanyDetail = ({data = {}, handleClose, show, id, searchCriterias, sttTa
                     <div key={index}>
                       {showLable({
                         title: row.name,
-                        value: moment(data[row.key]).format('DD-MM-YYYY'),
+                        value: moment(data[row.key]).format('DD/MM/YYYY'),
                       })}
                     </div>
                   )}

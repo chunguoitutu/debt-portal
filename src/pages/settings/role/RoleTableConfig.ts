@@ -26,6 +26,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       key: 'role_name',
       name: 'Role Name',
       isCreateEdit: true,
+      color: '#252F4A',
       infoCreateEdit: {
         type: 'input',
         isRequired: true,

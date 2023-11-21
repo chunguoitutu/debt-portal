@@ -24,6 +24,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       classNameTableHead: 'min-w-120px',
       key: 'job_type_name',
       name: 'Job Type',
+      color: '#252F4A',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',

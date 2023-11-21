@@ -24,6 +24,7 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       classNameTableHead: 'min-w-200px',
       key: 'type_name',
       name: 'Document Type',
+      color: '#252F4A',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',

@@ -23,6 +23,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     {
       classNameTableHead: 'min-w-200px',
       key: 'type_name',
+      color: '#252F4A',
       name: 'Loan Type',
       infoCreateEdit: {
         type: 'input',

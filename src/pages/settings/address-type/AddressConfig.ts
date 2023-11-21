@@ -24,6 +24,7 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     {
       key: 'address_type_name',
       name: 'Address Type',
+      color: '#252F4A',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',

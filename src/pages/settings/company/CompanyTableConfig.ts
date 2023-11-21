@@ -22,6 +22,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'company_name',
       name: 'Company Name',
+      color: '#252F4A',
     },
     {
       key: 'company_code',
@@ -30,6 +31,10 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'business_uen',
       name: 'Business UEN',
+    },
+    {
+      key: 'contact_person',
+      name: 'Contract Person',
     },
     {
       key: 'address',
