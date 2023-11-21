@@ -33,7 +33,7 @@ const InputCheck = ({
         <div className='fv-row'>
           <div className=' form-check form-check-custom form-check-solid form-switch'>
             <input
-              className='form-check-input'
+              className='form-check-input cursor-pointer'
               type='checkbox'
               checked={checked}
               style={{width: 40, height: 25, marginLeft: '8px'}}

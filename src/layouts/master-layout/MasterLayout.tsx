@@ -12,6 +12,7 @@ import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 import {useAuth} from '../../app/context/AuthContext'
 import clsx from 'clsx'
+import {swalToast} from 'src/app/swal-notification'
 
 interface iJwtDecode {
   iat: number
@@ -44,7 +45,11 @@ const MasterLayout = () => {
           : ''
 
         Cookies.remove('token')
-        navigate(`/login${query}`)
+        navigate(`/login?${query}`)
+        swalToast.fire({
+          icon: 'error',
+          title: 'Login session has expired.',
+        })
       } else {
         // Get info when reload
         token && refreshToken(token)
@@ -53,20 +58,20 @@ const MasterLayout = () => {
       logout()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [pathname])
 
   useEffect(() => {
     reInitMenu()
   }, [location.key])
 
-  if (!token) {
-    return <Navigate to='/login' />
-  }
-
   const isViewHeight = useMemo(() => {
     const arrCheck = ['loans', 'application/create', 'application/edit']
     return arrCheck.some((el) => pathname.includes(el))
   }, [pathname])
+
+  if (!token) {
+    return <Navigate to='/login' />
+  }
 
   return (
     <PageDataProvider>

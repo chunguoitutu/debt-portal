@@ -48,9 +48,9 @@ const HeaderUserMenu: FC = () => {
       <div className='separator my-2'></div>
 
       <div className='menu-item px-5'>
-        <a onClick={logout} className='menu-link px-5 fs-6'>
+        <span onClick={() => logout()} className='menu-link px-5 fs-6'>
           Sign Out
-        </a>
+        </span>
       </div>
     </div>
   )
