@@ -29,7 +29,10 @@ const TextArea: FC<TextAreaProps> = ({
       )}
 
       <textarea
-        className='form-control  p-12px  form-control-lg form-control-solid form-control-flush min-h-120px'
+        style={{
+          borderRadius: '8px',
+        }}
+        className='form-control  p-12px   form-control-lg form-control-solid form-control-flush min-h-120px'
         id={name}
         name={name}
         {...rest}
