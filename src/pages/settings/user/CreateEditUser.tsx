@@ -15,7 +15,7 @@ import {BranchItem, DataResponse, RoleInfo, TableConfig, UserInfo} from '../../.
 import {useAuth} from '../../../app/context/AuthContext'
 import {useFormik} from 'formik'
 import {swalToast} from '../../../app/swal-notification'
-import {DEFAULT_MESSAGE_ERROR_500, DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
+import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 import {convertErrorMessageResponse} from 'src/app/utils'
 import Cookies from 'js-cookie'
 
@@ -239,8 +239,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         })
       }
     } catch (error: any) {
+      const message = convertErrorMessageResponse(error)
       swalToast.fire({
-        title: DEFAULT_MESSAGE_ERROR_500,
+        title: message,
         icon: 'error',
       })
     } finally {
@@ -355,7 +356,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                               checked={values[key]}
                               onChange={handleChange}
                               id={key}
-                              title='Active'
+                              title={name}
                             />
                           )
                         }

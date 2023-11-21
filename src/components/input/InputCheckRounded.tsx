@@ -5,14 +5,14 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   checked?: boolean
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   id?: string
-  showlabelCheck?: boolean
+  showLabelCheck?: boolean
   request_info?: boolean //just apply for table Job Type
 }
 
 const InputCheck = ({
   title = '',
   checked = false,
-  showlabelCheck = true,
+  showLabelCheck = true,
   onChange,
   request_info = false,
   ...rest
@@ -45,7 +45,7 @@ const InputCheck = ({
             />
           </div>
         </div>
-        {showlabelCheck && request_info && (
+        {showLabelCheck && request_info && (
           <div
             style={{
               color: '#99A1B7',
@@ -59,7 +59,7 @@ const InputCheck = ({
           </div>
         )}
 
-        {showlabelCheck && !request_info && (
+        {showLabelCheck && !request_info && (
           <div
             style={{
               color: '#99A1B7',

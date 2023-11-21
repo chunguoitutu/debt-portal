@@ -41,11 +41,11 @@ export const formatNumber = (num: any) => {
 }
 
 export function convertMessageErrorMaximum(maxChar: number, isNumber?: boolean) {
-  return `Maximum ${maxChar}` + (isNumber ? ' for this field.' : ' symbols.')
+  return `Maximum ${maxChar}` + (isNumber ? ' for this field' : ' symbols')
 }
 
 export function convertMessageErrorRequired(fieldLabel?: string) {
-  return `${fieldLabel ? fieldLabel : 'This field'} is required.`
+  return `${fieldLabel ? fieldLabel : 'This field'} is required`
 }
 
 export function filterObjectKeyNotEmpty(object: {[key: string]: any}) {
