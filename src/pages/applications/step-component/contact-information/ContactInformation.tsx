@@ -68,7 +68,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-100 w-lg-unset w-xl-200px'
 
     if (typeComponent === 'Select') {
       return (
@@ -89,7 +89,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
     if (typeComponent === 'Input') {
       return (
-        <div className='d-flex flex-column'>
+        <div className='d-flex flex-column w-100'>
           <Component
             value={values[key]}
             onChange={handleChange}
@@ -229,7 +229,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
           const classNameComponent = !column
             ? 'flex-grow-1 w-300px w-lg-unset'
-            : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+            : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-100 w-lg-unset w-xl-200px'
 
           return (
             <Fragment key={i}>
@@ -265,7 +265,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                       fieldLabelOption={keyLabelOfOptions || 'value'}
                     />
                   ) : (
-                    <div className='d-flex flex-column'>
+                    <div className='d-flex flex-column w-100'>
                       <Component
                         value={values['address_contact_info']?.[indexParent]?.[key]}
                         onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}

@@ -1,5 +1,5 @@
 .application-details-form {
-  $widthLabel: 180px;
+  $widthLabel: 170px;
   $widthLabelCustom: 204px;
   height: 100%;
 
@@ -168,6 +168,10 @@
   @media (max-width: 1400px) {
     $widthLabel: 140px;
 
+    .form-wrap {
+      gap: 16px;
+    }
+
     .border-application {
       margin-left: -43px;
       font-size: 16px !important;
@@ -190,11 +194,11 @@
 
   @media (min-width: 1560px) {
     .input-wrap {
-      width: 250px !important;
+      width: 225px !important;
     }
 
     .select-wrap {
-      width: 250px !important;
+      width: 225px !important;
     }
   }
 
