@@ -328,7 +328,7 @@ export const STATUS_APPLICATION_FILTER: Option[] = [
     label: 'Rejected',
   },
   {
-    value: '0',
+    value: '2',
     label: 'Approved',
   },
 ]

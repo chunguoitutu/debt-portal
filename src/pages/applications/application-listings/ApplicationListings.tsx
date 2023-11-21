@@ -256,6 +256,7 @@ const ApplicationListing = () => {
 
   function handleChangeFilter(e: React.ChangeEvent<any>) {
     const {value, name} = e.target
+    console.log(value, name, 123)
     setDataFilter({...dataFilter, [name]: value})
   }
 
