@@ -251,58 +251,132 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   return (
     <Modal title={data ? `Edit User "${data.username}"` : 'New User'} show={show} onClose={onClose}>
-      <Tab.Container id='left-tabs-example' defaultActiveKey='first'>
-        <Row>
-          <Col>
-            <Nav variant='pills' className='flex-column gap-2 '>
-              <Nav.Item
-                style={{
-                  marginRight: '0',
-                }}
-              >
-                <Nav.Link
-                  onClick={() => {
-                    setActive(true)
-                  }}
-                  eventKey='first'
+      <div className='p-30px'>
+        <Tab.Container id='left-tabs-example' defaultActiveKey='first'>
+          <Row>
+            <Col>
+              <Nav variant='pills' className='flex-column gap-2 '>
+                <Nav.Item
                   style={{
-                    width: '100%',
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    color: active ? 'white' : '#071437',
-                    background: active ? '#1B84FF' : '',
+                    marginRight: '0',
                   }}
                 >
-                  Information
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link
-                  onClick={() => setActive(false)}
-                  eventKey='second'
-                  style={{
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    color: active ? '#071437' : 'white',
-                    background: active ? '' : '#1B84FF',
-                    marginBottom: '30px',
-                  }}
-                >
-                  Account
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col sm={9} className='h-lg-350px'>
-            <Tab.Content>
-              <Tab.Pane eventKey='first'>
-                <div>
+                  <Nav.Link
+                    onClick={() => {
+                      setActive(true)
+                    }}
+                    eventKey='first'
+                    style={{
+                      width: '100%',
+                      fontSize: '16px',
+                      fontWeight: '500',
+                      color: active ? 'white' : '#071437',
+                      background: active ? '#1B84FF' : '',
+                    }}
+                  >
+                    Information
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    onClick={() => setActive(false)}
+                    eventKey='second'
+                    style={{
+                      fontSize: '16px',
+                      fontWeight: '500',
+                      color: active ? '#071437' : 'white',
+                      background: active ? '' : '#1B84FF',
+                      marginBottom: '30px',
+                    }}
+                  >
+                    Account
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
+            <Col sm={9} className='h-lg-350px'>
+              <Tab.Content>
+                <Tab.Pane eventKey='first'>
+                  <div>
+                    <div className='row'>
+                      {(rows || [])
+                        ?.filter(
+                          (item) =>
+                            item.isCreateEdit &&
+                            !['username', 'password', 'role_id'].includes(item.key)
+                        )
+                        .map((item, i) => {
+                          const {infoCreateEdit, key, name} = item
+                          const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
+                            infoCreateEdit || {}
+                          if (type === 'input') {
+                            return (
+                              <div className='col-6' key={i}>
+                                <div className='d-flex flex-column mb-16px'>
+                                  <Input
+                                    onBlur={handleBlur}
+                                    type={typeInput}
+                                    title={name}
+                                    name={key}
+                                    value={values[key] || ''}
+                                    onChange={handleChange}
+                                    required={isRequired}
+                                  />
+
+                                  {errors[key] && touched[key] && (
+                                    <ErrorMessage
+                                      className='mt-2'
+                                      message={errors[key] as string}
+                                    />
+                                  )}
+                                </div>
+                              </div>
+                            )
+                          } else if (type === 'select') {
+                            return (
+                              <div className='col-6' key={i}>
+                                <Select
+                                  name={key}
+                                  required={isRequired}
+                                  options={dataCompany}
+                                  fieldLabelOption={fieldLabelOption || key}
+                                  fieldValueOption={fieldValueOption || 'id'}
+                                  label={name}
+                                  onBlur={handleBlur}
+                                  id={key}
+                                  error={!!errors[key]}
+                                  touched={!!touched[key]}
+                                  errorTitle={errors[key] as string}
+                                  value={values[key]}
+                                  onChange={handleChange}
+                                />
+                              </div>
+                            )
+                          } else if (type === 'checkbox') {
+                            return (
+                              <InputCheck
+                                name={key}
+                                key={i}
+                                checked={values[key]}
+                                onChange={handleChange}
+                                id={key}
+                                title={name}
+                              />
+                            )
+                          }
+
+                          return <Fragment key={i}></Fragment>
+                        })}
+                    </div>
+                  </div>
+                </Tab.Pane>
+                <Tab.Pane eventKey='second'>
                   <div className='row'>
                     {(rows || [])
                       ?.filter(
                         (item) =>
                           item.isCreateEdit &&
-                          !['username', 'password', 'role_id'].includes(item.key)
+                          ['username', 'password', 'role_id'].includes(item.key)
                       )
                       .map((item, i) => {
                         const {infoCreateEdit, key, name} = item
@@ -313,13 +387,15 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                             <div className='col-6' key={i}>
                               <div className='d-flex flex-column mb-16px'>
                                 <Input
-                                  onBlur={handleBlur}
                                   type={typeInput}
                                   title={name}
                                   name={key}
                                   value={values[key] || ''}
                                   onChange={handleChange}
-                                  required={isRequired}
+                                  onBlur={handleBlur}
+                                  required={
+                                    key === 'password' ? (!data ? true : false) : isRequired
+                                  }
                                 />
 
                                 {errors[key] && touched[key] && (
@@ -334,12 +410,12 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                               <Select
                                 name={key}
                                 required={isRequired}
-                                options={dataCompany}
+                                options={dataRole}
                                 fieldLabelOption={fieldLabelOption || key}
                                 fieldValueOption={fieldValueOption || 'id'}
                                 label={name}
-                                onBlur={handleBlur}
                                 id={key}
+                                onBlur={handleBlur}
                                 error={!!errors[key]}
                                 touched={!!touched[key]}
                                 errorTitle={errors[key] as string}
@@ -364,78 +440,21 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                         return <Fragment key={i}></Fragment>
                       })}
                   </div>
-                </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey='second'>
-                <div className='row'>
-                  {(rows || [])
-                    ?.filter(
-                      (item) =>
-                        item.isCreateEdit && ['username', 'password', 'role_id'].includes(item.key)
-                    )
-                    .map((item, i) => {
-                      const {infoCreateEdit, key, name} = item
-                      const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
-                        infoCreateEdit || {}
-                      if (type === 'input') {
-                        return (
-                          <div className='col-6' key={i}>
-                            <div className='d-flex flex-column mb-16px'>
-                              <Input
-                                type={typeInput}
-                                title={name}
-                                name={key}
-                                value={values[key] || ''}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                required={key === 'password' ? (!data ? true : false) : isRequired}
-                              />
+                </Tab.Pane>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
+      </div>
 
-                              {errors[key] && touched[key] && (
-                                <ErrorMessage className='mt-2' message={errors[key] as string} />
-                              )}
-                            </div>
-                          </div>
-                        )
-                      } else if (type === 'select') {
-                        return (
-                          <div className='col-6' key={i}>
-                            <Select
-                              name={key}
-                              required={isRequired}
-                              options={dataRole}
-                              fieldLabelOption={fieldLabelOption || key}
-                              fieldValueOption={fieldValueOption || 'id'}
-                              label={name}
-                              id={key}
-                              onBlur={handleBlur}
-                              error={!!errors[key]}
-                              touched={!!touched[key]}
-                              errorTitle={errors[key] as string}
-                              value={values[key]}
-                              onChange={handleChange}
-                            />
-                          </div>
-                        )
-                      }
-
-                      return <Fragment key={i}></Fragment>
-                    })}
-                </div>
-              </Tab.Pane>
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
-
-      <div className='d-flex flex-end pt-30px'>
-        <button
+      <div style={{borderTop: '1px solid #F1F1F2'}} className='d-flex flex-end p-30px'>
+        <Button
           type='reset'
           onClick={() => onClose()}
-          className='btn btn-secondary align-self-center me-3'
+          className='btn btn-secondary align-self-center me-8px'
         >
           Cancel
-        </button>
+        </Button>
         <Button
           className='btn-lg btn-primary'
           type='submit'

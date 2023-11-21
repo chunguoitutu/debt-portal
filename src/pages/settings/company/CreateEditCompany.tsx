@@ -239,26 +239,25 @@ const CreateEditCompanies = ({
                 id='Status'
               />
             </div>
-
-            <div className='d-flex flex-end pt-30px'>
-              <button
-                type='reset'
-                onClick={() => handleClose()}
-                className='btn btn-secondary align-self-center me-3'
-              >
-                Cancel
-              </button>
-              <Button
-                className='btn-lg btn-primary'
-                type='submit'
-                loading={isSubmitting}
-                onClick={() => handleSubmit()}
-              >
-                {titleLable === 'Edit' ? 'Update' : 'Create'}
-              </Button>
-            </div>
           </div>
         </div>
+      </div>
+      <div style={{borderTop: '1px solid #F1F1F2'}} className='d-flex flex-end p-30px'>
+        <Button
+          type='reset'
+          onClick={() => handleClose()}
+          className='btn btn-secondary align-self-center me-8px'
+        >
+          Cancel
+        </Button>
+        <Button
+          className='btn-lg btn-primary'
+          type='submit'
+          loading={isSubmitting}
+          onClick={() => handleSubmit()}
+        >
+          {titleLable === 'Edit' ? 'Update' : 'Create'}
+        </Button>
       </div>
     </Modal>,
     modalsRoot

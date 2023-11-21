@@ -290,7 +290,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       show={show}
       onClose={onClose}
     >
-      <form onSubmit={handleSubmit}>
+      <form className='p-30px'>
         {(rows || [])
           .filter((item) => item.isCreateEdit)
           .map((item, index) => {
@@ -387,20 +387,24 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
               return <Fragment key={index}></Fragment>
             }
           })}
-
-        <div className='d-flex flex-end pt-30px'>
-          <button
-            type='reset'
-            onClick={() => onClose()}
-            className='btn btn-secondary align-self-center me-3'
-          >
-            Cancel
-          </button>
-          <Button className='btn-lg btn-primary' type='submit' loading={isSubmitting}>
-            {data ? 'Update' : 'Create'}
-          </Button>
-        </div>
       </form>
+      <div style={{borderTop: '1px solid #F1F1F2'}} className='d-flex flex-end p-30px'>
+        <Button
+          type='reset'
+          onClick={() => onClose()}
+          className='btn btn-secondary align-self-center me-8px'
+        >
+          Cancel
+        </Button>
+        <Button
+          className='btn-lg btn-primary'
+          type='submit'
+          onClick={() => handleSubmit()}
+          loading={isSubmitting}
+        >
+          {data ? 'Update' : 'Create'}
+        </Button>
+      </div>
     </Modal>
   )
 }

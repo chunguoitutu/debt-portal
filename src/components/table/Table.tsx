@@ -242,6 +242,7 @@ const Table: FC<Props> = ({
                         className={row.classNameTableHead}
                         key={i}
                         style={{
+                          paddingRight: row.name === 'Status' ? '9.75px' : '',
                           maxWidth: '500px',
                         }}
                       >
@@ -251,7 +252,7 @@ const Table: FC<Props> = ({
                             display: row.name === 'Status' ? 'flex' : '',
                             justifyContent: row.name === 'Status' ? 'center' : '',
                             alignItems: row.name === 'Status' ? 'center' : '',
-                            paddingRight: row.name === 'Status' ? '9.75px' : '',
+                            alignContent: 'center',
                           }}
                           className={`d-flex flex-row gap-3 cursor-pointer ${
                             row.name === 'STATUS' ? 'w-100' : ''
@@ -356,23 +357,21 @@ const Table: FC<Props> = ({
                           if (key === 'status' || key === 'is_active') {
                             return (
                               <td
-                                key={i}
                                 style={{
                                   maxWidth: '500px',
                                   fontSize: '14px',
                                   fontWeight: '500',
                                   lineHeight: '20px',
-                                  display: 'flex',
                                   borderBottom: 'none',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  marginTop: '8px',
                                 }}
+                                className='text-center'
                               >
-                                <Component
-                                  color={value === 1 ? 'success' : 'danger'}
-                                  title={value === 1 ? 'Active' : 'Disable'}
-                                />
+                                <div className='d-flex align-items-center justify-content-center gap-1'>
+                                  <Component
+                                    color={value === 1 ? 'success' : 'danger'}
+                                    title={value === 1 ? 'Active' : 'Disable'}
+                                  />
+                                </div>
                               </td>
                             )
                           }
