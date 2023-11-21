@@ -16,10 +16,12 @@ export const JOB_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
+      classNameTableHead: 'min-w-70px',
       key: 'id',
       name: 'ID',
     },
     {
+      classNameTableHead: 'min-w-120px',
       key: 'job_type_name',
       name: 'Job Type',
       infoCreateEdit: {
@@ -29,7 +31,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-50 min-w-200px',
+      classNameTableHead: 'w-50 min-w-180px',
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
