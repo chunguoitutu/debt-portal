@@ -28,12 +28,11 @@ import {filterObjectKeyNotEmpty} from '../../app/utils'
 import {DEFAULT_MSG_ERROR} from '../../app/constants/error-message'
 import {swalToast} from '../../app/swal-notification'
 import {CreateSuccessResponse} from '../../app/types/response'
-import Button from 'src/components/button/Button'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Applications',
-    path: '/applications',
+    title: 'Application',
+    path: '/application',
     isSeparator: false,
     isActive: false,
   },
@@ -547,7 +546,9 @@ export const Applications = () => {
 
   return (
     <>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'New Application'}</PageTitle>
+      <PageTitle breadcrumbs={profileBreadCrumbs}>
+        {applicationIdEdit ? 'Edit Application' : 'New Application'}
+      </PageTitle>
       <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1 m-0'>
         <div className='col-3 col-xxl-2 order-1 d-flex flex-column overflow-hidden h-100 m-0'>
           <div className='card bg-white h-100 align-self-start align-self-lg-center overflow-y-auto p-10 m-0 d-flex flex-column'>

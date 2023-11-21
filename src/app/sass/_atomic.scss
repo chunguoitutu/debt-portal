@@ -40,8 +40,11 @@
   border-style: solid !important;
   border-color: var(--bs-gray-300) !important;
 
-  &.form-select.form-select-solid:focus {
-    border-color: var(--bs-gray-300) !important;
+  &.form-select.form-select-solid {
+    padding-right: 1rem !important;
+    &:focus {
+      border-color: var(--bs-gray-300) !important;
+    }
   }
 }
 

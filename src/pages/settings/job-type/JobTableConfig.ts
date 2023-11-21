@@ -38,11 +38,13 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       name: 'Description',
     },
     {
+      classNameTableHead: 'w-50 min-w-150px',
       key: 'request_more_information',
       name: 'Need More Information',
       type: 'yes/no',
     },
     {
+      classNameTableHead: 'min-w-200px',
       key: 'status',
       name: 'Status',
       component: Badge,
