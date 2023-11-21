@@ -5,6 +5,7 @@ import {swalToast} from '../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../constants/error-message'
 import {UserInfo} from '../types/common'
 import {getCurrentUser} from '../axios/request'
+import {useNavigate} from 'react-router-dom'
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
@@ -41,9 +42,20 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     Cookies.set('token', token)
 
     try {
-      const {data} = await getCurrentUser()
-      setPriority(data.data.priority)
-      setCurrentUser(data.data)
+      const {data: dataRes} = await getCurrentUser()
+      const {data, error} = dataRes || {}
+
+      if (error || !data) {
+        logout()
+        swalToast.fire({
+          title: DEFAULT_MSG_ERROR,
+          icon: 'error',
+        })
+        return
+      }
+
+      setPriority(data.priority)
+      setCurrentUser(data)
     } catch (error: any) {
       logout()
       swalToast.fire({

@@ -9,6 +9,7 @@ import {UpdatePasswordInfo} from '../../../../types/common'
 import {updatePasswordCurrentUser} from '../../../../axios/request'
 import {convertErrorMessageResponse} from '../../../../utils'
 import ErrorMessage from '../../../../../components/error/ErrorMessage'
+import Button from 'src/components/button/Button'
 // import {regexPassword} from 'src/app/constants'
 
 type Props = {
@@ -36,13 +37,13 @@ const passwordFormValidationSchema = Yup.object().shape({
   new_password: Yup.string()
     .matches(
       regexPassword,
-      'New Password must be at least 8 characters including at least one letter, one number, and one special character.'
+      'New Password must be at least 8 characters including at least one letter, one number, and one special character'
     )
     .required('New Password is required'),
   confirm_new_password: Yup.string()
     .matches(
       regexPassword,
-      'Confirm New Password must be at least 8 characters including at least one letter, one number, and one special character.'
+      'Confirm New Password must be at least 8 characters including at least one letter, one number, and one special character'
     )
     .required('Confirm New Password is required')
     .oneOf([Yup.ref('new_password')], 'Confirm New Password must match'),
@@ -52,7 +53,7 @@ const oldPasswordValidationSchema = Yup.object().shape({
   old_password: Yup.string()
     .matches(
       regexPassword,
-      'Current Password must be at least 8 characters including at least one letter, one number, and one special character.'
+      'Current Password must be at least 8 characters including at least one letter, one number, and one special character'
     )
     .required('Current Password is required'),
 })
@@ -148,7 +149,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
           {!ignoreOldPassword && (
             <div className='col-12'>
               <div className='fv-row mb-0'>
-                <label htmlFor='old_password' className='form-label fs-4 fw-semibold mb-3'>
+                <label
+                  htmlFor='old_password'
+                  className='form-label text-gray-900 fs-4 fw-semibold mb-3 required'
+                >
                   Current Password
                 </label>
                 <input
@@ -168,7 +172,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
 
           <div className='col-12'>
             <div className='fv-row mb-0'>
-              <label htmlFor='new_password' className='form-label fs-4 fw-semibold mb-3'>
+              <label
+                htmlFor='new_password'
+                className='form-label text-gray-900 fs-4 fw-semibold mb-3 required'
+              >
                 New Password
               </label>
               <input
@@ -187,7 +194,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
 
           <div className='col-12'>
             <div className='fv-row mb-0'>
-              <label htmlFor='confirm_new_password' className='form-label fs-4 fw-semibold mb-3'>
+              <label
+                htmlFor='confirm_new_password'
+                className='form-label text-gray-900 fs-4 fw-semibold mb-3 required'
+              >
                 Confirm New Password
               </label>
               <input
@@ -205,31 +215,18 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
         </form>
 
         <div className='d-flex justify-content-end mt-8 gap-4'>
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-secondary'
-            onClick={onClosePopup}
-            disabled={loading}
-          >
+          <Button className='btn-secondary' onClick={onClosePopup} disabled={loading}>
             Cancel
-          </button>
+          </Button>
 
-          <button
-            type='button'
-            id='kt_sign_in_submit'
-            className='btn btn-primary'
+          <Button
+            className='btn-primary'
             onClick={() => handleSubmit()}
             disabled={loading}
+            loading={loading}
           >
-            {!loading && <span className='indicator-label'>Update Password</span>}
-            {loading && (
-              <span className='indicator-progress' style={{display: 'block'}}>
-                Please wait...
-                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-              </span>
-            )}
-          </button>
+            Update Password
+          </Button>
         </div>
       </div>
     </Modal>
