@@ -49,3 +49,9 @@
     }
   }
 }
+
+@media (min-width: 1200px) {
+  .flex-grow-lg-0 {
+    flex-grow: 0 !important;
+  }
+}

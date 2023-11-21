@@ -33,7 +33,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-100 w-lg-unset w-xl-200px'
 
     // nothing
     if (!Component) return

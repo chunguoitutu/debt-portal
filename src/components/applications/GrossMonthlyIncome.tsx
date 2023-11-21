@@ -30,7 +30,7 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
   const {values, setFieldValue, handleChange, errors, touched} = formik
 
   return (
-    <div className='row w-100 gy-5'>
+    <div className='row w-100 gy-5 gx-0 gx-xl-5'>
       {data.map(({key, placeholder, desc}, i) => (
         <div className='col-12 col-xl-4 d-flex flex-column' key={i}>
           <Input
@@ -54,7 +54,7 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
               setFieldValue(key, +(Number(e.target.value) / 2))
               handleChange(e)
             }}
-            classShared='w-300px w-xl-unset'
+            classShared='flex-grow-1 w-xl-unset'
             type='number'
             noThereAreCommas={false}
           />

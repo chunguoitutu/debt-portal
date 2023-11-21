@@ -14,7 +14,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-100 w-lg-unset w-xl-200px'
 
     // nothing
     if (!Component) return
@@ -36,7 +36,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     if (typeComponent === 'Input') {
       return (
-        <div className='d-flex flex-column'>
+        <div className='d-flex flex-column w-100'>
           <Component
             value={values[key]}
             onChange={handleChange}

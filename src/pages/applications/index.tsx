@@ -28,6 +28,7 @@ import {filterObjectKeyNotEmpty} from '../../app/utils'
 import {DEFAULT_MSG_ERROR} from '../../app/constants/error-message'
 import {swalToast} from '../../app/swal-notification'
 import {CreateSuccessResponse} from '../../app/types/response'
+import Button from 'src/components/button/Button'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {

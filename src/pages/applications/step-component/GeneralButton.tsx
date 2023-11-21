@@ -22,12 +22,7 @@ const GeneralButton: FC<Props> = ({
   const {applicationIdEdit} = useParams()
 
   return (
-    <div
-      className='d-flex flex-end mt-10 full gap-5'
-      style={{
-        padding: currentStep === 6 ? '0px 30px 30px 0px' : '',
-      }}
-    >
+    <div className='d-flex flex-end mt-10 full gap-5'>
       {!applicationIdEdit && (
         <Button
           loading={isSubmitting && isDraft}
