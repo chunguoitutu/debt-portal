@@ -3,7 +3,7 @@ import {TableConfig} from '../../../app/types/common'
 import {DropDownRole} from '../../../components/DropDownRole'
 import Select from '../../../components/select/select'
 import Priority from './Priority'
-import InputCheck from 'src/components/input/inputCheck'
+import InputCheck from 'src/components/input/InputCheckRounded'
 
 export const ROLE_TABLE_CONFIG: TableConfig = {
   settings: {

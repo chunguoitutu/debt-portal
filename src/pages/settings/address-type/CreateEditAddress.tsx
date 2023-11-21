@@ -6,7 +6,6 @@ import {Modal} from 'react-bootstrap'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import InputCheck from '../../../components/input/inputCheck'
 import TextArea from '../../../components/icons/textarea/TextArea'
 import ErrorMessage from '../../../components/error/ErrorMessage'
 import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
@@ -16,6 +15,7 @@ import {KTIcon} from '../../../_metronic/helpers'
 import {swalToast} from '../../../app/swal-notification'
 import request from '../../../app/axios'
 import {convertErrorMessageResponse} from 'src/app/utils'
+import InputCheck from 'src/components/input/InputCheckRounded'
 
 type Props = {
   setLoadApi: any

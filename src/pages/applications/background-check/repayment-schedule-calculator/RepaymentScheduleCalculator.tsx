@@ -134,7 +134,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
         </div>
       </div>
       <div
-        className={`table-calculator-style modal-body py-lg-10 px-lg-10 overflow-y-auto `}
+        className={`table-calculator-style modal-body p-30px overflow-y-auto `}
         style={{
           maxHeight: 'calc(100vh - 200px)',
         }}
