@@ -131,6 +131,7 @@ export type ResponseApplicationListing = {
 export type TableRow = {
   key: string
   name: string
+  color?: string
   classNameTableHead?: string
   classNameTableBody?: string
   component?: any

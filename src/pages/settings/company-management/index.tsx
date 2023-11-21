@@ -8,7 +8,6 @@ import ErrorMessage from '../../../components/error/ErrorMessage'
 import Button from '../../../components/button/Button'
 import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
-import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 import {areObjectsEqual, stringifyObject} from '../../../app/utils'
 
 export const CompanyManagement = () => {
@@ -63,6 +62,7 @@ export const CompanyManagement = () => {
           company_code: values.company_code,
           business_uen: values.business_uen,
           telephone: values.telephone,
+          contact_person: values.contact_person,
           email: values.email,
           website: values.website,
           open_date: new Date(values.open_date),
@@ -83,7 +83,9 @@ export const CompanyManagement = () => {
         .catch((error) =>
           swalToast.fire({
             icon: 'error',
-            title: DEFAULT_MSG_ERROR,
+            title:
+              error?.response?.data?.message ||
+              'The system is having an error, please try again in a few minutes',
           })
         )
         .finally(() => setSubmitting(false))
@@ -130,7 +132,7 @@ export const CompanyManagement = () => {
           <Button
             type='reset'
             onClick={() => setLoadApi(!loadapi)}
-            className='btn-secondary align-self-center me-8px'
+            className='btn-lg btn-secondary align-self-center me-8px'
           >
             Discard
           </Button>

@@ -34,6 +34,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
     {
       key: 'username',
       name: 'Username',
+      color: '#252F4A',
       isCreateEdit: true,
       infoCreateEdit: {
         type: 'input',

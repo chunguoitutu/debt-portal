@@ -98,10 +98,12 @@ const CreatEditMarkettingType = ({
             handleClose()
             setLoadApi(!loadapi)
           })
-          .catch((e) => {
+          .catch((error) => {
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title:
+                error?.response?.data?.message ||
+                'The system is having an error, please try again in a few minutes',
             })
           })
           .finally(() => setSubmitting(false))
@@ -131,7 +133,9 @@ const CreatEditMarkettingType = ({
           .catch((error) => {
             swalToast.fire({
               icon: 'error',
-              title: DEFAULT_MSG_ERROR,
+              title:
+                error?.response?.data?.message ||
+                'The system is having an error, please try again in a few minutes',
             })
           })
           .finally(() => setSubmitting(false))
@@ -211,11 +215,7 @@ const CreatEditMarkettingType = ({
         </div>
       </div>
       <div style={{borderTop: '1px solid #F1F1F2'}} className='d-flex flex-end p-30px'>
-        <Button
-          type='reset'
-          onClick={() => handleClose()}
-          className='btn btn-secondary align-self-center me-8px'
-        >
+        <Button type='reset' onClick={() => handleClose()} className='btn-lg btn-secondary  me-8px'>
           Cancel
         </Button>
         <Button

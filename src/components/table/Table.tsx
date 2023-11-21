@@ -101,9 +101,9 @@ const Table: FC<Props> = ({
 
     switch (type) {
       case 'datetime':
-        return moment(value).format('DD-MM-YYYY') === 'Invalid date'
+        return moment(value).format('DD/MM/YYYY') === 'Invalid date'
           ? value
-          : moment(value).format('DD-MM-YYYY')
+          : moment(value).format('DD/MM/YYYY')
       case 'yes/no':
         return value === 1 ? 'Yes' : 'No'
       default:
@@ -133,12 +133,16 @@ const Table: FC<Props> = ({
       Array.isArray(data.data) && setData(data.data)
 
       data?.searchCriteria &&
-        setSearchCriteria((prev) => ({...prev, total: data?.total_count || 0}))
+        setSearchCriteria((prev) => ({
+          ...prev,
+          total: data?.total_count || 0,
+          currentPage: data?.searchCriteria?.currentPage || 1,
+        }))
       data?.searchCriteria &&
         setSearchCriterias((prev) => ({
           ...prev,
           total: data?.total_count || 0,
-          currentPage: data?.searchCriteria?.currentPage,
+          currentPage: data?.searchCriteria?.currentPage || 1,
         }))
     } catch (error) {
       // no thing
@@ -169,7 +173,14 @@ const Table: FC<Props> = ({
       }
 
       // handle refresh data
-      await onFetchDataList({...pagination, currentPage: 1})
+      await onFetchDataList({
+        ...pagination,
+        currentPage:
+          searchCriteria.total - (searchCriteria.currentPage - 1) * searchCriteria.pageSize === 1
+            ? 1
+            : searchCriteria.currentPage,
+      })
+
       swalToast.fire({
         title:
           (messageDeleteSuccess || '').replace(/\/%\//g, data?.data[showMessageTitle || '']) ||
@@ -243,7 +254,8 @@ const Table: FC<Props> = ({
                         key={i}
                         style={{
                           paddingRight: row.name === 'Status' ? '9.75px' : '',
-                          maxWidth: '500px',
+                          maxWidth: row.key === 'id' ? '500px' : '50px',
+                          minWidth: row.key === 'id' ? '' : '150px',
                         }}
                       >
                         <div
@@ -299,7 +311,7 @@ const Table: FC<Props> = ({
                 data.map((item, idx) => {
                   return (
                     <tr key={idx} className='fw-medium'>
-                      {rows.map(({key, component, type, classNameTableBody, isHide}, i) => {
+                      {rows.map(({key, component, type, classNameTableBody, isHide, color}, i) => {
                         if (isHide) {
                           return <Fragment key={i}></Fragment>
                         }
@@ -311,11 +323,12 @@ const Table: FC<Props> = ({
                             <td
                               key={i}
                               style={{
-                                maxWidth: '500px',
+                                maxWidth: '50px',
                                 fontSize: '14px',
                                 fontWeight: '500',
                                 lineHeight: '20px',
                               }}
+                              className='w-xxl-6'
                             >
                               {Number(idx) +
                                 1 +
@@ -331,13 +344,14 @@ const Table: FC<Props> = ({
                             <td
                               style={{
                                 maxWidth: '500px',
+                                minWidth: '150px',
                                 fontSize: '14px',
                                 fontWeight: '500',
                                 lineHeight: '20px',
                               }}
                               key={i}
                             >
-                              {moment(value).format('DD-MM-YYYY')}
+                              {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
                         }
@@ -348,7 +362,7 @@ const Table: FC<Props> = ({
                               key={i}
                               style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
                             >
-                              {moment(value).format('DD-MM-YYYY')}
+                              {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
                         }
@@ -357,8 +371,10 @@ const Table: FC<Props> = ({
                           if (key === 'status' || key === 'is_active') {
                             return (
                               <td
+                                key={i}
                                 style={{
                                   maxWidth: '500px',
+                                  minWidth: '150px',
                                   fontSize: '14px',
                                   fontWeight: '500',
                                   lineHeight: '20px',
@@ -392,6 +408,7 @@ const Table: FC<Props> = ({
                               key={i}
                               style={{
                                 maxWidth: '500px',
+                                minWidth: '150px',
                                 fontSize: '14px',
                                 fontWeight: '500',
                                 lineHeight: '20px',
@@ -421,6 +438,7 @@ const Table: FC<Props> = ({
                                 style={{
                                   fontSize: '14px',
                                   fontWeight: '500',
+                                  color: !!color ? color : '#78829D',
                                   lineHeight: '20px',
                                 }}
                                 className={classNameTableBody}

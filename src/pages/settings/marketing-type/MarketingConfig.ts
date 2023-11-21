@@ -24,6 +24,7 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     {
       key: 'marketing_type_name',
       name: 'Marketing Type',
+      color: '#252F4A',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',

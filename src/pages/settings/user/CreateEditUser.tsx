@@ -451,7 +451,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         <Button
           type='reset'
           onClick={() => onClose()}
-          className='btn btn-secondary align-self-center me-8px'
+          className='btn-lg btn-secondary align-self-center me-8px'
         >
           Cancel
         </Button>

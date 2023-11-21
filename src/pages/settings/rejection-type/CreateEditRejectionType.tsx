@@ -245,7 +245,7 @@ const CreateEditRejectionType = ({
         <Button
           type='reset'
           onClick={() => handleClose()}
-          className='btn btn-secondary align-self-center me-8px'
+          className='btn-lg btn-secondary align-self-center me-8px'
         >
           Cancel
         </Button>
