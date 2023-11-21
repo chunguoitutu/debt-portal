@@ -28,7 +28,7 @@ import {KTCardBody} from '../../../_metronic/helpers'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Application Listing',
+    title: 'Application',
     path: '/application/listing',
     isSeparator: false,
     isActive: false,
@@ -256,7 +256,6 @@ const ApplicationListing = () => {
 
   function handleChangeFilter(e: React.ChangeEvent<any>) {
     const {value, name} = e.target
-    console.log(value, name, 123)
     setDataFilter({...dataFilter, [name]: value})
   }
 
@@ -330,7 +329,7 @@ const ApplicationListing = () => {
 
   return (
     <div className='card p-5 h-fit-content'>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
+      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Listing'}</PageTitle>
 
       <div>
         <div className='d-flex flex-row'>

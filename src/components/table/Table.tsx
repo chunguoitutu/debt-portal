@@ -360,13 +360,36 @@ const Table: FC<Props> = ({
                           return (
                             <td
                               key={i}
-                              style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
+                              style={{
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                                display: 'flex',
+                                borderBottom: 'none',
+                                marginTop: '8px',
+                                marginLeft: '15px',
+                              }}
                             >
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
                         }
 
+                        if (key === 'updated_date') {
+                          return (
+                            <td
+                              key={i}
+                              style={{
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                                paddingLeft: '20px',
+                              }}
+                            >
+                              {moment(value).format('DD-MM-YYYY')}
+                            </td>
+                          )
+                        }
                         if (component) {
                           if (key === 'status' || key === 'is_active') {
                             return (

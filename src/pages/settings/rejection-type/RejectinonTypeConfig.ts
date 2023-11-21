@@ -32,6 +32,7 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
+      classNameTableHead: 'min-w-75px',
       key: 'rejection_type_code',
       name: 'Code',
       infoCreateEdit: {

@@ -38,15 +38,18 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       name: 'Description',
     },
     {
+      classNameTableHead: 'min-w-200px',
       key: 'status',
       name: 'Status',
       component: Badge,
     },
     {
+      classNameTableHead: 'min-w-200px align-items-center',
       key: 'created_date',
       name: 'Created Date',
     },
     {
+      classNameTableHead: 'min-w-200px  align-items-center',
       key: 'updated_date',
       name: 'Updated Date',
       type: 'datetime',
