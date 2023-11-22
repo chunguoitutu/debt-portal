@@ -28,7 +28,9 @@ type Props = {
 }
 
 export const NewEditMarkettingSchema = Yup.object().shape({
-  marketing_type_name: Yup.string().required('Marketing Type is required'),
+  marketing_type_name: Yup.string()
+    .required('Marketing Type is required')
+    .max(255, 'Marketing Type must be at most 255 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
