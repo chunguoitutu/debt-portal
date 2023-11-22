@@ -43,18 +43,18 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Contact Phone</label>
-
-            <div className='col-lg-8 d-flex align-items-center'>
-              <span className='fw-bolder fs-6 me-2'>{currentUser?.telephone}</span>
-            </div>
-          </div>
-
-          <div className='row mb-7'>
             <label className='col-lg-4 fw-bold text-muted'>Role</label>
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>{currentUser?.role_name}</span>
+            </div>
+          </div>
+
+          <div className='row mb-7'>
+            <label className='col-lg-4 fw-bold text-muted'>Contact Phone</label>
+
+            <div className='col-lg-8 d-flex align-items-center'>
+              <span className='fw-bolder fs-6 me-2'>{currentUser?.telephone}</span>
             </div>
           </div>
 
