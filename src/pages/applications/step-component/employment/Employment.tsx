@@ -1,10 +1,11 @@
-import {FC, Fragment, useState} from 'react'
+import {FC, Fragment, useEffect, useState} from 'react'
 import clsx from 'clsx'
 import ErrorMessage from '../../../../components/error/ErrorMessage'
 import Tippy from '@tippyjs/react'
 import Select from '../../../../components/select/select'
 import {ApplicationConfig, PropsStepApplication} from '../../../../app/types/common'
 import {COUNTRY_PHONE_CODE} from '../../../../app/utils/globalConfig'
+import request from 'src/app/axios'
 
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
@@ -15,6 +16,26 @@ const Employment: FC<PropsStepApplication> = (props) => {
     monthly_income_3: 0,
   })
 
+  const [dataLoanType, setDataLoanType] = useState({})
+
+  useEffect(() => {
+    onFetchDataList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  async function onFetchDataList() {
+    try {
+      const endpoint = config.filter((data) => !!data.dependencyApi)
+      console.log(endpoint)
+      endpoint.forEach((d) => {
+        request.post(d.dependencyApi || '', {status: true}).then((res) => {
+          setDataLoanType({...dataLoanType, [d.key]: res?.data?.data})
+        })
+      })
+    } catch (error) {
+    } finally {
+    }
+  }
+
   const {values, touched, setFieldValue, errors, handleChange} = formik
 
   function renderComponent(item: ApplicationConfig) {
@@ -23,6 +44,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
       data = [],
       column,
       options,
+      keyLabelOfOptions,
+      keyValueOfOptions,
+      dependencyApi,
       disabled,
       typeInput,
       desc,
@@ -33,7 +57,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-100 w-lg-unset w-xl-200px'
+      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
 
     // nothing
     if (!Component) return
@@ -52,7 +76,10 @@ const Employment: FC<PropsStepApplication> = (props) => {
           onChange={handleChange}
           name={key}
           classShared={className}
-          options={options}
+          fieldValueOption={keyValueOfOptions}
+          fieldLabelOption={keyLabelOfOptions}
+          options={!!dependencyApi ? dataLoanType[key] || [] : options}
+          touched={touched}
         />
       )
     }

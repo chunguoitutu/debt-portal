@@ -350,6 +350,7 @@ export type ApplicationPayload = {
 }
 
 export type ApplicationFormData = {
+  job_type_id: number
   country_id: number
   middlename: string
   lastname: string

@@ -408,6 +408,7 @@ export const Applications = () => {
       country_id,
       file_documents,
       customer_no,
+      job_type_id,
     } = values
 
     const addressList = address_contact_info
@@ -443,7 +444,7 @@ export const Applications = () => {
         mobilephone_3: String(mobilephone_3),
         homephone: String(homephone),
         monthly_income: +monthly_income || 0,
-        job_type_id: 1,
+        job_type_id: +job_type_id,
         spoken_language,
         marketing_type_id: +marketing_type_id,
         residential_type,
