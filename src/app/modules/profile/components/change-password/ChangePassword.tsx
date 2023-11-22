@@ -137,14 +137,14 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
       onHide={onClosePopup}
       animation={true}
     >
-      <div className='modal-header'>
+      <div className='modal-header ps-10'>
         <h2 className='mb-0'>Change Password</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClosePopup}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
 
-      <div className='modal-body py-lg-10 px-lg-10'>
+      <div className='modal-body p-10'>
         <form className='row gy-4'>
           {!ignoreOldPassword && (
             <div className='col-12'>

@@ -5,7 +5,7 @@ import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
 import {useAuth} from '../../../../app/context/AuthContext'
 
 const HeaderUserMenu: FC = () => {
-  const {currentUser, logout} = useAuth()
+  const {currentUser, logout, company_name} = useAuth()
 
   return (
     <div
@@ -31,7 +31,7 @@ const HeaderUserMenu: FC = () => {
               {currentUser?.email}
             </a>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
-              {currentUser?.company_name}
+              {company_name}
             </a>
           </div>
         </div>

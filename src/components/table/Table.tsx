@@ -57,13 +57,7 @@ const Table: FC<Props> = ({
     showMessageTitle,
   } = settings
 
-  const {currentUser, priority} = useAuth()
-
-  const company_id = useMemo(
-    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
-  )
+  const {currentUser, company_id} = useAuth()
 
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)

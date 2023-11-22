@@ -10,6 +10,7 @@ import request from '../../../app/axios'
 import Form from 'react-bootstrap/Form'
 import {LoginInfo} from '../../../app/types/common'
 import {login} from '../../../app/axios/request'
+import {useAuth} from 'src/app/context/AuthContext'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -78,11 +79,16 @@ export function Login() {
     }
   }
 
-  const handleSelectBranch = async (valueBranch: string) => {
-    if (valueBranch) {
+  const handleSelectBranch = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const {value} = e.target
+
+    const currentBranch = listBranch.find((el: any) => el.id === +value)
+
+    if (value && currentBranch) {
       // after navigate -> master layout will get current user
       Cookies.set('token', dataInfo.token)
-      Cookies.set('company_cookie', valueBranch)
+      Cookies.set('company_id', value)
+      Cookies.set('company_name', currentBranch?.company_name || '')
       navigate(`/${redirect ? redirect : 'dashboard'}`)
     }
   }
@@ -115,12 +121,7 @@ export function Login() {
       {showBranch ? (
         <Form.Group controlId='formBasicSelect'>
           <label className='form-label fs-6 fw-bolder text-dark mb-2'>Please Select Company:</label>
-          <Form.Select
-            as='select'
-            onChange={(e) => {
-              handleSelectBranch(e.target.value)
-            }}
-          >
+          <Form.Select as='select' onChange={handleSelectBranch}>
             <option value=''>{''}</option>
             {listBranch.map((el) => (
               <option key={el?.company_name + el?.id} value={el?.id}>

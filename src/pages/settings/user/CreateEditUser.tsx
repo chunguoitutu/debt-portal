@@ -67,15 +67,8 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     config?.settings?.dependencies || {}
   const {rows = []} = config || {}
 
-  const {priority, currentUser} = useAuth()
+  const {priority, currentUser, company_id} = useAuth()
 
-  const company_id = useMemo(
-    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
-  )
-
-  // Rep
   const validationSchema = useMemo(() => {
     const schemaObj = rows
       .filter((row) =>
