@@ -457,3 +457,8 @@ export type RemarkItem = {
   time: number
   user: string
 }
+
+export type JwtDecode = {
+  iat: number
+  exp?: string
+}

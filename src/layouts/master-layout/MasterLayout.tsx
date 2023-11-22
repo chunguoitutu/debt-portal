@@ -1,62 +1,29 @@
 import {useEffect, useMemo} from 'react'
-import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom'
-import {HeaderWrapper} from '../../_metronic/layout/components/header'
-import {ScrollTop} from '../../_metronic/layout/components/scroll-top'
-import {FooterWrapper} from '../../_metronic/layout/components/footer'
-import {Sidebar} from '../../_metronic/layout/components/sidebar'
-import {ActivityDrawer, DrawerMessenger, InviteUsers, UpgradePlan} from '../../_metronic/partials'
-import {PageDataProvider} from '../../_metronic/layout/core'
-import {reInitMenu} from '../../_metronic/helpers'
-import {ToolbarWrapper} from '../../_metronic/layout/components/toolbar'
+import {Navigate, Outlet, useLocation} from 'react-router-dom'
 import Cookies from 'js-cookie'
-import jwtDecode from 'jwt-decode'
-import {useAuth} from '../../app/context/AuthContext'
 import clsx from 'clsx'
-import {swalToast} from 'src/app/swal-notification'
-
-interface iJwtDecode {
-  iat: number
-  exp?: string
-}
+import {useAuth} from 'src/app/context/AuthContext'
+import {reInitMenu} from 'src/_metronic/helpers'
+import {PageDataProvider} from 'src/_metronic/layout/core'
+import {HeaderWrapper} from 'src/_metronic/layout/components/header'
+import {Sidebar} from 'src/_metronic/layout/components/sidebar'
+import {ToolbarWrapper} from 'src/_metronic/layout/components/toolbar'
+import {FooterWrapper} from 'src/_metronic/layout/components/footer'
+import {ScrollTop} from 'src/_metronic/layout/components/scroll-top'
+import {ActivityDrawer, DrawerMessenger, InviteUsers, UpgradePlan} from 'src/_metronic/partials'
 
 const MasterLayout = () => {
   const location = useLocation()
 
-  const {logout, refreshToken} = useAuth()
+  const {refreshToken} = useAuth()
 
-  const navigate = useNavigate()
   const {pathname} = useLocation()
 
   const token = Cookies.get('token')
 
   useEffect(() => {
-    // Avoid crashes app if token is invalid
-    try {
-      const {exp} = jwtDecode<iJwtDecode>(token || '')
-
-      const isTokenExpired = exp ? Number(exp) < Date.now() / 1000 : false
-
-      // handle token expired
-      if (isTokenExpired) {
-        const arrayReject = ['config', 'profile']
-        //E.g: pathname "/abc" should be return "redirect=abc"
-        const query = pathname.split('/').some((item) => !arrayReject.includes(item))
-          ? `redirect=${pathname.slice(1)}`
-          : ''
-
-        Cookies.remove('token')
-        navigate(`/login?${query}`)
-        swalToast.fire({
-          icon: 'error',
-          title: 'Login session has expired.',
-        })
-      } else {
-        // Get info when reload
-        token && refreshToken(token)
-      }
-    } catch (error) {
-      logout()
-    }
+    if (!token) return
+    refreshToken(token || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
