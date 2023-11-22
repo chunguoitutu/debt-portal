@@ -33,7 +33,7 @@ const InputCheck = ({
         )}
 
         <div className='fv-row'>
-          <div className=' form-check form-check-custom form-check-solid form-switch'>
+          <div className='form-check form-check-custom form-check-solid form-switch'>
             <input
               className='form-check-input cursor-pointer'
               type='checkbox'
