@@ -30,7 +30,9 @@ type Props = {
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
-  type_name: Yup.string().required('Loan Type is required'),
+  type_name: Yup.string()
+    .required('Loan Type is required')
+    .max(45, 'Loan Type must be at most 45 characters'),
   description: Yup.string().max(45, 'Description must be at most 45 characters'),
 })
 

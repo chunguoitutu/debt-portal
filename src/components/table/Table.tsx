@@ -364,10 +364,8 @@ const Table: FC<Props> = ({
                                 fontSize: '14px',
                                 fontWeight: '500',
                                 lineHeight: '20px',
-                                display: 'flex',
                                 borderBottom: 'none',
-                                marginTop: '8px',
-                                marginLeft: '15px',
+                                paddingLeft: '20px',
                               }}
                             >
                               {moment(value).format('DD/MM/YYYY')}
