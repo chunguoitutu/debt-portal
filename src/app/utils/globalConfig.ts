@@ -517,13 +517,13 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'companies',
-    labelBreadCrumbs: 'Companies',
+    labelBreadCrumbs: 'Company Listing',
     priority: [1],
     component: CompanyListing,
   },
   {
     path: 'users',
-    labelBreadCrumbs: 'Users',
+    labelBreadCrumbs: 'Users Listing',
     priority: [1, 2],
     component: UserManagement,
   },
@@ -541,7 +541,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'roles',
-    labelBreadCrumbs: 'Roles',
+    labelBreadCrumbs: 'Roles Listing',
     priority: [1, 2],
     component: RolePage,
   },

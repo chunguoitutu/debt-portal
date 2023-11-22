@@ -12,9 +12,7 @@ import {useAuth} from '../../../app/context/AuthContext'
 import {convertErrorMessageResponse, isJson} from '../../../app/utils'
 import {createNewRole, updateRole} from '../../../app/axios/request'
 import {swalToast} from '../../../app/swal-notification'
-import {DEFAULT_MESSAGE_ERROR_500} from '../../../app/constants/error-message'
 import {ROLE_PRIORITY} from '../../../app/utils/globalConfig'
-import Cookies from 'js-cookie'
 
 type Props = {
   data?: RoleInfo
