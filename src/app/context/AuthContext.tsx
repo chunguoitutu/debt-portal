@@ -5,11 +5,12 @@ import {swalToast} from '../swal-notification'
 import {DEFAULT_MSG_ERROR} from '../constants/error-message'
 import {UserInfo} from '../types/common'
 import {getCurrentUser} from '../axios/request'
-import {useNavigate} from 'react-router-dom'
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
   priority: number
+  company_id: number
+  company_name: string
   setCurrentUser: Dispatch<SetStateAction<UserInfo | undefined>>
   refreshToken: (token: string) => void
   logout: () => void
@@ -18,6 +19,8 @@ type AuthContextProps = {
 const initAuthContextPropsState = {
   currentUser: undefined,
   priority: 0,
+  company_id: 0,
+  company_name: '',
   setCurrentUser: () => {},
   refreshToken: (token: string) => {},
   logout: () => {},
@@ -32,6 +35,8 @@ const useAuth = () => {
 const AuthProvider: FC<WithChildren> = ({children}) => {
   const [currentUser, setCurrentUser] = useState<UserInfo | undefined>()
   const [priority, setPriority] = useState<number>(0)
+  const [companyId, setCompanyId] = useState<number>(0)
+  const [companyName, setCompanyName] = useState<string>('')
 
   const logout = () => {
     setCurrentUser(undefined)
@@ -40,10 +45,13 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
 
   const refreshToken = async (token: string) => {
     Cookies.set('token', token)
+    const companyIdFromCookie = Cookies.get('company_id') || 0
+    const companyNameFromCookie = Cookies.get('company_name') || ''
 
     try {
       const {data: dataRes} = await getCurrentUser()
       const {data, error} = dataRes || {}
+      const {company_id, priority, company_name} = data || {}
 
       if (error || !data) {
         logout()
@@ -54,7 +62,9 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
         return
       }
 
-      setPriority(data.priority)
+      setCompanyId(+companyIdFromCookie || company_id || 0)
+      setPriority(priority || 100)
+      setCompanyName(companyNameFromCookie || company_name || '')
       setCurrentUser(data)
     } catch (error: any) {
       logout()
@@ -66,7 +76,17 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
   }
 
   return (
-    <AuthContext.Provider value={{currentUser, priority, setCurrentUser, refreshToken, logout}}>
+    <AuthContext.Provider
+      value={{
+        currentUser,
+        priority,
+        company_id: companyId,
+        company_name: companyName,
+        setCurrentUser,
+        refreshToken,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )

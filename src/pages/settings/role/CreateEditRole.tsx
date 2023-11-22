@@ -35,13 +35,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
   const [dataPermissionSetting, setDataPermissionSetting] = useState(PAGE_PERMISSION.setting)
   const {rows} = config || {}
 
-  const {currentUser, priority} = useAuth()
-
-  const company_id = useMemo(
-    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
-  )
+  const {company_id, priority} = useAuth()
 
   const {
     values,
@@ -235,10 +229,8 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     }
   }
 
-  const DATA_ROLE_PRIORITY = ROLE_PRIORITY.filter((rolePriority) =>
-    priority === 1
-      ? Number(rolePriority.value) > Number(priority)
-      : Number(rolePriority.value) > Number(priority)
+  const DATA_ROLE_PRIORITY = ROLE_PRIORITY.filter(
+    (rolePriority) => Number(rolePriority.value) > Number(priority)
   )
 
   function handleCheck(_: string[], node: any) {

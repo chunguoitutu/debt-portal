@@ -158,7 +158,7 @@ export const Applications = () => {
     resetForm,
   } = formik
 
-  const {priority, currentUser} = useAuth()
+  const {company_id} = useAuth()
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
     const lengthStep = STEP_APPLICATION.length
@@ -409,12 +409,6 @@ export const Applications = () => {
       file_documents,
       customer_no,
     } = values
-
-    const company_id =
-      priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0
-
-    if (!+company_id)
-      return process.env.NODE_ENV === 'development' && console.warn('Missing company_id')
 
     const addressList = address_contact_info
       .filter((item) => item.address_type_id)

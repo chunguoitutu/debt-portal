@@ -45,13 +45,7 @@ const ApplicationListing = () => {
   const {settings, rows} = APPLICATION_LISTING_CONFIG || {}
   const {showAction = true, showEditButton} = settings || {}
 
-  const {currentUser, priority} = useAuth()
-
-  const company_id = useMemo(
-    () => (priority === 1 ? Cookies.get('company_cookie') || 0 : currentUser?.company_id || 0),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
-  )
+  const {company_id} = useAuth()
 
   const [showInput, setShowInput] = React.useState<boolean>(false)
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>({})
