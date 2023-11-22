@@ -2,9 +2,9 @@ import {FC, useState, createContext, useContext, Dispatch, SetStateAction} from 
 import {WithChildren} from '../../_metronic/helpers'
 import Cookies from 'js-cookie'
 import {swalToast} from '../swal-notification'
-import {DEFAULT_MSG_ERROR} from '../constants/error-message'
-import {UserInfo} from '../types/common'
+import {JwtDecode, UserInfo} from '../types/common'
 import {getCurrentUser} from '../axios/request'
+import jwtDecode from 'jwt-decode'
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
@@ -43,8 +43,32 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     Cookies.remove('token')
   }
 
+  function handleLogout() {
+    logout()
+    swalToast.fire({
+      title: 'Login session has expired',
+      icon: 'error',
+    })
+    return
+  }
+
   const refreshToken = async (token: string) => {
-    Cookies.set('token', token)
+    if (!token) return handleLogout()
+
+    const {exp} = jwtDecode<JwtDecode>(token || '')
+    const timestamp = exp ? (+exp || 0) * 1000 : 0
+
+    // Chuyển đổi timestamp thành đối tượng Date
+    const expires = exp ? new Date(timestamp) : undefined
+
+    if (!timestamp || !expires || !token) {
+      return handleLogout()
+    }
+
+    Cookies.set('token', token, {
+      expires,
+    })
+
     const companyIdFromCookie = Cookies.get('company_id') || 0
     const companyNameFromCookie = Cookies.get('company_name') || ''
 
@@ -54,12 +78,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
       const {company_id, priority, company_name} = data || {}
 
       if (error || !data) {
-        logout()
-        swalToast.fire({
-          title: DEFAULT_MSG_ERROR,
-          icon: 'error',
-        })
-        return
+        return handleLogout()
       }
 
       setCompanyId(+companyIdFromCookie || company_id || 0)
@@ -67,11 +86,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
       setCompanyName(companyNameFromCookie || company_name || '')
       setCurrentUser(data)
     } catch (error: any) {
-      logout()
-      swalToast.fire({
-        title: DEFAULT_MSG_ERROR,
-        icon: 'error',
-      })
+      return handleLogout()
     }
   }
 

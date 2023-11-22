@@ -10,7 +10,6 @@ import request from '../../../app/axios'
 import Form from 'react-bootstrap/Form'
 import {LoginInfo} from '../../../app/types/common'
 import {login} from '../../../app/axios/request'
-import {useAuth} from 'src/app/context/AuthContext'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -67,6 +66,7 @@ export function Login() {
           setLoading(false)
         } else {
           Cookies.set('token', data.token)
+
           // after navigate -> master layout will get current user
           navigate(`/${redirect ? redirect : 'dashboard'}`)
         }
