@@ -240,40 +240,38 @@ const Table: FC<Props> = ({
           >
             <thead>
               <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                {rows
-                  .filter((el) => !el.notShowFiled)
-                  .map(
-                    (row, i) =>
-                      !row?.isHide && (
-                        <th
-                          className={row.classNameTableHead}
-                          key={i}
+                {rows.map(
+                  (row, i) =>
+                    !row?.isHide && (
+                      <th
+                        className={row.classNameTableHead}
+                        key={i}
+                        style={{
+                          paddingRight: row.name === 'Status' ? '9.75px' : '',
+                          maxWidth: row.key === 'id' ? '500px' : '50px',
+                          minWidth: row.key === 'id' ? '' : '150px',
+                        }}
+                      >
+                        <div
                           style={{
-                            paddingRight: row.name === 'Status' ? '9.75px' : '',
-                            maxWidth: row.key === 'id' ? '500px' : '50px',
-                            minWidth: row.key === 'id' ? '' : '150px',
+                            width: '100%',
+                            display: row.name === 'Status' ? 'flex' : '',
+                            justifyContent: row.name === 'Status' ? 'center' : '',
+                            alignItems: row.name === 'Status' ? 'center' : '',
+                            alignContent: 'center',
                           }}
+                          className={`d-flex flex-row gap-3 cursor-pointer ${
+                            row.name === 'STATUS' ? 'w-100' : ''
+                          }`}
                         >
-                          <div
-                            style={{
-                              width: '100%',
-                              display: row.name === 'Status' ? 'flex' : '',
-                              justifyContent: row.name === 'Status' ? 'center' : '',
-                              alignItems: row.name === 'Status' ? 'center' : '',
-                              alignContent: 'center',
-                            }}
-                            className={`d-flex flex-row gap-3 cursor-pointer ${
-                              row.name === 'STATUS' ? 'w-100' : ''
-                            }`}
-                          >
-                            <span style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}>
-                              {row.name}
-                            </span>
-                            {isShowFilter && <Filter />}
-                          </div>
-                        </th>
-                      )
-                  )}
+                          <span style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}>
+                            {row.name}
+                          </span>
+                          {isShowFilter && <Filter />}
+                        </div>
+                      </th>
+                    )
+                )}
                 {(showAction || showRefresh) && (
                   <th
                     style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}
@@ -307,168 +305,166 @@ const Table: FC<Props> = ({
                 data.map((item, idx) => {
                   return (
                     <tr key={idx} className='fw-medium'>
-                      {rows
-                        .filter((el) => !el.notShowFiled)
-                        .map(({key, component, type, classNameTableBody, isHide, color}, i) => {
-                          if (isHide) {
-                            return <Fragment key={i}></Fragment>
-                          }
-                          let Component = component || Fragment
-                          let value = item[key]
+                      {rows.map(({key, component, type, classNameTableBody, isHide, color}, i) => {
+                        if (isHide) {
+                          return <Fragment key={i}></Fragment>
+                        }
+                        let Component = component || Fragment
+                        let value = item[key]
 
-                          if (key === 'id') {
+                        if (key === 'id') {
+                          return (
+                            <td
+                              key={i}
+                              style={{
+                                maxWidth: '50px',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                              }}
+                              className='w-xxl-6'
+                            >
+                              {Number(idx) +
+                                1 +
+                                (Number(searchCriteria.currentPage) *
+                                  Number(searchCriteria.pageSize) -
+                                  Number(searchCriteria.pageSize))}
+                            </td>
+                          )
+                        }
+
+                        if (key === 'open_date') {
+                          return (
+                            <td
+                              style={{
+                                maxWidth: '500px',
+                                minWidth: '150px',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                              }}
+                              key={i}
+                            >
+                              {moment(value).format('DD/MM/YYYY')}
+                            </td>
+                          )
+                        }
+
+                        if (key === 'created_date') {
+                          return (
+                            <td
+                              key={i}
+                              style={{
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                                borderBottom: 'none',
+                                marginTop: '8px',
+                                marginLeft: '15px',
+                              }}
+                            >
+                              {moment(value).format('DD/MM/YYYY')}
+                            </td>
+                          )
+                        }
+
+                        if (key === 'updated_date') {
+                          return (
+                            <td
+                              key={i}
+                              style={{
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                                paddingLeft: '20px',
+                              }}
+                            >
+                              {moment(value).format('DD/MM/YYYY')}
+                            </td>
+                          )
+                        }
+                        if (component) {
+                          if (key === 'status' || key === 'is_active') {
                             return (
                               <td
                                 key={i}
-                                style={{
-                                  maxWidth: '50px',
-                                  fontSize: '14px',
-                                  fontWeight: '500',
-                                  lineHeight: '20px',
-                                }}
-                                className='w-xxl-6'
-                              >
-                                {Number(idx) +
-                                  1 +
-                                  (Number(searchCriteria.currentPage) *
-                                    Number(searchCriteria.pageSize) -
-                                    Number(searchCriteria.pageSize))}
-                              </td>
-                            )
-                          }
-
-                          if (key === 'open_date') {
-                            return (
-                              <td
                                 style={{
                                   maxWidth: '500px',
                                   minWidth: '150px',
-                                  fontSize: '14px',
-                                  fontWeight: '500',
-                                  lineHeight: '20px',
-                                }}
-                                key={i}
-                              >
-                                {moment(value).format('DD/MM/YYYY')}
-                              </td>
-                            )
-                          }
-
-                          if (key === 'created_date') {
-                            return (
-                              <td
-                                key={i}
-                                style={{
                                   fontSize: '14px',
                                   fontWeight: '500',
                                   lineHeight: '20px',
                                   borderBottom: 'none',
-                                  marginTop: '8px',
-                                  marginLeft: '15px',
                                 }}
+                                className='text-center'
                               >
-                                {moment(value).format('DD/MM/YYYY')}
-                              </td>
-                            )
-                          }
-
-                          if (key === 'updated_date') {
-                            return (
-                              <td
-                                key={i}
-                                style={{
-                                  fontSize: '14px',
-                                  fontWeight: '500',
-                                  lineHeight: '20px',
-                                  paddingLeft: '20px',
-                                }}
-                              >
-                                {moment(value).format('DD/MM/YYYY')}
-                              </td>
-                            )
-                          }
-                          if (component) {
-                            if (key === 'status' || key === 'is_active') {
-                              return (
-                                <td
-                                  key={i}
-                                  style={{
-                                    maxWidth: '500px',
-                                    minWidth: '150px',
-                                    fontSize: '14px',
-                                    fontWeight: '500',
-                                    lineHeight: '20px',
-                                    borderBottom: 'none',
-                                  }}
-                                  className='text-center'
-                                >
-                                  <div className='d-flex align-items-center justify-content-center gap-1'>
-                                    <Component
-                                      color={value === 1 ? 'success' : 'danger'}
-                                      title={value === 1 ? 'Active' : 'Disable'}
-                                    />
-                                  </div>
-                                </td>
-                              )
-                            }
-                            //HANDLE ADD PERMISSION DROPDOWN
-                            if (key === 'permissions') {
-                              return (
-                                <td key={i} style={{maxWidth: '500px'}}>
+                                <div className='d-flex align-items-center justify-content-center gap-1'>
                                   <Component
-                                    tittle={''}
-                                    checked={handlePermissionChecked(item[key])}
+                                    color={value === 1 ? 'success' : 'danger'}
+                                    title={value === 1 ? 'Active' : 'Disable'}
                                   />
-                                </td>
-                              )
-                            }
-
-                            return (
-                              <td
-                                key={i}
-                                style={{
-                                  maxWidth: '500px',
-                                  minWidth: '150px',
-                                  fontSize: '14px',
-                                  fontWeight: '500',
-                                  lineHeight: '20px',
-                                }}
-                              >
-                                <>
-                                  <Component
-                                    data={item}
-                                    isUpdated={isUpdated}
-                                    setIsUpdated={setIsUpdated}
-                                  />
-                                </>
+                                </div>
                               </td>
                             )
                           }
-
-                          if (type) {
-                            value = convertValue(type, value)
+                          //HANDLE ADD PERMISSION DROPDOWN
+                          if (key === 'permissions') {
+                            return (
+                              <td key={i} style={{maxWidth: '500px'}}>
+                                <Component
+                                  tittle={''}
+                                  checked={handlePermissionChecked(item[key])}
+                                />
+                              </td>
+                            )
                           }
 
                           return (
-                            <td key={i} style={{maxWidth: '500px'}}>
-                              {component ? (
-                                <Component />
-                              ) : (
-                                <span
-                                  style={{
-                                    fontSize: '14px',
-                                    fontWeight: '500',
-                                    color: !!color ? color : '#78829D',
-                                    lineHeight: '20px',
-                                  }}
-                                  className={classNameTableBody}
-                                >
-                                  {value}
-                                </span>
-                              )}
+                            <td
+                              key={i}
+                              style={{
+                                maxWidth: '500px',
+                                minWidth: '150px',
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                lineHeight: '20px',
+                              }}
+                            >
+                              <>
+                                <Component
+                                  data={item}
+                                  isUpdated={isUpdated}
+                                  setIsUpdated={setIsUpdated}
+                                />
+                              </>
                             </td>
                           )
-                        })}
+                        }
+
+                        if (type) {
+                          value = convertValue(type, value)
+                        }
+
+                        return (
+                          <td key={i} style={{maxWidth: '500px'}}>
+                            {component ? (
+                              <Component />
+                            ) : (
+                              <span
+                                style={{
+                                  fontSize: '14px',
+                                  fontWeight: '500',
+                                  color: !!color ? color : '#78829D',
+                                  lineHeight: '20px',
+                                }}
+                                className={classNameTableBody}
+                              >
+                                {value}
+                              </span>
+                            )}
+                          </td>
+                        )
+                      })}
                       {showAction && (showDeleteButton || showEditButton || showViewButton) && (
                         <td className='text-center'>
                           <div className='d-flex align-items-center justify-content-center gap-1'>
