@@ -17,7 +17,7 @@ import {useFormik} from 'formik'
 import {swalToast} from '../../../app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 import {convertErrorMessageResponse} from 'src/app/utils'
-import Cookies from 'js-cookie'
+import {CREATE_USER_TAB} from 'src/app/constants/common'
 
 type Props = {
   config?: TableConfig
@@ -61,7 +61,8 @@ const initialValues: ValuesCreateEdit = {
 const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [dataCompany, setDataCompany] = useState<BranchItem[]>([])
   const [dataRole, setDataRole] = useState<RoleInfo[]>([])
-  const [active, setActive] = useState<boolean>(true)
+  const [isSwitchedAccount, setIsSwitchedAccount] = useState<boolean>(data ? true : false)
+  const [activeTab, setActiveTab] = useState<number>(1)
 
   const {apiGetCompanyList, apiGetRoleList, apiCreateUser, apiUpdateUser} =
     config?.settings?.dependencies || {}
@@ -81,7 +82,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                 .required('Password is required')
                 .matches(
                   regexPassword,
-                  'Password must be at least 8 characters including at least one letter, one number, and one special character.'
+                  'Password must be at least 8 characters including at least one letter, one number, and one special character'
                 ),
             }
           : {}),
@@ -157,6 +158,14 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser])
+
+  const dataRender = useMemo(() => {
+    return rows?.filter(({isCreateEdit, key}) => {
+      const fieldAccount = ['username', 'password', 'role_id'].includes(key)
+
+      return activeTab === 1 ? !fieldAccount && isCreateEdit : fieldAccount && isCreateEdit
+    })
+  }, [activeTab])
 
   function handleSubmitForm(values: ValuesCreateEdit) {
     const mappingPayload = {
@@ -242,136 +251,49 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     }
   }
 
+  console.log(
+    rows?.filter(({isCreateEdit, key}) => {
+      const fieldAccount = ['username', 'password', 'role_id'].includes(key)
+
+      return activeTab === 1 ? !fieldAccount && isCreateEdit : fieldAccount && isCreateEdit
+    })
+  )
+
   return (
     <Modal title={data ? `Edit User "${data.username}"` : 'New User'} show={show} onClose={onClose}>
       <div className='p-30px'>
-        <Tab.Container id='left-tabs-example' defaultActiveKey='first'>
+        <Tab.Container id='left-tabs-example' defaultActiveKey={1} activeKey={activeTab}>
           <Row>
             <Col>
-              <Nav variant='pills' className='flex-column gap-2 '>
-                <Nav.Item
-                  style={{
-                    marginRight: '0',
-                  }}
-                >
-                  <Nav.Link
-                    onClick={() => {
-                      setActive(true)
-                    }}
-                    eventKey='first'
-                    style={{
-                      width: '100%',
-                      fontSize: '16px',
-                      fontWeight: '500',
-                      color: active ? 'white' : '#071437',
-                      background: active ? '#1B84FF' : '',
-                    }}
-                  >
-                    Information
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    onClick={() => setActive(false)}
-                    eventKey='second'
-                    style={{
-                      fontSize: '16px',
-                      fontWeight: '500',
-                      color: active ? '#071437' : 'white',
-                      background: active ? '' : '#1B84FF',
-                      marginBottom: '30px',
-                    }}
-                  >
-                    Account
-                  </Nav.Link>
-                </Nav.Item>
+              <Nav variant='pills' className='flex-column gap-2'>
+                {CREATE_USER_TAB.map(({label}, index) => {
+                  const isActive = activeTab === index + 1
+                  const classDynamic = isActive
+                    ? 'bg-primary text-white'
+                    : 'bg-transparent text-gray-900'
+                  return (
+                    <Nav.Item className='m-0' key={index}>
+                      <Nav.Link
+                        className={`w-100 fw-semibold fs-4 ${classDynamic}`}
+                        onClick={() => {
+                          setActiveTab(index + 1)
+                          !isActive && setIsSwitchedAccount(true)
+                        }}
+                        eventKey={index + 1}
+                      >
+                        {label}
+                      </Nav.Link>
+                    </Nav.Item>
+                  )
+                })}
               </Nav>
             </Col>
             <Col sm={9} className='h-lg-350px'>
               <Tab.Content>
-                <Tab.Pane eventKey='first'>
+                <Tab.Pane eventKey={activeTab}>
                   <div>
                     <div className='row'>
-                      {(rows || [])
-                        ?.filter(
-                          (item) =>
-                            item.isCreateEdit &&
-                            !['username', 'password', 'role_id'].includes(item.key)
-                        )
-                        .map((item, i) => {
-                          const {infoCreateEdit, key, name} = item
-                          const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
-                            infoCreateEdit || {}
-                          if (type === 'input') {
-                            return (
-                              <div className='col-6' key={i}>
-                                <div className='d-flex flex-column mb-16px'>
-                                  <Input
-                                    onBlur={handleBlur}
-                                    type={typeInput}
-                                    title={name}
-                                    name={key}
-                                    value={values[key] || ''}
-                                    onChange={handleChange}
-                                    required={isRequired}
-                                  />
-
-                                  {errors[key] && touched[key] && (
-                                    <ErrorMessage
-                                      className='mt-2'
-                                      message={errors[key] as string}
-                                    />
-                                  )}
-                                </div>
-                              </div>
-                            )
-                          } else if (type === 'select') {
-                            return (
-                              <div className='col-6' key={i}>
-                                <Select
-                                  name={key}
-                                  required={isRequired}
-                                  options={dataCompany}
-                                  fieldLabelOption={fieldLabelOption || key}
-                                  fieldValueOption={fieldValueOption || 'id'}
-                                  label={name}
-                                  onBlur={handleBlur}
-                                  id={key}
-                                  error={!!errors[key]}
-                                  touched={!!touched[key]}
-                                  errorTitle={errors[key] as string}
-                                  value={values[key]}
-                                  onChange={handleChange}
-                                />
-                              </div>
-                            )
-                          } else if (type === 'checkbox') {
-                            return (
-                              <InputCheck
-                                name={key}
-                                key={i}
-                                checked={values[key]}
-                                onChange={handleChange}
-                                id={key}
-                                title={name}
-                              />
-                            )
-                          }
-
-                          return <Fragment key={i}></Fragment>
-                        })}
-                    </div>
-                  </div>
-                </Tab.Pane>
-                <Tab.Pane eventKey='second'>
-                  <div className='row'>
-                    {(rows || [])
-                      ?.filter(
-                        (item) =>
-                          item.isCreateEdit &&
-                          ['username', 'password', 'role_id'].includes(item.key)
-                      )
-                      .map((item, i) => {
+                      {dataRender.map((item, i) => {
                         const {infoCreateEdit, key, name} = item
                         const {type, typeInput, isRequired, fieldLabelOption, fieldValueOption} =
                           infoCreateEdit || {}
@@ -380,15 +302,13 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                             <div className='col-6' key={i}>
                               <div className='d-flex flex-column mb-16px'>
                                 <Input
+                                  onBlur={handleBlur}
                                   type={typeInput}
                                   title={name}
                                   name={key}
                                   value={values[key] || ''}
                                   onChange={handleChange}
-                                  onBlur={handleBlur}
-                                  required={
-                                    key === 'password' ? (!data ? true : false) : isRequired
-                                  }
+                                  required={isRequired}
                                 />
 
                                 {errors[key] && touched[key] && (
@@ -403,12 +323,12 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
                               <Select
                                 name={key}
                                 required={isRequired}
-                                options={dataRole}
+                                options={dataCompany}
                                 fieldLabelOption={fieldLabelOption || key}
                                 fieldValueOption={fieldValueOption || 'id'}
                                 label={name}
-                                id={key}
                                 onBlur={handleBlur}
+                                id={key}
                                 error={!!errors[key]}
                                 touched={!!touched[key]}
                                 errorTitle={errors[key] as string}
@@ -432,6 +352,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
                         return <Fragment key={i}></Fragment>
                       })}
+                    </div>
                   </div>
                 </Tab.Pane>
               </Tab.Content>
@@ -452,9 +373,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
           className='btn-lg btn-primary'
           type='submit'
           loading={isSubmitting}
-          onClick={() => handleSubmit()}
+          onClick={() => (!isSwitchedAccount ? setActiveTab((prev) => prev + 1) : handleSubmit())}
         >
-          {data ? 'Update' : 'Create'}
+          {!isSwitchedAccount ? 'Continue' : data ? 'Update' : 'Create'}
         </Button>
       </div>
     </Modal>

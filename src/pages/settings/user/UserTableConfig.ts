@@ -57,7 +57,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       },
       validationFormik: Yup.string().matches(
         regexPassword,
-        'Password must be at least 8 characters including at least one letter, one number, and one special character.'
+        'Password must be at least 8 characters including at least one letter, one number, and one special character'
       ),
     },
     {
@@ -74,7 +74,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
         isRequired: true,
         fieldLabelOption: 'role_name',
       },
-      validationFormik: Yup.string().required('Role name is required'),
+      validationFormik: Yup.string().required('Role is required'),
     },
     {
       key: 'firstname',
