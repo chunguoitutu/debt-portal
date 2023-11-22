@@ -58,9 +58,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     const {exp} = jwtDecode<JwtDecode>(token || '')
     const timestamp = exp ? (+exp || 0) * 1000 : 0
 
-    // Chuyển đổi timestamp thành đối tượng Date
     const expires = exp ? new Date(timestamp) : undefined
-
     if (!timestamp || !expires || !token) {
       return handleLogout()
     }

@@ -410,11 +410,15 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
-    key: 'specialization',
+    key: 'job_type_id',
     component: Select,
     typeComponent: 'Select',
-    label: 'Specialization',
+    label: 'Job Type',
     options: SPECIALIZATION,
+    keyLabelOfOptions: 'job_type_name',
+    keyValueOfOptions: 'id',
+    dependencyApi: '/config/job_type/listing',
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Job Type')),
   },
   {
     key: 'annual_income',
