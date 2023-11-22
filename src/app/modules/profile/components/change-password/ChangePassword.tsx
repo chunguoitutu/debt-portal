@@ -111,7 +111,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
       await updatePasswordCurrentUser(updatePasswordInfo)
       swalToast.fire({
         icon: 'success',
-        title: 'Password change successfully. Please login again.',
+        title: 'Password successfully changed. Please login again.',
       })
       onClosePopup()
       logout()
