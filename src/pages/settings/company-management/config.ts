@@ -21,7 +21,7 @@ export const COMPANY_MANAGEMENT_CONFIG = {
     },
     {
       key: 'contact_person',
-      name: 'Contract Person',
+      name: 'Contact Person',
       type: 'text',
     },
     {
@@ -34,7 +34,6 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       name: 'Telephone',
       type: 'number',
     },
-
     {
       key: 'email',
       name: 'Email',

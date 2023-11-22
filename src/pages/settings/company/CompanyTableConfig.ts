@@ -42,6 +42,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'telephone',
+      notShowFiled: true,
       name: 'Telephone',
     },
     {
@@ -52,6 +53,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'open_date',
       name: 'Open Date',
+      notShowFiled: true,
       type: 'date',
     },
     {
