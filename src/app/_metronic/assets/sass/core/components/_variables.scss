@@ -554,7 +554,7 @@ $font-sizes: (
   // 88.25px
   7hx: $font-size-base * 7.5,
   // 91.5px
-  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,
+  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,
 ) !default;
 
 $headings-font-weight: 600 !default;
@@ -1109,6 +1109,7 @@ $letter-spacing-values: (
 
 // Keenthemes hight and width sizes
 $custom-sizes: (
+  0: 0,
   unset: unset,
   25: 25%,
   50: 50%,
@@ -1126,6 +1127,7 @@ $custom-sizes: (
   9px: 9px,
   10px: 10px,
   15px: 15px,
+  18px: 18px,
   20px: 20px,
   25px: 25px,
   30px: 30px,

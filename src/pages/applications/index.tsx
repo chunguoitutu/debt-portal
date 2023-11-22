@@ -53,7 +53,7 @@ interface ListIdEdit {
 }
 
 export const Applications = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [currentStep, setCurrentStep] = useState<number>(4)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
   const [stepCompleted, setStepCompleted] = useState<number>(0)

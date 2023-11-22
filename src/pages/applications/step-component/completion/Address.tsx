@@ -5,65 +5,39 @@ type Props = {
 
 const Address = ({config, data}: Props) => {
   return (
-    <div style={{width: '100%', border: '1px solid #D4D4D4', padding: '0px'}}>
+    <div className='w-100 p-0' style={{border: '1px solid #D4D4D4'}}>
       <h1
+        className='pt-8px pb-8px ps-24px pe-24px   fw-semibold m-0 fs-13 text-gray-700'
         style={{
-          padding: '8px 24px',
-          alignItems: 'center',
           background: '#D4D4D4',
-          lineHeight: '20px',
-          fontWeight: '500px',
-          fontStyle: 'normal',
-          fontSize: '14px',
-          color: '#4B5675',
-          margin: '0px',
         }}
       >
         {config?.title}
       </h1>
-      <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+      <div className='d-flex flex-column w-100'>
         {data?.address_contact_info.map((e, i: number) => (
           <div
             key={i}
+            className='d-flex justify-content-between w-100 gap-16px p-24px'
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              padding: '24px',
-              width: '100%',
-              gap: '16px',
               borderBottom: i < data?.address_contact_info.length - 1 ? '1px solid #D4D4D4' : '',
             }}
           >
             {config?.config?.map((children_config: any, index: number) => {
               return (
-                <div
-                  key={index}
-                  style={{display: 'flex', flexDirection: 'column', gap: '16px', width: '100%'}}
-                >
+                <div key={index} className='d-flex flex-column gap-16px w-100'>
                   {children_config?.map((element_config: any) => {
                     const {Component} = element_config
                     return (
                       <div key={element_config.key}>
                         <div
+                          className='d-flex flex-column'
                           style={{
-                            display: 'flex',
-                            flexDirection: 'column',
                             justifyContent: !!element_config.img ? 'center' : 'start',
                             alignItems: !!element_config.img ? 'center' : 'start',
                           }}
                         >
-                          <h2
-                            style={{
-                              padding: '0px',
-                              lineHeight: '16px',
-                              fontWeight: '500px',
-                              fontStyle: 'normal',
-                              fontSize: '12px',
-                              color: '#B5B5C3',
-                              margin: '0px',
-                              textTransform: 'capitalize',
-                            }}
-                          >
+                          <h2 className='p-0 m-0 text-capitalize fw-semibold fs-12 text-gray-400'>
                             {element_config.value}
                           </h2>
                           {!!Component ? (
@@ -74,16 +48,9 @@ const Address = ({config, data}: Props) => {
                             />
                           ) : (
                             <p
+                              className='fw-semibold p-0 m-0 min-h-20px text-gray-900 fs-13'
                               style={{
                                 textAlign: !!element_config.img ? 'center' : 'start',
-                                padding: '0px',
-                                lineHeight: '20px',
-                                minHeight: '20px',
-                                fontWeight: '500px',
-                                fontStyle: 'normal',
-                                fontSize: '14px',
-                                color: '#071437',
-                                margin: '0px',
                               }}
                             >
                               {e[element_config.key]}

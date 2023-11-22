@@ -4,19 +4,7 @@ type Props = {
 
 function FullName({data}: Props) {
   return (
-    <div
-      style={{
-        textAlign: 'start',
-        padding: '0px',
-        lineHeight: '20px',
-        minHeight: '20px',
-        fontWeight: '500px',
-        fontStyle: 'normal',
-        fontSize: '14px',
-        color: '#071437',
-        margin: '0px',
-      }}
-    >
+    <div className='text-start fw-semibold p-0 m-0 min-h-20px fs-12 td-completion text-gray-900'>
       {data.lastname} {data.middlename} {data.firstname}
     </div>
   )

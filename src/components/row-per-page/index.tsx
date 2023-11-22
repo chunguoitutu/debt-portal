@@ -4,20 +4,9 @@ type Props = {limit: number; lenghtData: number; page: number; setLimit?: any}
 
 const RowPerPage = ({limit = 10, page = 1, lenghtData = 0, setLimit}: Props) => {
   return (
-    <div style={{display: 'flex', alignItems: 'center'}}>
-      <p
-        style={{
-          color: '#78829D',
-          fontSize: '14px',
-          fontWeight: '500',
-          lineHeight: '20px',
-          fontStyle: 'normal',
-          marginBottom: '0px',
-        }}
-      >
-        Row per page:
-      </p>
-      <div style={{marginRight: '16px', marginLeft: '16px'}}>
+    <div className='d-flex align-items-center' style={{display: 'flex', alignItems: 'center'}}>
+      <p className='text-gray-600 fs-14 mb-0 fw-semibold'>Row per page:</p>
+      <div className='ms-16px me-16px'>
         <Select
           classShared=''
           className='pt-1 pb-1 ps-4 pe-9 '
@@ -33,16 +22,7 @@ const RowPerPage = ({limit = 10, page = 1, lenghtData = 0, setLimit}: Props) => 
           ]}
         />
       </div>
-      <p
-        style={{
-          fontStyle: 'normal',
-          lineHeight: '20px',
-          fontWeight: '500',
-          fontSize: '14px',
-          color: '#78829D',
-          marginBottom: '0px',
-        }}
-      >
+      <p className='mb-0 text-gray-600 fs-14 '>
         {page * Number(limit) - (Number(limit) - 1) < lenghtData
           ? page * Number(limit) - (Number(limit) - 1)
           : lenghtData}

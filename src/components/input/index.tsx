@@ -41,15 +41,9 @@ const Input: FC<Props> = ({
           htmlFor={name}
         >
           <span
-            style={{
-              fontSize: '16px',
-              fontStyle: 'normal',
-              fontWeight: '500',
-              lineHeight: '24px',
-              color: '#071437',
-              textTransform: 'capitalize',
-            }}
-            className={`${required ? 'required' : ''} `}
+            className={`${
+              required ? 'required' : ''
+            } text-gray-900 fs-16 text-capitalize fw-semibold `}
           >
             {title}
           </span>

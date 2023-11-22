@@ -15,62 +15,36 @@ type Props = {
 
 function TableRender({title, config = [], data}: Props) {
   return (
-    <div style={{width: '100%', border: '1px solid #D4D4D4'}}>
+    <div className='w-100 p-0' style={{border: '1px solid #D4D4D4'}}>
       {!!title && (
         <h1
+          className='pt-8px pb-8px ps-24px pe-24px fw-semibold m-0 fs-13 text-gray-700'
           style={{
-            padding: '8px 24px',
-            alignItems: 'center',
             background: '#D4D4D4',
-            lineHeight: '20px',
-            fontWeight: '500px',
-            fontStyle: 'normal',
-            fontSize: '14px',
-            color: '#4B5675',
-            margin: '0px',
           }}
         >
           {title}
         </h1>
       )}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          padding: '24px',
-          width: '100%',
-          gap: '16px',
-        }}
-      >
+      <div className='d-flex p-24px justify-content-between w-100 gap-16px'>
         {config?.map((children_config: element_config[], index: number) => {
           return (
-            <div
-              key={index}
-              style={{display: 'flex', flexDirection: 'column', gap: '16px', width: '100%'}}
-            >
+            <div key={index} className='d-flex flex-column gap-16px w-100'>
               {children_config?.map((element_config: element_config, indx) => {
                 const {Component} = element_config
                 return (
                   <div key={indx}>
                     <div
+                      className='d-flex flex-column'
                       style={{
-                        display: 'flex',
-                        flexDirection: 'column',
                         justifyContent: !!element_config.img ? 'center' : 'start',
                         alignItems: !!element_config.img ? 'center' : 'start',
                       }}
                     >
                       {!element_config.img && (
                         <h2
+                          className='p-0 fs-12 fw-semibold text-gray-400 m-0 text-capitalize'
                           style={{
-                            padding: '0px',
-                            lineHeight: '16px',
-                            fontWeight: '500px',
-                            fontStyle: 'normal',
-                            fontSize: '12px',
-                            color: '#B5B5C3',
-                            margin: '0px',
-                            textTransform: 'capitalize',
                             whiteSpace: 'nowrap',
                           }}
                         >
@@ -83,9 +57,8 @@ function TableRender({title, config = [], data}: Props) {
                         <>
                           {!!element_config.img && (
                             <img
+                              className='max-w-100px p-8px'
                               style={{
-                                maxWidth: '100px',
-                                padding: '8px',
                                 borderRadius: '5px',
                                 border: '1px dashed #D4D4D4',
                                 objectFit: 'cover',
@@ -95,16 +68,9 @@ function TableRender({title, config = [], data}: Props) {
                             />
                           )}
                           <p
+                            className='p-0 h-20px m-0 fs-14 fw-semibold text-gray-900'
                             style={{
                               textAlign: !!element_config.img ? 'center' : 'start',
-                              padding: '0px',
-                              lineHeight: '20px',
-                              height: '20px',
-                              fontWeight: '500px',
-                              fontStyle: 'normal',
-                              fontSize: '14px',
-                              color: '#071437',
-                              margin: '0px',
                               wordBreak: 'break-all',
                             }}
                           >
