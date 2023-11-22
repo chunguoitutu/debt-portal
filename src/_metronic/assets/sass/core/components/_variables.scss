@@ -369,6 +369,9 @@ $border-widths: (
   3: 3px,
   4: 4px,
   5: 5px,
+  6px: 6px,
+  7px: 7px,
+  8px: 8px,
 ) !default;
 
 // Border Radiues
@@ -454,7 +457,8 @@ $gutters: (
     (
       $spacer * 2.5,
     ),
-  // 35px
+  16px: 16px,
+  12px: 12px // 35px,,,,,,,,,,,,,,,,
 ) !default;
 
 // Typography
@@ -511,6 +515,8 @@ $font-sizes: (
   7: $font-size-base * 0.95,
   // 12.35px
   8: $font-size-base * 0.85,
+  12px: 12px,
+  16px: 16px,
   // 11.05px
   9: $font-size-base * 0.75,
   // 9.75px
@@ -526,6 +532,7 @@ $font-sizes: (
 
   // 100%
   2x: $font-size-base * 2,
+  22px: 22px,
   // 26px
   2qx: $font-size-base * 2.25,
   // 29.25px
@@ -577,7 +584,7 @@ $font-sizes: (
   7hx: $font-size-base * 7.5,
   // 91.5px
   7tx: $font-size-base * 7.75
-    // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ) !default;
 
 $headings-font-weight: 600 !default;
@@ -1150,6 +1157,7 @@ $custom-sizes: (
   9px: 9px,
   10px: 10px,
   15px: 15px,
+  18px: 17.5px,
   20px: 20px,
   25px: 25px,
   30px: 30px,
@@ -1174,6 +1182,9 @@ $custom-sizes: (
   125px: 125px,
   150px: 150px,
   140px: 140px,
+  185px: 185px,
+  180px: 180px,
+
   188px: 188.457px,
   175px: 175px,
   200px: 200px,
@@ -1183,6 +1194,7 @@ $custom-sizes: (
   300px: 300px,
   325px: 325px,
   350px: 350px,
+  360px: 360px,
   375px: 375px,
   400px: 400px,
   425px: 425px,

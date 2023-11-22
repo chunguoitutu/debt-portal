@@ -314,16 +314,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'id') {
                           return (
-                            <td
-                              key={i}
-                              style={{
-                                maxWidth: '50px',
-                                fontSize: '14px',
-                                fontWeight: '500',
-                                lineHeight: '20px',
-                              }}
-                              className='w-xxl-6'
-                            >
+                            <td key={i} className='w-xxl-6 max-w-50px fw-semibold fs-14'>
                               {Number(idx) +
                                 1 +
                                 (Number(searchCriteria.currentPage) *
@@ -335,16 +326,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'open_date') {
                           return (
-                            <td
-                              style={{
-                                maxWidth: '500px',
-                                minWidth: '150px',
-                                fontSize: '14px',
-                                fontWeight: '500',
-                                lineHeight: '20px',
-                              }}
-                              key={i}
-                            >
+                            <td className='max-w-500px min-w-150px fs-14 fw-semibold' key={i}>
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
@@ -354,14 +336,7 @@ const Table: FC<Props> = ({
                           return (
                             <td
                               key={i}
-                              style={{
-                                fontSize: '14px',
-                                fontWeight: '500',
-                                lineHeight: '20px',
-                                borderBottom: 'none',
-                                marginTop: '8px',
-                                marginLeft: '15px',
-                              }}
+                              className='max-w-500px min-w-150px fs-14 fw-semibold mt-8px ms-16px'
                             >
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
@@ -370,15 +345,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'updated_date') {
                           return (
-                            <td
-                              key={i}
-                              style={{
-                                fontSize: '14px',
-                                fontWeight: '500',
-                                lineHeight: '20px',
-                                paddingLeft: '20px',
-                              }}
-                            >
+                            <td key={i} className='fs-14 fw-semibold pl-20px'>
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
@@ -388,15 +355,10 @@ const Table: FC<Props> = ({
                             return (
                               <td
                                 key={i}
+                                className='max-w-500px text-center fs-14 min-w-150px fw-semibold'
                                 style={{
-                                  maxWidth: '500px',
-                                  minWidth: '150px',
-                                  fontSize: '14px',
-                                  fontWeight: '500',
-                                  lineHeight: '20px',
                                   borderBottom: 'none',
                                 }}
-                                className='text-center'
                               >
                                 <div className='d-flex align-items-center justify-content-center gap-1'>
                                   <Component
@@ -410,7 +372,7 @@ const Table: FC<Props> = ({
                           //HANDLE ADD PERMISSION DROPDOWN
                           if (key === 'permissions') {
                             return (
-                              <td key={i} style={{maxWidth: '500px'}}>
+                              <td key={i} className='max-w-500px'>
                                 <Component
                                   tittle={''}
                                   checked={handlePermissionChecked(item[key])}
@@ -420,16 +382,7 @@ const Table: FC<Props> = ({
                           }
 
                           return (
-                            <td
-                              key={i}
-                              style={{
-                                maxWidth: '500px',
-                                minWidth: '150px',
-                                fontSize: '14px',
-                                fontWeight: '500',
-                                lineHeight: '20px',
-                              }}
-                            >
+                            <td key={i} className='max-w-500px fs-14 min-w-150px fw-semibold'>
                               <>
                                 <Component
                                   data={item}
@@ -446,18 +399,15 @@ const Table: FC<Props> = ({
                         }
 
                         return (
-                          <td key={i} style={{maxWidth: '500px'}}>
+                          <td key={i} className='max-w-500px'>
                             {component ? (
                               <Component />
                             ) : (
                               <span
                                 style={{
-                                  fontSize: '14px',
-                                  fontWeight: '500',
                                   color: !!color ? color : '#78829D',
-                                  lineHeight: '20px',
                                 }}
-                                className={classNameTableBody}
+                                className={`${classNameTableBody} fs-14 fw-semibold `}
                               >
                                 {value}
                               </span>

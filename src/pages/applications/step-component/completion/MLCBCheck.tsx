@@ -5,20 +5,16 @@ type Props = {
 
 const MLCBCheck = ({data, config}: Props) => {
   return (
-    <div
-      style={{
-        textAlign: 'start',
-        padding: '0px',
-        lineHeight: '18px',
-        minHeight: '56px',
-        fontWeight: '500px',
-        fontStyle: 'normal',
-        fontSize: '14px',
-        color: '#071437',
-        margin: '0px',
-      }}
-    >
-      {!!data[config.key] ? 'Opt In consent to disclose information to MLCB and SMECB' : ''}
+    <div>
+      <div
+        className='text-start p-0 m-0 fw-semibold text-gray-900 '
+        style={{
+          fontSize: '13px',
+        }}
+      >
+        {!!data[config.key] ? 'Opt In consent to disclose information to MLCB and SMECB' : ''}
+      </div>
+      <div className='h-18px'></div>
     </div>
   )
 }

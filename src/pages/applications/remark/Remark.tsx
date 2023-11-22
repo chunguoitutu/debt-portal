@@ -47,22 +47,8 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
 
   return (
     <div className='card h-100'>
-      <div
-        style={{borderBottom: '1px solid  #f1f1f2', padding: '30px'}}
-        className='modal-header p-5'
-      >
-        <h2
-          style={{
-            marginBottom: '0px',
-            fontSize: '20px',
-            fontWeight: '600',
-            lineHeight: '24px',
-            textTransform: 'capitalize',
-            color: '#071437',
-          }}
-        >
-          remark
-        </h2>
+      <div style={{borderBottom: '1px solid  #f1f1f2'}} className='modal-header p-30px'>
+        <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
       </div>
       <div className='p-5 min-h-50px overflow-y-auto' ref={contentRef}>
         {remarkList?.map((message, index: number) => (
@@ -104,17 +90,9 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
               }
             }}
             onChange={(e) => setValue(e.target.value)}
+            className='w-100 h-100 fs-14 bg-transparent pe-10px fw-semibold text-gray-500'
             style={{
-              width: '100%',
               border: 'none',
-              height: '100%',
-              color: '#99A1B7',
-              fontSize: '14px',
-              fontWeight: '500',
-              fontStyle: 'normal',
-              background: 'transparent',
-              lineHeight: '21.45px',
-              paddingRight: '10px',
               outline: 'none',
             }}
           />

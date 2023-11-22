@@ -5,46 +5,16 @@ type Props = {
 const GrossMonthlyIncomeCompletion = ({data}: Props) => {
   return (
     <div>
-      <p
-        style={{
-          textAlign: 'start',
-          padding: '0px',
-          lineHeight: '19px',
-          fontWeight: '500px',
-          fontStyle: 'normal',
-          fontSize: '14px',
-          color: '#071437',
-          margin: '0px',
-        }}
-      >
+      <p className='text-start p-0 m-0 fw-semibold text-gray-900 fs-13-line-19'>
         Last month: ${data?.monthly_income_1}
       </p>
-      <p
-        style={{
-          textAlign: 'start',
-          padding: '0px',
-          lineHeight: '19px',
-          fontWeight: '500px',
-          fontStyle: 'normal',
-          fontSize: '14px',
-          color: '#071437',
-          maxWidth: '200px',
-          margin: '0px',
-        }}
-      >
+      <p className='text-start p-0 m-0 fw-semibold text-gray-900 fs-13-line-19'>
         Last month -1: ${data?.monthly_income_2}
       </p>
       <p
+        className='text-start p-0 m-0 fw-semibold text-gray-900  line-18'
         style={{
-          textAlign: 'start',
-          padding: '0px',
-          lineHeight: '18px',
-          fontWeight: '500px',
-          fontStyle: 'normal',
-          fontSize: '14px',
-          color: '#071437',
-          maxWidth: '200px',
-          margin: '0px',
+          fontSize: '13px',
         }}
       >
         Last month -2: ${data?.monthly_income_3}

@@ -46,29 +46,11 @@ const InputCheck = ({
           </div>
         </div>
         {showLabelCheck && request_info && (
-          <div
-            style={{
-              color: '#99A1B7',
-              fontSize: '16px',
-              fontWeight: '500',
-              lineHeight: '24px',
-              marginLeft: '8px',
-            }}
-          >
-            {checked ? 'Yes' : 'No'}
-          </div>
+          <div className='text-gray-500 ms-8px fs-16 fw-semibold'>{checked ? 'Yes' : 'No'}</div>
         )}
 
         {showLabelCheck && !request_info && (
-          <div
-            style={{
-              color: '#99A1B7',
-              fontSize: '16px',
-              fontWeight: '500',
-              lineHeight: '24px',
-              marginLeft: '8px',
-            }}
-          >
+          <div className='text-gray-500 ms-8px fs-16 fw-semibold'>
             {checked ? 'Active' : 'Disable'}
           </div>
         )}
