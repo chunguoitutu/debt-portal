@@ -11,7 +11,6 @@ import Button from '../../../components/button/Button'
 import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
 import {KTIcon} from '../../../_metronic/helpers'
-import {DEFAULT_MSG_ERROR} from '../../../app/constants/error-message'
 import InputCheck from 'src/components/input/InputCheckRounded'
 
 type Props = {
