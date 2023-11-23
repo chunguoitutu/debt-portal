@@ -35,6 +35,8 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     {
       key: 'description',
       name: 'Description',
+      classNameTableHead: 'w-600px min-w-150px',
+      classNameTableBody: 'four-line',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',

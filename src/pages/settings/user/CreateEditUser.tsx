@@ -292,7 +292,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       title={data ? `Edit User "${data.username}"` : 'New User'}
       show={show || true}
       onClose={onClose}
-      dialogClassName='mw-1200px'
+      dialogClassName='mw-modal-1200px'
     >
       <div className='p-30px d-flex'>
         <div className='flex-grow-1 pe-6 border-end border-gray-200'>
