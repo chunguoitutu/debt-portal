@@ -48,6 +48,10 @@ export function convertMessageErrorRequired(fieldLabel?: string) {
   return `${fieldLabel ? fieldLabel : 'This field'} is required`
 }
 
+export function convertMessageErrorPassword(label: string) {
+  return `${label} must be at least 8 characters including at least one letter, one number, and one special character`
+}
+
 export function filterObjectKeyNotEmpty(object: {[key: string]: any}) {
   const keys = Object.keys(object)
   return keys
