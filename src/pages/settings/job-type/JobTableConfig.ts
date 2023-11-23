@@ -21,7 +21,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       name: 'ID',
     },
     {
-      classNameTableHead: 'min-w-200px',
+      classNameTableHead: 'min-w-300px',
       key: 'job_type_name',
       name: 'Job Type',
       color: '#252F4A',
@@ -38,7 +38,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       name: 'Description',
     },
     {
-      classNameTableHead: 'w-50 min-w-50px',
+      classNameTableHead: 'w-50 min-w-70px',
       key: 'request_more_information',
       name: 'Need More Information',
       type: 'yes/no',
