@@ -24,13 +24,20 @@ const Employment: FC<PropsStepApplication> = (props) => {
   }, [])
   async function onFetchDataList() {
     try {
-      const endpoint = config.filter((data) => !!data.dependencyApi)
-      console.log(endpoint)
-      endpoint.forEach((d) => {
-        request.post(d.dependencyApi || '', {status: true}).then((res) => {
-          setDataLoanType({...dataLoanType, [d.key]: res?.data?.data})
+      const endpoints = config.filter((data) => !!data.dependencyApi)
+
+      const results = await Promise.all(
+        endpoints.map(async (d) => {
+          const res = await request.post(d.dependencyApi || '', {status: true})
+          return {key: d.key, data: res?.data?.data}
         })
+      )
+
+      const newDataLoanType = {}
+      results.forEach((result) => {
+        newDataLoanType[result.key] = result.data
       })
+      setDataLoanType({...dataLoanType, ...newDataLoanType})
     } catch (error) {
     } finally {
     }
