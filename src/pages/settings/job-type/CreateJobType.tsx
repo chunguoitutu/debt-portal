@@ -28,7 +28,7 @@ type Props = {
 export const CreateJobTypeSchema = Yup.object().shape({
   job_type_name: Yup.string()
     .required('Job Type is required')
-    .max(45, 'Job Type must be at most 45 characters'),
+    .max(255, 'Job Type must be at most 255 characters'),
   description: Yup.string().max(45, 'Description must be at most 45 characters'),
 })
 

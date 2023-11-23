@@ -336,7 +336,7 @@ const Table: FC<Props> = ({
                           return (
                             <td
                               key={i}
-                              className='max-w-500px min-w-150px fs-14 fw-semibold mt-8px ms-16px'
+                              className='max-w-500px min-w-150px fs-14 fw-semibold mt-8px ms-16px ps-7'
                             >
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
@@ -345,11 +345,12 @@ const Table: FC<Props> = ({
 
                         if (key === 'updated_date') {
                           return (
-                            <td key={i} className='fs-14 fw-semibold pl-20px'>
+                            <td key={i} className='fs-14 fw-semibold pl-20px ps-7'>
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
                         }
+
                         if (component) {
                           if (key === 'status' || key === 'is_active') {
                             return (

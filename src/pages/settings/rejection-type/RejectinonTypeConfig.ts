@@ -17,7 +17,7 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
-      classNameTableHead: 'min-w-50px',
+      classNameTableHead: 'min-w-40px',
       key: 'id',
       name: 'ID',
     },
