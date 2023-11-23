@@ -10,6 +10,10 @@ import ImgPrintOptions from './ImgPrintOptions'
 import ImgSend from './ImgSend'
 import ImgUploadFile from './ImgUploadFile'
 import Close from './Close'
+import Home from './Home'
+import Email from './Email'
+import Telephone from './Telephone'
+import HomeSmall from './HomeSmall'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -24,6 +28,10 @@ const icons = {
   ImgSend: ImgSend,
   ImgUploadFile: ImgUploadFile,
   Close: Close,
+  Home: Home,
+  Email: Email,
+  Telephone: Telephone,
+  HomeSmall: HomeSmall,
 }
 
 const Icons = ({name}) => {

@@ -57,7 +57,7 @@ function TableRender({title, config = [], data}: Props) {
                         <>
                           {!!element_config.img && (
                             <img
-                              className='max-w-100px p-8px'
+                              className='mw-100px p-8px'
                               style={{
                                 borderRadius: '5px',
                                 border: '1px dashed #D4D4D4',

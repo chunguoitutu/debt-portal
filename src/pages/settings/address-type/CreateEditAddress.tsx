@@ -164,19 +164,8 @@ const CreateEditAddress = ({
       onHide={handleClose}
       backdrop={true}
     >
-      <div
-        style={{
-          padding: '30px',
-        }}
-        className='modal-header'
-      >
-        <h2
-          style={{
-            margin: '0',
-          }}
-        >
-          {titleLable} Address Type
-        </h2>
+      <div className='modal-header p-30px'>
+        <h2 className='m-0'>{titleLable} Address Type</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>

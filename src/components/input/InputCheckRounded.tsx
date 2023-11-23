@@ -35,10 +35,9 @@ const InputCheck = ({
         <div className='fv-row'>
           <div className='form-check form-check-custom form-check-solid form-switch'>
             <input
-              className='form-check-input cursor-pointer'
+              className='form-check-input cursor-pointer ms-8px w-40px h-25px'
               type='checkbox'
               checked={checked}
-              style={{width: 40, height: 25, marginLeft: '8px'}}
               onChange={onChange}
               {...rest}
               id={id}

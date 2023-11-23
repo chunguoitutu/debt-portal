@@ -87,7 +87,7 @@ const CreateEditCompanies = ({
       open_date: data ? data?.['open_date'].slice(0, 11) : '',
     },
     validationSchema: newCompaniesSchema,
-    onSubmit: async (values: any, actions: any) => {
+    onSubmit: async (values: any) => {
       if (!information?.id) {
         await request
           .post('config/company', {

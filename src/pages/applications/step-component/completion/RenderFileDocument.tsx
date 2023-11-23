@@ -49,7 +49,7 @@ const RenderFileDocument = ({config, data}: Props) => {
                   <Icons name={'ImgFoder'} />
                 </div>
                 <div className='pt-4px pb-16px ps-16px pe-16px d-flex justify-content-center flex-column'>
-                  <p className='max-w-180px text-center fw-semibold p-0 m-0 fs-12 text-gray-900'>
+                  <p className='mw-180px text-center fw-semibold p-0 m-0 fs-12 text-gray-900'>
                     {e?.document_name}- {convertSize(Number(e.size) || 0)}
                   </p>
                 </div>
