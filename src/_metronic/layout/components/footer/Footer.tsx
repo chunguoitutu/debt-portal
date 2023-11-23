@@ -10,9 +10,9 @@ const Footer = () => {
   return (
     <>
       <div className='text-dark order-2 order-md-1'>
-        <span className='text-muted fw-semibold me-1'>Copyright </span>
-        <span className='text-muted fw-semibold me-1'>
-          {new Date().getFullYear().toString()}&copy; MCK group Pte Ltd. All Rights Reserved
+        <span className='text-muted fw-semibold'>
+          Copyright {new Date().getFullYear().toString()}&copy; MCK group Pte Ltd. All Rights
+          Reserved
         </span>
       </div>
     </>

@@ -146,6 +146,13 @@ export type TableRow = {
     isRequired?: boolean
     fieldLabelOption?: string
     fieldValueOption?: string
+    typeComponent?: 'select' | 'input' | 'checkbox-rounded' | 'select'
+    component?: FC<any> | JSX.Element
+    dependencyApi?: string
+    isHide?: boolean
+    options?: Option[]
+    isLastChild?: boolean // using for remove margin
+    column?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 // column should be from 1 to 12 (column bootstrap)
   }
   isShowInput?: boolean
   infoFilter?: {
@@ -186,6 +193,8 @@ export type TableConfig = {
     endpoint?: string
     swalToastTitle?: string
     showRefresh?: boolean
+    validationCreate?: {[key: string]: Schema}
+    validationEdit?: {[key: string]: Schema} // expect: using if this field exists
   }
   endpoint?: string
 
