@@ -17,6 +17,7 @@ import request from '../../app/axios'
 import {swalConfirmDelete, swalToast} from '../../app/swal-notification'
 import {convertErrorMessageResponse} from '../../app/utils'
 import {KTCardBody} from '../../_metronic/helpers'
+import clsx from 'clsx'
 
 type Props = {
   config: TableConfig
@@ -240,45 +241,32 @@ const Table: FC<Props> = ({
           >
             <thead>
               <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                {rows.map(
-                  (row, i) =>
-                    !row?.isHide && (
-                      <th
-                        className={row.classNameTableHead}
-                        key={i}
-                        style={{
-                          paddingRight: row.name === 'Status' ? '9.75px' : '',
-                          maxWidth: row.key === 'id' ? '500px' : '50px',
-                          minWidth: row.key === 'id' ? '' : '150px',
-                        }}
-                      >
-                        <div
+                {rows
+                  .filter((el) => !el.isHide)
+                  .map(
+                    (row, i) =>
+                      !row?.isHide && (
+                        <th
+                          className={clsx(['min-w-50px', row.classNameTableHead])}
+                          key={i}
                           style={{
-                            width: '100%',
-                            display: row.name === 'Status' ? 'flex' : '',
-                            justifyContent: row.name === 'Status' ? 'center' : '',
-                            alignItems: row.name === 'Status' ? 'center' : '',
-                            alignContent: 'center',
+                            paddingRight: row.name === 'Status' ? '9.75px' : '',
                           }}
-                          className={`d-flex flex-row gap-3 cursor-pointer ${
-                            row.name === 'STATUS' ? 'w-100' : ''
-                          }`}
                         >
-                          <span style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}>
-                            {row.name}
-                          </span>
-                          {isShowFilter && <Filter />}
-                        </div>
-                      </th>
-                    )
-                )}
+                          <div
+                            className={clsx([
+                              row.name === 'Status' &&
+                                'w-100 d-flex justify-content-center align-items-center fs-14 fw-semibold',
+                            ])}
+                          >
+                            <span>{row.name}</span>
+                            {isShowFilter && <Filter />}
+                          </div>
+                        </th>
+                      )
+                  )}
                 {(showAction || showRefresh) && (
-                  <th
-                    style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}
-                    className='text-center w-150px'
-                  >
-                    Actions
-                  </th>
+                  <th className='text-center w-150px fs-14 fw-semibold'>Actions</th>
                 )}
               </tr>
             </thead>
@@ -314,7 +302,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'id') {
                           return (
-                            <td key={i} className='w-xxl-6 max-w-50px fw-semibold fs-14'>
+                            <td key={i} className='w-xxl-6 fw-semibold fs-14'>
                               {Number(idx) +
                                 1 +
                                 (Number(searchCriteria.currentPage) *
@@ -326,7 +314,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'open_date') {
                           return (
-                            <td className='max-w-500px min-w-150px fs-14 fw-semibold' key={i}>
+                            <td className='fs-14 fw-semibold' key={i}>
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
@@ -334,10 +322,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'created_date') {
                           return (
-                            <td
-                              key={i}
-                              className='max-w-500px min-w-150px fs-14 fw-semibold mt-8px ms-16px ps-7'
-                            >
+                            <td key={i} className='fs-14 fw-semibold mt-8px ms-16px ps-7'>
                               {moment(value).format('DD/MM/YYYY')}
                             </td>
                           )
@@ -356,7 +341,7 @@ const Table: FC<Props> = ({
                             return (
                               <td
                                 key={i}
-                                className='max-w-500px text-center fs-14 min-w-150px fw-semibold'
+                                className='text-center fs-14 min-w-150px fw-semibold'
                                 style={{
                                   borderBottom: 'none',
                                 }}
@@ -373,7 +358,7 @@ const Table: FC<Props> = ({
                           //HANDLE ADD PERMISSION DROPDOWN
                           if (key === 'permissions') {
                             return (
-                              <td key={i} className='max-w-500px'>
+                              <td key={i}>
                                 <Component
                                   tittle={''}
                                   checked={handlePermissionChecked(item[key])}
@@ -383,7 +368,7 @@ const Table: FC<Props> = ({
                           }
 
                           return (
-                            <td key={i} className='max-w-500px fs-14 min-w-150px fw-semibold'>
+                            <td key={i} className='fs-14 min-w-150px fw-semibold'>
                               <>
                                 <Component
                                   data={item}
@@ -400,7 +385,7 @@ const Table: FC<Props> = ({
                         }
 
                         return (
-                          <td key={i} className='max-w-500px'>
+                          <td key={i}>
                             {component ? (
                               <Component />
                             ) : (

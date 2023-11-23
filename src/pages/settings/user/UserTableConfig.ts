@@ -57,7 +57,23 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'id',
       name: 'ID',
     },
-
+    {
+      key: 'username',
+      name: 'Username',
+      color: '#252F4A',
+      isCreateEdit: true,
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        isRequired: true,
+        typeComponent: 'input',
+        component: Input,
+      },
+    },
+    {
+      key: 'role_name',
+      name: 'Role',
+    },
     {
       key: 'firstname',
       name: 'First Name',
@@ -114,19 +130,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
         isLastChild: true, // last of group information
       },
     },
-    {
-      key: 'username',
-      name: 'Username',
-      color: '#252F4A',
-      isCreateEdit: true,
-      infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
-        typeComponent: 'input',
-        component: Input,
-      },
-    },
+
     {
       isHide: true,
       key: 'password',
@@ -139,10 +143,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
         typeComponent: 'input',
         component: Input,
       },
-    },
-    {
-      key: 'role_name',
-      name: 'Role',
     },
     {
       key: 'role_id',

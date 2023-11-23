@@ -20,12 +20,12 @@ const FullNameUser: FC<Props> = ({formik}) => {
     []
   )
   return (
-    <div className='row'>
+    <div className='row gy-16px'>
       {data.map((item, i) => {
         const {name, label, required, type} = item
 
         return (
-          <div className='col-4 mb-16px' key={i}>
+          <div className='col-12 col-lg-4' key={i}>
             <Input
               type={type}
               title={label}

@@ -33,7 +33,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-50 min-w-200px',
+      classNameTableHead: 'w-600px min-w-150px',
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
