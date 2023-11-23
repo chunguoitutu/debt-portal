@@ -523,7 +523,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'users',
-    labelBreadCrumbs: 'Users Listing',
+    labelBreadCrumbs: 'User Listing',
     priority: [1, 2],
     component: UserManagement,
   },
@@ -541,7 +541,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'roles',
-    labelBreadCrumbs: 'Roles Listing',
+    labelBreadCrumbs: 'Role Listing',
     priority: [1, 2],
     component: RolePage,
   },

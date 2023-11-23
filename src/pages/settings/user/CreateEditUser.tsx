@@ -95,7 +95,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
     const rowHasDependencyApi = rows.filter((el) => el?.infoCreateEdit?.dependencyApi)
     const allDependencyApi = rowHasDependencyApi.map((el) =>
-      request.post(el?.infoCreateEdit?.dependencyApi as string, {company_id})
+      request.post(el?.infoCreateEdit?.dependencyApi as string, {company_id, status: 1})
     )
 
     // GET all dependency of select component
