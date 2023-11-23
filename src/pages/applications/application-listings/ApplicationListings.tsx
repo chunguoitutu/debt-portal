@@ -327,7 +327,7 @@ const ApplicationListing = () => {
 
       <div>
         <div className='d-flex flex-row'>
-          <div className='d-flex align-items-center position-relative my-1 flex-grow-1 mw-1200px'>
+          <div className='d-flex align-items-center position-relative my-1 flex-grow-1'>
             <i className='ki-duotone ki-magnifier fs-1 position-absolute ms-6'>
               <span className='path1'></span>
               <span className='path2'></span>
