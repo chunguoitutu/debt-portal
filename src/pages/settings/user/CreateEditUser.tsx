@@ -177,7 +177,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         onClose()
         const user_name = values.username
         swalToast.fire({
-          title: `User ${user_name} successfully created`,
+          title: `User "${user_name}" successfully created`,
           icon: 'success',
         })
       } else {
@@ -212,7 +212,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         const user_name = values.username
         onClose()
         swalToast.fire({
-          title: `User ${user_name} successfully updated`,
+          title: `User "${user_name}" successfully updated`,
           icon: 'success',
         })
       } else {

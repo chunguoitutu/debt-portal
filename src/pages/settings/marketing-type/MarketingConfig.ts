@@ -9,11 +9,11 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     showViewButton: false,
     endPointDelete: '/config/marketing_type',
     endPointGetListing: '/config/marketing_type',
-    messageDeleteSuccess: 'Marketing Type /%/ successfully deleted',
+    messageDeleteSuccess: 'Marketing Type "/%/" successfully deleted',
     showMessageTitle: 'marketing_type_name',
     buttonAddNew: 'New Marketing Type',
     endpoint: 'config/marketing_type',
-    swalToastTitle: 'Marketing Type /%/ successfully',
+    swalToastTitle: 'Marketing Type "/%/" successfully',
   },
   rows: [
     {

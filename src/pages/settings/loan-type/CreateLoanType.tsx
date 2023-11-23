@@ -81,7 +81,7 @@ const CreateLoanType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Loan Type ${loan_name} successfully created`,
+            title: `Loan Type "${loan_name}" successfully created`,
           })
         } catch (error) {
           const message = convertErrorMessageResponse(error)
@@ -106,7 +106,7 @@ const CreateLoanType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Loan Type ${loan_name} successfully updated`,
+            title: `Loan Type "${loan_name}" successfully updated`,
           })
         } catch (error) {
           const message = convertErrorMessageResponse(error)

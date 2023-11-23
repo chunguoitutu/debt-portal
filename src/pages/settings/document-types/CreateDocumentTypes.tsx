@@ -81,7 +81,7 @@ const CreateDocumentType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Document Type ${document_name} successfully created`,
+            title: `Document Type "${document_name}" successfully created`,
           })
         } catch (error) {
           const message = convertErrorMessageResponse(error)
@@ -106,7 +106,7 @@ const CreateDocumentType = ({
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Document Type ${document_name} successfully updated`,
+            title: `Document Type "${document_name}" successfully updated`,
           })
         } catch (error) {
           const message = convertErrorMessageResponse(error)
