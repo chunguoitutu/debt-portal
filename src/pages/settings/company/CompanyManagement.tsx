@@ -65,7 +65,12 @@ const CompanyListing = (props: Props) => {
           sttTable={sttTable}
           show={showDetail}
           id={id}
-          handleClose={() => setShowDetail(false)}
+          handleClose={() => {
+            setShowDetail(false)
+          }}
+          handleCloseShowEdit={() => {
+            setShowDetail(false), handleShowEdit(dataItem)
+          }}
         />
       )}
       {editShowCreateAppModal && (

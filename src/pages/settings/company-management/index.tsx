@@ -64,7 +64,6 @@ export const CompanyManagement = () => {
           telephone: values.telephone,
           contact_person: values.contact_person,
           email: values.email,
-          website: values.website,
           open_date: new Date(values.open_date),
         })
         .then((response) => {
@@ -141,15 +140,12 @@ export const CompanyManagement = () => {
             className='btn-lg btn-primary'
             disabled={
               isSubmitting ||
-              (areObjectsEqual(stringifyObject(information) || {}, stringifyObject(values) || {}, [
-                'id',
-                'delete_at',
-                'parent_id',
-                'status',
-                'deleted',
-                'open_date',
-                'telephone',
-              ]) &&
+              ((information?.company_name || '') === (values?.company_name || '').trim() &&
+                (information?.company_code || '') === (values?.company_code || '').trim() &&
+                (information?.business_uen || '') === (values?.business_uen || '').trim() &&
+                (information?.contact_person || '') === (values?.contact_person || '').trim() &&
+                (information?.address || '') === (values?.address || '').trim() &&
+                (information?.email || '') === (values?.email || '').trim() &&
                 Number(information?.telephone) ===
                   Number(!!values?.telephone ? values?.telephone : 0) &&
                 moment(information?.['open_date']).format('YYYY-MM-DD') ===

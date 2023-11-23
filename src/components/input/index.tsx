@@ -67,8 +67,8 @@ const Input: FC<Props> = ({
             }
           }}
           type={type === 'money' ? 'number' : type === 'number' ? 'text' : type}
-          className={`form-control-lg p-12px w-100 bg-transparent outline-none h-100 border-0 ${className}`}
-          style={{color: 'rgb(75, 86, 117)', fontWeight: '500'}}
+          className={`form-control-lg p-12px w-100 bg-transparent outline-none h-100 border-0 fw-semibold ${className}`}
+          style={{color: 'rgb(75, 86, 117)'}}
           id={id || name}
           name={name}
           {...rest}

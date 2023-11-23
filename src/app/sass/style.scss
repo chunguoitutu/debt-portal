@@ -101,6 +101,20 @@ input[type='number']::-webkit-outer-spin-button {
   color: var(--bs-gray-400);
 }
 
+.icons-company-detail {
+  border-radius: 16px 16px 4px 16px;
+  background: var(--gray-bs-gray-100, #f9f9f9);
+  box-shadow: -2px 2px 6px 0px rgba(0, 0, 0, 0.2);
+}
+.color-company-detail {
+  color: var(--color-text-light-mode-text-gray-500, #99a1b7);
+}
+.wrapper-company-detail {
+  border-radius: 6.18px;
+  border: 1px dashed #dbdfe9;
+  padding: var(--spacing-2, 8px);
+  flex: 1 0 0;
+}
 @media (min-width: 991px) {
   .app-main-content {
     height: calc(100vh - 160px);

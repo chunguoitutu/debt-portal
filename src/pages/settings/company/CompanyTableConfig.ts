@@ -27,6 +27,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'company_code',
       name: 'Company Code',
+      isHide: true,
     },
     {
       key: 'business_uen',
@@ -34,7 +35,8 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'contact_person',
-      name: 'Contract Person',
+      isHide: true,
+      name: 'Contact Person',
     },
     {
       key: 'address',
@@ -48,12 +50,12 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'email',
       name: 'Email',
+      isHide: true,
     },
 
     {
       key: 'open_date',
       name: 'Open Date',
-      isHide: true,
       type: 'date',
     },
     {
