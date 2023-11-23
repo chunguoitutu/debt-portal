@@ -81,7 +81,7 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           swalToast.fire({
             icon: 'success',
-            title: `Job Type ${job_name} successfully created`,
+            title: `Job Type "${job_name}" successfully created`,
 
             timer: 1500,
           })
@@ -108,7 +108,7 @@ const CreateJobType = ({
           setLoadApi(!loadApi)
           swalToast.fire({
             icon: 'success',
-            title: `Job Type ${job_name} successfully updated`,
+            title: `Job Type "${job_name}" successfully updated`,
           })
         } catch (error) {
           const message = convertErrorMessageResponse(error)

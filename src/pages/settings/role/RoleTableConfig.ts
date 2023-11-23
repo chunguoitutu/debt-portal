@@ -13,7 +13,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     showViewButton: false,
     endPointDelete: '/config/role',
     endPointGetListing: '/config/role',
-    messageDeleteSuccess: 'Role /%/ successfully deleted',
+    messageDeleteSuccess: 'Role "/%/" successfully deleted',
     buttonAddNew: 'New Role',
     showMessageTitle: 'role_name',
   },

@@ -90,7 +90,7 @@ const CreatEditMarkettingType = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Marketing ${marketing_name} successfully created`,
+                title: `Marketing "${marketing_name}" successfully created`,
               })
             }
             resetForm()

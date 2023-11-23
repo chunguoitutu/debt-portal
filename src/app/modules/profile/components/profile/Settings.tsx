@@ -75,7 +75,7 @@ const Settings: React.FC = () => {
       const {data} = await updateInfoUser(currentUser.id, values)
       refreshToken(data.token)
       swalToast.fire({
-        title: `User ${currentUser.username} successfully updated`,
+        title: `User "${currentUser.username}" successfully updated`,
         icon: 'success',
       })
     } catch (error) {

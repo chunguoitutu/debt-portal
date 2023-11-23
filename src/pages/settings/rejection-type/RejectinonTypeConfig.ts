@@ -9,11 +9,11 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
     showViewButton: false,
     endPointDelete: '/config/rejection_type',
     endPointGetListing: '/config/rejection_type',
-    messageDeleteSuccess: 'Rejection Type /%/ successfully deleted',
+    messageDeleteSuccess: 'Rejection Type "/%/" successfully deleted',
     buttonAddNew: 'New Rejection Type',
     endpoint: 'config/rejection_type',
     showMessageTitle: 'rejection_type_name',
-    swalToastTitle: 'Rejection Type /%/ successfully',
+    swalToastTitle: 'Rejection Type "/%/" successfully',
   },
   rows: [
     {
