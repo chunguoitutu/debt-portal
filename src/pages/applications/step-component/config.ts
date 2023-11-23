@@ -418,7 +418,6 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'job_type_name',
     keyValueOfOptions: 'id',
     dependencyApi: '/config/job_type/listing',
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Job Type')),
   },
   {
     key: 'annual_income',
