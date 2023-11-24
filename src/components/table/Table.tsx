@@ -247,7 +247,7 @@ const Table: FC<Props> = ({
                     (row, i) =>
                       !row?.isHide && (
                         <th
-                          className={clsx(['min-w-50px', row.classNameTableHead])}
+                          className={clsx(['min-w-50px text-nowrap', row.classNameTableHead])}
                           key={i}
                           style={{
                             paddingRight: row.name === 'Status' ? '9.75px' : '',

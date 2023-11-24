@@ -10,6 +10,7 @@ import request from '../../../app/axios'
 import Form from 'react-bootstrap/Form'
 import {LoginInfo} from '../../../app/types/common'
 import {login} from '../../../app/axios/request'
+import Input from 'src/components/input'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -145,7 +146,7 @@ export function Login() {
 
           <div className='fv-row mb-8'>
             <label className='form-label fs-6 fw-bolder text-dark'>Username</label>
-            <input
+            <Input
               placeholder='Username'
               {...getFieldProps('username')}
               className={clsx(
@@ -159,6 +160,7 @@ export function Login() {
               name='username'
               autoComplete='off'
             />
+
             {touched.username && errors.username && (
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block'>
@@ -170,7 +172,7 @@ export function Login() {
 
           <div className='fv-row'>
             <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
-            <input
+            <Input
               type='password'
               autoComplete='off'
               placeholder='Password'
@@ -185,6 +187,7 @@ export function Login() {
                 }
               )}
             />
+
             {touched.password && errors.password && (
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block'>
