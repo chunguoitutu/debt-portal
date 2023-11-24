@@ -1,7 +1,7 @@
 import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode, useState} from 'react'
 import {handleKeyPress, handlePaste} from '../enter-numbers-only'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEye} from '@fortawesome/free-solid-svg-icons'
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
 
 interface Props
   extends Omit<
@@ -94,7 +94,10 @@ const Input: FC<Props> = ({
           ? !!value.toString().length &&
             showIconTogglePassword && (
               <span className='pwd-icon text-gray-400 text-hover-gray-600 cursor-pointer'>
-                <FontAwesomeIcon icon={faEye} onClick={handleChangeTypeInput} />
+                <FontAwesomeIcon
+                  icon={typeCustom === 'password' ? faEyeSlash : faEye}
+                  onClick={handleChangeTypeInput}
+                />
               </span>
             )
           : insertRight && insertRight}
