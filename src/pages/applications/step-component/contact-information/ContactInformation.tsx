@@ -1,16 +1,15 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
-import Select from '../../../../components/select/select'
-import Button from '../../../../components/button/Button'
+import Select from '@/components/select/select'
+import Button from '@/components/button/Button'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
-import {ApplicationConfig, BlockAddress, PropsStepApplication} from '../../../../app/types/common'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import {ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
-import {COUNTRY_PHONE_CODE} from '../../../../app/utils/globalConfig'
-import {INIT_BLOCK_ADDRESS} from '../../../../app/constants'
 import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
-import {DEFAULT_MESSAGE_ERROR_500} from '../../../../app/constants/error-message'
+import {DEFAULT_MESSAGE_ERROR_500, INIT_BLOCK_ADDRESS} from '@/app/constants'
+import {COUNTRY_PHONE_CODE} from '@/app/utils'
 
 const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})

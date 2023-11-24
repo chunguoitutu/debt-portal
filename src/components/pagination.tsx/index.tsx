@@ -1,7 +1,7 @@
 import {useMemo} from 'react'
 import clsx from 'clsx'
 import {MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft} from 'react-icons/md'
-import {SearchCriteria} from '../../app/types/common'
+import {SearchCriteria} from '@/app/types'
 
 type Props = {
   onChangePagePagination: (pagination: Omit<SearchCriteria, 'total'>) => void

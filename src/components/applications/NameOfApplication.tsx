@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import Input from '../input'
 import ErrorMessage from '../error/ErrorMessage'
-import {PropsStepApplication} from '../../app/types/common'
+import {PropsStepApplication} from '@/app/types'
 
 const data = [
   {

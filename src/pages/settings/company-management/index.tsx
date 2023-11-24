@@ -3,12 +3,11 @@ import {COMPANY_MANAGEMENT_CONFIG} from './config'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
-import Input from '../../../components/input'
-import ErrorMessage from '../../../components/error/ErrorMessage'
-import Button from '../../../components/button/Button'
+import Input from '@/components/input'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import Button from '@/components/button/Button'
 import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
-import {areObjectsEqual, stringifyObject} from '../../../app/utils'
 
 export const CompanyManagement = () => {
   const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG

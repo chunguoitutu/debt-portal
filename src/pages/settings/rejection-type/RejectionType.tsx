@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import Table from '../../../components/table/Table'
+import Table from '@/components/table/Table'
 import {REJECTION_TYPE_TABLE_CONFIG} from './RejectinonTypeConfig'
 import {CreateEditRejectionType} from './CreateEditRejectionType'
 

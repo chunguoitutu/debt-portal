@@ -2,19 +2,15 @@ import {useEffect, useMemo} from 'react'
 import {Navigate, Outlet, useLocation} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import clsx from 'clsx'
-import {useAuth} from 'src/app/context/AuthContext'
-import {reInitMenu} from 'src/_metronic/helpers'
-import {PageDataProvider} from 'src/_metronic/layout/core'
-import {HeaderWrapper} from 'src/_metronic/layout/components/header'
-import {Sidebar} from 'src/_metronic/layout/components/sidebar'
-import {ToolbarWrapper} from 'src/_metronic/layout/components/toolbar'
-import {FooterWrapper} from 'src/_metronic/layout/components/footer'
-import {ScrollTop} from 'src/_metronic/layout/components/scroll-top'
-import {ActivityDrawer, DrawerMessenger, InviteUsers, UpgradePlan} from 'src/_metronic/partials'
+import {FooterWrapper} from '@/components/footer'
+import {useAuth} from '@/app/context/AuthContext'
+import {PageDataProvider} from '@/_metronic/layout/core'
+import {HeaderWrapper} from '@/_metronic/layout/components/header'
+import {Sidebar} from '@/_metronic/layout/components/sidebar'
+import {ToolbarWrapper} from '@/_metronic/layout/components/toolbar'
+import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
 
 const MasterLayout = () => {
-  const location = useLocation()
-
   const {refreshToken} = useAuth()
 
   const {pathname} = useLocation()
@@ -26,10 +22,6 @@ const MasterLayout = () => {
     refreshToken(token || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
-
-  useEffect(() => {
-    reInitMenu()
-  }, [location.key])
 
   const isViewHeight = useMemo(() => {
     const arrCheck = ['loans', 'application/create', 'application/edit']
@@ -69,11 +61,6 @@ const MasterLayout = () => {
         </div>
       </div>
 
-      <ActivityDrawer />
-      <DrawerMessenger />
-
-      <InviteUsers />
-      <UpgradePlan />
       <ScrollTop />
     </PageDataProvider>
   )

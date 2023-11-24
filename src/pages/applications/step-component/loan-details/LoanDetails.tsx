@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import {FC, Fragment, useEffect, useState} from 'react'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
-import {ApplicationConfig, PropsStepApplication} from '../../../../app/types/common'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 
 const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import {SearchCriteria} from '@/app/types'
 import clsx from 'clsx'
 import {useMemo} from 'react'
-import {SearchCriteria} from '../../../app/types/common'
 
 type Props = {
   onChangePagePagination: (pagination: Omit<SearchCriteria, 'total'>) => void

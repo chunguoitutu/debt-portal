@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import Input from '../input'
-import {PropsStepApplication} from '../../app/types/common'
 import ErrorMessage from '../error/ErrorMessage'
+import {PropsStepApplication} from '@/app/types'
 
 interface Props extends PropsStepApplication {
   annualIncome: any

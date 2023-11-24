@@ -1,7 +1,7 @@
 import {faTriangleExclamation} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {StepItem} from '@/app/types'
 import {FC} from 'react'
-import {StepItem} from '../../app/types/common'
 
 type Props = {
   currentStep: number

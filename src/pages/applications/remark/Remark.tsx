@@ -1,13 +1,13 @@
 import {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
-import Button from '../../../components/button/Button'
+import Button from '@/components/button/Button'
 import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
-import ImgAvataRemark from '../../../components/icons/ImgAvataRemark'
+import ImgAvataRemark from '@/components/icons/ImgAvataRemark'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faClose} from '@fortawesome/free-solid-svg-icons'
-import Icons from '../../../components/icons'
-import {RemarkItem} from '../../../app/types/common'
+import Icons from '@/components/icons'
 import {useAuth} from '../../../app/context/AuthContext'
+import {RemarkItem} from '@/app/types'
 
 type Props = {
   remarkList: RemarkItem[]

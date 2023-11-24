@@ -7,7 +7,7 @@ export default defineConfig(({mode}) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
     resolve: {
-      alias: [{find: 'src', replacement: path.resolve(__dirname, 'src')}],
+      alias: [{find: '@', replacement: path.resolve(__dirname, 'src')}],
     },
     define: {
       __APP_ENV__: env.APP_ENV,

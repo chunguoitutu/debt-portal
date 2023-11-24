@@ -1,8 +1,8 @@
 import {FormikProps} from 'formik'
 import {FC, useMemo} from 'react'
-import Input from 'src/components/input'
 import {CreateEditUser} from './CreateEditUser'
-import ErrorMessage from 'src/components/error/ErrorMessage'
+import Input from '@/components/input'
+import ErrorMessage from '@/components/error/ErrorMessage'
 
 type Props = {
   formik: FormikProps<CreateEditUser>

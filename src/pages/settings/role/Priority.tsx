@@ -1,4 +1,4 @@
-import {ROLE_PRIORITY} from '../../../app/utils/globalConfig'
+import {ROLE_PRIORITY} from '@/app/utils'
 
 type Props = {
   data: any

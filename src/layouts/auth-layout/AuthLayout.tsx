@@ -2,7 +2,7 @@ import {Navigate, Outlet} from 'react-router-dom'
 import logo from './../../app/images/logo-auth.png'
 import welcomeText from './../../app/images/welcome-3d.svg'
 import Cookies from 'js-cookie'
-import {FooterWrapper} from 'src/_metronic/layout/components/footer'
+import {FooterWrapper} from '@/components/footer'
 
 const AuthLayout = () => {
   const token = Cookies.get('token')

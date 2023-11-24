@@ -3,7 +3,7 @@ import CheckboxTree from 'react-checkbox-tree'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faChevronDown, faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import useClickOutside from '../../app/hooks/useClickOutside'
-import {CheckboxTreeItem} from '../../app/types/common'
+import {CheckboxTreeItem} from '@/app/types'
 
 type Props = {
   isLoading?: boolean

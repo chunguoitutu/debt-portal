@@ -1,11 +1,11 @@
-import NameOfApplication from '../../../components/applications/NameOfApplication'
-import Checkbox from '../../../components/checkbox/Checkbox'
-import Input from '../../../components/input'
-import Radio from '../../../components/radio/Radio'
-import Select from '../../../components/select/select'
-import TextArea from '../../../components/icons/textarea/TextArea'
 import * as Yup from 'yup'
-import GrossMonthlyIncome from '../../../components/applications/GrossMonthlyIncome'
+import NameOfApplication from '@/components/applications/NameOfApplication'
+import Checkbox from '@/components/checkbox/Checkbox'
+import Input from '@/components/input'
+import Radio from '@/components/radio/Radio'
+import Select from '@/components/select/select'
+import TextArea from '@/components/textarea/TextArea'
+import GrossMonthlyIncome from '@/components/applications/GrossMonthlyIncome'
 import FullName from './completion/FullName'
 import Address from './completion/Address'
 import GrossMonthlyIncomeCompletion from './completion/GrossMonthlyIncomeCompletion'
@@ -19,8 +19,8 @@ import FileDocument from './employment/FileDocument'
 import RenderFileDocument from './completion/RenderFileDocument'
 import {children_config_completion} from './completion'
 import LableOptionsCountry from './completion/Country'
-import {ApplicationConfig, TableConfig} from '../../../app/types/common'
-import {convertMessageErrorMaximum, convertMessageErrorRequired} from '../../../app/utils'
+import {ApplicationConfig, TableConfig} from '@/app/types'
+import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
 import {
   CUSTOMER_TYPE,
   EMPLOYMENT_STATUS,
@@ -33,9 +33,9 @@ import {
   RESIDENTIAL_TYPE,
   SPECIALIZATION,
   YES_NO_OPTION,
-} from '../../../app/utils/globalConfig'
+} from '@/app/utils/global-config'
 
-export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
+const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
     key: 'middlename',
     isHide: true,
@@ -52,8 +52,8 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'is_existing',
-    data: CUSTOMER_TYPE,
-    defaultValue: CUSTOMER_TYPE[0].value,
+    data: Promise.resolve(CUSTOMER_TYPE) as any,
+    defaultValue: Promise.resolve(CUSTOMER_TYPE[0].value) as any,
     component: Radio,
     typeComponent: 'Radio',
     label: ' ',
@@ -162,7 +162,7 @@ export const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   },
 ]
 
-export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
+const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
   {
     key: 'mlcb_check',
     data: MLCB_CHECK,
@@ -222,7 +222,7 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
 ]
 
 // Yup string will not validate (because typeInput phone === type number)
-export const CONTACT_INFORMATION: ApplicationConfig[] = [
+const CONTACT_INFORMATION: ApplicationConfig[] = [
   {
     key: 'mobilephone_1',
     component: Input,
@@ -287,7 +287,7 @@ export const CONTACT_INFORMATION: ApplicationConfig[] = [
   },
 ]
 
-export const BANK_INFO_CONFIG: ApplicationConfig[] = [
+const BANK_INFO_CONFIG: ApplicationConfig[] = [
   {
     key: 'is_giro',
     data: YES_NO_OPTION,
@@ -350,7 +350,7 @@ export const BANK_INFO_CONFIG: ApplicationConfig[] = [
   },
 ]
 
-export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
+const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
   {
     key: 'monthly_income_2',
     isHide: true,
@@ -477,7 +477,7 @@ export const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
   },
 ]
 
-export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
+const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
   {
     key: 'address_type_id',
     component: Select,
@@ -573,7 +573,7 @@ export const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
   },
 ]
 
-export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
+const TABLE_LOOKUP_CUSTOMER: TableConfig = {
   settings: {
     endPointGetListing: '/application/lookup',
     showViewButton: true,
@@ -604,7 +604,7 @@ export const TABLE_LOOKUP_CUSTOMER: TableConfig = {
   ],
 }
 
-export const COMPLETION_CONFIG: children_config_completion[] = [
+const COMPLETION_CONFIG: children_config_completion[] = [
   {
     col: 'col-xl-12',
     title: 'Personal Information',
@@ -930,3 +930,14 @@ export const COMPLETION_CONFIG: children_config_completion[] = [
     Component: RenderFileDocument,
   },
 ]
+
+export {
+  GENERAL_INFORMATION_CONFIG,
+  LOAN_DETAILS_CONFIG,
+  CONTACT_INFORMATION,
+  BANK_INFO_CONFIG,
+  EMPLOYMENT_CONFIG,
+  BLOCK_ADDRESS_CONFIG,
+  TABLE_LOOKUP_CUSTOMER,
+  COMPLETION_CONFIG,
+}

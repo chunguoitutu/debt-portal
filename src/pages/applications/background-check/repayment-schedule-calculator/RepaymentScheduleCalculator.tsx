@@ -5,23 +5,24 @@ import {Modal, Table} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import './style.scss'
 import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG, REPAYMENT_SHEDULE_TABLES} from './config'
-import Step from '../../../../components/step/Step'
-import Select from '../../../../components/select/select'
-import Input from '../../../../components/input'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
-import {swalToast} from '../../../../app/swal-notification'
-import request from '../../../../app/axios'
-import {KTIcon} from '../../../../_metronic/helpers'
-import {STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '../../../../app/constants/step'
-import {MONTHLY_DUE_DATE} from '../../../../app/utils/globalConfig'
-import {formatNumber} from '../../../../app/utils'
-import {DEFAULT_MSG_ERROR} from '../../../../app/constants/error-message'
+import {DEFAULT_MSG_ERROR, STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '@/app/constants'
+import request from '@/app/axios'
+import {swalToast} from '@/app/swal-notification'
+import {KTIcon} from '@/_metronic/helpers'
+import Input from '@/components/input'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import Select from '@/components/select/select'
+import Step from '@/components/step/Step'
+import {MONTHLY_DUE_DATE} from '@/app/utils'
+import {formatNumber} from '@/app/utils'
+
 type Props = {
   setLoadApi: any
   loadapi: boolean
   show: boolean
   handleClose: () => void
 }
+
 type ResponseRepayment = {
   balance_principal: number
   instalment_due_date: string
@@ -29,6 +30,7 @@ type ResponseRepayment = {
   interest_per_month: number
   principal_per_month: number
 }
+
 export const RepaymentScheduleCalculatorSchema = Yup.object().shape({
   totalsAmount: Yup.string().required('Amount of Loan $ is required.'),
   per_month_percent: Yup.string().required('Interest per Month % is required.'),

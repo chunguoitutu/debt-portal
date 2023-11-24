@@ -12,21 +12,19 @@ import {useFormik} from 'formik'
 import GeneralButton from './step-component/GeneralButton'
 import NotFoundPage from '../not-found-page/NotFoundPage'
 import {PageLink, PageTitle} from '../../_metronic/layout/core'
+import request from '../../app/axios'
+import {useAuth} from '../../app/context/AuthContext'
 import {
   ApplicationFormData,
   ApplicationPayload,
+  CreateSuccessResponse,
   PropsStepApplication,
   RemarkItem,
   StepItem,
-} from '../../app/types/common'
-import {STEP_APPLICATION} from '../../app/constants/step'
-import {INIT_BLOCK_ADDRESS} from '../../app/constants'
-import request from '../../app/axios'
-import {useAuth} from '../../app/context/AuthContext'
-import {filterObjectKeyNotEmpty} from '../../app/utils'
-import {DEFAULT_MSG_ERROR} from '../../app/constants/error-message'
-import {swalToast} from '../../app/swal-notification'
-import {CreateSuccessResponse} from '../../app/types/response'
+} from '@/app/types'
+import {INIT_BLOCK_ADDRESS, STEP_APPLICATION} from '@/app/constants'
+import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
+import {swalToast} from '@/app/swal-notification'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -523,7 +521,7 @@ export const Applications = () => {
         })
       }
     } catch (error: any) {
-      const message = DEFAULT_MSG_ERROR
+      const message = convertErrorMessageResponse(error)
 
       swalToast.fire({
         title: message,

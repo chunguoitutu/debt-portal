@@ -1,7 +1,7 @@
 import {FC} from 'react'
-import TableRender from '../../../../components/table-render'
-import TitleComponent from '../../../../components/title-component'
-import {PropsStepApplication} from '../../../../app/types/common'
+import TableRender from '@/components/table-render'
+import TitleComponent from '@/components/title-component'
+import {PropsStepApplication} from '@/app/types'
 
 export interface DEF_completion {
   key?: string
