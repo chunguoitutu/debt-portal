@@ -1,5 +1,7 @@
-import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode} from 'react'
+import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode, useState} from 'react'
 import {handleKeyPress, handlePaste} from '../enter-numbers-only'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEye} from '@fortawesome/free-solid-svg-icons'
 
 interface Props
   extends Omit<
@@ -17,6 +19,7 @@ interface Props
   type?: HTMLInputTypeAttribute | 'money'
   noThereAreCommas?: boolean
   symbolMoney?: string
+  showIconTogglePassword?: boolean
 }
 
 const Input: FC<Props> = ({
@@ -26,13 +29,26 @@ const Input: FC<Props> = ({
   insertLeft,
   insertRight,
   type = 'text',
-  noThereAreCommas = true,
-  required = false,
   className = '',
   classShared = '',
   symbolMoney = '$',
+  value = '',
+  noThereAreCommas = true,
+  required = false,
+  showIconTogglePassword = true,
   ...rest
 }) => {
+  const [typeCustom, setTypeCustom] = useState<string>(
+    type === 'money' ? 'number' : type === 'number' ? 'text' : type
+  )
+
+  // Only handle for type password
+  function handleChangeTypeInput() {
+    if (type === 'password') {
+      setTypeCustom(typeCustom === 'password' ? 'text' : 'password')
+    }
+  }
+
   return (
     <div className={`${classShared}`}>
       {title && (
@@ -66,14 +82,22 @@ const Input: FC<Props> = ({
               handlePaste({e: e, noThereAreCommas: noThereAreCommas})
             }
           }}
-          type={type === 'money' ? 'number' : type === 'number' ? 'text' : type}
-          className={`form-control-lg p-12px w-100 bg-transparent outline-none h-100 border-0 fw-semibold ${className}`}
+          type={typeCustom}
+          className={`form-control form-control-lg p-12px w-100 bg-transparent outline-none h-100 border-0 fw-semibold ${className}`}
           style={{color: 'rgb(75, 86, 117)'}}
+          value={value}
           id={id || name}
           name={name}
           {...rest}
         />
-        {insertRight && insertRight}
+        {type === 'password'
+          ? !!value.toString().length &&
+            showIconTogglePassword && (
+              <span className='pwd-icon text-gray-400 text-hover-gray-600 cursor-pointer'>
+                <FontAwesomeIcon icon={faEye} onClick={handleChangeTypeInput} />
+              </span>
+            )
+          : insertRight && insertRight}
       </div>
     </div>
   )

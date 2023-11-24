@@ -7,10 +7,10 @@ import {swalToast} from '../../../../swal-notification'
 import {useAuth} from '../../../../context/AuthContext'
 import {UpdatePasswordInfo} from '../../../../types/common'
 import {updatePasswordCurrentUser} from '../../../../axios/request'
-import {convertErrorMessageResponse} from '../../../../utils'
+import {convertErrorMessageResponse, convertMessageErrorPassword} from '../../../../utils'
 import ErrorMessage from '../../../../../components/error/ErrorMessage'
 import Button from 'src/components/button/Button'
-// import {regexPassword} from 'src/app/constants'
+import Input from 'src/components/input'
 
 type Props = {
   show: boolean
@@ -35,26 +35,17 @@ const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]
 
 const passwordFormValidationSchema = Yup.object().shape({
   new_password: Yup.string()
-    .matches(
-      regexPassword,
-      'New Password must be at least 8 characters including at least one letter, one number, and one special character'
-    )
+    .matches(regexPassword, convertMessageErrorPassword('New Password'))
     .required('New Password is required'),
   confirm_new_password: Yup.string()
-    .matches(
-      regexPassword,
-      'Confirm New Password must be at least 8 characters including at least one letter, one number, and one special character'
-    )
+    .matches(regexPassword, convertMessageErrorPassword('Confirm New Password'))
     .required('Confirm New Password is required')
     .oneOf([Yup.ref('new_password')], 'Confirm New Password must match'),
 })
 
 const oldPasswordValidationSchema = Yup.object().shape({
   old_password: Yup.string()
-    .matches(
-      regexPassword,
-      'Current Password must be at least 8 characters including at least one letter, one number, and one special character'
-    )
+    .matches(regexPassword, convertMessageErrorPassword('Current Password'))
     .required('Current Password is required'),
 })
 
@@ -155,7 +146,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
                 >
                   Current Password
                 </label>
-                <input
+                <Input
                   autoComplete='off'
                   type='password'
                   className='form-control form-control-lg form-control-solid'
@@ -178,7 +169,7 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
               >
                 New Password
               </label>
-              <input
+              <Input
                 autoComplete='off'
                 type='password'
                 className='form-control form-control-lg form-control-solid '
@@ -200,13 +191,14 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
               >
                 Confirm New Password
               </label>
-              <input
+              <Input
                 autoComplete='off'
                 type='password'
                 className='form-control form-control-lg form-control-solid '
                 id='confirm_new_password'
                 {...getFieldProps('confirm_new_password')}
               />
+
               {touched.confirm_new_password && errors.confirm_new_password && (
                 <ErrorMessage message={errors.confirm_new_password} />
               )}
