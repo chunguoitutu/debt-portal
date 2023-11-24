@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import {useEffect} from 'react'
 import {ILayout, useLayout} from '../../core'
+import clsx from 'clsx'
 
 const Footer = () => {
   const {config} = useLayout()
@@ -9,7 +10,7 @@ const Footer = () => {
   }, [config])
   return (
     <>
-      <div className='text-dark order-2 order-md-1'>
+      <div className={clsx(['text-dark order-2 order-md-1'])}>
         <span className='text-muted fw-semibold'>
           Copyright {new Date().getFullYear().toString()}&copy; MCK group Pte Ltd. All Rights
           Reserved

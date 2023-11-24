@@ -63,7 +63,7 @@ const MasterLayout = () => {
                 <ToolbarWrapper />
                 <Outlet />
               </div>
-              <FooterWrapper />
+              <FooterWrapper className='py-5' />
             </div>
           </div>
         </div>

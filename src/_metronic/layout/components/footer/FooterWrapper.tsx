@@ -1,23 +1,27 @@
 import clsx from 'clsx'
 import {useLayout} from '../../core'
 import {Footer} from './Footer'
+import {FC} from 'react'
 
-const FooterWrapper = () => {
+type Props = {
+  className?: string
+}
+
+const FooterWrapper: FC<Props> = ({className}) => {
   const {config} = useLayout()
   if (!config.app?.footer?.display) {
     return null
   }
 
   return (
-    <div className='app-footer' id='kt_app_footer'>
+    <div className='app-footer h-fit-content' id='kt_app_footer'>
       {config.app.footer.containerClass ? (
         <div
           className={clsx(
-            'app-container',
+            'app-container justify-content-center text-center',
             config.app.footer.container === 'fixed' ? 'container-xxl' : 'container-fluid',
-            config.app.footer.containerClass
+            className
           )}
-          style={{justifyContent: 'center'}}
         >
           <Footer />
         </div>
