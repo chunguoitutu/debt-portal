@@ -35,6 +35,7 @@ export const CreateEditRejectionTypeSchema = Yup.object().shape({
   rejection_type_code: Yup.string()
     .required('Code is required')
     .max(64, 'Code must be at most 64 characters'),
+  description: Yup.string().max(1024, 'Description must be at most 1024 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body

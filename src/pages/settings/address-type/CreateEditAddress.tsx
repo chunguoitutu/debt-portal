@@ -31,6 +31,7 @@ export const CreateEditAddressSchema = Yup.object().shape({
   address_type_name: Yup.string()
     .required('Address Type is required')
     .max(255, 'Address Type must be at most 255 characters'),
+  description: Yup.string().max(1024, 'Description must be at most 1024 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -93,7 +94,7 @@ const CreateEditAddress = ({
                 title:
                   (swalToastTitle || '').replace(
                     /\/%\//g,
-                    response?.data?.data['address_type_name']
+                    `"${response?.data?.data['address_type_name']}"`
                   ) + ' created',
               })
             }
@@ -130,7 +131,7 @@ const CreateEditAddress = ({
                 title:
                   (swalToastTitle || '').replace(
                     /\/%\//g,
-                    response?.data?.data['address_type_name']
+                    `"${response?.data?.data['address_type_name']}"`
                   ) + ' updated',
               })
             }
