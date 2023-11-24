@@ -16,18 +16,22 @@ export const CompanyManagement = () => {
   const [loadapi, setLoadApi] = React.useState<any>(false)
 
   const newCompaniesSchema = Yup.object().shape({
-    company_name: Yup.string().required('Company Name is required'),
-    business_uen: Yup.string().required('Business Uen is required'),
-    telephone: Yup.string()
-      .min(6, 'Minimum 6 symbols')
-      .max(11, 'Maximum 11 symbols')
-      .required('Telephone is required'),
+    company_name: Yup.string()
+      .required('Company Name is required')
+      .max(255, 'Company Name must be at most 255 characters'),
+    company_code: Yup.string()
+      .required('Company Code is required')
+      .max(64, 'Company Code must be at most 64 characters'),
+    business_uen: Yup.string()
+      .required('Business UEN is required')
+      .max(64, 'Business UEN must be at most 64 characters'),
+    telephone: Yup.string().max(64, 'Telephone must be at most 64 characters'),
     email: Yup.string()
-      .email('Wrong email format')
-      .min(3, 'Minimum 3 symbols')
-      .max(50, 'Maximum 50 symbols'),
+      .email('Email is not in valid format')
+      .max(255, 'Email must be at most 255 characters'),
     open_date: Yup.string().required('Open Date is required'),
-    address: Yup.string().required('Address is required'),
+    address: Yup.string().max(255, 'Address must be at most 255 characters'),
+    contact_person: Yup.string().min(0).max(255, 'Contact Person must be at most 255 characters'),
   })
 
   React.useEffect(() => {
@@ -96,11 +100,26 @@ export const CompanyManagement = () => {
     touched,
     errors,
     isSubmitting,
+    validateForm,
+    setTouched,
     handleChange,
     handleSubmit,
     setFieldValue,
     setSubmitting,
   } = formik
+
+  const handleBeforeSubmit = async () => {
+    const checkingErrors = await validateForm(values)
+    if (Object.keys(checkingErrors).length) {
+      const error = Object.keys(checkingErrors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
+      setTouched({
+        ...touched,
+        ...error,
+      })
+    } else {
+      handleSubmit()
+    }
+  }
 
   return (
     <div className='card'>
@@ -153,7 +172,7 @@ export const CompanyManagement = () => {
                   moment(values?.['open_date']).format('YYYY-MM-DD'))
             }
             loading={isSubmitting}
-            onClick={() => handleSubmit()}
+            onClick={() => handleBeforeSubmit()}
           >
             Update
           </Button>
