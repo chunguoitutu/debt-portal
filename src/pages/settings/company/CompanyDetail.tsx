@@ -94,7 +94,7 @@ const CompanyDetail = ({
           <div className='d-flex justify-content-start align-items-center px-0 pt-8px pb-30px m-0'>
             <Icons name={'HomeSmall'} />
             {!!data?.address ? (
-              <p className='ps-8px pe-0 pt-0 pb-0 m-0 fs-16 text-gray-800 fw-semibold  text-lowercase'>
+              <p className='ps-8px pe-0 pt-0 pb-0 m-0 fs-16 text-gray-800 fw-semibold  text-capitalize'>
                 {data?.address}
               </p>
             ) : (
@@ -121,7 +121,7 @@ const CompanyDetail = ({
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 company Code
               </h1>
-              <p className='p-0 m-0 h-100 fs-16 text-uppercase fw-semibold text-gray-800'>
+              <p className='p-0 m-0 h-100 fs-16 text-capitalize fw-semibold text-gray-800'>
                 {data?.company_code}
               </p>
             </div>
@@ -129,7 +129,7 @@ const CompanyDetail = ({
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 business UEN
               </h1>
-              <p className='p-0  h-100 m-0 fs-16 text-uppercase fw-semibold text-gray-800'>
+              <p className='p-0  h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
                 {data?.business_uen}
               </p>
             </div>
@@ -138,7 +138,7 @@ const CompanyDetail = ({
                 Contact Person
               </h1>
               {!!data?.contact_person ? (
-                <p className='p-0 h-100 m-0 fs-16 text-uppercase fw-semibold text-gray-800'>
+                <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
                   {data?.contact_person}
                 </p>
               ) : (
