@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import Table from '../../../components/table/Table'
+import Table from '@/components/table/Table'
 import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
 import {CreateEditAddress} from './CreateEditAddress'
 

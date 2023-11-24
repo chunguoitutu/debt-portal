@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
 import {CreateEditCompanies} from './CreateEditCompany'
-import Table from '../../../components/table/Table'
+import Table from '@/components/table/Table'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
 import CompanyDetail from './CompanyDetail'
-import {SearchCriteria} from '../../../app/types/common'
+import {SearchCriteria} from '@/app/types'
 
 type Props = {}
 

@@ -1,8 +1,8 @@
 import {Routes, Route, Navigate} from 'react-router-dom'
 import SettingManagementLayout from '../../layouts/setting-layout/SettingLayout'
-import {ROUTER_SETTING} from '../../app/utils/globalConfig'
 import {useAuth} from '../../app/context/AuthContext'
 import {PageLink, PageTitle} from '../../_metronic/layout/core'
+import {ROUTER_SETTING} from '@/app/utils'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {

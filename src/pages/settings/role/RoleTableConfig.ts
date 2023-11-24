@@ -1,9 +1,9 @@
-import Badge from 'src/components/badge/Badge'
-import {TableConfig} from '../../../app/types/common'
-import {DropDownRole} from '../../../components/DropDownRole'
-import Select from '../../../components/select/select'
+import {TableConfig} from '@/app/types'
 import Priority from './Priority'
-import InputCheck from 'src/components/input/InputCheckRounded'
+import Select from '@/components/select/select'
+import {DropDownRole} from '@/components/DropDownRole'
+import Badge from '@/components/badge/Badge'
+import InputCheck from '@/components/input/InputCheckRounded'
 
 export const ROLE_TABLE_CONFIG: TableConfig = {
   settings: {

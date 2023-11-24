@@ -1,4 +1,4 @@
-import {TableConfig} from '../../../app/types/common'
+import {TableConfig} from '@/app/types'
 import SearchBar from './SearchBar'
 import ToolBar from './ToolBar'
 

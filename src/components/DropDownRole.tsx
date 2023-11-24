@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import MultipleSelectTree from './multiple-select/MultipleSelectTree'
-import {PAGE_PERMISSION} from '../app/utils/pagePermission'
+import {PAGE_PERMISSION} from '../app/utils/page-permission'
 
 interface Props {
   id?: string

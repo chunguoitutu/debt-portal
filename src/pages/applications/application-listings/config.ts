@@ -1,7 +1,7 @@
-import {TableConfig} from '../../../app/types/common'
-import {ID_TYPE, STATUS_APPLICATION_FILTER} from '../../../app/utils/globalConfig'
-import Input from '../../../components/input'
-import Select from '../../../components/select/select'
+import {TableConfig} from '@/app/types'
+import {ID_TYPE, STATUS_APPLICATION_FILTER} from '@/app/utils'
+import Input from '@/components/input'
+import Select from '@/components/select/select'
 
 export const APPLICATION_LISTING_CONFIG: TableConfig = {
   endpoint: '',

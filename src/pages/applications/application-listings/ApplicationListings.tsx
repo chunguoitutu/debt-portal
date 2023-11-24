@@ -1,30 +1,25 @@
 import {Button} from 'react-bootstrap'
-import Icons from '../../../components/icons'
+import Icons from '@/components/icons'
 import {APPLICATION_LISTING_CONFIG} from './config'
 import React, {useEffect, useMemo, useState} from 'react'
-import RowPerPage from '../../../components/row-per-page'
-import PaginationArrow from '../../../components/pagination.tsx'
+import RowPerPage from '@/components/row-per-page'
+import PaginationArrow from '@/components/pagination.tsx'
 import {Link, useNavigate} from 'react-router-dom'
 import moment from 'moment'
 import numeral from 'numeral'
-import Badge from '../../../components/badge/Badge'
-import ButtonEdit from '../../../components/button/ButtonEdit'
-import Checkbox from '../../../components/checkbox/Checkbox'
+import Badge from '@/components/badge/Badge'
+import ButtonEdit from '@/components/button/ButtonEdit'
+import Checkbox from '@/components/checkbox/Checkbox'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import Loading from '../../../components/table/components/Loading'
-import Cookies from 'js-cookie'
+import Loading from '@/components/table/components/Loading'
 import {useAuth} from '../../../app/context/AuthContext'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {
-  ApplicationItem,
-  ResponseApplicationListing,
-  SearchCriteria,
-} from '../../../app/types/common'
+import {ApplicationItem, ResponseApplicationListing, SearchCriteria} from '@/app/types'
 import request from '../../../app/axios'
-import {filterObjectKeyNotEmpty} from '../../../app/utils'
 import {KTCardBody} from '../../../_metronic/helpers'
+import {filterObjectKeyNotEmpty} from '@/app/utils'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {

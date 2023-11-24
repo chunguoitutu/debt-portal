@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
 import CreateLoanType from './CreateLoanType'
-import Table from '../../../components/table/Table'
+import Table from '@/components/table/Table'
 
 const LoanTypes = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)

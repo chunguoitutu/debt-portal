@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
 import CreateJobType from './CreateJobType'
-import Table from '../../../components/table/Table'
+import Table from '@/components/table/Table'
 
 const JobType = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)

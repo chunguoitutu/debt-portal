@@ -1,5 +1,5 @@
-import {TableConfig} from '../../../app/types/common'
-import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '@/app/types'
+import Badge from '@/components/badge/Badge'
 
 export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/loan_type',
@@ -38,7 +38,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'Default Interest',
       infoCreateEdit: {
         type: 'input',
-        typeInput: 'text',
+        typeInput: 'number',
         isRequired: true,
       },
     },

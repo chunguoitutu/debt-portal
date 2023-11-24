@@ -3,9 +3,9 @@ import {FC, Fragment, useEffect, useState} from 'react'
 import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
+import ErrorMessage from '@/components/error/ErrorMessage'
 import LookupCustomer from './LookupCustomer'
-import {ApplicationConfig, PropsStepApplication} from '../../../../app/types/common'
+import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {

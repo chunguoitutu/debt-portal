@@ -1,5 +1,5 @@
+import {BadgeProps} from '@/app/types'
 import {FC, useMemo} from 'react'
-import {BadgeProps} from '../../app/types/common'
 
 const statusClass = {
   primary: 'badge-light-primary',

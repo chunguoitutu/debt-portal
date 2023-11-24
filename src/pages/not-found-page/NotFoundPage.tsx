@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom'
 import Button from '../../components/button/Button'
-import {toAbsoluteUrl} from 'src/_metronic/helpers'
+import {toAbsoluteUrl} from '@/_metronic/helpers'
 
 const NotFoundPage = () => {
   return (

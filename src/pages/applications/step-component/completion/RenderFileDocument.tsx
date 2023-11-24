@@ -1,5 +1,5 @@
-import {convertSize} from '../../../../app/utils'
-import Icons from '../../../../components/icons'
+import {convertSize} from '@/app/utils'
+import Icons from '@/components/icons'
 import {file} from '../employment/FileDocument'
 
 type Props = {

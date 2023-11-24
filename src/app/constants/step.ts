@@ -1,4 +1,3 @@
-import GeneralInformation from '../../pages/applications/step-component/general-information/GeneralInformation'
 import {
   BANK_INFO_CONFIG,
   COMPLETION_CONFIG,
@@ -6,13 +5,14 @@ import {
   EMPLOYMENT_CONFIG,
   GENERAL_INFORMATION_CONFIG,
   LOAN_DETAILS_CONFIG,
-} from '../../pages/applications/step-component/config'
-import LoanDetails from '../../pages/applications/step-component/loan-details/LoanDetails'
-import ContactInformation from '../../pages/applications/step-component/contact-information/ContactInformation'
-import Employment from '../../pages/applications/step-component/employment/Employment'
-import {StepItem} from '../types/common'
-import BankInfo from '../../pages/applications/step-component/bank-info/BankInfo'
-import Completion from '../../pages/applications/step-component/completion'
+} from '@/pages/applications/step-component/config'
+import {StepItem} from '../types'
+import LoanDetails from '@/pages/applications/step-component/loan-details/LoanDetails'
+import ContactInformation from '@/pages/applications/step-component/contact-information/ContactInformation'
+import Employment from '@/pages/applications/step-component/employment/Employment'
+import BankInfo from '@/pages/applications/step-component/bank-info/BankInfo'
+import Completion from '@/pages/applications/step-component/completion'
+import GeneralInformation from '@/pages/applications/step-component/general-information/GeneralInformation'
 
 export const STEP_APPLICATION: StepItem[] = [
   {

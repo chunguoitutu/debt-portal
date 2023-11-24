@@ -1,7 +1,6 @@
 import RejectionType from '../../pages/settings/rejection-type/RejectionType'
 import RolePage from '../../pages/settings/role/RoleManagement'
 import UserManagement from '../../pages/settings/user/UserManagement'
-
 import {v4 as uuidv4} from 'uuid'
 import {DropDownGroup, MenuSettingItem, Option} from '../types/common'
 import {CompanyManagement} from '../../pages/settings/company-management'

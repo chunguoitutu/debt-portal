@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react'
 
 import {AiOutlineClose} from 'react-icons/ai'
-import Icons from '../../../../components/icons'
+import Icons from '@/components/icons'
 import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
 import request from '../../../../app/axios'
-import {convertSize} from '../../../../app/utils'
-import {DEFAULT_MSG_ERROR} from '../../../../app/constants/error-message'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
+import {convertSize} from '@/app/utils'
 
 export interface file {
   id?: Number

@@ -1,8 +1,8 @@
 import {useState} from 'react'
 import CreateEditRole from './CreateEditRole'
-import Table from '../../../components/table/Table'
+import Table from '@/components/table/Table'
 import {ROLE_TABLE_CONFIG} from './RoleTableConfig'
-import {RoleInfo} from '../../../app/types/common'
+import {RoleInfo} from '@/app/types'
 
 const RolePage = () => {
   const [dataEdit, setDataEdit] = useState<RoleInfo | undefined>()

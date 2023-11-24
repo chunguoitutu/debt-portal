@@ -1,8 +1,8 @@
 import {useState} from 'react'
 import {USER_TABLE_CONFIG} from './UserTableConfig'
 import CreateEditUser from './CreateEditUser'
-import Table from '../../../components/table/Table'
-import {UserInfo} from '../../../app/types/common'
+import Table from '@/components/table/Table'
+import {UserInfo} from '@/app/types'
 
 const UserManagement = () => {
   const [dataEdit, setDataEdit] = useState<UserInfo>()

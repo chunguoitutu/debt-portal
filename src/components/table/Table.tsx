@@ -10,13 +10,13 @@ import Pagination from './components/Pagination'
 import ButtonViewDetail from '../button/ButtonViewDetail'
 import {Filter} from '../filter/Filter'
 import Input from '../input'
-import {SearchCriteria, TableConfig} from '../../app/types/common'
 import {useAuth} from '../../app/context/AuthContext'
 import request from '../../app/axios'
-import {swalConfirmDelete, swalToast} from '../../app/swal-notification'
-import {convertErrorMessageResponse} from '../../app/utils'
 import {KTCardBody} from '../../_metronic/helpers'
 import clsx from 'clsx'
+import {SearchCriteria, TableConfig} from '@/app/types'
+import {swalConfirmDelete, swalToast} from '@/app/swal-notification'
+import {convertErrorMessageResponse} from '@/app/utils'
 
 type Props = {
   config: TableConfig

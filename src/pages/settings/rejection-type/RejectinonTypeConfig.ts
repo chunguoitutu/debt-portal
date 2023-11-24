@@ -1,5 +1,5 @@
-import {TableConfig} from '../../../app/types/common'
-import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '@/app/types'
+import Badge from '@/components/badge/Badge'
 
 export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
   settings: {

@@ -5,12 +5,12 @@ import {FormikHelpers, useFormik} from 'formik'
 import clsx from 'clsx'
 import {useNavigate, useSearchParams} from 'react-router-dom'
 import Cookies from 'js-cookie'
-import {convertErrorMessageResponse} from '../../../app/utils'
 import request from '../../../app/axios'
 import Form from 'react-bootstrap/Form'
-import {LoginInfo} from '../../../app/types/common'
-import {login} from '../../../app/axios/request'
-import Input from 'src/components/input'
+import {LoginInfo} from '@/app/types'
+import Input from '@/components/input'
+import {login} from '@/app/axios/request'
+import {convertErrorMessageResponse} from '@/app/utils'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()

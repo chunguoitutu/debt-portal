@@ -1,5 +1,5 @@
-import {TableConfig} from '../../../app/types/common'
-import Badge from '../../../components/badge/Badge'
+import {TableConfig} from '@/app/types'
+import Badge from '@/components/badge/Badge'
 
 export const DOCUMENT_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/document_type',

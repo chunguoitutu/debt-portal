@@ -1,7 +1,7 @@
 import {FC} from 'react'
-import Button from '../../../components/button/Button'
+import Button from '@/components/button/Button'
 import {useParams} from 'react-router-dom'
-import {PropsStepApplication} from '../../../app/types/common'
+import {PropsStepApplication} from '@/app/types'
 
 interface Props extends PropsStepApplication {
   handleSubmit: () => void

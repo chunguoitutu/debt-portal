@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import CreateDocumentType from './CreateDocumentTypes'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
-import Table from '../../../components/table/Table'
+import Table from '@/components/table/Table'
 
 const DocumentTypes = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)

@@ -6,15 +6,14 @@ import {Modal} from 'react-bootstrap'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-
+import request from '@/app/axios'
+import {swalToast} from '@/app/swal-notification'
+import {KTIcon} from '@/_metronic/helpers'
+import Input from '@/components/input'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import InputCheck from '@/components/input/InputCheckRounded'
+import Button from '@/components/button/Button'
 import {MAKETTING_TABLE_CONFIG} from './MarketingConfig'
-import ErrorMessage from '../../../components/error/ErrorMessage'
-import Input from '../../../components/input'
-import Button from '../../../components/button/Button'
-import {KTIcon} from '../../../_metronic/helpers'
-import {swalToast} from '../../../app/swal-notification'
-import request from '../../../app/axios'
-import InputCheck from 'src/components/input/InputCheckRounded'
 
 type Props = {
   setLoadApi: any

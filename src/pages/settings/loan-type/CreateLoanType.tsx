@@ -6,17 +6,16 @@ import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 
 import * as Yup from 'yup'
-
-import InputCheck from '../../../components/input/InputCheckRounded'
 import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
-import TextArea from '../../../components/icons/textarea/TextArea'
-import Input from '../../../components/input'
-import ErrorMessage from '../../../components/error/ErrorMessage'
-import Button from '../../../components/button/Button'
-import {KTIcon} from '../../../_metronic/helpers'
-import {swalToast} from '../../../app/swal-notification'
-import request from '../../../app/axios'
-import {convertErrorMessageResponse} from 'src/app/utils'
+import request from '@/app/axios'
+import {swalToast} from '@/app/swal-notification'
+import {convertErrorMessageResponse} from '@/app/utils'
+import {KTIcon} from '@/_metronic/helpers'
+import TextArea from '@/components/textarea/TextArea'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import Input from '@/components/input'
+import InputCheck from '@/components/input/InputCheckRounded'
+import Button from '@/components/button/Button'
 
 type Props = {
   setLoadApi: any
@@ -55,6 +54,7 @@ const CreateLoanType = ({
     errors,
     isSubmitting,
     handleChange,
+    handleBlur,
     handleSubmit,
     resetForm,
     setSubmitting,
@@ -163,11 +163,15 @@ const CreateLoanType = ({
         <div className='flex-row-fluid' style={{padding: 30}}>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
             {rows.map((row) => {
-              const {infoCreateEdit} = row
-              const {isRequired} = infoCreateEdit || {}
+              const {infoCreateEdit, key} = row || {}
+              const {isRequired, typeInput} = infoCreateEdit || {}
+
               if (['id', 'status'].includes(row.key)) {
                 return null
               }
+
+              const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
+
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
                   {row.key === 'description' ? (
@@ -185,11 +189,14 @@ const CreateLoanType = ({
                   ) : (
                     <div className='d-flex flex-column mb-16px'>
                       <Input
+                        type={typeInput || 'text'}
                         title={row.name}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         required={isRequired}
+                        {...props}
                       />
 
                       {errors[row?.key] && touched[row?.key] && (

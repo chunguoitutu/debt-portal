@@ -1,7 +1,7 @@
 import {FC, Fragment} from 'react'
 import clsx from 'clsx'
-import ErrorMessage from '../../../../components/error/ErrorMessage'
-import {ApplicationConfig, PropsStepApplication} from '../../../../app/types/common'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 
 const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
   const {handleChange, values} = formik

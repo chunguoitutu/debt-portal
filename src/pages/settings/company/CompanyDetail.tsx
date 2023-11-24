@@ -1,10 +1,9 @@
 import {Modal} from 'react-bootstrap'
 import moment from 'moment'
-import {showLable} from '../../../components/input/showLable'
+import Button from '@/components/button/Button'
+import Icons from '@/components/icons'
+import {KTIcon} from '@/_metronic/helpers'
 import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
-import {KTIcon} from '../../../_metronic/helpers'
-import Button from 'src/components/button/Button'
-import Icons from 'src/components/icons'
 
 interface IProps {
   show: boolean

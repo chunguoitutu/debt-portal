@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {useLayout} from '../../core'
+import {useLayout} from '../../_metronic/layout/core'
 import {Footer} from './Footer'
 import {FC} from 'react'
 
