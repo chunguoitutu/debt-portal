@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react'
 import * as Yup from 'yup'
 import 'react-toastify/dist/ReactToastify.css'
 import {useFormik} from 'formik'
+import {useAuth} from '@/app/context/AuthContext'
+import {updateInfoUser} from '@/app/axios/request'
+import {swalToast} from '@/app/swal-notification'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import ChangePassword from '../change-password/ChangePassword'
-import {swalToast} from '../../../../swal-notification'
-import {useAuth} from '../../../../context/AuthContext'
-import {updateInfoUser} from '../../../../axios/request'
-import {DEFAULT_MSG_ERROR} from '../../../../constants/error-message'
 
 const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),
