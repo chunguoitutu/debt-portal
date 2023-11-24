@@ -17,8 +17,8 @@
     "noImplicitAny": false,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["./src/*"],
-      "react": ["./node_modules/@types/react"]
+      "react": ["./node_modules/@types/react"],
+      "@/*": ["./src/*"]
     },
     "types": ["vite/client", "node"],
     "baseUrl": "."
