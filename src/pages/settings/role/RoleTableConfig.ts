@@ -26,6 +26,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       key: 'role_name',
       name: 'Role Name',
       isCreateEdit: true,
+      classNameTableHead: ' min-w-150px',
       classNameTableBody: 'text-break',
       color: '#252F4A',
       infoCreateEdit: {
