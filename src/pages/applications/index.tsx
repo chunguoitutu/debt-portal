@@ -561,10 +561,10 @@ export const Applications = () => {
         <div className='col-9 col-xxl-8 order-2 d-flex flex-column h-100 m-0'>
           <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
             <HeaderApplication
-              labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
+              labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
               info={{
-                initialValues: values.customer_no,
-                date: values.application_date,
+                customer_no: values.customer_no || '',
+                application_date: values.application_date || '',
               }}
               percentCompleted={percentCompleted}
               className='p-10'

@@ -1,23 +1,38 @@
 import clsx from 'clsx'
-import {FC} from 'react'
+import {FC, useMemo} from 'react'
 import moment from 'moment'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFileLines} from '@fortawesome/free-solid-svg-icons'
 type Props = {
   labelStep?: string
   percentCompleted?: number
-  info?: {[key: string]: any}
+  info?: {
+    customer_no: string
+    application_date: string
+  }
   className?: string
 }
 
 const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, info}) => {
+  const {application_date = '', customer_no = ''} = info || {}
+
+  const newLabel = useMemo(
+    () => (customer_no ? `Application Number: #${customer_no}` : labelStep),
+    [labelStep, application_date, customer_no]
+  )
+
   return (
     <>
-      <div
-        className={clsx(['row align-items-center g-5 border-bottom border-gray-200', className])}
-      >
+      <div className={clsx(['row align-items-center border-bottom border-gray-200', className])}>
         <div className='col-6 d-flex flex-column'>
-          {info?.initialValues ? (
+          {<h3 className='fs-20 m-0 text-gray-900'>{newLabel}</h3>}
+          {application_date && (
+            <span className='text-gay-700 fs-14'>
+              Create Date: {moment(application_date).format('DD-MM-YYYY')}
+            </span>
+          )}
+
+          {/* {info?.initialValues ? (
             <div className='border-application fs-2 w-fit-content'>
               <div className='d-flex flex-row gap-7'>
                 <div
@@ -37,7 +52,7 @@ const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, i
             </div>
           ) : (
             <div className='border-application fs-2 w-fit-content'>{labelStep}</div>
-          )}
+          )} */}
         </div>
 
         {/* Still show when percent = 0 */}
