@@ -58,6 +58,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     {
       key: 'permissions',
       name: 'Permissions',
+      classNameTableHead: 'w-300px min-w-150px',
       component: DropDownRole,
       isCreateEdit: true,
     },
