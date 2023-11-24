@@ -16,7 +16,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
-      classNameTableHead: 'min-w-50px',
+      classNameTableHead: 'min-w-50px w-90px',
       key: 'id',
       name: 'ID',
     },

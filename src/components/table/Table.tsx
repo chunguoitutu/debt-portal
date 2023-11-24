@@ -254,8 +254,9 @@ const Table: FC<Props> = ({
                         >
                           <div
                             className={clsx([
-                              row.name === 'Status' &&
-                                'w-100 d-flex justify-content-center align-items-center fs-14 fw-semibold',
+                              row.name === 'Status'
+                                ? 'w-100 d-flex justify-content-center text-uppercase text-gray-500 align-items-center fs-14 fw-bold'
+                                : 'w-100  text-uppercase text-gray-500  fs-14 fw-bold',
                             ])}
                           >
                             <span>{row.name}</span>
@@ -265,7 +266,15 @@ const Table: FC<Props> = ({
                       )
                   )}
                 {(showAction || showRefresh) && (
-                  <th className='text-center w-150px fs-14 fw-semibold'>Actions</th>
+                  <th className='text-center w-150px '>
+                    <div
+                      className={clsx([
+                        'w-100 d-flex justify-content-center text-uppercase text-gray-500 align-items-center fs-14 fw-bold',
+                      ])}
+                    >
+                      <span>ACTIONS</span>
+                    </div>
+                  </th>
                 )}
               </tr>
             </thead>
@@ -321,7 +330,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'created_date') {
                           return (
-                            <td key={i} className='fs-14 fw-semibold mt-8px ms-16px ps-7'>
+                            <td key={i} className='fs-14 fw-semibold '>
                               {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )
@@ -329,7 +338,7 @@ const Table: FC<Props> = ({
 
                         if (key === 'updated_date') {
                           return (
-                            <td key={i} className='fs-14 fw-semibold pl-20px ps-7'>
+                            <td key={i} className='fs-14 fw-semibold '>
                               {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )

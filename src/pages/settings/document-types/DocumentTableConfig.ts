@@ -37,12 +37,7 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       key: 'description',
       name: 'Description',
     },
-    {
-      classNameTableHead: 'min-w-200px',
-      key: 'status',
-      name: 'Status',
-      component: Badge,
-    },
+
     {
       classNameTableHead: 'min-w-200px align-items-center',
       key: 'created_date',
@@ -53,6 +48,12 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       key: 'updated_date',
       name: 'Updated Date',
       type: 'datetime',
+    },
+    {
+      classNameTableHead: 'min-w-200px',
+      key: 'status',
+      name: 'Status',
+      component: Badge,
     },
   ],
 }
