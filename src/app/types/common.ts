@@ -324,6 +324,7 @@ export type ApplicationPayload = {
     is_existing: string
     company_id: number
     loan_reason?: string
+    interest: string | number
   }
   bank_account: {
     id?: number
@@ -426,6 +427,7 @@ export type ApplicationFormData = {
   customer_no?: string
   application_date?: any
   file_documents?: any
+  interest: number | string
 }
 
 export type BlockAddress = {

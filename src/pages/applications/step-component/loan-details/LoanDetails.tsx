@@ -13,18 +13,42 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   }, [])
   async function onFetchDataList() {
     try {
-      const endpoint = config.filter((data) => !!data.dependencyApi)
-      endpoint.forEach((d) => {
-        request.post(d.dependencyApi || '', {status: true}).then((res) => {
-          setDataLoanType({...dataLoanType, [d.key]: res?.data?.data})
+      const endpoints = config.filter((data) => !!data.dependencyApi)
+      const results = await Promise.all(
+        endpoints.map(async (d) => {
+          const res = await request.post(d.dependencyApi || '')
+          return {key: d.key, data: res?.data?.data}
         })
-      })
+      )
+
+      results &&
+        results.forEach((result) => {
+          setDataLoanType({
+            ...dataLoanType,
+            [result.key]: result?.data,
+          })
+        })
     } catch (error) {
     } finally {
     }
   }
 
   const {values, touched, errors, handleChange, setFieldValue} = formik
+
+  const handleAutoSelect = (key: string, e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (key === 'loan_type_id') {
+      const value = e.target.value
+      if (value && dataLoanType[key]) {
+        const {interest} = dataLoanType[key].find((el) => el.id == value)
+        if (interest) setFieldValue('interest', +interest)
+      } else {
+        setFieldValue('interest', '')
+      }
+      handleChange(e)
+    } else {
+      handleChange(e)
+    }
+  }
 
   function renderComponent(item: ApplicationConfig) {
     const {
@@ -116,7 +140,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
         <div className='d-flex flex-column w-100'>
           <Component
             value={values[key]}
-            onChange={handleChange}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleAutoSelect(key, e)}
             name={key}
             classShared={className}
             fieldValueOption={keyValueOfOptions}

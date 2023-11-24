@@ -32,7 +32,8 @@ export const CreateLoanTypeSchema = Yup.object().shape({
   type_name: Yup.string()
     .required('Loan Type is required')
     .max(45, 'Loan Type must be at most 45 characters'),
-  description: Yup.string().max(45, 'Description must be at most 45 characters'),
+  description: Yup.string().max(45, 'Description must be at most 45 characters').nullable(),
+  interest: Yup.string().required('Default Interest is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -47,9 +48,7 @@ const CreateLoanType = ({
   handleUpdated,
 }: Props) => {
   const [status, setStatus] = useState(data?.status === 0 ? false : true)
-
   const {rows, endpoint} = LOAN_TYPE_TABLE_CONFIG
-
   const {
     values,
     touched,
@@ -59,30 +58,39 @@ const CreateLoanType = ({
     handleSubmit,
     resetForm,
     setSubmitting,
+    validateForm,
+    setTouched,
   } = useFormik({
     initialValues: {
-      type_name: data.type_name || '',
-      description: data.description || '',
+      ...data,
     },
     validationSchema: CreateLoanTypeSchema,
     onSubmit: async (values: any, actions: any) => {
       if (title === 'New') {
         try {
-          const response = await request.post(endpoint || '', {
+          const {data} = await request.post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
           })
-          const loan_name = values.type_name
-          handleUpdated()
-          handleClose()
-          resetForm()
-          setStatus(false)
-          setLoadApi(!loadApi)
-          swalToast.fire({
-            timer: 1500,
-            icon: 'success',
-            title: `Loan Type "${loan_name}" successfully created`,
-          })
+          if (!data.error) {
+            const loan_name = values.type_name
+            handleUpdated()
+            handleClose()
+            resetForm()
+            setStatus(false)
+            setLoadApi(!loadApi)
+            swalToast.fire({
+              timer: 1500,
+              icon: 'success',
+              title: `Loan Type "${loan_name}" successfully created`,
+            })
+          } else {
+            swalToast.fire({
+              timer: 1500,
+              icon: 'error',
+              title: `Something went wrong. Please try again!`,
+            })
+          }
         } catch (error) {
           const message = convertErrorMessageResponse(error)
           swalToast.fire({
@@ -121,6 +129,19 @@ const CreateLoanType = ({
       }
     },
   })
+
+  const handleBeforeSubmit = async () => {
+    const checkingErrors = await validateForm(values)
+    if (Object.keys(checkingErrors).length) {
+      const error = Object.keys(checkingErrors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
+      setTouched({
+        ...touched,
+        ...error,
+      })
+    } else {
+      handleSubmit()
+    }
+  }
 
   return createPortal(
     <Modal
@@ -201,7 +222,7 @@ const CreateLoanType = ({
             <Button
               type='submit'
               className='btn-lg btn-primary'
-              onClick={() => handleSubmit()}
+              onClick={handleBeforeSubmit}
               loading={isSubmitting}
             >
               {title === 'New' ? 'Create' : 'Update'}

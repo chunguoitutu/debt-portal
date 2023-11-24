@@ -184,6 +184,15 @@ export const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     validationFormik: Yup.number().required(convertMessageErrorRequired('Loan Type')),
   },
   {
+    key: 'interest',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Interest (%)',
+    required: true,
+    noThereAreCommas: false,
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
+  },
+  {
     key: 'loan_amount_requested',
     component: Input,
     typeComponent: 'Input',
@@ -693,11 +702,15 @@ export const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'type_name',
         },
         {
-          key: 'loan_amount_requested',
-          value: 'Loan amount required',
+          key: 'interest',
+          value: 'Interest (%)',
         },
       ],
       [
+        {
+          key: 'loan_amount_requested',
+          value: 'Loan amount required',
+        },
         {
           key: 'loan_terms',
           value: 'Loan Terms (months)',

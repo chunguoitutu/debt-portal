@@ -32,6 +32,17 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
+      classNameTableHead: 'min-w-200px',
+      key: 'interest',
+      color: '#252F4A',
+      name: 'Default Interest',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        isRequired: true,
+      },
+    },
+    {
       classNameTableHead: 'w-50 min-w-200px',
       classNameTableBody: 'four-line',
       key: 'description',

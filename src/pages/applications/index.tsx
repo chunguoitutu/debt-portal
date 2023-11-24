@@ -6,7 +6,6 @@ import BackgroundCheck from './background-check/BackgroundCheck'
 import Step from '../../components/step/Step'
 import HeaderApplication from '../../components/applications/HeaderApplication'
 import Remark from './remark/Remark'
-import Cookies from 'js-cookie'
 import * as Yup from 'yup'
 import {BLOCK_ADDRESS_CONFIG} from './step-component/config'
 import {useFormik} from 'formik'
@@ -409,6 +408,7 @@ export const Applications = () => {
       file_documents,
       customer_no,
       job_type_id,
+      interest,
     } = values
 
     const addressList = address_contact_info
@@ -485,6 +485,7 @@ export const Applications = () => {
         is_existing,
         company_id: +company_id,
         loan_reason,
+        interest: +interest,
       },
       address: addressList,
       file_documents,
