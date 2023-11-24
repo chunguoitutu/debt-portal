@@ -2,6 +2,7 @@ import {Navigate, Outlet} from 'react-router-dom'
 import logo from './../../app/images/logo-auth.png'
 import welcomeText from './../../app/images/welcome-3d.svg'
 import Cookies from 'js-cookie'
+import {FooterWrapper} from 'src/_metronic/layout/components/footer'
 
 const AuthLayout = () => {
   const token = Cookies.get('token')
@@ -49,9 +50,7 @@ const AuthLayout = () => {
             <Outlet />
           </div>
         </div>
-        <span className='mt-auto text-gray d-none d-lg-block fw-semibold'>
-          Copy Right©2023 MC Dynamics Pte Ltd.All Rights Reserved
-        </span>
+        <FooterWrapper className='p-0 d-none d-lg-block' />
       </div>
     </div>
   )
