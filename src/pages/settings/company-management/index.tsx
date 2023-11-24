@@ -73,7 +73,7 @@ export const CompanyManagement = () => {
               icon: 'success',
               title: `Company${
                 !!response?.data?.data?.company_name
-                  ? ' ' + response?.data?.data?.company_name + ' '
+                  ? ' "' + response?.data?.data?.company_name + '" '
                   : ' '
               }successfully updated`,
             })
