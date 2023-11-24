@@ -90,7 +90,7 @@ const CreateEditCompanies = ({
       business_uen: data ? data?.['business_uen'] : '',
       telephone: information ? String(information?.telephone) : '',
       email: data ? data?.['email'] : '',
-      contact_person: data ? data?.['contact_person'] : ' ',
+      contact_person: !!data.contact_person ? data?.['contact_person'] : ' ',
       address: data ? data?.['address'] : '',
       open_date: data ? data?.['open_date'].slice(0, 11) : '',
     },
