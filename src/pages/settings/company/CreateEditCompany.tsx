@@ -99,13 +99,13 @@ const CreateEditCompanies = ({
       if (!information?.id) {
         await request
           .post('config/company', {
-            company_name: values.company_name,
-            company_code: values.company_code,
-            business_uen: values.business_uen,
+            company_name: values.company_name.trim(),
+            company_code: values.company_code.trim(),
+            business_uen: values.business_uen.trim(),
             contact_person: values.contact_person.trim(),
-            telephone: String(values.telephone),
-            email: values.email,
-            address: values.address,
+            telephone: String(values.telephone).trim(),
+            email: values.email.trim(),
+            address: values.address.trim(),
             open_date: new Date(values.open_date),
             status: status ? 1 : 0,
           })
@@ -136,13 +136,13 @@ const CreateEditCompanies = ({
       } else {
         await request
           .post('config/company/' + information?.id, {
-            company_name: values.company_name,
-            company_code: values.company_code,
-            business_uen: values.business_uen,
-            telephone: String(values.telephone),
-            contact_person: values.contact_person,
-            email: values.email,
-            address: values.address,
+            company_name: values.company_name.trim(),
+            company_code: values.company_code.trim(),
+            business_uen: values.business_uen.trim(),
+            telephone: String(values.telephone).trim(),
+            contact_person: values.contact_person.trim(),
+            email: values.email.trim(),
+            address: values.address.trim(),
             open_date: new Date(values.open_date),
             status: status ? 1 : 0,
           })
