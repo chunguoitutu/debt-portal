@@ -32,9 +32,10 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'min-w-75px',
+      classNameTableHead: 'min-w-75px w-150px',
       key: 'rejection_type_code',
       name: 'Code',
+
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
@@ -44,6 +45,7 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
     {
       key: 'rejection_type_description',
       name: 'Description',
+      classNameTableHead: 'w-400px min-w-150px',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',

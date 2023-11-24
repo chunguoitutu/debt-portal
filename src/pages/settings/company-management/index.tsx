@@ -58,12 +58,12 @@ export const CompanyManagement = () => {
     onSubmit: async (values: any, actions: any) => {
       await request
         .post('config/company/1', {
-          company_name: values.company_name,
-          company_code: values.company_code,
-          business_uen: values.business_uen,
-          telephone: values.telephone,
-          contact_person: values.contact_person,
-          email: values.email,
+          company_name: values.company_name.trim(),
+          company_code: values.company_code.trim(),
+          business_uen: values.business_uen.trim(),
+          telephone: values.telephone.trim(),
+          contact_person: values.contact_person.trim(),
+          email: values.email.trim(),
           open_date: new Date(values.open_date),
         })
         .then((response) => {
@@ -140,12 +140,13 @@ export const CompanyManagement = () => {
             className='btn-lg btn-primary'
             disabled={
               isSubmitting ||
-              ((information?.company_name || '') === (values?.company_name || '').trim() &&
-                (information?.company_code || '') === (values?.company_code || '').trim() &&
-                (information?.business_uen || '') === (values?.business_uen || '').trim() &&
-                (information?.contact_person || '') === (values?.contact_person || '').trim() &&
-                (information?.address || '') === (values?.address || '').trim() &&
-                (information?.email || '') === (values?.email || '').trim() &&
+              ((information?.company_name || '').trim() === (values?.company_name || '').trim() &&
+                (information?.company_code || '').trim() === (values?.company_code || '').trim() &&
+                (information?.business_uen || '').trim() === (values?.business_uen || '').trim() &&
+                (information?.contact_person || '').trim() ===
+                  (values?.contact_person || '').trim() &&
+                (information?.address || '').trim() === (values?.address || '').trim() &&
+                (information?.email || '').trim() === (values?.email || '').trim() &&
                 Number(information?.telephone) ===
                   Number(!!values?.telephone ? values?.telephone : 0) &&
                 moment(information?.['open_date']).format('YYYY-MM-DD') ===

@@ -24,14 +24,22 @@ type Props = {
 }
 
 export const newCompaniesSchema = Yup.object().shape({
-  company_name: Yup.string().required('Company Name is required'),
-  company_code: Yup.string().required('Company Code is required'),
-  business_uen: Yup.string().required('Business UEN is required'),
+  company_name: Yup.string()
+    .required('Company Name is required')
+    .max(255, 'Company Name must be at most 255 characters'),
+  company_code: Yup.string()
+    .required('Company Code is required')
+    .max(64, 'Company Code must be at most 64 characters'),
+  business_uen: Yup.string()
+    .required('Business UEN is required')
+    .max(64, 'Business UEN must be at most 64 characters'),
+  telephone: Yup.string().max(64, 'Telephone must be at most 64 characters'),
   email: Yup.string()
     .email('Email is not in valid format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols'),
+    .max(255, 'Email must be at most 255 characters'),
   open_date: Yup.string().required('Open Date is required'),
+  address: Yup.string().max(255, 'Address must be at most 255 characters'),
+  contact_person: Yup.string().max(255, 'Contact Person must be at most 255 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -107,7 +115,7 @@ const CreateEditCompanies = ({
                 icon: 'success',
                 title: `Company${
                   !!response?.data?.data?.company_name
-                    ? ' ' + response?.data?.data?.company_name + ' '
+                    ? ' "' + response?.data?.data?.company_name + '" '
                     : ' '
                 }successfully created`,
               })
@@ -144,7 +152,7 @@ const CreateEditCompanies = ({
                 icon: 'success',
                 title: `Company${
                   !!response?.data?.data?.company_name
-                    ? ' ' + response?.data?.data?.company_name + ' '
+                    ? ' "' + response?.data?.data?.company_name + '" '
                     : ' '
                 }successfully updated`,
               })
@@ -202,7 +210,7 @@ const CreateEditCompanies = ({
       </div>
 
       <div
-        style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
+        style={{maxHeight: 'calc(100vh - 250px)', overflowY: 'auto'}}
         className='modal-body  p-30px'
       >
         <div

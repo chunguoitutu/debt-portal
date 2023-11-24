@@ -12,14 +12,14 @@ export const swalToast = Swal.mixin({
 
 export const swalConfirmDelete = Swal.mixin({
   icon: 'warning',
-  showCancelButton: true,
   buttonsStyling: false,
+  showCancelButton: true,
   confirmButtonText: 'Delete',
   focusCancel: true,
   customClass: {
     htmlContainer: 'fs-3',
-    cancelButton: 'btn btn-light btn-active-light-primary',
-    confirmButton: 'btn btn-danger',
-    actions: 'd-flex justify-content-end w-100',
+    cancelButton: 'btn order-0 btn-secondary',
+    confirmButton: 'order-1 btn btn-danger',
+    actions: 'd-flex justify-content-center w-100',
   },
 })

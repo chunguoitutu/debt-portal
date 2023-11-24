@@ -140,8 +140,8 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
     swalConfirmDelete
       .fire({
-        title: 'Are you sure?',
-        text: `You won't be able to revert this.`,
+        title: 'Are You Sure?',
+        text: `You Won't Be Able To Revert This.`,
       })
       .then((result) => {
         if (result.isConfirmed) {

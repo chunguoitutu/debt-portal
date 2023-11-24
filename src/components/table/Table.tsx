@@ -8,7 +8,6 @@ import TableHelper from './components/TableHelper'
 import Loading from './components/Loading'
 import Pagination from './components/Pagination'
 import ButtonViewDetail from '../button/ButtonViewDetail'
-import Cookies from 'js-cookie'
 import {Filter} from '../filter/Filter'
 import Input from '../input'
 import {SearchCriteria, TableConfig} from '../../app/types/common'
@@ -96,9 +95,9 @@ const Table: FC<Props> = ({
 
     switch (type) {
       case 'datetime':
-        return moment(value).format('DD/MM/YYYY') === 'Invalid date'
+        return moment(value).format('MMM DD, YYYY') === 'Invalid date'
           ? value
-          : moment(value).format('DD/MM/YYYY')
+          : moment(value).format('MMM DD, YYYY')
       case 'yes/no':
         return value === 1 ? 'Yes' : 'No'
       default:
@@ -178,7 +177,7 @@ const Table: FC<Props> = ({
 
       swalToast.fire({
         title:
-          (messageDeleteSuccess || '').replace(/\/%\//g, data?.data[showMessageTitle || '']) ||
+          (messageDeleteSuccess || '').replace(/\/%\//g, `${data?.data[showMessageTitle || '']}`) ||
           'Delete Successfully',
         icon: 'success',
       })
@@ -315,7 +314,7 @@ const Table: FC<Props> = ({
                         if (key === 'open_date') {
                           return (
                             <td className='fs-14 fw-semibold' key={i}>
-                              {moment(value).format('DD/MM/YYYY')}
+                              {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )
                         }
@@ -323,7 +322,7 @@ const Table: FC<Props> = ({
                         if (key === 'created_date') {
                           return (
                             <td key={i} className='fs-14 fw-semibold mt-8px ms-16px ps-7'>
-                              {moment(value).format('DD/MM/YYYY')}
+                              {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )
                         }
@@ -331,7 +330,7 @@ const Table: FC<Props> = ({
                         if (key === 'updated_date') {
                           return (
                             <td key={i} className='fs-14 fw-semibold pl-20px ps-7'>
-                              {moment(value).format('DD/MM/YYYY')}
+                              {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )
                         }

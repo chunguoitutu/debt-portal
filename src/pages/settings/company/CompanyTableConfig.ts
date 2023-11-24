@@ -41,6 +41,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'address',
       name: 'Address',
+      classNameTableHead: 'w-400px min-w-150px',
     },
     {
       key: 'telephone',
@@ -61,6 +62,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'status',
       name: 'Status',
+      classNameTableHead: 'w-100px',
       component: Badge,
     },
   ],
