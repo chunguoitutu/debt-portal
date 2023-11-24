@@ -12,7 +12,7 @@ const Footer = () => {
     <>
       <div className={clsx(['text-dark order-2 order-md-1'])}>
         <span className='text-muted fw-semibold'>
-          Copyright {new Date().getFullYear().toString()}&copy; MC Dynamics Pte Ltd. All Rights
+          Copyright &copy;{new Date().getFullYear().toString()} MC Dynamics Pte Ltd. All Rights
           Reserved
         </span>
       </div>
