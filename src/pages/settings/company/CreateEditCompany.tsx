@@ -39,7 +39,7 @@ export const newCompaniesSchema = Yup.object().shape({
     .max(255, 'Email must be at most 255 characters'),
   open_date: Yup.string().required('Open Date is required'),
   address: Yup.string().max(255, 'Address must be at most 255 characters'),
-  contact_person: Yup.string().min(0).max(255, 'Contact Person must be at most 255 characters'),
+  contact_person: Yup.string().max(255, 'Contact Person must be at most 255 characters'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
