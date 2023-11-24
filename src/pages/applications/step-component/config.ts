@@ -52,8 +52,8 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'is_existing',
-    data: Promise.resolve(CUSTOMER_TYPE) as any,
-    defaultValue: Promise.resolve(CUSTOMER_TYPE[0].value) as any,
+    data: CUSTOMER_TYPE,
+    defaultValue: CUSTOMER_TYPE[0].value,
     component: Radio,
     typeComponent: 'Radio',
     label: ' ',
