@@ -199,8 +199,8 @@ const Table: FC<Props> = ({
   function handleShowConfirmDelete(item: any) {
     swalConfirmDelete
       .fire({
-        title: 'Are you sure?',
-        text: textConfirmDelete || `You won't be able to revert this.`,
+        title: 'Are You Sure?',
+        text: textConfirmDelete || `You Won't Be Able To Revert This.`,
       })
       .then((result) => {
         if (result.isConfirmed) {

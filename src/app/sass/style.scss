@@ -64,6 +64,10 @@ input[type='number']::-webkit-outer-spin-button {
   font-size: 14px;
   line-height: 1.5;
 }
+.fs16-line22 {
+  font-size: 16px;
+  line-height: 22px;
+}
 .fs-16 {
   font-size: 16px;
   line-height: 24px;
@@ -137,6 +141,10 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
+.swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen)
+  > .swal2-modal {
+  padding: 30px;
+}
 .none-company-detail {
   opacity: 0.3;
   font-style: italic;

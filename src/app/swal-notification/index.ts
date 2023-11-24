@@ -18,8 +18,8 @@ export const swalConfirmDelete = Swal.mixin({
   focusCancel: true,
   customClass: {
     htmlContainer: 'fs-3',
-    cancelButton: 'btn order-0 btn-secondary',
-    confirmButton: 'order-1 btn btn-danger',
-    actions: 'd-flex justify-content-center w-100',
+    cancelButton: 'btn order-0 fs16-line22 btn-secondary m-8px',
+    confirmButton: 'order-1  fs16-line22 btn btn-danger m-8px',
+    actions: 'd-flex justify-content-center w-100 ',
   },
 })
