@@ -57,7 +57,7 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       initialValues: {
         totalsAmount: '',
         per_month_percent: '4.0',
-        totalsMonthPayment: '',
+        totalsMonthPayment: '1',
         first_repayment_date: '',
         monthly_due_date: '1',
       },
