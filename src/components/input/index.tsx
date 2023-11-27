@@ -83,7 +83,7 @@ const Input: FC<Props> = ({
             }
           }}
           type={typeCustom}
-          className={`form-control form-control-lg p-12px w-100 bg-transparent outline-none h-100 border-0 fw-semibold ${className}`}
+          className={`form-control form-control-lg p-12px w-100 bg-transparent outline-none border-0 fw-semibold ${className}`}
           style={{color: 'rgb(75, 86, 117)'}}
           value={value}
           id={id || name}

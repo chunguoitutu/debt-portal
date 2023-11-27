@@ -75,6 +75,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       return data.map((item, i) => (
         <Component
           key={i}
+          disabled={true}
           classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
           name={key}
           label={item.label}

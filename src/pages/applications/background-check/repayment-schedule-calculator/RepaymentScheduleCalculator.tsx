@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import * as Yup from 'yup'
 import {createPortal} from 'react-dom'
 import {Modal, Table} from 'react-bootstrap'
@@ -15,6 +15,7 @@ import Select from '@/components/select/select'
 import Step from '@/components/step/Step'
 import {MONTHLY_DUE_DATE} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
+import moment from 'moment'
 
 type Props = {
   setLoadApi: any
@@ -32,11 +33,11 @@ type ResponseRepayment = {
 }
 
 export const RepaymentScheduleCalculatorSchema = Yup.object().shape({
-  totalsAmount: Yup.string().required('Amount of Loan $ is required.'),
-  per_month_percent: Yup.string().required('Interest per Month % is required.'),
-  totalsMonthPayment: Yup.string().required('No. of Instalment is required.'),
-  first_repayment_date: Yup.string().required('First Repayment Date is required.'),
-  monthly_due_date: Yup.string().required('Monthly Due Date is required.'),
+  totalsAmount: Yup.string().required('Amount of Loan $ is required'),
+  per_month_percent: Yup.string().required('Interest per Month % is required'),
+  totalsMonthPayment: Yup.string().required('No. of Instalment is required'),
+  first_repayment_date: Yup.string().required('First Repayment Date is required'),
+  monthly_due_date: Yup.string().required('Monthly Due Date is required'),
 })
 const modalsRoot = document.getElementById('root-modals') || document.body
 const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: Props) => {
@@ -45,35 +46,39 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   const [dataRepayment, setDataRepayment] = useState<ResponseRepayment[]>([])
   function handleChangeStep(step: number) {
     setCurrentStep(step)
+    if (stepperRef.current) {
+      stepperRef.current.scrollTop = 0
+    }
   }
   const {rows} = REPAYMENT_SHEDULE_CALCULATOR_CONFIG
   const {rows: rowsTable} = REPAYMENT_SHEDULE_TABLES
-  const {values, touched, errors, handleChange, handleSubmit, handleBlur} = useFormik({
-    initialValues: {
-      totalsAmount: '',
-      per_month_percent: '',
-      totalsMonthPayment: '',
-      first_repayment_date: '',
-      monthly_due_date: '1',
-    },
-    validationSchema: RepaymentScheduleCalculatorSchema,
-    onSubmit: async (values: any, actions: any) => {
-      try {
-        const {data} = await request.post('/calculate', {
-          ...values,
-        })
-        if (data.data) {
-          setDataRepayment(data.data)
-          setCurrentStep(2)
+  const {values, touched, errors, handleChange, handleSubmit, handleBlur, setFieldValue} =
+    useFormik({
+      initialValues: {
+        totalsAmount: '',
+        per_month_percent: '4.0',
+        totalsMonthPayment: '',
+        first_repayment_date: '',
+        monthly_due_date: '1',
+      },
+      validationSchema: RepaymentScheduleCalculatorSchema,
+      onSubmit: async (values: any, actions: any) => {
+        try {
+          const {data} = await request.post('/calculate', {
+            ...values,
+          })
+          if (data.data) {
+            setDataRepayment(data.data)
+            setCurrentStep(2)
+          }
+        } catch (error) {
+          swalToast.fire({
+            icon: 'error',
+            title: DEFAULT_MSG_ERROR,
+          })
         }
-      } catch (error) {
-        swalToast.fire({
-          icon: 'error',
-          title: DEFAULT_MSG_ERROR,
-        })
-      }
-    },
-  })
+      },
+    })
   const dataFooterTable = React.useMemo(() => {
     if (dataRepayment) {
       return dataRepayment.reduce(
@@ -98,6 +103,32 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
       totalPrinciple: 0,
     }
   }, [dataRepayment])
+
+  const getDayWithSuffix = (day) => {
+    const dString = String(day)
+    const last = +dString.slice(-2)
+    if (last > 3 && last < 21) return 'th'
+    switch (last % 10) {
+      case 1:
+        return 'st'
+      case 2:
+        return 'nd'
+      case 3:
+        return 'rd'
+      default:
+        return 'th'
+    }
+  }
+
+  const formattedMonthlyDueDate =
+    values.monthly_due_date + getDayWithSuffix(values.monthly_due_date)
+
+  useEffect(() => {
+    if (parseInt(values.totalsMonthPayment, 10) > 1) {
+      setFieldValue('per_month_percent', '3.95')
+    }
+  }, [values.totalsMonthPayment])
+
   return createPortal(
     <Modal
       id='kt_modal_create_app'
@@ -235,26 +266,38 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
                     {/* information for calculator */}
                     <div className='d-flex amount-header-calculator flex-row gap-10'>
                       <div className='gap-1 p-6 ms-3' style={{width: 'fit-content'}}>
-                        <div className='fs-7 fw-medium'>Amount Of Loan $</div>
-                        <div className='fs-3 fw-bold'>${formatNumber(values.totalsAmount)}</div>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          Amount Of Loan $
+                        </div>
+                        <div className='fs-4 fw-semibold'>${formatNumber(values.totalsAmount)}</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                        <div className='fs-7 fw-medium'>No. Of Instalment</div>
-                        <div className='fs-3 fw-bold'>{values.totalsMonthPayment}</div>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          No. Of Instalment
+                        </div>
+                        <div className='fs-4 fw-semibold'>{values.totalsMonthPayment}</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                        <div className='fs-7 fw-medium'>Monthly Due Date</div>
-                        <div className='fs-3 fw-bold'>{values.monthly_due_date}</div>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          Monthly Due Date
+                        </div>
+                        <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                        <div className='fs-7 fw-medium'>Interest Per Month %</div>
-                        <div className='fs-3 fw-bold'>
-                          {formatNumber(values.per_month_percent)}%
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          Interest Per Month %
+                        </div>
+                        <div className='fs-4 fw-semibold'>
+                          {formatNumber(values.per_month_percent)}
                         </div>
                       </div>
                       <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                        <div className='fs-7 fw-medium'>First Repayment Date</div>
-                        <div className='fs-3 fw-bold'>{values.first_repayment_date}</div>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          First Repayment Date
+                        </div>
+                        <div className='fs-4 fw-semibold'>
+                          {moment(values.first_repayment_date).format('MM/DD/YYYY')}
+                        </div>
                       </div>
                     </div>
                     {/* calculator table */}

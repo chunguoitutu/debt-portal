@@ -90,7 +90,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     required: true,
     validationFormik: Yup.string()
       .max(64, convertMessageErrorMaximum(64))
-      .required(convertMessageErrorRequired('ID Type')),
+      .required(convertMessageErrorRequired('NRIC No./FIN')),
   },
   {
     key: 'residential_type',
@@ -291,7 +291,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
   {
     key: 'is_giro',
     data: YES_NO_OPTION,
-    defaultValue: YES_NO_OPTION[0].value,
+    defaultValue: YES_NO_OPTION[1].value,
     component: Radio,
     typeComponent: 'Radio',
     label: 'Is it GIRO',
@@ -427,6 +427,8 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'job_type_name',
     keyValueOfOptions: 'id',
     dependencyApi: '/config/job_type/listing',
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Job Type')),
+    required: true,
   },
   {
     key: 'annual_income',

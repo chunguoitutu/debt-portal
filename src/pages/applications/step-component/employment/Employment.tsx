@@ -43,7 +43,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
     }
   }
 
-  const {values, touched, setFieldValue, errors, handleChange} = formik
+  const {values, touched, setFieldValue, errors, handleChange, handleBlur} = formik
 
   function renderComponent(item: ApplicationConfig) {
     const {
@@ -60,6 +60,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
       typeCheckbox,
       typeComponent,
     } = item
+
     let Component: any = item?.component
 
     const className = !column
@@ -78,16 +79,20 @@ const Employment: FC<PropsStepApplication> = (props) => {
     // handle for select
     if (typeComponent === 'Select') {
       return (
-        <Component
-          value={values[key]}
-          onChange={handleChange}
-          name={key}
-          classShared={className}
-          fieldValueOption={keyValueOfOptions}
-          fieldLabelOption={keyLabelOfOptions}
-          options={!!dependencyApi ? dataLoanType[key] || [] : options}
-          touched={touched}
-        />
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={values[key]}
+            onChange={handleChange}
+            name={key}
+            classShared={className}
+            fieldValueOption={keyValueOfOptions}
+            fieldLabelOption={keyLabelOfOptions}
+            options={!!dependencyApi ? dataLoanType[key] || [] : options}
+            touched={touched}
+            onBlur={handleBlur}
+          />
+          {errors[key] && touched[key] && <ErrorMessage className='mt-2' message={errors[key]} />}
+        </div>
       )
     }
 
@@ -184,7 +189,6 @@ const Employment: FC<PropsStepApplication> = (props) => {
           />
 
           {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
-
           {errors[key] && touched[key] && <ErrorMessage className='mt-2' message={errors[key]} />}
         </div>
       )

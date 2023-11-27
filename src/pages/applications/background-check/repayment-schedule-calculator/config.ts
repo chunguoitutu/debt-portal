@@ -10,19 +10,19 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       typeText: 'input',
     },
     {
-      key: 'per_month_percent',
-      type: 'number',
-      name: 'Interest per Month %',
-      require: true,
-      noThereAreCommas: false,
-      typeText: 'input',
-    },
-    {
       key: 'totalsMonthPayment',
       name: 'No. of Instalment',
       type: 'number',
       noThereAreCommas: true,
       require: true,
+      typeText: 'input',
+    },
+    {
+      key: 'per_month_percent',
+      type: 'number',
+      name: 'Interest per Month %',
+      require: true,
+      noThereAreCommas: false,
       typeText: 'input',
     },
     {

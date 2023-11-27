@@ -6,6 +6,7 @@ import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
 import request from '../../../../app/axios'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import {convertSize} from '@/app/utils'
+import './style.scss'
 
 export interface file {
   id?: Number
@@ -54,9 +55,9 @@ const FileInput = (props: any) => {
       <div className='d-flex flex-wrap mb-24px gap-24px'>
         {formik?.values?.file_documents.map((data: file, index: number) => {
           return (
-            <div key={index}>
+            <div key={index} className='file-document-style'>
               {!!data?.base64 && (
-                <div className='d-flex  min-w-100px flex-column w-185px position-relative h-100 border border-gray-400 rounded-5'>
+                <div className='d-flex  min-w-100px flex-column w-185px position-relative h-100 rounded-5 hover-document'>
                   <div className='d-flex justify-content-center align-items-center pt-24px pb-8px'>
                     <div className='d-flex justify-content-center align-items-center flex-shrink-0 w-60px h-60px'>
                       <Icons name={'ImgFoder'} />
