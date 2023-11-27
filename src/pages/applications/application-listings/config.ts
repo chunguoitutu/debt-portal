@@ -16,6 +16,11 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
   },
   rows: [
     {
+      key: 'id',
+      name: 'ID',
+      classNameTableBody: 'w-50px',
+    },
+    {
       key: 'application_no',
       name: 'Application Number',
       infoFilter: {
