@@ -41,12 +41,21 @@ const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, dat
 
                 <div className='stepper-label'>
                   <h3 className='stepper-title text-capitalize'>
-                    <span> {label}</span>
+                    <span style={{color: currentStep === i + 1 ? '#071437' : '#78829D'}}>
+                      {label}
+                    </span>
                     {stepError?.includes(i + 1) && (
                       <FontAwesomeIcon className='text-danger ms-2' icon={faTriangleExclamation} />
                     )}
                   </h3>
-                  {desc && <div className='stepper-desc text-capitalize'>{desc}</div>}
+                  {desc && (
+                    <div
+                      className='stepper-desc text-capitalize'
+                      style={{fontSize: '12px', fontWeight: '500'}}
+                    >
+                      {desc}
+                    </div>
+                  )}
                 </div>
               </div>
 

@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useState} from 'react'
+import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import moment from 'moment'
 import './style.scss'
@@ -25,6 +25,7 @@ import {
 import {INIT_BLOCK_ADDRESS, STEP_APPLICATION} from '@/app/constants'
 import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
+import clsx from 'clsx'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -91,6 +92,14 @@ export const Applications = () => {
     setStepCompleted(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
+
+  const containerRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0
+    }
+  }, [currentStep])
 
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
@@ -213,7 +222,12 @@ export const Applications = () => {
         desc: (
           <span>
             Has been filled out{' '}
-            <span className='text-gray-900 fw-bold'>
+            <span
+              className={clsx([
+                '',
+                currentStep === i + 1 ? 'fw-bold text-gray-900' : 'text-gray-400',
+              ])}
+            >
               {fieldDone}/{totalField}
             </span>{' '}
             information fields.
@@ -223,7 +237,7 @@ export const Applications = () => {
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values])
+  }, [values, currentStep])
 
   async function handleGetApplicationById() {
     try {
@@ -568,7 +582,7 @@ export const Applications = () => {
               className='p-10'
             />
 
-            <div className='overflow-lg-auto p-10 flex-grow-1'>
+            <div className='overflow-lg-auto p-10 flex-grow-1' ref={containerRef}>
               <div
                 className={`${currentStep !== 6 ? 'form-wrap' : ''}`}
                 style={currentStep === 2 ? {width: '91.5%'} : {}}

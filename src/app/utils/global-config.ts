@@ -112,7 +112,7 @@ export const LANGUAGES_SPOKEN: Option[] = [
 export const INCOME_DOCUMENT: Option[] = [
   {
     value: 'pay_slip',
-    label: 'Pay Slip',
+    label: 'PaySlip',
   },
   {
     value: 'cpf',
@@ -486,6 +486,59 @@ export const NATIONALITY: AdvanceConfig[] = [
     value: 'non-singapore-citizen',
     label: 'Non-S`pore Citizen',
     code: 'SGP',
+  },
+]
+
+export const POSITION: AdvanceConfig[] = [
+  {
+    value: 'director/gm',
+    label: 'Director / GM',
+    code: 'director',
+  },
+  {
+    value: 'senior-manager',
+    label: 'Senior Manager',
+    code: 'senior-manager',
+  },
+  {
+    value: 'manager/assistant',
+    label: 'Manager / Assitant Manager',
+    code: 'manager/assistant',
+  },
+  {
+    value: 'supervisor',
+    label: 'Supervisor',
+    code: 'supervisor',
+  },
+  {
+    value: 'senior-executive',
+    label: 'Senior Executive',
+    code: 'senior-executive',
+  },
+  {
+    value: 'junior-executive',
+    label: 'Junior Manager',
+    code: 'junior-executive',
+  },
+  {
+    value: 'non-executive',
+    label: 'Non Executive',
+    code: 'non-executive',
+  },
+  {
+    value: 'professional',
+    label: 'Professional',
+    code: 'professional',
+  },
+  {
+    value: 'self-employed',
+    label: 'Self Employed',
+    code: 'self-employed',
+  },
+  {
+    value: 'others',
+    label: 'Others',
+    code: 'others',
   },
 ]
 

@@ -60,10 +60,12 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
               <ImgAvataRemark />
             </div>
             <div>
-              <p className='mb-0 fs-5 fw-semibold text-break'>{message.message}</p>
+              <p className='mb-0 fs-5 fw-semibold text-break' style={{color: '#4B5675'}}>
+                {message.message}
+              </p>
               <div>
                 <span className='fs-sm fw-semibold text-capitalize text-gray-400 me-2'>
-                  {moment(message.time).format('hh:mm A - DD/MM/YYYY')}
+                  {moment(message.time).format('hh:mm A - MM/DD/YYYY')}
                 </span>
                 <span className='fs-sm fw-semibold text-capitalize text-primary'>
                   by {message.user}

@@ -300,8 +300,11 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                     </Button>
                   )}
                   {values.address_contact_info.length === indexParent + 1 && (
-                    <Button className='btn-sm btn-primary' onClick={handleAddBlock}>
-                      Add New Block
+                    <Button
+                      className='btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary'
+                      onClick={handleAddBlock}
+                    >
+                      + Add New Block
                     </Button>
                   )}
                 </div>
