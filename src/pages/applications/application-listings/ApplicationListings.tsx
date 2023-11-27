@@ -8,8 +8,6 @@ import {Link, useNavigate} from 'react-router-dom'
 import moment from 'moment'
 import numeral from 'numeral'
 import Badge from '@/components/badge/Badge'
-import ButtonViewDetail from '@/components/button/ButtonViewDetail'
-import Checkbox from '@/components/checkbox/Checkbox'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
@@ -20,6 +18,7 @@ import {ApplicationItem, ResponseApplicationListing, SearchCriteria} from '@/app
 import request from '../../../app/axios'
 import {KTCardBody} from '../../../_metronic/helpers'
 import {filterObjectKeyNotEmpty} from '@/app/utils'
+import ButtonEdit from '@/components/button/ButtonEdit'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -172,7 +171,7 @@ const ApplicationListing = () => {
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
-                {showViewButton && <ButtonViewDetail onClick={() => handleEditApplication(item)} />}
+                {showEditButton && <ButtonEdit onClick={() => handleEditApplication(item)} />}
               </div>
             </td>
           )}
