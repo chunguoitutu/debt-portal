@@ -40,12 +40,7 @@ const RenderFileDocument = ({config, data}: Props) => {
                   outline: 'none',
                 }}
               >
-                <div
-                  className='d-flex justify-content-center align-items-center p-8px w-100px h-100px'
-                  style={{
-                    border: '1px solid #F1F1F2',
-                  }}
-                >
+                <div className='d-flex justify-content-center align-items-center p-8px w-100px h-100px border border-gray-200'>
                   <Icons name={'ImgFoder'} />
                 </div>
                 <div className='pt-4px pb-16px ps-16px pe-16px d-flex justify-content-center flex-column'>

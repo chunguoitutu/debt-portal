@@ -56,13 +56,7 @@ const FileInput = (props: any) => {
           return (
             <div key={index}>
               {!!data?.base64 && (
-                <div
-                  className='d-flex  min-w-100px flex-column w-185px position-relative h-100 '
-                  style={{
-                    borderRadius: '5px',
-                    border: '1px solid #B5B5C3',
-                  }}
-                >
+                <div className='d-flex  min-w-100px flex-column w-185px position-relative h-100 border border-gray-400 rounded-5'>
                   <div className='d-flex justify-content-center align-items-center pt-24px pb-8px'>
                     <div className='d-flex justify-content-center align-items-center flex-shrink-0 w-60px h-60px'>
                       <Icons name={'ImgFoder'} />
@@ -109,21 +103,10 @@ const FileInput = (props: any) => {
                     </button>
                   </div>
                   <div className='pt-4px pb-4px ps-16px pe-16px d-flex justify-content-center align-items-center flex-column'>
-                    <p
-                      className='p-0 m-0 w-100 text-center fw-semibold'
-                      style={{
-                        color: '#071437',
-                        fontSize: '12px',
-                      }}
-                    >
+                    <p className='p-0 m-0 w-100 text-center fw-semibold fs-12 text-gray-900'>
                       {data?.document_name}
                     </p>
-                    <p
-                      style={{
-                        fontSize: '12px',
-                      }}
-                      className='w-100 text-B5B5C3 text-center fw-semibold fs-12 p-0 m-0 '
-                    >
+                    <p className='w-100 text-B5B5C3 text-center fw-semibold fs-12 p-0 m-0 '>
                       {convertSize(Number(data.size) || 0)}
                     </p>
                   </div>
@@ -145,7 +128,7 @@ const FileInput = (props: any) => {
             <p
               className='m-0 text-capitalize fw-normal p-0 cursor-position fs-12 '
               style={{
-                color: '#B5B5C3',
+                color: '#c4cada',
                 fontSize: '12px',
               }}
             >

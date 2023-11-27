@@ -199,7 +199,7 @@ const CreateJobType = ({
             </div>
           </form>
         </div>
-        <div style={{borderTop: '1px solid #F1F1F2'}}>
+        <div className='border-top border-gray-200'>
           <div className='d-flex justify-content-end' style={{padding: 30}}>
             <Button
               type='reset'

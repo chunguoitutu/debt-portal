@@ -47,7 +47,7 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
 
   return (
     <div className='card h-100'>
-      <div style={{borderBottom: '1px solid  #f1f1f2'}} className='modal-header p-30px'>
+      <div className='modal-header p-30px border-bottom border-gray-200'>
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
       </div>
       <div className='p-5 min-h-50px overflow-y-auto' ref={contentRef}>
@@ -78,7 +78,7 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
           </div>
         ))}
       </div>
-      <div className='mt-auto' style={{borderTop: '1px solid  #f1f1f2', padding: '14px'}}>
+      <div className='mt-auto border-top border-gray-200 p-4'>
         <div className='d-flex align-items-center gap-3' style={{}}>
           <input
             placeholder='Enter remark...'

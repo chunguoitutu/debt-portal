@@ -13,6 +13,12 @@ export default defineConfig(({mode}) => {
       __APP_ENV__: env.APP_ENV,
     },
     plugins: [react()],
+    server: {
+      // this ensures that the browser opens upon server start
+      open: true,
+      // this sets a default port to 3000
+      port: 3000,
+    },
     build: {
       outDir: './build',
     },

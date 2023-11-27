@@ -214,7 +214,7 @@ const CreatEditMarkettingType = ({
           </div>
         </div>
       </div>
-      <div style={{borderTop: '1px solid #F1F1F2'}} className='d-flex flex-end p-30px'>
+      <div className='d-flex flex-end p-30px border-top border-gray-200'>
         <Button type='reset' onClick={() => handleClose()} className='btn-lg btn-secondary  me-8px'>
           Cancel
         </Button>

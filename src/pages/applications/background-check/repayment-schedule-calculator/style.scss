@@ -19,7 +19,7 @@
   }
 
   .border-calculator {
-    border: 1px solid #f1f1f2;
+    border: 1px solid var(--bs-gray-200);
   }
 
   .label-calculator {
@@ -33,7 +33,7 @@
   }
 
   .border-right-table {
-    border-right: 1px solid #f1f1f2;
+    border-right: 1px solid var(--bs-gray-200);
   }
 
   .content-calculator {
