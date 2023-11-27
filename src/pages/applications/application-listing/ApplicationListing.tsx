@@ -1,7 +1,7 @@
 import {Button} from 'react-bootstrap'
 import Icons from '@/components/icons'
 import {APPLICATION_LISTING_CONFIG} from './config'
-import React, {useEffect, useMemo, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import RowPerPage from '@/components/row-per-page'
 import PaginationArrow from '@/components/pagination.tsx'
 import {Link, useNavigate} from 'react-router-dom'
@@ -14,11 +14,18 @@ import clsx from 'clsx'
 import Loading from '@/components/table/components/Loading'
 import {useAuth} from '../../../app/context/AuthContext'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {ApplicationItem, ResponseApplicationListing, SearchCriteria} from '@/app/types'
+import {
+  ApplicationItem,
+  OrderBy,
+  ResponseApplicationListing,
+  SearchCriteria,
+  TableRow,
+} from '@/app/types'
 import request from '../../../app/axios'
 import {KTCardBody} from '../../../_metronic/helpers'
 import {filterObjectKeyNotEmpty} from '@/app/utils'
 import ButtonEdit from '@/components/button/ButtonEdit'
+import SortBy from '@/components/sort-by'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -44,9 +51,10 @@ const ApplicationListing = () => {
   const [showInput, setShowInput] = React.useState<boolean>(false)
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>({})
   const [data, setData] = React.useState<ApplicationItem[]>([])
-  const [listIdChecked, setListIdChecked] = React.useState<number[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
+  const [orderBy, setOrderBy] = useState<OrderBy>('asc')
+  const [keySort, setKeySort] = useState<string>('id')
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 1,
@@ -82,7 +90,7 @@ const ApplicationListing = () => {
     onFetchDataList()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [company_id])
+  }, [company_id, keySort, orderBy])
 
   const navigate = useNavigate()
 
@@ -142,11 +150,7 @@ const ApplicationListing = () => {
                 }
 
                 return (
-                  <td
-                    style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
-                    key={i}
-                    className={classNameTableBody}
-                  >
+                  <td key={i} className={clsx(['fs-14 fw-semibold', classNameTableBody])}>
                     <Badge color={color as any} title={title as any} key={i} />
                   </td>
                 )
@@ -157,12 +161,7 @@ const ApplicationListing = () => {
                   {component ? (
                     <Component />
                   ) : (
-                    <span
-                      style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
-                      className='fw-semibold'
-                    >
-                      {value}
-                    </span>
+                    <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
                   )}
                 </td>
               )
@@ -188,6 +187,8 @@ const ApplicationListing = () => {
       const {data: response} = await request.post(settings.endPointGetListing, {
         ...body,
         company_id: +company_id,
+        keySort: keySort,
+        orderBy: orderBy,
       })
       Array.isArray(response.data) && setData(response.data)
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
@@ -258,7 +259,7 @@ const ApplicationListing = () => {
       if (dataFilter[key]) {
         let value = dataFilter[key]
 
-        if (key === 'loan_type_id') {
+        if (['loan_type_id', 'id'].includes(key)) {
           value = +value
         }
 
@@ -273,6 +274,15 @@ const ApplicationListing = () => {
       currentPage: 1,
       filters: newDataFilter,
     })
+  }
+
+  function handleChangeSortBy(item: TableRow) {
+    if (item.key === keySort) {
+      setOrderBy(orderBy === 'desc' ? 'asc' : 'desc')
+    } else {
+      setKeySort(item.key)
+      setOrderBy('asc')
+    }
   }
 
   return (
@@ -322,26 +332,31 @@ const ApplicationListing = () => {
             >
               <thead>
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                  {rows.map(
-                    (row, i) =>
-                      !row?.isHide && (
-                        <th className={row?.classNameTableHead} key={i}>
+                  {rows
+                    .filter((item) => !item.isHide)
+                    .map((item, i) => {
+                      const {classNameTableHead, name, isSort, key} = item
+
+                      return (
+                        <th
+                          className={clsx(['text-nowrap min-w-75px', classNameTableHead])}
+                          key={i}
+                          onClick={() => isSort && handleChangeSortBy(item)}
+                        >
                           <div className='cursor-pointer'>
-                            <span style={{fontSize: '14px', fontWeight: '600', lineHeight: '20px'}}>
-                              {row.name}
-                            </span>
+                            <span className='fs-14 fw-bold'>{name}</span>
+
+                            {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
                           </div>
                         </th>
                       )
-                  )}
+                    })}
                   {showAction && <th className='text-center w-150px'>Actions</th>}
                 </tr>
               </thead>
               <tbody>
                 {showInput ? (
                   <tr>
-                    {/* td checkbox */}
-                    <td></td>
                     {rows.map((row, i) => {
                       if (!row.infoFilter) return <td key={i}></td>
                       const {infoFilter, key, options, classNameTableBody} = row || {}
