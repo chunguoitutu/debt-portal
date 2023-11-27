@@ -15,7 +15,7 @@ export const DefaultConfig: ILayout = {
       layoutType: 'default',
       mode: 'light',
       rtl: false,
-      primaryColor: '#50CD89',
+      primaryColor: '#17c653',
       pageBgWhite: false,
       pageWidth: 'default',
     },

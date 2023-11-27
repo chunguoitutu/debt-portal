@@ -19,7 +19,7 @@ type Props = {
 const ContentListButton = ({config}: Props) => {
   return (
     <div className='card'>
-      <div style={{borderBottom: '1px solid  #f1f1f2'}} className='modal-header p-30px'>
+      <div className='modal-header p-30px border-bottom border-gray-200'>
         <h2 className='mb-0 fs-20 text-capitalize fw-bold text-gray-900'>{config?.title}</h2>
       </div>
       <div className={`${config?.classWrapper ? config.classWrapper : 'py-16px px-5'}`}>

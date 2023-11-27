@@ -149,8 +149,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
             <div className='d-flex flex-end'>
               <Button
                 onClick={showInputFilter}
-                className='btn-secondary align-self-center m-2 fs-6'
-                style={{color: '#1B84FF', background: ''}}
+                className='btn-secondary align-self-center m-2 fs-6 text-primary'
                 disabled={false}
               >
                 <Icons name={'filterIcon'} />

@@ -337,8 +337,7 @@ const ApplicationListing = () => {
           <div className='d-flex flex-end ms-4'>
             <Button
               onClick={showInputFilter}
-              className='btn-secondary align-self-center m-2 fs-6'
-              style={{color: '#1B84FF', background: ''}}
+              className='btn-secondary align-self-center m-2 fs-6 text-primary'
               disabled={false}
             >
               <Icons name={'filterIcon'} />
@@ -347,8 +346,7 @@ const ApplicationListing = () => {
 
             <Link to='/application/create'>
               <Button
-                className='btn-primary align-self-center m-2 fs-6'
-                style={{color: '#fff', background: ''}}
+                className='btn-primary align-self-center m-2 fs-6 text-white'
                 disabled={false}
               >
                 <Icons name={'AddIcon'} />
