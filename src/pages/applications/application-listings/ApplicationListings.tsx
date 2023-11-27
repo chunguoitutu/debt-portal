@@ -8,7 +8,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import moment from 'moment'
 import numeral from 'numeral'
 import Badge from '@/components/badge/Badge'
-import ButtonEdit from '@/components/button/ButtonEdit'
+import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import Checkbox from '@/components/checkbox/Checkbox'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
@@ -38,7 +38,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 const ApplicationListing = () => {
   const {settings, rows} = APPLICATION_LISTING_CONFIG || {}
-  const {showAction = true, showEditButton} = settings || {}
+  const {showAction = true, showEditButton, showViewButton} = settings || {}
 
   const {company_id} = useAuth()
 
@@ -87,19 +87,6 @@ const ApplicationListing = () => {
 
   const navigate = useNavigate()
 
-  const isCheckedAll = useMemo(() => {
-    const listIdCurrentPage = data.map((item) => item.id)
-
-    // If all id current page not include listIdChecked return false
-    if (listIdChecked.some((id) => listIdCurrentPage.includes(id))) {
-      return data.every((item) => listIdChecked.includes(item.id))
-    } else {
-      return false
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listIdChecked])
-
   function handleEditApplication(item: ApplicationItem) {
     navigate(`/application/edit/${item.id}`)
   }
@@ -112,13 +99,6 @@ const ApplicationListing = () => {
     return data.map((item, idx) => {
       return (
         <tr key={idx}>
-          <td>
-            <Checkbox
-              name=''
-              checked={listIdChecked.includes(item.id)}
-              onChange={(e) => handleCheckItem(e, item)}
-            />
-          </td>
           {rows.map(
             ({key, component, classNameTableBody, isHide, type, options, infoFilter}, i) => {
               const {fieldLabelOption, fieldValueOption} = infoFilter || {}
@@ -192,7 +172,7 @@ const ApplicationListing = () => {
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
-                {showEditButton && <ButtonEdit onClick={() => handleEditApplication(item)} />}
+                {showViewButton && <ButtonViewDetail onClick={() => handleEditApplication(item)} />}
               </div>
             </td>
           )}
@@ -221,26 +201,6 @@ const ApplicationListing = () => {
 
   async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
     onFetchDataList({...searchCriteria, ...data, filters: dataFilter})
-  }
-
-  function handleCheckItem(e: React.ChangeEvent<HTMLInputElement>, item: ApplicationItem) {
-    if (e.target.checked) {
-      setListIdChecked([...listIdChecked, item.id])
-    } else {
-      setListIdChecked(listIdChecked.filter((id) => id !== item.id))
-    }
-  }
-
-  function handleToggleCheckAll(e: React.ChangeEvent<HTMLInputElement>) {
-    const listIdCurrentPage = data.map((item) => item.id)
-
-    if (e.target.checked) {
-      const newListId = Array.from(new Set([...listIdChecked, ...listIdCurrentPage]))
-      setListIdChecked(newListId)
-    } else {
-      // if page 1 deselect still list id page 2
-      setListIdChecked(listIdChecked.filter((id) => !listIdCurrentPage.includes(id)))
-    }
   }
 
   function handleChangeFilter(e: React.ChangeEvent<any>) {
@@ -363,11 +323,6 @@ const ApplicationListing = () => {
             >
               <thead>
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                  <td>
-                    {!!data.length && (
-                      <Checkbox name='' checked={isCheckedAll} onChange={handleToggleCheckAll} />
-                    )}
-                  </td>
                   {rows.map(
                     (row, i) =>
                       !row?.isHide && (
