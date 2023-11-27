@@ -22,7 +22,7 @@ import ButtonEdit from '@/components/button/ButtonEdit'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Application',
+    title: 'Applications',
     path: '/application/listing',
     isSeparator: false,
     isActive: false,
@@ -249,7 +249,7 @@ const ApplicationListing = () => {
             )
             return {...acc, [key]: objectDate}
           }
-          return {...acc, [key]: objectHasValue}
+          return {...acc, [key]: +objectHasValue}
         } else {
           return {...acc}
         }
@@ -277,7 +277,7 @@ const ApplicationListing = () => {
 
   return (
     <div className='card p-5 h-fit-content'>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Listing'}</PageTitle>
+      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
 
       <div>
         <div className='d-flex flex-row'>
@@ -417,7 +417,7 @@ const ApplicationListing = () => {
                 ) : (
                   <tr>
                     <td colSpan={rows.length + 1}>
-                      <div className='d-flex text-center w-100 align-content-center justify-content-center'>
+                      <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-semibold text-gray-600'>
                         No matching records found
                       </div>
                     </td>
