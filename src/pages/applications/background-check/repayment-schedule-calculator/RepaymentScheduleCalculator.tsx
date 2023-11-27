@@ -126,6 +126,8 @@ const RepaymentScheduleCalculator = ({show, handleClose, loadapi, setLoadApi}: P
   useEffect(() => {
     if (parseInt(values.totalsMonthPayment, 10) > 1) {
       setFieldValue('per_month_percent', '3.95')
+    } else {
+      setFieldValue('per_month_percent', '4.0')
     }
   }, [values.totalsMonthPayment])
 
