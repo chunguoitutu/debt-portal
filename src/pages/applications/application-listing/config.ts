@@ -19,6 +19,12 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'id',
       name: 'ID',
       classNameTableBody: 'w-50px',
+      isSort: true,
+      infoFilter: {
+        typeComponent: 'input',
+        component: Input,
+        typeInput: 'number',
+      },
     },
     {
       key: 'application_no',
@@ -27,6 +33,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'input',
         component: Input,
       },
+      isSort: true,
     },
     {
       key: 'fullname',
@@ -35,6 +42,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'input',
         component: Input,
       },
+      isSort: true,
     },
     {
       key: 'identification_type',
@@ -44,6 +52,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'select',
         component: Select,
       },
+      isSort: true,
     },
     {
       key: 'identification_no',
@@ -52,6 +61,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'input',
         component: Input,
       },
+      isSort: true,
     },
     {
       key: 'loan_type_id',
@@ -63,6 +73,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         fieldLabelOption: 'type_name',
         fieldValueOption: 'id',
       },
+      isSort: true,
     },
     {
       key: 'loan_amount_requested',
@@ -76,6 +87,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeInput: 'number',
         component: Input,
       },
+      isSort: true,
     },
     {
       key: 'application_date',
@@ -89,6 +101,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         component: Input,
         typeInput: 'date',
       },
+      isSort: true,
     },
     {
       key: 'status',
@@ -100,6 +113,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'select',
         component: Select,
       },
+      isSort: true,
     },
   ],
 }

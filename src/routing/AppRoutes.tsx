@@ -25,7 +25,7 @@ import Loans from '../pages/loans'
 import Borrowers from '../pages/borrowers'
 import Transactions from '../pages/transactions'
 import MyTasks from '../pages/my-tasks'
-import ApplicationListing from '../pages/applications/application-listings/ApplicationListings'
+import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
 import {Logout} from '../pages/auth/logout/Logout'
 import {useAuth} from '../app/context/AuthContext'
 
