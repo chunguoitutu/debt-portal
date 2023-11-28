@@ -489,56 +489,46 @@ export const NATIONALITY: AdvanceConfig[] = [
   },
 ]
 
-export const POSITION: AdvanceConfig[] = [
+export const POSITION: Option[] = [
   {
     value: 'director/gm',
     label: 'Director / GM',
-    code: 'director',
   },
   {
     value: 'senior-manager',
     label: 'Senior Manager',
-    code: 'senior-manager',
   },
   {
     value: 'manager/assistant',
     label: 'Manager / Assitant Manager',
-    code: 'manager/assistant',
   },
   {
     value: 'supervisor',
     label: 'Supervisor',
-    code: 'supervisor',
   },
   {
     value: 'senior-executive',
     label: 'Senior Executive',
-    code: 'senior-executive',
   },
   {
     value: 'junior-executive',
     label: 'Junior Manager',
-    code: 'junior-executive',
   },
   {
     value: 'non-executive',
     label: 'Non Executive',
-    code: 'non-executive',
   },
   {
     value: 'professional',
     label: 'Professional',
-    code: 'professional',
   },
   {
     value: 'self-employed',
     label: 'Self Employed',
-    code: 'self-employed',
   },
   {
     value: 'others',
     label: 'Others',
-    code: 'others',
   },
 ]
 

@@ -30,10 +30,12 @@ import {
   LANGUAGES,
   LOAN_TYPE,
   MLCB_CHECK,
+  POSITION,
   RESIDENTIAL_TYPE,
   SPECIALIZATION,
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
+import PositionName from './completion/PositionName'
 
 const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -403,8 +405,9 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'position',
-    component: Input,
-    typeComponent: 'Input',
+    component: Select,
+    typeComponent: 'Select',
+    options: POSITION,
     label: 'Position',
     column: 6,
     validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
@@ -847,6 +850,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         {
           key: 'position',
           value: 'Position',
+          Component: PositionName,
         },
         {
           key: 'occupation',
