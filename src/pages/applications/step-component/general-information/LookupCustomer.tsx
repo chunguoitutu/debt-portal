@@ -8,9 +8,19 @@ import PaginationArrow from '@/components/pagination.tsx'
 import Input from '@/components/input'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
-import {ResponeLookupListing, SearchCriteria} from '@/app/types'
 import request from '../../../../app/axios'
 import {KTCardBody, KTIcon} from '../../../../_metronic/helpers'
+import {
+  ApplicationItem,
+  OrderBy,
+  ResponseApplicationListing,
+  SearchCriteria,
+  TableRow,
+  ResponeLookupListing,
+} from '@/app/types'
+import SortBy from '@/components/sort-by'
+import clsx from 'clsx'
+import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 
 type Props = {
   show?: boolean
@@ -25,9 +35,12 @@ const LookupCustomer = ({show, onClose}: Props) => {
     currentPage: 1,
     total: 0,
   })
+  const [orderBy, setOrderBy] = React.useState<OrderBy>('asc')
+  const [keySort, setKeySort] = React.useState<string>('id')
 
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponeLookupListing>>({})
   const {settings, rows} = TABLE_LOOKUP_CUSTOMER
+  const {showAction = true, showViewButton} = settings
   function showInputFilter() {
     setShowInput(!showInput)
   }
@@ -36,7 +49,11 @@ const LookupCustomer = ({show, onClose}: Props) => {
     body?: Omit<SearchCriteria<Partial<ResponeLookupListing>>, 'total'>
   ) {
     try {
-      const {data: response} = await request.post(settings.endPointGetListing + '/listing', body)
+      const {data: response} = await request.post(settings.endPointGetListing + '/listing', {
+        ...body,
+        keySort: keySort,
+        orderBy: orderBy,
+      })
       Array.isArray(response.data) && setData(response.data)
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {
@@ -46,6 +63,15 @@ const LookupCustomer = ({show, onClose}: Props) => {
 
   async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
     onFetchDataList({...searchCriteria, ...data, filters: dataFilters})
+  }
+
+  function handleChangeSortBy(item: TableRow) {
+    if (item.key === keySort) {
+      setOrderBy(orderBy === 'desc' ? 'asc' : 'desc')
+    } else {
+      setKeySort(item.key)
+      setOrderBy('asc')
+    }
   }
 
   const renderRows = () => {
@@ -61,12 +87,26 @@ const LookupCustomer = ({show, onClose}: Props) => {
             if (key === 'id') {
               return <td key={i}>{idx + 1}</td>
             }
+            if (key === 'identification_no') {
+              return (
+                <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
+                  {value}
+                </td>
+              )
+            }
             return (
-              <td key={i}>
+              <td key={i} className='fs-6 fw-medium' style={{color: '#78829D'}}>
                 {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
               </td>
             )
           })}
+          {showAction && showViewButton && (
+            <td className='text-center'>
+              <div className='d-flex align-items-center justify-content-center gap-1'>
+                {showViewButton && <ButtonViewDetail onClick={() => {}} />}
+              </div>
+            </td>
+          )}
         </tr>
       )
     })
@@ -164,17 +204,26 @@ const LookupCustomer = ({show, onClose}: Props) => {
                 className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
               >
                 <thead>
-                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                    {rows.map(
-                      (row, i) =>
-                        !row?.isHide && (
-                          <th className={row?.classNameTableHead} key={i}>
-                            <div className='d-flex flex-row gap-3 cursor-pointer'>
-                              <span>{row.name}</span>
+                  <tr className='text-start text-muted fw-bold fs-6 text-uppercase gs-0'>
+                    {rows
+                      .filter((item) => !item.isHide)
+                      .map((item, i) => {
+                        const {classNameTableHead, name, isSort, key} = item
+
+                        return (
+                          <th
+                            className={clsx(['text-nowrap min-w-75px', classNameTableHead])}
+                            key={i}
+                            onClick={() => isSort && handleChangeSortBy(item)}
+                          >
+                            <div className='cursor-pointer'>
+                              <span className='fs-14 fw-bold'>{name}</span>
+
+                              {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
                             </div>
                           </th>
                         )
-                    )}
+                      })}
                     {<th className='text-center w-150px'>Action</th>}
                   </tr>
                 </thead>
@@ -203,7 +252,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </td>
                         )
                       })}
-                      <td className='text-center align-top'>
+                      <td className='text-center'>
                         <div className='d-flex align-items-center justify-content-center gap-3'>
                           <div
                             className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
@@ -212,7 +261,12 @@ const LookupCustomer = ({show, onClose}: Props) => {
                             <FontAwesomeIcon icon={faArrowsRotate} />
                           </div>
 
-                          <Button onClick={handleFilter}>Filter</Button>
+                          <Button
+                            className='bg-white border fs-6 fw-medium p-12px h-36px'
+                            onClick={handleFilter}
+                          >
+                            Apply
+                          </Button>
                         </div>
                       </td>
                     </tr>
