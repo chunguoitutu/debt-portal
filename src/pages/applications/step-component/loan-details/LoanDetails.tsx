@@ -73,33 +73,41 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     if (typeComponent === 'Checkbox') {
       return data.map((item, i) => (
-        <Component
-          key={i}
-          disabled={true}
-          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
-          name={key}
-          label={item.label}
-          value={item.value}
-          onChange={(e: any) => {
-            if (typeCheckbox === 'array' && Array.isArray(values[key])) {
-              const {value, checked} = e.target
+        <>
+          <Component
+            key={i}
+            classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-dark'])}
+            name={key}
+            value={item.value}
+            disabled={true}
+            onChange={(e: any) => {
+              if (typeCheckbox === 'array' && Array.isArray(values[key])) {
+                const {value, checked} = e.target
 
-              const _value = [...values[key]]
-              const newValue = checked
-                ? [..._value, value]
-                : _value.filter((item) => item !== value)
+                const _value = [...values[key]]
+                const newValue = checked
+                  ? [..._value, value]
+                  : _value.filter((item) => item !== value)
 
-              setFieldValue(key, newValue)
-            } else {
-              handleChange(e)
+                setFieldValue(key, newValue)
+              } else {
+                handleChange(e)
+              }
+            }}
+            checked={
+              typeCheckbox === 'array' && Array.isArray(values[key])
+                ? values[key].includes(item.value)
+                : values[key]
             }
-          }}
-          checked={
-            typeCheckbox === 'array' && Array.isArray(values[key])
-              ? values[key].includes(item.value)
-              : values[key]
-          }
-        />
+          />
+          <span
+            className='fw-bold cursor-pointer fs-4'
+            color='#071437'
+            style={{marginLeft: '-15px'}}
+          >
+            Opt In Yes Consent to disclose information to MLCB and sMECB
+          </span>
+        </>
       ))
     }
     if (typeComponent === 'TextArea') {

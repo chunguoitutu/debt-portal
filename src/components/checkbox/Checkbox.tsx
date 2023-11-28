@@ -9,14 +9,7 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className'>
   classNameLabel?: string
 }
 
-const Checkbox: FC<Props> = ({
-  name,
-  className,
-  classNameLabel = 'text-gray-800',
-  label,
-  desc,
-  ...rest
-}) => {
+const Checkbox: FC<Props> = ({name, className, classNameLabel = '', label, desc, ...rest}) => {
   const id = useId()
 
   return (

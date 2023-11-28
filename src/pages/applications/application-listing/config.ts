@@ -28,7 +28,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'application_no',
-      name: 'Application Number',
+      name: 'APPLICATION NO',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -37,7 +37,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'fullname',
-      name: 'APPLICATION NAME',
+      name: 'NAME OF BORROWER',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -46,7 +46,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'identification_type',
-      name: 'ID TYPE',
+      name: 'IDENTITY CARD TYPE',
       options: ID_TYPE,
       infoFilter: {
         typeComponent: 'select',
@@ -56,7 +56,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'identification_no',
-      name: 'NRIC',
+      name: 'NRIC NO',
       infoFilter: {
         typeComponent: 'input',
         component: Input,

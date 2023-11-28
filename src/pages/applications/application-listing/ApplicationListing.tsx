@@ -1,4 +1,4 @@
-import {Button} from 'react-bootstrap'
+import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {APPLICATION_LISTING_CONFIG} from './config'
 import React, {useEffect, useState} from 'react'
@@ -26,6 +26,7 @@ import {KTCardBody} from '../../../_metronic/helpers'
 import {filterObjectKeyNotEmpty} from '@/app/utils'
 import ButtonEdit from '@/components/button/ButtonEdit'
 import SortBy from '@/components/sort-by'
+import './style.scss'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -150,7 +151,13 @@ const ApplicationListing = () => {
                 }
 
                 return (
-                  <td key={i} className={clsx(['fs-14 fw-semibold', classNameTableBody])}>
+                  <td
+                    key={i}
+                    className={clsx([
+                      'fs-14 fw-semibold hover-applications-listing',
+                      classNameTableBody,
+                    ])}
+                  >
                     <Badge color={color as any} title={title as any} key={i} />
                   </td>
                 )
@@ -161,7 +168,9 @@ const ApplicationListing = () => {
                   {component ? (
                     <Component />
                   ) : (
-                    <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
+                    <span className='fw-semibold fs-14 fw-semibold value-hover-render-row'>
+                      {value}
+                    </span>
                   )}
                 </td>
               )
@@ -292,7 +301,7 @@ const ApplicationListing = () => {
       <div>
         <div className='d-flex flex-row'>
           <div className='d-flex align-items-center position-relative my-1 flex-grow-1'>
-            <i className='ki-duotone ki-magnifier fs-1 position-absolute ms-6'>
+            <i className='ki-duotone ki-magnifier fs-1 position-absolute ms-4'>
               <span className='path1'></span>
               <span className='path2'></span>
             </i>
@@ -351,7 +360,7 @@ const ApplicationListing = () => {
                         </th>
                       )
                     })}
-                  {showAction && <th className='text-center w-150px'>Actions</th>}
+                  {showAction && <th className='text-center w-150px fs-6 fw-bold'>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -422,7 +431,12 @@ const ApplicationListing = () => {
                           <FontAwesomeIcon icon={faArrowsRotate} />
                         </div>
 
-                        <Button onClick={handleFilter}>Filter</Button>
+                        <Button
+                          className='bg-white border fw-medium p-12px h-36px button-application-filter-custom '
+                          onClick={handleFilter}
+                        >
+                          Apply
+                        </Button>
                       </div>
                     </td>
                   </tr>
@@ -432,7 +446,7 @@ const ApplicationListing = () => {
                 ) : (
                   <tr>
                     <td colSpan={rows.length + 1}>
-                      <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-semibold text-gray-600'>
+                      <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
                         No matching records found
                       </div>
                     </td>
