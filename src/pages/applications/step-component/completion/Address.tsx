@@ -7,7 +7,7 @@ const Address = ({config, data}: Props) => {
   return (
     <div className='w-100 p-0' style={{border: '1px solid #D4D4D4'}}>
       <h1
-        className='pt-8px pb-8px ps-24px pe-24px   fw-semibold m-0 fs-13 text-gray-700'
+        className='pt-8px pb-8px ps-24px pe-24px   fw-semibold m-0 fs-14 text-gray-700'
         style={{
           background: '#D4D4D4',
         }}
@@ -37,7 +37,7 @@ const Address = ({config, data}: Props) => {
                             alignItems: !!element_config.img ? 'center' : 'start',
                           }}
                         >
-                          <h2 className='p-0 m-0 text-capitalize fw-semibold fs-12 text-gray-400'>
+                          <h2 className='p-0 m-0 text-capitalize fw-semibold fs-12 text-B5B5C3'>
                             {element_config.value}
                           </h2>
                           {!!Component ? (
@@ -48,7 +48,7 @@ const Address = ({config, data}: Props) => {
                             />
                           ) : (
                             <p
-                              className='fw-semibold p-0 m-0 min-h-20px text-gray-900 fs-13'
+                              className='fw-semibold p-0 m-0 min-h-20px text-gray-900 fs-14'
                               style={{
                                 textAlign: !!element_config.img ? 'center' : 'start',
                               }}

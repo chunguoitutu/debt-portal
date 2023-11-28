@@ -13,6 +13,7 @@ export interface DEF_completion {
   dependencyApi?: string
   elBehind?: string
   dollars?: string
+  date?: boolean
 }
 
 export interface children_config_completion {
@@ -39,17 +40,13 @@ const Completion: FC<PropsStepApplication> = (Props) => {
             const options = children_config.options
             if (!!Component) {
               return (
-                <div key={index} style={{padding: '0.5px'}}>
+                <div key={index} className='p-0'>
                   <Component data={data} config={children_config} options={options} />
                 </div>
               )
             }
             return (
-              <div
-                key={index}
-                className={`col-lg-12 ${!!col ? col : 'col-xl-6'} `}
-                style={{padding: '0.5px'}}
-              >
+              <div key={index} className={`col-lg-12 ${!!col ? col : 'col-xl-6'} p-0`}>
                 <TableRender
                   title={children_config.title}
                   config={children_config.config}

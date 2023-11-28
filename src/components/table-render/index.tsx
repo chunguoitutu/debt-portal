@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export interface element_config {
   key: string
   value: string
@@ -5,6 +7,7 @@ export interface element_config {
   Component?: any
   dollars?: string
   elBehind?: string
+  date?: boolean
 }
 
 type Props = {
@@ -15,10 +18,10 @@ type Props = {
 
 function TableRender({title, config = [], data}: Props) {
   return (
-    <div className='w-100 p-0' style={{border: '1px solid #D4D4D4'}}>
+    <div className='w-100 p-0 h-100' style={{border: '1px solid #D4D4D4'}}>
       {!!title && (
         <h1
-          className='pt-8px pb-8px ps-24px pe-24px fw-semibold m-0 fs-13 text-gray-700'
+          className='pt-8px pb-8px ps-24px pe-24px fw-semibold m-0 fs-14 text-gray-700'
           style={{
             background: '#D4D4D4',
           }}
@@ -43,7 +46,7 @@ function TableRender({title, config = [], data}: Props) {
                     >
                       {!element_config.img && (
                         <h2
-                          className='p-0 fs-12 fw-semibold text-gray-400 m-0 text-capitalize'
+                          className='p-0 fs-12 fw-semibold text-B5B5C3 m-0 text-capitalize'
                           style={{
                             whiteSpace: 'nowrap',
                           }}
@@ -74,8 +77,12 @@ function TableRender({title, config = [], data}: Props) {
                               wordBreak: 'break-all',
                             }}
                           >
-                            {!!element_config?.dollars && element_config?.dollars}
-                            {data[element_config.key]}{' '}
+                            {!!element_config?.dollars &&
+                              !!data[element_config.key] &&
+                              element_config?.dollars}
+                            {element_config.date
+                              ? moment(data[element_config.key]).format('MMM DD, YYYY')
+                              : data[element_config.key]}{' '}
                             {!!element_config?.elBehind && element_config?.elBehind}
                           </p>
                         </>
