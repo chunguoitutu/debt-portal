@@ -2,6 +2,7 @@ import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode, useState} fr
 import {handleKeyPress, handlePaste} from '../enter-numbers-only'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 
 interface Props
   extends Omit<
@@ -14,6 +15,7 @@ interface Props
   required?: boolean
   className?: string
   classShared?: string
+  classInputWrap?: string
   insertLeft?: ReactNode
   insertRight?: ReactNode
   type?: HTMLInputTypeAttribute | 'money'
@@ -36,6 +38,7 @@ const Input: FC<Props> = ({
   noThereAreCommas = true,
   required = false,
   showIconTogglePassword = true,
+  classInputWrap = 'form-control-solid',
   ...rest
 }) => {
   const [typeCustom, setTypeCustom] = useState<string>(
@@ -65,7 +68,12 @@ const Input: FC<Props> = ({
           </span>
         </label>
       )}
-      <div className='input-advance form-control form-control-lg form-control-solid p-0 border-0 d-flex align-items-center h-100 overflow-hidden'>
+      <div
+        className={clsx([
+          'input-advance form-control form-control-lg p-0 d-flex align-items-center h-100 overflow-hidden',
+          classInputWrap,
+        ])}
+      >
         {type === 'money' ? (
           <span className='ps-5 text-gray-600'>{symbolMoney}</span>
         ) : (
@@ -83,8 +91,7 @@ const Input: FC<Props> = ({
             }
           }}
           type={typeCustom}
-          className={`form-control form-control-lg p-12px w-100 bg-transparent outline-none border-0 fw-semibold ${className}`}
-          style={{color: 'rgb(75, 86, 117)'}}
+          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 outline-none fw-semibold text-gray-700 ${className}`}
           value={value}
           id={id || name}
           name={name}

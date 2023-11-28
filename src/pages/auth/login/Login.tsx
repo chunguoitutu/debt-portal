@@ -117,6 +117,17 @@ export function Login() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdmin])
 
+  function checkValidInput(key: string) {
+    return clsx(
+      {
+        'is-invalid': errors[key] && touched[key],
+      },
+      {
+        'is-valid': !errors[key] && touched[key],
+      }
+    )
+  }
+
   return (
     <>
       {showBranch ? (
@@ -149,13 +160,8 @@ export function Login() {
             <Input
               placeholder='Username'
               {...getFieldProps('username')}
-              className={clsx(
-                'form-control bg-transparent',
-                {'is-invalid': touched.username && errors.username},
-                {
-                  'is-valid': touched.username && !errors.username,
-                }
-              )}
+              classInputWrap={checkValidInput('username')}
+              className={checkValidInput('username')}
               type='username'
               name='username'
               autoComplete='off'
@@ -171,21 +177,14 @@ export function Login() {
           </div>
 
           <div className='fv-row'>
-            <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
+            <label className='form-label fw-bolder text-dark fs-6'>Password</label>
             <Input
               type='password'
               autoComplete='off'
               placeholder='Password'
               {...getFieldProps('password')}
-              className={clsx(
-                'form-control bg-transparent',
-                {
-                  'is-invalid': touched.password && errors.password,
-                },
-                {
-                  'is-valid': touched.password && !errors.password,
-                }
-              )}
+              classInputWrap={checkValidInput('password')}
+              className={checkValidInput('password')}
             />
 
             {touched.password && errors.password && (

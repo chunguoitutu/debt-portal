@@ -24,14 +24,7 @@ const Button: FC<Props> = ({
   ...rest
 }) => {
   return (
-    <button
-      style={{
-        fontSize: '16px',
-        lineHeight: '22px',
-      }}
-      className={clsx(['btn-flex btn ', className])}
-      {...rest}
-    >
+    <button className={clsx(['btn-flex btn', className])} {...rest}>
       {iconLeft && <FontAwesomeIcon icon={iconLeft} className={clsx(['me-2', classNameIcon])} />}
       {loading ? (textLoading ? textLoading : 'Please wait...') : children}
       {iconRight && <FontAwesomeIcon icon={iconRight} className={clsx(['ms-2', classNameIcon])} />}

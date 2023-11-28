@@ -342,17 +342,19 @@ export const Applications = () => {
   function handleBeforeSubmit() {
     validateForm(values).then((errors) => {
       if (Object.keys(errors).length > 0) {
-        setErrors(errors)
-
+        // set touched field error
         const error = Object.keys(errors).reduce((acc, curr) => ({...acc, [curr]: true}), {})
+
+        // set touched on step contact info (block address)
         const errorBlockAddress = errors.address_contact_info
           ? {
-              address_contact_info: ((errors?.address_contact_info as string[]) || [])?.map(
-                (item) => Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
-              ),
+              address_contact_info: (values?.address_contact_info || [])?.map((item) => {
+                return Object.keys(item).reduce((acc, key) => ({...acc, [key]: true}), {})
+              }),
             }
           : {}
 
+        setErrors(errors)
         setTouched({
           ...touched,
           ...error,

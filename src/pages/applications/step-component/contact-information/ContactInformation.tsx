@@ -38,6 +38,8 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     }
   }
 
+  console.log(errors)
+
   useEffect(() => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
