@@ -21,6 +21,7 @@ import {
 import SortBy from '@/components/sort-by'
 import clsx from 'clsx'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
+import './style.scss'
 
 type Props = {
   show?: boolean
@@ -89,13 +90,21 @@ const LookupCustomer = ({show, onClose}: Props) => {
             }
             if (key === 'identification_no') {
               return (
-                <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
+                <td
+                  key={i}
+                  className='fs-6 fw-medium value-hover-render-row'
+                  style={{color: '#071437'}}
+                >
                   {value}
                 </td>
               )
             }
             return (
-              <td key={i} className='fs-6 fw-medium' style={{color: '#78829D'}}>
+              <td
+                key={i}
+                className='fs-6 fw-medium value-hover-render-row '
+                style={{color: '#78829D'}}
+              >
                 {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
               </td>
             )
@@ -262,7 +271,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </div>
 
                           <Button
-                            className='bg-white border fs-6 fw-medium p-12px h-36px'
+                            className='bg-white border fw-medium p-12px h-36px button-application-filter-custom'
                             onClick={handleFilter}
                           >
                             Apply

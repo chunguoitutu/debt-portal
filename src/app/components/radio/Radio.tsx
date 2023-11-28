@@ -10,14 +10,7 @@ interface Props
   classNameLabel?: string
 }
 
-const Radio: FC<Props> = ({
-  name,
-  className,
-  classNameLabel = 'text-gray-800',
-  label,
-  desc,
-  ...rest
-}) => {
+const Radio: FC<Props> = ({name, className, classNameLabel = '', label, desc, ...rest}) => {
   const id = useId()
 
   return (
@@ -32,7 +25,12 @@ const Radio: FC<Props> = ({
 
       {label && (
         <label className='form-check-label' htmlFor={id}>
-          <div className={clsx(['fw-bolder cursor-pointer', classNameLabel])}>{label}</div>
+          <div
+            className={clsx(['fw-bolder cursor-pointer', classNameLabel])}
+            style={{color: '#071437'}}
+          >
+            {label}
+          </div>
           {desc && <div className='text-gray-600'>{desc}</div>}
         </label>
       )}
