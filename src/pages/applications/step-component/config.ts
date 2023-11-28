@@ -719,7 +719,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
       [
         {
           key: 'loan_amount_requested',
-          value: 'Loan amount required',
+          value: 'Loan amount',
         },
         {
           key: 'loan_terms',

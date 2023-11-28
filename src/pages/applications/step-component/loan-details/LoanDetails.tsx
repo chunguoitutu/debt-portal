@@ -77,7 +77,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     if (typeComponent === 'Checkbox') {
       return data.map((item, i) => (
-        <>
+        <Fragment key={i}>
           <Component
             key={i}
             classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-dark'])}
@@ -105,13 +105,13 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             }
           />
           <span
-            className='fw-bold cursor-pointer fs-4'
+            className='fw-semibold cursor-pointer fs-4'
             color='#071437'
             style={{marginLeft: '-15px'}}
           >
             Opt In Yes Consent to disclose information to MLCB and sMECB
           </span>
-        </>
+        </Fragment>
       ))
     }
     if (typeComponent === 'TextArea') {
@@ -191,6 +191,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
                 'input-title-application-step2 left fs-4 text-start text-lg-end',
                 required && 'required',
               ])}
+              key={i}
             >
               {label}
             </div>

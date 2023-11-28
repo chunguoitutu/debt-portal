@@ -62,7 +62,7 @@ const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, i
           !Number.isNaN(+percentCompleted) && (
             <div className='col-6'>
               <div className='application-percent-completed d-flex flex-row align-items-center justify-content-between pb-2 gap-3'>
-                <div className='fs-5 fw-semibold text-truncate' style={{color: '#4B5675'}}>
+                <div className='fs-5 fw-bold text-truncate' style={{color: '#4B5675'}}>
                   Loan Application Completion
                 </div>
                 <div className='fs-6 fw-semibold'>{+percentCompleted.toFixed(2)}%</div>

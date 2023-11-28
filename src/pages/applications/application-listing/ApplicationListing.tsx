@@ -449,7 +449,8 @@ const ApplicationListing = () => {
                         </div>
 
                         <Button
-                          className='bg-white border fw-medium p-12px h-36px button-application-filter-custom '
+                          className='fw-medium p-12px button-application-filter-custom fs-6'
+                          style={{backgroundColor: '#f9f9f9', height: '35px'}}
                           onClick={handleFilter}
                         >
                           Apply

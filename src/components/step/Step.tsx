@@ -66,7 +66,7 @@ const Step: FC<Props> = ({
                     )}
                   </h3>
                   {desc && (
-                    <div className='stepper-desc text-capitalize fs-12 fw-semibold'>{desc}</div>
+                    <div className='text-capitalize fs-12 fw-semibold text-B5B5C3'>{desc}</div>
                   )}
                 </div>
               </div>

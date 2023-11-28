@@ -12,7 +12,7 @@ const PositionName = ({data, config}: Props) => {
       {data[config.key] === 'supervisor' && 'Supervisor'}
       {data[config.key] === 'senior-executive' && 'Senior Executive'}
       {data[config.key] === 'junior-executive' && 'Junior Manager'}
-      {data[config.key] === 'non-executive' && 'Non Executive'}
+      {data[config.key] === 'non-executive' && 'Non-Executive'}
       {data[config.key] === 'professional' && 'Professional'}
       {data[config.key] === 'self-employed' && 'Self Employed'}
       {data[config.key] === 'others' && 'Others'}

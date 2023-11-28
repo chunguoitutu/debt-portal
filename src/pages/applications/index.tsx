@@ -65,7 +65,6 @@ export const Applications = () => {
     bankInfoId: 0,
   })
   const {pathname} = useLocation()
-
   const initialValues: ApplicationFormData = useMemo(() => {
     return STEP_APPLICATION.flatMap((item) => item.config).reduce(
       (result, current) => ({
@@ -223,7 +222,7 @@ export const Applications = () => {
       return {
         ...item,
         desc: (
-          <span>
+          <span className='text-B5B5C3'>
             Has been filled out{' '}
             <span
               className={clsx([
