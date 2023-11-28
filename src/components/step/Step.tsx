@@ -2,6 +2,7 @@ import {faTriangleExclamation} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {StepItem} from '@/app/types'
 import {FC} from 'react'
+import clsx from 'clsx'
 
 type Props = {
   currentStep: number
@@ -9,16 +10,26 @@ type Props = {
   stepCompleted: number
   stepError?: number[]
   data: StepItem[]
+  className?: string
+  classNameLabel?: string
 }
 
-const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, data}) => {
+const Step: FC<Props> = ({
+  currentStep,
+  stepCompleted,
+  stepError,
+  onGoToStep,
+  data,
+  className,
+  classNameLabel,
+}) => {
   function handleGoToStep(step: number) {
     step <= stepCompleted + 1 && onGoToStep(step)
   }
 
   return (
-    <div className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'>
-      <div className='stepper-nav'>
+    <div className='stepper stepper-pills stepper-column'>
+      <div className={clsx(['stepper-nav w-100', className])}>
         {data.map(({desc, label}, i) => {
           const status =
             currentStep === i + 1
@@ -26,22 +37,28 @@ const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, dat
               : i + 1 <= stepCompleted + 1
               ? 'completed cursor-pointer'
               : ''
+
           return (
             <div
-              className={`stepper-item ${status}`}
+              className={clsx(['stepper-item', status])}
               data-kt-stepper-element='nav'
               onClick={() => handleGoToStep(i + 1)}
               key={i}
             >
-              <div className='stepper-wrapper'>
-                <div className='stepper-icon w-40px h-40px'>
+              <div className='stepper-wrapper w-100 d-flex align-items-center'>
+                <div className='stepper-icon w-40px h-40px me-16px'>
                   <i className='stepper-check fas fa-check'></i>
                   <span className='stepper-number'>{i + 1}</span>
                 </div>
 
-                <div className='stepper-label'>
+                <div className='stepper-label w-fit-content'>
                   <h3 className='stepper-title text-capitalize'>
-                    <span style={{color: currentStep === i + 1 ? '#071437' : '#78829D'}}>
+                    <span
+                      className={clsx([
+                        currentStep === i + 1 ? 'text-gray-900' : 'text-gray-600',
+                        classNameLabel,
+                      ])}
+                    >
                       {label}
                     </span>
                     {stepError?.includes(i + 1) && (
@@ -49,12 +66,7 @@ const Step: FC<Props> = ({currentStep, stepCompleted, stepError, onGoToStep, dat
                     )}
                   </h3>
                   {desc && (
-                    <div
-                      className='stepper-desc text-capitalize'
-                      style={{fontSize: '12px', fontWeight: '500'}}
-                    >
-                      {desc}
-                    </div>
+                    <div className='stepper-desc text-capitalize fs-12 fw-semibold'>{desc}</div>
                   )}
                 </div>
               </div>
