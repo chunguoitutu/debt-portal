@@ -44,7 +44,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 const ApplicationListing = () => {
   const {settings, rows} = APPLICATION_LISTING_CONFIG || {}
-  const {showAction = true, showEditButton, showViewButton} = settings || {}
+  const {showAction = true, showEditButton} = settings || {}
 
   const {company_id} = useAuth()
 

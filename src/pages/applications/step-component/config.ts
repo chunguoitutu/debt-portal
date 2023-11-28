@@ -589,22 +589,26 @@ const TABLE_LOOKUP_CUSTOMER: TableConfig = {
   rows: [
     {
       key: 'customer_no',
-      name: 'Customer No.',
+      name: 'Customer No',
       isShowInput: false,
+      isSort: true,
     },
     {
       key: 'identification_no',
       name: 'NRIC',
       isShowInput: false,
+      isSort: true,
     },
     {
       key: 'firstname',
       name: 'First Name',
       isShowInput: false,
+      isSort: true,
     },
     {
       key: 'lastname',
       name: 'Last Name',
+      isSort: true,
     },
   ],
 }
