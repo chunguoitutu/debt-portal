@@ -196,6 +196,7 @@ export type TableConfig = {
     showRefresh?: boolean
     validationCreate?: {[key: string]: Schema}
     validationEdit?: {[key: string]: Schema} // expect: using if this field exists
+    defaultSort?: string
   }
   endpoint?: string
 

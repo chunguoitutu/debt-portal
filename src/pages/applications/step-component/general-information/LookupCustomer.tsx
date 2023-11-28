@@ -29,6 +29,9 @@ type Props = {
 }
 
 const LookupCustomer = ({show, onClose}: Props) => {
+  const {settings, rows} = TABLE_LOOKUP_CUSTOMER
+  const {showAction = true, showViewButton, defaultSort} = settings
+
   const [showInput, setShowInput] = React.useState<boolean>(false)
   const [data, setData] = React.useState<ResponeLookupListing[]>([])
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
@@ -37,11 +40,10 @@ const LookupCustomer = ({show, onClose}: Props) => {
     total: 0,
   })
   const [orderBy, setOrderBy] = React.useState<OrderBy>('asc')
-  const [keySort, setKeySort] = React.useState<string>('id')
+  const [keySort, setKeySort] = React.useState<string>(defaultSort || 'id')
 
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponeLookupListing>>({})
-  const {settings, rows} = TABLE_LOOKUP_CUSTOMER
-  const {showAction = true, showViewButton} = settings
+
   function showInputFilter() {
     setShowInput(!showInput)
   }
@@ -129,9 +131,12 @@ const LookupCustomer = ({show, onClose}: Props) => {
   }
 
   React.useEffect(() => {
-    onFetchDataList()
+    onFetchDataList({
+      ...searchCriteria,
+      filters: dataFilters,
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [keySort, orderBy])
 
   function handleFilter() {
     const newDataFilter = Object.keys(dataFilters).reduce((acc, key) => {

@@ -585,6 +585,7 @@ const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     showAddNewButton: false,
     showAction: true,
     showRefresh: true,
+    defaultSort: 'customer_no',
   },
   rows: [
     {
