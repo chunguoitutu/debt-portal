@@ -239,8 +239,12 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                   }}
                 >
                   {/* information for calculator */}
-                  <div className='d-flex amount-header-calculator flex-row gap-10'>
-                    <div className='gap-1 p-6 ms-3' style={{width: 'fit-content'}}>
+                  <div
+                    className={`d-flex amount-header-calculator flex-row ${
+                      mobile ? 'gap-1' : 'gap-10'
+                    } `}
+                  >
+                    <div className='gap-1 p-6' style={{width: 'fit-content'}}>
                       <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
                         Amount Of Loan $
                       </div>

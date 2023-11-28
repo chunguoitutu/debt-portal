@@ -50,7 +50,7 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
       <div className='modal-header p-30px border-bottom border-gray-200'>
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
       </div>
-      <div className='p-5 min-h-50px overflow-y-auto' ref={contentRef}>
+      <div className='p-30px min-h-50px overflow-y-auto' ref={contentRef}>
         {remarkList?.map((message, index: number) => (
           <div
             className={`remark-item d-flex mb-${remarkList.length === index + 1 ? '0' : '5'}`}
