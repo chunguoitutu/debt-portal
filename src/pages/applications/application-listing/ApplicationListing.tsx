@@ -88,7 +88,10 @@ const ApplicationListing = () => {
 
   useEffect(() => {
     if (!+company_id) return
-    onFetchDataList()
+    onFetchDataList({
+      ...searchCriteria,
+      filters: dataFilter,
+    })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company_id, keySort, orderBy])
@@ -244,6 +247,7 @@ const ApplicationListing = () => {
         const objectHasValue = filterObjectKeyNotEmpty(dataFilter[key])
 
         if (Object.keys(objectHasValue).length) {
+          // object but type date
           if (key === 'application_date') {
             // add 1 days if key = lte
             const objectDate = Object.keys(objectHasValue).reduce(
@@ -257,9 +261,20 @@ const ApplicationListing = () => {
               }),
               {}
             )
+
             return {...acc, [key]: objectDate}
           }
-          return {...acc, [key]: +objectHasValue}
+
+          // convert value to number
+          const newObject = Object.keys(objectHasValue).reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: +objectHasValue[key],
+            }),
+            {}
+          )
+
+          return {...acc, [key]: newObject}
         } else {
           return {...acc}
         }
@@ -277,6 +292,8 @@ const ApplicationListing = () => {
 
       return {...acc}
     }, {})
+
+    setDataFilter(newDataFilter)
 
     onFetchDataList({
       ...searchCriteria,
