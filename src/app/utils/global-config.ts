@@ -516,7 +516,7 @@ export const POSITION: Option[] = [
   },
   {
     value: 'non-executive',
-    label: 'Non Executive',
+    label: 'Non-Executive',
   },
   {
     value: 'professional',

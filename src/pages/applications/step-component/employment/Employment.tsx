@@ -101,7 +101,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
       return data.map((item, i) => (
         <Component
           key={i}
-          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          classNameLabel={clsx([
+            values[key] === item.value ? 'fs-4 fw-medium' : 'text-gray-600 fs-4 fw-medium',
+          ])}
           name={key}
           label={item.label}
           checked={values[key] === item.value}
@@ -116,7 +118,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
       return data.map((item, i) => (
         <Component
           key={i}
-          classNameLabel={clsx([values[key] === item.value ? 'text-gray-800' : 'text-gray-600'])}
+          classNameLabel={clsx([
+            values[key].includes(item.value) ? 'text-gray-800' : 'text-gray-600',
+          ])}
           name={key}
           label={item.label}
           value={item.value}
