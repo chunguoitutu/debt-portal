@@ -9,6 +9,7 @@ import {HeaderWrapper} from '@/_metronic/layout/components/header'
 import {Sidebar} from '@/_metronic/layout/components/sidebar'
 import {ToolbarWrapper} from '@/_metronic/layout/components/toolbar'
 import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
+import {RightToolbar} from '@/_metronic/layout/components/toolbar/right-toll-bar/RightToolbar'
 
 const MasterLayout = () => {
   const {refreshToken} = useAuth()
@@ -60,6 +61,7 @@ const MasterLayout = () => {
           </div>
         </div>
       </div>
+      <div className=' d-xxl-none'>{pathname === '/application/create' && <RightToolbar />}</div>
 
       <ScrollTop />
     </PageDataProvider>

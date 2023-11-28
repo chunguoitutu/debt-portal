@@ -2,10 +2,10 @@ import * as Yup from 'yup'
 import {TableConfig} from '@/app/types'
 import Input from '@/components/input'
 import FullNameUser from './FullNameUser'
-import {Badge} from 'primereact/badge'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Select from '@/components/select/select'
 import {convertMessageErrorMaximum, convertMessageErrorPassword} from '@/app/utils'
+import Badge from '@/components/badge/Badge'
 
 const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/gi
 

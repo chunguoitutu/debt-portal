@@ -11,7 +11,7 @@ const RenderFileDocument = ({config, data}: Props) => {
   return (
     <div className='w-100 p-0' style={{border: '1px solid #D4D4D4'}}>
       <h1
-        className='pt-8px pb-8px ps-24px pe-24px   fw-semibold m-0 fs-13 text-gray-700'
+        className='pt-8px pb-8px ps-24px pe-24px   fw-semibold m-0 fs-14 text-gray-700'
         style={{
           background: '#D4D4D4',
         }}
@@ -44,7 +44,7 @@ const RenderFileDocument = ({config, data}: Props) => {
                   <Icons name={'ImgFoder'} />
                 </div>
                 <div className='pt-4px pb-16px ps-16px pe-16px d-flex justify-content-center flex-column'>
-                  <p className='mw-180px text-center fw-semibold p-0 m-0 fs-12 text-gray-900'>
+                  <p className='mw-180px text-center fw-semibold p-0 m-0 fs-14 text-gray-900'>
                     {e?.document_name}- {convertSize(Number(e.size) || 0)}
                   </p>
                 </div>

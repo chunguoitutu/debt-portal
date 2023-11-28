@@ -631,6 +631,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         {
           key: 'date_of_birth',
           value: 'Date of Birth',
+          date: true,
         },
       ],
       [
@@ -752,7 +753,6 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           value: 'Mobile 1 (NIL)',
           dollars: '+65',
         },
-        {},
       ],
       [
         {
@@ -916,7 +916,6 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           key: 'bank_code_1',
           value: 'Bank Code 1',
         },
-        {},
       ],
       [
         {

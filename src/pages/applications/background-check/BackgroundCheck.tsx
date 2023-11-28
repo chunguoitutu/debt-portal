@@ -6,7 +6,6 @@ import Icons from '@/components/icons'
 
 const BackgroundCheck = () => {
   const [show, setShow] = useState<boolean>(false)
-  const [loadapi, setLoadApi] = useState<boolean>(false)
 
   const configBackgroudCheck = {
     title: 'Background check',
@@ -33,14 +32,7 @@ const BackgroundCheck = () => {
   return (
     <div>
       <ContentListButton config={configBackgroudCheck} />
-      {show && (
-        <RepaymentScheduleCalculator
-          setLoadApi={setLoadApi}
-          loadapi={loadapi}
-          show={show}
-          handleClose={() => setShow(false)}
-        />
-      )}
+      {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
     </div>
   )
 }

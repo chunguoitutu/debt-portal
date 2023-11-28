@@ -90,6 +90,9 @@ export const Applications = () => {
   useEffect(() => {
     resetForm()
     setStepCompleted(0)
+    if (pathname === '/application/create') {
+      setCurrentStep(1)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 

@@ -25,7 +25,7 @@ const RenderOptionsApiAddress = ({config, keyData}: Props) => {
   )
 
   return (
-    <div className='text-start fw-semibold p-0 m-0 min-h-20px td-completion text-gray-900'>
+    <div className='text-start fw-semibold p-0 fs-14 m-0 min-h-20px td-completion text-gray-900'>
       {!!config.lable ? lable[0]?.[config.lable] : lable[0]?.label}
     </div>
   )
