@@ -16,7 +16,11 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       const endpoints = config.filter((data) => !!data.dependencyApi)
       const results = await Promise.all(
         endpoints.map(async (d) => {
-          const res = await request.post(d.dependencyApi || '')
+          const res = await request.post(d.dependencyApi || '', {
+            status: true,
+            pageSize: 99999,
+            currentPage: 1,
+          })
           return {key: d.key, data: res?.data?.data}
         })
       )

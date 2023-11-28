@@ -16,7 +16,7 @@ const HelpDrawer = () => {
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
         onclick: () => {
-          setShow(true)
+          setShow(!show)
         },
       },
       {
@@ -56,6 +56,13 @@ const HelpDrawer = () => {
               }}
             >
               <h5 className='font-bold fs-20 text-gray-900 m-0'>Repayment Schedule Calculator</h5>
+              <button
+                type='button'
+                className='btn btn-sm btn-icon explore-btn-dismiss '
+                onClick={() => setShow(!show)}
+              >
+                <KTIcon iconName='cross' className='fs-2' />
+              </button>
             </div>
             <Repayment handleClose={() => setShow(!show)} mobile={true} />
           </div>
