@@ -168,6 +168,13 @@
   @media (max-width: 1400px) {
     $widthLabel: 140px;
 
+    .step-application {
+      background-color: red;
+      .stepper-line {
+        display: none !important;
+      }
+    }
+
     .form-wrap {
       gap: 16px;
     }
@@ -257,5 +264,63 @@
 
   &:hover .close-remark-icon {
     visibility: visible;
+  }
+}
+
+@media (max-width: 1399px) {
+  $widthLabel: 140px;
+
+  .step-application {
+    .stepper-line {
+      display: none !important;
+    }
+
+    .stepper-nav {
+      .stepper-item {
+        .stepper-label {
+          $size-pseudo: 60px;
+          $size-arrow: 8px;
+          min-width: 300px;
+
+          position: relative;
+          padding-right: calc($size-pseudo + 16px);
+
+          &::before,
+          &::after {
+            content: '';
+            position: absolute;
+          }
+
+          &::before {
+            width: calc($size-pseudo - $size-arrow);
+            border-top: 1px dashed var(--bs-gray-400);
+            right: calc($size-arrow / 2 + 2px);
+          }
+
+          &::after {
+            border: calc($size-arrow / 2) solid var(--bs-gray-400);
+            right: calc(0px - $size-arrow / 2);
+            border-color: transparent transparent transparent var(--bs-gray-400);
+          }
+        }
+
+        .stepper-desc {
+          text-wrap: nowrap;
+        }
+      }
+
+      .stepper-item:last-child {
+        .stepper-label {
+          min-width: unset !important;
+          padding: 0 !important;
+
+          &::before,
+          &::after {
+            width: 0 !important;
+            border: 0 !important;
+          }
+        }
+      }
+    }
   }
 }
