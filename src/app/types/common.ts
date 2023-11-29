@@ -2,6 +2,10 @@ import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
 import {FormikProps} from 'formik'
 import {Schema} from 'yup'
 
+export type WithChildren = {
+  children?: ReactNode
+}
+
 export type LoginInfo = {
   username: string
   password: string
