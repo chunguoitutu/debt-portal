@@ -16,3 +16,11 @@
     cursor: pointer;
   }
 }
+
+.font-awesome-icon-refresh {
+  &:hover {
+    color: #fff !important;
+    cursor: pointer;
+    background-color: #3e97ff !important;
+  }
+}
