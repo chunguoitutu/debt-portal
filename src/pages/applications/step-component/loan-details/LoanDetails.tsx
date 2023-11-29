@@ -72,7 +72,6 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
 
     // nothing
     if (!Component) return
-
     const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
 
     if (typeComponent === 'Checkbox') {

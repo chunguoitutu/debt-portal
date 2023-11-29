@@ -7,15 +7,19 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faClose} from '@fortawesome/free-solid-svg-icons'
 import Icons from '@/components/icons'
 import {useAuth} from '../../../app/context/AuthContext'
-import {RemarkItem} from '@/app/types'
+import {ApplicationPayload, RemarkItem} from '@/app/types'
+import request from '@/app/axios'
+import {swalToast} from '@/app/swal-notification'
 
 type Props = {
   remarkList: RemarkItem[]
+  idUpdate: string | number | any
   setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
 }
-const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
+const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
   const [value, setValue] = useState<string>('')
   const [scroll, setScroll] = useState(false)
+
   const {currentUser} = useAuth()
 
   const contentRef = useRef<HTMLDivElement>(null)
@@ -27,6 +31,24 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
       contentDiv.scrollTop = contentDiv.scrollHeight
     }
   }, [scroll])
+
+  const handleUpdate = async (payload) => {
+    if (idUpdate) {
+      try {
+        await request.put('/remark/' + idUpdate, {
+          data: {
+            application_notes: JSON.stringify(payload),
+          },
+        })
+        setRemarkList(payload)
+      } catch (error) {
+        swalToast.fire({
+          title: 'The system is having an error, please try again in a few minutes.',
+          icon: 'error',
+        })
+      }
+    }
+  }
   const handleSubmit = () => {
     if (value !== '') {
       const newRemark: RemarkItem = {
@@ -35,14 +57,14 @@ const Remark: FC<Props> = ({remarkList, setRemarkList}) => {
         time: Date.now(),
         user: currentUser?.username || '',
       }
-      setRemarkList([...remarkList, newRemark])
+      handleUpdate([...remarkList, newRemark])
     }
     setValue('')
     setScroll(!scroll)
   }
 
   function handleRemoveRemark(item: RemarkItem) {
-    setRemarkList(remarkList.filter((remark) => remark.id !== item.id))
+    handleUpdate(remarkList.filter((remark) => remark.id !== item.id))
   }
 
   return (
