@@ -38,7 +38,7 @@ const Select: FC<Props> = ({
   return (
     <div className={`${classShared}`}>
       {label && (
-        <label htmlFor={name} className='d-flex align-items-center fs-5 fw-semibold mb-2'>
+        <label htmlFor={name} className='d-flex align-items-center fs-4 fw-semibold mb-2'>
           <span className={`${required ? 'required' : ''}`}>{label}</span>
         </label>
       )}
@@ -47,7 +47,7 @@ const Select: FC<Props> = ({
         <select
           id={name}
           name={name}
-          className={`form-select form-select-solid form-select-lg text-gray-700 px-4 pe-9 text-truncate ${className}`}
+          className={`form-select form-select-solid form-select-lg text-gray-700 px-4 pe-9 text-truncate fs-4 ${className}`}
           {...rest}
         >
           {isOptionDefault && <option value=''></option>}

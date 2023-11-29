@@ -369,7 +369,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                               case 'instalment_due_date':
                                 return (
                                   <td key={rt.key} className='p-4 content-calculator fs-4'>
-                                    {instalment_due_date}
+                                    {moment(instalment_due_date).format('MM/DD/YYYY')}
                                   </td>
                                 )
                               case 'monthly_inst_amount':

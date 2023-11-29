@@ -102,11 +102,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
               )
             }
             return (
-              <td
-                key={i}
-                className='fs-6 fw-medium value-hover-render-row '
-                style={{color: '#78829D'}}
-              >
+              <td key={i} className='fs-6 fw-medium ' style={{color: '#78829D'}}>
                 {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
               </td>
             )

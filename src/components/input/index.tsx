@@ -91,7 +91,7 @@ const Input: FC<Props> = ({
             }
           }}
           type={typeCustom}
-          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 outline-none fw-semibold text-gray-700 ${className}`}
+          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
           value={value}
           id={id || name}
           name={name}
