@@ -25,10 +25,7 @@ const Radio: FC<Props> = ({name, className, classNameLabel = '', label, desc, ..
 
       {label && (
         <label className='form-check-label' htmlFor={id}>
-          <div
-            className={clsx(['fw-bolder cursor-pointer', classNameLabel])}
-            style={{color: '#071437'}}
-          >
+          <div className={clsx(['cursor-pointer', classNameLabel])} style={{color: '#071437'}}>
             {label}
           </div>
           {desc && <div className='text-gray-600'>{desc}</div>}

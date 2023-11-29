@@ -119,7 +119,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
         <Component
           key={i}
           classNameLabel={clsx([
-            values[key].includes(item.value) ? 'fs-4 text-071437' : 'text-gray-600 fs-4',
+            values[key].includes(item.value)
+              ? 'fs-4 text-071437 fw-semibold'
+              : 'text-gray-600 fs-4 fw-semibold',
           ])}
           name={key}
           label={item.label}

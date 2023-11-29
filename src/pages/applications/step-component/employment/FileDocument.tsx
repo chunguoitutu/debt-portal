@@ -117,7 +117,7 @@ const FileInput = (props: any) => {
           )
         })}
       </div>
-      <label className='border border-dashed border-primary d-flex position-relative rounded-3 bg-primary-light align-items-center w-360px h-140px justify-content-center padding-24px '>
+      <label className='border border-dashed border-primary d-flex position-relative rounded-3 bg-primary-light align-items-center w-360px h-100px justify-content-center padding-24px '>
         <div className='d-flex cursor-pointer gap-16px ps-24px pe-24px align-items-center justify-content-center'>
           <div className='cursor-position w-40px h-40px flex-shrink-0'>
             <Icons name={'ImgUploadFile'} />

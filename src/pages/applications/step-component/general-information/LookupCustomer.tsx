@@ -265,7 +265,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                       <td className='text-center'>
                         <div className='d-flex align-items-center justify-content-center gap-3'>
                           <div
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 font-awesome-icon-refresh'
                             onClick={() => handleResetFilter()}
                           >
                             <FontAwesomeIcon icon={faArrowsRotate} />
