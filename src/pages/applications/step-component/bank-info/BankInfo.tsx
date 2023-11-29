@@ -25,7 +25,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
         <Component
           key={i}
           classNameLabel={clsx([
-            values[key] === item.value ? 'fs-4 fw-medium' : 'text-gray-500 fs-4 fw-medium',
+            values[key] === item.value ? 'fs-4 fw-medium' : 'text-gray-600 fs-4 fw-medium',
           ])}
           name={key}
           label={item.label}
