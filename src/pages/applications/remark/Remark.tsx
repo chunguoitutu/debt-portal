@@ -128,7 +128,7 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
                           const _remarkList = [...remarkList]
                           const idx = remarkList.findIndex((item) => item.id === infoEdit.id)
 
-                          if (!idx) return setInfoEdit(null)
+                          if (idx === -1) return setInfoEdit(null)
 
                           _remarkList.splice(idx, 1, infoEdit)
                           handleUpdate(_remarkList)
