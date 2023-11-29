@@ -85,16 +85,6 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
     handleUpdate(remarkList.filter((remark) => remark.id !== item.id))
   }
 
-  function handleSave(infoEdit) {
-    const _remarkList = [...remarkList]
-    const idx = remarkList.findIndex((item) => item.id === infoEdit.id)
-
-    if (!idx) return setInfoEdit(null)
-
-    _remarkList.splice(idx, 1, infoEdit)
-    handleUpdate(_remarkList)
-    setInfoEdit(null)
-  }
   return (
     <div className='card h-100'>
       <div className='modal-header p-30px  border-bottom border-gray-200'>
@@ -135,7 +125,14 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
                       </Button>
                       <Button
                         onClick={() => {
-                          handleSave(infoEdit)
+                          const _remarkList = [...remarkList]
+                          const idx = remarkList.findIndex((item) => item.id === infoEdit.id)
+
+                          if (!idx) return setInfoEdit(null)
+
+                          _remarkList.splice(idx, 1, infoEdit)
+                          handleUpdate(_remarkList)
+                          setInfoEdit(null)
                         }}
                         className='btn-lg btn-primary p-8px'
                       >
