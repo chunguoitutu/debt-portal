@@ -281,6 +281,9 @@ $spacers: (
   0px: 0px,
   16px: 16px,
   30px: 30px,
+
+  50px: 50px,
+
   44px: 44px,
   10px: 10px,
   32px: 32px,
@@ -458,7 +461,7 @@ $gutters: (
       $spacer * 2.5,
     ),
   16px: 16px,
-  12px: 12px // 35px,,,,,,,,,,,,
+  12px: 12px // 35px,,,,,,,,,,,,,
 ) !default;
 
 // Typography
@@ -583,7 +586,7 @@ $font-sizes: (
   // 88.25px
   7hx: $font-size-base * 7.5,
   // 91.5px
-  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,
+  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,
 ) !default;
 
 $headings-font-weight: 600 !default;

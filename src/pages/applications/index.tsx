@@ -564,7 +564,7 @@ export const Applications = () => {
       </PageTitle>
       <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1 m-0'>
         <div className='col-12 col-xxl-2 d-flex flex-column overflow-hidden h-unset h-xxl-100 mb-16px m-xxl-0'>
-          <div className='card bg-white w-100 align-self-start align-self-lg-center overflow-y-auto m-0 d-flex flex-column'>
+          <div className='card bg-white w-100 align-self-start align-self-lg-center overflow-y-auto m-0 d-flex flex-column h-100'>
             <div className='step-application h-fit-content my-auto'>
               <Step
                 className='d-flex flex-row flex-xxl-column align-items-center align-items-xxl-start gap-16px gap-xxl-0 overflow-x-auto p-10'
@@ -577,7 +577,7 @@ export const Applications = () => {
           </div>
         </div>
         <div className='col-12 col-xxl-8 d-flex flex-column h-fit-content h-xxl-100 mb-16px m-xxl-0'>
-          <div className='application-details-form d-flex flex-column card card-body p-0 m-0 h-100'>
+          <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
             <HeaderApplication
               labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
               info={{
