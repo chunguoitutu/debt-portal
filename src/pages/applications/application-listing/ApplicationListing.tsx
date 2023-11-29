@@ -1,19 +1,18 @@
+import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {Link, useNavigate} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import numeral from 'numeral'
+import moment from 'moment'
+import clsx from 'clsx'
+
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {APPLICATION_LISTING_CONFIG} from './config'
-import React, {useEffect, useState} from 'react'
 import RowPerPage from '@/components/row-per-page'
 import PaginationArrow from '@/components/pagination.tsx'
-import {Link, useNavigate} from 'react-router-dom'
-import moment from 'moment'
-import numeral from 'numeral'
 import Badge from '@/components/badge/Badge'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import Loading from '@/components/table/components/Loading'
-import {useAuth} from '../../../app/context/AuthContext'
-import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {
   ApplicationItem,
   OrderBy,
@@ -21,11 +20,13 @@ import {
   SearchCriteria,
   TableRow,
 } from '@/app/types'
-import request from '../../../app/axios'
-import {KTCardBody} from '../../../_metronic/helpers'
+import request from '@/app/axios'
 import {filterObjectKeyNotEmpty} from '@/app/utils'
 import ButtonEdit from '@/components/button/ButtonEdit'
 import SortBy from '@/components/sort-by'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
+import {KTCardBody} from '@/_metronic/helpers'
+import {useAuth} from '@/app/context/AuthContext'
 import './style.scss'
 
 const profileBreadCrumbs: Array<PageLink> = [
@@ -88,9 +89,12 @@ const ApplicationListing = () => {
 
   useEffect(() => {
     if (!+company_id) return
+
+    const newDataFilter = handleConvertDataFilter(dataFilter)
+
     onFetchDataList({
       ...searchCriteria,
-      filters: dataFilter,
+      filters: newDataFilter,
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -236,15 +240,15 @@ const ApplicationListing = () => {
     onFetchDataList({...searchCriteria})
   }
 
-  function handleFilter() {
-    const newDataFilter = Object.keys(dataFilter).reduce((acc, key) => {
+  function handleConvertDataFilter(oldDataFilter: {[key: string]: any}) {
+    return Object.keys(oldDataFilter).reduce((acc, key) => {
       // Check value object
       if (
-        typeof dataFilter[key] === 'object' &&
-        !Number.isNaN(dataFilter[key]) &&
-        !Array.isArray(dataFilter[key])
+        typeof oldDataFilter[key] === 'object' &&
+        !Number.isNaN(oldDataFilter[key]) &&
+        !Array.isArray(oldDataFilter[key])
       ) {
-        const objectHasValue = filterObjectKeyNotEmpty(dataFilter[key])
+        const objectHasValue = filterObjectKeyNotEmpty(oldDataFilter[key])
 
         if (Object.keys(objectHasValue).length) {
           // object but type date
@@ -292,8 +296,10 @@ const ApplicationListing = () => {
 
       return {...acc}
     }, {})
+  }
 
-    setDataFilter(newDataFilter)
+  function handleFilter() {
+    const newDataFilter = handleConvertDataFilter(dataFilter)
 
     onFetchDataList({
       ...searchCriteria,
