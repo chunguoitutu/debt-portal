@@ -54,6 +54,7 @@ export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
+
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -576,7 +577,7 @@ export const Applications = () => {
           </div>
         </div>
         <div className='col-12 col-xxl-8 d-flex flex-column h-fit-content h-xxl-100 mb-16px m-xxl-0'>
-          <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
+          <div className='application-details-form d-flex flex-column card card-body p-0 m-0 h-100'>
             <HeaderApplication
               labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
               info={{
@@ -617,7 +618,11 @@ export const Applications = () => {
               <BackgroundCheck />
             </div>
             <div className='flex-grow-1 overflow-hidden min-h-300px min-h-xxl-unset'>
-              <Remark setRemarkList={setRemarkList} remarkList={remarkList} />
+              <Remark
+                setRemarkList={setRemarkList}
+                idUpdate={applicationIdEdit}
+                remarkList={remarkList}
+              />
             </div>
           </div>
         </div>
