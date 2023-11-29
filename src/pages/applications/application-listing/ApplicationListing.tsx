@@ -170,14 +170,24 @@ const ApplicationListing = () => {
                 )
               }
 
+              if (key === 'identification_no') {
+                return (
+                  <td
+                    key={i}
+                    className='fs-6 fw-medium value-hover-render-row'
+                    style={{color: '#071437'}}
+                  >
+                    {value}
+                  </td>
+                )
+              }
+
               return (
                 <td key={i} className={classNameTableBody}>
                   {component ? (
                     <Component />
                   ) : (
-                    <span className='fw-semibold fs-14 fw-semibold value-hover-render-row'>
-                      {value}
-                    </span>
+                    <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
                   )}
                 </td>
               )
@@ -451,7 +461,7 @@ const ApplicationListing = () => {
                     >
                       <div className='gap-3'>
                         <div
-                          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 font-awesome-icon-refresh'
+                          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
                           onClick={() => handleResetFilter()}
                         >
                           <FontAwesomeIcon icon={faArrowsRotate} />
@@ -459,7 +469,6 @@ const ApplicationListing = () => {
 
                         <Button
                           className='fw-medium p-12px button-application-filter-custom fs-6'
-                          style={{backgroundColor: '#f9f9f9', height: '35px'}}
                           onClick={handleFilter}
                         >
                           Apply
