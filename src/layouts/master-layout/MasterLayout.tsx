@@ -23,7 +23,7 @@ const MasterLayout = () => {
     refreshToken(token || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
-
+  const checkBackgroundMobile = ['create', 'edit'].includes(pathname.split('/').filter(Boolean)[1])
   const isViewHeight = useMemo(() => {
     const arrCheck = ['loans', 'application/create', 'application/edit']
     return arrCheck.some((el) => pathname.includes(el))
@@ -61,7 +61,8 @@ const MasterLayout = () => {
           </div>
         </div>
       </div>
-      <div className=' d-xxl-none'>{pathname === '/application/create' && <RightToolbar />}</div>
+
+      <div className=' d-xxl-none'>{checkBackgroundMobile && <RightToolbar />}</div>
 
       <ScrollTop />
     </PageDataProvider>
