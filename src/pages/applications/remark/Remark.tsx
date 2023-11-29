@@ -4,10 +4,9 @@ import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
 import ImgAvataRemark from '@/components/icons/ImgAvataRemark'
 import {BsThreeDotsVertical} from 'react-icons/bs'
-import {faClose} from '@fortawesome/free-solid-svg-icons'
 import Icons from '@/components/icons'
 import {useAuth} from '../../../app/context/AuthContext'
-import {ApplicationPayload, RemarkItem} from '@/app/types'
+import {RemarkItem} from '@/app/types'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 
@@ -55,6 +54,8 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
           isCreate && handleScroll()
         }, 0)
       }
+    } else {
+      setRemarkList(payload)
     }
   }
 
