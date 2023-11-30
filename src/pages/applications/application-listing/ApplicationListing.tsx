@@ -487,6 +487,11 @@ const ApplicationListing = () => {
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                   handleChangeFromToFilter('gte', e)
                                 }}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    handleFilter()
+                                  }
+                                }}
                               />
                               <Component
                                 {...props}
@@ -495,10 +500,23 @@ const ApplicationListing = () => {
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                   handleChangeFromToFilter('lte', e)
                                 }}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    handleFilter()
+                                  }
+                                }}
                               />
                             </div>
                           ) : (
-                            <Component classShared={''} {...props} />
+                            <Component
+                              classShared={''}
+                              {...props}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  handleFilter()
+                                }
+                              }}
+                            />
                           )}
                         </td>
                       )

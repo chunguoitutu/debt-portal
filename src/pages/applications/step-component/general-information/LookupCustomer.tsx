@@ -308,6 +308,11 @@ const LookupCustomer = ({show, onClose}: Props) => {
                                   [row.key]: e.target.value,
                                 }))
                               }}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  handleFilter()
+                                }
+                              }}
                             />
                           </td>
                         )
