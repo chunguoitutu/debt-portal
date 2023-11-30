@@ -25,10 +25,10 @@ const Navbar = () => {
   const fullName = useMemo(
     () => {
       if (!currentUser) return 'Guest'
-      let name = firstname || ''
-      middlename && (name = name.trim() + ` ${middlename}`)
-      lastname && (name = name.trim() + ` ${lastname}`)
-      return name
+
+      const arrayName = [firstname, middlename, lastname].filter(Boolean)
+
+      return arrayName.join(' ')
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [firstname, lastname, middlename]
