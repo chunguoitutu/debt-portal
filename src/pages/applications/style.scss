@@ -1,5 +1,5 @@
 .application-details-form {
-  $widthLabel: 170px;
+  $widthLabel: 160px;
   $widthLabelCustom: 204px;
   height: 100%;
 
@@ -8,7 +8,6 @@
     grid-template-columns: repeat(2, auto);
     width: fit-content;
     height: fit-content;
-    min-width: min(100%, 1000px);
     gap: 24px;
 
     .full {
@@ -166,10 +165,7 @@
   }
 
   @media (max-width: 1400px) {
-    $widthLabel: 140px;
-
     .step-application {
-      background-color: red;
       .stepper-line {
         display: none !important;
       }
@@ -201,15 +197,21 @@
 
   @media (min-width: 1560px) {
     .input-wrap {
-      width: 225px !important;
+      width: 250px !important;
     }
 
     .select-wrap {
-      width: 225px !important;
+      width: 250px !important;
     }
   }
 
   @media (min-width: 1720px) {
+    $widthLabel: 170px;
+
+    .input-title-application.left {
+      width: $widthLabel;
+    }
+
     .input-wrap {
       width: 300px !important;
     }
@@ -219,7 +221,7 @@
     }
   }
 
-  @media (max-width: 1199px) {
+  @media (max-width: 991px) {
     .form-wrap {
       display: grid;
       grid-template-columns: auto;
@@ -236,9 +238,7 @@
     .input-title-application-step2 {
       width: $widthLabelCustom !important;
     }
-  }
 
-  @media (max-width: 991px) {
     .input-title-application {
       width: unset !important;
       position: static;
@@ -269,7 +269,7 @@
 }
 
 @media (max-width: 1399px) {
-  $widthLabel: 140px;
+  $widthLabel: 170px;
 
   .step-application {
     .stepper-line {
