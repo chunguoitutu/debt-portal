@@ -103,6 +103,7 @@ export type SearchCriteria<T = any> = {
   total: number
   company_id?: number
   filters?: T
+  searchBar?: string
 }
 
 export type ResponeLookupListing = {
@@ -119,6 +120,7 @@ export type ResponeLookupListing = {
   gender: string | null
   date_of_birth: Date
   country_id: number
+  searchBar?: string
 }
 
 export type ResponseApplicationListing = {
@@ -130,6 +132,7 @@ export type ResponseApplicationListing = {
   loan_amount: number
   application_date: Date
   status: number
+  searchBar?: string
 }
 
 export type TableRow = {
