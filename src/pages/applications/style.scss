@@ -376,3 +376,11 @@
   font-weight: 500;
   line-height: 20px; /* 142.857% */
 }
+
+.input-remark-import {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px; /* 146.667% */
+  text-transform: capitalize;
+  color: var(--color-text-light-mode-text-gray-700, #4b5675);
+}
