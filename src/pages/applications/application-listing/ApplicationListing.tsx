@@ -1,4 +1,4 @@
-import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
+import {faArrowsRotate, faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link, useNavigate} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
@@ -28,6 +28,7 @@ import {PageLink, PageTitle} from '@/components/breadcrumbs'
 import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import './style.scss'
+import Input from '@/components/input'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -57,6 +58,7 @@ const ApplicationListing = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('asc')
   const [keySort, setKeySort] = useState<string>('id')
+  const [searchValue, setSearchValue] = useState<string>('')
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 1,
@@ -247,11 +249,12 @@ const ApplicationListing = () => {
 
   function handleResetFilter() {
     setDataFilter({})
+    setSearchValue('')
     onFetchDataList({...searchCriteria})
   }
 
   function handleConvertDataFilter(oldDataFilter: {[key: string]: any}) {
-    return Object.keys(oldDataFilter).reduce((acc, key) => {
+    const filter = Object.keys(oldDataFilter).reduce((acc, key) => {
       // Check value object
       if (
         typeof oldDataFilter[key] === 'object' &&
@@ -306,6 +309,8 @@ const ApplicationListing = () => {
 
       return {...acc}
     }, {})
+
+    return {...filter, ...(searchValue ? {searchBar: searchValue || ''} : {})}
   }
 
   function handleFilter() {
@@ -327,28 +332,73 @@ const ApplicationListing = () => {
     }
   }
 
+  function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchValue(e.target.value)
+  }
+
+  // agrument using for clear search
+  function handleSearch(forceSearchValue?: string) {
+    const newDataFilter = handleConvertDataFilter(dataFilter)
+
+    const dataFilterChange: {[key: string]: any} = {
+      ...newDataFilter,
+      searchBar: forceSearchValue || searchValue,
+    }
+
+    // remove search bar if not value
+    if (!searchValue || !forceSearchValue) {
+      delete dataFilterChange.searchBar
+    }
+
+    const newSearchCriteria = {
+      ...searchCriteria,
+      currentPage: 1,
+      filters: dataFilterChange,
+    }
+
+    onFetchDataList(newSearchCriteria)
+  }
+
   return (
     <div className='card p-5 h-fit-content'>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
 
       <div>
-        <div className='d-flex flex-row'>
-          <div className='d-flex align-items-center position-relative my-1 flex-grow-1'>
-            <i className='ki-duotone ki-magnifier fs-1 position-absolute ms-4'>
-              <span className='path1'></span>
-              <span className='path2'></span>
-            </i>
-            <input
-              type='text'
-              data-kt-user-table-filter='search'
-              className='form-control form-control-solid ps-14 w-100'
-              placeholder='Search Customer'
-            />
-          </div>
+        <div className='d-flex flex-row align-items-center'>
+          <Input
+            classShared='flex-grow-1 h-30px mb-5'
+            placeholder='Search Customer'
+            value={searchValue}
+            onChange={handleChangeSearch}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch(searchValue)
+              }
+            }}
+            insertLeft={
+              <FontAwesomeIcon
+                className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                icon={faSearch}
+                onClick={() => handleSearch(searchValue)}
+              />
+            }
+            insertRight={
+              searchValue ? (
+                <FontAwesomeIcon
+                  className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                  icon={faClose}
+                  onClick={() => {
+                    setSearchValue('')
+                    handleSearch('')
+                  }}
+                />
+              ) : null
+            }
+          />
           <div className='d-flex flex-end ms-4'>
             <Button
               onClick={showInputFilter}
-              className='btn-secondary align-self-center m-2 fs-6 text-primary'
+              className='btn-secondary align-self-center m-2 fs-6 text-primary h-45px'
               disabled={false}
             >
               <Icons name={'filterIcon'} />
@@ -357,7 +407,7 @@ const ApplicationListing = () => {
 
             <Link to='/application/create'>
               <Button
-                className='btn-primary align-self-center m-2 fs-6 text-white'
+                className='btn-primary align-self-center m-2 fs-6 text-white h-45px'
                 disabled={false}
               >
                 <Icons name={'AddIcon'} />
@@ -468,7 +518,7 @@ const ApplicationListing = () => {
                         </div>
 
                         <Button
-                          className='fw-medium p-12px button-application-filter-custom fs-6'
+                          className='fw-medium p-12px button-application-filter-custom fs-6 text-primary'
                           onClick={handleFilter}
                         >
                           Apply

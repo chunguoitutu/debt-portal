@@ -7,7 +7,7 @@ import RowPerPage from '@/components/row-per-page'
 import PaginationArrow from '@/components/pagination.tsx'
 import Input from '@/components/input'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
+import {faArrowsRotate, faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import request from '../../../../app/axios'
 import {KTCardBody, KTIcon} from '../../../../_metronic/helpers'
 import {
@@ -33,6 +33,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
   const {showAction = true, showViewButton, defaultSort} = settings
 
   const [showInput, setShowInput] = React.useState<boolean>(false)
+  const [searchValue, setSearchValue] = React.useState<string>('')
   const [data, setData] = React.useState<ResponeLookupListing[]>([])
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
@@ -134,6 +135,31 @@ const LookupCustomer = ({show, onClose}: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keySort, orderBy])
 
+  function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchValue(e.target.value)
+  }
+
+  // agrument using for clear search
+  function handleSearch(forceSearchValue?: string) {
+    const dataFilterChange: {[key: string]: any} = {
+      ...dataFilters,
+      searchBar: forceSearchValue || searchValue,
+    }
+
+    // remove search bar if not value
+    if (!searchValue || !forceSearchValue) {
+      delete dataFilterChange.searchBar
+    }
+
+    const newSearchCriteria = {
+      ...searchCriteria,
+      currentPage: 1,
+      filters: dataFilterChange,
+    }
+
+    onFetchDataList(newSearchCriteria)
+  }
+
   function handleFilter() {
     const newDataFilter = Object.keys(dataFilters).reduce((acc, key) => {
       if (dataFilters[key]) {
@@ -145,14 +171,20 @@ const LookupCustomer = ({show, onClose}: Props) => {
       return {...acc}
     }, {})
 
+    const filterAndSearch = {
+      ...newDataFilter,
+      ...(searchValue ? {searchBar: searchValue || ''} : {}),
+    }
+
     onFetchDataList({
       ...searchCriteria,
       currentPage: 1,
-      filters: newDataFilter,
+      filters: filterAndSearch,
     })
   }
 
   function handleResetFilter() {
+    setSearchValue('')
     setDataFilter({})
     onFetchDataList({...searchCriteria})
   }
@@ -183,23 +215,41 @@ const LookupCustomer = ({show, onClose}: Props) => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <div className='d-flex flex-row'>
-            <div className='d-flex align-items-center position-relative my-1 flex-grow-1 mw-1000px'>
-              <i className='ki-duotone ki-magnifier fs-1 position-absolute ms-6'>
-                <span className='path1'></span>
-                <span className='path2'></span>
-              </i>
-              <input
-                type='text'
-                data-kt-user-table-filter='search'
-                className='form-control form-control-solid ps-14 w-100'
-                placeholder='Search Customer'
-              />
-            </div>
+          <div className='d-flex flex-row align-items-center'>
+            <Input
+              classShared='flex-grow-1 h-30px mb-5'
+              placeholder='Search Customer'
+              value={searchValue}
+              onChange={handleChangeSearch}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch(searchValue)
+                }
+              }}
+              insertLeft={
+                <FontAwesomeIcon
+                  className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                  icon={faSearch}
+                  onClick={() => handleSearch(searchValue)}
+                />
+              }
+              insertRight={
+                searchValue ? (
+                  <FontAwesomeIcon
+                    className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                    icon={faClose}
+                    onClick={() => {
+                      setSearchValue('')
+                      handleSearch('')
+                    }}
+                  />
+                ) : null
+              }
+            />
             <div className='d-flex flex-end'>
               <Button
                 onClick={showInputFilter}
-                className='btn-secondary align-self-center m-2 fs-6 text-primary'
+                className='btn-secondary align-self-center m-2 fs-6 text-primary h-45px'
                 disabled={false}
               >
                 <Icons name={'filterIcon'} />
@@ -272,7 +322,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </div>
 
                           <Button
-                            className='fw-medium p-12px button-application-filter-custom fs-6'
+                            className='fw-medium p-12px button-application-filter-custom fs-6 text-primary'
                             style={{backgroundColor: '#f9f9f9', height: '35px'}}
                             onClick={handleFilter}
                           >
