@@ -327,7 +327,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </div>
 
                           <Button
-                            className='fw-medium p-12px button-application-filter-custom fs-6 text-primary'
+                            className='fw-medium p-12px button-application-filter-custom fs-6 text-primary btn-secondary'
                             style={{backgroundColor: '#f9f9f9', height: '35px'}}
                             onClick={handleFilter}
                           >

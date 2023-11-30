@@ -81,7 +81,7 @@ function TableRender({title, config = [], data}: Props) {
                               !!data[element_config.key] &&
                               element_config?.dollars}
                             {element_config.date
-                              ? moment(data[element_config.key]).format('MM/DD/YYYY')
+                              ? moment(data[element_config.key]).format('MMM DD, YYYY')
                               : data[element_config.key]}{' '}
                             {!!element_config?.elBehind && element_config?.elBehind}
                           </p>
