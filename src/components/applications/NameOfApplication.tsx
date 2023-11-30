@@ -22,9 +22,9 @@ const NameOfApplication: FC<PropsStepApplication> = ({formik}) => {
   const {values, handleChange, errors, touched} = formik
 
   return (
-    <div className='row w-100 gy-5 gx-0 gx-xl-5 align-items-start'>
+    <div className='row w-100 gy-5 gx-0 gx-lg-5 align-items-start'>
       {data.map(({key, placeholder}, i) => (
-        <div className='col-12 col-xl-4 d-flex flex-column' key={i}>
+        <div className='col-12 col-lg-4 d-flex flex-column' key={i}>
           <Input
             name={key}
             value={values?.[key]}

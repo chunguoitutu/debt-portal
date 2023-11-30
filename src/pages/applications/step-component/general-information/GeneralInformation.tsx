@@ -63,7 +63,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-100 w-lg-unset w-xl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-lg-275px w-xl-300px w-xxl-200px'
 
     // nothing
     if (!Component) return
@@ -112,7 +112,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
     if (typeComponent === 'Input') {
       return (
-        <div className='d-flex flex-column w-100 w-xl-unset'>
+        <div className='d-flex flex-column w-100 w-lg-unset'>
           <Component
             value={values[key]}
             onChange={handleChange}
