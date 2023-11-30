@@ -165,6 +165,8 @@
   }
 
   @media (max-width: 1400px) {
+    $widthLabel: 140px;
+
     .step-application {
       .stepper-line {
         display: none !important;
@@ -232,14 +234,6 @@
     }
 
     .input-title-application {
-      width: $widthLabel !important;
-    }
-
-    .input-title-application-step2 {
-      width: $widthLabelCustom !important;
-    }
-
-    .input-title-application {
       width: unset !important;
       position: static;
       transform: unset;
@@ -269,8 +263,6 @@
 }
 
 @media (max-width: 1399px) {
-  $widthLabel: 170px;
-
   .step-application {
     .stepper-line {
       display: none !important;
