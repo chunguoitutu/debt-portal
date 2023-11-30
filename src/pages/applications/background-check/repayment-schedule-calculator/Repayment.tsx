@@ -54,7 +54,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
         totalsAmount: '',
         per_month_percent: '4.0',
         totalsMonthPayment: '1',
-        first_repayment_date: '',
+        first_repayment_date: moment(Date()).format('YYYY-MM-DD'),
         monthly_due_date: '1',
       },
       validationSchema: RepaymentScheduleCalculatorSchema,
@@ -129,7 +129,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
 
   return (
     <div
-      className={`table-calculator-style modal-body p-30px `}
+      className={`table-calculator-style modal-body px-30px py-0 `}
       style={{
         maxHeight: mobile ? 'calc(100vh - 100px)' : 'calc(100vh - 200px)',
         overflowY: 'auto',
@@ -211,7 +211,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       )}
                     </div>
                   ))}
-                  <div className='d-flex flex-end pt-30px '>
+                  <div className='d-flex flex-end py-30px '>
                     <Button
                       onClick={handleClose}
                       type='reset'
@@ -232,6 +232,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
             ) : (
               <>
                 <div
+                  className='position-relative'
                   style={{
                     width: mobile ? 'calc(100% - 10px)' : '100%',
                     marginTop: mobile ? '30px' : '0',
@@ -240,7 +241,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                 >
                   {/* information for calculator */}
                   <div
-                    className={`d-flex amount-header-calculator  ${
+                    className={`d-flex amount-header-calculator   ${
                       mobile ? 'gap-8px flex-column ' : 'gap-10 flex-row '
                     } `}
                   >
@@ -286,7 +287,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           First Repayment Date
                         </div>
                         <div className='fs-4 fw-semibold'>
-                          {moment(values.first_repayment_date).format('MM/DD/YYYY')}
+                          {moment(values.first_repayment_date).format('MMM DD, YYYY')}
                         </div>
                       </div>
                     </div>
@@ -369,7 +370,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           {rowsTable.map((el) => (
                             <th
                               key={el.name}
-                              className='border-right-table p-12px label-calculator'
+                              className='border-right-table p-12px label-calculator align-top'
                             >
                               {el.name}
                             </th>
@@ -419,11 +420,11 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       </tbody>
                     </Table>
                   </div>
-                  <div className='d-flex flex-end pt-30px'>
+                  <div className='d-flex flex-end btn-repayment-schedule-calculator py-30px'>
                     <Button
                       onClick={handleClose}
                       type='reset'
-                      className='btn-lg btn-secondary  me-8px'
+                      className='btn-lg btn-secondary me-8px'
                     >
                       Cancel
                     </Button>

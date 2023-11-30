@@ -66,7 +66,9 @@ const Step: FC<Props> = ({
                     )}
                   </h3>
                   {desc && (
-                    <div className='text-capitalize fs-12 fw-semibold text-B5B5C3'>{desc}</div>
+                    <div className='text-capitalize fs-12 fw-semibold text-B5B5C3 min-w-250px min-w-xxl-auto'>
+                      {desc}
+                    </div>
                   )}
                 </div>
               </div>
