@@ -240,89 +240,101 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                 >
                   {/* information for calculator */}
                   <div
-                    className={`d-flex amount-header-calculator flex-row ${
-                      mobile ? 'gap-1' : 'gap-10'
+                    className={`d-flex amount-header-calculator  ${
+                      mobile ? 'gap-8px flex-column ' : 'gap-10 flex-row '
                     } `}
                   >
-                    <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                      <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                        Amount Of Loan $
+                    <div
+                      className={`${
+                        mobile ? 'gap-8px ' : 'gap-10 '
+                      } d-flex justify-content-start algin-items-center w-100`}
+                    >
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          Amount Of Loan $
+                        </div>
+                        <div className='fs-4 fw-semibold'>${formatNumber(values.totalsAmount)}</div>
                       </div>
-                      <div className='fs-4 fw-semibold'>${formatNumber(values.totalsAmount)}</div>
-                    </div>
-                    <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                      <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                        No. Of Instalment
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          No. Of Instalment
+                        </div>
+                        <div className='fs-4 fw-semibold'>{values.totalsMonthPayment}</div>
                       </div>
-                      <div className='fs-4 fw-semibold'>{values.totalsMonthPayment}</div>
-                    </div>
-                    <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                      <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                        Monthly Due Date
-                      </div>
-                      <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
-                    </div>
-                    <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                      <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                        Interest Per Month %
-                      </div>
-                      <div className='fs-4 fw-semibold'>
-                        {formatNumber(values.per_month_percent)}
+                      <div className={`gap-1 p-6`} style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          Monthly Due Date
+                        </div>
+                        <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
                       </div>
                     </div>
-                    <div className='gap-1 p-6' style={{width: 'fit-content'}}>
-                      <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                        First Repayment Date
+                    <div
+                      className={`${
+                        mobile ? 'gap-8px ' : 'gap-10 '
+                      } d-flex justify-content-start algin-items-center w-100`}
+                    >
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          Interest Per Month %
+                        </div>
+                        <div className='fs-4 fw-semibold'>
+                          {formatNumber(values.per_month_percent)}
+                        </div>
                       </div>
-                      <div className='fs-4 fw-semibold'>
-                        {moment(values.first_repayment_date).format('MM/DD/YYYY')}
+                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                          First Repayment Date
+                        </div>
+                        <div className='fs-4 fw-semibold'>
+                          {moment(values.first_repayment_date).format('MM/DD/YYYY')}
+                        </div>
                       </div>
                     </div>
                   </div>
                   {/* calculator table */}
-                  <div className='pt-7 row algin-items-center justify-content-between'>
-                    <div className='col-6'>
-                      <Table className='table-bordered' responsive='sm'>
+                  <div className='pt-24px row algin-items-center justify-content-between'>
+                    <div className={`${mobile ? 'col-12 ' : 'col-6'} `}>
+                      <Table className='table-bordered mb-24px ' responsive='sm'>
                         <tbody className='border-calculator'>
                           <tr>
                             <td className='label-calculator'>Loan Amount</td>
-                            <td className='content-calculator'>
+                            <td className='content-calculator w-200px p-12px'>
                               ${formatNumber(values.totalsAmount)}
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Interest (Per Month)</td>
-                            <td className='content-calculator'>
+                            <td className='content-calculator w-200px p-12px'>
                               {formatNumber(values.per_month_percent)}%
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Interest (Per Annum)</td>
-                            <td className='content-calculator'>
+                            <td className='content-calculator w-200px p-12px'>
                               {formatNumber(+values.per_month_percent * 12)}%
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Term</td>
-                            <td className='content-calculator text-transform-none'>
+                            <td className='content-calculator text-transform-none p-12px w-200px'>
                               {values.totalsMonthPayment} Month(s)
                             </td>
                           </tr>
                         </tbody>
                       </Table>
                     </div>
-                    <div className='col-6'>
-                      <Table responsive='sm' className='table-bordered'>
+                    <div className={`${mobile ? 'col-12' : 'col-6'}`}>
+                      <Table responsive='sm' className='table-bordered mb-24px'>
                         <tbody>
                           <tr>
                             <td className='label-calculator'>Principal (Per Month)</td>
-                            <td className='content-calculator'>
+                            <td className='content-calculator w-200px p-12px'>
                               ${formatNumber(+values.totalsAmount / +values.totalsMonthPayment)}
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Interest (Per Month)</td>
-                            <td className='content-calculator'>
+                            <td className='content-calculator w-200px p-12px'>
                               $
                               {formatNumber(
                                 dataFooterTable.totalInterest / +values.totalsMonthPayment
@@ -331,7 +343,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           </tr>
                           <tr>
                             <td className='label-calculator'>Monthly Instalment Amount</td>
-                            <td className='content-calculator'>
+                            <td className='content-calculator w-200px p-12px'>
                               $
                               {formatNumber(
                                 dataFooterTable.totalInterest / +values.totalsMonthPayment +
@@ -341,7 +353,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           </tr>
                           <tr>
                             <td className='label-calculator'>Total Interest For Full Term</td>
-                            <td className='content-calculator'>
+                            <td className='content-calculator w-200px'>
                               ${formatNumber(dataFooterTable.totalInterest)}
                             </td>
                           </tr>
@@ -350,12 +362,15 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                     </div>
                   </div>
                   {/* table show charge per month */}
-                  <div className='overflow-y-auto pt-4'>
+                  <div className='overflow-y-auto pt-0'>
                     <Table responsive='sm' className='table-bordered'>
                       <thead style={{backgroundColor: '#F9F9F9'}}>
                         <tr>
                           {rowsTable.map((el) => (
-                            <th key={el.name} className='border-right-table p-4 label-calculator'>
+                            <th
+                              key={el.name}
+                              className='border-right-table p-12px label-calculator'
+                            >
                               {el.name}
                             </th>
                           ))}
@@ -368,19 +383,19 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                             switch (rt.key) {
                               case 'instalment_due_date':
                                 return (
-                                  <td key={rt.key} className='p-4 content-calculator fs-4'>
+                                  <td key={rt.key} className='p-12px content-calculator fs-4'>
                                     {moment(instalment_due_date).format('MM/DD/YYYY')}
                                   </td>
                                 )
                               case 'monthly_inst_amount':
                                 return (
-                                  <td key={rt.key} className='p-4 content-calculator fs-4'>
+                                  <td key={rt.key} className='p-12px content-calculator fs-4'>
                                     ${formatNumber(principal_per_month + interest_per_month)}
                                   </td>
                                 )
                               default:
                                 return (
-                                  <td key={rt.key} className='p-4 content-calculator fs-4'>
+                                  <td key={rt.key} className='p-12px content-calculator fs-4'>
                                     ${formatNumber(el[rt.key])}
                                   </td>
                                 )
@@ -389,17 +404,17 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           return <tr key={index}>{table}</tr>
                         })}
                         <tr style={{backgroundColor: '#F9F9F9'}}>
-                          <td className='border-right-table p-4 label-calculator fs-4'>Total</td>
-                          <td className='border-right-table p-4 label-calculator fs-4'>
+                          <td className='border-right-table p-12px label-calculator fs-4'>Total</td>
+                          <td className='border-right-table p-12px label-calculator fs-4'>
                             ${formatNumber(dataFooterTable.totalPrinciple)}
                           </td>
-                          <td className='border-right-table p-4 label-calculator fs-4'>
+                          <td className='border-right-table p-12px label-calculator fs-4'>
                             ${formatNumber(dataFooterTable.totalInterest)}
                           </td>
-                          <td className='border-right-table p-4 label-calculator fs-4'>
+                          <td className='border-right-table p-12px label-calculator fs-4'>
                             ${formatNumber(dataFooterTable.totalMonthlyInst)}
                           </td>
-                          <td className='border-right-table p-4 label-calculator fs-4'></td>
+                          <td className='border-right-table p-12px label-calculator fs-4'></td>
                         </tr>
                       </tbody>
                     </Table>

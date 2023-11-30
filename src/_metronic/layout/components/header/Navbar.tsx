@@ -37,18 +37,6 @@ const Navbar = () => {
 
   return (
     <div className='app-navbar'>
-      <div className={clsx('app-navbar-item', itemClass)}>
-        <div
-          data-kt-menu-trigger="{default: 'click'}"
-          data-kt-menu-attach='parent'
-          data-kt-menu-placement='bottom-end'
-          className={btnClass}
-        >
-          <IoMdNotificationsOutline className={btnIconClass} />
-        </div>
-        <HeaderNotificationsMenu />
-      </div>
-
       {/* Priority <= 2 means super admin or admin */}
       {priority <= 2 && (
         <Link
@@ -69,6 +57,18 @@ const Navbar = () => {
           </div>
         </Link>
       )}
+
+      <div className={clsx('app-navbar-item', itemClass)}>
+        <div
+          data-kt-menu-trigger="{default: 'click'}"
+          data-kt-menu-attach='parent'
+          data-kt-menu-placement='bottom-end'
+          className={btnClass}
+        >
+          <IoMdNotificationsOutline className={btnIconClass} />
+        </div>
+        <HeaderNotificationsMenu />
+      </div>
 
       <div className={clsx('app-navbar-item', itemClass)}>
         <div

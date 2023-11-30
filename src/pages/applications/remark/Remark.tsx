@@ -142,12 +142,12 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
                     </div>
                   </div>
                 ) : (
-                  <p className='mb-0 fs-5 fw-semibold text-break' style={{color: '#4B5675'}}>
+                  <p className='mb-0 fs-14 fw-semibold text-break' style={{color: '#4B5675'}}>
                     {message.message}
                   </p>
                 )}
                 <div>
-                  <span className='fs-sm fw-semibold text-capitalize text-gray-400 me-2'>
+                  <span className='fs-12 fw-semibold text-capitalize text-B5B5C3 me-2'>
                     {moment(message.time).format('hh:mm A - MM/DD/YYYY')}
                   </span>
                   <span className='fs-sm fw-semibold text-capitalize text-primary'>
@@ -162,13 +162,13 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
               >
                 <BsThreeDotsVertical className=' text-gray-600    text-hover-black cursor-pointer top-0 close-remark-icon' />
                 {!!(showMenu === index + 1) && (
-                  <div className='dropdown-menu-remark card  position-absolute'>
+                  <div className='dropdown-menu-remark card   position-absolute'>
                     <button
                       onClick={(e) => {
                         setShowMenu(0)
                         setInfoEdit(message)
                       }}
-                      className='dropdown-children-remark fs-5 px-4 menu-item-child mt-2'
+                      className='dropdown-children-remark fs-14 text-start px-4 menu-item-child mt-2'
                     >
                       Edit
                     </button>
@@ -201,7 +201,7 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
             id='myInput'
             type='text'
             ref={inputRef}
-            className='w-100 h-100 fs-14 bg-transparent pe-10px fw-semibold text-gray-500'
+            className='w-100 h-100  bg-transparent pe-10px input-remark-import'
             style={{
               border: 'none',
               outline: 'none',
