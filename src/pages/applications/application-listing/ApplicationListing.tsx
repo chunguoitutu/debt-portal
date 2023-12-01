@@ -538,6 +538,7 @@ const ApplicationListing = () => {
                         <Button
                           className='fw-medium p-12px button-application-filter-custom fs-5 text-primary btn-secondary'
                           onClick={handleFilter}
+                          style={{backgroundColor: '#f9f9f9'}}
                         >
                           Apply
                         </Button>
