@@ -300,7 +300,7 @@ const ApplicationListing = () => {
       if (dataFilter[key]) {
         let value = dataFilter[key]
 
-        if (['loan_type_id', 'id'].includes(key)) {
+        if (['loan_type_id', 'id', 'loan_terms'].includes(key)) {
           value = +value
         }
 

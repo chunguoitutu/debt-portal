@@ -311,7 +311,7 @@ export type ApplicationPayload = {
     mobilephone_3?: string
     email_1?: string
     email_2?: string
-    job_type_id?: number
+    job_type_id?: number | null
     employment_status?: string
     monthly_income?: number
     credit_score?: string
@@ -324,7 +324,7 @@ export type ApplicationPayload = {
     application_no?: string
     status?: number
     borrower_id?: string
-    loan_type_id?: string | number
+    loan_type_id?: number | null
     application_date?: any
     loan_amount_requested: number
     application_notes?: string

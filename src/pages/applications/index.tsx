@@ -377,6 +377,7 @@ export const Applications = () => {
       setCurrentStep(currentStep + 1)
     }
   }
+
   async function handleSubmitForm() {
     const {
       identification_type,
@@ -461,7 +462,7 @@ export const Applications = () => {
         mobilephone_3: String(mobilephone_3),
         homephone: String(homephone),
         monthly_income: +monthly_income || 0,
-        job_type_id: +job_type_id,
+        job_type_id: +job_type_id || null,
         spoken_language,
         marketing_type_id: +marketing_type_id,
         residential_type,
@@ -494,7 +495,7 @@ export const Applications = () => {
         ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
         loan_terms: +loan_terms,
         loan_amount_requested: +loan_amount_requested,
-        loan_type_id: +loan_type_id,
+        loan_type_id: +loan_type_id || null,
         status: 1,
         application_date: new Date(),
         application_notes: JSON.stringify(remarkList),
