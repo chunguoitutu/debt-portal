@@ -10,7 +10,6 @@ import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {APPLICATION_LISTING_CONFIG} from './config'
 import RowPerPage from '@/components/row-per-page'
-import PaginationArrow from '@/components/pagination.tsx'
 import Badge from '@/components/badge/Badge'
 import Loading from '@/components/table/components/Loading'
 import {
@@ -29,6 +28,7 @@ import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import './style.scss'
 import Input from '@/components/input'
+import Pagination from '@/components/table/components/Pagination'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -581,7 +581,8 @@ const ApplicationListing = () => {
               })
             }
           />
-          <PaginationArrow
+
+          <Pagination
             onChangePagePagination={handleChangePagination}
             searchCriteria={searchCriteria}
           />
