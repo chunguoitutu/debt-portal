@@ -90,6 +90,18 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       isSort: true,
     },
     {
+      key: 'loan_terms',
+      name: 'Loan Terms',
+      classNameTableBody: 'text-end pe-0',
+      classNameTableHead: 'text-end',
+      infoFilter: {
+        typeComponent: 'input',
+        typeInput: 'number',
+        component: Input,
+      },
+      isSort: true,
+    },
+    {
       key: 'application_date',
       name: 'APPLICATION DATE',
       type: 'date',
