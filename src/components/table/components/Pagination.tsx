@@ -5,7 +5,7 @@ import {useMemo} from 'react'
 
 type Props = {
   onChangePagePagination: (pagination: Omit<SearchCriteria, 'total'>) => void
-  isLoading: boolean
+  isLoading?: boolean
   searchCriteria: SearchCriteria
 }
 
@@ -21,7 +21,7 @@ const mappedLabel = (label: string): string => {
   return label
 }
 
-const Pagination = ({onChangePagePagination, isLoading, searchCriteria}: Props) => {
+const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}: Props) => {
   const {total, currentPage, pageSize} = searchCriteria
 
   // no item found will return 1

@@ -4,24 +4,17 @@ import {TABLE_LOOKUP_CUSTOMER} from '../config'
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import RowPerPage from '@/components/row-per-page'
-import PaginationArrow from '@/components/pagination.tsx'
 import Input from '@/components/input'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate, faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import request from '../../../../app/axios'
 import {KTCardBody, KTIcon} from '../../../../_metronic/helpers'
-import {
-  ApplicationItem,
-  OrderBy,
-  ResponseApplicationListing,
-  SearchCriteria,
-  TableRow,
-  ResponeLookupListing,
-} from '@/app/types'
+import {OrderBy, SearchCriteria, TableRow, ResponeLookupListing} from '@/app/types'
 import SortBy from '@/components/sort-by'
 import clsx from 'clsx'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import './style.scss'
+import Pagination from '@/components/table/components/Pagination'
 
 type Props = {
   show?: boolean
@@ -367,7 +360,8 @@ const LookupCustomer = ({show, onClose}: Props) => {
               })
             }
           />
-          <PaginationArrow
+
+          <Pagination
             onChangePagePagination={handleChangePagination}
             searchCriteria={searchCriteria}
           />

@@ -153,7 +153,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                   style={{
                     width: mobile ? 'calc(100% - 10px)' : '60.3%',
                     marginTop: mobile ? '30px' : '0',
-                    paddingLeft: mobile ? '00px' : '30px',
+                    paddingLeft: mobile ? '0px' : '30px',
                   }}
                 >
                   {rows?.map((row) => (
