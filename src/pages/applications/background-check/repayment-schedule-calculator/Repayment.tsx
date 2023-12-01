@@ -136,7 +136,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
       }}
     >
       <div ref={stepperRef}>
-        <div style={{width: '100%'}} className=''>
+        <div style={{width: '100%'}} className='pt-30px'>
           <div style={{width: '100%'}} className=' d-xxl-flex  justify-content-between'>
             <div className='step-repayment-schedule'>
               <Step
