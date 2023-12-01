@@ -15,6 +15,7 @@ import {MONTHLY_DUE_DATE} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
 import moment from 'moment'
 import Button from '@/components/button/Button'
+import {auto} from '@popperjs/core'
 
 type Props = {
   handleClose: any
@@ -242,27 +243,36 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                   {/* information for calculator */}
                   <div
                     className={`d-flex amount-header-calculator   ${
-                      mobile ? 'gap-8px flex-column ' : 'gap-10 flex-row '
+                      mobile ? ' flex-column ' : 'gap-10 flex-row '
                     } `}
                   >
                     <div
                       className={`${
-                        mobile ? 'gap-8px ' : 'gap-10 '
+                        mobile ? '' : 'gap-10 '
                       } d-flex justify-content-start algin-items-center w-100`}
                     >
-                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                      <div
+                        className='gap-1 p-6 w'
+                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                      >
                         <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
                           Amount Of Loan $
                         </div>
                         <div className='fs-4 fw-semibold'>${formatNumber(values.totalsAmount)}</div>
                       </div>
-                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                      <div
+                        className='gap-1 p-6'
+                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                      >
                         <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
                           No. Of Instalment
                         </div>
                         <div className='fs-4 fw-semibold'>{values.totalsMonthPayment}</div>
                       </div>
-                      <div className={`gap-1 p-6`} style={{width: 'fit-content'}}>
+                      <div
+                        className={`gap-1 p-6`}
+                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                      >
                         <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
                           Monthly Due Date
                         </div>
@@ -271,10 +281,13 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                     </div>
                     <div
                       className={`${
-                        mobile ? 'gap-8px ' : 'gap-10 '
+                        mobile ? ' ' : 'gap-10 '
                       } d-flex justify-content-start algin-items-center w-100`}
                     >
-                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                      <div
+                        className='gap-1 p-6'
+                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                      >
                         <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
                           Interest Per Month %
                         </div>
@@ -282,7 +295,10 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           {formatNumber(values.per_month_percent)}
                         </div>
                       </div>
-                      <div className='gap-1 p-6' style={{width: 'fit-content'}}>
+                      <div
+                        className='gap-1 p-6'
+                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                      >
                         <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
                           First Repayment Date
                         </div>
