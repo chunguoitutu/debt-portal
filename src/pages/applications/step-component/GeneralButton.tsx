@@ -27,7 +27,7 @@ const GeneralButton: FC<Props> = ({
         <Button
           loading={isSubmitting && isDraft}
           onClick={handleSaveDraft}
-          className='btn-secondary align-self-center d-flex none'
+          className='btn-secondary align-self-center d-flex none fs-5'
           disabled={isSubmitting}
         >
           Save Draft
@@ -38,12 +38,18 @@ const GeneralButton: FC<Props> = ({
         loading={isSubmitting && !isDraft}
         disabled={isSubmitting}
         onClick={handleSubmit}
+        className='fs-5 btn btn-primary'
       >
         {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
       </Button>
 
       {currentStep === 6 ? (
-        <Button type='submit' disabled={isSubmitting} onClick={() => {}}>
+        <Button
+          className='fs-5 btn btn-primary'
+          type='submit'
+          disabled={isSubmitting}
+          onClick={() => {}}
+        >
           Approve
         </Button>
       ) : null}

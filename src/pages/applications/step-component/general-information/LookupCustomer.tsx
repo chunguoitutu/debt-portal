@@ -320,7 +320,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </div>
 
                           <Button
-                            className='fw-medium p-12px button-application-filter-custom fs-6 text-primary btn-secondary'
+                            className='fw-medium p-12px button-application-filter-custom fs-5 text-primary btn-secondary'
                             style={{backgroundColor: '#f9f9f9', height: '35px'}}
                             onClick={handleFilter}
                           >
@@ -370,12 +370,18 @@ const LookupCustomer = ({show, onClose}: Props) => {
           <div className='d-flex flex-end full'>
             <Button
               onClick={onClose}
-              className='btn-secondary align-self-center me-3'
+              className='btn-secondary align-self-center me-3 fs-5'
               disabled={false}
             >
               Cancel
             </Button>
-            <Button type='submit' loading={false} disabled={false} onClick={handleLookup}>
+            <Button
+              type='submit'
+              loading={false}
+              disabled={false}
+              onClick={handleLookup}
+              className='fs-5 btn btn-primary'
+            >
               Lookup
             </Button>
           </div>

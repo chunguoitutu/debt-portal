@@ -293,7 +293,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                 >
                   {indexParent > 0 && (
                     <Button
-                      className='btn-sm btn-light-danger'
+                      className='btn-sm btn-light-danger h-45px'
                       onClick={() => handleShowConfirmDelete(blockAddress, indexParent)}
                     >
                       Close Block
