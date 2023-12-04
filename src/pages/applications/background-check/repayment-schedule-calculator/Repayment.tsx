@@ -8,7 +8,7 @@ import {DEFAULT_MSG_ERROR, STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '@/app/const
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {Input} from '@/components/input'
-import Select from '@/components/select/select'
+import {Select} from '@/components/select'
 import Step from '@/components/step/Step'
 import {MONTHLY_DUE_DATE} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
@@ -167,7 +167,6 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           error={errors[row?.key]}
                           onBlur={handleBlur}
                           touched={touched[row?.key]}
-                          errorTitle={errors[row?.key]}
                           options={MONTHLY_DUE_DATE || []}
                           value={values[row?.key] || ''}
                         />

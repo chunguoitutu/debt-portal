@@ -1,4 +1,4 @@
-import Select from '../select/select'
+import {Select} from '../select'
 
 type Props = {limit: number; lenghtData: number; page: number; setLimit?: any}
 

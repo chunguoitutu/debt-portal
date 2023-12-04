@@ -2,7 +2,7 @@ import {FC, Fragment, useEffect, useState} from 'react'
 import clsx from 'clsx'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import Tippy from '@tippyjs/react'
-import Select from '@/components/select/select'
+import {Select} from '@/components/select'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
 import {COUNTRY_PHONE_CODE} from '@/app/utils'
@@ -85,8 +85,8 @@ const Employment: FC<PropsStepApplication> = (props) => {
             onChange={handleChange}
             name={key}
             classShared={className}
-            fieldValueOption={keyValueOfOptions}
-            fieldLabelOption={keyLabelOfOptions}
+            keyValueOption={keyValueOfOptions}
+            keyLabelOption={keyLabelOfOptions}
             options={!!dependencyApi ? dataLoanType[key] || [] : options}
             touched={touched}
             onBlur={handleBlur}

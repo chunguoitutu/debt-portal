@@ -1,7 +1,7 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
-import Select from '@/components/select/select'
+import {Select} from '@/components/select'
 import Button from '@/components/button/Button'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
 import ErrorMessage from '@/components/error/ErrorMessage'
@@ -79,9 +79,8 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
           options={!!dependencyApi ? dataOption[key] || [] : options}
           error={errors[key]}
           touched={touched[key]}
-          errorTitle={errors[key]}
-          fieldValueOption={keyValueOfOptions}
-          fieldLabelOption={keyLabelOfOptions}
+          keyValueOption={keyValueOfOptions}
+          keyLabelOption={keyLabelOfOptions}
         />
       )
     }
@@ -259,9 +258,8 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                       options={!!dependencyApi ? dataOption[key] || [] : ''}
                       error={errors['address_contact_info']?.[indexParent]?.[key]}
                       touched={touched['address_contact_info']?.[indexParent]?.[key]}
-                      errorTitle={errors['address_contact_info']?.[indexParent]?.[key]}
-                      fieldValueOption={keyValueOfOptions || 'label'}
-                      fieldLabelOption={keyLabelOfOptions || 'value'}
+                      keyValueOption={keyValueOfOptions || 'label'}
+                      keyLabelOption={keyLabelOfOptions || 'value'}
                     />
                   ) : (
                     <div className='d-flex flex-column w-100'>

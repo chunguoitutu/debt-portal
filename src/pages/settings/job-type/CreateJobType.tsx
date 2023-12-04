@@ -8,7 +8,7 @@ import {swalToast} from '@/app/swal-notification'
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
 import request from '@/app/axios'
 import {KTIcon} from '@/_metronic/helpers'
-import TextArea from '@/components/textarea/TextArea'
+import {TextArea} from '@/components/textarea'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
@@ -153,14 +153,13 @@ const CreateJobType = ({
                   {row.key === 'description' ? (
                     <div>
                       <TextArea
-                        title={row.name}
+                        label={row.name}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
+                        error={errors[row.key] as string}
+                        touched={!!touched[row.key]}
                       />
-                      {errors[row?.key] && touched[row?.key] && (
-                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                      )}
                     </div>
                   ) : (
                     <div className='d-flex flex-column mb-16px'>

@@ -1,18 +1,13 @@
-import {FC, ReactNode, SelectHTMLAttributes} from 'react'
+import {FC, SelectHTMLAttributes} from 'react'
 import ErrorMessage from '../error/ErrorMessage'
 
-interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className' | 'name'> {
+interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string
-  name: string
-  className?: string
   options?: {[key: string]: any}[]
-  children?: ReactNode
-  required?: boolean
-  fieldValueOption?: string
-  fieldLabelOption?: string
-  error?: boolean
+  keyValueOption?: string
+  keyLabelOption?: string
+  error?: string
   touched?: boolean
-  errorTitle?: string
   classShared?: string
   isOptionDefault?: boolean
   dropDownGroup?: boolean | undefined
@@ -21,18 +16,16 @@ interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className
 const Select: FC<Props> = ({
   label,
   options,
-  children,
-  fieldValueOption = 'value',
-  fieldLabelOption = 'label',
-  error = false,
+  error,
   touched,
-  errorTitle,
   name,
   className = '',
   isOptionDefault = true,
   required = false,
   classShared = 'row mb-6',
   dropDownGroup,
+  keyValueOption = 'value',
+  keyLabelOption = 'label',
   ...rest
 }) => {
   return (
@@ -65,14 +58,13 @@ const Select: FC<Props> = ({
               })
             : options?.map((o, i) => {
                 return (
-                  <option value={o[fieldValueOption]} key={i}>
-                    {o[fieldLabelOption]}
+                  <option value={o[keyValueOption]} key={i}>
+                    {o[keyLabelOption]}
                   </option>
                 )
               })}
-          {children}
         </select>
-        {error && touched && <ErrorMessage message={errorTitle} />}
+        {error && touched && <ErrorMessage className='mt-2' message={error} />}
       </div>
     </div>
   )

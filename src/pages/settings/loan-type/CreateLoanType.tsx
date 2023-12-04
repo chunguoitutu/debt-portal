@@ -11,8 +11,7 @@ import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
-import TextArea from '@/components/textarea/TextArea'
-import ErrorMessage from '@/components/error/ErrorMessage'
+import {TextArea} from '@/components/textarea'
 import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
@@ -177,14 +176,13 @@ const CreateLoanType = ({
                   {row.key === 'description' ? (
                     <div>
                       <TextArea
-                        title={row.name}
+                        label={row.name}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
+                        error={errors[row.key] as string}
+                        touched={!!touched[row.key]}
                       />
-                      {errors[row?.key] && touched[row?.key] && (
-                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                      )}
                     </div>
                   ) : (
                     <div className='d-flex flex-column mb-16px'>

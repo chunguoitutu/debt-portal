@@ -120,7 +120,7 @@ const ApplicationListing = () => {
         <tr key={idx}>
           {rows.map(
             ({key, component, classNameTableBody, isHide, type, options, infoFilter}, i) => {
-              const {fieldLabelOption, fieldValueOption} = infoFilter || {}
+              const {keyLabelOption, keyValueOption} = infoFilter || {}
 
               if (isHide) {
                 return <React.Fragment key={i}></React.Fragment>
@@ -140,10 +140,10 @@ const ApplicationListing = () => {
               if (dataOption[key] || options) {
                 const currentItem =
                   (options || dataOption[key]).find(
-                    (item) => item[fieldValueOption || 'value'] === value
+                    (item) => item[keyValueOption || 'value'] === value
                   ) || {}
 
-                value = currentItem[fieldLabelOption || 'label'] || ''
+                value = currentItem[keyLabelOption || 'label'] || ''
               }
 
               if (key === 'status') {
@@ -467,8 +467,8 @@ const ApplicationListing = () => {
                         props = {
                           ...props,
                           options: options || dataOption[key],
-                          fieldLabelOption: infoFilter?.fieldLabelOption || 'label',
-                          fieldValueOption: infoFilter?.fieldValueOption || 'value',
+                          keyLabelOption: infoFilter?.keyLabelOption || 'label',
+                          keyValueOption: infoFilter?.keyValueOption || 'value',
                         }
                       } else {
                         // type input

@@ -8,7 +8,7 @@ import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
-import TextArea from '@/components/textarea/TextArea'
+import {TextArea} from '@/components/textarea'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
@@ -192,19 +192,14 @@ const CreateEditRejectionType = ({
                           {row?.key === 'rejection_type_description' ? (
                             <div className='mb-16px'>
                               <TextArea
-                                title={row?.name}
+                                label={row?.name}
                                 name={row?.key}
                                 value={values[row?.key] || ''}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                error={errors[row?.key]}
+                                touched={touched[row?.key]}
                               />
-
-                              {errors[row?.key] && touched[row?.key] && (
-                                <ErrorMessage
-                                  className='mt-2'
-                                  message={errors[row?.key] as string}
-                                />
-                              )}
                             </div>
                           ) : (
                             <div className='d-flex flex-column mb-16px'>

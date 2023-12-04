@@ -151,8 +151,8 @@ export type TableRow = {
     type: string
     typeInput?: HTMLInputTypeAttribute
     isRequired?: boolean
-    fieldLabelOption?: string
-    fieldValueOption?: string
+    keyLabelOption?: string
+    keyValueOption?: string
     typeComponent?: 'select' | 'input' | 'checkbox-rounded' | 'select'
     component?: FC<any> | JSX.Element
     dependencyApi?: string
@@ -168,8 +168,8 @@ export type TableRow = {
     typeComponent: 'select' | 'input'
     typeInput?: HTMLInputTypeAttribute
     component: any
-    fieldLabelOption?: string
-    fieldValueOption?: string
+    keyLabelOption?: string
+    keyValueOption?: string
     dependencyApi?: string
     noThereAreCommas?: boolean
   }

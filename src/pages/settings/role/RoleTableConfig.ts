@@ -1,9 +1,9 @@
 import {TableConfig} from '@/app/types'
 import Priority from './Priority'
-import Select from '@/components/select/select'
-import {DropDownRole} from '@/components/DropDownRole'
+import {Select} from '@/components/select'
 import Badge from '@/components/badge/Badge'
 import InputCheck from '@/components/input/InputCheckRounded'
+import {SelectRolePermission} from '@/components/select'
 
 export const ROLE_TABLE_CONFIG: TableConfig = {
   settings: {
@@ -59,7 +59,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       key: 'permissions',
       name: 'Permissions',
       classNameTableHead: 'w-300px min-w-150px',
-      component: DropDownRole,
+      component: SelectRolePermission,
       isCreateEdit: true,
     },
     {

@@ -3,7 +3,7 @@ import {TableConfig} from '@/app/types'
 import {Input} from '@/components/input'
 import FullNameUser from './FullNameUser'
 import InputCheck from '@/components/input/InputCheckRounded'
-import Select from '@/components/select/select'
+import {Select} from '@/components/select'
 import {convertMessageErrorMaximum, convertMessageErrorPassword} from '@/app/utils'
 import Badge from '@/components/badge/Badge'
 
@@ -151,7 +151,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'select',
         isRequired: true,
-        fieldLabelOption: 'role_name',
+        keyLabelOption: 'role_name',
         typeComponent: 'select',
         component: Select,
         dependencyApi: 'config/role/listing',
