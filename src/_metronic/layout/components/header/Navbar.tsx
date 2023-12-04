@@ -1,13 +1,14 @@
 import clsx from 'clsx'
-import {HeaderNotificationsMenu, HeaderUserMenu} from '../../../partials'
+import {HeaderNotificationsMenu} from '../../../partials'
 import {AiOutlineSetting} from 'react-icons/ai'
 import {IoMdNotificationsOutline} from 'react-icons/io'
 import {useLayout} from '../../core'
 import {KTIcon} from '../../../helpers'
 import {Link, useLocation} from 'react-router-dom'
 import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
-import {useMemo} from 'react'
+import {useMemo, useState} from 'react'
 import {useAuth} from '../../../../app/context/AuthContext'
+import HeaderUserMenu from '@/_metronic/partials/layout/header-menus/HeaderUserMenu'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -21,6 +22,17 @@ const Navbar = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {currentUser, priority} = useAuth()
   const {firstname, lastname, middlename} = currentUser || {}
+  const [isMenuVisible, setMenuVisible] = useState(false)
+
+  const showMenu = () => {
+    setMenuVisible(true)
+    console.log(1)
+  }
+
+  const hideMenu = () => {
+    setMenuVisible(false)
+    console.log(2)
+  }
 
   const fullName = useMemo(
     () => {
@@ -69,69 +81,83 @@ const Navbar = () => {
         </div>
         <HeaderNotificationsMenu />
       </div>
-
-      <div className={clsx('app-navbar-item', itemClass)}>
-        <div
-          className={clsx('cursor-pointer symbol', userAvatarClass)}
-          data-kt-menu-trigger="{default: 'hover'}"
-          data-kt-menu-attach='parent'
-          data-kt-menu-placement='bottom-end'
-        >
+      <div
+        className={clsx('app-navbar-item', itemClass)}
+        onMouseEnter={showMenu}
+        onMouseLeave={hideMenu}
+      >
+        <div className={clsx('app-navbar-item', itemClass)}>
           <div
-            style={{
-              paddingLeft: '12px',
-              paddingRight: '12px',
-              paddingTop: '4px',
-              paddingBottom: '4px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: '#071437',
-              borderRadius: '100px',
-              border: '1px solid var(--color-border-border-gray-800, #252F4A)',
-            }}
+            className={clsx('cursor-pointer symbol', userAvatarClass)}
+            // data-kt-menu-trigger="{default: 'hover'}"
+            // data-kt-menu-attach='parent'
+            // data-kt-menu-placement='bottom-end'
           >
-            <Avatar
-              firstname={currentUser?.firstname}
-              lastname={currentUser?.lastname}
+            <div
               style={{
-                width: 30,
-                borderRadius: '50%',
-                height: 30,
-                objectFit: 'cover',
+                paddingLeft: '12px',
+                paddingRight: '12px',
+                paddingTop: '4px',
+                paddingBottom: '4px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                background: '#071437',
+                borderRadius: '100px',
+                border: '1px solid var(--color-border-border-gray-800, #252F4A)',
               }}
-            />
-            <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
-              <p
+            >
+              <Avatar
+                firstname={currentUser?.firstname}
+                lastname={currentUser?.lastname}
                 style={{
-                  wordWrap: 'break-word',
-                  lineHeight: 'normal',
-                  fontWeight: '400',
-                  fontStyle: 'normal',
-                  fontSize: '14px',
-                  color: 'white',
-                  margin: '0',
+                  width: 30,
+                  borderRadius: '50%',
+                  height: 30,
+                  objectFit: 'cover',
                 }}
-              >
-                {fullName}
-              </p>
-              <p
-                style={{
-                  lineHeight: 'normal',
-                  fontWeight: '400',
-                  fontStyle: 'normal',
-                  fontSize: '12px',
-                  color: 'white',
-                  margin: '0',
-                  opacity: '0.7',
-                }}
-              >
-                {currentUser?.role_name || ''}
-              </p>
+              />
+              <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
+                <p
+                  style={{
+                    wordWrap: 'break-word',
+                    lineHeight: 'normal',
+                    fontWeight: '400',
+                    fontStyle: 'normal',
+                    fontSize: '14px',
+                    color: 'white',
+                    margin: '0',
+                  }}
+                >
+                  {fullName}
+                </p>
+                <p
+                  style={{
+                    lineHeight: 'normal',
+                    fontWeight: '400',
+                    fontStyle: 'normal',
+                    fontSize: '12px',
+                    color: 'white',
+                    margin: '0',
+                    opacity: '0.7',
+                  }}
+                >
+                  {currentUser?.role_name || ''}
+                </p>
+              </div>
             </div>
           </div>
+          {isMenuVisible && (
+            <div
+              style={{
+                position: 'relative',
+                right: 200,
+              }}
+            >
+              <HeaderUserMenu />
+            </div>
+          )}
         </div>
-        <HeaderUserMenu />
       </div>
       {config.app?.header?.default?.menu?.display && (
         <div className='app-navbar-item d-lg-none ms-2 me-n3' title='Show header menu'>

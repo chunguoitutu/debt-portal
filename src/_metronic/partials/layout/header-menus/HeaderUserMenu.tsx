@@ -1,19 +1,16 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import {useAuth} from '../../../../app/context/AuthContext'
+import Avatar from '@/app/modules/profile/components/profile/Avatar'
 import {FC} from 'react'
 import {Link} from 'react-router-dom'
-import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
-import {useAuth} from '../../../../app/context/AuthContext'
+import './style.scss'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout, company_name} = useAuth()
 
   return (
-    <div
-      className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-300px'
-      data-kt-menu='true'
-    >
-      <div className='menu-item px-3'>
-        <div className='menu-content d-flex align-items-center px-3'>
+    <div className='dropdown-menu-application'>
+      <div className='dropdown-fixed fw-bold py-4 fs-6 w-300px'>
+        <div className='d-flex ms-5 p-2'>
           <div className='symbol symbol-50px me-5'>
             <Avatar
               firstname={currentUser?.firstname}
@@ -35,25 +32,30 @@ const HeaderUserMenu: FC = () => {
             </a>
           </div>
         </div>
-      </div>
 
-      <div className='separator my-2'></div>
+        <div className='separator my-2'></div>
 
-      <div className='menu-item px-5 my-1'>
-        <Link to='/account/overview' className='menu-link px-5 fs-6'>
-          Account Settings
-        </Link>
-      </div>
+        <div className='menu-item px-5 my-1'>
+          <Link
+            to='/account/overview'
+            className='menu-link px-5 fs-6 text-dropdown-black menu-item-child'
+          >
+            Account Settings
+          </Link>
+        </div>
 
-      <div className='separator my-2'></div>
+        <div className='separator my-2'></div>
 
-      <div className='menu-item px-5'>
-        <span onClick={() => logout()} className='menu-link px-5 fs-6'>
-          Sign Out
-        </span>
+        <div className='menu-item px-5'>
+          <span
+            onClick={() => logout()}
+            className='menu-link px-5 fs-6 text-dropdown-black menu-item-child'
+          >
+            Sign Out
+          </span>
+        </div>
       </div>
     </div>
   )
 }
-
-export {HeaderUserMenu}
+export default HeaderUserMenu
