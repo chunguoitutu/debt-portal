@@ -23,7 +23,7 @@ const TextArea: FC<TextAreaProps> = ({
   const defaultId = useId()
 
   return (
-    <div className={`d-flex flex-column gap-2 ${classShared}`}>
+    <div className={`${classShared}`}>
       {label && (
         <Label
           className='d-flex align-items-center fs-5 fw-semibold mb-8px'
