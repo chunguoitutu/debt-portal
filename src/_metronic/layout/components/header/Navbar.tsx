@@ -26,12 +26,10 @@ const Navbar = () => {
 
   const showMenu = () => {
     setMenuVisible(true)
-    console.log(1)
   }
 
   const hideMenu = () => {
     setMenuVisible(false)
-    console.log(2)
   }
 
   const fullName = useMemo(
