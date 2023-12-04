@@ -4,7 +4,6 @@ import {useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-
 import * as Yup from 'yup'
 import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
 import request from '@/app/axios'
@@ -13,8 +12,8 @@ import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
 import {TextArea} from '@/components/textarea'
 import {Input} from '@/components/input'
-import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
+import {CheckboxRounded} from '@/components/checkbox'
 
 type Props = {
   setLoadApi: any
@@ -204,11 +203,11 @@ const CreateLoanType = ({
               )
             })}
             <div className='mt-16px'>
-              <InputCheck
+              <CheckboxRounded
+                label='Status'
                 checked={status}
                 onChange={() => setStatus(!status)}
                 id='status'
-                title='Status'
               />
             </div>
           </form>

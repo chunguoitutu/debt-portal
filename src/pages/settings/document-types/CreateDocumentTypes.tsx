@@ -10,8 +10,8 @@ import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
 import {TextArea} from '@/components/textarea'
 import {Input} from '@/components/input'
-import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
+import {CheckboxRounded} from '@/components/checkbox'
 
 type Props = {
   setLoadApi: any
@@ -175,11 +175,11 @@ const CreateDocumentType = ({
               )
             })}
             <div className='mt-16px'>
-              <InputCheck
+              <CheckboxRounded
+                label='Status'
                 checked={status}
                 onChange={() => setStatus(!status)}
                 id='status'
-                title='Status'
               />
             </div>
           </form>

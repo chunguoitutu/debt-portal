@@ -1,5 +1,6 @@
-import {FC, SelectHTMLAttributes} from 'react'
+import {FC, SelectHTMLAttributes, useId} from 'react'
 import ErrorMessage from '../error/ErrorMessage'
+import Label from '../label'
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string
@@ -19,6 +20,7 @@ const Select: FC<Props> = ({
   error,
   touched,
   name,
+  id,
   className = '',
   isOptionDefault = true,
   required = false,
@@ -28,12 +30,17 @@ const Select: FC<Props> = ({
   keyLabelOption = 'label',
   ...rest
 }) => {
+  const defaultId = useId()
+
   return (
     <div className={`${classShared}`}>
       {label && (
-        <label htmlFor={name} className='d-flex align-items-center fs-4 fw-semibold mb-2'>
-          <span className={`${required ? 'required' : ''}`}>{label}</span>
-        </label>
+        <Label
+          htmlFor={id || defaultId || name}
+          className='d-flex align-items-center fs-16 fw-semibold mb-8px'
+          label={label}
+          required={required}
+        />
       )}
 
       <div className='fv-row'>

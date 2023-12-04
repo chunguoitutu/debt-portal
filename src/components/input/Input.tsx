@@ -1,5 +1,4 @@
 import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode, useId, useState} from 'react'
-import {handleKeyPress, handlePaste} from '../enter-numbers-only'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
@@ -19,6 +18,8 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   error?: string
   touched?: boolean
 }
+
+const numberAllowDotRegex = /^[0-9.]+$/
 
 const Input: FC<Props> = ({
   id,
@@ -50,12 +51,33 @@ const Input: FC<Props> = ({
     }
   }
 
+  function handleKeyPress({noThereAreCommas = true, e}: any) {
+    e = e || window.event
+    const charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
+    const charStr = String.fromCharCode(charCode)
+    const dotInvalid = noThereAreCommas
+      ? charStr === '.' && noThereAreCommas
+      : e.target.value.includes('.') && charStr === '.'
+    ;(dotInvalid || !charStr.match(numberAllowDotRegex)) && e.preventDefault()
+  }
+
+  function handlePaste({noThereAreCommas = true, e}: any) {
+    let valueCopied = e.clipboardData.getData('text/plain')
+    const oldValue = +e.target.value
+    if (
+      Number.isNaN(+valueCopied) ||
+      ((oldValue % 1 !== 0 || noThereAreCommas) && +valueCopied % 1 !== 0) ||
+      +valueCopied < 0
+    )
+      e.preventDefault()
+  }
+
   return (
     <div className={`${classShared}`}>
       {label && (
         <Label
           htmlFor={id || defaultId || name}
-          className='d-flex align-items-center fs-5 fw-semibold mb-8px'
+          className='d-flex align-items-center fs-16 fw-semibold mb-8px'
           label={label}
           required={required}
         />
@@ -80,7 +102,7 @@ const Input: FC<Props> = ({
           }
           type={typeCustom}
           className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
-          value={value}
+          value={value || ''}
           id={id || defaultId || name}
           name={name}
           {...rest}

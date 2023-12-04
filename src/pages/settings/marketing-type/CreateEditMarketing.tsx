@@ -9,9 +9,9 @@ import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
 import {Input} from '@/components/input'
-import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
 import {MAKETTING_TABLE_CONFIG} from './MarketingConfig'
+import {CheckboxRounded} from '@/components/checkbox'
 
 type Props = {
   setLoadApi: any
@@ -200,11 +200,12 @@ const CreatEditMarkettingType = ({
                     })}
                 </>
               ) : null}
-              <InputCheck
-                title='Status'
+
+              <CheckboxRounded
+                label='Status'
                 checked={status}
                 onChange={() => setStatus(!status)}
-                id='Status'
+                id='status'
               />
             </form>
           </div>

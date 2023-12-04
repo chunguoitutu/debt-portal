@@ -8,11 +8,10 @@ import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
-import {TextArea} from '@/components/textarea'
-import ErrorMessage from '@/components/error/ErrorMessage'
-import {Input} from '@/components/input'
-import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
+import {TextArea} from '@/components/textarea'
+import {Input} from '@/components/input'
+import {CheckboxRounded} from '@/components/checkbox'
 
 type Props = {
   setLoadApi: any
@@ -221,11 +220,12 @@ const CreateEditRejectionType = ({
                     })}
                 </>
               ) : null}
-              <InputCheck
-                title='Status'
+
+              <CheckboxRounded
+                label='Status'
                 checked={status}
                 onChange={() => setStatus(!status)}
-                id='Status'
+                id='status'
               />
             </form>
           </div>

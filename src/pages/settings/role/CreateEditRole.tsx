@@ -326,7 +326,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     checked={!!values.status}
                     onChange={handleChangeStatus}
                     id='status'
-                    title='Status'
+                    label='Status'
                     key={index}
                   />
                 )
