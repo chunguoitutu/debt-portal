@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 import NameOfApplication from '@/components/applications/NameOfApplication'
 import Checkbox from '@/components/checkbox/Checkbox'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import Radio from '@/components/radio/Radio'
 import Select from '@/components/select/select'
 import TextArea from '@/components/textarea/TextArea'

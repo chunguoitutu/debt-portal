@@ -1,10 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-
 import * as Yup from 'yup'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import request from '@/app/axios'
@@ -13,7 +10,7 @@ import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
 import TextArea from '@/components/textarea/TextArea'
 import ErrorMessage from '@/components/error/ErrorMessage'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
 
@@ -165,17 +162,15 @@ const CreateDocumentType = ({
                   ) : (
                     <div className='d-flex flex-column mb-16px'>
                       <Input
-                        title={row.name}
+                        label={row.name}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required={isRequired}
+                        error={errors[row.key] as string}
+                        touched={!!touched[row.key]}
                       />
-
-                      {errors[row?.key] && touched[row?.key] && (
-                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                      )}
                     </div>
                   )}
                 </div>

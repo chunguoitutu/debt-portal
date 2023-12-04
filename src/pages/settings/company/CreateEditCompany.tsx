@@ -8,8 +8,7 @@ import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
-import Input from '@/components/input'
-import ErrorMessage from '@/components/error/ErrorMessage'
+import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
 
@@ -225,18 +224,16 @@ const CreateEditCompanies = ({
                   <div key={row?.key} style={{flex: '0 0 50%'}}>
                     <div className='d-flex flex-column mb-16px'>
                       <Input
-                        required={row?.require ? true : false}
-                        title={row.name}
+                        required={row?.required ? true : false}
+                        label={row.name}
                         onBlur={handleBlur}
                         name={row?.key}
                         type={row?.type || 'text'}
                         value={values[row?.key] || ''}
                         onChange={handleChange}
+                        error={errors[row.key] as string}
+                        touched={!!touched[row.key]}
                       />
-
-                      {errors[row?.key] && touched[row?.key] && (
-                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                      )}
                     </div>
                   </div>
                 ))}

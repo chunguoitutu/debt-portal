@@ -10,7 +10,7 @@ import request from '@/app/axios'
 import {KTIcon} from '@/_metronic/helpers'
 import TextArea from '@/components/textarea/TextArea'
 import ErrorMessage from '@/components/error/ErrorMessage'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
 
@@ -165,16 +165,14 @@ const CreateJobType = ({
                   ) : (
                     <div className='d-flex flex-column mb-16px'>
                       <Input
-                        title={row.name}
+                        label={row.name}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
                         required={isRequired}
+                        error={errors[row.key] as string}
+                        touched={!!touched[row.key]}
                       />
-
-                      {errors[row?.key] && touched[row?.key] && (
-                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                      )}
                     </div>
                   )}
                 </div>

@@ -1,6 +1,6 @@
 import {TableConfig} from '@/app/types'
 import {ID_TYPE, STATUS_APPLICATION_FILTER} from '@/app/utils'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import Select from '@/components/select/select'
 
 export const APPLICATION_LISTING_CONFIG: TableConfig = {

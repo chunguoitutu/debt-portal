@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 import {TableConfig} from '@/app/types'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import FullNameUser from './FullNameUser'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Select from '@/components/select/select'

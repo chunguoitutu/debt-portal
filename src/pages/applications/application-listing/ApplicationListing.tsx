@@ -27,7 +27,7 @@ import {PageLink, PageTitle} from '@/components/breadcrumbs'
 import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import './style.scss'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import Pagination from '@/components/table/components/Pagination'
 
 const profileBreadCrumbs: Array<PageLink> = [

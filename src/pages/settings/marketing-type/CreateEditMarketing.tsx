@@ -3,14 +3,12 @@
 import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
-
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
-import Input from '@/components/input'
-import ErrorMessage from '@/components/error/ErrorMessage'
+import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
 import {MAKETTING_TABLE_CONFIG} from './MarketingConfig'
@@ -187,17 +185,15 @@ const CreatEditMarkettingType = ({
                           <div className='d-flex flex-column mb-16px'>
                             <Input
                               required={!!isRequired ? true : false}
-                              title={row?.name}
+                              label={row?.name}
                               name={row?.key}
                               type={typeInput}
                               onBlur={handleBlur}
                               value={values[row?.key] || ''}
                               onChange={handleChange}
+                              error={errors[row.key]}
+                              touched={touched[row.key]}
                             />
-
-                            {errors[row?.key] && touched[row?.key] && (
-                              <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                            )}
                           </div>
                         </div>
                       )

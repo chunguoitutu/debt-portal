@@ -2,9 +2,8 @@ import {FC, useMemo, useState} from 'react'
 import {Modal} from 'react-bootstrap'
 import {FormikHelpers, useFormik} from 'formik'
 import * as Yup from 'yup'
-import ErrorMessage from '@/components/error/ErrorMessage'
 import Button from '@/components/button/Button'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import {convertErrorMessageResponse, convertMessageErrorPassword} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 import {UpdatePasswordInfo} from '@/app/types'
@@ -151,12 +150,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
                   type='password'
                   className='form-control form-control-lg form-control-solid'
                   id='old_password'
+                  error={errors.old_password}
+                  touched={touched.old_password}
                   {...getFieldProps('old_password')}
                 />
-
-                {touched.old_password && errors.old_password && (
-                  <ErrorMessage message={errors.old_password} />
-                )}
               </div>
             </div>
           )}
@@ -174,12 +171,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
                 type='password'
                 className='form-control form-control-lg form-control-solid '
                 id='new_password'
+                error={errors.new_password}
+                touched={touched.new_password}
                 {...getFieldProps('new_password')}
               />
-
-              {touched.new_password && errors.new_password && (
-                <ErrorMessage message={errors.new_password} />
-              )}
             </div>
           </div>
 
@@ -196,12 +191,10 @@ const ChangePassword: FC<Props> = ({show, onClose, ignoreOldPassword = false, id
                 type='password'
                 className='form-control form-control-lg form-control-solid '
                 id='confirm_new_password'
+                error={errors.confirm_new_password}
+                touched={touched.confirm_new_password}
                 {...getFieldProps('confirm_new_password')}
               />
-
-              {touched.confirm_new_password && errors.confirm_new_password && (
-                <ErrorMessage message={errors.confirm_new_password} />
-              )}
             </div>
           </div>
         </form>

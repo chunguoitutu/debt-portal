@@ -1,6 +1,5 @@
 import {FC} from 'react'
-import Input from '../input'
-import ErrorMessage from '../error/ErrorMessage'
+import {Input} from '../input'
 import {PropsStepApplication} from '@/app/types'
 
 const data = [
@@ -31,9 +30,9 @@ const NameOfApplication: FC<PropsStepApplication> = ({formik}) => {
             placeholder={placeholder}
             onChange={handleChange}
             classShared='flex-grow-1 w-xl-unset'
+            error={errors[key] as string}
+            touched={!!touched[key]}
           />
-
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
         </div>
       ))}
     </div>

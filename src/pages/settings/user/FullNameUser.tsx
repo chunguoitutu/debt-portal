@@ -1,8 +1,7 @@
 import {FormikProps} from 'formik'
 import {FC, useMemo} from 'react'
 import {CreateEditUser} from './CreateEditUser'
-import Input from '@/components/input'
-import ErrorMessage from '@/components/error/ErrorMessage'
+import {Input} from '@/components/input'
 
 type Props = {
   formik: FormikProps<CreateEditUser>
@@ -28,17 +27,15 @@ const FullNameUser: FC<Props> = ({formik}) => {
           <div className='col-12 col-lg-4' key={i}>
             <Input
               type={type}
-              title={label}
+              label={label}
               required={required}
               name={name}
               value={values[name] || ''}
               onChange={handleChange}
               onBlur={handleBlur}
+              error={errors[name]}
+              touched={touched[name]}
             />
-
-            {errors[name] && touched[name] && (
-              <ErrorMessage className='mt-2' message={errors[name] as string} />
-            )}
           </div>
         )
       })}

@@ -3,8 +3,7 @@ import {COMPANY_MANAGEMENT_CONFIG} from './config'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
-import Input from '@/components/input'
-import ErrorMessage from '@/components/error/ErrorMessage'
+import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import request from '../../../app/axios'
 import {swalToast} from '../../../app/swal-notification'
@@ -129,17 +128,15 @@ export const CompanyManagement = () => {
               <div key={row.key} style={{flex: '0 0 50%'}}>
                 <div className='d-flex flex-column'>
                   <Input
-                    required={row?.require ? true : false}
-                    title={row.name}
+                    required={row?.required ? true : false}
+                    label={row.name}
                     name={row.key}
                     value={values[row.key] || ''}
                     onChange={handleChange}
                     type={row.type}
+                    error={errors[row.key] as string}
+                    touched={!!touched[row.key]}
                   />
-
-                  {errors[row?.key] && touched[row?.key] && (
-                    <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                  )}
                 </div>
               </div>
             ))}

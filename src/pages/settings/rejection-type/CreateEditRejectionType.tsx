@@ -1,9 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
-
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {REJECTION_TYPE_TABLE_CONFIG} from './RejectinonTypeConfig'
@@ -13,7 +10,7 @@ import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
 import TextArea from '@/components/textarea/TextArea'
 import ErrorMessage from '@/components/error/ErrorMessage'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import InputCheck from '@/components/input/InputCheckRounded'
 import Button from '@/components/button/Button'
 
@@ -212,21 +209,16 @@ const CreateEditRejectionType = ({
                           ) : (
                             <div className='d-flex flex-column mb-16px'>
                               <Input
-                                required={!!isRequired ? true : false}
-                                title={row?.name}
+                                required={!!isRequired}
+                                label={row?.name}
                                 name={row?.key}
                                 type={typeInput}
                                 value={values[row?.key] || ''}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                error={errors[row.key]}
+                                touched={touched[row.key]}
                               />
-
-                              {errors[row?.key] && touched[row?.key] && (
-                                <ErrorMessage
-                                  className='mt-2'
-                                  message={errors[row?.key] as string}
-                                />
-                              )}
                             </div>
                           )}
                         </div>

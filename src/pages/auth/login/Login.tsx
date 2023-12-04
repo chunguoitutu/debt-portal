@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 import request from '../../../app/axios'
 import Form from 'react-bootstrap/Form'
 import {LoginInfo} from '@/app/types'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import {login} from '@/app/axios/request'
 import {convertErrorMessageResponse} from '@/app/utils'
 
