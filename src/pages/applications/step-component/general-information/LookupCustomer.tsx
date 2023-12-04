@@ -58,8 +58,8 @@ const LookupCustomer = ({show, onClose}: Props) => {
     }
   }
 
-  async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
-    onFetchDataList({...searchCriteria, ...data, filters: dataFilters})
+  async function handleChangePagination(goToPage: number) {
+    onFetchDataList({...searchCriteria, currentPage: goToPage, filters: dataFilters})
   }
 
   function handleChangeSortBy(item: TableRow) {
@@ -351,14 +351,9 @@ const LookupCustomer = ({show, onClose}: Props) => {
             lenghtData={searchCriteria.total}
             limit={searchCriteria.pageSize}
             page={searchCriteria.currentPage}
-            setLimit={(e: any) =>
-              onFetchDataList({
-                ...searchCriteria,
-                pageSize: e.target.value,
-                currentPage: 1,
-                filters: dataFilters,
-              })
-            }
+            setLimit={(e: any) => {
+              setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+            }}
           />
 
           <Pagination
