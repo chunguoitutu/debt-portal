@@ -283,7 +283,7 @@ class MenuComponent {
   }
 
   // Get item sub element
-  private _getItemSubElement = (item: HTMLElement): HTMLElement | null => {
+  _getItemSubElement = (item: HTMLElement): HTMLElement | null => {
     if (!item) {
       return null
     }
@@ -302,7 +302,7 @@ class MenuComponent {
     }
   }
 
-  private _getCss = (el: HTMLElement, styleProp: string) => {
+  _getCss = (el: HTMLElement, styleProp: string) => {
     const defaultView = (el.ownerDocument || document).defaultView
     if (!defaultView) {
       return ''
@@ -316,7 +316,7 @@ class MenuComponent {
   }
 
   // Get item sub type
-  private _getItemSubType = (element: HTMLElement) => {
+  _getItemSubType = (element: HTMLElement) => {
     const sub = this._getItemSubElement(element)
     if (sub && parseInt(this._getCss(sub as HTMLElement, 'z-index')) > 0) {
       return 'dropdown'
@@ -326,7 +326,7 @@ class MenuComponent {
   }
 
   // Test if item's sub is shown
-  private _isItemSubShown = (item: HTMLElement) => {
+  _isItemSubShown = (item: HTMLElement) => {
     let sub = this._getItemSubElement(item)
     if (sub) {
       if (this._getItemSubType(item) === 'dropdown') {
@@ -378,11 +378,10 @@ class MenuComponent {
   }
 
   // Show item dropdown
-  private _showDropdown = (item: HTMLElement) => {
+  _showDropdown = (item: HTMLElement) => {
     if (EventHandlerUtil.trigger(this.element, 'kt.menu.dropdown.show') === false) {
       return
     }
-
     // Hide all currently shown dropdowns except current one
     MenuComponent.hideDropdowns(item)
 
