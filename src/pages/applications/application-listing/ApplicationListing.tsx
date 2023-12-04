@@ -65,6 +65,8 @@ const ApplicationListing = () => {
     total: 0,
   })
 
+  const {pageSize, currentPage} = searchCriteria
+
   React.useEffect(() => {
     const allApi = rows
       .filter((item) => item?.infoFilter?.dependencyApi)
@@ -100,7 +102,7 @@ const ApplicationListing = () => {
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [company_id, keySort, orderBy])
+  }, [company_id, keySort, orderBy, pageSize, currentPage])
 
   const navigate = useNavigate()
 
@@ -227,8 +229,8 @@ const ApplicationListing = () => {
     }
   }
 
-  async function handleChangePagination(data: Omit<SearchCriteria, 'total'>) {
-    onFetchDataList({...searchCriteria, ...data, filters: dataFilter})
+  async function handleChangePagination(goToPage: number) {
+    setSearchCriteria({...searchCriteria, currentPage: goToPage})
   }
 
   function handleChangeFilter(e: React.ChangeEvent<any>) {
@@ -443,7 +445,7 @@ const ApplicationListing = () => {
                         </th>
                       )
                     })}
-                  {showAction && <th className='text-center w-150px fs-6 fw-bold'>Actions</th>}
+                  {showAction && <th className='text-center w-100px fs-6 fw-bold'>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -573,14 +575,9 @@ const ApplicationListing = () => {
             lenghtData={searchCriteria.total}
             limit={searchCriteria.pageSize}
             page={searchCriteria.currentPage}
-            setLimit={(e: any) =>
-              onFetchDataList({
-                ...searchCriteria,
-                pageSize: e.target.value,
-                currentPage: 1,
-                filters: dataFilter,
-              })
-            }
+            setLimit={(e: any) => {
+              setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+            }}
           />
 
           <Pagination
