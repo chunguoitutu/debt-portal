@@ -3,19 +3,17 @@
 import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
-
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
-import TextArea from '@/components/textarea/TextArea'
-import ErrorMessage from '@/components/error/ErrorMessage'
-import Input from '@/components/input'
-import InputCheck from '@/components/input/InputCheckRounded'
+import {TextArea} from '@/components/textarea'
+import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {convertErrorMessageResponse} from '@/app/utils'
+import {CheckboxRounded} from '@/components/checkbox'
 
 type Props = {
   setLoadApi: any
@@ -194,37 +192,27 @@ const CreateEditAddress = ({
                             <div className='mb-16px'>
                               <TextArea
                                 onBlur={handleBlur}
-                                title={row?.name}
+                                label={row?.name}
                                 name={row?.key}
                                 value={values[row?.key] || ''}
                                 onChange={handleChange}
+                                error={errors[row.key] as string}
+                                touched={!!touched[row.key]}
                               />
-
-                              {errors[row?.key] && touched[row?.key] && (
-                                <ErrorMessage
-                                  className='mt-2'
-                                  message={errors[row?.key] as string}
-                                />
-                              )}
                             </div>
                           ) : (
                             <div className='d-flex flex-column mb-16px'>
                               <Input
                                 onBlur={handleBlur}
                                 required={!!isRequired ? true : false}
-                                title={row?.name}
+                                label={row?.name}
                                 name={row?.key}
                                 type={typeInput}
                                 value={values[row?.key] || ''}
                                 onChange={handleChange}
+                                error={errors[row.key] as string}
+                                touched={!!touched[row.key]}
                               />
-
-                              {errors[row?.key] && touched[row?.key] && (
-                                <ErrorMessage
-                                  className='mt-2'
-                                  message={errors[row?.key] as string}
-                                />
-                              )}
                             </div>
                           )}
                         </div>
@@ -232,11 +220,11 @@ const CreateEditAddress = ({
                     })}
                 </>
               ) : null}
-              <InputCheck
-                title='Status'
+              <CheckboxRounded
+                label='Status'
                 checked={status}
                 onChange={() => setStatus(!status)}
-                id='Status'
+                id='status'
               />
             </form>
           </div>

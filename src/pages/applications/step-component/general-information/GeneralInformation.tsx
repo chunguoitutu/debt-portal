@@ -6,7 +6,7 @@ import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import LookupCustomer from './LookupCustomer'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
-import request from '../../../../app/axios'
+import request from '@/app/axios'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
@@ -80,12 +80,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         <Component
           error={errors[key]}
           touched={touched[key]}
-          errorTitle={errors[key]}
           value={values[key]}
           onChange={handleChange}
           name={key}
-          fieldValueOption={keyValueOfOptions}
-          fieldLabelOption={keyLabelOfOptions}
+          keyValueOption={keyValueOfOptions}
+          keyLabelOption={keyLabelOfOptions}
           classShared={className}
           options={!!dependencyApi ? dataMarketing[key] || [] : options}
           dropDownGroup={item.dropDownGroup}

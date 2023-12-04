@@ -1,42 +1,46 @@
-import {FC, TextareaHTMLAttributes} from 'react'
+import {FC, TextareaHTMLAttributes, useId} from 'react'
+import Label from '../label'
+import ErrorMessage from '../error/ErrorMessage'
 
-interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'id'> {
-  className?: string
+interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   classShared?: string
-  name: string
-  title?: string
-  isRequired?: boolean
+  label?: string
+  error?: string
+  touched?: boolean
 }
 
 const TextArea: FC<TextAreaProps> = ({
+  id,
   name,
-  title,
+  label,
   className = '',
   classShared = '',
-  isRequired = false,
+  required = false,
+  error,
+  touched,
   ...rest
 }) => {
+  const defaultId = useId()
+
   return (
     <div className={`d-flex flex-column gap-2 ${classShared}`}>
-      {title && (
-        <label
-          style={{fontSize: '16px'}}
-          className='d-flex align-items-center  fw-semibold'
-          htmlFor={name}
-        >
-          {title} {isRequired && <span className='text-danger'>*</span>}
-        </label>
+      {label && (
+        <Label
+          className='d-flex align-items-center fs-5 fw-semibold mb-8px'
+          required={required}
+          label={label}
+          htmlFor={id || defaultId || name}
+        />
       )}
 
       <textarea
-        style={{
-          borderRadius: '8px',
-        }}
-        className='form-control p-12px form-control-lg form-control-solid form-control-flush min-h-120px'
-        id={name}
+        className='form-control p-12px form-control-lg form-control-solid min-h-120px rounded-8'
+        id={id || defaultId || name}
         name={name}
         {...rest}
       />
+
+      {error && touched && <ErrorMessage className='mt-2' message={error} />}
     </div>
   )
 }

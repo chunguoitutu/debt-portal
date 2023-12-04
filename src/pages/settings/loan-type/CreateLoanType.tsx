@@ -4,18 +4,16 @@ import {useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-
 import * as Yup from 'yup'
 import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {KTIcon} from '@/_metronic/helpers'
-import TextArea from '@/components/textarea/TextArea'
-import ErrorMessage from '@/components/error/ErrorMessage'
-import Input from '@/components/input'
-import InputCheck from '@/components/input/InputCheckRounded'
+import {TextArea} from '@/components/textarea'
+import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
+import {CheckboxRounded} from '@/components/checkbox'
 
 type Props = {
   setLoadApi: any
@@ -177,42 +175,39 @@ const CreateLoanType = ({
                   {row.key === 'description' ? (
                     <div>
                       <TextArea
-                        title={row.name}
+                        label={row.name}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
+                        error={errors[row.key] as string}
+                        touched={!!touched[row.key]}
                       />
-                      {errors[row?.key] && touched[row?.key] && (
-                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                      )}
                     </div>
                   ) : (
                     <div className='d-flex flex-column mb-16px'>
                       <Input
                         type={typeInput || 'text'}
-                        title={row.name}
+                        label={row.name}
                         name={row.key}
                         value={values[row.key] || ''}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required={isRequired}
+                        error={errors[row.key] as string}
+                        touched={!!touched[row.key]}
                         {...props}
                       />
-
-                      {errors[row?.key] && touched[row?.key] && (
-                        <ErrorMessage className='mt-2' message={errors[row?.key] as string} />
-                      )}
                     </div>
                   )}
                 </div>
               )
             })}
             <div className='mt-16px'>
-              <InputCheck
+              <CheckboxRounded
+                label='Status'
                 checked={status}
                 onChange={() => setStatus(!status)}
                 id='status'
-                title='Status'
               />
             </div>
           </form>

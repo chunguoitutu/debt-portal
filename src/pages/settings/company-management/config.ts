@@ -5,19 +5,19 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       key: 'company_name',
       name: 'Company Name',
       type: 'text',
-      require: true,
+      required: true,
     },
     {
       key: 'company_code',
       type: 'text',
       name: 'Company Code',
-      require: true,
+      required: true,
     },
     {
       key: 'business_uen',
       name: 'Business UEN',
       type: 'text',
-      require: true,
+      required: true,
     },
     {
       key: 'contact_person',
@@ -43,7 +43,7 @@ export const COMPANY_MANAGEMENT_CONFIG = {
       key: 'open_date',
       name: 'Open Date',
       type: 'date',
-      require: true,
+      required: true,
     },
   ],
 }

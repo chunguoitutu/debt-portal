@@ -121,11 +121,9 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             value={values[key]}
             onChange={handleChange}
             name={key}
-            touched={touched}
-            errors={errors}
+            touched={touched[key]}
+            error={errors[key]}
           />
-
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
         </div>
       )
     }
@@ -155,8 +153,8 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleAutoSelect(key, e)}
             name={key}
             classShared={className}
-            fieldValueOption={keyValueOfOptions}
-            fieldLabelOption={keyLabelOfOptions}
+            keyValueOption={keyValueOfOptions}
+            keyLabelOption={keyLabelOfOptions}
             options={!!dependencyApi ? dataLoanType[key] || [] : options}
             touched={touched}
             errors={errors}

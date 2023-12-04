@@ -1,11 +1,11 @@
 import * as Yup from 'yup'
 import {TableConfig} from '@/app/types'
-import Input from '@/components/input'
 import FullNameUser from './FullNameUser'
-import InputCheck from '@/components/input/InputCheckRounded'
-import Select from '@/components/select/select'
+import {Select} from '@/components/select'
 import {convertMessageErrorMaximum, convertMessageErrorPassword} from '@/app/utils'
 import Badge from '@/components/badge/Badge'
+import {CheckboxRounded} from '@/components/checkbox'
+import {Input} from '@/components/input'
 
 const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/gi
 
@@ -125,7 +125,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'checkbox',
         typeComponent: 'checkbox-rounded',
-        component: InputCheck,
+        component: CheckboxRounded,
         isLastChild: true, // last of group information
       },
     },
@@ -151,7 +151,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'select',
         isRequired: true,
-        fieldLabelOption: 'role_name',
+        keyLabelOption: 'role_name',
         typeComponent: 'select',
         component: Select,
         dependencyApi: 'config/role/listing',

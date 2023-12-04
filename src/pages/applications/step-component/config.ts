@@ -1,10 +1,9 @@
 import * as Yup from 'yup'
 import NameOfApplication from '@/components/applications/NameOfApplication'
-import Checkbox from '@/components/checkbox/Checkbox'
-import Input from '@/components/input'
+import {Input} from '@/components/input'
 import Radio from '@/components/radio/Radio'
-import Select from '@/components/select/select'
-import TextArea from '@/components/textarea/TextArea'
+import {Select} from '@/components/select'
+import {TextArea} from '@/components/textarea'
 import GrossMonthlyIncome from '@/components/applications/GrossMonthlyIncome'
 import FullName from './completion/FullName'
 import Address from './completion/Address'
@@ -36,6 +35,7 @@ import {
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
+import {Checkbox} from '@/components/checkbox'
 
 const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -190,6 +190,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Input,
     typeComponent: 'Input',
     label: 'Interest (%)',
+    typeInput: 'number',
     required: true,
     noThereAreCommas: false,
     validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),

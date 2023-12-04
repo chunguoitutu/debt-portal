@@ -234,7 +234,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   function generatePropsComponent(row: TableRow) {
     const {infoCreateEdit, key, name} = row
-    const {typeComponent, isRequired, typeInput, fieldLabelOption, fieldValueOption, options} =
+    const {typeComponent, isRequired, typeInput, keyLabelOption, keyValueOption, options} =
       infoCreateEdit || {}
 
     // General props
@@ -257,7 +257,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         ...props,
         required: key === 'password' && data ? false : isRequired,
         type: typeInput,
-        title: name,
+        label: name,
       }
     }
 
@@ -268,8 +268,8 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         type: typeInput,
         label: name,
         options: dataOption[key] || options || [],
-        fieldLabelOption: fieldLabelOption || 'label',
-        fieldValueOption: fieldValueOption || dataOption[key] ? 'id' : 'value',
+        keyLabelOption: keyLabelOption || 'label',
+        keyValueOption: keyValueOption || dataOption[key] ? 'id' : 'value',
         classShared: '',
       }
     }

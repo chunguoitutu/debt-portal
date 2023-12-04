@@ -7,15 +7,13 @@ import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG, REPAYMENT_SHEDULE_TABLES} from './c
 import {DEFAULT_MSG_ERROR, STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '@/app/constants'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
-import Input from '@/components/input'
-import ErrorMessage from '@/components/error/ErrorMessage'
-import Select from '@/components/select/select'
+import {Input} from '@/components/input'
+import {Select} from '@/components/select'
 import Step from '@/components/step/Step'
 import {MONTHLY_DUE_DATE} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
 import moment from 'moment'
 import Button from '@/components/button/Button'
-import {auto} from '@popperjs/core'
 
 type Props = {
   handleClose: any
@@ -158,56 +156,34 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                 >
                   {rows?.map((row) => (
                     <div key={row?.key}>
-                      {row?.typeText === 'date' || row?.typeText === 'select' ? (
-                        <>
-                          {row?.typeText === 'date' && (
-                            <div className='d-flex flex-column mb-16px'>
-                              <Input
-                                required={row?.require ? true : false}
-                                title={row?.name}
-                                name={row?.key}
-                                value={values[row?.key] || ''}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                type='date'
-                              />
-                              {errors[row.key] && touched[row.key] && (
-                                <ErrorMessage message={errors[row.key]} />
-                              )}
-                            </div>
-                          )}
-                          {row.typeText === 'select' && (
-                            <Select
-                              label={row?.name}
-                              required={!!row?.require}
-                              isOptionDefault={false}
-                              id={row?.key}
-                              name={row.key}
-                              onChange={handleChange}
-                              error={errors[row?.key]}
-                              onBlur={handleBlur}
-                              touched={touched[row?.key]}
-                              errorTitle={errors[row?.key]}
-                              options={MONTHLY_DUE_DATE || []}
-                              value={values[row?.key] || ''}
-                            />
-                          )}
-                        </>
+                      {row?.typeComponent === 'select' ? (
+                        <Select
+                          label={row?.name}
+                          required={!!row?.require}
+                          isOptionDefault={false}
+                          id={row?.key}
+                          name={row.key}
+                          onChange={handleChange}
+                          error={errors[row?.key]}
+                          onBlur={handleBlur}
+                          touched={touched[row?.key]}
+                          options={MONTHLY_DUE_DATE || []}
+                          value={values[row?.key] || ''}
+                        />
                       ) : (
                         <div className='d-flex flex-column mb-16px'>
                           <Input
                             required={row?.require ? true : false}
-                            title={row?.name}
+                            label={row?.name}
                             name={row?.key}
                             onBlur={handleBlur}
                             type={row.type}
                             noThereAreCommas={row?.noThereAreCommas}
                             value={values[row?.key] || ''}
                             onChange={handleChange}
+                            error={errors[row.key] as string}
+                            touched={!!touched[row.key]}
                           />
-                          {errors[row.key] && touched[row.key] && (
-                            <ErrorMessage message={errors[row.key]} />
-                          )}
                         </div>
                       )}
                     </div>
@@ -255,27 +231,21 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         className='gap-1 p-6 w'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                          Amount Of Loan $
-                        </div>
+                        <div className='fs-7 fw-medium text-gray-600'>Amount Of Loan $</div>
                         <div className='fs-4 fw-semibold'>${formatNumber(values.totalsAmount)}</div>
                       </div>
                       <div
                         className='gap-1 p-6'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                          No. Of Instalment
-                        </div>
+                        <div className='fs-7 fw-medium text-gray-600'>No. Of Instalment</div>
                         <div className='fs-4 fw-semibold'>{values.totalsMonthPayment}</div>
                       </div>
                       <div
                         className={`gap-1 p-6`}
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
-                          Monthly Due Date
-                        </div>
+                        <div className='fs-7 fw-medium text-gray-600'>Monthly Due Date 1</div>
                         <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
                       </div>
                     </div>

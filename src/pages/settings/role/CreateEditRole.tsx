@@ -10,9 +10,8 @@ import {createNewRole, updateRole} from '@/app/axios/request'
 import {swalToast} from '@/app/swal-notification'
 import {ROLE_PRIORITY} from '@/app/utils'
 import Modal from '@/components/modal/Modal'
-import Input from '@/components/input'
-import ErrorMessage from '@/components/error/ErrorMessage'
-import TextArea from '@/components/textarea/TextArea'
+import {Input} from '@/components/input'
+import {TextArea} from '@/components/textarea'
 import Button from '@/components/button/Button'
 
 type Props = {
@@ -309,14 +308,13 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     name={key}
                     key={index}
                     options={DATA_ROLE_PRIORITY}
-                    fieldLabelOption='label'
-                    fieldValueOption='value'
+                    keyLabelOption='label'
+                    keyValueOption='value'
                     required={isRequired}
                     label='Priority'
                     id='priority'
                     error={errors[key]}
                     touched={touched[key]}
-                    errorTitle={errors[key]}
                     value={values.priority || ''}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -328,7 +326,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
                     checked={!!values.status}
                     onChange={handleChangeStatus}
                     id='status'
-                    title='Status'
+                    label='Status'
                     key={index}
                   />
                 )
@@ -341,35 +339,31 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
               return (
                 <div className='d-flex flex-column mb-16px' key={index}>
                   <Input
-                    title={name}
+                    label={name}
                     type={typeInput || 'text'}
                     name={key}
                     value={values[key] || ''}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     required={isRequired}
+                    error={errors[key]}
+                    touched={touched[key]}
                   />
-
-                  {errors[key] && touched[key] && (
-                    <ErrorMessage className='mt-2' message={errors[key] as string} />
-                  )}
                 </div>
               )
             } else if (type === 'textarea') {
               return (
                 <div className='mb-16px' key={index}>
                   <TextArea
-                    title={name}
+                    label={name}
                     name={key}
                     value={values[key] || ''}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    isRequired={isRequired}
+                    required={isRequired}
+                    error={errors[key]}
+                    touched={touched[key]}
                   />
-
-                  {errors[key] && touched[key] && (
-                    <ErrorMessage className='mt-2' message={errors[key]} />
-                  )}
                 </div>
               )
             } else {

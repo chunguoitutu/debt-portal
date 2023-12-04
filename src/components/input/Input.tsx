@@ -1,49 +1,48 @@
-import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode, useState} from 'react'
-import {handleKeyPress, handlePaste} from '../enter-numbers-only'
+import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode, useId, useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import ErrorMessage from '../error/ErrorMessage'
+import Label from '../label'
 
-interface Props
-  extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    'className' | 'id' | 'type' | 'required' | 'name'
-  > {
-  name?: string
-  id?: string
-  title?: string
-  required?: boolean
-  className?: string
+interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  label?: string
   classShared?: string
   classInputWrap?: string
   insertLeft?: ReactNode
   insertRight?: ReactNode
   type?: HTMLInputTypeAttribute | 'money'
-  noThereAreCommas?: boolean
   symbolMoney?: string
+  noThereAreCommas?: boolean
   showIconTogglePassword?: boolean
+  error?: string
+  touched?: boolean
 }
+
+const numberAllowDotRegex = /^[0-9.]+$/
 
 const Input: FC<Props> = ({
   id,
   name,
-  title,
+  label,
   insertLeft,
   insertRight,
   type = 'text',
   className = '',
   classShared = '',
   symbolMoney = '$',
-  value = '',
   noThereAreCommas = true,
   required = false,
   showIconTogglePassword = true,
+  value = '',
   classInputWrap = 'form-control-solid',
+  error,
+  touched,
   ...rest
 }) => {
-  const [typeCustom, setTypeCustom] = useState<string>(
-    type === 'money' ? 'number' : type === 'number' ? 'text' : type
-  )
+  const [typeCustom, setTypeCustom] = useState<string>(type === 'money' ? 'number' : type)
+
+  const defaultId = useId()
 
   // Only handle for type password
   function handleChangeTypeInput() {
@@ -52,21 +51,36 @@ const Input: FC<Props> = ({
     }
   }
 
+  function handleKeyPress({noThereAreCommas = true, e}: any) {
+    e = e || window.event
+    const charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
+    const charStr = String.fromCharCode(charCode)
+    const dotInvalid = noThereAreCommas
+      ? charStr === '.' && noThereAreCommas
+      : e.target.value.includes('.') && charStr === '.'
+    ;(dotInvalid || !charStr.match(numberAllowDotRegex)) && e.preventDefault()
+  }
+
+  function handlePaste({noThereAreCommas = true, e}: any) {
+    let valueCopied = e.clipboardData.getData('text/plain')
+    const oldValue = +e.target.value
+    if (
+      Number.isNaN(+valueCopied) ||
+      ((oldValue % 1 !== 0 || noThereAreCommas) && +valueCopied % 1 !== 0) ||
+      +valueCopied < 0
+    )
+      e.preventDefault()
+  }
+
   return (
     <div className={`${classShared}`}>
-      {title && (
-        <label
-          className='d-flex align-items-center fs-5 fw-semibold mb-8px cursor-pointer'
-          htmlFor={name}
-        >
-          <span
-            className={`${
-              required ? 'required' : ''
-            } text-gray-900 fs-16 text-capitalize fw-semibold `}
-          >
-            {title}
-          </span>
-        </label>
+      {label && (
+        <Label
+          htmlFor={id || defaultId || name}
+          className='d-flex align-items-center fs-16 fw-semibold mb-8px'
+          label={label}
+          required={required}
+        />
       )}
       <div
         className={clsx([
@@ -80,20 +94,16 @@ const Input: FC<Props> = ({
           insertLeft && insertLeft
         )}
         <input
-          onKeyPressCapture={(e) => {
-            if (type === 'number') {
-              handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
-            }
-          }}
-          onPaste={(e) => {
-            if (type === 'number') {
-              handlePaste({e: e, noThereAreCommas: noThereAreCommas})
-            }
-          }}
+          onKeyPressCapture={(e) =>
+            type === 'number' && handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
+          }
+          onPaste={(e) =>
+            type === 'number' && handlePaste({e: e, noThereAreCommas: noThereAreCommas})
+          }
           type={typeCustom}
           className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
-          value={value}
-          id={id || name}
+          value={value || ''}
+          id={id || defaultId || name}
           name={name}
           {...rest}
         />
@@ -109,6 +119,8 @@ const Input: FC<Props> = ({
             )
           : insertRight && insertRight}
       </div>
+
+      {error && touched && <ErrorMessage className='mt-2' message={error} />}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import {FC} from 'react'
-import Input from '../input'
+import {Input} from '../input'
 import ErrorMessage from '../error/ErrorMessage'
 import {PropsStepApplication} from '@/app/types'
 
