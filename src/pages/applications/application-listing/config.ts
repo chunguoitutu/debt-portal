@@ -18,7 +18,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'id',
       name: 'ID',
-      classNameTableBody: 'w-50px',
+      classNameTableHead: 'ps-5',
+      classNameTableBody: 'w-50px ps-5',
       isSort: true,
       infoFilter: {
         typeComponent: 'input',
@@ -105,8 +106,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'application_date',
       name: 'APPLICATION DATE',
       type: 'date',
-      classNameTableBody: 'text-end pe-0',
-      classNameTableHead: 'text-end',
+      classNameTableBody: 'text-end pe-5',
+      classNameTableHead: 'text-end pe-3',
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',

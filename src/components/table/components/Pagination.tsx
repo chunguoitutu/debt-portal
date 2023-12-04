@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import {useMemo} from 'react'
 
 type Props = {
-  onChangePagePagination: (pagination: Omit<SearchCriteria, 'total'>) => void
+  onChangePagePagination: (goToPage: number) => void
   isLoading?: boolean
   searchCriteria: SearchCriteria
 }
@@ -68,7 +68,7 @@ const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}:
             })}
           >
             <a
-              onClick={() => onChangePagePagination({pageSize, currentPage: 1})}
+              onClick={() => onChangePagePagination(1)}
               style={{cursor: 'pointer'}}
               className='page-link'
             >
@@ -85,7 +85,7 @@ const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}:
               className={clsx('page-link', {
                 'page-text': true,
               })}
-              onClick={() => onChangePagePagination({pageSize, currentPage: 1})}
+              onClick={() => onChangePagePagination(1)}
               style={{cursor: 'pointer'}}
             >
               {mappedLabel('&laquo; Previous')}
@@ -104,7 +104,7 @@ const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}:
                 <a
                   className={clsx('page-link')}
                   onClick={() => {
-                    onChangePagePagination({pageSize, currentPage: pageNumber})
+                    onChangePagePagination(pageNumber)
                   }}
                   style={{cursor: 'pointer'}}
                 >
@@ -124,7 +124,7 @@ const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}:
               className={clsx('page-link', {
                 'page-text': true,
               })}
-              onClick={() => onChangePagePagination({pageSize, currentPage: currentPage + 1})}
+              onClick={() => onChangePagePagination(currentPage + 1)}
               style={{cursor: 'pointer'}}
             >
               {mappedLabel('Next &raquo;')}
@@ -136,7 +136,7 @@ const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}:
             })}
           >
             <a
-              onClick={() => onChangePagePagination({pageSize, currentPage: totalPagination})}
+              onClick={() => onChangePagePagination(totalPagination)}
               style={{cursor: 'pointer'}}
               className='page-link'
             >
