@@ -9,6 +9,7 @@ import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
 import {useMemo, useState} from 'react'
 import {useAuth} from '../../../../app/context/AuthContext'
 import HeaderUserMenu from '@/_metronic/partials/layout/header-menus/HeaderUserMenu'
+import './style.scss'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -85,60 +86,21 @@ const Navbar = () => {
         onMouseLeave={hideMenu}
       >
         <div className={clsx('app-navbar-item', itemClass)}>
-          <div
-            className={clsx('cursor-pointer symbol', userAvatarClass)}
-            // data-kt-menu-trigger="{default: 'hover'}"
-            // data-kt-menu-attach='parent'
-            // data-kt-menu-placement='bottom-end'
-          >
-            <div
-              style={{
-                paddingLeft: '12px',
-                paddingRight: '12px',
-                paddingTop: '4px',
-                paddingBottom: '4px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '100px',
-              }}
-            >
+          <div className={clsx('cursor-pointer symbol', userAvatarClass)}>
+            <div className='navbar-user-custom-non-metronic'>
               <Avatar
                 firstname={currentUser?.firstname}
                 lastname={currentUser?.lastname}
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 35,
+                  height: 35,
                   objectFit: 'cover',
+                  borderRadius: '0.475rem',
                 }}
               />
               <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
-                <p
-                  style={{
-                    wordWrap: 'break-word',
-                    lineHeight: 'normal',
-                    fontWeight: '400',
-                    fontStyle: 'normal',
-                    fontSize: '14px',
-                    color: 'white',
-                    margin: '0',
-                  }}
-                >
-                  {fullName}
-                </p>
-                <p
-                  style={{
-                    lineHeight: 'normal',
-                    fontWeight: '400',
-                    fontStyle: 'normal',
-                    fontSize: '12px',
-                    color: 'white',
-                    margin: '0',
-                    opacity: '0.7',
-                  }}
-                >
-                  {currentUser?.role_name || ''}
-                </p>
+                <p className='text-full-mid-last-name'>{fullName}</p>
+                <p className='dropdown-text-role'>{currentUser?.role_name || ''}</p>
               </div>
             </div>
           </div>

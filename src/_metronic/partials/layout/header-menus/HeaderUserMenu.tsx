@@ -18,7 +18,7 @@ const HeaderUserMenu: FC = () => {
               style={{width: 50, height: 50}}
             />
           </div>
-          <div className='d-flex flex-column'>
+          <div className='d-flex flex-column' style={{marginTop: '-4px'}}>
             <div className='fw-bolder d-flex align-items-center fs-5'>
               {` ${currentUser?.firstname} ${currentUser?.middlename || ''} ${
                 currentUser?.lastname || ''

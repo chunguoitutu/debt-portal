@@ -12,11 +12,7 @@ export function Overview() {
             <h3 className='fw-bold m-0'>Profile Details</h3>
           </div>
 
-          <Link
-            to='/account/settings'
-            className='btn btn-primary align-self-center'
-            style={{fontSize: 14}}
-          >
+          <Link to='/account/settings' className='btn btn-primary align-self-center fs-14'>
             Edit Profile
           </Link>
         </div>

@@ -152,13 +152,13 @@ const CreateLoanType = ({
       backdrop={true}
     >
       <>
-        <div className='modal-header' style={{padding: 30}}>
+        <div className='modal-header p-30px'>
           <h2>{title} Loan Type</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>
         </div>
-        <div className='flex-row-fluid' style={{padding: 30}}>
+        <div className='flex-row-fluid p-30px'>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
             {rows.map((row) => {
               const {infoCreateEdit, key} = row || {}
@@ -213,7 +213,7 @@ const CreateLoanType = ({
           </form>
         </div>
         <div className='border-top border-gray-200'>
-          <div className='d-flex justify-content-end' style={{padding: 30}}>
+          <div className='d-flex justify-content-end p-30px'>
             <Button
               type='reset'
               onClick={() => handleClose()}

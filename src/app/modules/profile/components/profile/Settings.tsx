@@ -140,9 +140,7 @@ const Settings: React.FC = () => {
                       />
                       {formik.touched.firstname && formik.errors.firstname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block' style={{fontSize: 13}}>
-                            {formik.errors.firstname}
-                          </div>
+                          <div className='fv-help-block fs-13'>{formik.errors.firstname}</div>
                         </div>
                       )}
                     </div>
@@ -165,9 +163,7 @@ const Settings: React.FC = () => {
                       />
                       {formik.touched.lastname && formik.errors.lastname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block' style={{fontSize: 13}}>
-                            {formik.errors.lastname}
-                          </div>
+                          <div className='fv-help-block fs-13'>{formik.errors.lastname}</div>
                         </div>
                       )}
                     </div>
@@ -189,9 +185,7 @@ const Settings: React.FC = () => {
                   />
                   {formik.touched.telephone && formik.errors.telephone && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block' style={{fontSize: 13}}>
-                        {formik.errors.telephone}
-                      </div>
+                      <div className='fv-help-block fs-13'>{formik.errors.telephone}</div>
                     </div>
                   )}
                 </div>
@@ -212,9 +206,7 @@ const Settings: React.FC = () => {
                   />
                   {formik.touched.email && formik.errors.email && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block' style={{fontSize: 13}}>
-                        {formik.errors.email}
-                      </div>
+                      <div className='fv-help-block fs-13'>{formik.errors.email}</div>
                     </div>
                   )}
                 </div>
