@@ -1,8 +1,6 @@
 import clsx from 'clsx'
 import {FC, useMemo} from 'react'
 import moment from 'moment'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faFileLines} from '@fortawesome/free-solid-svg-icons'
 type Props = {
   labelStep?: string
   percentCompleted?: number
@@ -23,7 +21,9 @@ const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, i
 
   return (
     <>
-      <div className={clsx(['row align-items-center border-bottom border-gray-200', className])}>
+      <div
+        className={clsx(['row align-items-center border-bottom border-gray-200 g-0', className])}
+      >
         <div className='col-6 d-flex flex-column'>
           {<h3 className='fs-20 m-0 text-gray-900'>{newLabel}</h3>}
           {application_date && (
@@ -31,28 +31,6 @@ const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, i
               Create Date: {moment(application_date).format('MM/DD/YYYY')}
             </span>
           )}
-
-          {/* {info?.initialValues ? (
-            <div className='border-application fs-2 w-fit-content'>
-              <div className='d-flex flex-row gap-7'>
-                <div
-                  className='d-flex align-items-center justify-content-center rounded bg-light h-25'
-                  style={{padding: 15}}
-                >
-                  <FontAwesomeIcon icon={faFileLines} size='2xl' color='gray' />
-                </div>
-                <div>
-                  <span className='fs-7 fw-medium'>Application Number</span>
-                  <div className='fs-2'>#{info.initialValues}</div>
-                  <div className='fs-7 fw-medium'>
-                    Create Date: {moment(info.initialValues.application_date).format('YYYY-MM-DD')}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className='border-application fs-2 w-fit-content'>{labelStep}</div>
-          )} */}
         </div>
 
         {/* Still show when percent = 0 */}

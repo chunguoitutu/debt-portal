@@ -20,7 +20,7 @@ const AvatarHeader = ({firstname, lastname, style}) => {
         justifyContent: 'center',
         alignItems: 'center',
         ...style,
-        borderRadius: '50%',
+        borderRadius: '10%',
       }}
     >
       {avatarInitials ? (

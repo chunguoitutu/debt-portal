@@ -95,7 +95,9 @@ const Input: FC<Props> = ({
         ])}
       >
         {type === 'money' ? (
-          <span className='ps-5 text-gray-600'>{symbolMoney}</span>
+          <span className='ps-5 text-gray-600' style={{marginTop: '2px'}}>
+            {symbolMoney}
+          </span>
         ) : (
           insertLeft && insertLeft
         )}
