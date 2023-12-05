@@ -40,7 +40,9 @@ const Input: FC<Props> = ({
   touched,
   ...rest
 }) => {
-  const [typeCustom, setTypeCustom] = useState<string>(type === 'money' ? 'number' : type)
+  const [typeCustom, setTypeCustom] = useState<string>(
+    type === 'money' ? 'number' : type === 'number' ? 'text' : type
+  )
 
   const defaultId = useId()
 
@@ -102,7 +104,7 @@ const Input: FC<Props> = ({
           }
           type={typeCustom}
           className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
-          value={value || ''}
+          value={value}
           id={id || defaultId || name}
           name={name}
           {...rest}
