@@ -57,18 +57,10 @@ const Input: FC<Props> = ({
     e = e || window.event
     const charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
     const charStr = String.fromCharCode(charCode)
-    if (charStr === '0') {
-      e.target.value = '0' + e.target.value
-      e.preventDefault()
-      return charStr === e.target.value
-    }
-
-    const dotInvalid = noThereAreCommas && (charStr === '.' || charStr === ',')
-    const numberAllowDotRegex = /^[0-9.]+$/
-
-    if (dotInvalid || !charStr.match(numberAllowDotRegex)) {
-      e.preventDefault()
-    }
+    const dotInvalid = noThereAreCommas
+      ? charStr === '.' && noThereAreCommas
+      : e.target.value.includes('.') && charStr === '.'
+    ;(dotInvalid || !charStr.match(numberAllowDotRegex)) && e.preventDefault()
   }
 
   function handlePaste({noThereAreCommas = true, e}: any) {
