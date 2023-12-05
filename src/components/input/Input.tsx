@@ -53,14 +53,18 @@ const Input: FC<Props> = ({
     }
   }
 
+  // handle deleting characters on firefox
   function handleKeyPress({noThereAreCommas = true, e}: any) {
-    e = e || window.event
-    const charCode = typeof e.which == 'undefined' ? e.keyCode : e.which
-    const charStr = String.fromCharCode(charCode)
-    const dotInvalid = noThereAreCommas
-      ? charStr === '.' && noThereAreCommas
-      : e.target.value.includes('.') && charStr === '.'
-    ;(dotInvalid || !charStr.match(numberAllowDotRegex)) && e.preventDefault()
+    if (type !== 'number') return
+
+    // Only allow integer values
+    if (noThereAreCommas && e.key === '.') return e.preventDefault()
+
+    // Concatenate old value and key pressed
+    const newValue: string = e.target.value + e.key;
+
+    // still allow 0
+   ;+newValue !== 0 && !+newValue && e.preventDefault()
   }
 
   function handlePaste({noThereAreCommas = true, e}: any) {
