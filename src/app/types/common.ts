@@ -1,6 +1,6 @@
 import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
 import {FormikProps} from 'formik'
-import {Schema} from 'yup'
+import {ObjectSchema, Schema} from 'yup'
 
 export type WithChildren = {
   children?: ReactNode
@@ -196,8 +196,8 @@ export type TableConfig = {
     endpoint?: string
     swalToastTitle?: string
     showRefresh?: boolean
-    validationCreateEdit?: {[key: string]: Schema}
-    validationEdit?: {[key: string]: Schema} // expect: using when edit if this field exists
+    validationCreateEdit?: ObjectSchema<any>
+    validationEdit?: ObjectSchema<any> // expect: using when edit if this field exists
     defaultSort?: string
   }
   endpoint?: string
