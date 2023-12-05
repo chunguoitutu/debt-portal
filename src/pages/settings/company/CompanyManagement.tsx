@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import {CreateEditCompanies} from './CreateEditCompany'
 import Table from '@/components/table/Table'
-import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
+import {COMPANY_TABLE_CONFIG} from './config'
 import CompanyDetail from './CompanyDetail'
 import {SearchCriteria} from '@/app/types'
 

@@ -1,16 +1,15 @@
 import React, {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
-import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import moment from 'moment'
-import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
+import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
 
 type Props = {
   setLoadApi: any
@@ -21,25 +20,6 @@ type Props = {
   handleClose: () => void
   handleUpdated: () => void
 }
-
-export const newCompaniesSchema = Yup.object().shape({
-  company_name: Yup.string()
-    .required('Company Name is required')
-    .max(255, 'Company Name must be at most 255 characters'),
-  company_code: Yup.string()
-    .required('Company Code is required')
-    .max(64, 'Company Code must be at most 64 characters'),
-  business_uen: Yup.string()
-    .required('Business UEN is required')
-    .max(64, 'Business UEN must be at most 64 characters'),
-  telephone: Yup.string().max(64, 'Telephone must be at most 64 characters'),
-  email: Yup.string()
-    .email('Email is not in valid format')
-    .max(255, 'Email must be at most 255 characters'),
-  open_date: Yup.string().required('Open Date is required'),
-  address: Yup.string().max(255, 'Address must be at most 255 characters'),
-  contact_person: Yup.string().max(255, 'Contact Person must be at most 255 characters'),
-})
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
@@ -53,7 +33,8 @@ const CreateEditCompanies = ({
   handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const {rows} = COMPANY_MANAGEMENT_CONFIG
+  const {rows, settings} = COMPANY_MANAGEMENT_CONFIG
+  const {validationFormik} = settings || {}
   const [information, setInformation] = React.useState<any>(null)
 
   const [status, setStatus] = useState(data ? data?.status : true)
@@ -93,7 +74,7 @@ const CreateEditCompanies = ({
       address: data ? data?.['address'] : '',
       open_date: data ? data?.['open_date'].slice(0, 11) : '',
     },
-    validationSchema: newCompaniesSchema,
+    validationSchema: validationFormik,
     onSubmit: async (values: any) => {
       if (!information?.id) {
         await request

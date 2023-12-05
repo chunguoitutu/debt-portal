@@ -1,36 +1,17 @@
 import * as React from 'react'
 import {COMPANY_MANAGEMENT_CONFIG} from './config'
 import {useFormik} from 'formik'
-import * as Yup from 'yup'
 import moment from 'moment'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
-import request from '../../../app/axios'
-import {swalToast} from '../../../app/swal-notification'
+import {swalToast} from '@/app/swal-notification'
+import request from '@/app/axios'
 
 export const CompanyManagement = () => {
-  const {endpoint, rows} = COMPANY_MANAGEMENT_CONFIG
+  const {settings, rows} = COMPANY_MANAGEMENT_CONFIG
+  const {endpoint, validationFormik} = settings || {}
   const [information, setInformation] = React.useState<any>(null)
   const [loadapi, setLoadApi] = React.useState<any>(false)
-
-  const newCompaniesSchema = Yup.object().shape({
-    company_name: Yup.string()
-      .required('Company Name is required')
-      .max(255, 'Company Name must be at most 255 characters'),
-    company_code: Yup.string()
-      .required('Company Code is required')
-      .max(64, 'Company Code must be at most 64 characters'),
-    business_uen: Yup.string()
-      .required('Business UEN is required')
-      .max(64, 'Business UEN must be at most 64 characters'),
-    telephone: Yup.string().max(64, 'Telephone must be at most 64 characters'),
-    email: Yup.string()
-      .email('Email is not in valid format')
-      .max(255, 'Email must be at most 255 characters'),
-    open_date: Yup.string().required('Open Date is required'),
-    address: Yup.string().max(255, 'Address must be at most 255 characters'),
-    contact_person: Yup.string().min(0).max(255, 'Contact Person must be at most 255 characters'),
-  })
 
   React.useEffect(() => {
     request
@@ -56,7 +37,7 @@ export const CompanyManagement = () => {
 
   const formik = useFormik<any>({
     initialValues: {} as any,
-    validationSchema: newCompaniesSchema,
+    validationSchema: validationFormik,
     onSubmit: async (values: any, actions: any) => {
       await request
         .post('config/company/1', {

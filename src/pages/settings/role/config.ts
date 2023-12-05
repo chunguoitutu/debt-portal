@@ -4,6 +4,7 @@ import {Select} from '@/components/select'
 import Badge from '@/components/badge/Badge'
 import {SelectRolePermission} from '@/components/select'
 import {CheckboxRounded} from '@/components/checkbox'
+import * as Yup from 'yup'
 
 export const ROLE_TABLE_CONFIG: TableConfig = {
   settings: {
@@ -16,6 +17,10 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     messageDeleteSuccess: 'Role "/%/" successfully deleted',
     buttonAddNew: 'New Role',
     showMessageTitle: 'role_name',
+    validationCreateEdit: {
+      role_name: Yup.string().required('Role name is required'),
+      priority: Yup.number().min(1, 'Priority is required').required('Priority is required'),
+    },
   },
   rows: [
     {
@@ -25,7 +30,6 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     {
       key: 'role_name',
       name: 'Role Name',
-      isCreateEdit: true,
       classNameTableHead: ' min-w-150px',
       classNameTableBody: 'text-break',
       color: '#252F4A',
@@ -39,7 +43,6 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
-      isCreateEdit: true,
       infoCreateEdit: {
         type: 'textarea',
       },
@@ -47,12 +50,11 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     {
       key: 'priority',
       name: 'Priority',
-      isCreateEdit: true,
       component: Priority,
-      componentCreateEdit: Select,
       infoCreateEdit: {
         type: 'input',
         isRequired: true,
+        component: Select,
       },
     },
     {
@@ -60,14 +62,15 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       name: 'Permissions',
       classNameTableHead: 'w-300px min-w-150px',
       component: SelectRolePermission,
-      isCreateEdit: true,
     },
     {
       key: 'status',
       name: 'Status',
       component: Badge,
-      componentCreateEdit: CheckboxRounded,
-      isCreateEdit: true,
+      infoCreateEdit: {
+        type: 'input',
+        component: CheckboxRounded,
+      },
     },
   ],
 }

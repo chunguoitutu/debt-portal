@@ -1,5 +1,27 @@
+import * as Yup from 'yup'
+
 export const COMPANY_MANAGEMENT_CONFIG = {
-  endpoint: 'config/company/1',
+  settings: {
+    endpoint: 'config/company/1',
+    validationFormik: Yup.object().shape({
+      company_name: Yup.string()
+        .required('Company Name is required')
+        .max(255, 'Company Name must be at most 255 characters'),
+      company_code: Yup.string()
+        .required('Company Code is required')
+        .max(64, 'Company Code must be at most 64 characters'),
+      business_uen: Yup.string()
+        .required('Business UEN is required')
+        .max(64, 'Business UEN must be at most 64 characters'),
+      telephone: Yup.string().max(64, 'Telephone must be at most 64 characters'),
+      email: Yup.string()
+        .email('Email is not in valid format')
+        .max(255, 'Email must be at most 255 characters'),
+      open_date: Yup.string().required('Open Date is required'),
+      address: Yup.string().max(255, 'Address must be at most 255 characters'),
+      contact_person: Yup.string().min(0).max(255, 'Contact Person must be at most 255 characters'),
+    }),
+  },
   rows: [
     {
       key: 'company_name',

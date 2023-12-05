@@ -56,17 +56,17 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   const {apiCreateUser, apiUpdateUser} = config?.settings?.dependencies || {}
   const {rows = [], settings} = config || {}
-  const {validationCreate, validationEdit} = settings || {}
+  const {validationCreateEdit, validationEdit} = settings || {}
 
   const {currentUser, company_id} = useAuth()
 
   const validationSchema = useMemo(
     () =>
       Yup.object().shape(
-        !!(validationCreate || validationEdit)
+        !!(validationCreateEdit || validationEdit)
           ? data
-            ? (validationEdit as any) || validationCreate
-            : validationCreate
+            ? (validationEdit as any) || validationCreateEdit
+            : validationCreateEdit
           : {}
       ),
     [data]
@@ -142,10 +142,10 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
   const fieldAccount = ['username', 'password', 'role_id']
 
   const dataAccount = useMemo(() => {
-    return rows?.filter(({isCreateEdit, key}) => fieldAccount.includes(key) && isCreateEdit)
+    return rows?.filter(({infoCreateEdit, key}) => fieldAccount.includes(key) && infoCreateEdit)
   }, [rows])
   const dataInformation = useMemo(() => {
-    return rows?.filter(({isCreateEdit, key}) => !fieldAccount.includes(key) && isCreateEdit)
+    return rows?.filter(({infoCreateEdit, key}) => !fieldAccount.includes(key) && infoCreateEdit)
   }, [rows])
 
   function handleSubmitForm(values: CreateEditUser) {

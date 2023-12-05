@@ -41,7 +41,6 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       classNameTableHead: 'w-50 min-w-70px',
       key: 'request_more_information',
       name: 'Need More Information',
-      type: 'yes/no',
     },
     {
       classNameTableHead: 'min-w-200px',

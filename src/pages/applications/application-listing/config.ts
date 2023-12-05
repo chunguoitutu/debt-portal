@@ -20,11 +20,11 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       name: 'ID',
       classNameTableHead: 'ps-5',
       classNameTableBody: 'w-50px ps-5',
-      isSort: true,
       infoFilter: {
         typeComponent: 'input',
         component: Input,
         typeInput: 'number',
+        isSort: true,
       },
     },
     {
@@ -33,8 +33,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         typeComponent: 'input',
         component: Input,
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'fullname',
@@ -42,8 +42,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         typeComponent: 'input',
         component: Input,
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'identification_type',
@@ -52,8 +52,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         typeComponent: 'select',
         component: Select,
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'identification_no',
@@ -61,8 +61,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         typeComponent: 'input',
         component: Input,
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'loan_type_id',
@@ -73,13 +73,12 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         dependencyApi: '/config/loan_type/listing',
         keyLabelOption: 'type_name',
         keyValueOption: 'id',
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'loan_amount_requested',
       name: 'LOAN AMOUNT REQUIRED',
-      type: 'money',
       classNameTableBody: 'text-end pe-0',
       classNameTableHead: 'text-end',
       infoFilter: {
@@ -87,8 +86,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'input',
         typeInput: 'number',
         component: Input,
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'loan_terms',
@@ -99,13 +98,12 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'input',
         typeInput: 'number',
         component: Input,
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'application_date',
       name: 'APPLICATION DATE',
-      type: 'date',
       classNameTableBody: 'text-end pe-5',
       classNameTableHead: 'text-end pe-3',
       infoFilter: {
@@ -113,8 +111,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
         typeComponent: 'input',
         component: Input,
         typeInput: 'date',
+        isSort: true,
       },
-      isSort: true,
     },
     {
       key: 'status',
@@ -125,8 +123,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         typeComponent: 'select',
         component: Select,
+        isSort: true,
       },
-      isSort: true,
     },
   ],
 }

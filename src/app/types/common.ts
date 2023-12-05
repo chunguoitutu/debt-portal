@@ -142,10 +142,7 @@ export type TableRow = {
   classNameTableHead?: string
   classNameTableBody?: string
   component?: any
-  componentCreateEdit?: any
-  type?: string
-  isHide?: boolean
-  isCreateEdit?: boolean
+  isHide?: boolean // hide io table listing
   options?: Option[]
   infoCreateEdit?: {
     type: string
@@ -161,19 +158,17 @@ export type TableRow = {
     isLastChild?: boolean // using for remove margin
     column?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 // column should be from 1 to 12 (column bootstrap)
   }
-  isShowInput?: boolean
-  isSort?: boolean
   infoFilter?: {
     isFromTo?: boolean
-    typeComponent: 'select' | 'input'
+    typeComponent?: 'select' | 'input'
     typeInput?: HTMLInputTypeAttribute
-    component: any
+    component?: any
     keyLabelOption?: string
     keyValueOption?: string
     dependencyApi?: string
     noThereAreCommas?: boolean
+    isSort?: boolean
   }
-  validationFormik?: Schema
 }
 
 export type TableConfig = {
@@ -201,8 +196,8 @@ export type TableConfig = {
     endpoint?: string
     swalToastTitle?: string
     showRefresh?: boolean
-    validationCreate?: {[key: string]: Schema}
-    validationEdit?: {[key: string]: Schema} // expect: using if this field exists
+    validationCreateEdit?: {[key: string]: Schema}
+    validationEdit?: {[key: string]: Schema} // expect: using when edit if this field exists
     defaultSort?: string
   }
   endpoint?: string
