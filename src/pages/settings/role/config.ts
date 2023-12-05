@@ -17,10 +17,10 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     messageDeleteSuccess: 'Role "/%/" successfully deleted',
     buttonAddNew: 'New Role',
     showMessageTitle: 'role_name',
-    validationCreateEdit: {
+    validationCreateEdit: Yup.object().shape({
       role_name: Yup.string().required('Role name is required'),
       priority: Yup.number().min(1, 'Priority is required').required('Priority is required'),
-    },
+    }),
   },
   rows: [
     {

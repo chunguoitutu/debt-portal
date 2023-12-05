@@ -43,13 +43,13 @@ export const USER_TABLE_CONFIG: TableConfig = {
     messageCreateSuccess: 'User "/%/" successfully created',
     buttonAddNew: 'New User',
     showMessageTitle: 'username',
-    validationEdit: validate,
-    validationCreateEdit: {
+    validationEdit: Yup.object().shape(validate),
+    validationCreateEdit: Yup.object().shape({
       ...validate,
       password: Yup.string()
         .required('Password is required')
         .matches(regexPassword, convertMessageErrorPassword('Password')),
-    },
+    }),
   },
   rows: [
     {

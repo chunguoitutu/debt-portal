@@ -1,5 +1,4 @@
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
-import * as Yup from 'yup'
 import clsx from 'clsx'
 import {TableConfig, TableRow, UserInfo} from '@/app/types'
 import {useAuth} from '@/app/context/AuthContext'
@@ -60,21 +59,9 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
   const {currentUser, company_id} = useAuth()
 
-  const validationSchema = useMemo(
-    () =>
-      Yup.object().shape(
-        !!(validationCreateEdit || validationEdit)
-          ? data
-            ? (validationEdit as any) || validationCreateEdit
-            : validationCreateEdit
-          : {}
-      ),
-    [data]
-  )
-
   const formik = useFormik<any>({
     initialValues,
-    validationSchema,
+    validationSchema: data ? validationEdit : validationCreateEdit,
     onSubmit: handleSubmitForm,
   })
   const {
