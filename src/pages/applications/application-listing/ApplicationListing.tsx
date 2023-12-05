@@ -118,85 +118,83 @@ const ApplicationListing = () => {
     return data.map((item, idx) => {
       return (
         <tr key={idx}>
-          {rows.map(
-            ({key, component, classNameTableBody, isHide, type, options, infoFilter}, i) => {
-              const {keyLabelOption, keyValueOption} = infoFilter || {}
+          {rows.map(({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
+            const {keyLabelOption, keyValueOption} = infoFilter || {}
 
-              if (isHide) {
-                return <React.Fragment key={i}></React.Fragment>
-              }
-              let Component = component || React.Fragment
-              let value = item[key]
+            if (isHide) {
+              return <React.Fragment key={i}></React.Fragment>
+            }
+            let Component = component || React.Fragment
+            let value = item[key]
 
-              if (type === 'date') {
-                value = moment(item[key]).format('MMM D, YYYY')
-              }
+            if (key === 'application_date') {
+              value = moment(item[key]).format('MMM D, YYYY')
+            }
 
-              if (type === 'money') {
-                value = numeral(item[key]).format('$0,0.00')
-              }
+            if (key === 'loan_amount_requested') {
+              value = numeral(item[key]).format('$0,0.00')
+            }
 
-              // handle for select
-              if (dataOption[key] || options) {
-                const currentItem =
-                  (options || dataOption[key]).find(
-                    (item) => item[keyValueOption || 'value'] === value
-                  ) || {}
+            // handle for select
+            if (dataOption[key] || options) {
+              const currentItem =
+                (options || dataOption[key]).find(
+                  (item) => item[keyValueOption || 'value'] === value
+                ) || {}
 
-                value = currentItem[keyLabelOption || 'label'] || ''
-              }
+              value = currentItem[keyLabelOption || 'label'] || ''
+            }
 
-              if (key === 'status') {
-                let title: string = ''
-                let color: string = ''
+            if (key === 'status') {
+              let title: string = ''
+              let color: string = ''
 
-                if (item[key] === 1) {
-                  title = 'Awaiting Approval'
-                  color = 'warning'
-                } else if (item[key] === 0) {
-                  title = 'Rejected'
-                  color = 'danger'
-                } else {
-                  title = 'Approved'
-                  color = 'success'
-                }
-
-                return (
-                  <td
-                    key={i}
-                    className={clsx([
-                      'fs-14 fw-semibold hover-applications-listing',
-                      classNameTableBody,
-                    ])}
-                  >
-                    <Badge color={color as any} title={title as any} key={i} />
-                  </td>
-                )
-              }
-
-              if (key === 'identification_no') {
-                return (
-                  <td
-                    key={i}
-                    className='fs-6 fw-medium value-hover-render-row'
-                    style={{color: '#071437'}}
-                  >
-                    {value}
-                  </td>
-                )
+              if (item[key] === 1) {
+                title = 'Awaiting Approval'
+                color = 'warning'
+              } else if (item[key] === 0) {
+                title = 'Rejected'
+                color = 'danger'
+              } else {
+                title = 'Approved'
+                color = 'success'
               }
 
               return (
-                <td key={i} className={classNameTableBody}>
-                  {component ? (
-                    <Component />
-                  ) : (
-                    <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
-                  )}
+                <td
+                  key={i}
+                  className={clsx([
+                    'fs-14 fw-semibold hover-applications-listing',
+                    classNameTableBody,
+                  ])}
+                >
+                  <Badge color={color as any} title={title as any} key={i} />
                 </td>
               )
             }
-          )}
+
+            if (key === 'identification_no') {
+              return (
+                <td
+                  key={i}
+                  className='fs-6 fw-medium value-hover-render-row'
+                  style={{color: '#071437'}}
+                >
+                  {value}
+                </td>
+              )
+            }
+
+            return (
+              <td key={i} className={classNameTableBody}>
+                {component ? (
+                  <Component />
+                ) : (
+                  <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
+                )}
+              </td>
+            )
+          })}
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
@@ -429,7 +427,9 @@ const ApplicationListing = () => {
                   {rows
                     .filter((item) => !item.isHide)
                     .map((item, i) => {
-                      const {classNameTableHead, name, isSort, key} = item
+                      const {classNameTableHead, name, infoFilter, key} = item
+
+                      const {isSort} = infoFilter || {}
 
                       return (
                         <th

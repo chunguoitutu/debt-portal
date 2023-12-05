@@ -44,7 +44,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
     buttonAddNew: 'New User',
     showMessageTitle: 'username',
     validationEdit: validate,
-    validationCreate: {
+    validationCreateEdit: {
       ...validate,
       password: Yup.string()
         .required('Password is required')
@@ -60,7 +60,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
       key: 'username',
       name: 'Username',
       color: '#252F4A',
-      isCreateEdit: true,
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
@@ -76,7 +75,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
     {
       key: 'firstname',
       name: 'First Name',
-      isCreateEdit: true,
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
@@ -96,7 +94,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
     {
       key: 'telephone',
       name: 'Telephone',
-      isCreateEdit: true,
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
@@ -108,7 +105,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
     {
       key: 'email',
       name: 'Email',
-      isCreateEdit: true,
       infoCreateEdit: {
         type: 'input',
         typeInput: 'string',
@@ -120,7 +116,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
     {
       key: 'is_active',
       name: 'Status',
-      isCreateEdit: true,
       component: Badge,
       infoCreateEdit: {
         type: 'checkbox',
@@ -134,7 +129,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
       isHide: true,
       key: 'password',
       name: 'Password',
-      isCreateEdit: true,
       infoCreateEdit: {
         type: 'input',
         typeInput: 'password',
@@ -146,7 +140,6 @@ export const USER_TABLE_CONFIG: TableConfig = {
     {
       key: 'role_id',
       name: 'Role',
-      isCreateEdit: true,
       isHide: true,
       infoCreateEdit: {
         type: 'select',

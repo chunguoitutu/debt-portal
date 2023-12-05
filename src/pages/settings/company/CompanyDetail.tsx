@@ -3,7 +3,7 @@ import moment from 'moment'
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {KTIcon} from '@/_metronic/helpers'
-import {COMPANY_TABLE_CONFIG} from './CompanyTableConfig'
+import {COMPANY_TABLE_CONFIG} from './config'
 
 interface IProps {
   show: boolean

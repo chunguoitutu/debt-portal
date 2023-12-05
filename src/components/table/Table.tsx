@@ -1,4 +1,4 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
@@ -67,8 +67,11 @@ const Table: FC<Props> = ({
     currentPage: 1,
     total: 0,
   })
-
   const {total, ...pagination} = searchCriteria
+
+  const ROW_LIST = useMemo(() => {
+    return rows.filter((el) => !el.isHide)
+  }, [rows])
 
   useEffect(() => {
     if (!currentUser) return
@@ -89,21 +92,6 @@ const Table: FC<Props> = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdated, currentUser])
-
-  function convertValue(type: string, value: string | number) {
-    if (typeof value !== 'string' && typeof value !== 'number') return
-
-    switch (type) {
-      case 'datetime':
-        return moment(value).format('MMM DD, YYYY') === 'Invalid date'
-          ? value
-          : moment(value).format('MMM DD, YYYY')
-      case 'yes/no':
-        return value === 1 ? 'Yes' : 'No'
-      default:
-        return value
-    }
-  }
 
   function handleEditItem(item: any) {
     if (typeof onEditItem !== 'function') return
@@ -240,31 +228,26 @@ const Table: FC<Props> = ({
           >
             <thead>
               <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                {rows
-                  .filter((el) => !el.isHide)
-                  .map(
-                    (row, i) =>
-                      !row?.isHide && (
-                        <th
-                          className={clsx(['min-w-50px text-nowrap', row.classNameTableHead])}
-                          key={i}
-                          style={{
-                            paddingRight: row.name === 'Status' ? '9.75px' : '',
-                          }}
-                        >
-                          <div
-                            className={clsx([
-                              row.name === 'Status'
-                                ? 'w-100 d-flex justify-content-center text-uppercase text-gray-500 align-items-center fs-14 fw-bold'
-                                : 'w-100  text-uppercase text-gray-500  fs-14 fw-bold',
-                            ])}
-                          >
-                            <span>{row.name}</span>
-                            {isShowFilter && <Filter />}
-                          </div>
-                        </th>
-                      )
-                  )}
+                {ROW_LIST.map((row, i) => (
+                  <th
+                    className={clsx(['min-w-50px text-nowrap', row.classNameTableHead])}
+                    key={i}
+                    style={{
+                      paddingRight: row.name === 'Status' ? '9.75px' : '',
+                    }}
+                  >
+                    <div
+                      className={clsx([
+                        row.name === 'Status'
+                          ? 'w-100 d-flex justify-content-center text-uppercase text-gray-500 align-items-center fs-14 fw-bold'
+                          : 'w-100  text-uppercase text-gray-500  fs-14 fw-bold',
+                      ])}
+                    >
+                      <span>{row.name}</span>
+                      {isShowFilter && <Filter />}
+                    </div>
+                  </th>
+                ))}
                 {(showAction || showRefresh) && (
                   <th className='text-center w-150px '>
                     <div
@@ -279,29 +262,11 @@ const Table: FC<Props> = ({
               </tr>
             </thead>
             <tbody className='text-gray-600 fw-bold'>
-              {rows.some((item) => item.isShowInput) && (
-                <tr style={{borderColor: '#fff'}}>
-                  {rows.map((item, key) => (
-                    <td key={key}>
-                      {item.isShowInput && <Input classShared='' name={item[key]} />}
-                    </td>
-                  ))}
-                  {(showAction || showRefresh) && (
-                    <td className='p-0'>
-                      <div className='d-flex align-items-center justify-content-center gap-1'>
-                        <div className='p-2 border cursor-pointer rounded'>
-                          <FontAwesomeIcon icon={faArrowsRotate} />
-                        </div>
-                      </div>
-                    </td>
-                  )}
-                </tr>
-              )}
               {data.length > 0 ? (
                 data.map((item, idx) => {
                   return (
                     <tr key={idx} className='fw-medium'>
-                      {rows.map(({key, component, type, classNameTableBody, isHide, color}, i) => {
+                      {rows.map(({key, component, classNameTableBody, isHide, color}, i) => {
                         if (isHide) {
                           return <Fragment key={i}></Fragment>
                         }
@@ -320,7 +285,7 @@ const Table: FC<Props> = ({
                           )
                         }
 
-                        if (key === 'open_date') {
+                        if (['open_date', 'created_date', 'updated_date'].includes(key)) {
                           return (
                             <td className='fs-14 fw-semibold' key={i}>
                               {moment(value).format('MMM DD, YYYY')}
@@ -328,18 +293,11 @@ const Table: FC<Props> = ({
                           )
                         }
 
-                        if (key === 'created_date') {
+                        // belongs to job type
+                        if (key === 'request_more_information') {
                           return (
-                            <td key={i} className='fs-14 fw-semibold '>
-                              {moment(value).format('MMM DD, YYYY')}
-                            </td>
-                          )
-                        }
-
-                        if (key === 'updated_date') {
-                          return (
-                            <td key={i} className='fs-14 fw-semibold '>
-                              {moment(value).format('MMM DD, YYYY')}
+                            <td className='fs-14 fw-semibold' key={i}>
+                              {value === 1 ? 'Yes' : 'No'}
                             </td>
                           )
                         }
@@ -386,10 +344,6 @@ const Table: FC<Props> = ({
                               </>
                             </td>
                           )
-                        }
-
-                        if (type) {
-                          value = convertValue(type, value)
                         }
 
                         return (

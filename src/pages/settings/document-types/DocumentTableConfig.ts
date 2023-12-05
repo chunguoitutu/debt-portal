@@ -47,7 +47,6 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       classNameTableHead: 'min-w-200px  align-items-center',
       key: 'updated_date',
       name: 'Updated Date',
-      type: 'datetime',
     },
     {
       classNameTableHead: 'min-w-200px',

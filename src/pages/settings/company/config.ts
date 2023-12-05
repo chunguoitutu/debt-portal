@@ -57,7 +57,6 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'open_date',
       name: 'Open Date',
-      type: 'date',
     },
     {
       key: 'status',

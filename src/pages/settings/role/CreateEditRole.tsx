@@ -1,5 +1,3 @@
-import * as Yup from 'yup'
-
 import {RoleInfo, TableConfig, UpdateById} from '@/app/types'
 import {ChangeEvent, FC, Fragment, useEffect, useState} from 'react'
 import {PAGE_PERMISSION} from '@/app/utils'
@@ -22,16 +20,12 @@ type Props = {
   config?: TableConfig
 }
 
-export const roleSchema = Yup.object().shape({
-  role_name: Yup.string().required('Role name is required'),
-  priority: Yup.number().min(1, 'Priority is required').required('Priority is required'),
-})
-
 const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [checked, setChecked] = useState<string[]>([])
   const [expanded, setExpanded] = useState<string[]>([])
   const [dataPermissionSetting, setDataPermissionSetting] = useState(PAGE_PERMISSION.setting)
-  const {rows} = config || {}
+  const {rows, settings} = config || {}
+  const {validationCreateEdit} = settings || {}
 
   const {company_id, priority} = useAuth()
 
@@ -56,7 +50,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       status: 1,
       priority: 0,
     },
-    validationSchema: roleSchema,
+    validationSchema: validationCreateEdit,
     onSubmit: handleSubmitForm,
   })
 
@@ -280,10 +274,15 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
     >
       <form className='p-30px'>
         {(rows || [])
-          .filter((item) => item.isCreateEdit)
+          .filter((item) => item.infoCreateEdit)
           .map((item, index) => {
-            const {infoCreateEdit, key, name, component, componentCreateEdit} = item
-            const {type, typeInput, isRequired} = infoCreateEdit || {}
+            const {infoCreateEdit, key, name, component} = item
+            const {
+              type,
+              typeInput,
+              isRequired,
+              component: componentCreateEdit,
+            } = infoCreateEdit || {}
 
             if (component || componentCreateEdit) {
               const Component = componentCreateEdit || component

@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import CreateEditRole from './CreateEditRole'
 import Table from '@/components/table/Table'
-import {ROLE_TABLE_CONFIG} from './RoleTableConfig'
+import {ROLE_TABLE_CONFIG} from './config'
 import {RoleInfo} from '@/app/types'
 
 const RolePage = () => {

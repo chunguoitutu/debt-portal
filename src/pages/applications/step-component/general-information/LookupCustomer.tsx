@@ -261,7 +261,8 @@ const LookupCustomer = ({show, onClose}: Props) => {
                     {rows
                       .filter((item) => !item.isHide)
                       .map((item, i) => {
-                        const {classNameTableHead, name, isSort, key} = item
+                        const {classNameTableHead, name, infoFilter, key} = item
+                        const {isSort} = infoFilter || {}
 
                         return (
                           <th
