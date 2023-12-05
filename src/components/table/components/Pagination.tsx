@@ -85,7 +85,7 @@ const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}:
               className={clsx('page-link', {
                 'page-text': true,
               })}
-              onClick={() => onChangePagePagination(1)}
+              onClick={() => onChangePagePagination(currentPage - 1)}
               style={{cursor: 'pointer'}}
             >
               {mappedLabel('&laquo; Previous')}
