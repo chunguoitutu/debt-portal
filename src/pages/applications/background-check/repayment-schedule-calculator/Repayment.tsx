@@ -231,21 +231,27 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         className='gap-1 p-6 w'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium text-gray-600'>Amount Of Loan $</div>
+                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
+                          Amount Of Loan $
+                        </div>
                         <div className='fs-4 fw-semibold'>${formatNumber(values.totalsAmount)}</div>
                       </div>
                       <div
                         className='gap-1 p-6'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium text-gray-600'>No. Of Instalment</div>
+                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
+                          No. Of Instalment
+                        </div>
                         <div className='fs-4 fw-semibold'>{values.totalsMonthPayment}</div>
                       </div>
                       <div
                         className={`gap-1 p-6`}
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium text-gray-600'>Monthly Due Date 1</div>
+                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
+                          Monthly Due Date
+                        </div>
                         <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
                       </div>
                     </div>
@@ -258,7 +264,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         className='gap-1 p-6'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
                           Interest Per Month %
                         </div>
                         <div className='fs-4 fw-semibold'>
@@ -269,7 +275,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         className='gap-1 p-6'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium' style={{color: '#78829D'}}>
+                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
                           First Repayment Date
                         </div>
                         <div className='fs-4 fw-semibold'>

@@ -100,9 +100,7 @@ const Navbar = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                background: '#071437',
                 borderRadius: '100px',
-                border: '1px solid var(--color-border-border-gray-800, #252F4A)',
               }}
             >
               <Avatar
@@ -110,7 +108,6 @@ const Navbar = () => {
                 lastname={currentUser?.lastname}
                 style={{
                   width: 30,
-                  borderRadius: '50%',
                   height: 30,
                   objectFit: 'cover',
                 }}

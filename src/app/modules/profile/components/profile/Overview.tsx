@@ -9,7 +9,7 @@ export function Overview() {
       <div className='card mb-5 mb-xl-10' id='kt_profile_details_view'>
         <div className='card-header cursor-pointer'>
           <div className='card-title m-0'>
-            <h3 className='fw-bolder m-0'>Profile Details</h3>
+            <h3 className='fw-bold m-0'>Profile Details</h3>
           </div>
 
           <Link
@@ -26,7 +26,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>
+              <span className='fw-bold fs-6 text-dark'>
                 {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
                   currentUser?.lastname || ''
                 }`}
@@ -46,7 +46,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Role</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{currentUser?.role_name}</span>
+              <span className='fw-bold fs-6 text-dark'>{currentUser?.role_name}</span>
             </div>
           </div>
 
@@ -54,7 +54,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Contact Phone</label>
 
             <div className='col-lg-8 d-flex align-items-center'>
-              <span className='fw-bolder fs-6 me-2'>{currentUser?.telephone}</span>
+              <span className='fw-bold fs-6 me-2'>{currentUser?.telephone}</span>
             </div>
           </div>
 
@@ -62,7 +62,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Contact Email</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{currentUser?.email}</span>
+              <span className='fw-bold fs-6 text-dark'>{currentUser?.email}</span>
             </div>
           </div>
 
