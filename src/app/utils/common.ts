@@ -62,10 +62,10 @@ export function filterObjectKeyNotEmpty(object: {[key: string]: any}) {
 export function convertSize(sizeInBytes) {
   const KB = 1024
   const MB = KB ** 2
-  if (sizeInBytes < MB) {
-    return (sizeInBytes / KB).toFixed(2) + ' KB'
+  if (+sizeInBytes < MB) {
+    return (+sizeInBytes / KB).toFixed(2) + ' KB'
   } else {
-    return (sizeInBytes / MB).toFixed(2) + ' MB'
+    return (+sizeInBytes / MB).toFixed(2) + ' MB'
   }
 }
 ///convert to string all
