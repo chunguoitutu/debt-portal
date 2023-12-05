@@ -35,6 +35,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
   })
   const [orderBy, setOrderBy] = React.useState<OrderBy>('asc')
   const [keySort, setKeySort] = React.useState<string>(defaultSort || 'id')
+  const {pageSize, currentPage} = searchCriteria
 
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponeLookupListing>>({})
 
@@ -59,7 +60,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
   }
 
   async function handleChangePagination(goToPage: number) {
-    onFetchDataList({...searchCriteria, currentPage: goToPage, filters: dataFilters})
+    onFetchDataList({...searchCriteria, currentPage: goToPage})
   }
 
   function handleChangeSortBy(item: TableRow) {
@@ -126,7 +127,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
       filters: dataFilters,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keySort, orderBy])
+  }, [keySort, orderBy, pageSize, currentPage])
 
   function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value)

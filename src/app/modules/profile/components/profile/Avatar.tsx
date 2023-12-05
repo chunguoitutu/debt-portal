@@ -19,13 +19,11 @@ const Avatar = ({firstname, lastname, style}) => {
         justifyContent: 'center',
         alignItems: 'center',
         ...style,
-        borderRadius: '20%',
+        borderRadius: '0.475rem',
       }}
     >
       {avatarInitials ? (
-        <div className='avatar-text' style={{color: '#000', fontWeight: 'bold'}}>
-          {avatarInitials}
-        </div>
+        <div className='avatar-text fw-bold text-black'>{avatarInitials}</div>
       ) : (
         <div className='default-avatar'>Default</div>
       )}

@@ -1,7 +1,8 @@
 import React from 'react'
 import {useAuth} from '../../../../context/AuthContext'
+import './style.scss'
 
-const AvatarHeader = ({firstname, lastname, style}) => {
+const AvatarHeader = ({firstname, lastname}) => {
   const {currentUser} = useAuth()
   let avatarInitials = ''
 
@@ -10,23 +11,9 @@ const AvatarHeader = ({firstname, lastname, style}) => {
   }
 
   return (
-    <div
-      className='avatar'
-      style={{
-        backgroundColor: '#C0C0C0',
-        width: '150px',
-        height: '152px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        ...style,
-        borderRadius: '10%',
-      }}
-    >
+    <div className='avatar-header-overview'>
       {avatarInitials ? (
-        <div className='avatar-text' style={{color: '#000', fontWeight: 'bold', fontSize: 30}}>
-          {avatarInitials}
-        </div>
+        <div className='avatar-text image-name-user'>{avatarInitials}</div>
       ) : (
         <div className='default-avatar'>Default</div>
       )}

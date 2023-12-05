@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
 import AvatarHeader from './AvatarHeader'
 import {useAuth} from '../../../../context/AuthContext'
+import './style.scss'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()
@@ -17,11 +18,7 @@ const AccountHeader: React.FC = () => {
         <div className='d-flex flex-wrap flex-sm-nowrap mb-5'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative'>
-              <AvatarHeader
-                firstname={currentUser?.firstname}
-                lastname={currentUser?.lastname}
-                style={{}}
-              />
+              <AvatarHeader firstname={currentUser?.firstname} lastname={currentUser?.lastname} />
             </div>
           </div>
 
@@ -29,11 +26,7 @@ const AccountHeader: React.FC = () => {
             <div className='d-flex justify-content-between align-items-start flex-wrap mb-2'>
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
-                  <a
-                    href='#'
-                    className='text-hover-primary'
-                    style={{fontWeight: 700, fontSize: 20, color: '#252F4A'}}
-                  >
+                  <a href='#' className='text-hover-primary style-image-account-header'>
                     {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
                       currentUser?.lastname || ''
                     }`}
@@ -86,10 +79,7 @@ const AccountHeader: React.FC = () => {
         </div>
 
         <div className='d-flex overflow-auto h-55px'>
-          <ul
-            className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 flex-nowrap'
-            style={{fontWeight: 600}}
-          >
+          <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 flex-nowrap fw-bold'>
             <li className='nav-item'>
               <Link
                 className={
