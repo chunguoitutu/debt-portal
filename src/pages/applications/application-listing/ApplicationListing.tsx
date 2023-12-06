@@ -100,14 +100,25 @@ const ApplicationListing = () => {
 
     const newDataFilter = handleConvertDataFilter(dataFilter)
 
-    loadApi &&
+    const timer = setTimeout(() => {
       onFetchDataList({
         ...searchCriteria,
-        filters: newDataFilter,
+        filters: handleFormatFilter({
+          dataFilter: {
+            ...newDataFilter,
+            searchBar: searchValue,
+          },
+          keyDate: ['application_date'],
+          keyNumber: ['loan_type_id', 'id', 'loan_terms'],
+        }),
       })
+    }, 300)
+    return () => {
+      clearTimeout(timer)
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [company_id, keySort, orderBy, pageSize, currentPage])
+  }, [company_id, keySort, orderBy, pageSize, currentPage, loadApi])
 
   const navigate = useNavigate()
 
@@ -219,7 +230,6 @@ const ApplicationListing = () => {
     body?: Omit<SearchCriteria<Partial<ResponseApplicationListing>>, 'total'>
   ) {
     setLoading(true)
-    setLoadApi(false)
     try {
       const {data: response} = await request.post(settings.endPointGetListing, {
         ...body,
@@ -234,10 +244,6 @@ const ApplicationListing = () => {
     } finally {
       setLoading(false)
     }
-    //can only call api after 2s
-    setTimeout(() => {
-      setLoadApi(true)
-    }, 2000 * Math.random())
   }
 
   // Change page number
@@ -267,7 +273,7 @@ const ApplicationListing = () => {
   function handleResetFilter() {
     setDataFilter({})
     setSearchValue('')
-    loadApi && onFetchDataList({...searchCriteria})
+    setLoadApi(!loadApi)
   }
 
   /**
@@ -284,18 +290,6 @@ const ApplicationListing = () => {
       keyDate: ['application_date'],
       keyNumber: ['loan_type_id', 'id', 'loan_terms'],
     })
-  }
-
-  // handled when clicking the apply button or pressing enter
-  function handleFilter() {
-    const newDataFilter = handleConvertDataFilter(dataFilter)
-
-    loadApi &&
-      onFetchDataList({
-        ...searchCriteria,
-        currentPage: 1,
-        filters: newDataFilter,
-      })
   }
 
   /**
@@ -316,30 +310,9 @@ const ApplicationListing = () => {
     setSearchValue(e.target.value)
   }
 
-  /**
-   * Search value will filter multiple key (full_name, application_no)
-   * @param forceSearchValue: force override search value. Using when click icon clear search
-   */
-  function handleSearch(forceSearchValue?: string) {
-    const newDataFilter = handleConvertDataFilter(dataFilter)
-
-    const dataFilterChange: {[key: string]: any} = {
-      ...newDataFilter,
-      searchBar: forceSearchValue || searchValue,
-    }
-
-    // remove search bar if not value
-    if (!searchValue || !forceSearchValue) {
-      delete dataFilterChange.searchBar
-    }
-
-    const newSearchCriteria = {
-      ...searchCriteria,
-      currentPage: 1,
-      filters: dataFilterChange,
-    }
-
-    loadApi && onFetchDataList(newSearchCriteria)
+  //to call api when get listing/filter/search
+  function handleReGetApi() {
+    setLoadApi(!loadApi)
   }
 
   return (
@@ -355,14 +328,14 @@ const ApplicationListing = () => {
             onChange={handleChangeSearch}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                handleSearch(searchValue)
+                handleReGetApi()
               }
             }}
             insertLeft={
               <FontAwesomeIcon
                 className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
                 icon={faSearch}
-                onClick={() => handleSearch(searchValue)}
+                onClick={handleReGetApi}
               />
             }
             insertRight={
@@ -372,7 +345,7 @@ const ApplicationListing = () => {
                   icon={faClose}
                   onClick={() => {
                     setSearchValue('')
-                    handleSearch('')
+                    handleReGetApi()
                   }}
                 />
               ) : null
@@ -416,7 +389,11 @@ const ApplicationListing = () => {
 
                       return (
                         <th
-                          className={clsx(['text-nowrap min-w-75px', classNameTableHead])}
+                          className={clsx([
+                            'text-nowrap min-w-75px user-select-none',
+                            classNameTableHead,
+                          ])}
+                          data-title={item.key}
                           key={i}
                           onClick={() => isSort && handleChangeSortBy(item)}
                         >
@@ -474,7 +451,7 @@ const ApplicationListing = () => {
                                 }}
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter') {
-                                    handleFilter()
+                                    setLoadApi(!loadApi)
                                   }
                                 }}
                               />
@@ -487,7 +464,7 @@ const ApplicationListing = () => {
                                 }}
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter') {
-                                    handleFilter()
+                                    setLoadApi(!loadApi)
                                   }
                                 }}
                               />
@@ -498,7 +475,7 @@ const ApplicationListing = () => {
                               {...props}
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
-                                  handleFilter()
+                                  setLoadApi(!loadApi)
                                 }
                               }}
                             />
@@ -522,7 +499,7 @@ const ApplicationListing = () => {
 
                         <Button
                           className='fw-medium p-12px button-application-filter-custom fs-5 text-primary btn-secondary'
-                          onClick={handleFilter}
+                          onClick={() => setLoadApi(!loadApi)}
                           style={{backgroundColor: '#f9f9f9'}}
                         >
                           Apply

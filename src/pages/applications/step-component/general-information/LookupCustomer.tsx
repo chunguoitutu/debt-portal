@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {Modal} from 'react-bootstrap'
 import {TABLE_LOOKUP_CUSTOMER} from '../config'
 import Button from '@/components/button/Button'
@@ -16,6 +15,7 @@ import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import './style.scss'
 import Pagination from '@/components/table/components/Pagination'
 import {handleFormatFilter} from '@/app/utils'
+import React from 'react'
 
 type Props = {
   show?: boolean
@@ -57,9 +57,6 @@ const LookupCustomer = ({show, onClose}: Props) => {
     } catch (error) {
       // no thing
     }
-    // setTimeout(() => {
-    //   setLoadApi(true)
-    // }, 2000 * Math.random())
   }
 
   async function handleChangePagination(goToPage: number) {
@@ -148,30 +145,14 @@ const LookupCustomer = ({show, onClose}: Props) => {
     setSearchValue(e.target.value)
   }
 
-  // agrument using for clear search
-  function handleSearch(forceSearchValue?: string) {
-    const dataFilterChange: {[key: string]: any} = {
-      ...dataFilters,
-      searchBar: forceSearchValue || searchValue,
-    }
-
-    // remove search bar if not value
-    if (!searchValue || !forceSearchValue) {
-      delete dataFilterChange.searchBar
-    }
-
-    const newSearchCriteria = {
-      ...searchCriteria,
-      currentPage: 1,
-      filters: dataFilterChange,
-    }
-
-    loadApi && onFetchDataList(newSearchCriteria)
-  }
-
   function handleResetFilter() {
     setSearchValue('')
     setDataFilter({})
+    setLoadApi(!loadApi)
+  }
+
+  //to call api when get listing/filter/search
+  function handleReGetApi() {
     setLoadApi(!loadApi)
   }
 
@@ -209,14 +190,14 @@ const LookupCustomer = ({show, onClose}: Props) => {
               onChange={handleChangeSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleSearch(searchValue)
+                  handleReGetApi()
                 }
               }}
               insertLeft={
                 <FontAwesomeIcon
                   className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
                   icon={faSearch}
-                  onClick={() => handleSearch(searchValue)}
+                  onClick={handleReGetApi}
                 />
               }
               insertRight={
@@ -226,7 +207,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                     icon={faClose}
                     onClick={() => {
                       setSearchValue('')
-                      handleSearch('')
+                      handleReGetApi()
                     }}
                   />
                 ) : null
@@ -301,7 +282,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                               }}
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
-                                  setLoadApi(!loadApi)
+                                  handleReGetApi()
                                 }
                               }}
                             />
@@ -320,7 +301,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           <Button
                             className='fw-medium p-12px button-application-filter-custom fs-5 text-primary btn-secondary'
                             style={{backgroundColor: '#f9f9f9', height: '35px'}}
-                            onClick={() => setLoadApi(!loadApi)}
+                            onClick={handleReGetApi}
                           >
                             Apply
                           </Button>
