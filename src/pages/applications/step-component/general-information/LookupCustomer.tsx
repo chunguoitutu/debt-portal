@@ -26,6 +26,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
   const {showAction = true, showViewButton, defaultSort} = settings
 
   const [showInput, setShowInput] = React.useState<boolean>(false)
+  const [loadApi, setLoadApi] = React.useState<boolean>(true)
   const [searchValue, setSearchValue] = React.useState<string>('')
   const [data, setData] = React.useState<ResponeLookupListing[]>([])
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
@@ -46,6 +47,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
   async function onFetchDataList(
     body?: Omit<SearchCriteria<Partial<ResponeLookupListing>>, 'total'>
   ) {
+    setLoadApi(false)
     try {
       const {data: response} = await request.post(settings.endPointGetListing + '/listing', {
         ...body,
@@ -56,11 +58,16 @@ const LookupCustomer = ({show, onClose}: Props) => {
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {
       // no thing
+    } finally {
     }
+
+    setTimeout(() => {
+      setLoadApi(true)
+    }, 2000 * Math.random())
   }
 
   async function handleChangePagination(goToPage: number) {
-    onFetchDataList({...searchCriteria, currentPage: goToPage})
+    loadApi && onFetchDataList({...searchCriteria, currentPage: goToPage})
   }
 
   function handleChangeSortBy(item: TableRow) {
@@ -115,17 +122,19 @@ const LookupCustomer = ({show, onClose}: Props) => {
   }
 
   const handleLookup = async () => {
-    onFetchDataList({
-      ...searchCriteria,
-      filters: dataFilters,
-    })
+    loadApi &&
+      onFetchDataList({
+        ...searchCriteria,
+        filters: dataFilters,
+      })
   }
 
   React.useEffect(() => {
-    onFetchDataList({
-      ...searchCriteria,
-      filters: dataFilters,
-    })
+    loadApi &&
+      onFetchDataList({
+        ...searchCriteria,
+        filters: dataFilters,
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keySort, orderBy, pageSize, currentPage])
 
@@ -151,7 +160,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
       filters: dataFilterChange,
     }
 
-    onFetchDataList(newSearchCriteria)
+    loadApi && onFetchDataList(newSearchCriteria)
   }
 
   function handleFilter() {
@@ -170,17 +179,18 @@ const LookupCustomer = ({show, onClose}: Props) => {
       ...(searchValue ? {searchBar: searchValue || ''} : {}),
     }
 
-    onFetchDataList({
-      ...searchCriteria,
-      currentPage: 1,
-      filters: filterAndSearch,
-    })
+    loadApi &&
+      onFetchDataList({
+        ...searchCriteria,
+        currentPage: 1,
+        filters: filterAndSearch,
+      })
   }
 
   function handleResetFilter() {
     setSearchValue('')
     setDataFilter({})
-    onFetchDataList({...searchCriteria})
+    loadApi && onFetchDataList({...searchCriteria})
   }
 
   return (
