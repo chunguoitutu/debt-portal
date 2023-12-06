@@ -11,13 +11,6 @@ import ChangePassword from '../change-password/ChangePassword'
 const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),
   lastname: Yup.string().required('Last Name is required'),
-  email: Yup.string()
-    .required('Contact Email is required')
-    .matches(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email format. It must contain '@' symbol and the domain extension"
-    ),
-  telephone: Yup.string().required('Contact Phone is required'),
 })
 
 interface UserProfile {
@@ -173,7 +166,7 @@ const Settings: React.FC = () => {
 
               <div className='row mb-6 '>
                 <label className='col-lg-4 col-form-label fw-bold fs-6'>
-                  <span className='required'>Contact Phone</span>
+                  <span>Contact Phone</span>
                 </label>
 
                 <div className='col-lg-8 fv-row'>
@@ -183,18 +176,11 @@ const Settings: React.FC = () => {
                     placeholder='Contact Phone'
                     {...formik.getFieldProps('telephone')}
                   />
-                  {formik.touched.telephone && formik.errors.telephone && (
-                    <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block fs-13'>{formik.errors.telephone}</div>
-                    </div>
-                  )}
                 </div>
               </div>
 
               <div className='row mb-6 p-1'>
-                <label className='col-lg-4 col-form-label required fw-bold fs-6'>
-                  Contact Email
-                </label>
+                <label className='col-lg-4 col-form-label fw-bold fs-6'>Contact Email</label>
 
                 <div className='col-lg-8 fv-row'>
                   <input
@@ -204,11 +190,6 @@ const Settings: React.FC = () => {
                     {...formik.getFieldProps('email')}
                     pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
                   />
-                  {formik.touched.email && formik.errors.email && (
-                    <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block fs-13'>{formik.errors.email}</div>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
