@@ -2,6 +2,7 @@ import axios, {AxiosError} from 'axios'
 import numeral from 'numeral'
 import {ErrorResponse} from '../types/common'
 import {DEFAULT_MESSAGE_ERROR_500} from '../constants'
+import moment from 'moment'
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -68,26 +69,68 @@ export function convertSize(sizeInBytes) {
     return (+sizeInBytes / MB).toFixed(2) + ' MB'
   }
 }
-///convert to string all
-export function stringifyObject(obj: object) {
-  const result = {}
 
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      result[key] = String(obj[key])
-    }
+export function isObject(value: any) {
+  if (typeof value === 'object' && !Number.isNaN(value) && !Array.isArray(value)) {
+    return true
+  } else {
+    return false
   }
-
-  return result
 }
-//compare object
-export function areObjectsEqual(obj1: any, obj2: any, excludedFields: any) {
-  const obj1Copy = {...obj1}
-  const obj2Copy = {...obj2}
 
-  excludedFields.forEach((field: any) => {
-    delete obj1Copy[field]
-    delete obj2Copy[field]
-  })
-  return JSON.stringify(obj1Copy) === JSON.stringify(obj2Copy)
+// Filter keys with value and format it.
+export function handleFormatFilter<T = any>(config: {
+  dataFilter: T
+  keyNumber?: string[]
+  keyDate?: string[]
+}) {
+  const {keyNumber = [], keyDate = [], dataFilter} = config
+
+  if (!isObject(dataFilter)) return {}
+
+  const newDataFilter = Object.keys(dataFilter || {})
+    .filter((key) => dataFilter[key])
+    .reduce((acc, key) => {
+      /* handle for filter from to.
+       * key after format should be type date or number
+       */
+      if (isObject(dataFilter[key])) {
+        const keyHasValue = filterObjectKeyNotEmpty(dataFilter[key])
+
+        if (!Object.keys(keyHasValue).length) return {...acc}
+
+        // Format type date
+        if (keyDate.includes(key)) {
+          // add 1 days if key = lte
+          const objectDate = Object.keys(keyHasValue).reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: new Date(
+                key === 'lte'
+                  ? moment(keyHasValue[key], 'YYYY-MM-DD').add(1, 'days')
+                  : keyHasValue[key]
+              ),
+            }),
+            {}
+          )
+
+          return {...acc, [key]: objectDate}
+        } else {
+          const newObject = Object.keys(keyHasValue).reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: +keyHasValue[key],
+            }),
+            {}
+          )
+          return {...acc, [key]: newObject}
+        }
+      }
+
+      const value = dataFilter[key]
+
+      return {...acc, [key]: keyNumber.includes(key) ? +value : value}
+    }, {})
+
+  return newDataFilter
 }
