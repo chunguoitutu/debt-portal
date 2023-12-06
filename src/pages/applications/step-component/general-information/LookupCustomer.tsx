@@ -9,12 +9,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate, faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import request from '../../../../app/axios'
 import {KTCardBody, KTIcon} from '../../../../_metronic/helpers'
-import {OrderBy, SearchCriteria, TableRow, ResponeLookupListing} from '@/app/types'
+import {OrderBy, SearchCriteria, TableRow, ResponseLookupListing} from '@/app/types'
 import SortBy from '@/components/sort-by'
 import clsx from 'clsx'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import './style.scss'
 import Pagination from '@/components/table/components/Pagination'
+import {handleFormatFilter} from '@/app/utils'
 
 type Props = {
   show?: boolean
@@ -24,11 +25,10 @@ type Props = {
 const LookupCustomer = ({show, onClose}: Props) => {
   const {settings, rows} = TABLE_LOOKUP_CUSTOMER
   const {showAction = true, showViewButton, defaultSort} = settings
-
   const [showInput, setShowInput] = React.useState<boolean>(false)
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
   const [searchValue, setSearchValue] = React.useState<string>('')
-  const [data, setData] = React.useState<ResponeLookupListing[]>([])
+  const [data, setData] = React.useState<ResponseLookupListing[]>([])
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 1,
@@ -37,17 +37,15 @@ const LookupCustomer = ({show, onClose}: Props) => {
   const [orderBy, setOrderBy] = React.useState<OrderBy>('asc')
   const [keySort, setKeySort] = React.useState<string>(defaultSort || 'id')
   const {pageSize, currentPage} = searchCriteria
-
-  const [dataFilters, setDataFilter] = React.useState<Partial<ResponeLookupListing>>({})
+  const [dataFilters, setDataFilter] = React.useState<Partial<ResponseLookupListing>>({})
 
   function showInputFilter() {
     setShowInput(!showInput)
   }
 
   async function onFetchDataList(
-    body?: Omit<SearchCriteria<Partial<ResponeLookupListing>>, 'total'>
+    body?: Omit<SearchCriteria<Partial<ResponseLookupListing>>, 'total'>
   ) {
-    setLoadApi(false)
     try {
       const {data: response} = await request.post(settings.endPointGetListing + '/listing', {
         ...body,
@@ -58,12 +56,10 @@ const LookupCustomer = ({show, onClose}: Props) => {
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {
       // no thing
-    } finally {
     }
-
-    setTimeout(() => {
-      setLoadApi(true)
-    }, 2000 * Math.random())
+    // setTimeout(() => {
+    //   setLoadApi(true)
+    // }, 2000 * Math.random())
   }
 
   async function handleChangePagination(goToPage: number) {
@@ -130,13 +126,23 @@ const LookupCustomer = ({show, onClose}: Props) => {
   }
 
   React.useEffect(() => {
-    loadApi &&
+    const timer = setTimeout(() => {
       onFetchDataList({
         ...searchCriteria,
-        filters: dataFilters,
+        filters: handleFormatFilter({
+          dataFilter: {
+            ...dataFilters,
+            searchBar: searchValue,
+          },
+        }),
       })
+    }, 300)
+
+    return () => {
+      clearTimeout(timer)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keySort, orderBy, pageSize, currentPage])
+  }, [keySort, orderBy, pageSize, currentPage, loadApi])
 
   function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value)
@@ -163,34 +169,10 @@ const LookupCustomer = ({show, onClose}: Props) => {
     loadApi && onFetchDataList(newSearchCriteria)
   }
 
-  function handleFilter() {
-    const newDataFilter = Object.keys(dataFilters).reduce((acc, key) => {
-      if (dataFilters[key]) {
-        let value = dataFilters[key]
-
-        return {...acc, [key]: value}
-      }
-
-      return {...acc}
-    }, {})
-
-    const filterAndSearch = {
-      ...newDataFilter,
-      ...(searchValue ? {searchBar: searchValue || ''} : {}),
-    }
-
-    loadApi &&
-      onFetchDataList({
-        ...searchCriteria,
-        currentPage: 1,
-        filters: filterAndSearch,
-      })
-  }
-
   function handleResetFilter() {
     setSearchValue('')
     setDataFilter({})
-    loadApi && onFetchDataList({...searchCriteria})
+    setLoadApi(!loadApi)
   }
 
   return (
@@ -277,7 +259,11 @@ const LookupCustomer = ({show, onClose}: Props) => {
 
                         return (
                           <th
-                            className={clsx(['text-nowrap min-w-75px', classNameTableHead])}
+                            className={clsx([
+                              'text-nowrap min-w-75px user-select-none',
+                              classNameTableHead,
+                            ])}
+                            data-title={item.key}
                             key={i}
                             onClick={() => isSort && handleChangeSortBy(item)}
                           >
@@ -315,7 +301,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                               }}
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
-                                  handleFilter()
+                                  setLoadApi(!loadApi)
                                 }
                               }}
                             />
@@ -334,7 +320,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           <Button
                             className='fw-medium p-12px button-application-filter-custom fs-5 text-primary btn-secondary'
                             style={{backgroundColor: '#f9f9f9', height: '35px'}}
-                            onClick={handleFilter}
+                            onClick={() => setLoadApi(!loadApi)}
                           >
                             Apply
                           </Button>

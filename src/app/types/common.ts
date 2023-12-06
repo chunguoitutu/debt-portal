@@ -106,7 +106,7 @@ export type SearchCriteria<T = any> = {
   searchBar?: string
 }
 
-export type ResponeLookupListing = {
+export type ResponseLookupListing = {
   id: number
   company_id: number
   customer_no: string
