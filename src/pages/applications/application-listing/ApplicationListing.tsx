@@ -59,6 +59,7 @@ const ApplicationListing = () => {
   const [orderBy, setOrderBy] = useState<OrderBy>('asc')
   const [keySort, setKeySort] = useState<string>('id')
   const [searchValue, setSearchValue] = useState<string>('')
+  const [loadApi, setLoadApi] = React.useState<boolean>(true)
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
     pageSize: 10,
     currentPage: 1,
@@ -99,10 +100,11 @@ const ApplicationListing = () => {
 
     const newDataFilter = handleConvertDataFilter(dataFilter)
 
-    onFetchDataList({
-      ...searchCriteria,
-      filters: newDataFilter,
-    })
+    loadApi &&
+      onFetchDataList({
+        ...searchCriteria,
+        filters: newDataFilter,
+      })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company_id, keySort, orderBy, pageSize, currentPage])
@@ -212,10 +214,12 @@ const ApplicationListing = () => {
     })
   }
 
+  // get list application
   async function onFetchDataList(
     body?: Omit<SearchCriteria<Partial<ResponseApplicationListing>>, 'total'>
   ) {
     setLoading(true)
+    setLoadApi(false)
     try {
       const {data: response} = await request.post(settings.endPointGetListing, {
         ...body,
@@ -230,11 +234,15 @@ const ApplicationListing = () => {
     } finally {
       setLoading(false)
     }
+    //can only call api after 2s
+    setTimeout(() => {
+      setLoadApi(true)
+    }, 2000 * Math.random())
   }
 
   // Change page number
   async function handleChangePagination(goToPage: number) {
-    setSearchCriteria({...searchCriteria, currentPage: goToPage})
+    loadApi && setSearchCriteria({...searchCriteria, currentPage: goToPage})
   }
 
   /**
@@ -259,7 +267,7 @@ const ApplicationListing = () => {
   function handleResetFilter() {
     setDataFilter({})
     setSearchValue('')
-    onFetchDataList({...searchCriteria})
+    loadApi && onFetchDataList({...searchCriteria})
   }
 
   /**
@@ -282,11 +290,12 @@ const ApplicationListing = () => {
   function handleFilter() {
     const newDataFilter = handleConvertDataFilter(dataFilter)
 
-    onFetchDataList({
-      ...searchCriteria,
-      currentPage: 1,
-      filters: newDataFilter,
-    })
+    loadApi &&
+      onFetchDataList({
+        ...searchCriteria,
+        currentPage: 1,
+        filters: newDataFilter,
+      })
   }
 
   /**
@@ -330,7 +339,7 @@ const ApplicationListing = () => {
       filters: dataFilterChange,
     }
 
-    onFetchDataList(newSearchCriteria)
+    loadApi && onFetchDataList(newSearchCriteria)
   }
 
   return (
