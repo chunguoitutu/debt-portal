@@ -20,7 +20,7 @@ import {
   TableRow,
 } from '@/app/types'
 import request from '@/app/axios'
-import {filterObjectKeyNotEmpty} from '@/app/utils'
+import {filterObjectKeyNotEmpty, handleFormatFilter} from '@/app/utils'
 import ButtonEdit from '@/components/button/ButtonEdit'
 import SortBy from '@/components/sort-by'
 import {PageLink, PageTitle} from '@/components/breadcrumbs'
@@ -67,6 +67,9 @@ const ApplicationListing = () => {
 
   const {pageSize, currentPage} = searchCriteria
 
+  /**
+   * get api or filter
+   */
   React.useEffect(() => {
     const allApi = rows
       .filter((item) => item?.infoFilter?.dependencyApi)
@@ -106,7 +109,7 @@ const ApplicationListing = () => {
 
   const navigate = useNavigate()
 
-  function handleEditApplication(item: ApplicationItem) {
+  function handleNavigateEditApplication(item: ApplicationItem) {
     navigate(`/application/edit/${item.id}`)
   }
 
@@ -198,7 +201,9 @@ const ApplicationListing = () => {
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
-                {showEditButton && <ButtonEdit onClick={() => handleEditApplication(item)} />}
+                {showEditButton && (
+                  <ButtonEdit onClick={() => handleNavigateEditApplication(item)} />
+                )}
               </div>
             </td>
           )}
@@ -227,92 +232,53 @@ const ApplicationListing = () => {
     }
   }
 
+  // Change page number
   async function handleChangePagination(goToPage: number) {
     setSearchCriteria({...searchCriteria, currentPage: goToPage})
   }
 
-  function handleChangeFilter(e: React.ChangeEvent<any>) {
-    const {value, name} = e.target
-    setDataFilter({...dataFilter, [name]: value})
-  }
-
-  function handleChangeFromToFilter(key: 'gte' | 'lte', e: React.ChangeEvent<HTMLInputElement>) {
+  /**
+   * Change search value.
+   * @param e element event
+   * @param key Expected use for range search
+   */
+  function handleChangeFilter(e: React.ChangeEvent<HTMLInputElement>, key?: 'gte' | 'lte') {
     const {value, name} = e.target
     setDataFilter({
       ...dataFilter,
-      [name]: {
-        ...dataFilter[name],
-        [key]: value,
-      },
+      [name]: key
+        ? {
+            ...dataFilter[name],
+            [key]: value,
+          }
+        : value,
     })
   }
 
+  // Reset the filter. include search bar, filter
   function handleResetFilter() {
     setDataFilter({})
     setSearchValue('')
     onFetchDataList({...searchCriteria})
   }
 
-  function handleConvertDataFilter(oldDataFilter: {[key: string]: any}) {
-    const filter = Object.keys(oldDataFilter).reduce((acc, key) => {
-      // Check value object
-      if (
-        typeof oldDataFilter[key] === 'object' &&
-        !Number.isNaN(oldDataFilter[key]) &&
-        !Array.isArray(oldDataFilter[key])
-      ) {
-        const objectHasValue = filterObjectKeyNotEmpty(oldDataFilter[key])
-
-        if (Object.keys(objectHasValue).length) {
-          // object but type date
-          if (key === 'application_date') {
-            // add 1 days if key = lte
-            const objectDate = Object.keys(objectHasValue).reduce(
-              (acc, key) => ({
-                ...acc,
-                [key]: new Date(
-                  key === 'lte'
-                    ? moment(objectHasValue[key], 'YYYY-MM-DD').add(1, 'days')
-                    : objectHasValue[key]
-                ),
-              }),
-              {}
-            )
-
-            return {...acc, [key]: objectDate}
-          }
-
-          // convert value to number
-          const newObject = Object.keys(objectHasValue).reduce(
-            (acc, key) => ({
-              ...acc,
-              [key]: +objectHasValue[key],
-            }),
-            {}
-          )
-
-          return {...acc, [key]: newObject}
-        } else {
-          return {...acc}
-        }
-      }
-
-      if (dataFilter[key]) {
-        let value = dataFilter[key]
-
-        if (['loan_type_id', 'id', 'loan_terms'].includes(key)) {
-          value = +value
-        }
-
-        return {...acc, [key]: value}
-      }
-
-      return {...acc}
-    }, {})
-
-    return {...filter, ...(searchValue ? {searchBar: searchValue || ''} : {})}
+  /**
+   * Delete empty fields, reformat data to send to API
+   * Re-run api on useEffect
+   * @returns New data after formatting
+   */
+  function handleConvertDataFilter(dataFilter: {[key: string]: any}) {
+    return handleFormatFilter({
+      dataFilter: {
+        ...dataFilter,
+        searchBar: searchValue,
+      },
+      keyDate: ['application_date'],
+      keyNumber: ['loan_type_id', 'id', 'loan_terms'],
+    })
   }
 
+  // handled when clicking the apply button or pressing enter
   function handleFilter() {
     const newDataFilter = handleConvertDataFilter(dataFilter)
 
@@ -323,6 +289,10 @@ const ApplicationListing = () => {
     })
   }
 
+  /**
+   * Handle change filter sort
+   * Re-run api on useEffect
+   */
   function handleChangeSortBy(item: TableRow) {
     if (item.key === keySort) {
       setOrderBy(orderBy === 'desc' ? 'asc' : 'desc')
@@ -332,11 +302,15 @@ const ApplicationListing = () => {
     }
   }
 
+  // Change value search bar
   function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value)
   }
 
-  // agrument using for clear search
+  /**
+   * Search value will filter multiple key (full_name, application_no)
+   * @param forceSearchValue: force override search value. Using when click icon clear search
+   */
   function handleSearch(forceSearchValue?: string) {
     const newDataFilter = handleConvertDataFilter(dataFilter)
 
@@ -487,7 +461,7 @@ const ApplicationListing = () => {
                                 placeholder='from'
                                 value={dataFilter[key]?.['gte'] || ''}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                  handleChangeFromToFilter('gte', e)
+                                  handleChangeFilter(e, 'gte')
                                 }}
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter') {
@@ -500,7 +474,7 @@ const ApplicationListing = () => {
                                 placeholder='to'
                                 value={dataFilter[key]?.['lte'] || ''}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                  handleChangeFromToFilter('lte', e)
+                                  handleChangeFilter(e, 'lte')
                                 }}
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter') {
