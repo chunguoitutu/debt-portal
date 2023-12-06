@@ -34,38 +34,31 @@ const AccountHeader: React.FC = () => {
                 </div>
 
                 <div className='d-flex flex-wrap fw-bold fs-6 mb-3 mt-0 pe-2'>
-                  <a
-                    href='#'
-                    className='d-flex align-items-center text-gray-400 text-hover-primary me-4 mb-2'
-                  >
-                    <KTIcon iconName='sms' className='fs-4 me-1' />
-                    {currentUser?.email}
-                  </a>
-                  <a
-                    href='#'
-                    className='d-flex align-items-center text-gray-400 text-hover-primary me-4 mb-2'
-                  >
-                    <KTIcon iconName='phone' className='fs-4 me-1' />
-                    {currentUser?.telephone}
-                  </a>
-                  <a
-                    href='#'
-                    className={`d-flex align-items-center text-gray-400 text-hover-primary mb-2 ${
+                  <span className='d-flex align-items-center text-gray-500 me-4 mb-2'>
+                    <KTIcon iconName='sms' className='fs-4 me-1 mb-0' />
+                    {currentUser?.email || 'None'}
+                  </span>
+                  <span className='d-flex align-items-center text-gray-500 me-4 mb-2'>
+                    <KTIcon iconName='phone' className='fs-4 me-1 mb-0' />
+                    {currentUser?.telephone || 'None'}
+                  </span>
+                  <span
+                    className={`d-flex align-items-center text-gray-500 mb-2 ${
                       currentUser?.is_active === 1 ? 'active' : 'disabled'
                     }`}
                   >
                     {currentUser?.is_active === 1 ? (
                       <>
-                        <KTIcon iconName='check' className='fs-4 me-1' />
+                        <KTIcon iconName='check' className='fs-4 me-1 mb-0' />
                         Active
                       </>
                     ) : (
                       <>
-                        <KTIcon iconName='close' className='fs-4 me-1' />
+                        <KTIcon iconName='close' className='fs-4 me-1 mb-0' />
                         Disabled
                       </>
                     )}
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
