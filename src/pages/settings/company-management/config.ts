@@ -5,11 +5,11 @@ export const COMPANY_MANAGEMENT_CONFIG = {
     endpoint: 'config/company/1',
     validationFormik: Yup.object().shape({
       company_name: Yup.string()
-        .required('Company Name is required')
-        .max(255, 'Company Name must be at most 255 characters'),
+        .required('Organization Name is required')
+        .max(255, 'Organization Name must be at most 255 characters'),
       company_code: Yup.string()
-        .required('Company Code is required')
-        .max(64, 'Company Code must be at most 64 characters'),
+        .required('Organization Code is required')
+        .max(64, 'Organization Code must be at most 64 characters'),
       business_uen: Yup.string()
         .required('Business UEN is required')
         .max(64, 'Business UEN must be at most 64 characters'),
@@ -25,14 +25,14 @@ export const COMPANY_MANAGEMENT_CONFIG = {
   rows: [
     {
       key: 'company_name',
-      name: 'Company Name',
+      name: 'Organization Name',
       type: 'text',
       required: true,
     },
     {
       key: 'company_code',
       type: 'text',
-      name: 'Company Code',
+      name: 'Organization Code',
       required: true,
     },
     {

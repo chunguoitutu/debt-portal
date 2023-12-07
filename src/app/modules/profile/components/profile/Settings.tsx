@@ -119,7 +119,7 @@ const Settings: React.FC = () => {
 
         <div id='kt_account_profile_details' className='collapse show'>
           <form onSubmit={formik.handleSubmit} noValidate className='form'>
-            <div className='card-body border-top p-9'>
+            <div className='card-body p-9'>
               <div className='row mb-6 p-1'>
                 <label className='col-lg-4 col-form-label required fw-bold fs-6'>Full Name</label>
 
@@ -206,7 +206,7 @@ const Settings: React.FC = () => {
               </button>
               <button
                 type='submit'
-                className='btn btn-primary'
+                className='btn btn-primary align-self-center fs-14'
                 disabled={loading}
                 onClick={() => formik.handleSubmit}
               >

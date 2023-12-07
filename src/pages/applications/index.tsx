@@ -337,7 +337,7 @@ export const Applications = () => {
 
         setIsDraft(false)
       } else {
-        handleSubmitForm()
+        handleSubmitForm(true)
       }
     })
   }
@@ -378,7 +378,11 @@ export const Applications = () => {
     }
   }
 
-  async function handleSubmitForm() {
+  /**
+   * handle create or edit applocation
+   * @param isDraft status of application
+   */
+  async function handleSubmitForm(isDraft: boolean = false) {
     const {
       identification_type,
       identification_no,
@@ -493,7 +497,7 @@ export const Applications = () => {
       },
       application: {
         ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
-        loan_terms: +loan_terms,
+        loan_terms: +loan_terms || 12,
         loan_amount_requested: +loan_amount_requested,
         loan_type_id: +loan_type_id || null,
         status: 1,

@@ -145,7 +145,8 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Select',
     column: 6,
     label: 'Nationality',
-    keyLabelOfOptions: 'name',
+    keyLabelOfOptions: 'nationality',
+    defaultValue: 192, //default value country is SINGAPORE
     keyValueOfOptions: 'id',
     dependencyApi: 'config/country/listing',
     required: true,
@@ -156,6 +157,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     component: Select,
     typeComponent: 'Select',
     options: LANGUAGES,
+    defaultValue: LANGUAGES[0].value,
     column: 6,
     label: 'Language Spoken',
     className: 'justify-content-xxl-end',
@@ -203,7 +205,9 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     required: true,
     typeInput: 'money',
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Loan Amount')),
+    validationFormik: Yup.number()
+      .required(convertMessageErrorRequired('Loan Amount'))
+      .max(5000, 'Loan Amount must be less than or equal to 5000$'),
   },
   {
     key: 'loan_terms',
@@ -212,9 +216,10 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     label: 'Loan Terms (months)',
     required: true,
     typeInput: 'number',
+    defaultValue: '12',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
-      .max(1000, convertMessageErrorMaximum(1000, true)),
+      .max(1000, convertMessageErrorMaximum(100, true)),
   },
   {
     key: 'loan_reason',
@@ -390,7 +395,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'company_telephone',
     component: Input,
     typeComponent: 'Input',
-    label: 'Company Telephone',
+    label: 'Telephone',
     column: 6,
     typeInput: 'phone',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
@@ -399,7 +404,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'portal_code',
     component: Input,
     typeComponent: 'Input',
-    label: 'Company	Postal Code',
+    label: 'Postal Code',
     column: 6,
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
@@ -569,8 +574,9 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Country',
     column: 6,
     className: 'justify-content-xxl-end',
-    keyLabelOfOptions: 'name',
+    keyLabelOfOptions: 'nicename',
     keyValueOfOptions: 'id',
+    defaultValue: 192, //default value country is SINGAPORE
     dependencyApi: 'config/country/listing',
     required: true,
     validationFormik: Yup.string()

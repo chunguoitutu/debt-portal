@@ -24,11 +24,11 @@ const GeneralButton: FC<Props> = ({
 
   return (
     <div className='d-flex flex-end mt-10 full gap-5'>
-      {!applicationIdEdit && (
+      {!applicationIdEdit && currentStep !== 6 && (
         <Button
           loading={isSubmitting && isDraft}
           onClick={handleSaveDraft}
-          className='btn-secondary align-self-center d-flex none fs-5'
+          className='btn-secondary align-self-center d-flex none fs-6'
           disabled={isSubmitting}
         >
           Save Draft
@@ -39,14 +39,14 @@ const GeneralButton: FC<Props> = ({
         loading={isSubmitting && !isDraft}
         disabled={isSubmitting}
         onClick={handleSubmit}
-        className='fs-5 btn btn-primary'
+        className='fs-6 btn btn-primary'
       >
         {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
       </Button>
 
       {currentStep === 6 ? (
         <Button
-          className='fs-5 btn btn-primary'
+          className='fs-6 btn btn-primary'
           type='submit'
           disabled={isSubmitting}
           onClick={() => {}}

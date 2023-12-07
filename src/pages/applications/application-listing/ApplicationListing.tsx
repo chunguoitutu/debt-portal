@@ -143,6 +143,17 @@ const ApplicationListing = () => {
             let Component = component || React.Fragment
             let value = item[key]
 
+            if (key === 'id') {
+              return (
+                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-6'>
+                  {Number(idx) +
+                    1 +
+                    (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
+                      Number(searchCriteria.pageSize))}
+                </td>
+              )
+            }
+
             if (key === 'application_date') {
               value = moment(item[key]).format('MMM D, YYYY')
             }
@@ -188,7 +199,6 @@ const ApplicationListing = () => {
                 </td>
               )
             }
-
             if (key === 'identification_no') {
               return (
                 <td
@@ -199,6 +209,20 @@ const ApplicationListing = () => {
                   {value}
                 </td>
               )
+            }
+
+            if (key === 'fullname') {
+              {
+                data.map((item) => item.is_draft)
+                return (
+                  <td key={i} className='d-flex row ms-1' style={{borderBottom: 'none'}}>
+                    <div className='p-0 fw-semibold fs-14 fw-semibold'>{value}</div>
+                    <div className='p-0 mt-1 fs-12 text-gray-600 fw-normal'>
+                      {item.is_draft === 1 ? 'Draft' : 'Saved'}
+                    </div>
+                  </td>
+                )
+              }
             }
 
             return (
@@ -354,7 +378,7 @@ const ApplicationListing = () => {
           <div className='d-flex flex-end ms-4'>
             <Button
               onClick={showInputFilter}
-              className='btn-secondary align-self-center m-2 fs-5 text-primary h-45px'
+              className='btn-secondary align-self-center m-2 fs-14 text-primary h-45px'
               disabled={false}
             >
               <Icons name={'filterIcon'} />
@@ -363,7 +387,7 @@ const ApplicationListing = () => {
 
             <Link to='/application/create'>
               <Button
-                className='btn-primary align-self-center m-2 fs-5 text-white h-45px'
+                className='btn-primary align-self-center m-2 fs-14 text-white h-45px'
                 disabled={false}
               >
                 <Icons name={'AddIcon'} />
@@ -498,7 +522,7 @@ const ApplicationListing = () => {
                         </div>
 
                         <Button
-                          className='fw-medium p-12px button-application-filter-custom fs-5 text-primary btn-secondary'
+                          className='fw-medium p-12px button-application-filter-custom fs-6 text-primary btn-secondary'
                           onClick={() => setLoadApi(!loadApi)}
                           style={{backgroundColor: '#f9f9f9'}}
                         >

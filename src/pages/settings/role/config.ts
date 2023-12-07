@@ -57,12 +57,15 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
         component: Select,
       },
     },
-    {
-      key: 'permissions',
-      name: 'Permissions',
-      classNameTableHead: 'w-300px min-w-150px',
-      component: SelectRolePermission,
-    },
+    /**
+     * use it after have feature permissions
+     */
+    // {
+    //   key: 'permissions',
+    //   name: 'Permissions',
+    //   classNameTableHead: 'w-300px min-w-150px',
+    //   component: SelectRolePermission,
+    // },
     {
       key: 'status',
       name: 'Status',
