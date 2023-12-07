@@ -67,7 +67,7 @@ const CompanyDetail = ({
           </div>
 
           <div className='d-flex justify-content-start align-items-center p-0 m-0'>
-            <Icons name={'Telephone'} />
+            <KTIcon iconName='phone' className='fs-20' />
             {!!data?.telephone ? (
               <p className='ps-8px pe-0 pt-0 pb-0 m-0 fs-16 text-gray-800 fw-semibold text-lowercase'>
                 {data?.telephone}
@@ -80,7 +80,7 @@ const CompanyDetail = ({
           </div>
 
           <div className='d-flex justify-content-start align-items-center px-0 pt-8px m-0'>
-            <Icons name={'Email'} />
+            <KTIcon iconName='sms' className='fs-20' />
             {!!data?.email ? (
               <p className='ps-8px pe-0 pt-0 pb-0 m-0 fs-16 text-gray-800 fw-semibold text-lowercase'>
                 {data?.email}
@@ -92,7 +92,8 @@ const CompanyDetail = ({
             )}
           </div>
           <div className='d-flex justify-content-start align-items-center px-0 pt-8px pb-30px m-0'>
-            <Icons name={'HomeSmall'} />
+            <KTIcon iconName='geolocation' className='fs-20' />
+
             {!!data?.address ? (
               <p className='ps-8px pe-0 pt-0 pb-0 m-0 fs-16 text-gray-800 fw-semibold  text-capitalize'>
                 {data?.address}
