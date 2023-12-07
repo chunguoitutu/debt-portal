@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTIcon} from '../../../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
+import './style.scss'
+
+import {KTIcon} from '../../../../../_metronic/helpers'
 import AvatarHeader from './AvatarHeader'
 import {useAuth} from '../../../../context/AuthContext'
-import './style.scss'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()

@@ -1,13 +1,14 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
+
+import request from '../../../../app/axios'
+import {BLOCK_ADDRESS_CONFIG} from '../config'
+import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
 import {Select} from '@/components/select'
 import Button from '@/components/button/Button'
-import {BLOCK_ADDRESS_CONFIG} from '../config'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
-import request from '../../../../app/axios'
-import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
 import {DEFAULT_MESSAGE_ERROR_500, INIT_BLOCK_ADDRESS} from '@/app/constants'
 import {COUNTRY_PHONE_CODE} from '@/app/utils'
 

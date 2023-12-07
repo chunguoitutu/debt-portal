@@ -1,8 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react'
-import * as Yup from 'yup'
 import {Table} from 'react-bootstrap'
+import * as Yup from 'yup'
+import moment from 'moment'
 import {useFormik} from 'formik'
 import './style.scss'
+
 import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG, REPAYMENT_SHEDULE_TABLES} from './config'
 import {DEFAULT_MSG_ERROR, STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '@/app/constants'
 import request from '@/app/axios'
@@ -12,7 +14,6 @@ import {Select} from '@/components/select'
 import Step from '@/components/step/Step'
 import {MONTHLY_DUE_DATE} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
-import moment from 'moment'
 import Button from '@/components/button/Button'
 
 type Props = {

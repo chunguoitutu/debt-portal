@@ -3,15 +3,16 @@ import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import {REJECTION_TYPE_TABLE_CONFIG} from './RejectinonTypeConfig'
+
 import request from '@/app/axios'
-import {swalToast} from '@/app/swal-notification'
-import {convertErrorMessageResponse} from '@/app/utils'
-import {KTIcon} from '@/_metronic/helpers'
-import Button from '@/components/button/Button'
-import {TextArea} from '@/components/textarea'
 import {Input} from '@/components/input'
+import {KTIcon} from '@/_metronic/helpers'
+import {TextArea} from '@/components/textarea'
+import Button from '@/components/button/Button'
+import {swalToast} from '@/app/swal-notification'
 import {CheckboxRounded} from '@/components/checkbox'
+import {convertErrorMessageResponse} from '@/app/utils'
+import {REJECTION_TYPE_TABLE_CONFIG} from './RejectinonTypeConfig'
 
 type Props = {
   setLoadApi: any

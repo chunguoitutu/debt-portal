@@ -1,21 +1,23 @@
+import React from 'react'
 import {Modal} from 'react-bootstrap'
-import {TABLE_LOOKUP_CUSTOMER} from '../config'
-import Button from '@/components/button/Button'
-import Icons from '@/components/icons'
-import RowPerPage from '@/components/row-per-page'
-import {Input} from '@/components/input'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowsRotate, faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
+import './style.scss'
+
+import {TABLE_LOOKUP_CUSTOMER} from '../config'
 import request from '../../../../app/axios'
 import {KTCardBody, KTIcon} from '../../../../_metronic/helpers'
+import Icons from '@/components/icons'
+import Button from '@/components/button/Button'
+import RowPerPage from '@/components/row-per-page'
+import {Input} from '@/components/input'
 import {OrderBy, SearchCriteria, TableRow, ResponseLookupListing} from '@/app/types'
 import SortBy from '@/components/sort-by'
-import clsx from 'clsx'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
-import './style.scss'
 import Pagination from '@/components/table/components/Pagination'
 import {handleFormatFilter} from '@/app/utils'
-import React from 'react'
+import Loading from '@/components/table/components/Loading'
 
 type Props = {
   show?: boolean
@@ -38,6 +40,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
   const [keySort, setKeySort] = React.useState<string>(defaultSort || 'id')
   const {pageSize, currentPage} = searchCriteria
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponseLookupListing>>({})
+  const [loading, setLoading] = React.useState<boolean>(false)
 
   function showInputFilter() {
     setShowInput(!showInput)
@@ -46,6 +49,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
   async function onFetchDataList(
     body?: Omit<SearchCriteria<Partial<ResponseLookupListing>>, 'total'>
   ) {
+    setLoading(true)
     try {
       const {data: response} = await request.post(settings.endPointGetListing + '/listing', {
         ...body,
@@ -56,6 +60,8 @@ const LookupCustomer = ({show, onClose}: Props) => {
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {
       // no thing
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -339,6 +345,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
             onChangePagePagination={handleChangePagination}
             searchCriteria={searchCriteria}
           />
+          {loading && <Loading />}
         </div>
         <Modal.Footer>
           <div className='d-flex flex-end full'>

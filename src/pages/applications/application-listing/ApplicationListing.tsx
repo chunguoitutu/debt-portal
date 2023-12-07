@@ -5,13 +5,10 @@ import React, {useEffect, useState} from 'react'
 import numeral from 'numeral'
 import moment from 'moment'
 import clsx from 'clsx'
+import './style.scss'
 
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
-import {APPLICATION_LISTING_CONFIG} from './config'
-import RowPerPage from '@/components/row-per-page'
-import Badge from '@/components/badge/Badge'
-import Loading from '@/components/table/components/Loading'
 import {
   ApplicationItem,
   OrderBy,
@@ -21,12 +18,15 @@ import {
 } from '@/app/types'
 import request from '@/app/axios'
 import {filterObjectKeyNotEmpty, handleFormatFilter} from '@/app/utils'
+import {APPLICATION_LISTING_CONFIG} from './config'
+import RowPerPage from '@/components/row-per-page'
+import Badge from '@/components/badge/Badge'
+import Loading from '@/components/table/components/Loading'
 import ButtonEdit from '@/components/button/ButtonEdit'
 import SortBy from '@/components/sort-by'
 import {PageLink, PageTitle} from '@/components/breadcrumbs'
 import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
-import './style.scss'
 import {Input} from '@/components/input'
 import Pagination from '@/components/table/components/Pagination'
 
