@@ -1,9 +1,10 @@
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import clsx from 'clsx'
+import {useFormik} from 'formik'
+
 import {TableConfig, TableRow, UserInfo} from '@/app/types'
 import {useAuth} from '@/app/context/AuthContext'
 import request from '@/app/axios'
-import {useFormik} from 'formik'
 import {swalToast} from '@/app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import Modal from '@/components/modal/Modal'

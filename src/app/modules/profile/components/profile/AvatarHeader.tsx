@@ -1,6 +1,6 @@
-import React from 'react'
-import {useAuth} from '../../../../context/AuthContext'
 import './style.scss'
+
+import {useAuth} from '../../../../context/AuthContext'
 
 const AvatarHeader = ({firstname, lastname}) => {
   const {currentUser} = useAuth()

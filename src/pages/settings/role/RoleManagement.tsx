@@ -1,4 +1,5 @@
 import {useState} from 'react'
+
 import CreateEditRole from './CreateEditRole'
 import Table from '@/components/table/Table'
 import {ROLE_TABLE_CONFIG} from './config'

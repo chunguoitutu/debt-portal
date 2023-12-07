@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import {FC, Fragment, useEffect, useState} from 'react'
+import clsx from 'clsx'
+
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'

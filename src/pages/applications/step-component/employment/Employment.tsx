@@ -1,11 +1,12 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import clsx from 'clsx'
-import ErrorMessage from '@/components/error/ErrorMessage'
 import Tippy from '@tippyjs/react'
-import {Select} from '@/components/select'
-import {ApplicationConfig, PropsStepApplication} from '@/app/types'
+
 import request from '@/app/axios'
+import {Select} from '@/components/select'
 import {COUNTRY_PHONE_CODE} from '@/app/utils'
+import ErrorMessage from '@/components/error/ErrorMessage'
+import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props

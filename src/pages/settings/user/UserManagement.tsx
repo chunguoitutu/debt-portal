@@ -1,4 +1,5 @@
 import {useState} from 'react'
+
 import {USER_TABLE_CONFIG} from './config'
 import CreateEditUser from './CreateEditUser'
 import Table from '@/components/table/Table'

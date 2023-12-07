@@ -1,8 +1,9 @@
-import {RoleInfo, TableConfig, UpdateById} from '@/app/types'
 import {ChangeEvent, FC, Fragment, useEffect, useState} from 'react'
+import {useFormik} from 'formik'
+
+import {RoleInfo, TableConfig, UpdateById} from '@/app/types'
 import {PAGE_PERMISSION} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
-import {useFormik} from 'formik'
 import {convertErrorMessageResponse, isJson} from '@/app/utils'
 import {createNewRole, updateRole} from '@/app/axios/request'
 import {swalToast} from '@/app/swal-notification'

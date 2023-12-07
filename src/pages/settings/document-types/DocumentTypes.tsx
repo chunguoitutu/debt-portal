@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
+
 import CreateDocumentType from './CreateDocumentTypes'
 import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
 import Table from '@/components/table/Table'

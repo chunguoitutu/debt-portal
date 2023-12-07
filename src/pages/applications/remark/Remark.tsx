@@ -1,7 +1,8 @@
 import {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
-import Button from '@/components/button/Button'
 import {v4 as uuidv4} from 'uuid'
 import moment from 'moment'
+
+import Button from '@/components/button/Button'
 import ImgAvataRemark from '@/components/icons/ImgAvataRemark'
 import {BsThreeDotsVertical} from 'react-icons/bs'
 import Icons from '@/components/icons'

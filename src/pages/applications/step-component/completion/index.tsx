@@ -1,4 +1,5 @@
 import {FC} from 'react'
+
 import TableRender from '@/components/table-render'
 import TitleComponent from '@/components/title-component'
 import {PropsStepApplication} from '@/app/types'

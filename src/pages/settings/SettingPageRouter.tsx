@@ -1,4 +1,5 @@
 import {Routes, Route, Navigate} from 'react-router-dom'
+
 import SettingManagementLayout from '../../layouts/setting-layout/SettingLayout'
 import {useAuth} from '../../app/context/AuthContext'
 import {PageLink, PageTitle} from '../../_metronic/layout/core'

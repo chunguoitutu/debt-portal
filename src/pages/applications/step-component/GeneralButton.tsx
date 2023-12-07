@@ -1,6 +1,7 @@
 import {FC} from 'react'
-import Button from '@/components/button/Button'
 import {useParams} from 'react-router-dom'
+
+import Button from '@/components/button/Button'
 import {PropsStepApplication} from '@/app/types'
 
 interface Props extends PropsStepApplication {

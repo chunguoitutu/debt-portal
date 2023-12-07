@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
+
 import {JOB_TABLE_CONFIG} from './JobTableConfig'
 import CreateJobType from './CreateJobType'
 import Table from '@/components/table/Table'

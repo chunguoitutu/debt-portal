@@ -1,7 +1,7 @@
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import './style.scss'
-import {swalToast} from '@/app/swal-notification'
+
 import {KTIcon} from '@/_metronic/helpers'
 import Repayment from './Repayment'
 
