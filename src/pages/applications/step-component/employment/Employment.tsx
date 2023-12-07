@@ -66,7 +66,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 w-sm-300px w-xl-200px'
+      : 'input-wrap flex-shrink-0 w-100 w-xxl-200px'
 
     // nothing
     if (!Component) return
@@ -215,7 +215,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
         return (
           <div
             className={clsx([
-              'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+              'd-flex flex-column flex-xxl-row align-items-start align-items-xxl-stretch gap-3 gap-xxl-8',
               !column ? 'full' : '',
               className,
             ])}

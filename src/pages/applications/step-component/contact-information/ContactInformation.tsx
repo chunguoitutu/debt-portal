@@ -68,7 +68,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-lg-275px w-xl-300px w-xxl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
 
     if (typeComponent === 'Select') {
       return (
@@ -185,7 +185,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
           <Fragment key={i}>
             <div
               className={clsx([
-                'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+                'd-flex flex-column flex-xxl-row align-items-start align-items-xxl-stretch gap-3 gap-xxl-8',
                 !column ? 'full' : '',
                 className,
               ])}
@@ -228,14 +228,14 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
           const classNameComponent = !column
             ? 'flex-grow-1 w-300px w-lg-unset'
-            : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-lg-275px w-xl-300px w-xxl-200px'
+            : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
 
           return (
             <Fragment key={i}>
               {i === 0 && <div className='separator-contact full'></div>}
               <div
                 className={clsx([
-                  'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+                  'd-flex flex-column flex-xxl-row align-items-start align-items-xxl-stretch gap-3 gap-xxl-8',
                   !column ? 'full' : '',
                   className,
                 ])}

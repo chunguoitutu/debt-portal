@@ -88,7 +88,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'NRIC No./FIN',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     required: true,
     validationFormik: Yup.string()
       .max(64, convertMessageErrorMaximum(64))
@@ -111,7 +111,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Select',
     column: 6,
     label: 'Marketing Type',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     required: true,
     keyLabelOfOptions: 'marketing_type_name',
     keyValueOfOptions: 'id',
@@ -135,7 +135,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Date of Birth',
     required: true,
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     typeInput: 'date',
     validationFormik: Yup.string().required(convertMessageErrorRequired('Date of Birth')),
   },
@@ -158,7 +158,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     options: LANGUAGES,
     column: 6,
     label: 'Language Spoken',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     required: true,
     validationFormik: Yup.string().required(convertMessageErrorRequired('Language Spoken')),
   },
@@ -245,7 +245,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     label: 'Mobile 2(NIL)',
     column: 6,
     typeInput: 'phone',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
@@ -264,7 +264,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     column: 6,
     typeInput: 'phone',
     label: 'Home Phone(NIL)',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
@@ -283,7 +283,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Alternate Email',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
       .email('Alternate Email invalid.')
       .max(255, convertMessageErrorMaximum(255)),
@@ -314,7 +314,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Bank Name 2',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
   },
   {
@@ -331,7 +331,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Bank Acc 2',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
@@ -348,7 +348,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Bank Code 2',
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
 ]
@@ -401,7 +401,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'Company	Postal Code',
     column: 6,
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
@@ -419,7 +419,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'Occupation',
     column: 6,
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
   {
@@ -502,7 +502,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'Address Label',
     column: 6,
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     required: true,
     validationFormik: Yup.string()
       .required(convertMessageErrorRequired('Address Label'))
@@ -525,7 +525,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'Street 2',
     column: 6,
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
   },
   {
@@ -545,7 +545,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'State',
     column: 6,
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     required: true,
     validationFormik: Yup.string()
       .required(convertMessageErrorRequired('State'))
@@ -568,7 +568,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Select',
     label: 'Country',
     column: 6,
-    className: 'justify-content-lg-end',
+    className: 'justify-content-xxl-end',
     keyLabelOfOptions: 'name',
     keyValueOfOptions: 'id',
     dependencyApi: 'config/country/listing',
