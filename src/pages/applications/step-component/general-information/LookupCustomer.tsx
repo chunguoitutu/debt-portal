@@ -305,7 +305,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </div>
 
                           <Button
-                            className='fw-medium p-12px button-application-filter-custom fs-5 text-primary btn-secondary'
+                            className='btn text-primary btn-secondary fw-medium fs-14 btn-sm me-1 fw-medium text-primary'
                             style={{backgroundColor: '#f9f9f9', height: '35px'}}
                             onClick={handleReGetApi}
                           >

@@ -522,7 +522,7 @@ const ApplicationListing = () => {
                         </div>
 
                         <Button
-                          className='fw-medium p-12px button-application-filter-custom fs-6 text-primary btn-secondary'
+                          className='btn text-primary btn-secondary fw-medium fs-14 btn-sm me-1 fw-medium text-primary'
                           onClick={() => setLoadApi(!loadApi)}
                           style={{backgroundColor: '#f9f9f9'}}
                         >
