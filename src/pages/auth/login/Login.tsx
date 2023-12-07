@@ -197,7 +197,7 @@ export function Login() {
 
           <div className='d-grid mt-8'>
             <Button
-              className='btn-primary'
+              className='btn-primary text-center'
               loading={loading}
               disabled={
                 loading ||
