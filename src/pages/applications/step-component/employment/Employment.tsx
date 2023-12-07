@@ -64,9 +64,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     let Component: any = item?.component
 
-    const className = !column
-      ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 w-100 w-xxl-200px'
+    const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0 w-100 w-xxl-200px'
 
     // nothing
     if (!Component) return
@@ -80,7 +78,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
     // handle for select
     if (typeComponent === 'Select') {
       return (
-        <div className='d-flex flex-column w-100'>
+        <div className={clsx(['d-flex flex-column w-100', column && 'w-xxl-unset'])}>
           <Component
             value={values[key]}
             onChange={handleChange}
@@ -152,7 +150,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     if (typeComponent === 'Input') {
       return (
-        <div className='d-flex flex-column w-100'>
+        <div className={clsx(['d-flex flex-column w-100', column && 'w-xxl-unset'])}>
           <Component
             value={values[key]}
             onChange={handleChange}
@@ -208,23 +206,27 @@ const Employment: FC<PropsStepApplication> = (props) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, column, isHide, className, required} = item
+        const {label, column, isHide, className, required, typeComponent} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
         return (
           <div
             className={clsx([
-              'd-flex flex-column flex-xxl-row align-items-start align-items-xxl-stretch gap-3 gap-xxl-8',
+              'd-flex gap-3 gap-xxl-8',
               !column ? 'full' : '',
+              typeComponent === 'Radio'
+                ? 'align-items-center gap-5'
+                : 'flex-column flex-xxl-row align-items-start align-items-xxl-stretch',
               className,
             ])}
             key={i}
           >
             <div
               className={clsx([
-                'input-title-application left fs-4 text-start text-lg-end',
+                'input-title-application left fs-4 text-start text-lg-end ',
                 required && 'required',
+                typeComponent === 'Radio' && 'd-none d-xxl-block',
               ])}
             >
               {label}

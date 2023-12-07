@@ -177,23 +177,22 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
               'd-flex gap-3 gap-xxl-8',
               !column ? 'full' : '',
               typeComponent === 'Checkbox'
-                ? 'align-items-center'
-                : 'flex-column flex-xxl-row align-items-start align-items-xxl-center',
+                ? 'align-items-center gap-5'
+                : 'flex-column flex-xxl-row align-items-start align-items-xxl-stretch',
               className,
             ])}
             key={i}
           >
-            {typeComponent !== 'Checkbox' && (
-              <div
-                className={clsx([
-                  'input-title-application-step2 left fs-4 text-start text-lg-end',
-                  required && 'required',
-                ])}
-                key={i}
-              >
-                {label}
-              </div>
-            )}
+            <div
+              className={clsx([
+                'input-title-application-step2 left fs-4 text-start text-lg-end',
+                required && 'required',
+                typeComponent === 'Checkbox' && 'd-none d-xxl-block',
+              ])}
+              key={i}
+            >
+              {label}
+            </div>
 
             {renderComponent(item)}
           </div>
