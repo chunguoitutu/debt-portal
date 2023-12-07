@@ -67,7 +67,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     if (!Component) return
 
     const className = !column
-      ? 'flex-grow-1 w-300px w-lg-unset'
+      ? 'flex-grow-1'
       : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
 
     if (typeComponent === 'Select') {
@@ -227,7 +227,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
           let Component = component
 
           const classNameComponent = !column
-            ? 'flex-grow-1 w-300px w-lg-unset'
+            ? 'flex-grow-1'
             : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
 
           return (

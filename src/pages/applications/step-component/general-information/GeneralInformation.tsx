@@ -63,7 +63,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     let Component: any = item?.component
 
     const className = !column
-      ? 'flex-grow-1 w-300px w-lg-unset'
+      ? 'flex-grow-1'
       : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
 
     // nothing
@@ -157,22 +157,21 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
               'd-flex gap-3 gap-xxl-8',
               !column ? 'full' : '',
               typeComponent === 'Radio'
-                ? 'align-items-center'
+                ? 'align-items-center gap-5'
                 : 'flex-column flex-xxl-row align-items-start align-items-xxl-stretch',
               className,
             ])}
             key={i}
           >
-            {typeComponent !== 'Radio' && (
-              <div
-                className={clsx([
-                  'input-title-application left fs-4 text-start text-lg-end',
-                  required && 'required',
-                ])}
-              >
-                {label}
-              </div>
-            )}
+            <div
+              className={clsx([
+                'input-title-application left fs-4 text-start text-lg-end',
+                required && 'required',
+                typeComponent === 'Radio' && 'd-none d-xxl-block',
+              ])}
+            >
+              {label}
+            </div>
 
             {renderComponent(item)}
           </div>
