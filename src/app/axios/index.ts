@@ -9,9 +9,11 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const token = Cookies.get('token')
+    const currentCompany = Cookies.get('company_id') || 0
 
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token
+      config.headers['Company'] = +currentCompany
     }
 
     return config
