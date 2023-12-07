@@ -104,11 +104,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
                 : values[key]
             }
           />
-          <span
-            className='fw-semibold cursor-pointer fs-4'
-            color='#071437'
-            style={{marginLeft: '-15px'}}
-          >
+          <span className='fw-semibold cursor-pointer fs-4 text-gray-900'>
             Opt In Yes Consent to disclose information to MLCB and sMECB
           </span>
         </Fragment>
@@ -171,28 +167,33 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, column, isHide, required, className} = item
+        const {label, column, isHide, required, className, typeComponent} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
         return (
           <div
             className={clsx([
-              'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+              'd-flex gap-3 gap-xxl-8',
               !column ? 'full' : '',
+              typeComponent === 'Checkbox'
+                ? 'align-items-center'
+                : 'flex-column flex-xxl-row align-items-start align-items-xxl-center',
               className,
             ])}
             key={i}
           >
-            <div
-              className={clsx([
-                'input-title-application-step2 left fs-4 text-start text-lg-end',
-                required && 'required',
-              ])}
-              key={i}
-            >
-              {label}
-            </div>
+            {typeComponent !== 'Checkbox' && (
+              <div
+                className={clsx([
+                  'input-title-application-step2 left fs-4 text-start text-lg-end',
+                  required && 'required',
+                ])}
+                key={i}
+              >
+                {label}
+              </div>
+            )}
 
             {renderComponent(item)}
           </div>

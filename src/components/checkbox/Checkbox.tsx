@@ -15,7 +15,7 @@ const Checkbox: FC<Props> = ({name, className, classNameLabel = '', label, desc,
   return (
     <div className='form-check form-check-custom form-check-solid'>
       <input
-        className={clsx(['form-check-input me-3 cursor-pointer', className])}
+        className={clsx(['d-inline-block form-check-input cursor-pointer', className])}
         name={name}
         id={id}
         type='checkbox'

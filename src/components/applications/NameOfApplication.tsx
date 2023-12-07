@@ -18,22 +18,22 @@ const data = [
 ]
 
 const NameOfApplication: FC<PropsStepApplication> = ({formik}) => {
-  const {values, handleChange, errors, touched} = formik
+  const {values, errors, touched, handleChange, handleBlur} = formik
 
   return (
-    <div className='row w-100 gy-5 gx-0 gx-lg-5 align-items-start'>
+    <div className='grid-3-column w-100 gap-16px'>
       {data.map(({key, placeholder}, i) => (
-        <div className='col-12 col-lg-4 d-flex flex-column' key={i}>
-          <Input
-            name={key}
-            value={values?.[key]}
-            placeholder={placeholder}
-            onChange={handleChange}
-            classShared='flex-grow-1 w-xl-unset'
-            error={errors[key] as string}
-            touched={!!touched[key]}
-          />
-        </div>
+        <Input
+          key={i}
+          name={key}
+          value={values?.[key]}
+          placeholder={placeholder}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          classShared=''
+          error={errors[key] as string}
+          touched={!!touched[key]}
+        />
       ))}
     </div>
   )

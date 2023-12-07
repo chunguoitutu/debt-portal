@@ -61,10 +61,10 @@ const Input: FC<Props> = ({
     if (noThereAreCommas && e.key === '.') return e.preventDefault()
 
     // Concatenate old value and key pressed
-    const newValue: string = e.target.value + e.key;
+    const newValue: string = e.target.value + e.key
 
     // still allow 0
-   ;+newValue !== 0 && !+newValue && e.preventDefault()
+    ;+newValue !== 0 && !+newValue && e.preventDefault()
   }
 
   function handlePaste({noThereAreCommas = true, e}: any) {
@@ -90,7 +90,7 @@ const Input: FC<Props> = ({
       )}
       <div
         className={clsx([
-          'input-advance form-control form-control-lg p-0 d-flex align-items-center h-100 overflow-hidden',
+          'input-advance form-control form-control-lg p-0 d-flex align-items-center overflow-hidden',
           classInputWrap,
         ])}
       >
@@ -109,7 +109,7 @@ const Input: FC<Props> = ({
             type === 'number' && handlePaste({e: e, noThereAreCommas: noThereAreCommas})
           }
           type={typeCustom}
-          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
+          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
           value={value}
           id={id || defaultId || name}
           name={name}

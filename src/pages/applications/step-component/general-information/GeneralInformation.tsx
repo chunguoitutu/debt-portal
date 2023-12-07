@@ -15,7 +15,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const [dataMarketing, setDataMarketing] = useState({})
   const [showPopup, setShowPopup] = useState(false)
 
-  const {values, touched, errors, handleChange} = formik
+  const {values, touched, errors, handleChange, handleBlur} = formik
 
   async function onFetchDataList() {
     try {
@@ -64,7 +64,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
     const className = !column
       ? 'flex-grow-1 w-300px w-lg-unset'
-      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-lg-0 w-lg-275px w-xl-300px w-xxl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
 
     // nothing
     if (!Component) return
@@ -112,13 +112,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
     if (typeComponent === 'Input') {
       return (
-        <div className='d-flex flex-column w-100 w-lg-unset'>
+        <>
           <Component
             value={values[key]}
             onChange={handleChange}
+            onBlur={handleBlur}
             type={typeInput}
             name={key}
             classShared={className}
+            touched={touched[key]}
+            error={errors[key]}
             insertRight={
               key === 'identification_no' ? (
                 <Tippy offset={[40, 0]} content='Lookup Customer'>
@@ -133,9 +136,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
               ) : undefined
             }
           />
-
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
-        </div>
+        </>
       )
     }
 
@@ -146,27 +147,32 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, column, isHide, className, required} = item
+        const {label, column, isHide, className, required, typeComponent} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
         return (
           <div
             className={clsx([
-              'd-flex flex-column flex-lg-row align-items-start align-items-lg-stretch gap-3 gap-lg-8',
+              'd-flex gap-3 gap-xxl-8',
               !column ? 'full' : '',
+              typeComponent === 'Radio'
+                ? 'align-items-center'
+                : 'flex-column flex-xxl-row align-items-start align-items-xxl-stretch',
               className,
             ])}
             key={i}
           >
-            <div
-              className={clsx([
-                'input-title-application left fs-4 text-start text-lg-end',
-                required && 'required',
-              ])}
-            >
-              {label}
-            </div>
+            {typeComponent !== 'Radio' && (
+              <div
+                className={clsx([
+                  'input-title-application left fs-4 text-start text-lg-end',
+                  required && 'required',
+                ])}
+              >
+                {label}
+              </div>
+            )}
 
             {renderComponent(item)}
           </div>
