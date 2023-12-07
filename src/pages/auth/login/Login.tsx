@@ -11,6 +11,8 @@ import {LoginInfo} from '@/app/types'
 import {Input} from '@/components/input'
 import {login} from '@/app/axios/request'
 import {convertErrorMessageResponse} from '@/app/utils'
+import Button from '@/components/button/Button'
+import {DEFAULT_MESSAGE_ERROR_500} from '@/app/constants'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -31,47 +33,76 @@ const initialValues = {
 export function Login() {
   const [loading, setLoading] = useState(false)
   const [searchParams] = useSearchParams()
-  const [showBranch, setShowBranch] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
-  const [listBranch, setListBranch] = useState<any>([])
-  const [dataInfo, setDataInfo] = useState<any>({})
+  const [listBranch, setListBranch] = useState<null | any[]>(null)
+  const [token, setToken] = useState<any>({})
   const redirect = searchParams.get('redirect')
 
   const navigate = useNavigate()
 
-  const {status, errors, touched, handleSubmit, getFieldProps} = useFormik<LoginInfo>({
+  const {
+    status,
+    errors,
+    touched,
+    handleSubmit,
+    getFieldProps,
+    setStatus,
+    setSubmitting,
+    resetForm,
+  } = useFormik<LoginInfo>({
     initialValues,
     validationSchema: loginSchema,
     onSubmit,
   })
 
-  async function onSubmit(values: LoginInfo, {setStatus, setSubmitting}: FormikHelpers<LoginInfo>) {
+  /**
+   * handle login system
+   * @param values info login
+   */
+
+  async function onSubmit(values: LoginInfo) {
     setLoading(true)
 
     try {
       const {data} = await login(values)
+      const {info, token} = data || {}
+      const {priority, company_id, company_name} = info
+
       // If account isn't active -> no login
-      if (data.error) {
-        setStatus(data.message)
+      if (data.error || !priority || !company_id || !company_name) {
+        setStatus(data.message || DEFAULT_MESSAGE_ERROR_500)
         setSubmitting(false)
         setLoading(false)
         return
       }
-      if (data?.info) {
-        const {priority} = data?.info
-        if (priority === 1) {
-          setDataInfo(data)
-          setIsAdmin(true)
-          setShowBranch(true)
+
+      Cookies.set('token', data.token)
+      Cookies.set('company_id', company_id.toString())
+      Cookies.set('company_name', company_name)
+
+      // priority === 1 -> super admin -> need select company first
+      if (priority === 1) {
+        const {data} = await request.post('config/company/listing', {
+          status: true,
+        })
+
+        // unexpected error
+        if (data.error || !Array.isArray(data?.data) || !data?.data.length) {
+          setStatus(data?.message || DEFAULT_MESSAGE_ERROR_500)
           setSubmitting(false)
           setLoading(false)
-        } else {
-          Cookies.set('token', data.token)
-
-          // after navigate -> master layout will get current user
-          navigate(`/${redirect ? redirect : 'dashboard'}`)
+          return
         }
+
+        setSubmitting(false)
+        setLoading(false)
+        setListBranch(data.data)
+        setToken(token)
+        return
       }
+
+      // after navigate -> master layout will get current user
+      navigate(`/${redirect ? redirect : 'dashboard'}`)
     } catch (error) {
       const message = convertErrorMessageResponse(error)
       setStatus(message)
@@ -83,39 +114,19 @@ export function Login() {
   const handleSelectBranch = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const {value} = e.target
 
-    const currentBranch = listBranch.find((el: any) => el.id === +value)
+    const currentBranch = listBranch?.find((el: any) => el.id === +value)
 
     if (value && currentBranch) {
-      // after navigate -> master layout will get current user
-      Cookies.set('token', dataInfo.token)
       Cookies.set('company_id', value)
       Cookies.set('company_name', currentBranch?.company_name || '')
       navigate(`/${redirect ? redirect : 'dashboard'}`)
+    } else {
+      setStatus('Something went wrong!')
+      setListBranch(null)
+      resetForm()
+      setSubmitting(false)
     }
   }
-
-  useEffect(() => {
-    const fetchCompany = async () => {
-      if (isAdmin) {
-        const {data} = await request.post(
-          'config/company/listing',
-          {
-            status: true,
-          },
-          {
-            headers: {
-              authorization: 'Bearer ' + dataInfo.token,
-            },
-          }
-        )
-        if (!data?.error) {
-          setListBranch(data?.data)
-        }
-      }
-    }
-    fetchCompany()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAdmin])
 
   function checkValidInput(key: string) {
     return clsx(
@@ -130,7 +141,7 @@ export function Login() {
 
   return (
     <>
-      {showBranch ? (
+      {!!listBranch ? (
         <Form.Group controlId='formBasicSelect'>
           <label className='form-label fs-6 fw-bolder text-dark mb-2'>Please Select Company:</label>
           <Form.Select as='select' onChange={handleSelectBranch}>
@@ -165,15 +176,9 @@ export function Login() {
               type='username'
               name='username'
               autoComplete='off'
+              touched={touched.username}
+              error={errors.username as string}
             />
-
-            {touched.username && errors.username && (
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block'>
-                  <span role='alert'>{errors.username}</span>
-                </div>
-              </div>
-            )}
           </div>
 
           <div className='fv-row'>
@@ -182,39 +187,26 @@ export function Login() {
               type='password'
               autoComplete='off'
               placeholder='Password'
-              {...getFieldProps('password')}
               classInputWrap={checkValidInput('password')}
               className={checkValidInput('password')}
+              {...getFieldProps('password')}
+              touched={touched.password}
+              error={errors.password as string}
             />
-
-            {touched.password && errors.password && (
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block'>
-                  <span role='alert'>{errors.password}</span>
-                </div>
-              </div>
-            )}
           </div>
 
           <div className='d-grid mt-8'>
-            <button
-              type='submit'
-              id='kt_sign_in_submit'
-              className='btn btn-primary'
+            <Button
+              className='btn-primary'
+              loading={loading}
               disabled={
                 loading ||
                 !!(touched.password && errors.password) ||
                 !!(touched.username && errors.username)
               }
             >
-              {!loading && <span className='indicator-label'>Continue</span>}
-              {loading && (
-                <span className='indicator-progress' style={{display: 'block'}}>
-                  Please wait...
-                  <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                </span>
-              )}
-            </button>
+              Continue
+            </Button>
           </div>
         </form>
       )}

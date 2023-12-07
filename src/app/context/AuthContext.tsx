@@ -79,7 +79,12 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
         return handleLogout()
       }
 
-      setCompanyId(+companyIdFromCookie || company_id || 0)
+      if (priority !== 1 && companyIdFromCookie !== companyId) {
+        Cookies.set('company_id', company_id.toString())
+      }
+
+      // Super admin receive company id from cookie
+      setCompanyId(priority === 1 ? +companyIdFromCookie : company_id)
       setPriority(priority || 100)
       setCompanyName(companyNameFromCookie || company_name || '')
       setCurrentUser(data)
