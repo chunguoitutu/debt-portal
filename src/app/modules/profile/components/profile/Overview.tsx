@@ -10,7 +10,7 @@ export function Overview() {
       <div className='card mb-5 mb-xl-10' id='kt_profile_details_view'>
         <div className='card-header cursor-pointer'>
           <div className='card-title m-0'>
-            <h3 className='fw-bold m-0'>Profile Details</h3>
+            <h3 className='fw-bolder m-0'>Profile Details</h3>
           </div>
 
           <Link to='/account/settings' className='btn btn-primary align-self-center fs-14'>

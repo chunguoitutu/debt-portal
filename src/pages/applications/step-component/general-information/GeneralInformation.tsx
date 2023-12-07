@@ -8,6 +8,7 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import LookupCustomer from './LookupCustomer'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
+import {getCurrentDate} from '@/app/utils/get-current-date'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
@@ -60,6 +61,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       typeInput,
       typeComponent,
     } = item
+
     let Component: any = item?.component
 
     const className = !column
@@ -122,6 +124,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             classShared={className}
             touched={touched[key]}
             error={errors[key]}
+            min='1900-01-01'
+            max={getCurrentDate()}
             insertRight={
               key === 'identification_no' ? (
                 <Tippy offset={[40, 0]} content='Lookup Customer'>

@@ -299,6 +299,33 @@ export const LOAN_TYPE: Option[] = [
   },
 ]
 
+export const LOAN_TERM: Option[] = [
+  {
+    value: '1',
+    label: '1',
+  },
+  {
+    value: '3',
+    label: '3',
+  },
+  {
+    value: '6',
+    label: '6',
+  },
+  {
+    value: '12',
+    label: '12',
+  },
+  {
+    value: '18',
+    label: '18',
+  },
+  {
+    value: '24',
+    label: '24',
+  },
+]
+
 export const PURPOSE_OF_LOAN: Option[] = [
   {
     value: 'others',
@@ -553,7 +580,7 @@ export const OBLIGATION: AdvanceConfig[] = [
 export const ROUTER_SETTING = [
   {
     path: 'company-management',
-    labelBreadCrumbs: 'Company Management',
+    labelBreadCrumbs: 'Organization',
     component: CompanyManagement,
     priority: [1],
   },
@@ -616,13 +643,13 @@ export const ROUTER_SETTING = [
 export const MENU_SETTING_LISTING: MenuSettingItem[] = [
   {
     activeKey: uuidv4(),
-    title: 'Company Management',
+    title: 'Organization',
     priority: [1],
     children: [
       {
         id: uuidv4(),
         to: '/settings/company-management',
-        label: 'Company Information',
+        label: 'Organization Information',
         priority: [1],
       },
       {
