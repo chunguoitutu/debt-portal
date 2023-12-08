@@ -37,12 +37,12 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       })
 
       setDataOption(updatedDataMarketing)
-      setDefaultValueCountry(updatedDataMarketing?.country.length > 0 ? '192' : '')
+      setDefaultValueCountry(updatedDataMarketing?.country.length > 0 ? 'Singapore' : '')
 
       !applicationIdEdit &&
         setFieldValue(
           `address_contact_info[0][country]`,
-          updatedDataMarketing?.country.length > 0 ? '192' : ''
+          updatedDataMarketing?.country.length > 0 ? 'Singapore' : ''
         )
       !applicationIdEdit &&
         setFieldValue(
@@ -69,8 +69,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     } finally {
     }
   }
-
-  console.log(values)
 
   useEffect(() => {
     onFetchDataList()

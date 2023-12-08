@@ -195,17 +195,20 @@ const ApplicationListing = () => {
             if (key === 'status') {
               let title: string = ''
               let color: string = ''
-
               if (item[key] === 1) {
                 title = 'Awaiting Approval'
                 color = 'warning'
-              } else if (item[key] === 0) {
+              } else if (item[key] === 2) {
                 title = 'Rejected'
                 color = 'danger'
-              } else {
+              } else if (item[key] === 3) {
                 title = 'Approved'
                 color = 'success'
+              } else {
+                title = 'Draft'
+                color = 'info'
               }
+
               return (
                 <td
                   key={i}
@@ -228,20 +231,6 @@ const ApplicationListing = () => {
                   {value}
                 </td>
               )
-            }
-
-            if (key === 'fullname') {
-              {
-                data.map((item) => item.is_draft)
-                return (
-                  <td key={i} className='d-flex row ms-1' style={{borderBottom: 'none'}}>
-                    <div className='p-0 fw-semibold fs-14 fw-semibold'>{value}</div>
-                    <div className='p-0 mt-1 fs-12 text-gray-600 fw-normal'>
-                      {item.is_draft === 1 ? 'Draft' : 'Saved'}
-                    </div>
-                  </td>
-                )
-              }
             }
 
             return (

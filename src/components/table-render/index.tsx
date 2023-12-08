@@ -38,9 +38,9 @@ function TableRender({title, config = [], data}: Props) {
               {children_config?.map((element_config: element_config, indx) => {
                 const {Component} = element_config
                 return (
-                  <div key={indx}>
+                  <div key={indx} className='mb-5'>
                     <div
-                      className='d-flex flex-column'
+                      className='d-flex flex-column mb-3'
                       style={{
                         justifyContent: !!element_config.img ? 'center' : 'start',
                         alignItems: !!element_config.img ? 'center' : 'start',

@@ -268,7 +268,7 @@ export const Applications = () => {
           }) || [],
       })
 
-      if (application?.is_draft !== 1) {
+      if (application?.status !== 0) {
         setStepCompleted(STEP_APPLICATION.length - 1)
       }
 
@@ -502,10 +502,9 @@ export const Applications = () => {
         loan_terms: +loan_terms,
         loan_amount_requested: +loan_amount_requested,
         loan_type_id: +loan_type_id || null,
-        status: 1,
+        status: isDraft ? 0 : 1,
         application_date: new Date(),
         application_notes: JSON.stringify(remarkList),
-        is_draft: isDraft ? 1 : 0,
         is_existing,
         company_id: +company_id,
         loan_reason,

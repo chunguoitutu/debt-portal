@@ -346,15 +346,19 @@ export const ID_TYPE: Option[] = [
 
 export const STATUS_APPLICATION_FILTER: Option[] = [
   {
+    value: '0',
+    label: 'Draft',
+  },
+  {
     value: '1',
     label: 'Awaiting Approval',
   },
   {
-    value: '0',
+    value: '2',
     label: 'Rejected',
   },
   {
-    value: '2',
+    value: '3',
     label: 'Approved',
   },
 ]

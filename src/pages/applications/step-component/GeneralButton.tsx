@@ -20,14 +20,14 @@ const GeneralButton: FC<Props> = ({
   isDraft,
   currentStep,
 }) => {
-  const {isSubmitting} = formik
+  const {isSubmitting, values} = formik
 
   const {applicationIdEdit} = useParams()
 
   return (
     <div className='d-flex justify-content-between align-items-center  mt-10 full gap-5'>
       <div>
-        {!!applicationIdEdit && (
+        {!!applicationIdEdit && values.status === 1 && (
           <Button type='submit' onClick={handleClose} className='fs-5 btn btn-danger'>
             Reject
           </Button>
@@ -53,7 +53,7 @@ const GeneralButton: FC<Props> = ({
         >
           {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
         </Button>
-        {currentStep === 6 ? (
+        {!!applicationIdEdit && values.status === 1 && currentStep === 6 ? (
           <Button
             className='fs-5 btn btn-primary'
             type='submit'

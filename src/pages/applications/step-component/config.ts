@@ -574,8 +574,8 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     column: 6,
     className: 'justify-content-xxl-end',
     keyLabelOfOptions: 'nicename',
-    keyValueOfOptions: 'id',
-    defaultValue: 192, //default value country is SINGAPORE
+    keyValueOfOptions: 'nicename',
+    defaultValue: 'Singapore', //default value country is Singapore
     dependencyApi: 'config/country/listing',
     required: true,
     validationFormik: Yup.string()
@@ -660,7 +660,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           dependencyApi: 'config/country/listing',
           Component: RenderOptionsApi,
           keyFilter: 'id',
-          lable: 'name',
+          lable: 'nationality',
         },
         {
           key: 'identification_type',
@@ -825,12 +825,12 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           value: 'State',
         },
         {
-          key: 'country',
-          value: 'Country',
+          key: 'country_id',
+          value: 'nationality',
           dependencyApi: 'config/country/listing',
-          Component: LableOptionsCountry,
+          Component: RenderOptionsApi,
           keyFilter: 'id',
-          lable: 'name',
+          lable: 'nicename',
         },
       ],
     ],

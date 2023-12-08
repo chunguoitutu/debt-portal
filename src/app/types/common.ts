@@ -326,7 +326,6 @@ export type ApplicationPayload = {
     loan_amount_requested: number
     application_notes?: string
     loan_terms: number
-    is_draft: 1 | 0
     is_existing: string
     company_id: number
     loan_reason?: string
@@ -434,6 +433,7 @@ export type ApplicationFormData = {
   application_date?: any
   file_documents?: any
   interest: number | string
+  status?: number
 }
 
 export type BlockAddress = {
@@ -462,7 +462,6 @@ export type ApplicationItem = {
   application_date: string
   loan_amount_requested: string
   loan_terms: number
-  is_draft: null | 1 | 0
   identification_type: string
   identification_no: string
   fullname: string
