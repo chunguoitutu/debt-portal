@@ -145,7 +145,7 @@ export type TableRow = {
   isHide?: boolean // hide io table listing
   options?: Option[]
   infoCreateEdit?: {
-    type: string
+    type?: string
     typeInput?: HTMLInputTypeAttribute
     isRequired?: boolean
     keyLabelOption?: string
@@ -157,6 +157,8 @@ export type TableRow = {
     options?: Option[]
     isLastChild?: boolean // using for remove margin
     column?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 // column should be from 1 to 12 (column bootstrap)
+    subTextWhenChecked?: string // using for checkbox rounded
+    subTextWhenNoChecked?: string // using for checkbox rounded
   }
   infoFilter?: {
     isFromTo?: boolean

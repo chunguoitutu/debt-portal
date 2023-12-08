@@ -6,7 +6,7 @@ import {Modal} from 'react-bootstrap'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 
-import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
+import {ADDRESS_TABLE_CONFIG} from './config'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
@@ -77,6 +77,7 @@ const CreateEditAddress = ({
   } = useFormik({
     initialValues: {
       ...generateField,
+      is_default: data.is_default === 1 ? true : false,
     },
     validationSchema: CreateEditAddressSchema,
     onSubmit: async (values: any, actions: any) => {
@@ -85,6 +86,7 @@ const CreateEditAddress = ({
           .post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           .then((response) => {
             if (!response.data?.error) {
@@ -121,6 +123,7 @@ const CreateEditAddress = ({
           .post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           .then((response) => {
             const address = values.address_type_name
@@ -185,8 +188,34 @@ const CreateEditAddress = ({
                 <>
                   {rows
                     .filter((data) => !!data.infoCreateEdit)
-                    .map((row) => {
-                      const {isRequired, typeInput} = row.infoCreateEdit || {}
+                    .map((row, i) => {
+                      const {infoCreateEdit, name, key} = row
+                      const {
+                        typeInput,
+                        isRequired,
+                        typeComponent,
+                        component,
+                        subTextWhenChecked,
+                        subTextWhenNoChecked,
+                      } = infoCreateEdit || {}
+
+                      const Component = component as any
+
+                      if (typeComponent === 'checkbox-rounded') {
+                        return (
+                          <div className='mt-16px' key={i}>
+                            <Component
+                              label={name}
+                              checked={values[key]}
+                              onChange={handleChange}
+                              subTextWhenChecked={subTextWhenChecked}
+                              subTextWhenNoChecked={subTextWhenNoChecked}
+                              id={key}
+                            />
+                          </div>
+                        )
+                      }
+
                       return (
                         <div key={row?.key} style={{flex: '0 0 50%'}}>
                           {row?.key === 'description' ? (
@@ -221,12 +250,14 @@ const CreateEditAddress = ({
                     })}
                 </>
               ) : null}
-              <CheckboxRounded
-                label='Status'
-                checked={status}
-                onChange={() => setStatus(!status)}
-                id='status'
-              />
+              <div className='mt-16px'>
+                <CheckboxRounded
+                  label='Status'
+                  checked={status}
+                  onChange={() => setStatus(!status)}
+                  id='status'
+                />
+              </div>
             </form>
           </div>
         </div>

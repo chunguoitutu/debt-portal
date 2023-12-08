@@ -1,6 +1,4 @@
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faArrowsRotate} from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
 import ButtonDelete from '../button/ButtonDelete'
 import ButtonEdit from '../button/ButtonEdit'
@@ -9,7 +7,6 @@ import Loading from './components/Loading'
 import Pagination from './components/Pagination'
 import ButtonViewDetail from '../button/ButtonViewDetail'
 import {Filter} from '../filter/Filter'
-import {Input} from '../input'
 import {useAuth} from '../../app/context/AuthContext'
 import request from '../../app/axios'
 import {KTCardBody} from '../../_metronic/helpers'
@@ -240,7 +237,7 @@ const Table: FC<Props> = ({
                       className={clsx([
                         row.name === 'Status'
                           ? 'w-100 d-flex justify-content-center text-uppercase text-gray-500 align-items-center fs-14 fw-bold'
-                          : 'w-100  text-uppercase text-gray-500  fs-14 fw-bold',
+                          : 'w-100 text-uppercase text-gray-500 fs-14 fw-bold',
                       ])}
                     >
                       <span>{row.name}</span>
@@ -293,17 +290,21 @@ const Table: FC<Props> = ({
                           )
                         }
 
-                        // belongs to job type
-                        if (key === 'request_more_information') {
-                          return (
-                            <td className='fs-14 fw-semibold' key={i}>
-                              {value === 1 ? 'Yes' : 'No'}
-                            </td>
-                          )
-                        }
-
                         if (component) {
-                          if (key === 'status' || key === 'is_active') {
+                          if (
+                            [
+                              'is_default',
+                              'status',
+                              'is_active',
+                              'request_more_information',
+                            ].includes(key)
+                          ) {
+                            let title = value === 1 ? 'Active' : 'Disable'
+
+                            if (['is_default', 'request_more_information'].includes(key)) {
+                              title = value === 1 ? 'Yes' : 'No'
+                            }
+
                             return (
                               <td
                                 key={i}
@@ -315,12 +316,13 @@ const Table: FC<Props> = ({
                                 <div className='d-flex align-items-center justify-content-center gap-1'>
                                   <Component
                                     color={value === 1 ? 'success' : 'danger'}
-                                    title={value === 1 ? 'Active' : 'Disable'}
+                                    title={title}
                                   />
                                 </div>
                               </td>
                             )
                           }
+
                           //HANDLE ADD PERMISSION DROPDOWN
                           if (key === 'permissions') {
                             return (

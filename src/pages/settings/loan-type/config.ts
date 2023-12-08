@@ -1,5 +1,6 @@
 import {TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
+import {CheckboxRounded} from '@/components/checkbox'
 
 export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/loan_type',
@@ -16,12 +17,12 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
-      classNameTableHead: 'min-w-50px w-90px',
+      classNameTableHead: 'w-50px w-90px',
       key: 'id',
       name: 'ID',
     },
     {
-      classNameTableHead: 'min-w-200px',
+      classNameTableHead: 'w-200px',
       key: 'type_name',
       color: '#252F4A',
       name: 'Loan Type',
@@ -32,7 +33,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'min-w-200px',
+      classNameTableHead: 'w-200px',
       key: 'interest',
       color: '#252F4A',
       name: 'Default Interest',
@@ -43,10 +44,22 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-50 min-w-200px',
+      classNameTableHead: 'w-50 w-200px',
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
+    },
+    {
+      classNameTableHead: 'w-200px text-center',
+      key: 'is_default',
+      name: 'Default',
+      component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        subTextWhenChecked: 'Yes',
+        subTextWhenNoChecked: 'No',
+      },
     },
     {
       key: 'status',

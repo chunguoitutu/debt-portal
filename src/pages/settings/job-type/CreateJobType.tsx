@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 
 import {convertErrorMessageResponse} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
-import {JOB_TABLE_CONFIG} from './JobTableConfig'
+import {JOB_TABLE_CONFIG} from './config'
 import request from '@/app/axios'
 import {KTIcon} from '@/_metronic/helpers'
 import {TextArea} from '@/components/textarea'
@@ -43,10 +43,6 @@ const CreateJobType = ({
   handleUpdated,
 }: Props) => {
   const [status, setStatus] = useState(data?.status === 0 ? false : true)
-  const [requestMoreInformation, setRequestMoreInformation] = useState(
-    data.request_more_information || false
-  )
-
   const {rows, endpoint} = JOB_TABLE_CONFIG
 
   const {
@@ -62,6 +58,8 @@ const CreateJobType = ({
     initialValues: {
       job_type_name: data.job_type_name || '',
       description: data.description || '',
+      request_more_information: data.request_more_information === 1 ? true : false,
+      is_default: data.is_default === 1 ? true : false,
     },
     validationSchema: CreateJobTypeSchema,
     onSubmit: async (values: any, actions: any) => {
@@ -69,8 +67,9 @@ const CreateJobType = ({
         try {
           const response = await request.post(endpoint || '', {
             ...values,
-            request_more_information: requestMoreInformation ? 1 : 0,
+            request_more_information: values.request_more_information ? 1 : 0,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           const job_name = values.job_type_name
           handleUpdated()
@@ -98,8 +97,9 @@ const CreateJobType = ({
         try {
           const response = await request.post(endpoint + '/' + data?.id, {
             ...values,
-            request_more_information: requestMoreInformation ? 1 : 0,
+            request_more_information: values.request_more_information ? 1 : 0,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           const job_name = values.job_type_name
           handleUpdated()
@@ -142,12 +142,38 @@ const CreateJobType = ({
         </div>
         <div className='flex-row-fluid p-30px'>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-            {rows.map((row) => {
-              const {infoCreateEdit} = row
-              const {isRequired} = infoCreateEdit || {}
-              if (['id', 'status', 'request_more_information'].includes(row.key)) {
+            {rows.map((row, i) => {
+              const {infoCreateEdit, name, key} = row
+              const {
+                typeInput,
+                isRequired,
+                typeComponent,
+                component,
+                subTextWhenChecked,
+                subTextWhenNoChecked,
+              } = infoCreateEdit || {}
+
+              const Component = component as any
+
+              if (['id', 'status'].includes(row.key)) {
                 return null
               }
+
+              if (typeComponent === 'checkbox-rounded') {
+                return (
+                  <div className='mt-16px' key={i}>
+                    <Component
+                      label={name}
+                      checked={values[key]}
+                      onChange={handleChange}
+                      subTextWhenChecked={subTextWhenChecked}
+                      subTextWhenNoChecked={subTextWhenNoChecked}
+                      id={key}
+                    />
+                  </div>
+                )
+              }
+
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
                   {row.key === 'description' ? (
@@ -177,15 +203,7 @@ const CreateJobType = ({
                 </div>
               )
             })}
-            <div className='mt-16px'>
-              <CheckboxRounded
-                onChange={() => setRequestMoreInformation(!requestMoreInformation)}
-                checked={requestMoreInformation}
-                id='request_more_information'
-                label='Need More Information'
-                request_info
-              />
-            </div>
+
             <div className='mt-16px'>
               <CheckboxRounded
                 label='Status'

@@ -12,7 +12,7 @@ import Button from '@/components/button/Button'
 import {swalToast} from '@/app/swal-notification'
 import {CheckboxRounded} from '@/components/checkbox'
 import {convertErrorMessageResponse} from '@/app/utils'
-import {REJECTION_TYPE_TABLE_CONFIG} from './RejectinonTypeConfig'
+import {REJECTION_TYPE_TABLE_CONFIG} from './config'
 
 type Props = {
   setLoadApi: any
@@ -78,6 +78,7 @@ const CreateEditRejectionType = ({
   } = useFormik({
     initialValues: {
       ...generateField,
+      is_default: data.is_default === 1 ? true : false,
     },
     validationSchema: CreateEditRejectionTypeSchema,
     onSubmit: async (values: any, actions: any) => {
@@ -86,6 +87,7 @@ const CreateEditRejectionType = ({
           .post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           .then((response) => {
             if (!response.data?.error) {
@@ -120,6 +122,7 @@ const CreateEditRejectionType = ({
           .post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           .then((response) => {
             if (!response.data?.error) {
@@ -185,8 +188,34 @@ const CreateEditRejectionType = ({
                 <>
                   {rows
                     .filter((data) => !!data.infoCreateEdit)
-                    .map((row) => {
-                      const {isRequired, typeInput} = row.infoCreateEdit || {}
+                    .map((row, i) => {
+                      const {infoCreateEdit, name, key} = row
+                      const {
+                        typeInput,
+                        isRequired,
+                        typeComponent,
+                        component,
+                        subTextWhenChecked,
+                        subTextWhenNoChecked,
+                      } = infoCreateEdit || {}
+
+                      const Component = component as any
+
+                      if (typeComponent === 'checkbox-rounded') {
+                        return (
+                          <div className='mt-16px' key={i}>
+                            <Component
+                              label={name}
+                              checked={values[key]}
+                              onChange={handleChange}
+                              subTextWhenChecked={subTextWhenChecked}
+                              subTextWhenNoChecked={subTextWhenNoChecked}
+                              id={key}
+                            />
+                          </div>
+                        )
+                      }
+
                       return (
                         <div key={row?.key} style={{flex: '0 0 50%'}}>
                           {row?.key === 'rejection_type_description' ? (
@@ -222,12 +251,14 @@ const CreateEditRejectionType = ({
                 </>
               ) : null}
 
-              <CheckboxRounded
-                label='Status'
-                checked={status}
-                onChange={() => setStatus(!status)}
-                id='status'
-              />
+              <div className='mt-16px'>
+                <CheckboxRounded
+                  label='Status'
+                  checked={status}
+                  onChange={() => setStatus(!status)}
+                  id='status'
+                />
+              </div>
             </form>
           </div>
         </div>

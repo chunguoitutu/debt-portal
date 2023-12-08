@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 import Table from '@/components/table/Table'
-import {ADDRESS_TABLE_CONFIG} from './AddressConfig'
+import {ADDRESS_TABLE_CONFIG} from './config'
 import {CreateEditAddress} from './CreateEditAddress'
 
 const AddressType = () => {

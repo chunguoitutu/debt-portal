@@ -1,5 +1,6 @@
 import {TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
+import {CheckboxRounded} from '@/components/checkbox'
 
 export const JOB_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/job_type',
@@ -37,10 +38,34 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       key: 'description',
       name: 'Description',
     },
+    // {
+    //   classNameTableHead: 'w-50 min-w-70px',
+    //   key: 'request_more_information',
+    //   name: 'Need More Information',
+    // },
     {
       classNameTableHead: 'w-50 min-w-70px',
       key: 'request_more_information',
       name: 'Need More Information',
+      component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        subTextWhenChecked: 'Yes',
+        subTextWhenNoChecked: 'No',
+      },
+    },
+    {
+      classNameTableHead: 'w-200px text-center',
+      key: 'is_default',
+      name: 'Default',
+      component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        subTextWhenChecked: 'Yes',
+        subTextWhenNoChecked: 'No',
+      },
     },
     {
       classNameTableHead: 'min-w-200px',

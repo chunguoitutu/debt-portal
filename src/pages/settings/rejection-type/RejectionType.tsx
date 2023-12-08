@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 import Table from '@/components/table/Table'
 import {CreateEditRejectionType} from './CreateEditRejectionType'
-import {REJECTION_TYPE_TABLE_CONFIG} from './RejectinonTypeConfig'
+import {REJECTION_TYPE_TABLE_CONFIG} from './config'
 
 const RejectionType = () => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
