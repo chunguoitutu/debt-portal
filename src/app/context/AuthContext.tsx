@@ -69,7 +69,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
       expires,
     })
 
-    const companyIdFromCookie = Cookies.get('company_id') || 0
+    const companyIdFromCookie = Number(Cookies.get('company_id')) || 0
     const companyNameFromCookie = Cookies.get('company_name') || ''
 
     try {
@@ -77,7 +77,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
       const {data, error} = dataRes || {}
       const {company_id, priority, company_name} = data || {}
 
-      if (error || !data) {
+      if (error || !data || !companyIdFromCookie) {
         return handleLogout()
       }
 

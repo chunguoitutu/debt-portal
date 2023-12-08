@@ -6,6 +6,7 @@ const statusClass = {
   success: 'badge-light-success',
   warning: 'badge-light-warning',
   danger: 'badge-light-danger',
+  info: 'badge-light-primary',
 }
 
 const Badge: FC<BadgeProps> = ({color, title}) => {

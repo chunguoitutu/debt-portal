@@ -65,9 +65,7 @@ const Reject = ({handleClose, show, id}: Props) => {
       description: '',
     },
     validationSchema: CreateLoanTypeSchema,
-    onSubmit: async (values: any, actions: any) => {
-      console.log(values)
-    },
+    onSubmit: async (values: any, actions: any) => {},
   })
 
   return createPortal(
