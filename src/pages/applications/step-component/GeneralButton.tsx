@@ -27,11 +27,12 @@ const GeneralButton: FC<Props> = ({
   return (
     <div className='d-flex justify-content-between align-items-center  mt-10 full gap-5'>
       <div>
-        {!!applicationIdEdit && values.status === 1 && (
-          <Button type='submit' onClick={handleClose} className='fs-5 btn btn-danger'>
-            Reject
-          </Button>
-        )}
+        {(!!applicationIdEdit && values.status === 1) ||
+          (values.status === 2 && (
+            <Button type='submit' onClick={handleClose} className='fs-5 btn btn-danger'>
+              Reject
+            </Button>
+          ))}
       </div>
       <div className='d-flex gap-5'>
         {!applicationIdEdit && currentStep !== 6 && (

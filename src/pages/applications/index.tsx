@@ -56,7 +56,9 @@ export const Applications = () => {
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
   const [show, setShow] = useState<boolean>(false)
+  const [loadApiEdit, SetLoadApiEdit] = useState<boolean>(false)
 
+  const [rejectionOne, setRejectionOne] = useState({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -87,7 +89,7 @@ export const Applications = () => {
     if (!applicationIdEdit) return setIsLoading(false)
     handleGetApplicationById()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applicationIdEdit])
+  }, [applicationIdEdit, loadApiEdit])
 
   useEffect(() => {
     resetForm()
@@ -247,6 +249,7 @@ export const Applications = () => {
   async function handleGetApplicationById() {
     try {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
+      setRejectionOne(data?.rejection || {})
 
       const {borrower, application, customer, bank_info, employment, address, file_documents} =
         data.data || {}
@@ -606,7 +609,13 @@ export const Applications = () => {
                   />
                 )}
                 {show && (
-                  <Reject id={applicationIdEdit} show={show} handleClose={() => setShow(!show)} />
+                  <Reject
+                    handleloadApi={() => SetLoadApiEdit(!loadApiEdit)}
+                    id={applicationIdEdit}
+                    show={show}
+                    rejection_one={rejectionOne}
+                    handleClose={() => setShow(!show)}
+                  />
                 )}
                 <GeneralButton
                   handleClose={() => setShow(!show)}

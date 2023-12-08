@@ -44,8 +44,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       !applicationIdEdit &&
         setFieldValue(
           `marketing_type_id`,
-          updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1).length >
-            0 && updatedDataMarketing?.marketing_type_id.length > 0
+          updatedDataMarketing?.marketing_type_id.length > 0
             ? updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1)
                 .length > 0
               ? updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1)[0]

@@ -11,22 +11,29 @@ import Button from '@/components/button/Button'
 import {Select} from '@/components/select'
 import {useEffect, useState} from 'react'
 import request from '@/app/axios'
+import {convertErrorMessageResponse} from '@/app/utils'
+import {swalToast} from '@/app/swal-notification'
+import {useAuth} from '@/app/context/AuthContext'
 
 type Props = {
   id: string | number | any
   show: boolean
   handleClose: () => void
+  rejection_one: {} | any
+  handleloadApi: () => void
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
   rejection_id: Yup.string().required('Rejection Type is required'),
-  description: Yup.string().max(45, 'Description must be at most 45 characters').nullable(),
+  description: Yup.string().max(45, 'Note must be at most 45 characters').nullable(),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const Reject = ({handleClose, show, id}: Props) => {
+const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) => {
   const [options, setOptions] = useState([])
+  const {currentUser} = useAuth()
+
   useEffect(() => {
     !!id &&
       request
@@ -37,15 +44,16 @@ const Reject = ({handleClose, show, id}: Props) => {
         })
         .then((res) => {
           setOptions(res?.data?.data || [])
-          setFieldValue(
-            'rejection_id',
-            res?.data?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
+          !rejection_one?.id &&
+            setFieldValue(
+              'rejection_id',
               res?.data?.data.length > 0
-              ? res?.data?.data.filter((el: any) => +el.is_default === 1).length > 0
-                ? res?.data?.data.filter((el: any) => +el.is_default === 1)[0].id
-                : res?.data?.data[0].id
-              : ''
-          )
+                ? res?.data?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
+                  res?.data?.data.length > 0
+                  ? res?.data?.data.filter((el: any) => +el.is_default === 1)[0].id
+                  : res?.data?.data[0].id
+                : ''
+            )
         })
         .catch()
   }, [])
@@ -58,16 +66,46 @@ const Reject = ({handleClose, show, id}: Props) => {
     handleChange,
     handleBlur,
     handleSubmit,
+    setSubmitting,
     setFieldValue,
   } = useFormik({
     initialValues: {
-      rejection_id: '',
-      description: '',
+      rejection_id: !!rejection_one ? rejection_one?.rejection_type_id : '',
+      description: !!rejection_one?.rejection_note ? rejection_one?.rejection_note : '',
     },
     validationSchema: CreateLoanTypeSchema,
-    onSubmit: async (values: any, actions: any) => {},
+    onSubmit: async (values: any, actions: any) => {
+      setSubmitting(true)
+      try {
+        if (!rejection_one?.id) {
+          await request.post('application/application-reject', {
+            rejection_type_id: +values.rejection_id,
+            application_id: +id,
+            rejection_note: values.description,
+            rejected_by: currentUser?.id,
+          })
+        } else {
+          await request.put('application/application-reject/' + rejection_one?.id, {
+            rejection_type_id: +values.rejection_id,
+            rejection_note: values.description,
+            rejected_by: currentUser?.id,
+          })
+        }
+        handleClose()
+        setSubmitting(false)
+        handleloadApi()
+      } catch (error) {
+        const message = convertErrorMessageResponse(error)
+        swalToast.fire({
+          icon: 'error',
+          title: message,
+          timer: 1500,
+        })
+        setSubmitting(false)
+      }
+    },
   })
-
+  console.log(rejection_one.rejection_type_id, values.rejection_id)
   return createPortal(
     <Modal
       id='kt_modal_create_app'
@@ -105,7 +143,7 @@ const Reject = ({handleClose, show, id}: Props) => {
             <div>
               <TextArea
                 id='description'
-                label={'description'}
+                label={'Note'}
                 name={'description'}
                 value={values['description'] || ''}
                 onChange={handleChange}
@@ -126,11 +164,11 @@ const Reject = ({handleClose, show, id}: Props) => {
             </Button>
             <Button
               type='submit'
+              loading={isSubmitting}
               className='btn-lg btn-primary'
               onClick={() => {
                 handleSubmit()
               }}
-              loading={isSubmitting}
             >
               save
             </Button>
