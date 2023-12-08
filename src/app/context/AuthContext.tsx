@@ -11,6 +11,7 @@ type AuthContextProps = {
   priority: number
   company_id: number
   company_name: string
+  setCompanyName: Dispatch<SetStateAction<string>>
   setCurrentUser: Dispatch<SetStateAction<UserInfo | undefined>>
   refreshToken: (token: string) => void
   logout: () => void
@@ -22,6 +23,7 @@ const initAuthContextPropsState = {
   company_id: 0,
   company_name: '',
   setCurrentUser: () => {},
+  setCompanyName: () => {},
   refreshToken: (token: string) => {},
   logout: () => {},
 }
@@ -101,6 +103,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
         company_id: companyId,
         company_name: companyName,
         setCurrentUser,
+        setCompanyName: setCompanyName,
         refreshToken,
         logout,
       }}

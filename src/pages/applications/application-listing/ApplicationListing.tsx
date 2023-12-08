@@ -1,4 +1,4 @@
-import {faArrowsRotate, faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
+import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link, useNavigate} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
@@ -292,7 +292,8 @@ const ApplicationListing = () => {
 
   // Change page number
   async function handleChangePagination(goToPage: number) {
-    loadApi && setSearchCriteria({...searchCriteria, currentPage: goToPage})
+    setSearchCriteria({...searchCriteria, currentPage: goToPage})
+    setLoadApi(!loadApi)
   }
 
   /**
@@ -359,6 +360,11 @@ const ApplicationListing = () => {
     setLoadApi(!loadApi)
   }
 
+  function handleFilter() {
+    setSearchCriteria({...searchCriteria, currentPage: 1})
+    setLoadApi(!loadApi)
+  }
+
   return (
     <div className='card p-5 h-fit-content'>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
@@ -418,6 +424,18 @@ const ApplicationListing = () => {
         </div>
         <KTCardBody className='py-4'>
           <div className='table-responsive'>
+            {showInput && (
+              <FilterApplication
+                onClose={showInputFilter}
+                handleResetFilter={handleResetFilter}
+                rows={rows}
+                handleLoadApi={handleFilter}
+                dataFilter={dataFilter}
+                handleChangeFilter={handleChangeFilter}
+                dataOption={dataOption}
+              />
+            )}
+
             <table
               id='kt_table_users'
               className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
@@ -453,18 +471,6 @@ const ApplicationListing = () => {
                 </tr>
               </thead>
               <tbody>
-                {showInput && (
-                  <FilterApplication
-                    onClose={showInputFilter}
-                    handleResetFilter={handleResetFilter}
-                    rows={rows}
-                    handleLoadApi={() => setLoadApi(!loadApi)}
-                    dataFilter={dataFilter}
-                    handleChangeFilter={handleChangeFilter}
-                    dataOption={dataOption}
-                  />
-                )}
-
                 {data.length ? (
                   renderRows()
                 ) : (
