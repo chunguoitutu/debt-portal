@@ -23,7 +23,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'application_no',
-      name: 'APPLICATION NO',
+      name: 'Application No',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -32,7 +32,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'fullname',
-      name: 'NAME OF BORROWER',
+      name: 'Name of Borrower',
+
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -41,7 +42,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'identification_type',
-      name: 'IDENTITY CARD TYPE',
+      name: 'Identity Card Type',
+
       options: ID_TYPE,
       infoFilter: {
         typeComponent: 'select',
@@ -60,7 +62,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'loan_type_id',
-      name: 'LOAN TYPE',
+      name: 'Loan Type',
       infoFilter: {
         typeComponent: 'select',
         component: Select,
@@ -72,7 +74,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'loan_amount_requested',
-      name: 'LOAN AMOUNT REQUIRED',
+      name: 'Loan Amount Requested',
       classNameTableBody: 'text-end pe-0',
       classNameTableHead: 'text-end',
       infoFilter: {
@@ -97,7 +99,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'application_date',
-      name: 'APPLICATION DATE',
+      name: 'Application Date',
       classNameTableBody: 'text-end pe-5',
       classNameTableHead: 'text-end pe-3',
       infoFilter: {
@@ -110,7 +112,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'status',
-      name: 'STATUS',
+      name: 'Status',
       classNameTableBody: 'text-center',
       classNameTableHead: 'text-center pe-3',
       options: STATUS_APPLICATION_FILTER,
