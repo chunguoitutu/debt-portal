@@ -32,7 +32,12 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
       responses.forEach((res, index) => {
         const key = endpoint[index].key
-        updatedDataMarketing[key] = res?.data?.data
+
+        let data = res?.data?.data || []
+        if (key === 'country_id') {
+          data = data.filter((el: any) => el.nationality)
+        }
+        updatedDataMarketing[key] = data
       })
 
       setDataMarketing(updatedDataMarketing)
@@ -57,8 +62,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
   useEffect(() => {
     onFetchDataList()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleShowPopup() {
@@ -163,7 +166,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // unexpected
     return <Component />
   }
-
   return (
     <>
       {config.map((item, i) => {
