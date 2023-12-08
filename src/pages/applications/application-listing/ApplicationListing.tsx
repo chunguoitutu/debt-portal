@@ -17,7 +17,7 @@ import {
   TableRow,
 } from '@/app/types'
 import request from '@/app/axios'
-import {filterObjectKeyNotEmpty, handleFormatFilter} from '@/app/utils'
+import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import {APPLICATION_LISTING_CONFIG} from './config'
 import RowPerPage from '@/components/row-per-page'
 import Badge from '@/components/badge/Badge'
@@ -51,21 +51,27 @@ const ApplicationListing = () => {
 
   const {company_id} = useAuth()
 
+  // Get search criteria from session
+  const sessionData = isObject(parseJson(sessionStorage.getItem('application') || ''))
+    ? parseJson(sessionStorage.getItem('application') || '')
+    : {}
+
   const [showInput, setShowInput] = React.useState<boolean>(false)
-  const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>({})
+  const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
+    isObject(sessionData?.dataFilter) ? sessionData?.dataFilter : {}
+  )
   const [data, setData] = React.useState<ApplicationItem[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
-  const [orderBy, setOrderBy] = useState<OrderBy>('asc')
-  const [keySort, setKeySort] = useState<string>('id')
-  const [searchValue, setSearchValue] = useState<string>('')
+  const [orderBy, setOrderBy] = useState<OrderBy>(sessionData?.orderBy || 'asc')
+  const [keySort, setKeySort] = useState<string>(sessionData?.keySort || 'id')
+  const [searchValue, setSearchValue] = useState<string>(sessionData?.searchValue || '')
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
-    pageSize: 10,
-    currentPage: 1,
+    pageSize: sessionData?.pageSize || 10,
+    currentPage: sessionData?.currentPage || 1,
     total: 0,
   })
-
   const {pageSize, currentPage} = searchCriteria
 
   /**
@@ -113,14 +119,27 @@ const ApplicationListing = () => {
         }),
       })
     }, 300)
+
     return () => {
       clearTimeout(timer)
+      handleSaveSearchToSession()
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company_id, keySort, orderBy, pageSize, currentPage, loadApi])
 
   const navigate = useNavigate()
+
+  function handleSaveSearchToSession() {
+    const data = {
+      searchValue,
+      dataFilter,
+      pageSize,
+      currentPage,
+    }
+
+    sessionStorage.setItem('application', JSON.stringify(data))
+  }
 
   function handleNavigateEditApplication(item: ApplicationItem) {
     navigate(`/application/edit/${item.id}`)
