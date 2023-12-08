@@ -22,7 +22,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'ID',
     },
     {
-      classNameTableHead: 'w-200px',
+      classNameTableHead: 'w-200px min-w-150px',
       key: 'type_name',
       color: '#252F4A',
       name: 'Loan Type',
@@ -33,7 +33,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px',
+      classNameTableHead: 'w-200px min-w-150px',
       key: 'interest',
       color: '#252F4A',
       name: 'Default Interest',
@@ -44,7 +44,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-50 w-200px',
+      classNameTableHead: 'w-500px min-w-150px',
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',

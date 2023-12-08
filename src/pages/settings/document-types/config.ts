@@ -22,7 +22,7 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       name: 'ID',
     },
     {
-      classNameTableHead: 'w-200px',
+      classNameTableHead: 'w-200px min-w-175px',
       key: 'type_name',
       name: 'Document Type',
       color: '#252F4A',
@@ -33,24 +33,24 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-50 w-200px',
+      classNameTableHead: 'w-200px  min-w-175px',
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
     },
 
     {
-      classNameTableHead: 'w-200px align-items-center',
+      classNameTableHead: 'w-200px align-items-center min-w-150px',
       key: 'created_date',
       name: 'Created Date',
     },
     {
-      classNameTableHead: 'w-200px align-items-center',
+      classNameTableHead: 'w-200px align-items-center min-w-150px',
       key: 'updated_date',
       name: 'Updated Date',
     },
     {
-      classNameTableHead: 'w-200px text-center',
+      classNameTableHead: 'w-200px text-center min-w-150px',
       key: 'is_default',
       name: 'Default',
       component: Badge,
@@ -62,7 +62,7 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px',
+      classNameTableHead: 'w-200px min-w-150px',
       key: 'status',
       name: 'Status',
       component: Badge,

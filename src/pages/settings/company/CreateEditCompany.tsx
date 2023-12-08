@@ -241,12 +241,12 @@ const CreateEditCompanies = ({
         <Button
           type='reset'
           onClick={() => handleClose()}
-          className='btn-lg btn-secondary align-self-center me-8px'
+          className='btn-lg btn-secondary align-self-center me-8px fs-6'
         >
           Cancel
         </Button>
         <Button
-          className='btn-lg btn-primary'
+          className='btn-lg btn-primary fs-6'
           type='submit'
           loading={isSubmitting}
           onClick={() => handleSubmit()}

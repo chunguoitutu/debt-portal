@@ -14,6 +14,7 @@ import request from '@/app/axios'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import {useAuth} from '@/app/context/AuthContext'
+import {Navigate, useNavigate} from 'react-router-dom'
 
 type Props = {
   id: string | number | any
@@ -25,7 +26,7 @@ type Props = {
 
 export const CreateLoanTypeSchema = Yup.object().shape({
   rejection_id: Yup.string().required('Rejection Type is required'),
-  description: Yup.string().max(45, 'Note must be at most 45 characters').nullable(),
+  description: Yup.string().max(1024, 'Note must be at most 1024 characters').nullable(),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -33,6 +34,7 @@ const modalsRoot = document.getElementById('root-modals') || document.body
 const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) => {
   const [options, setOptions] = useState([])
   const {currentUser} = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     !!id &&
@@ -92,6 +94,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
           })
         }
         handleClose()
+        navigate('/application/listing')
         setSubmitting(false)
         handleloadApi()
       } catch (error) {
@@ -105,7 +108,6 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
       }
     },
   })
-  console.log(rejection_one.rejection_type_id, values.rejection_id)
   return createPortal(
     <Modal
       id='kt_modal_create_app'
@@ -118,7 +120,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
     >
       <>
         <div className='modal-header p-30px'>
-          <h2>Reject application</h2>
+          <h2>Reject Application</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>
@@ -170,7 +172,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
                 handleSubmit()
               }}
             >
-              save
+              Save
             </Button>
           </div>
         </div>

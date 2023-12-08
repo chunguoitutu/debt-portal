@@ -245,13 +245,13 @@ const CreateLoanType = ({
             <Button
               type='reset'
               onClick={() => handleClose()}
-              className='btn-lg btn-secondary align-self-center me-8px'
+              className='btn-lg btn-secondary align-self-center me-8px fs-6'
             >
               Cancel
             </Button>
             <Button
               type='submit'
-              className='btn-lg btn-primary'
+              className='btn-lg btn-primary fs-6'
               onClick={handleBeforeSubmit}
               loading={isSubmitting}
             >

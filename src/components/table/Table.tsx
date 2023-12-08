@@ -357,7 +357,7 @@ const Table: FC<Props> = ({
                                 style={{
                                   color: !!color ? color : '#78829D',
                                 }}
-                                className={`${classNameTableBody} fs-14 fw-semibold `}
+                                className={clsx(['fs-14 fw-semibold', classNameTableBody])}
                               >
                                 {value}
                               </span>

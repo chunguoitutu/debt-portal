@@ -21,7 +21,7 @@ export function FilterApplication({
   onClose,
 }: Props) {
   return (
-    <div className='menu-filter-application card  w-400px w-md-300px' data-kt-menu='true'>
+    <div className='menu-filter-application card  w-xxl-400px w-300px' data-kt-menu='true'>
       <div className='position-relative p-0'>
         <div className='p-30px d-flex w-full align-items-center justify-content-between'>
           <div className='fs-20 fw-bold text-dark text-gray-900'>Filter Options</div>
@@ -32,7 +32,7 @@ export function FilterApplication({
 
         <div className='separator p-0 border-gray-200'></div>
 
-        <div style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}} className='px-30px'>
+        <div style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}} className='p-30px'>
           {rows.map((row, i) => {
             if (!row.infoFilter) return <td key={i}></td>
             const {infoFilter, key, options, name} = row || {}
@@ -112,7 +112,7 @@ export function FilterApplication({
           <button
             type='reset'
             onClick={() => handleResetFilter()}
-            className='btn btn-lg btn-light btn-active-light-primary me-2'
+            className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
             data-kt-menu-dismiss='true'
           >
             Reset
@@ -123,7 +123,7 @@ export function FilterApplication({
             onClick={() => {
               handleLoadApi()
             }}
-            className='btn btn-lg btn-primary'
+            className='btn btn-lg btn-primary fs-6'
             data-kt-menu-dismiss='true'
           >
             Apply

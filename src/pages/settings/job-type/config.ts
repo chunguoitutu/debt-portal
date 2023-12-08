@@ -17,12 +17,12 @@ export const JOB_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
-      classNameTableHead: 'min-w-70px',
+      classNameTableHead: 'w-70px',
       key: 'id',
       name: 'ID',
     },
     {
-      classNameTableHead: 'min-w-300px',
+      classNameTableHead: 'w-300px min-w-150px',
       key: 'job_type_name',
       name: 'Job Type',
       color: '#252F4A',
@@ -33,18 +33,18 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-50 min-w-300px',
+      classNameTableHead: 'w-300px min-w-150px',
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
     },
     // {
-    //   classNameTableHead: 'w-50 min-w-70px',
+    //   classNameTableHead: 'w-50 w-70px',
     //   key: 'request_more_information',
     //   name: 'Need More Information',
     // },
     {
-      classNameTableHead: 'w-50 min-w-70px',
+      classNameTableHead: 'w-70px',
       key: 'request_more_information',
       name: 'Need More Information',
       component: Badge,
@@ -68,7 +68,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'min-w-200px',
+      classNameTableHead: 'w-200px',
       key: 'status',
       name: 'Status',
       component: Badge,
