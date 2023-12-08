@@ -1,5 +1,6 @@
 import {TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
+import {CheckboxRounded} from '@/components/checkbox'
 
 export const DOCUMENT_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/document_type',
@@ -16,12 +17,12 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
   },
   rows: [
     {
-      classNameTableHead: 'min-w-70px',
+      classNameTableHead: 'w-70px',
       key: 'id',
       name: 'ID',
     },
     {
-      classNameTableHead: 'min-w-200px',
+      classNameTableHead: 'w-200px',
       key: 'type_name',
       name: 'Document Type',
       color: '#252F4A',
@@ -32,24 +33,36 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-50 min-w-200px',
+      classNameTableHead: 'w-50 w-200px',
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
     },
 
     {
-      classNameTableHead: 'min-w-200px align-items-center',
+      classNameTableHead: 'w-200px align-items-center',
       key: 'created_date',
       name: 'Created Date',
     },
     {
-      classNameTableHead: 'min-w-200px  align-items-center',
+      classNameTableHead: 'w-200px align-items-center',
       key: 'updated_date',
       name: 'Updated Date',
     },
     {
-      classNameTableHead: 'min-w-200px',
+      classNameTableHead: 'w-200px text-center',
+      key: 'is_default',
+      name: 'Default',
+      component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        subTextWhenChecked: 'Yes',
+        subTextWhenNoChecked: 'No',
+      },
+    },
+    {
+      classNameTableHead: 'w-200px',
       key: 'status',
       name: 'Status',
       component: Badge,

@@ -7,6 +7,8 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   showLabelCheck?: boolean
   request_info?: boolean //just apply for table Job Type
+  subTextWhenChecked?: string
+  subTextWhenNoChecked?: string
 }
 
 const CheckboxRounded: FC<Props> = ({
@@ -17,6 +19,8 @@ const CheckboxRounded: FC<Props> = ({
   request_info = false,
   name,
   required,
+  subTextWhenChecked,
+  subTextWhenNoChecked,
   onChange,
   ...rest
 }: Props) => {
@@ -52,7 +56,7 @@ const CheckboxRounded: FC<Props> = ({
 
         {showLabelCheck && !request_info && (
           <div className='text-gray-500 ms-8px fs-16 fw-semibold'>
-            {checked ? 'Active' : 'Disable'}
+            {checked ? subTextWhenChecked || 'Active' : subTextWhenNoChecked || 'Disable'}
           </div>
         )}
       </div>

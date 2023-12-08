@@ -1,10 +1,10 @@
-import {useState} from 'react'
+import {Component, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 
-import {DOCUMENT_TABLE_CONFIG} from './DocumentTableConfig'
+import {DOCUMENT_TABLE_CONFIG} from './config'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
@@ -60,14 +60,16 @@ const CreateDocumentType = ({
     initialValues: {
       type_name: data.type_name || '',
       description: data.description || '',
+      is_default: data.is_default === 1 ? true : false,
     },
     validationSchema: CreateLoanTypeSchema,
-    onSubmit: async (values: any, actions: any) => {
+    onSubmit: async (values, actions: any) => {
       if (title === 'New') {
         try {
           const response = await request.post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           const document_name = values.type_name
           handleUpdated()
@@ -95,6 +97,7 @@ const CreateDocumentType = ({
           const response = await request.post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           const document_name = values.type_name
           handleUpdated()
@@ -138,12 +141,37 @@ const CreateDocumentType = ({
         </div>
         <div className='flex-row-fluid p-30px'>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-            {rows.map((row) => {
-              const {infoCreateEdit} = row
-              const {isRequired} = infoCreateEdit || {}
+            {rows.map((row, i) => {
+              const {infoCreateEdit, name, key} = row
+              const {
+                isRequired,
+                typeComponent,
+                component,
+                subTextWhenChecked,
+                subTextWhenNoChecked,
+              } = infoCreateEdit || {}
+
+              const Component = component as any
+
               if (['id', 'status', 'created_date', 'updated_date'].includes(row.key)) {
                 return null
               }
+
+              if (typeComponent === 'checkbox-rounded') {
+                return (
+                  <div className='mt-16px' key={i}>
+                    <Component
+                      label={name}
+                      checked={values[key]}
+                      onChange={handleChange}
+                      subTextWhenChecked={subTextWhenChecked}
+                      subTextWhenNoChecked={subTextWhenNoChecked}
+                      id={key}
+                    />
+                  </div>
+                )
+              }
+
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
                   {row.key === 'description' ? (

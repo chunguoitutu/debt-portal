@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 import Table from '@/components/table/Table'
 import {CreatEditMarkettingType} from './CreateEditMarketing'
-import {MAKETTING_TABLE_CONFIG} from './MarketingConfig'
+import {MAKETTING_TABLE_CONFIG} from './config'
 
 const MarkettingType = () => {
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)

@@ -6,7 +6,7 @@ import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 
-import {LOAN_TYPE_TABLE_CONFIG} from './LoanTableConfig'
+import {LOAN_TYPE_TABLE_CONFIG} from './config'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
@@ -62,14 +62,16 @@ const CreateLoanType = ({
   } = useFormik({
     initialValues: {
       ...data,
+      is_default: data.is_default === 1 ? true : false,
     },
     validationSchema: CreateLoanTypeSchema,
-    onSubmit: async (values: any, actions: any) => {
+    onSubmit: async (values, actions: any) => {
       if (title === 'New') {
         try {
           const {data} = await request.post(endpoint || '', {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           if (!data.error) {
             const loan_name = values.type_name
@@ -105,6 +107,7 @@ const CreateLoanType = ({
           await request.post(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
+            is_default: values.is_default ? 1 : 0,
           })
           const loan_name = values.type_name
           handleUpdated()
@@ -161,15 +164,39 @@ const CreateLoanType = ({
         </div>
         <div className='flex-row-fluid p-30px'>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-            {rows.map((row) => {
-              const {infoCreateEdit, key} = row || {}
-              const {isRequired, typeInput} = infoCreateEdit || {}
+            {rows.map((row, i) => {
+              const {infoCreateEdit, name, key} = row
+              const {
+                typeInput,
+                isRequired,
+                typeComponent,
+                component,
+                subTextWhenChecked,
+                subTextWhenNoChecked,
+              } = infoCreateEdit || {}
+
+              const Component = component as any
 
               if (['id', 'status'].includes(row.key)) {
                 return null
               }
 
               const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
+
+              if (typeComponent === 'checkbox-rounded') {
+                return (
+                  <div className='mt-16px' key={i}>
+                    <Component
+                      label={name}
+                      checked={values[key]}
+                      onChange={handleChange}
+                      subTextWhenChecked={subTextWhenChecked}
+                      subTextWhenNoChecked={subTextWhenNoChecked}
+                      id={key}
+                    />
+                  </div>
+                )
+              }
 
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>

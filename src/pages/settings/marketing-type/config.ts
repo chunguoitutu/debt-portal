@@ -1,5 +1,6 @@
 import {TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
+import {CheckboxRounded} from '@/components/checkbox'
 
 export const MAKETTING_TABLE_CONFIG: TableConfig = {
   settings: {
@@ -31,6 +32,18 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
+      },
+    },
+    {
+      classNameTableHead: 'w-200px text-center',
+      key: 'is_default',
+      name: 'Default',
+      component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        subTextWhenChecked: 'Yes',
+        subTextWhenNoChecked: 'No',
       },
     },
     {
