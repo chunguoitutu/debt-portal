@@ -422,7 +422,7 @@ export type ApplicationFormData = {
   city: string
   state: string
   postal_code: string
-  country: string
+  country: string | number
   mobilephone_3: string
   address_contact_info: BlockAddress[]
   loan_terms: number

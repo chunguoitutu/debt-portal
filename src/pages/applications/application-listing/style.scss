@@ -17,3 +17,21 @@
     cursor: pointer;
   }
 }
+
+.menu-filter-application {
+  z-index: 10;
+  top: 70px;
+  position: absolute;
+  right: 360px;
+  background-color: white;
+  animation: animate-application 0.1s;
+}
+
+@keyframes animate-application {
+  0% {
+    top: 80px;
+  }
+  100% {
+    top: 60px;
+  }
+}

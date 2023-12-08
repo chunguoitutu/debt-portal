@@ -29,6 +29,7 @@ import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import {Input} from '@/components/input'
 import Pagination from '@/components/table/components/Pagination'
+import {FilterApplication} from './FilterApplication'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -394,7 +395,7 @@ const ApplicationListing = () => {
               ) : null
             }
           />
-          <div className='d-flex flex-end ms-4'>
+          <div className='d-flex position-relative flex-end ms-4'>
             <Button
               onClick={showInputFilter}
               className='btn-secondary align-self-center m-2 fs-14 text-primary h-45px'
@@ -452,105 +453,18 @@ const ApplicationListing = () => {
                 </tr>
               </thead>
               <tbody>
-                {showInput ? (
-                  <tr>
-                    {rows.map((row, i) => {
-                      if (!row.infoFilter) return <td key={i}></td>
-                      const {infoFilter, key, options, classNameTableBody} = row || {}
-                      const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
+                {showInput && (
+                  <FilterApplication
+                    onClose={showInputFilter}
+                    handleResetFilter={handleResetFilter}
+                    rows={rows}
+                    handleLoadApi={() => setLoadApi(!loadApi)}
+                    dataFilter={dataFilter}
+                    handleChangeFilter={handleChangeFilter}
+                    dataOption={dataOption}
+                  />
+                )}
 
-                      const Component = component
-                      let props: {[key: string]: any} = {
-                        name: key,
-                        value: dataFilter[key] || '',
-                        onChange: handleChangeFilter,
-                      }
-
-                      if (typeComponent === 'select') {
-                        props = {
-                          ...props,
-                          options: options || dataOption[key],
-                          keyLabelOption: infoFilter?.keyLabelOption || 'label',
-                          keyValueOption: infoFilter?.keyValueOption || 'value',
-                        }
-                      } else {
-                        // type input
-                        props = {
-                          ...props,
-                          type: typeInput || 'text',
-                        }
-                      }
-
-                      return (
-                        <td key={i} className={clsx(['align-top', classNameTableBody])}>
-                          {isFromTo ? (
-                            <div className='d-flex flex-column gap-3'>
-                              <Component
-                                {...props}
-                                placeholder='from'
-                                value={dataFilter[key]?.['gte'] || ''}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                  handleChangeFilter(e, 'gte')
-                                }}
-                                onKeyDown={(e) => {
-                                  if (e.key === 'Enter') {
-                                    setLoadApi(!loadApi)
-                                  }
-                                }}
-                              />
-                              <Component
-                                {...props}
-                                placeholder='to'
-                                value={dataFilter[key]?.['lte'] || ''}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                  handleChangeFilter(e, 'lte')
-                                }}
-                                onKeyDown={(e) => {
-                                  if (e.key === 'Enter') {
-                                    setLoadApi(!loadApi)
-                                  }
-                                }}
-                              />
-                            </div>
-                          ) : (
-                            <Component
-                              classShared={''}
-                              {...props}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                  setLoadApi(!loadApi)
-                                }
-                              }}
-                            />
-                          )}
-                        </td>
-                      )
-                    })}
-
-                    {/* td refresh */}
-                    <td
-                      className='d-flex mt-2 align-items-center justify-content-center'
-                      style={{borderBottom: 'none'}}
-                    >
-                      <div className='gap-3'>
-                        <div
-                          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
-                          onClick={() => handleResetFilter()}
-                        >
-                          <FontAwesomeIcon icon={faArrowsRotate} />
-                        </div>
-
-                        <Button
-                          className='btn text-primary btn-secondary fw-medium fs-14 btn-sm me-1 fw-medium text-primary'
-                          onClick={() => setLoadApi(!loadApi)}
-                          style={{backgroundColor: '#f9f9f9'}}
-                        >
-                          Apply
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ) : null}
                 {data.length ? (
                   renderRows()
                 ) : (

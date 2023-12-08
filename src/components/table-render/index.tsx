@@ -1,4 +1,5 @@
 import moment from 'moment'
+import numeral from 'numeral'
 
 export interface element_config {
   key: string
@@ -8,6 +9,7 @@ export interface element_config {
   dollars?: string
   elBehind?: string
   date?: boolean
+  number?: boolean
 }
 
 type Props = {
@@ -82,6 +84,8 @@ function TableRender({title, config = [], data}: Props) {
                               element_config?.dollars}
                             {element_config.date
                               ? moment(data[element_config.key]).format('MMM DD, YYYY')
+                              : !!element_config?.number
+                              ? numeral(+data[element_config.key]).format('0,0.00')
                               : data[element_config.key]}{' '}
                             {!!element_config?.elBehind && element_config?.elBehind}
                           </p>
