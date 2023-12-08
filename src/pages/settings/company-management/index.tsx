@@ -128,13 +128,13 @@ export const CompanyManagement = () => {
           <Button
             type='reset'
             onClick={() => setLoadApi(!loadapi)}
-            className='btn-lg btn-secondary align-self-center me-8px'
+            className='btn-lg btn-secondary align-self-center me-8px fs-6'
           >
             Discard
           </Button>
 
           <Button
-            className='btn-lg btn-primary'
+            className='btn-lg btn-primary fs-6'
             disabled={
               isSubmitting ||
               ((information?.company_name || '').trim() === (values?.company_name || '').trim() &&

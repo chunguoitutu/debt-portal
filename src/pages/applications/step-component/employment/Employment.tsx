@@ -1,6 +1,7 @@
 import {FC, Fragment, useEffect, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
+import {useParams} from 'react-router-dom'
 
 import request from '@/app/axios'
 import {Select} from '@/components/select'
@@ -10,6 +11,7 @@ import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
+  const {applicationIdEdit} = useParams()
 
   const [annualIncome, setAnnualIncome] = useState({
     monthly_income_1: 0,
@@ -43,6 +45,26 @@ const Employment: FC<PropsStepApplication> = (props) => {
       results &&
         results.forEach((result) => {
           newDataLoanType[result.key] = result?.data
+          !applicationIdEdit &&
+            setFieldValue(
+              `${result.key}`,
+              result?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
+                result?.data.length > 0
+                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
+                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].id
+                  : result?.data[0].id
+                : ''
+            )
+          !applicationIdEdit &&
+            setFieldValue(
+              `job_type_name`,
+              result?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
+                result?.data.length > 0
+                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
+                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].job_type_name
+                  : result?.data[0].job_type_name
+                : ''
+            )
         })
       setDataLoanType({...dataLoanType, ...newDataLoanType})
     } catch (error) {

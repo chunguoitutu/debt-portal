@@ -375,12 +375,12 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
         <Button
           type='reset'
           onClick={() => onClose()}
-          className='btn-lg btn-secondary align-self-center me-8px'
+          className='btn-lg btn-secondary align-self-center me-8px fs-6'
         >
           Cancel
         </Button>
         <Button
-          className='btn-lg btn-primary'
+          className='btn-lg btn-primary fs-6'
           type='submit'
           onClick={() => handleSubmit()}
           loading={isSubmitting}

@@ -26,7 +26,7 @@ const ToolBar = ({config, handleAddNew}: Props) => {
       {showFilter && <UsersListFilter />}
 
       {checkNewButton && showAddNewButton && (
-        <button onClick={handleAddNew} type='button' className='btn btn-primary'>
+        <button onClick={handleAddNew} type='button' className='btn btn-primary fs-6'>
           <KTIcon iconName='plus' className='fs-2' />
           {buttonAddNew}
         </button>

@@ -160,10 +160,18 @@ const CompanyDetail = ({
         </div>
       </div>
       <div className='d-flex flex-end p-30px border-top border-gray-200'>
-        <Button type='reset' onClick={() => handleClose()} className='btn-lg btn-secondary  me-8px'>
+        <Button
+          type='reset'
+          onClick={() => handleClose()}
+          className='btn-lg btn-secondary fs-6 me-8px'
+        >
           Cancel
         </Button>
-        <Button className='btn-lg btn-primary' type='submit' onClick={() => handleCloseShowEdit()}>
+        <Button
+          className='btn-lg btn-primary fs-6'
+          type='submit'
+          onClick={() => handleCloseShowEdit()}
+        >
           Edit Company
         </Button>
       </div>

@@ -121,7 +121,7 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
                         onClick={() => {
                           setInfoEdit(null)
                         }}
-                        className='btn-lg btn-secondary p-8px align-self-center me-8px'
+                        className='btn-lg btn-secondary p-8px align-self-center me-8px fs-6'
                       >
                         Cancel
                       </Button>
@@ -136,7 +136,7 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
                           handleUpdate(_remarkList)
                           setInfoEdit(null)
                         }}
-                        className='btn-lg btn-primary p-8px'
+                        className='btn-lg btn-primary p-8px fs-6'
                       >
                         Save
                       </Button>

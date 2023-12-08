@@ -28,7 +28,7 @@ const GeneralButton: FC<Props> = ({
     <div className='d-flex justify-content-between align-items-center  mt-10 full gap-5'>
       <div>
         {!!applicationIdEdit && (values.status === 1 || values.status === 2) && (
-          <Button type='submit' onClick={handleClose} className='fs-5 btn btn-danger'>
+          <Button type='submit' onClick={handleClose} className='fs-6 btn btn-danger'>
             Reject
           </Button>
         )}
@@ -38,7 +38,7 @@ const GeneralButton: FC<Props> = ({
           <Button
             loading={isSubmitting && isDraft}
             onClick={handleSaveDraft}
-            className='btn-secondary align-self-center d-flex none fs-5'
+            className='btn-secondary align-self-center d-flex none fs-6'
             disabled={isSubmitting}
           >
             Save Draft
@@ -49,13 +49,13 @@ const GeneralButton: FC<Props> = ({
           loading={isSubmitting && !isDraft}
           disabled={isSubmitting}
           onClick={handleSubmit}
-          className='fs-5 btn btn-primary'
+          className='fs-6 btn btn-primary'
         >
           {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
         </Button>
         {!!applicationIdEdit && values.status === 1 && currentStep === 6 ? (
           <Button
-            className='fs-5 btn btn-primary'
+            className='fs-6 btn btn-primary'
             type='submit'
             disabled={isSubmitting}
             onClick={() => {}}

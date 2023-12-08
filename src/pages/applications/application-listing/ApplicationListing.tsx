@@ -148,6 +148,7 @@ const ApplicationListing = () => {
 
   function showInputFilter() {
     setShowInput(!showInput)
+    handleResetFilter()
   }
 
   const renderRows = () => {
@@ -366,6 +367,7 @@ const ApplicationListing = () => {
             onChange={handleChangeSearch}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
+                handleResetFilter()
                 handleReGetApi()
               }
             }}
@@ -392,7 +394,7 @@ const ApplicationListing = () => {
           <div className='d-flex position-relative flex-end ms-4'>
             <Button
               onClick={showInputFilter}
-              className='btn-secondary align-self-center m-2 fs-14 text-primary h-45px'
+              className='btn-secondary align-self-center m-2 fs-6 text-primary h-45px'
               disabled={false}
             >
               <Icons name={'filterIcon'} />
@@ -401,7 +403,7 @@ const ApplicationListing = () => {
 
             <Link to='/application/create'>
               <Button
-                className='btn-primary align-self-center m-2 fs-14 text-white h-45px'
+                className='btn-primary align-self-center m-2 fs-6 text-white h-45px'
                 disabled={false}
               >
                 <Icons name={'AddIcon'} />
