@@ -79,7 +79,6 @@ export function FilterApplication({
                       }}
                     />
                     <Component
-                      label={name}
                       {...props}
                       placeholder='to'
                       value={dataFilter[key]?.['lte'] || ''}
