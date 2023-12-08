@@ -47,8 +47,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       !applicationIdEdit &&
         setFieldValue(
           `address_contact_info[0][address_type_id]`,
-          updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
-            0 && updatedDataMarketing?.address_type_id.length > 0
+          updatedDataMarketing?.address_type_id.length > 0
             ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)
                 .length > 0
               ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0]
@@ -57,8 +56,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
             : ''
         )
       setDefaultValueAddress(
-        updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
-          0 && updatedDataMarketing?.address_type_id.length > 0
+        updatedDataMarketing?.address_type_id.length > 0
           ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
             0
             ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0].id
