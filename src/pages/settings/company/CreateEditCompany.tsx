@@ -11,6 +11,7 @@ import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
 import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
+import {useAuth} from '@/app/context/AuthContext'
 
 type Props = {
   setLoadApi: any
@@ -39,6 +40,8 @@ const CreateEditCompanies = ({
   const [information, setInformation] = React.useState<any>(null)
 
   const [status, setStatus] = useState(data ? data?.status : true)
+
+  const {company_id, setCompanyName} = useAuth()
 
   React.useEffect(() => {
     if (data?.id) {
@@ -137,6 +140,10 @@ const CreateEditCompanies = ({
                     : ' '
                 }successfully updated`,
               })
+
+              // set company name when current company name and edit company have duplicate id
+              const {id, company_name} = response?.data?.data || {}
+              id === company_id && setCompanyName(company_name)
             }
             handleUpdated()
             handleClose()
