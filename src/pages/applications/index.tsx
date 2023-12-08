@@ -26,6 +26,7 @@ import {INIT_BLOCK_ADDRESS, STEP_APPLICATION} from '@/app/constants'
 import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
+import Reject from './step-component/reject/Reject'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -54,6 +55,7 @@ export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
+  const [show, setShow] = useState<boolean>(false)
 
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -604,8 +606,11 @@ export const Applications = () => {
                     formik={formik}
                   />
                 )}
-
+                {show && (
+                  <Reject id={applicationIdEdit} show={show} handleClose={() => setShow(!show)} />
+                )}
                 <GeneralButton
+                  handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
                   handleSubmit={handleBeforeSubmit}
                   config={STEP_APPLICATION[currentStep - 1].config || []}

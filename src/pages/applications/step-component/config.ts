@@ -733,6 +733,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         {
           key: 'loan_amount_requested',
           value: 'Loan amount',
+          number: true,
         },
         {
           key: 'loan_terms',
@@ -891,16 +892,19 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           key: 'monthly_income',
           value: 'Average Monthly Income',
           dollars: '$',
+          number: true,
         },
         {
           key: 'six_months_income',
           value: 'Past 6 Month Gross Income',
           dollars: '$',
+          number: true,
         },
         {
           key: 'annual_income',
           value: 'Annual Gross Income',
           dollars: '$',
+          number: true,
         },
       ],
     ],

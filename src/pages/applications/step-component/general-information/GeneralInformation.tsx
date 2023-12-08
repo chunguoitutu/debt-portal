@@ -9,18 +9,19 @@ import LookupCustomer from './LookupCustomer'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
 import {getCurrentDate} from '@/app/utils/get-current-date'
+import {useParams} from 'react-router-dom'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
-
-  const [dataMarketing, setDataMarketing] = useState({})
+  const {applicationIdEdit} = useParams()
+  const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
 
-  const {values, touched, errors, handleChange, handleBlur} = formik
+  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
 
   async function onFetchDataList() {
     try {
-      const updatedDataMarketing = {...dataMarketing}
+      const updatedDataMarketing: any = {...dataMarketing}
       const endpoint = config.filter((data) => !!data.dependencyApi)
 
       const requests = endpoint.map((d) =>
@@ -35,6 +36,20 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       })
 
       setDataMarketing(updatedDataMarketing)
+      !applicationIdEdit &&
+        setFieldValue(
+          `marketing_type_id`,
+          updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1).length >
+            0 && updatedDataMarketing?.marketing_type_id.length > 0
+            ? updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1)
+                .length > 0
+              ? updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1)[0]
+                  .id
+              : updatedDataMarketing?.marketing_type_id[0].id
+            : ''
+        )
+      !applicationIdEdit &&
+        setFieldValue(`country_id`, updatedDataMarketing?.country_id.length > 0 ? '192' : '')
     } catch (error) {
     } finally {
     }
@@ -42,6 +57,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
   useEffect(() => {
     onFetchDataList()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

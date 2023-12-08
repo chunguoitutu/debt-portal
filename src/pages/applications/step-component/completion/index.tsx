@@ -11,6 +11,7 @@ export interface DEF_completion {
   options?: any[]
   keyFilter?: string
   lable?: string
+  number?: boolean
   dependencyApi?: string
   elBehind?: string
   dollars?: string

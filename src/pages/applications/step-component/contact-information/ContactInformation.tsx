@@ -11,10 +11,13 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
 import {DEFAULT_MESSAGE_ERROR_500, INIT_BLOCK_ADDRESS} from '@/app/constants'
 import {COUNTRY_PHONE_CODE} from '@/app/utils'
+import {useParams} from 'react-router-dom'
 
 const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
-
+  const [defaultValueAddress, setDefaultValueAddress] = useState<number | string>('')
+  const [defaultValueCountry, setDefaultValueCountry] = useState<number | string>('')
+  const {applicationIdEdit} = useParams()
   const {values, touched, errors, handleChange, setValues, setFieldValue} = formik
 
   async function onFetchDataList() {
@@ -34,10 +37,40 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       })
 
       setDataOption(updatedDataMarketing)
+      setDefaultValueCountry(updatedDataMarketing?.country.length > 0 ? '192' : '')
+
+      !applicationIdEdit &&
+        setFieldValue(
+          `address_contact_info[0][country]`,
+          updatedDataMarketing?.country.length > 0 ? '192' : ''
+        )
+      !applicationIdEdit &&
+        setFieldValue(
+          `address_contact_info[0][address_type_id]`,
+          updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
+            0 && updatedDataMarketing?.address_type_id.length > 0
+            ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)
+                .length > 0
+              ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0]
+                  .id
+              : updatedDataMarketing?.address_type_id[0].id
+            : ''
+        )
+      setDefaultValueAddress(
+        updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
+          0 && updatedDataMarketing?.address_type_id.length > 0
+          ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
+            0
+            ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0].id
+            : updatedDataMarketing?.address_type_id[0].id
+          : ''
+      )
     } catch (error) {
     } finally {
     }
   }
+
+  console.log(values)
 
   useEffect(() => {
     onFetchDataList()
@@ -128,7 +161,14 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     setValues(
       {
         ...values,
-        address_contact_info: [...values.address_contact_info, INIT_BLOCK_ADDRESS],
+        address_contact_info: [
+          ...values.address_contact_info,
+          {
+            ...INIT_BLOCK_ADDRESS,
+            address_type_id: defaultValueAddress || '',
+            country: (defaultValueCountry as string) || '',
+          },
+        ],
       },
       false
     )

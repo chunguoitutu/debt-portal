@@ -4,10 +4,11 @@ import clsx from 'clsx'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
+import {useParams} from 'react-router-dom'
 
 const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   const [dataLoanType, setDataLoanType] = useState({})
-
+  const {applicationIdEdit} = useParams()
   useEffect(() => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -22,6 +23,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             pageSize: 99999,
             currentPage: 1,
           })
+
           return {key: d.key, data: res?.data?.data}
         })
       )
@@ -32,6 +34,26 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             ...dataLoanType,
             [result.key]: result?.data,
           })
+          !applicationIdEdit &&
+            setFieldValue(
+              `${result.key}`,
+              result?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
+                result?.data.length > 0
+                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
+                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].id
+                  : result?.data[0].id
+                : ''
+            )
+          !applicationIdEdit &&
+            setFieldValue(
+              `interest`,
+              result?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
+                result?.data.length > 0
+                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
+                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].interest
+                  : result?.data[0].interest
+                : ''
+            )
         })
     } catch (error) {
     } finally {
