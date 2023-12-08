@@ -37,6 +37,12 @@ export function isJson(str: string) {
   }
 }
 
+export function parseJson(str: string) {
+  try {
+    return JSON.parse(str)
+  } catch (error) {}
+}
+
 export const formatNumber = (num: any) => {
   return numeral(num).format('0,0.00')
 }
