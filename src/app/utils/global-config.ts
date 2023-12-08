@@ -580,7 +580,7 @@ export const OBLIGATION: AdvanceConfig[] = [
 export const ROUTER_SETTING = [
   {
     path: 'company-management',
-    labelBreadCrumbs: 'Organization',
+    labelBreadCrumbs: 'Organization Management',
     component: CompanyManagement,
     priority: [1],
   },
@@ -643,7 +643,7 @@ export const ROUTER_SETTING = [
 export const MENU_SETTING_LISTING: MenuSettingItem[] = [
   {
     activeKey: uuidv4(),
-    title: 'Organization',
+    title: 'Organization Management',
     priority: [1],
     children: [
       {

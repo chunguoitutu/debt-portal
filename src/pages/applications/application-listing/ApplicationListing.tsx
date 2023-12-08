@@ -206,7 +206,6 @@ const ApplicationListing = () => {
                 title = 'Approved'
                 color = 'success'
               }
-
               return (
                 <td
                   key={i}

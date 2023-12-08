@@ -499,7 +499,7 @@ export const Applications = () => {
       },
       application: {
         ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
-        loan_terms: +loan_terms || 12,
+        loan_terms: +loan_terms,
         loan_amount_requested: +loan_amount_requested,
         loan_type_id: +loan_type_id || null,
         status: 1,

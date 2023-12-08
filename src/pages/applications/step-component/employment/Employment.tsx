@@ -29,15 +29,21 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
       const results = await Promise.all(
         endpoints.map(async (d) => {
-          const res = await request.post(d.dependencyApi || '', {status: true})
+          const res = await request.post(d.dependencyApi || '', {
+            status: true,
+            pageSize: 99999,
+            currentPage: 1,
+          })
+
           return {key: d.key, data: res?.data?.data}
         })
       )
 
       const newDataLoanType = {}
-      results.forEach((result) => {
-        newDataLoanType[result.key] = result.data
-      })
+      results &&
+        results.forEach((result) => {
+          newDataLoanType[result.key] = result?.data
+        })
       setDataLoanType({...dataLoanType, ...newDataLoanType})
     } catch (error) {
     } finally {
@@ -80,7 +86,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
       return (
         <div className={clsx(['d-flex flex-column w-100', column && 'w-xxl-unset'])}>
           <Component
-            value={values[key]}
+            value={values[key] || ''}
             onChange={handleChange}
             name={key}
             classShared={className}
@@ -180,7 +186,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
                   <span>
                     <Select
                       onChange={handleChange}
-                      value={values[key]}
+                      value={values[key] || ''}
                       isOptionDefault={false}
                       classShared='m-0'
                       className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'

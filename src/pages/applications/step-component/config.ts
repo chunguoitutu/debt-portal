@@ -207,7 +207,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     noThereAreCommas: false,
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Amount'))
-      .max(5000, 'Loan Amount must be less than or equal to 5000$'),
+      .max(999999999999, 'Loan Amount must be less than or equal to 999999999999$'),
   },
   {
     key: 'loan_terms',
@@ -216,10 +216,9 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     label: 'Loan Terms (months)',
     required: true,
     typeInput: 'number',
-    defaultValue: '12',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
-      .max(1000, convertMessageErrorMaximum(100, true)),
+      .max(999999, convertMessageErrorMaximum(100, true)),
   },
   {
     key: 'loan_reason',
