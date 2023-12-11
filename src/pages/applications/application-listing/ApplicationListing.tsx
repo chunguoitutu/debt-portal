@@ -110,14 +110,7 @@ const ApplicationListing = () => {
     const timer = setTimeout(() => {
       onFetchDataList({
         ...searchCriteria,
-        filters: handleFormatFilter({
-          dataFilter: {
-            ...newDataFilter,
-            searchBar: searchValue,
-          },
-          keyDate: ['application_date'],
-          keyNumber: ['loan_type_id', 'id', 'loan_terms'],
-        }),
+        filters: newDataFilter,
       })
     }, 300)
 
@@ -356,7 +349,17 @@ const ApplicationListing = () => {
   return (
     <div className='card p-5 h-fit-content'>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
-
+      {showInput && (
+        <FilterApplication
+          onClose={showInputFilter}
+          handleResetFilter={handleResetFilter}
+          rows={rows}
+          handleLoadApi={handleFilter}
+          dataFilter={dataFilter}
+          handleChangeFilter={handleChangeFilter}
+          dataOption={dataOption}
+        />
+      )}
       <div>
         <div className='d-flex flex-row align-items-center'>
           <Input
@@ -366,7 +369,6 @@ const ApplicationListing = () => {
             onChange={handleChangeSearch}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                handleResetFilter()
                 handleReGetApi()
               }
             }}
@@ -413,18 +415,6 @@ const ApplicationListing = () => {
         </div>
         <KTCardBody className='py-4'>
           <div className='table-responsive'>
-            {showInput && (
-              <FilterApplication
-                onClose={showInputFilter}
-                handleResetFilter={handleResetFilter}
-                rows={rows}
-                handleLoadApi={handleFilter}
-                dataFilter={dataFilter}
-                handleChangeFilter={handleChangeFilter}
-                dataOption={dataOption}
-              />
-            )}
-
             <table
               id='kt_table_users'
               className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
