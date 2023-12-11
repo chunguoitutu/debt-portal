@@ -3,7 +3,7 @@ import {AiOutlineClose} from 'react-icons/ai'
 import './style.scss'
 
 import Icons from '@/components/icons'
-import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
+import {swalConfirm, swalToast} from '../../../../app/swal-notification'
 import request from '../../../../app/axios'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import {convertSize} from '@/app/utils'
@@ -67,7 +67,7 @@ const FileInput = (props: any) => {
                       className='close text-16px button-file cursor-position position-absolute border-0 bg-transparent'
                       onClick={() => {
                         if (!!data?.id) {
-                          swalConfirmDelete
+                          swalConfirm
                             .fire({
                               title: 'Are You Sure?',
                               text: `You Won't Be Able To Revert This.`,

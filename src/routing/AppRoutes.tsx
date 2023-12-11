@@ -71,6 +71,8 @@ const AppRoutes: FC = () => {
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/my-tasks' element={<MyTasks />} />
 
+            {/* <Route path='/guest' element={<Guest />} /> */}
+
             {/* Lazy Modules */}
             <Route
               path='settings/*'

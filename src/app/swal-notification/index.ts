@@ -10,7 +10,7 @@ export const swalToast = Swal.mixin({
   },
 })
 
-export const swalConfirmDelete = Swal.mixin({
+export const swalConfirm = Swal.mixin({
   icon: 'warning',
   buttonsStyling: false,
   showCancelButton: true,
