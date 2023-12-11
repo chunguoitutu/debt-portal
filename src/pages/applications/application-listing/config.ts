@@ -74,7 +74,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'loan_amount_requested',
-      name: 'Loan Amount Requested',
+      name: 'Loan Amount',
       classNameTableBody: 'text-end pe-0',
       classNameTableHead: 'text-end',
       infoFilter: {

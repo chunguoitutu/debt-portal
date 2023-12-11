@@ -201,7 +201,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     key: 'loan_amount_requested',
     component: Input,
     typeComponent: 'Input',
-    label: 'Loan Amount',
+    label: 'Loan Amount Required',
     required: true,
     typeInput: 'money',
     noThereAreCommas: false,
@@ -731,8 +731,9 @@ const COMPLETION_CONFIG: children_config_completion[] = [
       [
         {
           key: 'loan_amount_requested',
-          value: 'Loan amount',
+          value: 'Loan amount Required',
           number: true,
+          dollars: '$',
         },
         {
           key: 'loan_terms',
@@ -740,7 +741,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           elBehind: 'Months',
         },
         {
-          key: 'reason_for_loan',
+          key: 'loan_reason',
           value: 'Reason For Loan',
         },
       ],
@@ -825,10 +826,9 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           value: 'State',
         },
         {
-          key: 'country_id',
-          value: 'nationality',
+          key: 'country',
+          value: 'Country',
           dependencyApi: 'config/country/listing',
-          Component: RenderOptionsApi,
           keyFilter: 'id',
           lable: 'nicename',
         },
@@ -851,12 +851,12 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         },
         {
           key: 'company_telephone',
-          value: 'Company Telephone',
+          value: 'Telephone',
           dollars: '+65',
         },
         {
           key: 'portal_code',
-          value: 'Company Postal Code',
+          value: 'Postal Code',
         },
       ],
       [
@@ -874,11 +874,12 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           value: 'Occupation',
         },
         {
-          key: 'specialization',
-          value: 'Specialization',
-          options: SPECIALIZATION,
-          Component: LableOptions,
-          keyFilter: 'value',
+          key: 'job_type_id',
+          value: 'Job Type',
+          dependencyApi: 'config/job_type/listing',
+          Component: RenderOptionsApi,
+          keyFilter: 'id',
+          lable: 'job_type_name',
         },
       ],
       [

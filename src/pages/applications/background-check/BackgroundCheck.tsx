@@ -30,7 +30,7 @@ const BackgroundCheck = () => {
   }
 
   return (
-    <div>
+    <div className='h-100'>
       <ContentListButton config={configBackgroudCheck} />
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
     </div>

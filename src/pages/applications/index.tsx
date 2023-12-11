@@ -27,6 +27,10 @@ import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
 import Reject from './step-component/reject/Reject'
+import Button from '@/components/button/Button'
+import Icons from '@/components/icons'
+import {ChatInner, DrawerMessenger} from '@/_metronic/partials'
+import SearchBar from '@/components/table/components/SearchBar'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -57,7 +61,7 @@ export const Applications = () => {
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
   const [show, setShow] = useState<boolean>(false)
   const [loadApiEdit, SetLoadApiEdit] = useState<boolean>(false)
-
+  const [showRemark, setShowRemark] = useState<boolean>(false)
   const [rejectionOne, setRejectionOne] = useState({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -251,7 +255,7 @@ export const Applications = () => {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
       setRejectionOne(data?.rejection || {})
 
-      const {borrower, application, customer, bank_info, employment, address, file_documents} =
+      const {borrower, application, customer, bank_account, employment, address, file_documents} =
         data.data || {}
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
 
@@ -260,7 +264,7 @@ export const Applications = () => {
         ...borrower,
         ...application,
         ...customer,
-        ...bank_info,
+        ...bank_account,
         ...employment,
         address_contact_info:
           Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
@@ -280,7 +284,7 @@ export const Applications = () => {
         borrowerId: borrower?.id || 0,
         employmentId: employment?.id || 0,
         applicationId: application?.id || 0,
-        bankInfoId: bank_info?.id || 0,
+        bankInfoId: bank_account?.id || 0,
       })
 
       const applicationNotes = JSON.parse(application?.application_notes) || []
@@ -568,6 +572,27 @@ export const Applications = () => {
 
   return (
     <>
+      <div className='position-fixed' style={{zIndex: '1000000'}}>
+        {showRemark && (
+          <div className='wrapper-show-remark'>
+            <div
+              onClick={() => {
+                setShowRemark(!showRemark)
+              }}
+              className='w-100 h-100'
+            ></div>
+            <Remark
+              handleOnClose={() => {
+                setShowRemark(!showRemark)
+              }}
+              setRemarkList={setRemarkList}
+              idUpdate={applicationIdEdit}
+              remarkList={remarkList}
+            />
+          </div>
+        )}
+      </div>
+
       <PageTitle breadcrumbs={profileBreadCrumbs}>
         {applicationIdEdit ? 'Edit Application' : 'New Application'}
       </PageTitle>
@@ -630,17 +655,22 @@ export const Applications = () => {
             </div>
           </div>
         </div>
-        <div className='col-12 col-xxl-2 m-0 h-unset h-xxl-100'>
+        <div className='col-12  col-xxl-2 m-0 h-unset h-xxl-100'>
           <div className='d-flex flex-column h-100'>
-            <div className='pb-6 d-none d-xxl-block'>
+            <div className='pb-30px d-none d-xxl-block h-100'>
               <BackgroundCheck />
             </div>
-            <div className='flex-grow-1 overflow-hidden min-h-300px min-h-xxl-unset'>
-              <Remark
-                setRemarkList={setRemarkList}
-                idUpdate={applicationIdEdit}
-                remarkList={remarkList}
-              />
+
+            <div className='flex-grow-1 wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
+              <button
+                onClick={() => {
+                  setShowRemark(!showRemark)
+                }}
+                className='  btn-remark d-flex justify-content-center align-items-center  '
+              >
+                <Icons name={'Mes'} />
+                <span className='span-button-remark'>Remark</span>
+              </button>
             </div>
           </div>
         </div>

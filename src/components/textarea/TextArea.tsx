@@ -34,7 +34,7 @@ const TextArea: FC<TextAreaProps> = ({
       )}
 
       <textarea
-        className='form-control p-12px form-control-lg form-control-solid min-h-120px rounded-8'
+        className='form-control p-12px form-control-lg form-control-solid fs-4 min-h-120px rounded-8'
         id={id || defaultId || name}
         name={name}
         {...rest}
