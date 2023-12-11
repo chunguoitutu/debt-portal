@@ -46,8 +46,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
           !applicationIdEdit &&
             setFieldValue(
               `interest`,
-              result?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
-                result?.data.length > 0
+              result?.data.length > 0
                 ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
                   ? result?.data.filter((el: any) => +el.is_default === 1)[0].interest
                   : result?.data[0].interest

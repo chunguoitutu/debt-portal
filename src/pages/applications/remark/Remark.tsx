@@ -17,8 +17,15 @@ type Props = {
   idUpdate: string | number | any
   setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
   handleOnClose: () => void
+  small?: boolean
 }
-const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate, handleOnClose}) => {
+const Remark: FC<Props> = ({
+  remarkList = [],
+  setRemarkList,
+  idUpdate,
+  handleOnClose,
+  small = false,
+}) => {
   const [showMenu, setShowMenu] = useState(0)
   const [infoEdit, setInfoEdit] = useState<RemarkItem | null>(null)
   const [inputValue, setInputValue] = useState('')
@@ -96,14 +103,27 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate, handleOnCl
   }
 
   return (
-    <div className='card h-100 w-900px min-w-100px  wrapper-remark-mes'>
+    <div
+      style={{
+        borderRadius: small ? '8px' : '0px',
+      }}
+      className={`card h-100  ${small ? 'w-100' : 'w-900px min-w-100px'}   wrapper-remark-mes`}
+    >
       <div className='modal-header p-30px  border-bottom border-gray-200'>
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleOnClose}>
+        <div
+          className='btn btn-sm btn-icon btn-active-color-primary d-none d-xxl-block'
+          onClick={handleOnClose}
+        >
           <KTIcon className='fs-1' iconName='cross' />
         </div>
       </div>
-      <div className='px-30px pt-30px  min-h-50px overflow-y-auto h-100' ref={contentRef}>
+      <div
+        className={`px-30px pt-30px  min-h-50px overflow-y-auto ${
+          small ? 'min-h-100px mh-500px' : 'h-100'
+        }`}
+        ref={contentRef}
+      >
         <div className='pb-30px'>
           {remarkList?.map((message, index: number) => (
             <div

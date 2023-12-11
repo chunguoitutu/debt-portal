@@ -53,7 +53,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'identification_no',
-      name: 'NRIC NO',
+      name: 'NRIC No',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
