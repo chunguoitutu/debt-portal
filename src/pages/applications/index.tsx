@@ -666,7 +666,7 @@ export const Applications = () => {
                 onClick={() => {
                   setShowRemark(!showRemark)
                 }}
-                className='d-none d-xxl-block btn-remark d-flex justify-content-center align-items-center  '
+                className='d-none d-xxl-block btn-remark d-flex justify-content-center align-items-center gap-8px'
               >
                 <Icons name={'Mes'} />
                 <span className='span-button-remark'>Remark</span>

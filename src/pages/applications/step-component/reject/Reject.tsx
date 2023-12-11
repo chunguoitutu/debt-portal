@@ -94,7 +94,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
           })
         }
         handleClose()
-        !rejection_one?.id && navigate('/application/listing')
+        // !rejection_one?.id && navigate('/application/listing')
         setSubmitting(false)
         handleloadApi()
       } catch (error) {
