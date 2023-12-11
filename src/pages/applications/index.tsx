@@ -251,7 +251,9 @@ export const Applications = () => {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
       setRejectionOne(data?.rejection || {})
 
-      const {borrower, application, customer, bank_info, employment, address, file_documents} =
+      console.log(data)
+
+      const {borrower, application, customer, bank_account, employment, address, file_documents} =
         data.data || {}
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
 
@@ -260,7 +262,7 @@ export const Applications = () => {
         ...borrower,
         ...application,
         ...customer,
-        ...bank_info,
+        ...bank_account,
         ...employment,
         address_contact_info:
           Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
@@ -280,8 +282,10 @@ export const Applications = () => {
         borrowerId: borrower?.id || 0,
         employmentId: employment?.id || 0,
         applicationId: application?.id || 0,
-        bankInfoId: bank_info?.id || 0,
+        bankInfoId: bank_account?.id || 0,
       })
+
+      console.log(bank_account?.id, 'bank_info')
 
       const applicationNotes = JSON.parse(application?.application_notes) || []
       setRemarkList(applicationNotes)
@@ -516,6 +520,8 @@ export const Applications = () => {
       address: addressList,
       file_documents,
     }
+
+    console.log(bankInfoId, bank_code_1, bank_code_2)
 
     try {
       setSubmitting(true)

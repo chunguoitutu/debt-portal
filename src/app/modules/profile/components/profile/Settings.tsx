@@ -121,14 +121,14 @@ const Settings: React.FC = () => {
           <form onSubmit={formik.handleSubmit} noValidate className='form'>
             <div className='card-body p-9'>
               <div className='row mb-6 p-1'>
-                <label className='col-lg-4 col-form-label required fw-bold fs-6'>Full Name</label>
+                <label className='col-lg-4 col-form-label required fw-bold fs-5'>Full Name</label>
 
                 <div className='col-lg-8'>
                   <div className='row'>
                     <div className='col-lg-4 fv-row'>
                       <input
                         type='text'
-                        className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                        className='fs-4 form-control form-control-lg form-control-solid mb-3 mb-lg-0'
                         placeholder='First name'
                         {...formik.getFieldProps('firstname')}
                       />
@@ -142,7 +142,7 @@ const Settings: React.FC = () => {
                     <div className='col-lg-4 fv-row '>
                       <input
                         type='text'
-                        className='form-control form-control-lg form-control-solid'
+                        className='fs-4 form-control form-control-lg form-control-solid'
                         placeholder='Middle name'
                         {...formik.getFieldProps('middlename')}
                       />
@@ -151,7 +151,7 @@ const Settings: React.FC = () => {
                     <div className='col-lg-4 fv-row'>
                       <input
                         type='text'
-                        className='form-control form-control-lg form-control-solid'
+                        className='fs-4 form-control form-control-lg form-control-solid'
                         placeholder='Last name'
                         {...formik.getFieldProps('lastname')}
                       />
@@ -166,14 +166,14 @@ const Settings: React.FC = () => {
               </div>
 
               <div className='row mb-6 '>
-                <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                <label className='col-lg-4 col-form-label fw-bold fs-5'>
                   <span>Contact Phone</span>
                 </label>
 
                 <div className='col-lg-8 fv-row'>
                   <input
                     type='tel'
-                    className='form-control form-control-lg form-control-solid'
+                    className='fs-4 form-control form-control-lg form-control-solid'
                     placeholder='Contact Phone'
                     {...formik.getFieldProps('telephone')}
                   />
@@ -181,12 +181,12 @@ const Settings: React.FC = () => {
               </div>
 
               <div className='row mb-6 p-1'>
-                <label className='col-lg-4 col-form-label fw-bold fs-6'>Contact Email</label>
+                <label className='col-lg-4 col-form-label fw-bold fs-5'>Contact Email</label>
 
                 <div className='col-lg-8 fv-row'>
                   <input
                     type='email'
-                    className='form-control form-control-lg form-control-solid'
+                    className='fs-4 form-control form-control-lg form-control-solid'
                     placeholder='Contact Email'
                     {...formik.getFieldProps('email')}
                     pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
