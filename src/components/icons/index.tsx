@@ -14,6 +14,7 @@ import Home from './Home'
 import Email from './Email'
 import Telephone from './Telephone'
 import HomeSmall from './HomeSmall'
+import {Mes} from './Mes'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -32,6 +33,7 @@ const icons = {
   Email: Email,
   Telephone: Telephone,
   HomeSmall: HomeSmall,
+  Mes: Mes,
 }
 
 const Icons = ({name}) => {

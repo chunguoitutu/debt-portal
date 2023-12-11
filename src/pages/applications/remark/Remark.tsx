@@ -10,21 +10,23 @@ import {useAuth} from '../../../app/context/AuthContext'
 import {RemarkItem} from '@/app/types'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
+import {KTIcon} from '@/_metronic/helpers'
 
 type Props = {
   remarkList: RemarkItem[]
   idUpdate: string | number | any
   setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
+  handleOnClose: () => void
 }
-const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
+const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate, handleOnClose}) => {
   const [showMenu, setShowMenu] = useState(0)
   const [infoEdit, setInfoEdit] = useState<RemarkItem | null>(null)
+  const [inputValue, setInputValue] = useState('')
 
   const {currentUser} = useAuth()
 
   const contentRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     textareaRef.current?.focus()
@@ -34,7 +36,15 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
       textarea?.scroll({top: textarea.scrollHeight, behavior: 'smooth'})
       textarea?.setSelectionRange(textarea.value.length, textarea.value.length)
     }
+    handleScroll()
   }, [infoEdit])
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      setInputValue((prevValue) => prevValue + '\n')
+    }
+  }
 
   const handleUpdate = async (payload, isCreate: boolean = false) => {
     if (idUpdate) {
@@ -69,18 +79,16 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
   }
 
   const handleSubmit = () => {
-    if (inputRef.current?.value.trim()) {
+    if (inputValue.replace(/\n/g, '<br>').trim()) {
       const newRemark: RemarkItem = {
         id: uuidv4(),
-        message: inputRef.current?.value || '',
+        message: inputValue.replace(/\n/g, '<br>') || '',
         time: Date.now(),
         user: currentUser?.username || '',
       }
       handleUpdate([...remarkList, newRemark], true)
     }
-    if (inputRef.current) {
-      inputRef.current.value = ''
-    }
+    setInputValue('')
   }
 
   function handleRemoveRemark(item: RemarkItem) {
@@ -88,11 +96,14 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
   }
 
   return (
-    <div className='card h-100'>
+    <div className='card h-100 w-900px min-w-100px  wrapper-remark-mes'>
       <div className='modal-header p-30px  border-bottom border-gray-200'>
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
+        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleOnClose}>
+          <KTIcon className='fs-1' iconName='cross' />
+        </div>
       </div>
-      <div className='px-10px pt-10px  min-h-50px overflow-y-auto h-100' ref={contentRef}>
+      <div className='px-30px pt-30px  min-h-50px overflow-y-auto h-100' ref={contentRef}>
         <div className='pb-30px'>
           {remarkList?.map((message, index: number) => (
             <div
@@ -110,11 +121,15 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
                     <textarea
                       id='myTextarea'
                       onChange={(e) => {
-                        setInfoEdit({...infoEdit, message: e.target.value})
+                        if (e.target.value === 'Enter') {
+                          setInfoEdit({...infoEdit, message: '\n'})
+                        } else {
+                          setInfoEdit({...infoEdit, message: e.target.value})
+                        }
                       }}
                       ref={textareaRef}
                       className='input-remark min-h-75px'
-                      value={infoEdit.message}
+                      value={infoEdit.message.replace(/<br\s*\/?>/g, '\n')}
                     />
                     <div>
                       <Button
@@ -132,7 +147,10 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
 
                           if (idx === -1) return setInfoEdit(null)
 
-                          _remarkList.splice(idx, 1, infoEdit)
+                          _remarkList.splice(idx, 1, {
+                            ...infoEdit,
+                            message: infoEdit.message.replace(/\n/g, '<br>'),
+                          })
                           handleUpdate(_remarkList)
                           setInfoEdit(null)
                         }}
@@ -143,9 +161,11 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
                     </div>
                   </div>
                 ) : (
-                  <p className='mb-0 fs-14 fw-semibold text-break' style={{color: '#4B5675'}}>
-                    {message.message}
-                  </p>
+                  <p
+                    className='mb-0 fs-14 fw-semibold text-break'
+                    style={{color: '#4B5675'}}
+                    dangerouslySetInnerHTML={{__html: message.message}}
+                  />
                 )}
                 <div>
                   <span className='fs-12 fw-semibold text-capitalize text-B5B5C3 me-2'>
@@ -191,18 +211,13 @@ const Remark: FC<Props> = ({remarkList = [], setRemarkList, idUpdate}) => {
       </div>
       <div className='mt-auto border-top border-gray-200 p-4'>
         <div className='d-flex align-items-center gap-3'>
-          <input
+          <textarea
             placeholder='Enter remark...'
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                event.preventDefault()
-                handleSubmit()
-              }
-            }}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
             id='myInput'
-            type='text'
-            ref={inputRef}
-            className='w-100 h-100  bg-transparent pe-10px input-remark-import'
+            className='w-100 min-h-50px mh-100px  pe-10px input-remark-import'
             style={{
               border: 'none',
               outline: 'none',
