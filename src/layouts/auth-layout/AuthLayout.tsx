@@ -35,7 +35,7 @@ const AuthLayout = () => {
               alt='welcome'
             />
             <h1 className='text-capitalize text-white m-0 fw-normal fs-xl-2tx'>
-              The Money Lending System Monetium Credit
+              The Money Lending System
             </h1>
           </div>
           <span className='text-capitalize text-white fs-2 fw-semibold'>
