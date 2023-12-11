@@ -18,7 +18,7 @@ type Props = {
 
 const ContentListButton = ({config}: Props) => {
   return (
-    <div className='card'>
+    <div className='card  h-100'>
       <div className='modal-header p-30px border-bottom border-gray-200'>
         <h2 className='mb-0 fs-20 text-capitalize fw-bold text-gray-900'>{config?.title}</h2>
       </div>

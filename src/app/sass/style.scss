@@ -193,3 +193,29 @@ input[type='number']::-webkit-outer-spin-button {
   background: white;
   bottom: -1px;
 }
+.btn-remark {
+  background: #222;
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 8px;
+  gap: 8px;
+}
+.wrapper-button-remark {
+  padding-bottom: 3px;
+}
+.span-button-remark {
+  color: var(
+    --preview-keenthemes-com-metronic-8-react-demo-1-crafted-widgets-tables-1920-x-956-yellow,
+    #f8f5ff
+  );
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.btn-remark:hover {
+  background: #161515d0;
+}
