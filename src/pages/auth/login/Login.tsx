@@ -76,15 +76,21 @@ export function Login() {
         return
       }
 
-      Cookies.set('token', data.token)
-      Cookies.set('company_id', company_id.toString())
-      Cookies.set('company_name', company_name)
+      setToken(token)
 
       // priority === 1 -> super admin -> need select company first
       if (priority === 1) {
-        const {data} = await request.post('config/company/listing', {
-          status: true,
-        })
+        const {data} = await request.post(
+          'config/company/listing',
+          {
+            status: true,
+          },
+          {
+            headers: {
+              authorization: 'Bearer ' + token,
+            },
+          }
+        )
 
         // unexpected error
         if (data.error || !Array.isArray(data?.data) || !data?.data.length) {
@@ -97,11 +103,13 @@ export function Login() {
         setSubmitting(false)
         setLoading(false)
         setListBranch(data.data)
-        setToken(token)
         return
       }
 
       // after navigate -> master layout will get current user
+      Cookies.set('token', data.token)
+      Cookies.set('company_id', company_id.toString())
+      Cookies.set('company_name', company_name)
       navigate(`/${redirect ? redirect : 'dashboard'}`)
     } catch (error) {
       const message = convertErrorMessageResponse(error)
@@ -117,6 +125,7 @@ export function Login() {
     const currentBranch = listBranch?.find((el: any) => el.id === +value)
 
     if (value && currentBranch) {
+      Cookies.set('token', token)
       Cookies.set('company_id', value)
       Cookies.set('company_name', currentBranch?.company_name || '')
       navigate(`/${redirect ? redirect : 'dashboard'}`)

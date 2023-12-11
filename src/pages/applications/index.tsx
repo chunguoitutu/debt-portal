@@ -287,8 +287,6 @@ export const Applications = () => {
         bankInfoId: bank_account?.id || 0,
       })
 
-      console.log(bank_account?.id, 'bank_info')
-
       const applicationNotes = JSON.parse(application?.application_notes) || []
       setRemarkList(applicationNotes)
     } catch (error) {
@@ -522,8 +520,6 @@ export const Applications = () => {
       address: addressList,
       file_documents,
     }
-
-    console.log(bankInfoId, bank_code_1, bank_code_2)
 
     try {
       setSubmitting(true)
