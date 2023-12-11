@@ -37,7 +37,7 @@ const Select: FC<Props> = ({
       {label && (
         <Label
           htmlFor={id || defaultId || name}
-          className='d-flex align-items-center fs-16 fw-semibold mb-8px'
+          className='d-flex align-items-center fs-15 fw-semibold mb-8px'
           label={label}
           required={required}
         />
