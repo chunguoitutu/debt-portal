@@ -73,10 +73,9 @@ function TableRender({title, config = [], data}: Props) {
                             />
                           )}
                           <p
-                            className='p-0 h-20px m-0 fs-14 fw-semibold text-gray-900'
+                            className='p-0 m-0 fs-14 fw-semibold text-gray-900'
                             style={{
                               textAlign: !!element_config.img ? 'center' : 'start',
-                              wordBreak: 'break-all',
                             }}
                           >
                             {!!element_config?.dollars &&

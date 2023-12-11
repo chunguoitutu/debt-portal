@@ -684,11 +684,22 @@ export const Applications = () => {
                 onClick={() => {
                   setShowRemark(!showRemark)
                 }}
-                className='btn-remark d-flex justify-content-center align-items-center gap-8px'
+                className='d-none d-xxl-block btn-remark d-flex justify-content-center align-items-center gap-8px'
               >
                 <Icons name={'Mes'} />
                 <span className='span-button-remark'>Remark</span>
               </button>
+              <div className='d-block d-xxl-none '>
+                <Remark
+                  handleOnClose={() => {
+                    setShowRemark(!showRemark)
+                  }}
+                  small={true}
+                  setRemarkList={setRemarkList}
+                  idUpdate={applicationIdEdit}
+                  remarkList={remarkList}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -384,7 +384,7 @@
 
   border-radius: 8px;
   padding: 10px 12px;
-  background-color: '#f9f9f9';
+  background-color: #f1f1f4;
   font-weight: 500;
   line-height: 20px; /* 142.857% */
 }
@@ -396,7 +396,6 @@
   font-size: 15px;
   font-weight: 400;
   line-height: 22px; /* 146.667% */
-  text-transform: capitalize;
   color: var(--color-text-light-mode-text-gray-700, #4b5675);
 }
 
@@ -412,7 +411,6 @@
 }
 
 .wrapper-remark-mes {
-  border-radius: 0px;
   animation: animate-wrapper-remark-mes 0.3s;
 }
 
