@@ -349,12 +349,12 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         <Button
           type='reset'
           onClick={() => onClose()}
-          className='btn-lg btn-secondary align-self-center me-8px fs-6'
+          className='btn-lg btn-secondary align-self-center me-8px'
         >
           Cancel
         </Button>
         <Button
-          className='btn-lg btn-primary fs-6'
+          className='btn-lg btn-primary'
           type='submit'
           loading={isSubmitting}
           onClick={() => handleSubmit()}

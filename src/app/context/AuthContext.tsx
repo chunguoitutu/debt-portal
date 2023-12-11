@@ -5,10 +5,6 @@ import {swalToast} from '../swal-notification'
 import {JwtDecode, UserInfo} from '../types/common'
 import {getCurrentUser} from '../axios/request'
 import jwtDecode from 'jwt-decode'
-import io, {Socket} from 'socket.io-client'
-import {DefaultEventsMap} from '@socket.io/component-emitter'
-
-type SocketSetup = Socket<DefaultEventsMap, DefaultEventsMap> | null
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
@@ -19,8 +15,6 @@ type AuthContextProps = {
   setCurrentUser: Dispatch<SetStateAction<UserInfo | undefined>>
   refreshToken: (token: string) => void
   logout: () => void
-  socket: SocketSetup
-  setupSocket: () => void
 }
 
 const initAuthContextPropsState = {
@@ -32,8 +26,6 @@ const initAuthContextPropsState = {
   setCompanyName: () => {},
   refreshToken: (token: string) => {},
   logout: () => {},
-  socket: null,
-  setupSocket: () => {},
 }
 
 const AuthContext = createContext<AuthContextProps>(initAuthContextPropsState)
@@ -47,29 +39,6 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
   const [priority, setPriority] = useState<number>(0)
   const [companyId, setCompanyId] = useState<number>(0)
   const [companyName, setCompanyName] = useState<string>('')
-  const [socket, setSocket] = useState<SocketSetup>(null)
-
-  const setupSocket = () => {
-    const token = localStorage.getItem('socket-test-token')
-    if (token && !socket) {
-      const newSocket = io(import.meta.env.VITE_PUBLIC_URL, {
-        query: {
-          token: Cookies.get('token'),
-        },
-      })
-
-      newSocket.on('disconnect', () => {
-        setSocket(null)
-        setTimeout(setupSocket, 3000)
-      })
-
-      newSocket.on('connect', () => {
-        console.log('Connect success!')
-      })
-
-      setSocket(newSocket)
-    }
-  }
 
   const logout = () => {
     setCurrentUser(undefined)
@@ -136,8 +105,6 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
         setCurrentUser,
         setCompanyName: setCompanyName,
         refreshToken,
-        setupSocket,
-        socket,
         logout,
       }}
     >

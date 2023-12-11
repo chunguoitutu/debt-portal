@@ -66,7 +66,6 @@ export const Applications = () => {
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [originData, setOriginData] = useState<ApplicationFormData>({} as ApplicationFormData)
   const [listIdEdit, setListIdEdit] = useState<ListIdEdit>({
     customerId: 0,
     borrowerId: 0,
@@ -261,22 +260,6 @@ export const Applications = () => {
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
 
       setValues({
-        ...values,
-        ...borrower,
-        ...application,
-        ...customer,
-        ...bank_account,
-        ...employment,
-        address_contact_info:
-          Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
-        date_of_birth: formattedDateOfBirth,
-        file_documents:
-          file_documents.map((data) => {
-            return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
-          }) || [],
-      })
-
-      setOriginData({
         ...values,
         ...borrower,
         ...application,
@@ -660,7 +643,6 @@ export const Applications = () => {
                   />
                 )}
                 <GeneralButton
-                  originData={originData}
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
                   handleSubmit={handleBeforeSubmit}
