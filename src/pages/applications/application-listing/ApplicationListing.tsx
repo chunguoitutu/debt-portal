@@ -148,7 +148,6 @@ const ApplicationListing = () => {
 
   function showInputFilter() {
     setShowInput(!showInput)
-    handleResetFilter()
   }
 
   const renderRows = () => {

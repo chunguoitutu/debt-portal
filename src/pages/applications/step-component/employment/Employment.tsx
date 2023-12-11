@@ -48,8 +48,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
           !applicationIdEdit &&
             setFieldValue(
               `${result.key}`,
-              result?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
-                result?.data.length > 0
+              result?.data.length > 0
                 ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
                   ? result?.data.filter((el: any) => +el.is_default === 1)[0].id
                   : result?.data[0].id
@@ -58,8 +57,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
           !applicationIdEdit &&
             setFieldValue(
               `job_type_name`,
-              result?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
-                result?.data.length > 0
+              result?.data.length > 0
                 ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
                   ? result?.data.filter((el: any) => +el.is_default === 1)[0].job_type_name
                   : result?.data[0].job_type_name
