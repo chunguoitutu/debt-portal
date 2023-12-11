@@ -1,4 +1,3 @@
-import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link, useNavigate} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
@@ -30,6 +29,7 @@ import {useAuth} from '@/app/context/AuthContext'
 import {Input} from '@/components/input'
 import Pagination from '@/components/table/components/Pagination'
 import {FilterApplication} from './FilterApplication'
+import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {

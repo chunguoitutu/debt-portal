@@ -12,7 +12,6 @@ import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
 import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
 import {useAuth} from '@/app/context/AuthContext'
-import Cookies from 'js-cookie'
 
 type Props = {
   setLoadApi: any
@@ -142,13 +141,9 @@ const CreateEditCompanies = ({
                 }successfully updated`,
               })
 
-              const {id, company_name} = response?.data?.data || {}
-
               // set company name when current company name and edit company have duplicate id
-              if (id === company_id) {
-                setCompanyName(company_name)
-                Cookies.set('company_name', company_name)
-              }
+              const {id, company_name} = response?.data?.data || {}
+              id === company_id && setCompanyName(company_name)
             }
             handleUpdated()
             handleClose()

@@ -13,7 +13,6 @@ import {login} from '@/app/axios/request'
 import {convertErrorMessageResponse} from '@/app/utils'
 import Button from '@/components/button/Button'
 import {DEFAULT_MESSAGE_ERROR_500} from '@/app/constants'
-import {useAuth} from '@/app/context/AuthContext'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -40,7 +39,6 @@ export function Login() {
   const redirect = searchParams.get('redirect')
 
   const navigate = useNavigate()
-  const {setupSocket} = useAuth()
 
   const {
     status,
@@ -131,8 +129,6 @@ export function Login() {
       Cookies.set('company_id', value)
       Cookies.set('company_name', currentBranch?.company_name || '')
       navigate(`/${redirect ? redirect : 'dashboard'}`)
-
-      setupSocket()
     } else {
       setStatus('Something went wrong!')
       setListBranch(null)

@@ -34,7 +34,7 @@ export function FilterApplication({
 
         <div style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}} className='p-30px'>
           {rows.map((row, i) => {
-            if (!row.infoFilter) return <p key={i}></p>
+            if (!row.infoFilter) return <td key={i}></td>
             const {infoFilter, key, options, name} = row || {}
             const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
 

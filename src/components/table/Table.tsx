@@ -12,7 +12,7 @@ import request from '../../app/axios'
 import {KTCardBody} from '../../_metronic/helpers'
 import clsx from 'clsx'
 import {SearchCriteria, TableConfig} from '@/app/types'
-import {swalConfirm, swalToast} from '@/app/swal-notification'
+import {swalConfirmDelete, swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 
 type Props = {
@@ -182,7 +182,7 @@ const Table: FC<Props> = ({
   }
 
   function handleShowConfirmDelete(item: any) {
-    swalConfirm
+    swalConfirmDelete
       .fire({
         title: 'Are You Sure?',
         text: textConfirmDelete || `You Won't Be Able To Revert This.`,

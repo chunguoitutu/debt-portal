@@ -59,12 +59,10 @@ export function convertMessageErrorPassword(label: string) {
   return `${label} must be at least 8 characters including at least one letter, one number, and one special character`
 }
 
-export function filterObjectKeyNotEmpty(object: {[key: string]: any}, allowZero: boolean = false) {
+export function filterObjectKeyNotEmpty(object: {[key: string]: any}) {
   const keys = Object.keys(object)
   return keys
-    .filter(
-      (key) => !!object[key] === true && (allowZero ? (object[key] === 0 ? false : true) : true)
-    )
+    .filter((key) => !!object[key] === true)
     .reduce((acc, key) => ({...acc, [key]: object[key]}), {})
 }
 
@@ -103,7 +101,7 @@ export function handleFormatFilter<T = any>(config: {
        * key after format should be type date or number
        */
       if (isObject(dataFilter[key])) {
-        const keyHasValue = filterObjectKeyNotEmpty(dataFilter[key], true)
+        const keyHasValue = filterObjectKeyNotEmpty(dataFilter[key])
 
         if (!Object.keys(keyHasValue).length) return {...acc}
 
@@ -131,7 +129,6 @@ export function handleFormatFilter<T = any>(config: {
             }),
             {}
           )
-
           return {...acc, [key]: newObject}
         }
       }
