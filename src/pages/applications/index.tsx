@@ -82,6 +82,8 @@ export const Applications = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [STEP_APPLICATION])
 
+  const {priority} = useAuth()
+
   const {applicationIdEdit} = useParams()
 
   const navigate = useNavigate()
@@ -370,13 +372,39 @@ export const Applications = () => {
           ...errorBlockAddress,
         })
       } else if (
-        (values.is_existing === 'new' && values.loan_amount_requested > 3000) ||
-        (values.is_existing === 'existing' && values.loan_amount_requested > 5000)
+        (values.is_existing === 'new' &&
+          priority > 2 &&
+          !!values.monthly_income &&
+          +values.loan_amount_requested > 3000 &&
+          +values.monthly_income * 6 <= 20000) ||
+        (values.is_existing === 'new' &&
+          !!values.monthly_income &&
+          priority > 2 &&
+          +values.loan_amount_requested > +values.monthly_income * 6 &&
+          +values.monthly_income * 6 > 20000) ||
+        (values.is_existing === 'existing' &&
+          !!values.monthly_income &&
+          values.loan_amount_requested > 5000 &&
+          priority > 2 &&
+          +values.monthly_income * 6 <= 20000) ||
+        (values.is_existing === 'existing' &&
+          !!values.monthly_income &&
+          priority > 2 &&
+          +values.loan_amount_requested > +values.monthly_income * 6) ||
+        +values.monthly_income * 6 > 20000
       ) {
         swalToast.fire({
           timer: 1500,
           icon: 'error',
-          title: `Cannot borrow more than ${values.is_existing === 'new' ? '3000' : '5000'}`,
+          title: `Cannot borrow more than ${
+            values.is_existing === 'existing'
+              ? +values.monthly_income * 6 > 20000
+                ? +values.monthly_income * 6
+                : '5000'
+              : +values.monthly_income * 6 > 20000
+              ? +values.monthly_income * 6
+              : '3000'
+          }`,
         })
       } else {
         handleContinue()
