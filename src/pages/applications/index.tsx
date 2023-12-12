@@ -450,8 +450,6 @@ export const Applications = () => {
       bankrupted,
     } = values
 
-    console.log(formik.values)
-
     const addressList = address_contact_info
       .filter((item) => item.address_type_id)
       .map((item) => ({
