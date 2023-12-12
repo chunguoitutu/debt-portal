@@ -10,14 +10,29 @@ import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
 import {getCurrentDate} from '@/app/utils/get-current-date'
 import {useParams} from 'react-router-dom'
+import moment from 'moment'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
-  const {config = [], formik} = props
+  const {config = [], formik, setStepCompleted} = props
   const {applicationIdEdit} = useParams()
   const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
 
-  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    setTouched,
+    setValues,
+    validateForm,
+    setErrors,
+    resetForm,
+    setSubmitting,
+  } = formik
+  console.log(values)
 
   async function onFetchDataList() {
     try {
@@ -66,6 +81,26 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   function handleShowPopup() {
     setShowPopup(!showPopup)
   }
+  async function handleGetApplicationById() {
+    try {
+      const {data} = await request.get(`/application/nric_no/${values['identification_no']}`)
+
+      const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
+      setStepCompleted(0)
+      setFieldValue('country_id', data?.data.country_id || '')
+      setFieldValue('customer_no', data?.data.customer_no || '')
+      setFieldValue('firstname', data?.data.firstname || '')
+      setFieldValue('gender', data?.data.gender || '')
+      setFieldValue('identification_type', data?.data.identification_type || '')
+      setFieldValue('lastname', data?.data.lastname || '')
+      setFieldValue('middlename', data?.data.middlename || '')
+      setFieldValue('is_existing', 'existing')
+
+      setFieldValue('date_of_birth', formattedDateOfBirth || '')
+    } catch (error) {
+    } finally {
+    }
+  }
 
   function renderComponent(item: ApplicationConfig) {
     const {
@@ -95,8 +130,42 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
     // End special cases
 
-    // handle for select
+    if (key === 'identification_no') {
+      return (
+        <Component
+          value={values[key]}
+          onChange={handleChange}
+          onBlur={(e) => {
+            handleBlur(e)
+            if (!!values[key].trim()) {
+              handleGetApplicationById()
+            }
+          }}
+          type={typeInput}
+          name={key}
+          classShared={className}
+          touched={touched[key]}
+          error={errors[key]}
+          min='1900-01-01'
+          max={getCurrentDate()}
+          insertRight={
+            key === 'identification_no' ? (
+              <Tippy offset={[40, 0]} content='Lookup Customer'>
+                {/* Wrapper with a span tag to show tooltip */}
+                <div
+                  className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'
+                  onClick={handleShowPopup}
+                >
+                  <FontAwesomeIcon icon={faSearch} />
+                </div>
+              </Tippy>
+            ) : undefined
+          }
+        />
+      )
+    }
     if (typeComponent === 'Select') {
+      // handle for select
       return (
         <Component
           error={errors[key]}
@@ -122,6 +191,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             values[key] === item.value ? 'fs-4 fw-medium' : 'text-gray-600 fs-4 fw-medium',
           ])}
           name={key}
+          disabled={true}
           label={item.label}
           checked={values[key] === item.value}
           value={item.value}

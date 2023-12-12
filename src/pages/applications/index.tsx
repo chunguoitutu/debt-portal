@@ -629,6 +629,7 @@ export const Applications = () => {
               >
                 {CurrentComponentControl && (
                   <CurrentComponentControl
+                    setStepCompleted={setStepCompleted}
                     config={STEP_APPLICATION[currentStep - 1].config || []}
                     formik={formik}
                   />
@@ -643,6 +644,7 @@ export const Applications = () => {
                   />
                 )}
                 <GeneralButton
+                  setStepCompleted={setStepCompleted}
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
                   handleSubmit={handleBeforeSubmit}
