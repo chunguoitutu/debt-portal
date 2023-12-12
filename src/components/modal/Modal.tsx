@@ -27,7 +27,7 @@ const Modal: FC<Props> = ({show, title, className = '', children, dialogClassNam
       animation
     >
       <div className='modal-header d-flex align-items-center gap-3 p-30px'>
-        <h2 className='text-truncate'>{title}</h2>
+        <h2 className='text-truncate m-0'>{title}</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>

@@ -4,7 +4,7 @@ import Tippy from '@tippyjs/react'
 
 import request from '../../../../app/axios'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
-import {swalConfirmDelete, swalToast} from '../../../../app/swal-notification'
+import {swalConfirm, swalToast} from '../../../../app/swal-notification'
 import {Select} from '@/components/select'
 import Button from '@/components/button/Button'
 import ErrorMessage from '@/components/error/ErrorMessage'
@@ -173,7 +173,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   function handleShowConfirmDelete(item: BlockAddress, index: number) {
     if (!item.id) return handleRemoveBlockAddress(item, index)
 
-    swalConfirmDelete
+    swalConfirm
       .fire({
         title: 'Are You Sure?',
         text: `You Won't Be Able To Revert This.`,
