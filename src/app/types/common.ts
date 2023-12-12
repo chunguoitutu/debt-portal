@@ -358,6 +358,8 @@ export type ApplicationPayload = {
     six_months_income?: number
     annual_income?: string | number | any
     pay_date?: string
+    bankrupted?: string | any
+    bankrupt_plan?: string | any
   }
   address: BlockAddress[]
   customerId?: number
@@ -435,6 +437,8 @@ export type ApplicationFormData = {
   file_documents?: any
   interest: number | string
   status?: number
+  bankrupted?: string | any
+  bankrupt_plan?: string | any
 }
 
 export type BlockAddress = {

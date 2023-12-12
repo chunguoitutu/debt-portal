@@ -21,6 +21,7 @@ import LableOptionsCountry from './completion/Country'
 import {ApplicationConfig, TableConfig} from '@/app/types'
 import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
 import {
+  BANKRUPTCY,
   CUSTOMER_TYPE,
   EMPLOYMENT_STATUS,
   GENDER,
@@ -36,6 +37,7 @@ import {
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
 import {Checkbox} from '@/components/checkbox'
+import Bankruptcy from '@/components/applications/Bankruptcy'
 
 const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -484,6 +486,23 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     key: 'file_documents',
     component: FileDocument,
     defaultValue: [],
+  },
+  {
+    key: 'bankrupted',
+    component: Bankruptcy,
+    typeComponent: 'Bankruptcy',
+    label: 'Bankruptcy',
+    className: 'no-center-label',
+  },
+  {
+    key: 'bankrupt_plan',
+    isHide: true,
+    defaultValue: false,
+  },
+  {
+    key: 'bankrupted',
+    isHide: true,
+    defaultValue: false,
   },
 ]
 

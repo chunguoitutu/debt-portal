@@ -32,7 +32,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     resetForm,
     setSubmitting,
   } = formik
-  console.log(values)
 
   async function onFetchDataList() {
     try {

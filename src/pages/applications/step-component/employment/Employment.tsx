@@ -99,6 +99,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
     if (key === 'monthly_income_1') {
       return <Component {...props} annualIncome={annualIncome} setAnnualIncome={setAnnualIncome} />
     }
+    if (key === 'bankrupted') {
+      return <Component {...props} key={key} />
+    }
     // End special cases
 
     // handle for select
