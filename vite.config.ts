@@ -12,6 +12,9 @@ export default defineConfig(({mode}) => {
     define: {
       __APP_ENV__: env.APP_ENV,
     },
+    optimizeDeps: {
+      exclude: ['js-big-decimal'],
+    },
     plugins: [react()],
     server: {
       // this ensures that the browser opens upon server start
