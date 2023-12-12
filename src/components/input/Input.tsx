@@ -1,4 +1,15 @@
-import {FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode, useId, useState} from 'react'
+import {
+  FC,
+  ForwardRefExoticComponent,
+  ForwardRefRenderFunction,
+  ForwardedRef,
+  HTMLInputTypeAttribute,
+  InputHTMLAttributes,
+  ReactNode,
+  forwardRef,
+  useId,
+  useState,
+} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
@@ -21,25 +32,28 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
 
 const numberAllowDotRegex = /^[0-9.]+$/
 
-const Input: FC<Props> = ({
-  id,
-  name,
-  label,
-  insertLeft,
-  insertRight,
-  type = 'text',
-  className = '',
-  classShared = '',
-  symbolMoney = '$',
-  noThereAreCommas = true,
-  required = false,
-  showIconTogglePassword = true,
-  value = '',
-  classInputWrap = 'form-control-solid',
-  error,
-  touched,
-  ...rest
-}) => {
+const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
+  {
+    id,
+    name,
+    label,
+    insertLeft,
+    insertRight,
+    type = 'text',
+    className = '',
+    classShared = '',
+    symbolMoney = '$',
+    noThereAreCommas = true,
+    required = false,
+    showIconTogglePassword = true,
+    value = '',
+    classInputWrap = 'form-control-solid',
+    error,
+    touched,
+    ...rest
+  },
+  ref
+) => {
   const [typeCustom, setTypeCustom] = useState<string>(
     type === 'money' ? 'number' : type === 'number' ? 'text' : type
   )
@@ -102,6 +116,7 @@ const Input: FC<Props> = ({
           insertLeft && insertLeft
         )}
         <input
+          ref={ref}
           onKeyPressCapture={(e) =>
             type === 'number' && handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
           }
@@ -110,7 +125,6 @@ const Input: FC<Props> = ({
           }
           type={typeCustom}
           className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
-          value={value}
           id={id || defaultId || name}
           name={name}
           {...rest}
@@ -133,4 +147,4 @@ const Input: FC<Props> = ({
   )
 }
 
-export default Input
+export default forwardRef(Input)
