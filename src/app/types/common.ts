@@ -276,6 +276,7 @@ export type ApplicationConfig = {
 }
 
 export type PropsStepApplication = {
+  setStepCompleted: any
   config: ApplicationConfig[]
   formik: FormikProps<ApplicationFormData>
 }
@@ -380,7 +381,7 @@ export type ApplicationFormData = {
   nationality: string
   mlcb_check: string[]
   loan_type_id: string
-  loan_amount_requested: string
+  loan_amount_requested: string | any
   loan_reason: string
   address_full: string
   block_no: string

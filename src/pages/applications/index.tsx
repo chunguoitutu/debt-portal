@@ -27,10 +27,7 @@ import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
 import Reject from './step-component/reject/Reject'
-import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
-import {ChatInner, DrawerMessenger} from '@/_metronic/partials'
-import SearchBar from '@/components/table/components/SearchBar'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -372,6 +369,15 @@ export const Applications = () => {
           ...error,
           ...errorBlockAddress,
         })
+      } else if (
+        (values.is_existing === 'new' && values.loan_amount_requested > 3000) ||
+        (values.is_existing === 'existing' && values.loan_amount_requested > 5000)
+      ) {
+        swalToast.fire({
+          timer: 1500,
+          icon: 'error',
+          title: `Cannot borrow more than ${values.is_existing === 'new' ? '3000' : '5000'}`,
+        })
       } else {
         handleContinue()
       }
@@ -629,6 +635,7 @@ export const Applications = () => {
               >
                 {CurrentComponentControl && (
                   <CurrentComponentControl
+                    setStepCompleted={setStepCompleted}
                     config={STEP_APPLICATION[currentStep - 1].config || []}
                     formik={formik}
                   />
@@ -643,6 +650,7 @@ export const Applications = () => {
                   />
                 )}
                 <GeneralButton
+                  setStepCompleted={setStepCompleted}
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
                   handleSubmit={handleBeforeSubmit}
