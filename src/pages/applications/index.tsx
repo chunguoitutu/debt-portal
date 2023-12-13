@@ -378,52 +378,60 @@ export const Applications = () => {
           values.loan_amount_requested > 3000 &&
           +values.six_months_income * 2 <= 20000 &&
           values.is_existing === 'new' &&
+          priority > 2 &&
           values.identification_type === 'singapore_nric_no') ||
         (!!values.six_months_income &&
           values.loan_amount_requested > +values.six_months_income &&
           +values.six_months_income * 2 > 20000 &&
+          priority > 2 &&
           values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no') ||
         (!!values.six_months_income &&
           values.loan_amount_requested > 5000 &&
           +values.six_months_income * 2 <= 20000 &&
+          priority > 2 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (!!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > +values.six_months_income &&
           +values.six_months_income * 2 > 20000 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (!!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > 500 &&
           +values.six_months_income * 2 <= 10000 &&
           values.identification_type === 'foreign_identification_number') ||
         (!!values.six_months_income &&
           values.loan_amount_requested > +values.six_months_income &&
           +values.six_months_income * 2 > 40000 &&
+          priority > 2 &&
           values.identification_type === 'foreign_identification_number') ||
         (!!values.six_months_income &&
-          values.loan_amount_requested > +values.six_months_income &&
+          values.loan_amount_requested > 3000 &&
           +values.six_months_income * 2 <= 40000 &&
           10000 < +values.six_months_income * 2 &&
+          priority > 2 &&
           values.identification_type === 'foreign_identification_number')
       ) {
         if (
           !!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > 3000 &&
           +values.six_months_income * 2 <= 20000 &&
-          values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no'
         ) {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 3000`,
+            title: `Cannot borrow more than 3000, need someone with higher authority to create this application`,
           })
         }
 
         if (
           !!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > +values.six_months_income &&
           +values.six_months_income * 2 > 20000 &&
           values.is_existing === 'new' &&
@@ -432,12 +440,13 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
+            title: `Cannot borrow more than ${+values.six_months_income}, need someone with higher authority to create this application`,
           })
         }
 
         if (
           !!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > 5000 &&
           +values.six_months_income * 2 <= 20000 &&
           values.is_existing === 'existing' &&
@@ -446,12 +455,13 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 5000`,
+            title: `Cannot borrow more than 5000, need someone with higher authority to create this application`,
           })
         }
 
         if (
           !!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > +values.six_months_income &&
           +values.six_months_income * 2 > 20000 &&
           values.is_existing === 'existing' &&
@@ -460,12 +470,13 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
+            title: `Cannot borrow more than ${+values.six_months_income}, need someone with higher authority to create this application`,
           })
         }
 
         if (
           !!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > 500 &&
           +values.six_months_income * 2 <= 10000 &&
           values.identification_type === 'foreign_identification_number'
@@ -473,12 +484,13 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 500`,
+            title: `Cannot borrow more than 500 , need someone with higher authority to create this application`,
           })
         }
 
         if (
           !!values.six_months_income &&
+          priority > 2 &&
           values.loan_amount_requested > +values.six_months_income &&
           +values.six_months_income * 2 > 40000 &&
           values.identification_type === 'foreign_identification_number'
@@ -486,13 +498,14 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
+            title: `Cannot borrow more than ${+values.six_months_income}, need someone with higher authority to create this application`,
           })
         }
 
         if (
           !!values.six_months_income &&
-          values.loan_amount_requested > +values.six_months_income &&
+          priority > 2 &&
+          values.loan_amount_requested > 3000 &&
           +values.six_months_income * 2 <= 40000 &&
           10000 < +values.six_months_income * 2 &&
           values.identification_type === 'foreign_identification_number'
@@ -500,7 +513,7 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 3000`,
+            title: `Cannot borrow more than 3000, need someone with higher authority to create this application`,
           })
         }
       } else {
