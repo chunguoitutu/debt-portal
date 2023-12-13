@@ -144,7 +144,7 @@ const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
   return (
     <Modal dialogClassName='mw-800px' show={true} onClose={onClose} title='Validation Phone Number'>
       <div className='d-flex flex-column align-items-center p-30px w-100'>
-        {otp ? (
+        {true ? (
           <div className='d-flex flex-column align-items-center w-fit-content'>
             <img src={phoneImg} alt='phone' className='w-160px object-fit-cover d-block' />
 
@@ -192,7 +192,7 @@ const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
           <>
             {error && (
               <div className='bg-light-danger w-100 text-center p-12px mb-16px rounded-5'>
-                <ErrorMessage className='m-0' message={error} />
+                <ErrorMessage className='m-0' message={error as string} />
               </div>
             )}
             <Input
