@@ -488,7 +488,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     defaultValue: [],
   },
   {
-    key: 'bankrupted',
+    key: 'bankrupted_key',
     component: Bankruptcy,
     typeComponent: 'Bankruptcy',
     label: 'Bankruptcy',
@@ -899,6 +899,14 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: RenderOptionsApi,
           keyFilter: 'id',
           lable: 'job_type_name',
+        },
+        {
+          key: 'bankrupted',
+          value: 'Declared Bankrupt In Last 5 Years',
+        },
+        {
+          key: 'bankrupt_plan',
+          value: 'Plan To Declare Bankrupt In The Next 3 Months',
         },
       ],
       [

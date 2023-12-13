@@ -130,7 +130,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
     >
       <>
         <div className='modal-header p-30px'>
-          <h2>Reject Application</h2>
+          <h2>{!rejection_one?.id ? '' : 'Update'} Reject Application</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>
