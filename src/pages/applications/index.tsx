@@ -59,6 +59,8 @@ export const Applications = () => {
   const [show, setShow] = useState<boolean>(false)
   const [loadApiEdit, SetLoadApiEdit] = useState<boolean>(false)
   const [showRemark, setShowRemark] = useState<boolean>(false)
+  const [checkAmount, SetCheckAmount] = useState<number>(0)
+
   const [rejectionOne, setRejectionOne] = useState({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -81,6 +83,8 @@ export const Applications = () => {
     ) as ApplicationFormData
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [STEP_APPLICATION])
+
+  const {priority} = useAuth()
 
   const {applicationIdEdit} = useParams()
 
@@ -183,7 +187,7 @@ export const Applications = () => {
       }
 
       const blockAddress = formik?.values?.address_contact_info || []
-      const allFieldShow = item.config || []
+      const allFieldShow = item.config.filter((el) => !el.isHide) || []
       let totalField = allFieldShow.length
       let number = 0
 
@@ -370,14 +374,135 @@ export const Applications = () => {
           ...errorBlockAddress,
         })
       } else if (
-        (values.is_existing === 'new' && values.loan_amount_requested > 3000) ||
-        (values.is_existing === 'existing' && values.loan_amount_requested > 5000)
+        (!!values.six_months_income &&
+          values.loan_amount_requested > 3000 &&
+          +values.six_months_income * 2 <= 20000 &&
+          values.is_existing === 'new' &&
+          values.identification_type === 'singapore_nric_no') ||
+        (!!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 > 20000 &&
+          values.is_existing === 'new' &&
+          values.identification_type === 'singapore_nric_no') ||
+        (!!values.six_months_income &&
+          values.loan_amount_requested > 5000 &&
+          +values.six_months_income * 2 <= 20000 &&
+          values.is_existing === 'existing' &&
+          values.identification_type === 'singapore_nric_no') ||
+        (!!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 > 20000 &&
+          values.is_existing === 'existing' &&
+          values.identification_type === 'singapore_nric_no') ||
+        (!!values.six_months_income &&
+          values.loan_amount_requested > 500 &&
+          +values.six_months_income * 2 <= 10000 &&
+          values.identification_type === 'foreign_identification_number') ||
+        (!!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 > 40000 &&
+          values.identification_type === 'foreign_identification_number') ||
+        (!!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 <= 40000 &&
+          10000 < +values.six_months_income * 2 &&
+          values.identification_type === 'foreign_identification_number')
       ) {
-        swalToast.fire({
-          timer: 1500,
-          icon: 'error',
-          title: `Cannot borrow more than ${values.is_existing === 'new' ? '3000' : '5000'}`,
-        })
+        if (
+          !!values.six_months_income &&
+          values.loan_amount_requested > 3000 &&
+          +values.six_months_income * 2 <= 20000 &&
+          values.is_existing === 'new' &&
+          values.identification_type === 'singapore_nric_no'
+        ) {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Cannot borrow more than 3000`,
+          })
+        }
+
+        if (
+          !!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 > 20000 &&
+          values.is_existing === 'new' &&
+          values.identification_type === 'singapore_nric_no'
+        ) {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Cannot borrow more than ${+values.six_months_income}`,
+          })
+        }
+
+        if (
+          !!values.six_months_income &&
+          values.loan_amount_requested > 5000 &&
+          +values.six_months_income * 2 <= 20000 &&
+          values.is_existing === 'existing' &&
+          values.identification_type === 'singapore_nric_no'
+        ) {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Cannot borrow more than 5000`,
+          })
+        }
+
+        if (
+          !!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 > 20000 &&
+          values.is_existing === 'existing' &&
+          values.identification_type === 'singapore_nric_no'
+        ) {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Cannot borrow more than ${+values.six_months_income}`,
+          })
+        }
+
+        if (
+          !!values.six_months_income &&
+          values.loan_amount_requested > 500 &&
+          +values.six_months_income * 2 <= 10000 &&
+          values.identification_type === 'foreign_identification_number'
+        ) {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Cannot borrow more than 500`,
+          })
+        }
+
+        if (
+          !!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 > 40000 &&
+          values.identification_type === 'foreign_identification_number'
+        ) {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Cannot borrow more than ${+values.six_months_income}`,
+          })
+        }
+
+        if (
+          !!values.six_months_income &&
+          values.loan_amount_requested > +values.six_months_income &&
+          +values.six_months_income * 2 <= 40000 &&
+          10000 < +values.six_months_income * 2 &&
+          values.identification_type === 'foreign_identification_number'
+        ) {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Cannot borrow more than 3000`,
+          })
+        }
       } else {
         handleContinue()
       }
