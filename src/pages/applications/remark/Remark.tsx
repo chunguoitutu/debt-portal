@@ -112,6 +112,9 @@ const Remark: FC<Props> = ({
       <div className='modal-header p-30px  border-bottom border-gray-200'>
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
         <div
+          style={{
+            padding: '6px',
+          }}
           className='btn btn-sm btn-icon btn-active-color-primary d-none d-xxl-block'
           onClick={handleOnClose}
         >

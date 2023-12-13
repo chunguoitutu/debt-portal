@@ -193,14 +193,14 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                     <Button
                       onClick={handleClose}
                       type='reset'
-                      className='btn-lg btn-secondary  me-8px'
+                      className='btn-lg btn-secondary fs-6 swal2-confirm order-1 fs-5 btn btn-lg btn-danger m-8px me-8px'
                     >
                       Cancel
                     </Button>
                     <Button
                       onClick={() => handleSubmit()}
                       type='submit'
-                      className='btn btn-lg btn-primary '
+                      className='btn btn-lg btn-primary fs-6'
                     >
                       Calculate
                     </Button>

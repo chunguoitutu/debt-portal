@@ -584,6 +584,8 @@ export const Applications = () => {
       customer_no,
       job_type_id,
       interest,
+      bankrupt_plan,
+      bankrupted,
     } = values
 
     const addressList = address_contact_info
@@ -647,6 +649,8 @@ export const Applications = () => {
         position,
         specialization,
         six_months_income: +six_months_income,
+        bankrupt_plan: bankrupt_plan ? 1 : 0,
+        bankrupted: bankrupted ? 1 : 0,
       },
       application: {
         ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
