@@ -412,7 +412,6 @@ export const Applications = () => {
           !!values.six_months_income &&
           values.loan_amount_requested > 3000 &&
           +values.six_months_income * 2 <= 20000 &&
-          values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no'
         ) {
           swalToast.fire({
