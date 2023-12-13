@@ -44,7 +44,7 @@ const Remark: FC<Props> = ({
       textarea?.setSelectionRange(textarea.value.length, textarea.value.length)
     }
     handleScroll()
-  }, [infoEdit])
+  }, [infoEdit, inputValue])
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -239,6 +239,7 @@ const Remark: FC<Props> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
+            ref={textareaRef}
             id='myInput'
             className='w-100 min-h-50px mh-100px  pe-10px input-remark-import'
             style={{
