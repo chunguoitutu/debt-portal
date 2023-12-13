@@ -5,7 +5,7 @@ import {Checkbox} from '@/components/checkbox'
 const data = [
   {
     key: 'bankrupted',
-    label: 'Declared Bankrupt In Last 5 Years',
+    label: 'Declared Bankrupt In The Last 5 Years',
   },
   {
     key: 'bankrupt_plan',
