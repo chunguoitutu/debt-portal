@@ -144,7 +144,7 @@ const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
   return (
     <Modal dialogClassName='mw-800px' show={true} onClose={onClose} title='Validation Phone Number'>
       <div className='d-flex flex-column align-items-center p-30px w-100'>
-        {true ? (
+        {otp ? (
           <div className='d-flex flex-column align-items-center w-fit-content'>
             <img src={phoneImg} alt='phone' className='w-160px object-fit-cover d-block' />
 
