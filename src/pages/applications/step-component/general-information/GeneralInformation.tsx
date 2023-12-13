@@ -11,13 +11,14 @@ import request from '@/app/axios'
 import {getCurrentDate} from '@/app/utils/get-current-date'
 import {useParams} from 'react-router-dom'
 import moment from 'moment'
+import {useAuth} from '@/app/context/AuthContext'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {config = [], formik, setStepCompleted} = props
   const {applicationIdEdit} = useParams()
   const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
-
+  const {company_id} = useAuth()
   const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
 
   async function onFetchDataList() {
@@ -69,7 +70,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   }
   async function handleGetApplicationById() {
     try {
-      const {data} = await request.get(`/application/nric_no/${values['identification_no']}`)
+      const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
+        company_id,
+      })
 
       const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
       setStepCompleted(0)
