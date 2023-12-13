@@ -14,7 +14,7 @@ const data = [
 ]
 
 const Bankruptcy: FC<PropsStepApplication> = ({formik}) => {
-  const {values, handleChange, setFieldValue} = formik
+  const {values, setFieldValue} = formik
   return (
     <div className='d-flex gap-3 gap-xxl-8 full flex-column flex-xxl-row align-items-start align-items-xxl-stretch no-center-label'>
       {data.map(({key, label}, i) => (
