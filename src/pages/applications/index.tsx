@@ -185,7 +185,7 @@ export const Applications = () => {
       }
 
       const blockAddress = formik?.values?.address_contact_info || []
-      const allFieldShow = item.config || []
+      const allFieldShow = item.config.filter((el) => !el.isHide) || []
       let totalField = allFieldShow.length
       let number = 0
 
@@ -474,6 +474,8 @@ export const Applications = () => {
       customer_no,
       job_type_id,
       interest,
+      bankrupt_plan,
+      bankrupted,
     } = values
 
     const addressList = address_contact_info
@@ -537,6 +539,8 @@ export const Applications = () => {
         position,
         specialization,
         six_months_income: +six_months_income,
+        bankrupt_plan: bankrupt_plan ? 1 : 0,
+        bankrupted: bankrupted ? 1 : 0,
       },
       application: {
         ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
