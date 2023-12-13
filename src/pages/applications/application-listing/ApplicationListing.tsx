@@ -400,7 +400,7 @@ const ApplicationListing = () => {
                 backgroundColor: Object.keys(checkFilter).length === 0 ? '#f1f1f4' : '#c4cada',
               }}
               onClick={showInputFilter}
-              className={` align-self-center m-2 fs-6 text-primary h-45px btn-secondary`}
+              className={` align-self-center m-2 fs-6 text-primary h-45px `}
               disabled={false}
             >
               <Icons name={'filterIcon'} />
