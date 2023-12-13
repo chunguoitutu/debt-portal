@@ -73,7 +73,7 @@ function TableRender({title, config = [], data}: Props) {
                             />
                           )}
                           <p
-                            className='p-0 m-0 fs-14 fw-semibold text-gray-900'
+                            className='pt-4px pt-0 px-0 m-0 fs-14 fw-semibold text-gray-900'
                             style={{
                               textAlign: !!element_config.img ? 'center' : 'start',
                             }}
