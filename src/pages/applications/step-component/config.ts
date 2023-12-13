@@ -902,7 +902,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         },
         {
           key: 'bankrupted',
-          value: 'Declared Bankrupt In Last 5 Years',
+          value: 'Declared Bankrupt In The Last 5 Years',
         },
         {
           key: 'bankrupt_plan',
