@@ -783,7 +783,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         },
         {
           key: 'mobilephone_3',
-          value: 'Mobile 1 (NIL)',
+          value: 'Mobile 3 (NIL)',
           dollars: '+65',
         },
       ],
@@ -856,7 +856,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
   },
   {
     col: 'col-xxl-8',
-    title: 'Workplace',
+    title: 'Employment',
     config: [
       [
         {
