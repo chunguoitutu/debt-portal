@@ -18,20 +18,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
 
-  const {
-    values,
-    touched,
-    errors,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    setTouched,
-    setValues,
-    validateForm,
-    setErrors,
-    resetForm,
-    setSubmitting,
-  } = formik
+  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
 
   async function onFetchDataList() {
     try {

@@ -127,6 +127,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
           className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
           id={id || defaultId || name}
           name={name}
+          value={value}
           {...rest}
         />
         {type === 'password'
