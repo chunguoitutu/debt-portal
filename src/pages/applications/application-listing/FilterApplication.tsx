@@ -37,7 +37,7 @@ export function FilterApplication({
           className='p-30px pt-8px pb-30px'
         >
           {rows.map((row, i) => {
-            if (!row.infoFilter) return <td key={i}></td>
+            if (!row.infoFilter) return <div key={i}></div>
             const {infoFilter, key, options, name} = row || {}
             const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
 

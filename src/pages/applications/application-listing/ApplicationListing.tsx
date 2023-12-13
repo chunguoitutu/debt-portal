@@ -61,6 +61,7 @@ const ApplicationListing = () => {
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
     isObject(sessionData?.dataFilter) ? sessionData?.dataFilter : {}
   )
+  const [checkFilter, setCheckFilter] = React.useState({})
   const [data, setData] = React.useState<ApplicationItem[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
@@ -256,6 +257,7 @@ const ApplicationListing = () => {
   ) {
     setLoading(true)
     try {
+      setCheckFilter(body?.filters || {})
       const {data: response} = await request.post(settings.endPointGetListing, {
         ...body,
         company_id: +company_id,
@@ -394,8 +396,11 @@ const ApplicationListing = () => {
           />
           <div className='d-flex position-relative flex-end ms-4'>
             <Button
+              style={{
+                backgroundColor: Object.keys(checkFilter).length === 0 ? '#f1f1f4' : '#c4cada',
+              }}
               onClick={showInputFilter}
-              className='btn-secondary align-self-center m-2 fs-6 text-primary h-45px'
+              className={` align-self-center m-2 fs-6 text-primary h-45px btn-secondary`}
               disabled={false}
             >
               <Icons name={'filterIcon'} />
