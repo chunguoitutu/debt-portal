@@ -176,16 +176,6 @@ export const Applications = () => {
     resetForm,
   } = formik
 
-  console.log()
-
-  console.log(
-    !!values.six_months_income &&
-      values.loan_amount_requested > 3000 &&
-      +values.six_months_income * 2 <= 40000 &&
-      10000 < +values.six_months_income * 2 &&
-      values.identification_type === 'foreign_identification_number'
-  )
-
   const {company_id} = useAuth()
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
@@ -361,7 +351,6 @@ export const Applications = () => {
       }
     })
   }
-  console.log(priority)
 
   function handleBeforeSubmit() {
     validateForm(values).then((errors) => {
