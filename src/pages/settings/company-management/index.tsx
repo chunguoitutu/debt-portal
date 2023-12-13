@@ -126,6 +126,20 @@ export const CompanyManagement = () => {
         ) : null}
         <div className='d-flex flex-end pt-10'>
           <Button
+            disabled={
+              isSubmitting ||
+              ((information?.company_name || '').trim() === (values?.company_name || '').trim() &&
+                (information?.company_code || '').trim() === (values?.company_code || '').trim() &&
+                (information?.business_uen || '').trim() === (values?.business_uen || '').trim() &&
+                (information?.contact_person || '').trim() ===
+                  (values?.contact_person || '').trim() &&
+                (information?.address || '').trim() === (values?.address || '').trim() &&
+                (information?.email || '').trim() === (values?.email || '').trim() &&
+                Number(information?.telephone) ===
+                  Number(!!values?.telephone ? values?.telephone : 0) &&
+                moment(information?.['open_date']).format('YYYY-MM-DD') ===
+                  moment(values?.['open_date']).format('YYYY-MM-DD'))
+            }
             type='reset'
             onClick={() => setLoadApi(!loadapi)}
             className='btn-lg btn-secondary align-self-center me-8px fs-6'
