@@ -1,7 +1,6 @@
 import request from '@/app/axios'
 import Button from '@/components/button/Button'
 import {Input} from '@/components/input'
-import Modal from '@/components/modal/Modal'
 import {ChangeEvent, FC, useEffect, useRef, useState} from 'react'
 import phoneImg from '@/app/images/phone.svg'
 import ErrorMessage from '@/components/error/ErrorMessage'
