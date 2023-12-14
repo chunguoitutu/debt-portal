@@ -92,6 +92,7 @@ export const Applications = () => {
   useEffect(() => {
     if (!applicationIdEdit) return setIsLoading(false)
     handleGetApplicationById()
+    setCurrentStep(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationIdEdit, loadApiEdit])
 
@@ -783,7 +784,6 @@ export const Applications = () => {
                 )}
                 {show && (
                   <Reject
-                    setStepCompleted={setStepCompleted}
                     handleloadApi={() => SetLoadApiEdit(!loadApiEdit)}
                     id={applicationIdEdit}
                     show={show}

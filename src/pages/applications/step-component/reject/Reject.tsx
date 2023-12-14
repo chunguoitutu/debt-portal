@@ -19,7 +19,6 @@ type Props = {
   id: string | number | any
   show: boolean
   handleClose: () => void
-  setStepCompleted: any
   rejection_one: {} | any
   handleloadApi: () => void
 }
@@ -31,7 +30,7 @@ export const CreateLoanTypeSchema = Yup.object().shape({
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const Reject = ({handleClose, show, id, rejection_one, handleloadApi, setStepCompleted}: Props) => {
+const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) => {
   const [options, setOptions] = useState([])
   const {currentUser} = useAuth()
 
@@ -102,9 +101,9 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi, setStepCom
             title: `Update rejected application successfully`,
           })
         }
-        setStepCompleted(0)
         handleClose()
         setSubmitting(false)
+
         handleloadApi()
       } catch (error) {
         const message = convertErrorMessageResponse(error)
