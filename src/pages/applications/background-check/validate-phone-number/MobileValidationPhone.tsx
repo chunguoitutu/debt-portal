@@ -1,5 +1,5 @@
 import {KTIcon} from '@/_metronic/helpers'
-import ValidationPhoneNumber from './validationPhoneNumber'
+import ValidationPhoneNumber from './ValidationPhoneNumber'
 
 type Props = {
   handleShow: () => void

@@ -1,6 +1,6 @@
 import Modal from '@/components/modal/Modal'
 import {FC} from 'react'
-import ValidationPhoneNumber from './validationPhoneNumber'
+import ValidationPhoneNumber from './ValidationPhoneNumber'
 
 type Props = {
   onClose: () => void

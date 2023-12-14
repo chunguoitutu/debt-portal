@@ -1,17 +1,9 @@
-interface row {
-  value: string
-  icon: any
-  background: string
-  onclick: any
-  show: boolean
-}
-
 interface config {
   classButton?: string
   classIcons?: string
   classWrapper?: string
   title: string
-  row: row[]
+  row: any
 }
 type Props = {
   config: config

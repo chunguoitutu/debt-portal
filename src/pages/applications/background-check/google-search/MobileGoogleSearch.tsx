@@ -24,6 +24,7 @@ const MobileGoogleSearch = ({handleShow, payload}: Props) => {
         })
       })
       .catch((e) => {
+        handleShow()
         swalToast.fire({
           timer: 1500,
           icon: 'error',
