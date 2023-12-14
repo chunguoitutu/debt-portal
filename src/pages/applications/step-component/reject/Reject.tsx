@@ -86,15 +86,25 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
             rejection_note: values.description,
             rejected_by: currentUser?.id,
           })
+          swalToast.fire({
+            timer: 1500,
+            icon: 'success',
+            title: `Application rejected successfully`,
+          })
         } else {
           await request.put('application/application-reject/' + rejection_one?.id, {
             rejection_type_id: +values.rejection_id,
             rejection_note: values.description,
             rejected_by: currentUser?.id,
           })
+          swalToast.fire({
+            timer: 1500,
+            icon: 'success',
+            title: `Update rejected application successfully`,
+          })
         }
         handleClose()
-        // !rejection_one?.id && navigate('/application/listing')
+        !rejection_one?.id && navigate('/application/listing')
         setSubmitting(false)
         handleloadApi()
       } catch (error) {
@@ -120,7 +130,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
     >
       <>
         <div className='modal-header p-30px'>
-          <h2>Reject Application</h2>
+          <h2>{!rejection_one?.id ? '' : 'Update'} Reject Application</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>

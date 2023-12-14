@@ -276,6 +276,7 @@ export type ApplicationConfig = {
 }
 
 export type PropsStepApplication = {
+  setStepCompleted: any
   config: ApplicationConfig[]
   formik: FormikProps<ApplicationFormData>
 }
@@ -357,6 +358,8 @@ export type ApplicationPayload = {
     six_months_income?: number
     annual_income?: string | number | any
     pay_date?: string
+    bankrupted?: string | any
+    bankrupt_plan?: string | any
   }
   address: BlockAddress[]
   customerId?: number
@@ -380,7 +383,7 @@ export type ApplicationFormData = {
   nationality: string
   mlcb_check: string[]
   loan_type_id: string
-  loan_amount_requested: string
+  loan_amount_requested: string | any
   loan_reason: string
   address_full: string
   block_no: string
@@ -434,6 +437,8 @@ export type ApplicationFormData = {
   file_documents?: any
   interest: number | string
   status?: number
+  bankrupted?: string | any
+  bankrupt_plan?: string | any
 }
 
 export type BlockAddress = {

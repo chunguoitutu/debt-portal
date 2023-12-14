@@ -73,15 +73,22 @@ function TableRender({title, config = [], data}: Props) {
                             />
                           )}
                           <p
-                            className='p-0 m-0 fs-14 fw-semibold text-gray-900'
+                            className='pt-4px pt-0 px-0 m-0 fs-14 fw-semibold text-gray-900'
                             style={{
                               textAlign: !!element_config.img ? 'center' : 'start',
                             }}
                           >
-                            {!!element_config?.dollars &&
-                              !!data[element_config.key] &&
-                              element_config?.dollars}
-                            {element_config.date
+                            {element_config.key === 'bankrupted'
+                              ? !!data[element_config.key] === false
+                                ? 'No'
+                                : 'Yes'
+                              : element_config.key === 'bankrupt_plan'
+                              ? !!data[element_config.key] === false
+                                ? 'No'
+                                : !!data[element_config.key] === true
+                                ? 'Yes'
+                                : ''
+                              : element_config.date
                               ? moment(data[element_config.key]).format('MMM DD, YYYY')
                               : !!element_config?.number
                               ? numeral(+data[element_config.key]).format('0,0.00')

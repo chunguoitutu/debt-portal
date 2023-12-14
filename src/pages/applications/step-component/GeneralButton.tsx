@@ -44,15 +44,17 @@ const GeneralButton: FC<Props> = ({
             Save Draft
           </Button>
         )}
-        <Button
-          type='submit'
-          loading={isSubmitting && !isDraft}
-          disabled={isSubmitting}
-          onClick={handleSubmit}
-          className='fs-6 btn btn-primary'
-        >
-          {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
-        </Button>
+        {values.status !== 2 && (
+          <Button
+            type='submit'
+            loading={isSubmitting && !isDraft}
+            disabled={isSubmitting}
+            onClick={handleSubmit}
+            className='fs-6 btn btn-primary'
+          >
+            {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
+          </Button>
+        )}
         {!!applicationIdEdit && values.status === 1 && currentStep === 6 ? (
           <Button
             className='fs-6 btn btn-primary'

@@ -21,6 +21,7 @@ import LableOptionsCountry from './completion/Country'
 import {ApplicationConfig, TableConfig} from '@/app/types'
 import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
 import {
+  BANKRUPTCY,
   CUSTOMER_TYPE,
   EMPLOYMENT_STATUS,
   GENDER,
@@ -36,6 +37,7 @@ import {
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
 import {Checkbox} from '@/components/checkbox'
+import Bankruptcy from '@/components/applications/Bankruptcy'
 
 const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -485,6 +487,23 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     component: FileDocument,
     defaultValue: [],
   },
+  {
+    key: 'bankrupted_key',
+    component: Bankruptcy,
+    typeComponent: 'Bankruptcy',
+    label: 'Bankruptcy',
+    className: 'no-center-label',
+  },
+  {
+    key: 'bankrupt_plan',
+    isHide: true,
+    defaultValue: false,
+  },
+  {
+    key: 'bankrupted',
+    isHide: true,
+    defaultValue: false,
+  },
 ]
 
 const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
@@ -764,7 +783,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         },
         {
           key: 'mobilephone_3',
-          value: 'Mobile 1 (NIL)',
+          value: 'Mobile 3 (NIL)',
           dollars: '+65',
         },
       ],
@@ -837,7 +856,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
   },
   {
     col: 'col-xxl-8',
-    title: 'Workplace',
+    title: 'Employment',
     config: [
       [
         {
@@ -880,6 +899,14 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: RenderOptionsApi,
           keyFilter: 'id',
           lable: 'job_type_name',
+        },
+        {
+          key: 'bankrupted',
+          value: 'Declared Bankrupt In The Last 5 Years',
+        },
+        {
+          key: 'bankrupt_plan',
+          value: 'Plan To Declare Bankrupt In The Next 3 Months',
         },
       ],
       [

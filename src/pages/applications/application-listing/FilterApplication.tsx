@@ -32,9 +32,12 @@ export function FilterApplication({
 
         <div className='separator p-0 border-gray-200'></div>
 
-        <div style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}} className='p-30px'>
+        <div
+          style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}}
+          className='p-30px pt-8px pb-30px'
+        >
           {rows.map((row, i) => {
-            if (!row.infoFilter) return <td key={i}></td>
+            if (!row.infoFilter) return <div key={i}></div>
             const {infoFilter, key, options, name} = row || {}
             const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
 

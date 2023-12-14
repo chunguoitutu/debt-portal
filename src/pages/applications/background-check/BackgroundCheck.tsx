@@ -3,9 +3,13 @@ import {useState} from 'react'
 import ContentListButton from '@/components/list-button/ContentListButton'
 import RepaymentScheduleCalculator from './repayment-schedule-calculator/RepaymentScheduleCalculator'
 import Icons from '@/components/icons'
+import PopupValidationPhoneNumber from './PopupValidationPhoneNumber'
+import MLCBReport from './MLCBReport'
 
 const BackgroundCheck = () => {
   const [show, setShow] = useState<boolean>(false)
+  const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
+  const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
 
   const configBackgroudCheck = {
     title: 'Background check',
@@ -26,6 +30,22 @@ const BackgroundCheck = () => {
           alert('Loan Cross Check')
         },
       },
+      {
+        value: 'Validation Phone Number',
+        icon: <Icons name={'ImgLoanCrossCheck'} />,
+        background: 'rgba(232, 255, 243, 0.85)',
+        onclick: () => {
+          setShowValidationPhone(true)
+        },
+      },
+      {
+        value: 'Get MLCB Report',
+        icon: <Icons name={'ImgLoanCrossCheck'} />,
+        background: 'rgba(232, 255, 243, 0.85)',
+        onclick: () => {
+          setShowMLCBReport(true)
+        },
+      },
     ],
   }
 
@@ -33,6 +53,10 @@ const BackgroundCheck = () => {
     <div className='h-100'>
       <ContentListButton config={configBackgroudCheck} />
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
+      {showValidationPhone && (
+        <PopupValidationPhoneNumber onClose={() => setShowValidationPhone(false)} />
+      )}
+      {showMLCBReport && <MLCBReport onClose={() => setShowMLCBReport(false)} />}
     </div>
   )
 }

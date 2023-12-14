@@ -197,17 +197,31 @@ const Settings: React.FC = () => {
 
             <div className='card-footer d-flex justify-content-end py-6 px-9'>
               <button
+                disabled={
+                  loading ||
+                  (originalData?.email.trim() === formik.values.email.trim() &&
+                    originalData?.lastname.trim() === formik.values.lastname.trim() &&
+                    originalData?.middlename.trim() === formik.values.middlename.trim() &&
+                    originalData?.telephone.trim() === formik.values.telephone.trim() &&
+                    originalData?.firstname.trim() === formik.values.firstname.trim())
+                }
                 type='button'
                 className='btn btn-secondary align-self-center me-8px'
                 onClick={handleDiscardChanges}
-                disabled={loading}
               >
                 Discard Changes
               </button>
               <button
                 type='submit'
                 className='btn btn-primary align-self-center fs-14'
-                disabled={loading}
+                disabled={
+                  loading ||
+                  (originalData?.email.trim() === formik.values.email.trim() &&
+                    originalData?.lastname.trim() === formik.values.lastname.trim() &&
+                    originalData?.middlename.trim() === formik.values.middlename.trim() &&
+                    originalData?.telephone.trim() === formik.values.telephone.trim() &&
+                    originalData?.firstname.trim() === formik.values.firstname.trim())
+                }
                 onClick={() => formik.handleSubmit}
               >
                 {!loading && 'Save Changes'}

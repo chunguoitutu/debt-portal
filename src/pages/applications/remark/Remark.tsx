@@ -44,7 +44,7 @@ const Remark: FC<Props> = ({
       textarea?.setSelectionRange(textarea.value.length, textarea.value.length)
     }
     handleScroll()
-  }, [infoEdit])
+  }, [infoEdit, inputValue])
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -112,6 +112,9 @@ const Remark: FC<Props> = ({
       <div className='modal-header p-30px  border-bottom border-gray-200'>
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
         <div
+          style={{
+            padding: '6px',
+          }}
           className='btn btn-sm btn-icon btn-active-color-primary d-none d-xxl-block'
           onClick={handleOnClose}
         >
@@ -236,6 +239,7 @@ const Remark: FC<Props> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
+            ref={textareaRef}
             id='myInput'
             className='w-100 min-h-50px mh-100px  pe-10px input-remark-import'
             style={{
