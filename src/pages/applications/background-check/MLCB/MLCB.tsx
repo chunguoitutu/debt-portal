@@ -1,15 +1,13 @@
 import request from '@/app/axios'
 import {swalConfirm} from '@/app/swal-notification'
-import {convertErrorMessageResponse} from '@/app/utils'
 import Button from '@/components/button/Button'
-import Modal from '@/components/modal/Modal'
 import {FC, useState} from 'react'
 
 type Props = {
   onClose: () => void
 }
 
-const MLCBReport: FC<Props> = ({onClose}) => {
+const MLCB: FC<Props> = ({onClose}) => {
   const [loading, setLoading] = useState<'BM' | 'ME' | null>(null)
 
   async function handleGetMLCBReport(type: 'BM' | 'ME') {
@@ -38,7 +36,7 @@ const MLCBReport: FC<Props> = ({onClose}) => {
   }
 
   return (
-    <Modal dialogClassName='mw-800px' show={true} onClose={onClose} title='Validation Phone Number'>
+    <div className='p-0 m-0'>
       <div className='d-flex flex-column p-30px w-100 gap-12px'>
         <h1 className='m-0 fs-20 fw-bold'>Pre-Loan Declaration</h1>
         <span className='fs-16 fw-semibold'>
@@ -76,8 +74,8 @@ const MLCBReport: FC<Props> = ({onClose}) => {
           </Button>
         </div>
       </div>
-    </Modal>
+    </div>
   )
 }
 
-export default MLCBReport
+export default MLCB

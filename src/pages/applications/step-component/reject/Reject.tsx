@@ -14,12 +14,12 @@ import request from '@/app/axios'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import {useAuth} from '@/app/context/AuthContext'
-import {Navigate, useNavigate} from 'react-router-dom'
 
 type Props = {
   id: string | number | any
   show: boolean
   handleClose: () => void
+  setStepCompleted: any
   rejection_one: {} | any
   handleloadApi: () => void
 }
@@ -31,10 +31,9 @@ export const CreateLoanTypeSchema = Yup.object().shape({
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) => {
+const Reject = ({handleClose, show, id, rejection_one, handleloadApi, setStepCompleted}: Props) => {
   const [options, setOptions] = useState([])
   const {currentUser} = useAuth()
-  const navigate = useNavigate()
 
   useEffect(() => {
     !!id &&
@@ -103,8 +102,8 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
             title: `Update rejected application successfully`,
           })
         }
+        setStepCompleted(0)
         handleClose()
-        !rejection_one?.id && navigate('/application/listing')
         setSubmitting(false)
         handleloadApi()
       } catch (error) {

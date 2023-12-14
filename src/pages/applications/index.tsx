@@ -59,11 +59,10 @@ export const Applications = () => {
   const [show, setShow] = useState<boolean>(false)
   const [loadApiEdit, SetLoadApiEdit] = useState<boolean>(false)
   const [showRemark, setShowRemark] = useState<boolean>(false)
-  const [checkAmount, SetCheckAmount] = useState<number>(0)
-
   const [rejectionOne, setRejectionOne] = useState({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
+  const [data, setData] = useState<any>({})
   const [isLoading, setIsLoading] = useState(true)
   const [listIdEdit, setListIdEdit] = useState<ListIdEdit>({
     customerId: 0,
@@ -255,7 +254,7 @@ export const Applications = () => {
     try {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
       setRejectionOne(data?.rejection || {})
-
+      setData(data?.data || {})
       const {borrower, application, customer, bank_account, employment, address, file_documents} =
         data.data || {}
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
@@ -784,6 +783,7 @@ export const Applications = () => {
                 )}
                 {show && (
                   <Reject
+                    setStepCompleted={setStepCompleted}
                     handleloadApi={() => SetLoadApiEdit(!loadApiEdit)}
                     id={applicationIdEdit}
                     show={show}
@@ -808,7 +808,7 @@ export const Applications = () => {
         <div className='col-12  col-xxl-2 m-0 h-unset h-xxl-100'>
           <div className='d-flex flex-column h-100'>
             <div className='pb-30px d-none d-xxl-block h-100'>
-              <BackgroundCheck />
+              <BackgroundCheck data={data} />
             </div>
 
             <div className='flex-grow-1 wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
