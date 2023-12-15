@@ -54,7 +54,7 @@ const GeneralButton: FC<Props> = ({
   const checkbugApprove = useMemo(() => {
     if (
       values.loan_amount_requested > 3000 &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
       values.identification_type === 'singapore_nric_no'
     ) {
       setNumber(3000)
@@ -120,6 +120,7 @@ const GeneralButton: FC<Props> = ({
     }
     return true
   }, [values, priority])
+  console.log(checkApprove || !checkbugApprove)
 
   const {applicationIdEdit} = useParams()
 
@@ -183,7 +184,7 @@ const GeneralButton: FC<Props> = ({
               } else {
                 swalConfirm.fire({
                   icon: 'success',
-                  title: 'Successfully Approved This Application',
+                  title: 'Successfully Approved This Application.',
                   showCancelButton: false,
                   confirmButtonText: 'OK',
                   customClass: {
