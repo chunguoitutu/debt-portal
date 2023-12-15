@@ -3,23 +3,29 @@ import {FC, Fragment, useEffect, useState} from 'react'
 import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
+import './style.scss'
+import Cookies from 'js-cookie'
 
-import ErrorMessage from '@/components/error/ErrorMessage'
 import LookupCustomer from './LookupCustomer'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
 import {getCurrentDate} from '@/app/utils/get-current-date'
-import {useParams} from 'react-router-dom'
+import {useParams, useSearchParams} from 'react-router-dom'
 import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
+import Button from '@/components/button/Button'
+import Singpass from './Singpass'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {config = [], formik, setStepCompleted} = props
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const {applicationIdEdit} = useParams()
   const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
+  const [popupSingpass, setPopupSingpass] = useState(false)
   const {company_id} = useAuth()
-  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
+  const {values, touched, errors, handleChange, handleBlur, setFieldValue, setValues} = formik
 
   async function onFetchDataList() {
     try {
@@ -65,9 +71,58 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     onFetchDataList()
   }, [])
 
+  useEffect(() => {
+    const authCode = searchParams.get('code')
+    const codeVerifier = Cookies.get('codeVerifier')
+
+    if (!authCode || !codeVerifier) return
+
+    // handleGetPersonData({authCode, codeVerifier})
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('message', (event) => {
+      if (event.origin === 'http://localhost:3001') {
+        // console.log(1324, event.data)
+
+        const fullName = event.data.name.value
+        const firstName = fullName.split(' ')[0]
+        const lastName = fullName.substring(firstName.length).trim()
+
+        const annual_api = event.data['noa-basic'].amount.value
+
+        setTimeout(() => {
+          formik.setValues({
+            ...formik.values,
+            firstname: firstName || '',
+            lastname: lastName || '',
+            date_of_birth: event.data?.dob?.value || '',
+            identification_no: event.data?.uinfin?.value || '',
+            mobilephone_1: event.data?.mobileno.nbr?.value || '',
+            email_1: event.data?.email?.value || '',
+            address_contact_info: formik.values.address_contact_info.map((item, i) =>
+              i === 0
+                ? {
+                    ...item,
+                    postal_code: event.data.regadd.postal.value,
+                    // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
+                    street_1: event.data.regadd.street.value,
+                  }
+                : item
+            ),
+            gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
+            residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
+            annual_income: annual_api || '',
+          })
+        }, 1000)
+      } else return
+    })
+  }, [formik])
+
   function handleShowPopup() {
     setShowPopup(!showPopup)
   }
+
   async function handleGetApplicationById() {
     try {
       const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
@@ -89,6 +144,26 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     } catch (error) {
     } finally {
     }
+  }
+
+  // async function handleGetPersonData(payload) {
+  //   try {
+  //     const {data} = await axios.post('http://localhost:3001/getPersonData', payload)
+  //   } catch (error) {
+  //   } finally {
+  //     Cookies.remove('sid')
+  //     Cookies.remove('codeVerifier')
+  //     setSearchParams('')
+  //   }
+  // }
+
+  async function goToSingpass() {
+    const dataPopup = window.open(
+      'http://localhost:3001/singPass.html',
+      'sharer',
+      `resizeable=yes,width=1100,height=900,top=75,left=2300`
+    )
+    dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
   }
 
   function renderComponent(item: ApplicationConfig) {
@@ -188,6 +263,24 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         />
       ))
     }
+    console.log()
+    if (typeComponent === 'Button') {
+      if (applicationIdEdit && !values.is_existing === false) return <></>
+      return (
+        <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px hihihaha'>
+          <div>
+            <span className='fs-6 fw-medium text-gray-900'>
+              You Can Fil Out The Form Using Your Singpass
+            </span>
+            <br />
+            <span className='fs-7 fw-normal text-gray-400'>Or fill the form to register</span>
+          </div>
+          <div>
+            <Button onClick={goToSingpass}>Go To Singpass</Button>
+          </div>
+        </div>
+      )
+    }
 
     if (typeComponent === 'Input') {
       return (
@@ -259,6 +352,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       })}
 
       {showPopup && <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} />}
+
+      {popupSingpass && <Singpass show={popupSingpass} onClose={() => setPopupSingpass(false)} />}
     </>
   )
 }
