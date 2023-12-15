@@ -409,8 +409,6 @@ export const Applications = () => {
     })
   }
 
-  console.log(stepCompleted)
-
   function handleBeforeSubmit() {
     validateForm(values).then((errors) => {
       if (Object.keys(errors).length > 0) {
@@ -624,6 +622,18 @@ export const Applications = () => {
       interest,
       bankrupt_plan,
       bankrupted,
+      cpf_amount,
+      cpf_date,
+      cpf_employer,
+      cpf_month,
+      vehicle_no,
+      vehicle_model,
+      vehicle_coe_category,
+      vehicle_coe_expiry_date,
+      vehicle_effective_date,
+      vehicle_maker,
+      vehicle_open_maket_value,
+      vehicle_type,
     } = values
 
     const addressList = address_contact_info

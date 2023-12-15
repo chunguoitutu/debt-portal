@@ -439,6 +439,18 @@ export type ApplicationFormData = {
   status?: number
   bankrupted?: string | any
   bankrupt_plan?: string | any
+  cpf_date?: string | any
+  cpf_employer?: string | any
+  cpf_amount?: string | any
+  cpf_month?: string | any
+  vehicle_no?: string | any
+  vehicle_model?: string | any
+  vehicle_type?: string | any
+  vehicle_maker?: string | any
+  vehicle_coe_category?: string | any
+  vehicle_coe_expiry_date?: string | any
+  vehicle_open_maket_value?: string | any
+  vehicle_effective_date?: string
 }
 
 export type BlockAddress = {
