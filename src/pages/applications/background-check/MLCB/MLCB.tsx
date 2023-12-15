@@ -1,7 +1,8 @@
 import request from '@/app/axios'
-import {swalConfirm} from '@/app/swal-notification'
+import {swalConfirm, swalToast} from '@/app/swal-notification'
 import Button from '@/components/button/Button'
 import {FC, useState} from 'react'
+import {useParams} from 'react-router-dom'
 
 type Props = {
   onClose: () => void
@@ -9,12 +10,40 @@ type Props = {
 
 const MLCB: FC<Props> = ({onClose}) => {
   const [loading, setLoading] = useState<'BM' | 'ME' | null>(null)
+  const {applicationIdEdit} = useParams()
 
   async function handleGetMLCBReport(type: 'BM' | 'ME') {
+    if (!applicationIdEdit || !+applicationIdEdit) {
+      onClose()
+      return swalToast.fire({
+        icon: 'error',
+        title: 'You can get MLCB report only when the loan application is in Awaiting Approval',
+      })
+    }
     setLoading(type)
 
     try {
-      const {data} = await request.post('/site/mlcb-check')
+      const {data} = await request.post(`/site/mlcb-check`, {
+        id: +applicationIdEdit,
+        report_type: type,
+      })
+
+      if (!data.error) {
+        onClose()
+        swalConfirm.fire({
+          icon: 'success',
+          title: 'Success',
+          showCancelButton: false,
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'm-w-300px',
+            htmlContainer: 'fs-3',
+            cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+            confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+            actions: 'd-flex justify-content-center w-100 ',
+          },
+        })
+      }
     } catch (error) {
       onClose()
       swalConfirm.fire({
