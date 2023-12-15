@@ -25,20 +25,35 @@ const GeneralButton: FC<Props> = ({
   const {priority} = useAuth()
   const {isSubmitting, values} = formik
   const checkApprove = useMemo(() => {
-    if (priority <= 2) {
+    if (
+      (values.loan_amount_requested < +values.six_months_income &&
+        values.loan_amount_requested > 3000 &&
+        priority <= 2 &&
+        values.is_existing === 'new' &&
+        values.identification_type === 'singapore_nric_no') ||
+      (values.loan_amount_requested < +values.six_months_income &&
+        priority <= 2 &&
+        values.is_existing === 'existing' &&
+        values.loan_amount_requested > 5000 &&
+        values.identification_type === 'singapore_nric_no') ||
+      (values.loan_amount_requested < +values.six_months_income &&
+        priority <= 2 &&
+        values.loan_amount_requested > 3000 &&
+        values.identification_type === 'foreign_identification_number')
+    ) {
       return false
     }
     if (
-      (values.loan_amount_requested < 3000 &&
+      (values.loan_amount_requested <= 3000 &&
         priority > 2 &&
         values.is_existing === 'new' &&
         priority > 2 &&
         values.identification_type === 'singapore_nric_no') ||
-      (values.loan_amount_requested < 5000 &&
+      (values.loan_amount_requested <= 5000 &&
         values.is_existing === 'existing' &&
         priority > 2 &&
         values.identification_type === 'singapore_nric_no') ||
-      (values.loan_amount_requested < 3000 &&
+      (values.loan_amount_requested <= 3000 &&
         priority > 2 &&
         values.identification_type === 'foreign_identification_number')
     ) {
