@@ -131,11 +131,11 @@ export const INCOME_DOCUMENT: Option[] = [
 export const BANKRUPTCY: Option[] = [
   {
     value: 'declared_bankrupt_in_last_5_years',
-    label: 'Declared Bankrupt In The Last 5 Years',
+    label: 'Declared bankrupt in the last 5 years',
   },
   {
     value: 'plan_to_declare_bankrupt_in_the_next_3_months',
-    label: 'Plan To Declare Bankrupt In The Next 3 Months',
+    label: 'Plan to declare bankrupt in the next 3 months',
   },
 ]
 
@@ -414,23 +414,23 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'HDB',
     options: [
       {
-        value: '1_Room',
+        value: '1-ROOM FLAT (HDB)',
         label: '1 Room',
       },
       {
-        value: '2_Room',
+        value: '2-ROOM FLAT (HDB)',
         label: '2 Room',
       },
       {
-        value: '3_Room',
+        value: '3-ROOM FLAT (HDB)',
         label: '3 Room',
       },
       {
-        value: '4_Room',
+        value: '4-ROOM FLAT (HDB)',
         label: '4 Room',
       },
       {
-        value: '5_Room',
+        value: '5-ROOM FLAT (HDB)',
         label: '5 Room',
       },
     ],
@@ -439,7 +439,7 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'EXECUTIVE',
     options: [
       {
-        value: 'exec',
+        value: 'EXECUTIVE FLAT (HDB)',
         label: 'Exec',
       },
     ],
@@ -452,7 +452,7 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
         label: 'Apartment',
       },
       {
-        value: 'condo',
+        value: 'CONDOMINIUM',
         label: 'Condo',
       },
       {
