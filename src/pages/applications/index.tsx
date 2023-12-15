@@ -821,6 +821,7 @@ export const Applications = () => {
                   />
                 )}
                 <GeneralButton
+                  data={data}
                   setStepCompleted={setStepCompleted}
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
