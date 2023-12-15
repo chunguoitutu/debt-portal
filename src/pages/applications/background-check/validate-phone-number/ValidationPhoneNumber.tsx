@@ -124,8 +124,8 @@ const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
       icon: 'success',
       html: `
       <div class="d-flex flex-column gap-8px">
-        <span class="fs-20 fw-bold">Phone number verification successful!</span>
-        <span class="fs-3 text-gray-800">Continue completing loan documents</span>
+        <span class="fs-20 fw-bold">Phone number verification was successful!</span>
+        <span class="fs-3 text-gray-800">Continue completing the loan documents.</span>
       </div>
       `,
       width: 'unset',

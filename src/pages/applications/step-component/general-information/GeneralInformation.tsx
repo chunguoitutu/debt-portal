@@ -87,15 +87,27 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         // console.log(1324, event.data)
 
         const fullName = event.data.name.value
-        const firstName = fullName.split(' ')[0]
-        const lastName = fullName.substring(firstName.length).trim()
+        const {firstname, middlename, lastname} = splitName(fullName)
 
         const annual_api = event.data['noa-basic'].amount.value
+        const cpf_months = event.data?.cpfcontributions?.history?.map(
+          (entry: any) => entry.month.value
+        )
+        const cpf_amount = event.data?.cpfcontributions?.history?.map(
+          (entry: any) => entry.amount.value
+        )
+        const cpf_date = event.data?.cpfcontributions?.history?.map(
+          (entry: any) => entry.date.value
+        )
+        const cpf_employer = event.data?.cpfcontributions?.history?.map(
+          (entry: any) => entry.employer.value
+        )
 
         const values = {
           ...formik.values,
-          firstname: firstName || '',
-          lastname: lastName || '',
+          firstname: firstname || '',
+          middlename: middlename || '',
+          lastname: lastname || '',
           date_of_birth: event.data?.dob?.value || '',
           identification_no: event.data?.uinfin?.value || '',
           mobilephone_1: event.data?.mobileno.nbr?.value || '',
@@ -113,14 +125,19 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
           residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
           annual_income: annual_api || '',
+          cpf_month: cpf_months || '',
+          cpf_amount: cpf_amount || '',
+          cpf_date: cpf_date || '',
+          cpf_employer: cpf_employer || '',
         }
         handleFillFormSingpass(values)
 
         setTimeout(() => {
           formik.setValues({
             ...formik.values,
-            firstname: firstName || '',
-            lastname: lastName || '',
+            firstname: firstname || '',
+            middlename: middlename || '',
+            lastname: lastname || '',
             date_of_birth: event.data?.dob?.value || '',
             identification_no: event.data?.uinfin?.value || '',
             mobilephone_1: event.data?.mobileno.nbr?.value || '',
@@ -138,11 +155,46 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
             residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
             annual_income: annual_api || '',
+            nationality: event.data.race.desc || '',
+            country: event.data.regadd.country.desc,
+            cpf_month: cpf_months || '',
+            cpf_amount: cpf_amount || '',
+            cpf_date: cpf_date || '',
+            cpf_employer: cpf_employer || '',
+
+            // vehicle will return result when we have the offical api singpass
           })
         }, 0)
       } else return
     })
   }, [company_id])
+
+  function splitName(fullName: string) {
+    const arr = fullName?.trim()?.split(' ')
+
+    if (!Array.isArray(arr) || arr.length === 0) {
+      return {}
+    }
+
+    const leng = arr.length
+
+    if (leng === 1) {
+      return {
+        firstname: arr[0],
+      }
+    }
+    if (leng === 2) {
+      return {
+        firstname: arr[0],
+        lastname: arr[1],
+      }
+    }
+    return {
+      firstname: arr[0],
+      middlename: arr.slice(1, leng - 1).join(' '),
+      lastname: arr[leng - 1],
+    }
+  }
 
   function handleShowPopup() {
     setShowPopup(!showPopup)

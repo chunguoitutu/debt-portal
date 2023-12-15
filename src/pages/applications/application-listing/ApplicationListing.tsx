@@ -65,7 +65,7 @@ const ApplicationListing = () => {
   const [data, setData] = React.useState<ApplicationItem[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
-  const [orderBy, setOrderBy] = useState<OrderBy>(sessionData?.orderBy || 'asc')
+  const [orderBy, setOrderBy] = useState<OrderBy>(sessionData?.orderBy || 'desc')
   const [keySort, setKeySort] = useState<string>(sessionData?.keySort || 'id')
   const [searchValue, setSearchValue] = useState<string>(sessionData?.searchValue || '')
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
