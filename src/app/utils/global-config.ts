@@ -131,11 +131,11 @@ export const INCOME_DOCUMENT: Option[] = [
 export const BANKRUPTCY: Option[] = [
   {
     value: 'declared_bankrupt_in_last_5_years',
-    label: 'Declared Bankrupt In The Last 5 Years',
+    label: 'Declared bankrupt in the last 5 years',
   },
   {
     value: 'plan_to_declare_bankrupt_in_the_next_3_months',
-    label: 'Plan To Declare Bankrupt In The Next 3 Months',
+    label: 'Plan to declare bankrupt in the next 3 months',
   },
 ]
 
