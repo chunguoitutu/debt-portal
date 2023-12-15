@@ -81,6 +81,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   }, [])
 
   useEffect(() => {
+    if (!company_id) return
     window.addEventListener('message', (event) => {
       if (event.origin === 'http://localhost:3001') {
         // console.log(1324, event.data)
@@ -90,6 +91,30 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         const lastName = fullName.substring(firstName.length).trim()
 
         const annual_api = event.data['noa-basic'].amount.value
+
+        const values = {
+          ...formik.values,
+          firstname: firstName || '',
+          lastname: lastName || '',
+          date_of_birth: event.data?.dob?.value || '',
+          identification_no: event.data?.uinfin?.value || '',
+          mobilephone_1: event.data?.mobileno.nbr?.value || '',
+          email_1: event.data?.email?.value || '',
+          address_contact_info: formik.values.address_contact_info.map((item, i) =>
+            i === 0
+              ? {
+                  ...item,
+                  postal_code: event.data.regadd.postal.value,
+                  // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
+                  street_1: event.data.regadd.street.value,
+                }
+              : item
+          ),
+          gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
+          residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
+          annual_income: annual_api || '',
+        }
+        handleFillFormSingpass(values)
 
         setTimeout(() => {
           formik.setValues({
@@ -114,13 +139,32 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
             annual_income: annual_api || '',
           })
-        }, 1000)
+        }, 0)
       } else return
     })
-  }, [formik])
+  }, [company_id])
 
   function handleShowPopup() {
     setShowPopup(!showPopup)
+  }
+
+  async function handleFillFormSingpass(dataSingpass: any) {
+    let newDataSingpass = {...dataSingpass}
+
+    try {
+      const NRIC = dataSingpass.identification_no
+
+      // send api
+      await request.post(`/application/nric_no/${NRIC}`, {
+        company_id,
+      })
+
+      newDataSingpass = {...newDataSingpass, is_existing: 'existing'}
+    } catch (error) {
+      //nothing
+    } finally {
+      formik.setValues({...formik.values, ...newDataSingpass})
+    }
   }
 
   async function handleGetApplicationById() {
@@ -263,7 +307,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         />
       ))
     }
-    console.log()
     if (typeComponent === 'Button') {
       if (applicationIdEdit || values.is_existing === 'existing') return <></>
       return (
