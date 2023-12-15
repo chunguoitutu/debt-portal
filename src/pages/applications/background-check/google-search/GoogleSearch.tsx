@@ -84,6 +84,7 @@ const GoogleSearch = ({handleClose, dataSearch, mobile = false}: Props) => {
           Cancel
         </Button>
         <Button
+          disabled={!dataSearch?.url}
           onClick={() => handleLinkClick(dataSearch?.url)}
           type='submit'
           className='btn-lg btn-primary'
