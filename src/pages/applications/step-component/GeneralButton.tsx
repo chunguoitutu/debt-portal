@@ -1,14 +1,15 @@
-import {FC, useMemo} from 'react'
+import {FC, useMemo, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
 import Button from '@/components/button/Button'
 import {PropsStepApplication} from '@/app/types'
 import {useAuth} from '@/app/context/AuthContext'
-import {swalConfirm} from '@/app/swal-notification'
+import {swalConfirm, swalToast} from '@/app/swal-notification'
 
 interface Props extends PropsStepApplication {
   handleSubmit: () => void
   handleSaveDraft: () => void
+  data: any
   handleClose: () => void
   isDraft: boolean
   currentStep: number
@@ -19,28 +20,16 @@ const GeneralButton: FC<Props> = ({
   handleSaveDraft,
   handleClose,
   formik,
+  data,
   isDraft,
   currentStep,
 }) => {
+  const [number, setNumber] = useState(0)
   const {priority} = useAuth()
   const {isSubmitting, values} = formik
+
   const checkApprove = useMemo(() => {
-    if (
-      (values.loan_amount_requested < +values.six_months_income &&
-        values.loan_amount_requested > 3000 &&
-        priority <= 2 &&
-        values.is_existing === 'new' &&
-        values.identification_type === 'singapore_nric_no') ||
-      (values.loan_amount_requested < +values.six_months_income &&
-        priority <= 2 &&
-        values.is_existing === 'existing' &&
-        values.loan_amount_requested > 5000 &&
-        values.identification_type === 'singapore_nric_no') ||
-      (values.loan_amount_requested < +values.six_months_income &&
-        priority <= 2 &&
-        values.loan_amount_requested > 3000 &&
-        values.identification_type === 'foreign_identification_number')
-    ) {
+    if (priority <= 2) {
       return false
     }
     if (
@@ -62,6 +51,76 @@ const GeneralButton: FC<Props> = ({
 
     return true
   }, [values, priority])
+  const checkbugApprove = useMemo(() => {
+    if (
+      values.loan_amount_requested > 3000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+      values.identification_type === 'singapore_nric_no'
+    ) {
+      setNumber(3000)
+      return false
+    }
+
+    if (
+      values.loan_amount_requested > +values.six_months_income &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+      values.is_existing === 'new' &&
+      values.identification_type === 'singapore_nric_no'
+    ) {
+      setNumber(+values.six_months_income)
+      return false
+    }
+
+    if (
+      values.loan_amount_requested > 5000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+      values.is_existing === 'existing' &&
+      values.identification_type === 'singapore_nric_no'
+    ) {
+      setNumber(3000)
+      return false
+    }
+
+    if (
+      values.loan_amount_requested > +values.six_months_income &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+      values.is_existing === 'existing' &&
+      values.identification_type === 'singapore_nric_no'
+    ) {
+      setNumber(+values.six_months_income)
+      return false
+    }
+
+    if (
+      values.loan_amount_requested > 500 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 10000 &&
+      values.identification_type === 'foreign_identification_number'
+    ) {
+      setNumber(500)
+      return false
+    }
+
+    if (
+      values.loan_amount_requested > +values.six_months_income &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 40000 &&
+      values.identification_type === 'foreign_identification_number'
+    ) {
+      setNumber(+values.six_months_income)
+      return false
+    }
+
+    if (
+      values.loan_amount_requested > 3000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
+      10000 < (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
+      values.identification_type === 'foreign_identification_number'
+    ) {
+      setNumber(300)
+      return false
+    }
+    return true
+  }, [values, priority])
+  console.log(checkApprove || !checkbugApprove)
 
   const {applicationIdEdit} = useParams()
 
@@ -102,20 +161,26 @@ const GeneralButton: FC<Props> = ({
             type='submit'
             disabled={isSubmitting}
             onClick={() => {
-              if (checkApprove) {
-                swalConfirm.fire({
-                  icon: 'error',
-                  title: 'You Do Not Have Sufficient Permissions To Approve This Application',
-                  showCancelButton: false,
-                  confirmButtonText: 'OK',
-                  customClass: {
-                    popup: 'm-w-300px',
-                    htmlContainer: 'fs-3',
-                    cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
-                    confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
-                    actions: 'd-flex justify-content-center w-100 ',
-                  },
-                })
+              if (checkApprove || !checkbugApprove) {
+                checkbugApprove
+                  ? swalConfirm.fire({
+                      icon: 'error',
+                      title: 'You Do Not Have Sufficient Permissions To Approve This Application',
+                      showCancelButton: false,
+                      confirmButtonText: 'OK',
+                      customClass: {
+                        popup: 'm-w-300px',
+                        htmlContainer: 'fs-3',
+                        cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+                        confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+                        actions: 'd-flex justify-content-center w-100 ',
+                      },
+                    })
+                  : swalToast.fire({
+                      timer: 1500,
+                      icon: 'error',
+                      title: `Cannot borrow more than ${number}`,
+                    })
               } else {
                 swalConfirm.fire({
                   icon: 'success',
