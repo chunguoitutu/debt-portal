@@ -54,7 +54,7 @@ const GeneralButton: FC<Props> = ({
   const checkbugApprove = useMemo(() => {
     if (
       values.loan_amount_requested > 3000 &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
       values.identification_type === 'singapore_nric_no'
     ) {
       setNumber(3000)
@@ -63,7 +63,7 @@ const GeneralButton: FC<Props> = ({
 
     if (
       values.loan_amount_requested > +values.six_months_income &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
       values.is_existing === 'new' &&
       values.identification_type === 'singapore_nric_no'
     ) {
@@ -73,7 +73,7 @@ const GeneralButton: FC<Props> = ({
 
     if (
       values.loan_amount_requested > 5000 &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
       values.is_existing === 'existing' &&
       values.identification_type === 'singapore_nric_no'
     ) {
@@ -83,7 +83,7 @@ const GeneralButton: FC<Props> = ({
 
     if (
       values.loan_amount_requested > +values.six_months_income &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
       values.is_existing === 'existing' &&
       values.identification_type === 'singapore_nric_no'
     ) {
@@ -93,7 +93,7 @@ const GeneralButton: FC<Props> = ({
 
     if (
       values.loan_amount_requested > 500 &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 10000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 10000 &&
       values.identification_type === 'foreign_identification_number'
     ) {
       setNumber(500)
@@ -102,7 +102,7 @@ const GeneralButton: FC<Props> = ({
 
     if (
       values.loan_amount_requested > +values.six_months_income &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 40000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 40000 &&
       values.identification_type === 'foreign_identification_number'
     ) {
       setNumber(+values.six_months_income)
@@ -112,7 +112,7 @@ const GeneralButton: FC<Props> = ({
     if (
       values.loan_amount_requested > 3000 &&
       (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
-      10000 < (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
+      10000 <= (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
       values.identification_type === 'foreign_identification_number'
     ) {
       setNumber(300)
