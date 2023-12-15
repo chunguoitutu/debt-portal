@@ -14,6 +14,7 @@ import {KTIcon} from '@/_metronic/helpers'
 
 type Props = {
   remarkList: RemarkItem[]
+
   idUpdate: string | number | any
   setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
   handleOnClose: () => void

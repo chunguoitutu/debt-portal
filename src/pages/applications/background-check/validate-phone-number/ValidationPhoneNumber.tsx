@@ -1,7 +1,6 @@
 import request from '@/app/axios'
 import Button from '@/components/button/Button'
 import {Input} from '@/components/input'
-import Modal from '@/components/modal/Modal'
 import {ChangeEvent, FC, useEffect, useRef, useState} from 'react'
 import phoneImg from '@/app/images/phone.svg'
 import ErrorMessage from '@/components/error/ErrorMessage'
@@ -18,7 +17,7 @@ const validationSchema = Yup.object().shape({
   phone_number: Yup.string().required(convertMessageErrorRequired('Phone Number')),
 })
 
-const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
+const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [otp, setOtp] = useState<string | null>(null)
   const [otpExpire, setOtpExpire] = useState<number | null>(null)
@@ -142,7 +141,7 @@ const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
   }
 
   return (
-    <Modal dialogClassName='mw-800px' show={true} onClose={onClose} title='Validation Phone Number'>
+    <div className=' p-0 m-0'>
       <div className='d-flex flex-column align-items-center p-30px w-100'>
         {otp ? (
           <div className='d-flex flex-column align-items-center w-fit-content'>
@@ -198,6 +197,7 @@ const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
             <Input
               classShared='w-100'
               type='number'
+              required={true}
               {...formik.getFieldProps('phone_number')}
               label='Phone Number'
               error={formik.errors['phone_number']}
@@ -206,7 +206,6 @@ const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
           </>
         )}
       </div>
-
       <div className='border-top border-gray-200 p-30px'>
         {otp ? (
           <div className='d-flex align-items-center justify-content-center gap-8px'>
@@ -230,8 +229,8 @@ const PopupValidationPhoneNumber: FC<Props> = ({onClose}) => {
           </div>
         )}
       </div>
-    </Modal>
+    </div>
   )
 }
 
-export default PopupValidationPhoneNumber
+export default ValidationPhoneNumber

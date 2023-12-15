@@ -1,8 +1,10 @@
-import {FC} from 'react'
+import {FC, useMemo} from 'react'
 import {useParams} from 'react-router-dom'
 
 import Button from '@/components/button/Button'
 import {PropsStepApplication} from '@/app/types'
+import {useAuth} from '@/app/context/AuthContext'
+import {swalConfirm} from '@/app/swal-notification'
 
 interface Props extends PropsStepApplication {
   handleSubmit: () => void
@@ -20,7 +22,46 @@ const GeneralButton: FC<Props> = ({
   isDraft,
   currentStep,
 }) => {
+  const {priority} = useAuth()
   const {isSubmitting, values} = formik
+  const checkApprove = useMemo(() => {
+    if (
+      (values.loan_amount_requested < +values.six_months_income &&
+        values.loan_amount_requested > 3000 &&
+        priority <= 2 &&
+        values.is_existing === 'new' &&
+        values.identification_type === 'singapore_nric_no') ||
+      (values.loan_amount_requested < +values.six_months_income &&
+        priority <= 2 &&
+        values.is_existing === 'existing' &&
+        values.loan_amount_requested > 5000 &&
+        values.identification_type === 'singapore_nric_no') ||
+      (values.loan_amount_requested < +values.six_months_income &&
+        priority <= 2 &&
+        values.loan_amount_requested > 3000 &&
+        values.identification_type === 'foreign_identification_number')
+    ) {
+      return false
+    }
+    if (
+      (values.loan_amount_requested <= 3000 &&
+        priority > 2 &&
+        values.is_existing === 'new' &&
+        priority > 2 &&
+        values.identification_type === 'singapore_nric_no') ||
+      (values.loan_amount_requested <= 5000 &&
+        values.is_existing === 'existing' &&
+        priority > 2 &&
+        values.identification_type === 'singapore_nric_no') ||
+      (values.loan_amount_requested <= 3000 &&
+        priority > 2 &&
+        values.identification_type === 'foreign_identification_number')
+    ) {
+      return false
+    }
+
+    return true
+  }, [values, priority])
 
   const {applicationIdEdit} = useParams()
 
@@ -60,7 +101,37 @@ const GeneralButton: FC<Props> = ({
             className='fs-6 btn btn-primary'
             type='submit'
             disabled={isSubmitting}
-            onClick={() => {}}
+            onClick={() => {
+              if (checkApprove) {
+                swalConfirm.fire({
+                  icon: 'error',
+                  title: 'You Do Not Have Sufficient Permissions To Approve This Application',
+                  showCancelButton: false,
+                  confirmButtonText: 'OK',
+                  customClass: {
+                    popup: 'm-w-300px',
+                    htmlContainer: 'fs-3',
+                    cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+                    confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+                    actions: 'd-flex justify-content-center w-100 ',
+                  },
+                })
+              } else {
+                swalConfirm.fire({
+                  icon: 'success',
+                  title: 'Successfully Approved This Application',
+                  showCancelButton: false,
+                  confirmButtonText: 'OK',
+                  customClass: {
+                    popup: 'm-w-300px',
+                    htmlContainer: 'fs-3',
+                    cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+                    confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+                    actions: 'd-flex justify-content-center w-100 ',
+                  },
+                })
+              }
+            }}
           >
             Approve
           </Button>

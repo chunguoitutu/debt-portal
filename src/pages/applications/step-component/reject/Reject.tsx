@@ -14,7 +14,6 @@ import request from '@/app/axios'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import {useAuth} from '@/app/context/AuthContext'
-import {Navigate, useNavigate} from 'react-router-dom'
 
 type Props = {
   id: string | number | any
@@ -34,7 +33,6 @@ const modalsRoot = document.getElementById('root-modals') || document.body
 const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) => {
   const [options, setOptions] = useState([])
   const {currentUser} = useAuth()
-  const navigate = useNavigate()
 
   useEffect(() => {
     !!id &&
@@ -100,12 +98,12 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Update rejected application successfully`,
+            title: `Reject application successfully updated`,
           })
         }
         handleClose()
-        !rejection_one?.id && navigate('/application/listing')
         setSubmitting(false)
+
         handleloadApi()
       } catch (error) {
         const message = convertErrorMessageResponse(error)
