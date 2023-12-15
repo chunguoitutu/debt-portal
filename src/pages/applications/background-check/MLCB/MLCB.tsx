@@ -32,7 +32,7 @@ const MLCB: FC<Props> = ({onClose}) => {
         onClose()
         swalConfirm.fire({
           icon: 'success',
-          title: 'Success',
+          title: data?.message || 'Success',
           showCancelButton: false,
           confirmButtonText: 'OK',
           customClass: {

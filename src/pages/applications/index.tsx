@@ -409,8 +409,6 @@ export const Applications = () => {
     })
   }
 
-  console.log(stepCompleted)
-
   function handleBeforeSubmit() {
     validateForm(values).then((errors) => {
       if (Object.keys(errors).length > 0) {
@@ -434,35 +432,35 @@ export const Applications = () => {
         })
       } else if (
         (values.loan_amount_requested > 3000 &&
-          stepCompleted === 5 &&
+          currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
           values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > +values.six_months_income &&
-          stepCompleted === 5 &&
+          currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
           values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > 5000 &&
-          stepCompleted === 5 &&
+          currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > +values.six_months_income &&
-          stepCompleted === 5 &&
+          currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > 500 &&
-          stepCompleted === 5 &&
+          currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 10000 &&
           values.identification_type === 'foreign_identification_number') ||
         (values.loan_amount_requested > +values.six_months_income &&
-          stepCompleted === 5 &&
+          currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 40000 &&
           values.identification_type === 'foreign_identification_number') ||
         (values.loan_amount_requested > 3000 &&
-          stepCompleted === 5 &&
+          currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
           10000 <= (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
           values.identification_type === 'foreign_identification_number')
@@ -624,6 +622,18 @@ export const Applications = () => {
       interest,
       bankrupt_plan,
       bankrupted,
+      cpf_amount,
+      cpf_date,
+      cpf_employer,
+      cpf_month,
+      vehicle_no,
+      vehicle_model,
+      vehicle_coe_category,
+      vehicle_coe_expiry_date,
+      vehicle_effective_date,
+      vehicle_maker,
+      vehicle_open_maket_value,
+      vehicle_type,
     } = values
 
     const addressList = address_contact_info
