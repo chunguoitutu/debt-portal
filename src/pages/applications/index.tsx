@@ -435,41 +435,41 @@ export const Applications = () => {
       } else if (
         (values.loan_amount_requested > 3000 &&
           stepCompleted === 5 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
           values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > +values.six_months_income &&
           stepCompleted === 5 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
           values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > 5000 &&
           stepCompleted === 5 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > +values.six_months_income &&
           stepCompleted === 5 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > 500 &&
           stepCompleted === 5 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 10000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 10000 &&
           values.identification_type === 'foreign_identification_number') ||
         (values.loan_amount_requested > +values.six_months_income &&
           stepCompleted === 5 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 40000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 40000 &&
           values.identification_type === 'foreign_identification_number') ||
         (values.loan_amount_requested > 3000 &&
           stepCompleted === 5 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
-          10000 < (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
+          10000 <= (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
           values.identification_type === 'foreign_identification_number')
       ) {
         if (
           values.loan_amount_requested > 3000 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
           values.identification_type === 'singapore_nric_no'
         ) {
           swalToast.fire({
@@ -481,7 +481,7 @@ export const Applications = () => {
 
         if (
           values.loan_amount_requested > +values.six_months_income &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
           values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no'
         ) {
@@ -494,7 +494,7 @@ export const Applications = () => {
 
         if (
           values.loan_amount_requested > 5000 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no'
         ) {
@@ -507,7 +507,7 @@ export const Applications = () => {
 
         if (
           values.loan_amount_requested > +values.six_months_income &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 20000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
           values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no'
         ) {
@@ -520,7 +520,7 @@ export const Applications = () => {
 
         if (
           values.loan_amount_requested > 500 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 10000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 10000 &&
           values.identification_type === 'foreign_identification_number'
         ) {
           swalToast.fire({
@@ -532,7 +532,7 @@ export const Applications = () => {
 
         if (
           values.loan_amount_requested > +values.six_months_income &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) > 40000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 40000 &&
           values.identification_type === 'foreign_identification_number'
         ) {
           swalToast.fire({
@@ -545,7 +545,7 @@ export const Applications = () => {
         if (
           values.loan_amount_requested > 3000 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
-          10000 < (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
+          10000 <= (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
           values.identification_type === 'foreign_identification_number'
         ) {
           swalToast.fire({
