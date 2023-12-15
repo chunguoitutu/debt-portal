@@ -91,7 +91,6 @@ export const Applications = () => {
   const {priority} = useAuth()
 
   const {applicationIdEdit} = useParams()
-
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -411,8 +410,6 @@ export const Applications = () => {
       }
     })
   }
-
-  console.log(+values.six_months_income < 1000)
 
   function handleBeforeSubmit() {
     validateForm(values).then((errors) => {

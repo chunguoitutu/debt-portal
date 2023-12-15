@@ -20,6 +20,8 @@ const HelpDrawer = () => {
   const {applicationIdEdit} = useParams()
 
   useEffect(() => {
+    if (!applicationIdEdit) return
+
     request.get(`/application/detail/${applicationIdEdit}`).then((res) => {
       setData(res?.data?.data)
       setCheckPending(Number(res?.data?.data?.application?.status))
