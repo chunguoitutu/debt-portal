@@ -197,6 +197,7 @@ const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
             <Input
               classShared='w-100'
               type='number'
+              required={true}
               {...formik.getFieldProps('phone_number')}
               label='Phone Number'
               error={formik.errors['phone_number']}

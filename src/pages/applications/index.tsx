@@ -412,6 +412,8 @@ export const Applications = () => {
     })
   }
 
+  console.log(+values.six_months_income < 1000)
+
   function handleBeforeSubmit() {
     validateForm(values).then((errors) => {
       if (Object.keys(errors).length > 0) {

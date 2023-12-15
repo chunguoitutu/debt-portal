@@ -29,6 +29,7 @@ const WrapperGoogleSearch = ({show, handleClose, payload}: Props) => {
         })
       })
       .catch((e) => {
+        handleClose()
         swalToast.fire({
           timer: 1500,
           icon: 'error',
