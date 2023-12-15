@@ -27,6 +27,7 @@ const HelpDrawer = () => {
       setCheckPending(Number(res?.data?.data?.application?.status))
     })
   }, [])
+  console.log(applicationIdEdit, '1')
 
   const configBackgroudCheck = {
     title: 'Background check',
@@ -139,29 +140,36 @@ const HelpDrawer = () => {
           </div>
           <div style={{maxHeight: 'calc(100vh - 100px)', overflowY: 'auto'}} className='p-30px'>
             {configBackgroudCheck?.row.map((data, index) => (
-              <button
-                key={index}
-                className={`py-12px px-4px
+              <div className='m-0 p-0' key={index}>
+                {!!data?.show && (
+                  <>
+                    <button
+                      className={`py-12px px-4px
                bg-transparent d-flex justify-content-center align-items-center`}
-                onClick={data.onclick}
-                style={{
-                  border: 'none',
-                }}
-              >
-                <span
-                  style={{
-                    border: 'none',
-                    borderRadius: '8px',
-                    background: data?.background,
-                  }}
-                  className={`
+                      onClick={data.onclick}
+                      style={{
+                        border: 'none',
+                      }}
+                    >
+                      <span
+                        style={{
+                          border: 'none',
+                          borderRadius: '8px',
+                          background: data?.background,
+                        }}
+                        className={`
                   h-48px w-48px me-5
                  bg-transparent d-flex justify-content-center align-items-center flex-shrink-0`}
-                >
-                  {data.icon}
-                </span>
-                <span className='text-gray-700 text-start fw-semibold fs-14'>{data.value}</span>
-              </button>
+                      >
+                        {data.icon}
+                      </span>
+                      <span className='text-gray-700 text-start fw-semibold fs-14'>
+                        {data.value}
+                      </span>
+                    </button>
+                  </>
+                )}
+              </div>
             ))}
           </div>
         </div>
