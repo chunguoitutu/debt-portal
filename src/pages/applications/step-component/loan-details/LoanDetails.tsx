@@ -125,7 +125,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             }
           />
           <span className='fw-semibold cursor-pointer fs-4 text-gray-900'>
-            Opt In Yes Consent to disclose information to MLCB and sMECB
+            Opt-in consent to disclose information to MLCB and SMECB
           </span>
         </Fragment>
       ))

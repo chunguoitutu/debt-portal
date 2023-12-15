@@ -265,7 +265,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
     console.log()
     if (typeComponent === 'Button') {
-      if (applicationIdEdit && !values.is_existing === false) return <></>
+      if (applicationIdEdit || values.is_existing === 'existing') return <></>
       return (
         <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px hihihaha'>
           <div>
