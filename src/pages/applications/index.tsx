@@ -1,5 +1,5 @@
 import {FC, useEffect, useMemo, useRef, useState} from 'react'
-import {useLocation, useNavigate, useParams} from 'react-router-dom'
+import {useLocation, useNavigate, useParams, useSearchParams} from 'react-router-dom'
 import moment from 'moment'
 import './style.scss'
 import BackgroundCheck from './background-check/BackgroundCheck'
@@ -28,6 +28,7 @@ import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
 import Reject from './step-component/reject/Reject'
 import Icons from '@/components/icons'
+import Cookies from 'js-cookie'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -59,6 +60,10 @@ export const Applications = () => {
   const [show, setShow] = useState<boolean>(false)
   const [loadApiEdit, SetLoadApiEdit] = useState<boolean>(false)
   const [showRemark, setShowRemark] = useState<boolean>(false)
+  // const [checkAmount, SetCheckAmount] = useState<number>(0)
+  // const [popupSingpass, setPopupSingpass] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const [rejectionOne, setRejectionOne] = useState({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -112,6 +117,61 @@ export const Applications = () => {
       containerRef.current.scrollTop = 0
     }
   }, [currentStep])
+
+  useEffect(() => {
+    const authCode = searchParams.get('code')
+    const codeVerifier = Cookies.get('codeVerifier')
+
+    if (!authCode || !codeVerifier) return
+
+    // handleGetPersonData({authCode, codeVerifier})
+  }, [])
+
+  // useEffect(() => {
+  //   window.addEventListener('message', (event) => {
+  //     if (event.origin === 'http://localhost:3001') {
+  //       // console.log('Message from popup:', event)
+  //       // console.log(1324, event.data)
+
+  //       const fullName = event.data.name.value
+  //       const firstName = fullName.split(' ')[0]
+  //       const lastName = fullName.substring(firstName.length).trim()
+
+  //       setTimeout(() => {
+  //         formik.setValues({
+  //           ...formik.values,
+  //           firstname: firstName || '',
+  //           lastname: lastName || '',
+  //           date_of_birth: event.data?.dob?.value || '',
+  //           identification_no: event.data?.uinfin?.value || '',
+  //           mobilephone_1: event.data?.mobileno.nbr?.value || '',
+  //           email_1: event.data?.email?.value || '',
+  //           address_contact_info: formik.values.address_contact_info.map((item, i) =>
+  //             i === 0
+  //               ? {
+  //                   ...item,
+  //                   postal_code: event.data.regadd.postal.value,
+  //                   street_1: event.data.regadd.street.value,
+  //                 }
+  //               : item
+  //           ),
+
+  //           // company_name: data?.employment?.value,
+  //         })
+  //       }, 1000)
+  //     }
+  //   })
+  // }, [])
+
+  // async function goToSingpass() {
+  //   const dataPopup = window.open(
+  //     'http://localhost:3001/singPass.html',
+  //     'sharer',
+  //     'toolbar=0,status=0,width=1200,height=900,align=center,menubar=no,location=no'
+  //   )
+
+  //   dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
+  // }
 
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
