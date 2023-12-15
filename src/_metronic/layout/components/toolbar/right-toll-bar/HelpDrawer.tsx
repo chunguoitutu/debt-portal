@@ -26,8 +26,7 @@ const HelpDrawer = () => {
       setData(res?.data?.data)
       setCheckPending(Number(res?.data?.data?.application?.status))
     })
-  }, [])
-  console.log(applicationIdEdit, '1')
+  }, [applicationIdEdit])
 
   const configBackgroudCheck = {
     title: 'Background check',
