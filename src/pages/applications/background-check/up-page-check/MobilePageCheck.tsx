@@ -68,6 +68,7 @@ const MobilePageCheck = ({handleShow, payload}: Props) => {
         setSearch={setSearch}
         search={search}
         handleClose={handleShow}
+        mobile={true}
         dataSearch={dataSearch}
       />
     </div>
