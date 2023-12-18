@@ -83,7 +83,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   useEffect(() => {
     if (!company_id) return
     window.addEventListener('message', (event) => {
-      if (event.origin === 'http://localhost:3001') {
+      if (event.origin === 'http://54.255.250.147:3001/') {
         // console.log(1324, event.data)
 
         const fullName = event.data.name.value
@@ -255,11 +255,12 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
   async function goToSingpass() {
     const dataPopup = window.open(
-      'http://localhost:3001/singPass.html',
+      // 'http://localhost:3001/singPass.html',
+      'http://54.255.250.147:3001/',
       'sharer',
       `resizeable=yes,width=1100,height=900,top=75,left=2300`
     )
-    dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
+    dataPopup?.postMessage({message: 'Singpass'}, 'http://54.255.250.147:3001/')
   }
 
   function renderComponent(item: ApplicationConfig) {
