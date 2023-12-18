@@ -36,14 +36,9 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
         updatedDataMarketing[key] = res?.data?.data
       })
 
+      console.log('123', values)
       setDataOption(updatedDataMarketing)
-      setDefaultValueCountry(updatedDataMarketing?.country.length > 0 ? 'Singapore' : '')
 
-      !applicationIdEdit &&
-        setFieldValue(
-          `address_contact_info[0][country]`,
-          updatedDataMarketing?.country.length > 0 ? 'Singapore' : ''
-        )
       !applicationIdEdit &&
         setFieldValue(
           `address_contact_info[0][address_type_id]`,
