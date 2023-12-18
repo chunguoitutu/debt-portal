@@ -83,8 +83,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   useEffect(() => {
     if (!company_id) return
     window.addEventListener('message', (event) => {
-      if (event.origin === 'http://54.255.250.147:3001/') {
+      if (event.origin === 'http://localhost:3001') {
         // console.log(1324, event.data)
+
+        console.log(123456, event.data)
 
         const fullName = event.data.name.value
         const {firstname, middlename, lastname} = splitName(fullName)
@@ -119,10 +121,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                   postal_code: event.data.regadd.postal.value,
                   // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
                   street_1: event.data.regadd.street.value,
+                  country: event.data.regadd.country.desc,
                 }
               : item
           ),
-          gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
+          gender: event.data.sex.desc === 'MALE' ? 'MALE' : 'FEMALE',
           residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
           annual_income: annual_api || '',
           cpf_month: cpf_months || '',
@@ -255,12 +258,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
   async function goToSingpass() {
     const dataPopup = window.open(
-      // 'http://localhost:3001/singPass.html',
-      'http://54.255.250.147:3001/',
+      'http://localhost:3001/singPass.html',
       'sharer',
       `resizeable=yes,width=1100,height=900,top=75,left=2300`
     )
-    dataPopup?.postMessage({message: 'Singpass'}, 'http://54.255.250.147:3001/')
+    dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
   }
 
   function renderComponent(item: ApplicationConfig) {
