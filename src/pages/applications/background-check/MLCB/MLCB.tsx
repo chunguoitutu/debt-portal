@@ -1,5 +1,6 @@
 import request from '@/app/axios'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
+import {convertErrorMessageResponse} from '@/app/utils'
 import Button from '@/components/button/Button'
 import {FC, useState} from 'react'
 import {useParams} from 'react-router-dom'
@@ -45,10 +46,12 @@ const MLCB: FC<Props> = ({onClose}) => {
         })
       }
     } catch (error) {
+      const message = convertErrorMessageResponse(error)
+
       onClose()
       swalConfirm.fire({
         icon: 'error',
-        title: 'MLCB Rejected',
+        title: message,
         showCancelButton: false,
         confirmButtonText: 'OK',
         customClass: {
