@@ -132,7 +132,7 @@ const HelpDrawer = () => {
         {showSearchCheck && (
           <MobileGoogleSearch
             payload={`${data.customer?.firstname} ${data.customer?.middlename}${
-              !!data.customer?.middlename && ' '
+              !!data.customer?.middlename ? ' ' : ''
             }${data.customer?.lastname}`}
             handleShow={() => setShowSearchCheck(false)}
           />

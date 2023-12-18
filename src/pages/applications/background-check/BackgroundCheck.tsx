@@ -94,7 +94,7 @@ const BackgroundCheck = ({data}: props) => {
       {showSearchCheck && !!applicationIdEdit && data.application?.status === 1 && (
         <WrapperGoogleSearch
           payload={`${data?.customer?.firstname} ${data?.customer?.middlename}${
-            !!data?.customer?.middlename && ' '
+            !!data?.customer?.middlename ? ' ' : ''
           }${data?.customer?.lastname}`}
           show={showSearchCheck}
           handleClose={() => setShowSearchCheck(false)}
