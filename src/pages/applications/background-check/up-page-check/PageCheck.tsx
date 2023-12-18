@@ -1,11 +1,10 @@
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {KTIcon} from '@/_metronic/helpers'
-import GoogleSearch from './GoogleSearch'
 import {useEffect, useState} from 'react'
 import request from '@/app/axios'
-import {useParams} from 'react-router-dom'
 import {swalToast} from '@/app/swal-notification'
+import GoogleSearchPageCheck from '.'
 
 type Props = {
   show: boolean
@@ -13,15 +12,21 @@ type Props = {
   payload: string
 }
 const modalsRoot = document.getElementById('root-modals') || document.body
-const WrapperGoogleSearch = ({show, handleClose, payload}: Props) => {
+const PageCheckDeskTop = ({show, handleClose, payload}: Props) => {
+  const [search, setSearch] = useState(payload || '')
+  const [loadApi, setLoadApi] = useState(false)
+  const [loadApiCheck, setLoadApiCheck] = useState(false)
   const [dataSearch, setDataSeacrch] = useState({
     url: '',
     screenshot: '',
   })
 
   useEffect(() => {
+    setLoadApiCheck(true)
     request
-      .get('/google-search/google/' + `${payload}`)
+      .post('/google-search/up-page-check', {
+        searchTerm: search,
+      })
       .then((data) => {
         setDataSeacrch({
           screenshot: data?.data?.screenshot || '',
@@ -36,7 +41,10 @@ const WrapperGoogleSearch = ({show, handleClose, payload}: Props) => {
           title: `System error, please try again in a few minutes`,
         })
       })
-  }, [])
+      .finally(() => {
+        setLoadApiCheck(false)
+      })
+  }, [loadApi])
   return createPortal(
     <Modal
       id='kt_modal_create_app'
@@ -65,7 +73,7 @@ const WrapperGoogleSearch = ({show, handleClose, payload}: Props) => {
             }}
             className='mb-0px'
           >
-            Google Search
+            UN Page Check
           </h2>
           <div
             style={{width: '24px', height: '24px'}}
@@ -75,11 +83,20 @@ const WrapperGoogleSearch = ({show, handleClose, payload}: Props) => {
             <KTIcon className='fs-1' iconName='cross' />
           </div>
         </div>
-        <GoogleSearch handleClose={handleClose} dataSearch={dataSearch} />
+        <GoogleSearchPageCheck
+          handleReGetApi={() => {
+            setLoadApi(!loadApi)
+          }}
+          loadApiCheck={loadApiCheck}
+          setSearch={setSearch}
+          search={search}
+          handleClose={handleClose}
+          dataSearch={dataSearch}
+        />
       </div>
     </Modal>,
     modalsRoot
   )
 }
 
-export default WrapperGoogleSearch
+export default PageCheckDeskTop
