@@ -133,6 +133,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           cpf_date: cpf_date || '',
           cpf_employer: cpf_employer || '',
         }
+
+        console.log(event.data.regadd.country.desc, 1231231)
         handleFillFormSingpass(values)
 
         setTimeout(() => {
@@ -152,6 +154,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                     postal_code: event.data.regadd.postal.value,
                     // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
                     street_1: event.data.regadd.street.value,
+                    country: event.data.regadd.country.desc,
                   }
                 : item
             ),

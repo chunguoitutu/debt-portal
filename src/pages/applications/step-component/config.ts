@@ -599,8 +599,8 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     column: 6,
     className: 'justify-content-xxl-end',
     keyLabelOfOptions: 'nicename',
-    keyValueOfOptions: 'nicename',
-    defaultValue: 'Singapore', //default value country is Singapore
+    keyValueOfOptions: 'name',
+    defaultValue: 'SINGAPORE', //default value country is Singapore
     dependencyApi: 'config/country/listing',
     required: true,
     validationFormik: Yup.string()
