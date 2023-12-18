@@ -7,6 +7,7 @@ import WrapperGoogleSearch from './google-search'
 import {useParams} from 'react-router-dom'
 import PopupValidationPhoneNumber from './validate-phone-number/PopupValidationPhoneNumber'
 import MLCBReport from './MLCB/MLCBReport'
+import PageCheckDeskTop from './up-page-check/PageCheck'
 interface props {
   data: any
 }
@@ -16,6 +17,7 @@ const BackgroundCheck = ({data}: props) => {
 
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
   const [showSearchCheck, setShowSearchCheck] = useState<boolean>(false)
+  const [showSearchPageCheck, setShowSearchPageCheck] = useState<boolean>(false)
 
   const {applicationIdEdit} = useParams()
 
@@ -67,6 +69,15 @@ const BackgroundCheck = ({data}: props) => {
           setShowSearchCheck(true)
         },
       },
+      {
+        value: 'UN Page Check',
+        icon: <Icons name={'GoogleCheck'} />,
+        background: '#E2E5E7',
+        show: !!applicationIdEdit && data.application?.status === 1,
+        onclick: () => {
+          setShowSearchPageCheck(true)
+        },
+      },
     ],
   }
 
@@ -82,9 +93,19 @@ const BackgroundCheck = ({data}: props) => {
       )}
       {showSearchCheck && !!applicationIdEdit && data.application?.status === 1 && (
         <WrapperGoogleSearch
-          payload={`${data?.customer?.firstname} ${data?.customer?.middlename}  ${data?.customer?.lastname}`}
+          payload={`${data?.customer?.firstname} ${data?.customer?.middlename}${
+            data?.customer?.middlename && ''
+          }${data?.customer?.lastname}`}
           show={showSearchCheck}
           handleClose={() => setShowSearchCheck(false)}
+        />
+      )}
+
+      {showSearchPageCheck && !!applicationIdEdit && data.application?.status === 1 && (
+        <PageCheckDeskTop
+          payload={`${data?.customer?.lastname}`}
+          show={showSearchPageCheck}
+          handleClose={() => setShowSearchPageCheck(false)}
         />
       )}
     </div>

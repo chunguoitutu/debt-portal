@@ -115,7 +115,7 @@ const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
     }, '')
 
     if (!otpExpire || otpVerify.length > 6 || otpVerify !== otp) {
-      setError('Please enter valid verification code and try again.')
+      setError('The phone OTP is not match, please try again, or sesend again.')
       return
     }
 
@@ -159,7 +159,7 @@ const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
             </div>
 
             <div className='place-control align-self-start d-flex flex-column gap-8px my-32px'>
-              <h3 className='fs-16'>Type Your 6 Digit Verification Code</h3>
+              <h3 className='fs-16 fw-semibold'>Type your 6-digit verification code</h3>
 
               <div className='d-flex align-items-center gap-12px'>
                 {inputs.map((inputRef, index) => (

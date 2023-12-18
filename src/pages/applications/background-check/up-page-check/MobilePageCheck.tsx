@@ -1,22 +1,29 @@
 import {KTIcon} from '@/_metronic/helpers'
 import React, {useEffect, useState} from 'react'
-import GoogleSearch from './GoogleSearch'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
+import GoogleSearchPageCheck from '.'
 
 type Props = {
   handleShow: () => void
   payload: string
 }
 
-const MobileGoogleSearch = ({handleShow, payload}: Props) => {
+const MobilePageCheck = ({handleShow, payload}: Props) => {
+  const [search, setSearch] = useState(payload || '')
+  const [loadApi, setLoadApi] = useState(false)
+  const [loadApiCheck, setLoadApiCheck] = useState(false)
   const [dataSearch, setDataSeacrch] = useState({
     url: '',
     screenshot: '',
   })
+
   useEffect(() => {
+    setLoadApiCheck(true)
     request
-      .get('/google-search/google/' + `${payload}`)
+      .post('/google-search/up-page-check', {
+        searchTerm: search,
+      })
       .then((data) => {
         setDataSeacrch({
           screenshot: data?.data?.screenshot || '',
@@ -31,7 +38,10 @@ const MobileGoogleSearch = ({handleShow, payload}: Props) => {
           title: `System error, please try again in a few minutes`,
         })
       })
-  }, [])
+      .finally(() => {
+        setLoadApiCheck(false)
+      })
+  }, [loadApi])
   return (
     <div className='w-100'>
       <div
@@ -41,7 +51,7 @@ const MobileGoogleSearch = ({handleShow, payload}: Props) => {
           height: '98px',
         }}
       >
-        <h5 className='font-bold fs-20 text-gray-900 m-0'> Google Search</h5>
+        <h5 className='font-bold fs-20 text-gray-900 m-0'> UN Page Check</h5>
         <button
           type='button'
           className='btn btn-sm btn-icon explore-btn-dismiss '
@@ -50,9 +60,18 @@ const MobileGoogleSearch = ({handleShow, payload}: Props) => {
           <KTIcon iconName='cross' className='fs-2' />
         </button>
       </div>
-      <GoogleSearch dataSearch={dataSearch} handleClose={handleShow} mobile={true} />
+      <GoogleSearchPageCheck
+        handleReGetApi={() => {
+          setLoadApi(!loadApi)
+        }}
+        loadApiCheck={loadApiCheck}
+        setSearch={setSearch}
+        search={search}
+        handleClose={handleShow}
+        dataSearch={dataSearch}
+      />
     </div>
   )
 }
 
-export default MobileGoogleSearch
+export default MobilePageCheck

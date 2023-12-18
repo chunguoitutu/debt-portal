@@ -6,6 +6,7 @@ import Icons from '@/components/icons'
 import MobileMLCB from '@/pages/applications/background-check/MLCB/MobileMLCB'
 import MobileGoogleSearch from '@/pages/applications/background-check/google-search/MobileGoogleSearch'
 import MobileRepayment from '@/pages/applications/background-check/repayment-schedule-calculator/MobileRepayment'
+import MobilePageCheck from '@/pages/applications/background-check/up-page-check/MobilePageCheck'
 import MobileValidationPhoneNumber from '@/pages/applications/background-check/validate-phone-number/MobileValidationPhone'
 import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
@@ -16,6 +17,7 @@ const HelpDrawer = () => {
   const [data, setData] = useState<any>({})
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
   const [showSearchCheck, setShowSearchCheck] = useState<boolean>(false)
+  const [showSearchPageCheck, setShowSearchPageCheck] = useState<boolean>(false)
   const [checkPending, setCheckPending] = useState(0)
   const {applicationIdEdit} = useParams()
 
@@ -41,6 +43,7 @@ const HelpDrawer = () => {
           setShowValidationPhone(false)
           setShowMLCBReport(false)
           setShowSearchCheck(false)
+          setShowSearchPageCheck(false)
         },
       },
       {
@@ -62,6 +65,7 @@ const HelpDrawer = () => {
           setShowValidationPhone(true)
           setShowMLCBReport(false)
           setShowSearchCheck(false)
+          setShowSearchPageCheck(false)
         },
       },
       {
@@ -74,6 +78,7 @@ const HelpDrawer = () => {
           setShowValidationPhone(false)
           setShowMLCBReport(true)
           setShowSearchCheck(false)
+          setShowSearchPageCheck(false)
         },
       },
       {
@@ -86,6 +91,20 @@ const HelpDrawer = () => {
           setShowValidationPhone(false)
           setShowMLCBReport(false)
           setShowSearchCheck(true)
+          setShowSearchPageCheck(false)
+        },
+      },
+      {
+        value: 'UN Page Check',
+        icon: <Icons name={'GoogleCheck'} />,
+        background: '#E2E5E7',
+        show: !!applicationIdEdit && data.application?.status === 1,
+        onclick: () => {
+          setShowSearchPageCheck(true)
+          setShow(false)
+          setShowValidationPhone(false)
+          setShowMLCBReport(false)
+          setShowSearchCheck(false)
         },
       },
     ],
@@ -94,7 +113,10 @@ const HelpDrawer = () => {
     <div
       id='kt_help'
       style={{
-        width: show || showValidationPhone || showMLCBReport || showSearchCheck ? '100%' : '350px',
+        width:
+          show || showValidationPhone || showMLCBReport || showSearchCheck || showSearchPageCheck
+            ? '100%'
+            : '350px',
       }}
       className='bg-body  d'
       data-kt-drawer='true'
@@ -109,7 +131,9 @@ const HelpDrawer = () => {
         {show && <MobileRepayment handleShow={() => setShow(false)} />}
         {showSearchCheck && (
           <MobileGoogleSearch
-            payload={`${data.customer?.firstname} ${data.customer?.middlename}  ${data.customer?.lastname}`}
+            payload={`${data.customer?.firstname} ${data.customer?.middlename}${
+              !!data.customer?.middlename && ''
+            }${data.customer?.lastname}`}
             handleShow={() => setShowSearchCheck(false)}
           />
         )}
@@ -117,6 +141,12 @@ const HelpDrawer = () => {
           <MobileValidationPhoneNumber handleShow={() => setShowValidationPhone(false)} />
         )}
         {showMLCBReport && <MobileMLCB handleShow={() => setShowMLCBReport(false)} />}
+        {showSearchPageCheck && (
+          <MobilePageCheck
+            payload={`${data.customer?.lastname}`}
+            handleShow={() => setShowSearchPageCheck(false)}
+          />
+        )}
 
         <div className='card shadow-none rounded-0 w-350px flex-shrink-0'>
           <div
