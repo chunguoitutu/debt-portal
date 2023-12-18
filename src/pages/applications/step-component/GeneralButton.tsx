@@ -120,7 +120,6 @@ const GeneralButton: FC<Props> = ({
     }
     return true
   }, [values, priority])
-  console.log(checkApprove || !checkbugApprove)
 
   const {applicationIdEdit} = useParams()
 

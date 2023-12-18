@@ -414,23 +414,23 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'HDB',
     options: [
       {
-        value: '1 Room',
+        value: '1-ROOM FLAT (HDB)',
         label: '1 Room',
       },
       {
-        value: '2 Room',
+        value: '2-ROOM FLAT (HDB)',
         label: '2 Room',
       },
       {
-        value: '3 Room',
+        value: '3-ROOM FLAT (HDB)',
         label: '3 Room',
       },
       {
-        value: '4 Room',
+        value: '4-ROOM FLAT (HDB)',
         label: '4 Room',
       },
       {
-        value: '5 Room',
+        value: '5-ROOM FLAT (HDB)',
         label: '5 Room',
       },
     ],
@@ -439,7 +439,7 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'EXECUTIVE',
     options: [
       {
-        value: 'Exec',
+        value: 'EXECUTIVE FLAT (HDB)',
         label: 'Exec',
       },
     ],
@@ -448,15 +448,15 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'PRIVATE',
     options: [
       {
-        value: 'Apartment',
+        value: 'apartment',
         label: 'Apartment',
       },
       {
-        value: 'Condo',
+        value: 'CONDOMINIUM',
         label: 'Condo',
       },
       {
-        value: 'Landed',
+        value: 'landed',
         label: 'Landed',
       },
     ],
