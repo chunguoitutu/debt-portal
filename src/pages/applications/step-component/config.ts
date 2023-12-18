@@ -563,10 +563,6 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'City',
     column: 6,
-    required: true,
-    validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('City'))
-      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'state',
@@ -575,10 +571,6 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'State',
     column: 6,
     className: 'justify-content-xxl-end',
-    required: true,
-    validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('State'))
-      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'postal_code',
