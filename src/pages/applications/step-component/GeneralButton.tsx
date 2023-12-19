@@ -164,7 +164,7 @@ const GeneralButton: FC<Props> = ({
                 checkbugApprove
                   ? swalConfirm.fire({
                       icon: 'error',
-                      title: 'You Do Not Have Sufficient Permissions To Approve This Application',
+                      title: 'No permission to proceed. Please contact company admin',
                       showCancelButton: false,
                       confirmButtonText: 'OK',
                       customClass: {

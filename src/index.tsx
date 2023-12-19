@@ -28,6 +28,7 @@ import {MetronicI18nProvider} from './_metronic/i18n/Metronici18n'
 import {PrimeReactProvider} from 'primereact/api'
 import 'primereact/resources/themes/lara-light-indigo/theme.css'
 import {AuthProvider} from './app/context/AuthContext'
+import {SocketProvider} from './app/context/SocketContext'
 /**
  * Creates `axios-mock-adapter` instance for provided `axios` instance, add
  * basic Metronic mocks and returns it.
@@ -48,9 +49,11 @@ if (container) {
     <QueryClientProvider client={queryClient}>
       <MetronicI18nProvider>
         <AuthProvider>
-          <PrimeReactProvider>
-            <AppRoutes />
-          </PrimeReactProvider>
+          <SocketProvider>
+            <PrimeReactProvider>
+              <AppRoutes />
+            </PrimeReactProvider>
+          </SocketProvider>
         </AuthProvider>
       </MetronicI18nProvider>
     </QueryClientProvider>
