@@ -16,6 +16,8 @@ import Telephone from './Telephone'
 import HomeSmall from './HomeSmall'
 import {Mes} from './Mes'
 import GoogleCheck from './GoogleCheck'
+import Warning from './Warning'
+import FolderPdf from './FolderPdf'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -36,6 +38,8 @@ const icons = {
   HomeSmall: HomeSmall,
   Mes: Mes,
   GoogleCheck: GoogleCheck,
+  Warning: Warning,
+  FolderPdf: FolderPdf,
 }
 
 const Icons = ({name}) => {
