@@ -371,7 +371,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px hihihaha'>
           <div>
             <span className='fs-6 fw-medium text-gray-900'>
-              You Can Fil Out The Form Using Your Singpass
+              You Can Fill Out The Form Using Your Singpass
             </span>
             <br />
             <span className='fs-7 fw-normal text-gray-400'>Or fill the form to register</span>

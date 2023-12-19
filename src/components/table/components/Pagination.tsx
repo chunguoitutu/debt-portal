@@ -68,7 +68,7 @@ const Pagination = ({onChangePagePagination, isLoading = false, searchCriteria}:
             })}
           >
             <a
-              onClick={() => onChangePagePagination(currentPage - 1)}
+              onClick={() => onChangePagePagination(1)}
               style={{cursor: 'pointer'}}
               className='page-link'
             >

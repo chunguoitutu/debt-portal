@@ -8,6 +8,9 @@ import {useParams} from 'react-router-dom'
 import PopupValidationPhoneNumber from './validate-phone-number/PopupValidationPhoneNumber'
 import MLCBReport from './MLCB/MLCBReport'
 import PageCheckDeskTop from './up-page-check/PageCheck'
+import request from '@/app/axios'
+import {swalToast} from '@/app/swal-notification'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
 interface props {
   data: any
 }
@@ -76,6 +79,41 @@ const BackgroundCheck = ({data}: props) => {
         show: !!applicationIdEdit && data.application?.status === 1,
         onclick: () => {
           setShowSearchPageCheck(true)
+        },
+      },
+      {
+        value: 'CAs Check',
+        icon: <Icons name={'GoogleCheck'} />,
+        background: '#E2E5E7',
+        show: !!applicationIdEdit && data.application?.status === 1,
+        onclick: () => {
+          request
+            .post('/pdf/ca-check', {})
+            .then((data) => {
+              if (data?.data?.pdf) {
+                fetch(`data:application/pdf;base64,${data?.data?.pdf}`)
+                  .then((response) => response.blob())
+                  .then((blob) => {
+                    const blobUrl = URL.createObjectURL(blob)
+
+                    window.open(blobUrl, '_blank')
+                  })
+                  .catch(() => {
+                    swalToast.fire({
+                      icon: 'error',
+                      title: DEFAULT_MSG_ERROR,
+                    })
+                  })
+              }
+            })
+            .catch((e) => {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `System error, please try again in a few minutes`,
+              })
+            })
+            .finally(() => {})
         },
       },
     ],

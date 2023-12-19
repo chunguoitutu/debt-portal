@@ -436,22 +436,10 @@ export const Applications = () => {
         (values.loan_amount_requested > 3000 &&
           currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
-          values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > +values.six_months_income &&
           currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'new' &&
-          values.identification_type === 'singapore_nric_no') ||
-        (values.loan_amount_requested > 5000 &&
-          currentStep === 6 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
-          values.is_existing === 'existing' &&
-          values.identification_type === 'singapore_nric_no') ||
-        (values.loan_amount_requested > +values.six_months_income &&
-          currentStep === 6 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > 500 &&
           currentStep === 6 &&
@@ -463,7 +451,7 @@ export const Applications = () => {
           values.identification_type === 'foreign_identification_number') ||
         (values.loan_amount_requested > 3000 &&
           currentStep === 6 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 40000 &&
           10000 <= (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
           values.identification_type === 'foreign_identification_number')
       ) {
@@ -475,46 +463,19 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 3000`,
+            title: `Cannot borrow more than $3000`,
           })
         }
 
         if (
           values.loan_amount_requested > +values.six_months_income &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no'
         ) {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
-          })
-        }
-
-        if (
-          values.loan_amount_requested > 5000 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
-          values.is_existing === 'existing' &&
-          values.identification_type === 'singapore_nric_no'
-        ) {
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `Cannot borrow more than 5000`,
-          })
-        }
-
-        if (
-          values.loan_amount_requested > +values.six_months_income &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'existing' &&
-          values.identification_type === 'singapore_nric_no'
-        ) {
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
+            title: `Cannot borrow more than $${+values.six_months_income}`,
           })
         }
 
@@ -526,7 +487,7 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 500 `,
+            title: `Cannot borrow more than $500 `,
           })
         }
 
@@ -538,7 +499,7 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
+            title: `Cannot borrow more than $${+values.six_months_income}`,
           })
         }
 
@@ -551,7 +512,7 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 3000`,
+            title: `Cannot borrow more than $3000`,
           })
         }
       } else {

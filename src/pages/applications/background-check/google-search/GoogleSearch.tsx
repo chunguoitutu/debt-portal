@@ -80,14 +80,14 @@ const GoogleSearch = ({handleClose, dataSearch, mobile = false}: Props) => {
         }}
         className='d-flex flex-end btn-repayment-schedule-calculator p-30px'
       >
-        <Button onClick={handleClose} type='reset' className='btn-lg btn-secondary me-8px'>
+        <Button onClick={handleClose} type='reset' className='btn-lg fs-14 btn-secondary me-8px'>
           Cancel
         </Button>
         <Button
           disabled={!dataSearch?.url}
           onClick={() => handleLinkClick(dataSearch?.url)}
           type='submit'
-          className='btn-lg btn-primary'
+          className='btn-lg btn-primary fs-14'
         >
           Go to Google
         </Button>

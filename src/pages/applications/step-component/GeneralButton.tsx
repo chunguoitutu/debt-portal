@@ -32,20 +32,7 @@ const GeneralButton: FC<Props> = ({
     if (priority <= 2) {
       return false
     }
-    if (
-      (values.loan_amount_requested <= 3000 &&
-        priority > 2 &&
-        values.is_existing === 'new' &&
-        priority > 2 &&
-        values.identification_type === 'singapore_nric_no') ||
-      (values.loan_amount_requested <= 5000 &&
-        values.is_existing === 'existing' &&
-        priority > 2 &&
-        values.identification_type === 'singapore_nric_no') ||
-      (values.loan_amount_requested <= 3000 &&
-        priority > 2 &&
-        values.identification_type === 'foreign_identification_number')
-    ) {
+    if (values.loan_amount_requested <= 3000 && priority > 2) {
       return false
     }
 
@@ -54,27 +41,7 @@ const GeneralButton: FC<Props> = ({
   const checkbugApprove = useMemo(() => {
     if (
       values.loan_amount_requested > 3000 &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 20000 &&
-      values.identification_type === 'singapore_nric_no'
-    ) {
-      setNumber(3000)
-      return false
-    }
-
-    if (
-      values.loan_amount_requested > +values.six_months_income &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-      values.is_existing === 'new' &&
-      values.identification_type === 'singapore_nric_no'
-    ) {
-      setNumber(+values.six_months_income)
-      return false
-    }
-
-    if (
-      values.loan_amount_requested > 5000 &&
       (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
-      values.is_existing === 'existing' &&
       values.identification_type === 'singapore_nric_no'
     ) {
       setNumber(3000)
@@ -84,7 +51,6 @@ const GeneralButton: FC<Props> = ({
     if (
       values.loan_amount_requested > +values.six_months_income &&
       (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-      values.is_existing === 'existing' &&
       values.identification_type === 'singapore_nric_no'
     ) {
       setNumber(+values.six_months_income)
@@ -111,11 +77,11 @@ const GeneralButton: FC<Props> = ({
 
     if (
       values.loan_amount_requested > 3000 &&
-      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
+      (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 40000 &&
       10000 <= (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
       values.identification_type === 'foreign_identification_number'
     ) {
-      setNumber(300)
+      setNumber(3000)
       return false
     }
     return true
@@ -178,7 +144,7 @@ const GeneralButton: FC<Props> = ({
                   : swalToast.fire({
                       timer: 1500,
                       icon: 'error',
-                      title: `Cannot borrow more than ${number}`,
+                      title: `Cannot borrow more than $${number}`,
                     })
               } else {
                 swalConfirm.fire({
