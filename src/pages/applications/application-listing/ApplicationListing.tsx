@@ -30,6 +30,7 @@ import {Input} from '@/components/input'
 import Pagination from '@/components/table/components/Pagination'
 import {FilterApplication} from './FilterApplication'
 import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
+import {useSocket} from '@/app/context/SocketContext'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -51,6 +52,7 @@ const ApplicationListing = () => {
   const {showAction = true, showEditButton} = settings || {}
 
   const {company_id} = useAuth()
+  const {socket} = useSocket()
 
   // Get search criteria from session
   const sessionData = isObject(parseJson(sessionStorage.getItem('application') || ''))
@@ -74,7 +76,20 @@ const ApplicationListing = () => {
     currentPage: sessionData?.currentPage || 1,
     total: 0,
   })
+  const [newDataSocket, setNewDataSocket] = React.useState<number>(0) // new data in realtime
   const {pageSize, currentPage} = searchCriteria
+
+  useEffect(() => {
+    const handleDetectNewApplication = () => {
+      setNewDataSocket((prev) => prev + 1)
+    }
+
+    socket?.on('newApplication', handleDetectNewApplication)
+
+    return () => {
+      socket?.off('newApplication', handleDetectNewApplication) // Clean up event listener on component unmount
+    }
+  }, [socket])
 
   /**
    * get api or filter
@@ -348,6 +363,18 @@ const ApplicationListing = () => {
     setLoadApi(!loadApi)
   }
 
+  // Reset force data
+  function handleRefreshDataSocket() {
+    setDataFilter({})
+    setSearchValue('')
+    setNewDataSocket(0)
+    setSearchCriteria({
+      ...searchCriteria,
+      currentPage: 1,
+    })
+    setLoadApi(!loadApi)
+  }
+
   return (
     <div className='card p-5 h-fit-content'>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
@@ -400,7 +427,7 @@ const ApplicationListing = () => {
                 backgroundColor: Object.keys(checkFilter).length === 0 ? '#f1f1f4' : '#c4cada',
               }}
               onClick={showInputFilter}
-              className={` align-self-center m-2 fs-6 text-primary h-45px `}
+              className={` align-self-center fs-6 text-primary h-45px `}
               disabled={false}
             >
               <Icons name={'filterIcon'} />
@@ -409,7 +436,7 @@ const ApplicationListing = () => {
 
             <Link to='/application/create'>
               <Button
-                className='btn-primary align-self-center m-2 fs-6 text-white h-45px'
+                className='btn-primary align-self-center ms-4 fs-6 text-white h-45px'
                 disabled={false}
               >
                 <Icons name={'AddIcon'} />
@@ -418,6 +445,20 @@ const ApplicationListing = () => {
             </Link>
           </div>
         </div>
+
+        {!!newDataSocket && (
+          <div className='bg-primary-light p-16px px-32px my-16px d-flex align-items-center justify-content-between gap-16px'>
+            <span className='fs-16 text-primary'>
+              Detected <span className='fw-bold'>{newDataSocket}</span> new records. Do you want to
+              refresh the data now?
+            </span>
+
+            <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
+              Refresh
+            </Button>
+          </div>
+        )}
+
         <KTCardBody className='py-4'>
           <div className='table-responsive'>
             <table

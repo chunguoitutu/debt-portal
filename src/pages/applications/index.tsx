@@ -29,6 +29,7 @@ import clsx from 'clsx'
 import Reject from './step-component/reject/Reject'
 import Icons from '@/components/icons'
 import Cookies from 'js-cookie'
+import {useSocket} from '@/app/context/SocketContext'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -89,6 +90,7 @@ export const Applications = () => {
   }, [STEP_APPLICATION])
 
   const {applicationIdEdit} = useParams()
+  const {socket} = useSocket()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -748,6 +750,9 @@ export const Applications = () => {
           icon: 'success',
         })
       }
+
+      // When create successfully -> all user current company will receive notification
+      !applicationIdEdit && socket?.emit('createApplicationSuccess', 1)
     } catch (error: any) {
       const message = convertErrorMessageResponse(error)
 
