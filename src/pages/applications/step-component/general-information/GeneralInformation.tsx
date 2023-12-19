@@ -84,10 +84,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     if (!company_id) return
     window.addEventListener('message', (event) => {
       if (event.origin === 'http://localhost:3001') {
-        // console.log(1324, event.data)
-
-        console.log(123456, event.data)
-
         const fullName = event.data.name.value
         const {firstname, middlename, lastname} = splitName(fullName)
 
@@ -134,7 +130,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           cpf_employer: cpf_employer || '',
         }
 
-        console.log(event.data.regadd.country.desc, 1231231)
         handleFillFormSingpass(values)
 
         setTimeout(() => {

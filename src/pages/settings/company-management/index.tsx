@@ -2,14 +2,14 @@ import * as React from 'react'
 import {useFormik} from 'formik'
 import moment from 'moment'
 
-import {COMPANY_MANAGEMENT_CONFIG} from './config'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {swalToast} from '@/app/swal-notification'
 import request from '@/app/axios'
+import {CREATE_COMPANY_CONFIG} from './config'
 
 export const CompanyManagement = () => {
-  const {settings, rows} = COMPANY_MANAGEMENT_CONFIG
+  const {settings, rows} = CREATE_COMPANY_CONFIG('Organization')
   const {endpoint, validationFormik} = settings || {}
   const [information, setInformation] = React.useState<any>(null)
   const [loadapi, setLoadApi] = React.useState<any>(false)
