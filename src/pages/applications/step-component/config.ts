@@ -99,6 +99,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     className: 'justify-content-xxl-end',
     required: true,
     validationFormik: Yup.string()
+      .min(4, 'Minimum 4 characters')
       .max(64, convertMessageErrorMaximum(64))
       .required(convertMessageErrorRequired('NRIC No./FIN')),
   },

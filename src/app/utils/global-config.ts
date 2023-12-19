@@ -596,13 +596,13 @@ export const OBLIGATION: AdvanceConfig[] = [
 export const ROUTER_SETTING = [
   {
     path: 'company-management',
-    labelBreadCrumbs: 'Organization Management',
+    labelBreadCrumbs: 'Organization Information',
     component: CompanyManagement,
     priority: [1],
   },
   {
     path: 'companies',
-    labelBreadCrumbs: 'Company Listing',
+    labelBreadCrumbs: 'Business Listing',
     priority: [1],
     component: CompanyListing,
   },
@@ -626,7 +626,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'roles',
-    labelBreadCrumbs: 'Role Listing',
+    labelBreadCrumbs: 'Manager Roles',
     priority: [1, 2],
     component: RolePage,
   },
@@ -665,7 +665,7 @@ export const ROUTER_SETTING = [
 export const MENU_SETTING_LISTING: MenuSettingItem[] = [
   {
     activeKey: uuidv4(),
-    title: 'Organization Management',
+    title: 'Organization',
     priority: [1],
     children: [
       {
@@ -677,33 +677,27 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       {
         id: uuidv4(),
         to: '/settings/companies',
-        label: 'Company Listing',
+        label: 'Business Listing',
         priority: [1],
       },
-    ],
-  },
-  {
-    activeKey: uuidv4(),
-    title: 'User Management',
-    priority: [1, 2],
-    children: [
       {
         id: uuidv4(),
         to: '/settings/users',
-        label: 'User Listing',
+        label: 'Manager  Users',
         priority: [1, 2],
       },
       {
         id: uuidv4(),
         to: '/settings/roles',
-        label: 'Role Listing',
+        label: 'Manager Roles',
         priority: [1, 2],
       },
     ],
   },
+
   {
     activeKey: uuidv4(),
-    title: 'Listing',
+    title: 'Business Listing',
     priority: [1],
     children: [
       {
@@ -759,7 +753,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       {
         id: uuidv4(),
         to: '/settings/other',
-        label: 'Config',
+        label: 'Configurations',
         priority: [1],
       },
     ],
