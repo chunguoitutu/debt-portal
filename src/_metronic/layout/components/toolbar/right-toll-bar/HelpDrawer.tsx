@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {KTIcon} from '@/_metronic/helpers'
 import request from '@/app/axios'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
+import {swalToast} from '@/app/swal-notification'
 import Icons from '@/components/icons'
 import MobileMLCB from '@/pages/applications/background-check/MLCB/MobileMLCB'
 import MobileGoogleSearch from '@/pages/applications/background-check/google-search/MobileGoogleSearch'
@@ -105,6 +107,41 @@ const HelpDrawer = () => {
           setShowValidationPhone(false)
           setShowMLCBReport(false)
           setShowSearchCheck(false)
+        },
+      },
+      {
+        value: 'CAs Check',
+        icon: <Icons name={'GoogleCheck'} />,
+        background: '#E2E5E7',
+        show: !!applicationIdEdit && data.application?.status === 1,
+        onclick: () => {
+          request
+            .post('/pdf/ca-check', {})
+            .then((data) => {
+              if (data?.data?.pdf) {
+                fetch(`data:application/pdf;base64,${data?.data?.pdf}`)
+                  .then((response) => response.blob())
+                  .then((blob) => {
+                    const blobUrl = URL.createObjectURL(blob)
+
+                    window.open(blobUrl, '_blank')
+                  })
+                  .catch(() => {
+                    swalToast.fire({
+                      icon: 'error',
+                      title: DEFAULT_MSG_ERROR,
+                    })
+                  })
+              }
+            })
+            .catch((e) => {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `System error, please try again in a few minutes`,
+              })
+            })
+            .finally(() => {})
         },
       },
     ],

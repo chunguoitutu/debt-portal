@@ -476,6 +476,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'Past 6 Month Gross Income',
     typeInput: 'money',
+    disabled: true,
   },
 
   {

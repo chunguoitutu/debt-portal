@@ -142,14 +142,14 @@ const GoogleSearchPageCheck = ({
         }}
         className='d-flex flex-end btn-repayment-schedule-calculator p-30px'
       >
-        <Button onClick={handleClose} type='reset' className='btn-lg btn-secondary me-8px'>
+        <Button onClick={handleClose} type='reset' className='btn-lg btn-secondary me-8px fs-14'>
           Cancel
         </Button>
         <Button
           disabled={!dataSearch?.url}
           onClick={() => handleLinkClick(dataSearch?.url)}
           type='submit'
-          className='btn-lg btn-primary'
+          className='btn-lg btn-primary fs-14'
         >
           Go to UN Page Check
         </Button>

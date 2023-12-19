@@ -10,6 +10,7 @@ import LoanTypes from '../../pages/settings/loan-type/LoanType'
 import JobType from '../../pages/settings/job-type/JobType'
 import AddressType from '../../pages/settings/address-type/AddressType'
 import MarkettingType from '../../pages/settings/marketing-type/MarketingType'
+import UploadFileCasCheck from '@/pages/settings/UploadFileCasCheck'
 
 export const ROLE_PRIORITY: Option[] = [
   {
@@ -653,6 +654,12 @@ export const ROUTER_SETTING = [
     priority: [1],
     component: RejectionType,
   },
+  {
+    path: 'upload-pdf-cas-check',
+    labelBreadCrumbs: 'Upload File Pdf Cas Check',
+    priority: [1, 2],
+    component: UploadFileCasCheck,
+  },
 ]
 
 export const MENU_SETTING_LISTING: MenuSettingItem[] = [
@@ -743,6 +750,12 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
     title: 'Settings',
     priority: [1],
     children: [
+      {
+        id: uuidv4(),
+        to: '/settings/upload-pdf-cas-check',
+        label: 'Upload File Pdf Cas Check',
+        priority: [1, 2],
+      },
       {
         id: uuidv4(),
         to: '/settings/other',
