@@ -50,9 +50,10 @@ const GoogleSearch = ({handleClose, dataSearch, mobile = false}: Props) => {
               onClick={() => handleLinkClick(dataSearch?.url)}
               style={{
                 color: '#4147D5',
+                fontStyle: 'italic',
                 overflowWrap: 'break-word',
               }}
-              className='fs-16  fw-semibold m-0  mw-100 cursor-pointer text-wrap'
+              className='fs-16  fw-semibold m-0  mw-100 cursor-pointer '
             >
               {dataSearch?.url}
             </p>
