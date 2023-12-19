@@ -602,7 +602,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'companies',
-    labelBreadCrumbs: 'Business Listing',
+    labelBreadCrumbs: 'Business Units',
     priority: [1],
     component: CompanyListing,
   },
@@ -666,7 +666,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
   {
     activeKey: uuidv4(),
     title: 'Organization',
-    priority: [1],
+    priority: [1, 2],
     children: [
       {
         id: uuidv4(),
@@ -677,7 +677,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       {
         id: uuidv4(),
         to: '/settings/companies',
-        label: 'Business Listing',
+        label: 'Business Units',
         priority: [1],
       },
       {

@@ -36,7 +36,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
         updatedDataMarketing[key] = res?.data?.data
       })
 
-      console.log('123', values)
       setDataOption(updatedDataMarketing)
 
       !applicationIdEdit &&

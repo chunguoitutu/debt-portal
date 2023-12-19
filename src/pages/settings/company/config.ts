@@ -10,7 +10,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     endPointDelete: '/config/company',
     endPointGetListing: '/config/company',
     messageDeleteSuccess: 'Company "/%/" successfully deleted',
-    buttonAddNew: 'New Company',
+    buttonAddNew: 'New Unit',
     showMessageTitle: 'company_name',
     showAddNewButton: true,
   },
@@ -21,7 +21,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'company_name',
-      name: 'Company Name',
+      name: 'Business Name',
       color: '#252F4A',
     },
     {

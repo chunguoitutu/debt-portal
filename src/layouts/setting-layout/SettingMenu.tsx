@@ -41,7 +41,7 @@ const SettingMenu = () => {
         {MENU_SETTING_LISTING.filter((item) => item.priority.includes(priority)).map(
           (menu, index) => {
             return (
-              <Accordion.Item eventKey={menu.activeKey} key={index}>
+              <Accordion.Item eventKey={activeKey} key={index}>
                 <Accordion.Header>{menu.title}</Accordion.Header>
                 <Accordion.Body>
                   {menu.children

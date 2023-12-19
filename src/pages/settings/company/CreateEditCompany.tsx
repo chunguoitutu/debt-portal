@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useMemo, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -10,7 +10,7 @@ import {KTIcon} from '@/_metronic/helpers'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
-import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
+import {CREATE_COMPANY_CONFIG} from '../company-management/config'
 import {useAuth} from '@/app/context/AuthContext'
 import Cookies from 'js-cookie'
 
@@ -36,7 +36,8 @@ const CreateEditCompanies = ({
   handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const {rows, settings} = COMPANY_MANAGEMENT_CONFIG
+
+  const {rows, settings} = CREATE_COMPANY_CONFIG('Business')
   const {validationFormik} = settings || {}
   const [information, setInformation] = React.useState<any>(null)
 
