@@ -656,8 +656,8 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'upload-pdf-cas-check',
-    labelBreadCrumbs: 'Upload File Pdf Cas Check',
-    priority: [1, 2],
+    labelBreadCrumbs: 'Upload File CAs Check',
+    priority: [1],
     component: UploadFileCasCheck,
   },
 ]
@@ -753,8 +753,8 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       {
         id: uuidv4(),
         to: '/settings/upload-pdf-cas-check',
-        label: 'Upload File Pdf Cas Check',
-        priority: [1, 2],
+        label: 'Upload File CAs Check',
+        priority: [1],
       },
       {
         id: uuidv4(),
