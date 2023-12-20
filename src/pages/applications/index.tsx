@@ -833,8 +833,10 @@ export const Applications = () => {
                 }}
                 className='d-none d-xxl-block btn-remark d-flex justify-content-center align-items-center '
               >
-                <Icons name={'Mes'} />
-                <span className='span-button-remark ms-8px'>Remark</span>
+                <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
+                  <Icons name={'Mes'} />
+                  <span className='span-button-remark ms-8px pt-1px'>Remark</span>
+                </div>
               </button>
               <div className='d-block d-xxl-none '>
                 <Remark
