@@ -557,7 +557,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {cpfData?.date.map((date, index) => (
+                      {cpfData?.date?.map((date, index) => (
                         <tr key={index}>
                           <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
                             {index + 1}
@@ -569,7 +569,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {cpfData?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData?.amount[index] || 'No Information'}$
+                            ${cpfData?.amount[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                             {moment(cpfData?.month[index]).format('YYYY/MM') || 'No Information'}
@@ -622,7 +622,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {cpfData?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData?.amount[index] || 'No Information'}$
+                            ${cpfData?.amount[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                             {cpfData?.month[index] || 'No Information'}
@@ -710,7 +710,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {formik.values.date.map((date, index) => (
+                      {formik.values?.date?.map((date, index) => (
                         <tr key={index}>
                           <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
                             {index + 1}
@@ -722,7 +722,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {values?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values?.amount[index] || 'No Information'}$
+                            ${values?.amount[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                             {moment(values?.month[index]).format('YYYY/MM') || 'No Information'}
@@ -763,7 +763,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {formik.values.date.map((date, index) => (
+                      {formik.values?.date?.map((date, index) => (
                         <tr key={index}>
                           <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
                             {index + 1}
@@ -775,7 +775,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {values?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values?.amount[index] || 'No Information'}$
+                            ${values?.amount[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                             {moment(values?.month[index]).format('YYYY/MM') || 'No Information'}
