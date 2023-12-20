@@ -172,7 +172,7 @@ const CompanyDetail = ({
           type='submit'
           onClick={() => handleCloseShowEdit()}
         >
-          Edit Company
+          Edit Business Unit
         </Button>
       </div>
     </Modal>
