@@ -11,7 +11,6 @@ const UploadFileCasCheck = () => {
   const [selectedFiles, setSelectedFiles] = useState<any>([])
   const [files, setFiles] = useState<any>({})
   const [loading, setLoading] = useState(false)
-  console.log(selectedFiles)
 
   const handleFileChange = (event: any) => {
     const files: FileList | null = event.target.files

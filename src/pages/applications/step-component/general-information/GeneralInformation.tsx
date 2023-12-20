@@ -569,10 +569,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {cpfData.employer[index]}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            $ {cpfData.amount[index]}
+                            {cpfData.amount[index]}$
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(cpfData.month[index]).format('MM/YYYY')}
+                            {moment(cpfData.month[index]).format('YYYY/MM')}
                           </td>
                         </tr>
                       ))}
@@ -722,10 +722,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {values.employer[index]}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            $ {values.amount[index]}
+                            {values.amount[index]}$
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.month[index]).format('MM/YYYY')}
+                            {moment(values.month[index]).format('YYYY/MM')}
                           </td>
                         </tr>
                       ))}
@@ -775,10 +775,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {values.employer[index]}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            $ {values.amount[index]}
+                            {values.amount[index]}$
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.month[index]).format('MM/YYYY')}
+                            {moment(values.month[index]).format('YYYY/MM')}
                           </td>
                         </tr>
                       ))}
