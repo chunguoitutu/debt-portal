@@ -188,6 +188,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       } else return
     })
   }, [company_id])
+
   function splitName(fullName: string) {
     const arr = fullName?.trim()?.split(' ')
 
@@ -621,6 +622,159 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                             {cpfData.month[index]}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Tab>
+              </Tabs>
+            </div>
+
+            <div className='border-top border-gray-200'>
+              <div className='d-flex justify-content-end p-30px'>
+                <Button
+                  type='reset'
+                  onClick={() => setShowMoreInformation(false)}
+                  className='btn-lg btn-secondary align-self-center me-8px fs-6'
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
+
+      {showMoreInformation && !applicationIdEdit && (
+        <div>
+          {/* Render your popup content here */}
+          <Modal
+            id='kt_modal_create_app'
+            tabIndex={-1}
+            style={{}}
+            aria-hidden='true'
+            dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+            show={showMoreInformation}
+            backdrop={true}
+            onHide={() => setShowMoreInformation(false)}
+          >
+            <div className='modal-header p-30px'>
+              <h2 className='m-0'>More Information From Singpass</h2>
+              <div
+                className='btn btn-sm btn-icon btn-active-color-primary'
+                onClick={() => setShowMoreInformation(false)}
+              >
+                <KTIcon className='fs-1' iconName='cross' />
+              </div>
+            </div>
+            <div
+              style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
+              className='modal-body p-30px  '
+            >
+              <Tabs
+                activeKey={activeTab}
+                onSelect={(key: any) => setActiveTab(key)}
+                id='controlled-tab-example'
+              >
+                <Tab
+                  eventKey='cpf'
+                  title='CPF'
+                  tabClassName={
+                    activeTab === 'cpf' ? 'select-tab-information' : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {formik.values.date.map((date, index) => (
+                        <tr key={index}>
+                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                            {index + 1}
+                          </th>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {moment(values.date[index]).format('MM/YYYY')}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {values.employer[index]}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            $ {values.amount[index]}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {moment(values.month[index]).format('MM/YYYY')}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Tab>
+                <Tab
+                  eventKey='vehicle'
+                  title='Vehicle'
+                  tabClassName={
+                    activeTab === 'vehicle'
+                      ? 'select-tab-information'
+                      : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {formik.values.date.map((date, index) => (
+                        <tr key={index}>
+                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                            {index + 1}
+                          </th>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {moment(values.date[index]).format('MM/YYYY')}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {values.employer[index]}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            $ {values.amount[index]}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {moment(values.month[index]).format('MM/YYYY')}
                           </td>
                         </tr>
                       ))}
