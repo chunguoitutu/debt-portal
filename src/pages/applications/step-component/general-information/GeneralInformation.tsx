@@ -106,19 +106,25 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         const fullName = event.data.name.value
         const {firstname, middlename, lastname} = splitName(fullName)
 
-        const annual_api = event.data['noa-basic'].amount.value
+        const annual_api = event.data['noa-basic']?.amount?.value
         const cpf_months = event.data?.cpfcontributions?.history?.map(
           (entry: any) => entry.month.value
         )
         const cpf_amount = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry.amount.value
+          (entry: any) => entry?.amount?.value
         )
         const cpf_date = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry.date.value
+          (entry: any) => entry?.date?.value
         )
         const cpf_employer = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry.employer.value
+          (entry: any) => entry?.employer?.value
         )
+
+        const unit = event.data?.regadd?.unit?.value || ''
+
+        const block = event.data?.regadd?.block?.value || ''
+
+        const street_full = `${block} ${unit} ${event.data?.regadd?.street?.value || ''}`
 
         const values = {
           ...formik.values,
@@ -135,7 +141,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                   ...item,
                   postal_code: event.data.regadd.postal.value,
                   // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
-                  street_1: event.data.regadd.street.value,
+                  street_1: street_full,
                   country: event.data.regadd.country.desc,
                 }
               : item
@@ -447,8 +453,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     return <Component />
   }
 
-  const stepperRef = useRef<HTMLDivElement | null>(null)
-
   return (
     <>
       {config.map((item, i) => {
@@ -712,7 +716,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {index + 1}
                           </th>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.date[index]).format('MM/YYYY')}
+                            {moment(values.date[index]).format('MM/DD/YYYY')}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                             {values.employer[index]}
@@ -743,17 +747,17 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                       className='fs-16 fw-medium text-gray-600'
                     >
                       <tr>
-                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'></th>
-                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
                           Date
                         </th>
-                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
                           Employer
                         </th>
-                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
                           Amount
                         </th>
-                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
                           Month
                         </th>
                       </tr>
@@ -765,7 +769,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {index + 1}
                           </th>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.date[index]).format('MM/YYYY')}
+                            {moment(values.date[index]).format('MM/DD/YYYY')}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                             {values.employer[index]}

@@ -132,7 +132,7 @@ const FileInput = (props: any) => {
                 fontSize: '12px',
               }}
             >
-              Choose files from compute (file upload maximum 200MB and only upload files in PDF
+              Choose files from the computer (file upload maximum 200MB and only upload files in PDF
               format).
             </p>
           </div>
