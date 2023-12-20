@@ -11,12 +11,12 @@ type Props = {
 
 const ContentListButton = ({config}: Props) => {
   return (
-    <div className='card  h-100 '>
+    <div className='card'>
       <div className='modal-header p-30px border-bottom border-gray-200'>
         <h2 className='mb-0 fs-20 text-capitalize fw-bold text-gray-900'>{config?.title}</h2>
       </div>
       <div
-        style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
+        style={{maxHeight: 'calc(100vh - 375px)', overflowY: 'auto'}}
         className={`${config?.classWrapper ? config.classWrapper : 'py-16px px-5'}`}
       >
         {config?.row.map((data, index) => (

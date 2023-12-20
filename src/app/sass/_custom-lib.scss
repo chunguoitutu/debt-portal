@@ -58,3 +58,12 @@
     display: flex !important;
   }
 }
+.swal2-toast-shown .swal2-container.swal2-top-end {
+  top: 80px !important;
+}
+
+// custom react pdf viewer
+.rpv-core__viewer {
+  height: fit-content !important;
+  max-height: 900px;
+}

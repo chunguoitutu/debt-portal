@@ -594,12 +594,12 @@ export const OBLIGATION: AdvanceConfig[] = [
 ]
 
 export const ROUTER_SETTING = [
-  {
-    path: 'company-management',
-    labelBreadCrumbs: 'Organization Information',
-    component: CompanyManagement,
-    priority: [1],
-  },
+  // {
+  //   path: 'company-management',
+  //   labelBreadCrumbs: 'Organization Information',
+  //   component: CompanyManagement,
+  //   priority: [1],
+  // },
   {
     path: 'companies',
     labelBreadCrumbs: 'Business Units',

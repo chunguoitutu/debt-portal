@@ -6,7 +6,7 @@
  */
 
 import {FC, Suspense, lazy} from 'react'
-import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
+import {Routes, Route, BrowserRouter, Navigate, Outlet} from 'react-router-dom'
 import {ErrorsPage} from '../app/modules/errors/ErrorsPage'
 import {App} from '../App'
 import {AuthLayout} from '../layouts/auth-layout/AuthLayout'
@@ -28,6 +28,7 @@ import MyTasks from '../pages/my-tasks'
 import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
 import {Logout} from '../pages/auth/logout/Logout'
 import {useAuth} from '../app/context/AuthContext'
+import Guest from '@/pages/guest'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -70,6 +71,7 @@ const AppRoutes: FC = () => {
             <Route path='/borrowers' element={<Borrowers />} />
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/my-tasks' element={<MyTasks />} />
+            <Route path='guest' element={<Guest />} />
 
             {/* Lazy Modules */}
             <Route
