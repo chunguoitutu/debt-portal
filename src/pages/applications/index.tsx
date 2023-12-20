@@ -52,6 +52,7 @@ interface ListIdEdit {
   employmentId: number
   applicationId: number
   bankInfoId: number
+  cpfId?: number
 }
 
 export const Applications = () => {
@@ -65,6 +66,8 @@ export const Applications = () => {
   // const [popupSingpass, setPopupSingpass] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const [singpass, setSingpass] = useState(false)
+
   const [rejectionOne, setRejectionOne] = useState({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -76,6 +79,7 @@ export const Applications = () => {
     employmentId: 0,
     applicationId: 0,
     bankInfoId: 0,
+    cpfId: 0,
   })
   const {pathname} = useLocation()
   const initialValues: ApplicationFormData = useMemo(() => {
@@ -125,52 +129,6 @@ export const Applications = () => {
 
     // handleGetPersonData({authCode, codeVerifier})
   }, [])
-
-  // useEffect(() => {
-  //   window.addEventListener('message', (event) => {
-  //     if (event.origin === 'http://localhost:3001') {
-  //       // console.log('Message from popup:', event)
-  //       // console.log(1324, event.data)
-
-  //       const fullName = event.data.name.value
-  //       const firstName = fullName.split(' ')[0]
-  //       const lastName = fullName.substring(firstName.length).trim()
-
-  //       setTimeout(() => {
-  //         formik.setValues({
-  //           ...formik.values,
-  //           firstname: firstName || '',
-  //           lastname: lastName || '',
-  //           date_of_birth: event.data?.dob?.value || '',
-  //           identification_no: event.data?.uinfin?.value || '',
-  //           mobilephone_1: event.data?.mobileno.nbr?.value || '',
-  //           email_1: event.data?.email?.value || '',
-  //           address_contact_info: formik.values.address_contact_info.map((item, i) =>
-  //             i === 0
-  //               ? {
-  //                   ...item,
-  //                   postal_code: event.data.regadd.postal.value,
-  //                   street_1: event.data.regadd.street.value,
-  //                 }
-  //               : item
-  //           ),
-
-  //           // company_name: data?.employment?.value,
-  //         })
-  //       }, 1000)
-  //     }
-  //   })
-  // }, [])
-
-  // async function goToSingpass() {
-  //   const dataPopup = window.open(
-  //     'http://localhost:3001/singPass.html',
-  //     'sharer',
-  //     'toolbar=0,status=0,width=1200,height=900,align=center,menubar=no,location=no'
-  //   )
-
-  //   dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
-  // }
 
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
@@ -239,6 +197,7 @@ export const Applications = () => {
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
     const lengthStep = STEP_APPLICATION.length
+
     return STEP_APPLICATION.map((item, i) => {
       // Last step no edit anything
       if (i + 1 === lengthStep) {
@@ -315,9 +274,25 @@ export const Applications = () => {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
       setRejectionOne(data?.rejection || {})
       setData(data?.data || {})
-      const {borrower, application, customer, bank_account, employment, address, file_documents} =
-        data.data || {}
+      const {
+        borrower,
+        application,
+        customer,
+        bank_account,
+        employment,
+        address,
+        file_documents,
+        cpf,
+      } = data.data || {}
+
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
+
+      if (cpf) {
+        const date = JSON.parse(cpf.date)
+        const employer = JSON.parse(cpf.employer)
+        const amount = JSON.parse(cpf.amount)
+        const month = JSON.parse(cpf.month)
+      }
 
       setValues({
         ...values,
@@ -326,6 +301,7 @@ export const Applications = () => {
         ...customer,
         ...bank_account,
         ...employment,
+        ...cpf,
         address_contact_info:
           Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
         date_of_birth: formattedDateOfBirth,
@@ -346,7 +322,7 @@ export const Applications = () => {
         applicationId: application?.id || 0,
         bankInfoId: bank_account?.id || 0,
       })
-
+      cpf && setSingpass(true)
       const applicationNotes = JSON.parse(application?.application_notes) || []
       setRemarkList(applicationNotes)
     } catch (error) {
@@ -585,10 +561,10 @@ export const Applications = () => {
       interest,
       bankrupt_plan,
       bankrupted,
-      cpf_amount,
-      cpf_date,
-      cpf_employer,
-      cpf_month,
+      amount,
+      date,
+      employer,
+      month,
       vehicle_no,
       vehicle_model,
       vehicle_coe_category,
@@ -606,7 +582,7 @@ export const Applications = () => {
         address_type_id: +item.address_type_id,
       }))
 
-    const {applicationId, bankInfoId, borrowerId, customerId, employmentId} = listIdEdit
+    const {applicationId, bankInfoId, borrowerId, customerId, employmentId, cpfId} = listIdEdit
 
     const payload: ApplicationPayload = {
       customer: {
@@ -678,8 +654,15 @@ export const Applications = () => {
       },
       address: addressList,
       file_documents,
-    }
 
+      cpf: {
+        ...(cpfId && applicationIdEdit && singpass ? {id: cpfId} : {}),
+        amount: JSON.stringify(amount),
+        date: JSON.stringify(date),
+        employer: JSON.stringify(employer),
+        month: JSON.stringify(month),
+      },
+    }
     try {
       setSubmitting(true)
       if (applicationIdEdit) {
@@ -794,6 +777,8 @@ export const Applications = () => {
                     setStepCompleted={setStepCompleted}
                     config={STEP_APPLICATION[currentStep - 1].config || []}
                     formik={formik}
+                    setSingpass={setSingpass}
+                    singpass={singpass}
                   />
                 )}
                 {show && (
@@ -815,6 +800,8 @@ export const Applications = () => {
                   formik={formik}
                   isDraft={isDraft}
                   currentStep={currentStep}
+                  setSingpass={setSingpass}
+                  singpass={singpass}
                 />
               </div>
             </div>

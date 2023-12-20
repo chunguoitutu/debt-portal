@@ -1,10 +1,12 @@
 import clsx from 'clsx'
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useRef, useState} from 'react'
 import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import './style.scss'
 import Cookies from 'js-cookie'
+import {createPortal} from 'react-dom'
+import {Modal, Tab, Table, Tabs} from 'react-bootstrap'
 
 import LookupCustomer from './LookupCustomer'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
@@ -15,15 +17,27 @@ import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
 import Singpass from './Singpass'
+import {KTIcon} from '@/_metronic/helpers'
+
+const modalsRoot = document.getElementById('root-modals') || document.body
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
-  const {config = [], formik, setStepCompleted} = props
+  const {config = [], formik, setStepCompleted, setSingpass, singpass} = props
   const [searchParams, setSearchParams] = useSearchParams()
+  const [useSingpass, setUseSingpass] = useState(false)
+  const [activeTab, setActiveTab] = useState('cpf')
+
+  const [cpfData, setCpfData] = useState<{
+    date: string[]
+    employer: string[]
+    amount: string[]
+    month: string[]
+  } | null>(null)
 
   const {applicationIdEdit} = useParams()
   const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
-  const [popupSingpass, setPopupSingpass] = useState(false)
+  const [popupSingpass, setPopupSingpass] = useState<boolean>(false)
   const {company_id} = useAuth()
   const {values, touched, errors, handleChange, handleBlur, setFieldValue, setValues} = formik
 
@@ -84,6 +98,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     if (!company_id) return
     window.addEventListener('message', (event) => {
       if (event.origin === 'http://localhost:3001') {
+        // console.log(1324, event.data)
+        setSingpass(true)
+
+        // console.log(123456, event.data)
+
         const fullName = event.data.name.value
         const {firstname, middlename, lastname} = splitName(fullName)
 
@@ -124,10 +143,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           gender: event.data.sex.desc === 'MALE' ? 'MALE' : 'FEMALE',
           residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
           annual_income: annual_api || '',
-          cpf_month: cpf_months || '',
-          cpf_amount: cpf_amount || '',
-          cpf_date: cpf_date || '',
-          cpf_employer: cpf_employer || '',
+          month: cpf_months || '',
+          amount: cpf_amount || '',
+          date: cpf_date || '',
+          employer: cpf_employer || '',
         }
 
         handleFillFormSingpass(values)
@@ -158,10 +177,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             annual_income: annual_api || '',
             nationality: event.data.race.desc || '',
             country: event.data.regadd.country.desc,
-            cpf_month: cpf_months || '',
-            cpf_amount: cpf_amount || '',
-            cpf_date: cpf_date || '',
-            cpf_employer: cpf_employer || '',
+            month: cpf_months || '',
+            amount: cpf_amount || '',
+            date: cpf_date || '',
+            employer: cpf_employer || '',
 
             // vehicle will return result when we have the offical api singpass
           })
@@ -169,7 +188,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       } else return
     })
   }, [company_id])
-
   function splitName(fullName: string) {
     const arr = fullName?.trim()?.split(' ')
 
@@ -243,16 +261,23 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
   }
 
-  // async function handleGetPersonData(payload) {
-  //   try {
-  //     const {data} = await axios.post('http://localhost:3001/getPersonData', payload)
-  //   } catch (error) {
-  //   } finally {
-  //     Cookies.remove('sid')
-  //     Cookies.remove('codeVerifier')
-  //     setSearchParams('')
-  //   }
-  // }
+  async function handleGetDataFromSingpass() {
+    try {
+      const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
+      const {cpf} = data.data || {}
+
+      if (cpf) {
+        const date = JSON.parse(cpf.date)
+        const employer = JSON.parse(cpf.employer)
+        const amount = JSON.parse(cpf.amount)
+        const month = JSON.parse(cpf.month)
+
+        setCpfData({date, employer, amount, month})
+      }
+    } catch (error) {
+      //nothing
+    }
+  }
 
   async function goToSingpass() {
     const dataPopup = window.open(
@@ -261,6 +286,13 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       `resizeable=yes,width=1100,height=900,top=75,left=2300`
     )
     dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
+  }
+
+  const [showMoreInformation, setShowMoreInformation] = useState(false)
+
+  function handleShowMoreInformation() {
+    setShowMoreInformation(true)
+    handleGetDataFromSingpass()
   }
 
   function renderComponent(item: ApplicationConfig) {
@@ -363,10 +395,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     if (typeComponent === 'Button') {
       if (applicationIdEdit || values.is_existing === 'existing') return <></>
       return (
-        <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px hihihaha'>
+        <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px fill-singpass'>
           <div>
             <span className='fs-6 fw-medium text-gray-900'>
-              You Can Fill Out The Form Using Your Singpass
+              You can fill out the form using your Singpass
             </span>
             <br />
             <span className='fs-7 fw-normal text-gray-400'>Or fill the form to register</span>
@@ -413,6 +445,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // unexpected
     return <Component />
   }
+
+  const stepperRef = useRef<HTMLDivElement | null>(null)
+
   return (
     <>
       {config.map((item, i) => {
@@ -441,15 +476,174 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             >
               {label}
             </div>
-
             {renderComponent(item)}
           </div>
         )
       })}
+      {singpass && (
+        <div className='d-flex justify-content-end align-items-end'>
+          <Button className='w-50 btn btn-secondary' onClick={() => handleShowMoreInformation()}>
+            More Information
+          </Button>
+        </div>
+      )}
 
       {showPopup && <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} />}
 
       {popupSingpass && <Singpass show={popupSingpass} onClose={() => setPopupSingpass(false)} />}
+
+      {showMoreInformation && (
+        <div>
+          {/* Render your popup content here */}
+          <Modal
+            id='kt_modal_create_app'
+            tabIndex={-1}
+            style={{}}
+            aria-hidden='true'
+            dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+            show={showMoreInformation}
+            backdrop={true}
+            onHide={() => setShowMoreInformation(false)}
+          >
+            <div className='modal-header p-30px'>
+              <h2 className='m-0'>More Information From Singpass</h2>
+              <div
+                className='btn btn-sm btn-icon btn-active-color-primary'
+                onClick={() => setShowMoreInformation(false)}
+              >
+                <KTIcon className='fs-1' iconName='cross' />
+              </div>
+            </div>
+            <div
+              style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
+              className='modal-body p-30px  '
+            >
+              <Tabs
+                activeKey={activeTab}
+                onSelect={(key: any) => setActiveTab(key)}
+                id='controlled-tab-example'
+              >
+                <Tab
+                  eventKey='cpf'
+                  title='CPF'
+                  tabClassName={
+                    activeTab === 'cpf' ? 'select-tab-information' : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cpfData?.date.map((date, index) => (
+                        <tr key={index}>
+                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                            {index + 1}
+                          </th>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {moment(date).format('MM/DD/YYYY')}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {cpfData.employer[index]}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            $ {cpfData.amount[index]}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {moment(cpfData.month[index]).format('MM/YYYY')}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Tab>
+                <Tab
+                  eventKey='vehicle'
+                  title='Vehicle'
+                  tabClassName={
+                    activeTab === 'vehicle'
+                      ? 'select-tab-information'
+                      : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cpfData?.date.map((date, index) => (
+                        <tr key={index}>
+                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                            {index + 1}
+                          </th>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {date}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {cpfData.employer[index]}
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {cpfData.amount[index]}$
+                          </td>
+                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                            {cpfData.month[index]}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Tab>
+              </Tabs>
+            </div>
+
+            <div className='border-top border-gray-200'>
+              <div className='d-flex justify-content-end p-30px'>
+                <Button
+                  type='reset'
+                  onClick={() => setShowMoreInformation(false)}
+                  className='btn-lg btn-secondary align-self-center me-8px fs-6'
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
     </>
   )
 }
