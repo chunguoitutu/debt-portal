@@ -608,7 +608,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'users',
-    labelBreadCrumbs: 'User Listing',
+    labelBreadCrumbs: 'Manager Users',
     priority: [1, 2],
     component: UserManagement,
   },
