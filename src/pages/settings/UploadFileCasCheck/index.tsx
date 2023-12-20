@@ -209,7 +209,7 @@ const UploadFileCasCheck = () => {
                 swalToast.fire({
                   timer: 1500,
                   icon: 'success',
-                  title: `Upload file "alert_list.pdf" successfully.`,
+                  title: `Upload file "alert_list.pdf" successfully`,
                 })
               })
               .catch((e) => {

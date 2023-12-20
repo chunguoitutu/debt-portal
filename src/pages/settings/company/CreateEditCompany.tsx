@@ -37,7 +37,7 @@ const CreateEditCompanies = ({
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
 
-  const {rows, settings} = CREATE_COMPANY_CONFIG('Business')
+  const {rows, settings} = CREATE_COMPANY_CONFIG('Business Unit')
   const {validationFormik} = settings || {}
   const [information, setInformation] = React.useState<any>(null)
 
@@ -196,7 +196,7 @@ const CreateEditCompanies = ({
         }}
         className='modal-header'
       >
-        <h2>{titleLable} Company</h2>
+        <h2>{titleLable} Business Unit</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>

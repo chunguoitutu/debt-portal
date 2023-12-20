@@ -1,16 +1,13 @@
 import * as Yup from 'yup'
 
-export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business') {
+export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
   return {
     settings: {
       endpoint: 'config/company/1',
       validationFormik: Yup.object().shape({
         company_name: Yup.string()
-          .required(`${type === 'Business' ? 'Business Unit' : type} Name is required`)
-          .max(
-            255,
-            `${type === 'Business' ? 'Business Unit' : type} Name must be at most 255 characters`
-          ),
+          .required(`${type} Name is required`)
+          .max(255, `${type} Name must be at most 255 characters`),
         company_code: Yup.string()
           .required(`${type} Code is required`)
           .max(64, `${type} Code must be at most 64 characters`),
@@ -31,7 +28,7 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business') {
     rows: [
       {
         key: 'company_name',
-        name: `${type === 'Business' ? 'Business Unit' : type} Name`,
+        name: `${type} Name`,
         type: 'text',
         required: true,
       },
@@ -43,7 +40,7 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business') {
       },
       {
         key: 'business_uen',
-        name: 'Business UEN',
+        name: `${type} UEN`,
         type: 'text',
         required: true,
       },

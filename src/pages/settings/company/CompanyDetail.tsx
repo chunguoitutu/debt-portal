@@ -38,7 +38,7 @@ const CompanyDetail = ({
       animation={true}
     >
       <div className='modal-header p-30px'>
-        <h2>Company Details</h2>
+        <h2>Business Unit Details</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -57,7 +57,7 @@ const CompanyDetail = ({
               )}
               <div>
                 <h1 className='text-capitalize fs-14 fw-semibold color-company-detail mt-4px mb-0'>
-                  Company Name
+                  Business Unit Name
                 </h1>
                 <p className='p-0 m-0 fs-16 text-uppercase fw-bold text-gray-900'>
                   {data?.company_name}
@@ -120,7 +120,7 @@ const CompanyDetail = ({
             </div>
             <div className=' h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
-                company Code
+                Business Unit Code
               </h1>
               <p className='p-0 m-0 h-100 fs-16 text-capitalize fw-semibold text-gray-800'>
                 {data?.company_code}
@@ -128,7 +128,7 @@ const CompanyDetail = ({
             </div>
             <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
-                business UEN
+                Business Unit UEN
               </h1>
               <p className='p-0  h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
                 {data?.business_uen}

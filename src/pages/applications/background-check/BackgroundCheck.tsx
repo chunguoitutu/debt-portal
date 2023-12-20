@@ -120,7 +120,7 @@ const BackgroundCheck = ({data}: props) => {
   }
 
   return (
-    <div className='h-100'>
+    <>
       <ContentListButton config={configBackgroudCheck} />
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
       {showValidationPhone && !!applicationIdEdit && data.application?.status === 1 && (
@@ -146,7 +146,7 @@ const BackgroundCheck = ({data}: props) => {
           handleClose={() => setShowSearchPageCheck(false)}
         />
       )}
-    </div>
+    </>
   )
 }
 
