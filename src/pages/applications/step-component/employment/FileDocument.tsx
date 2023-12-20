@@ -127,13 +127,13 @@ const FileInput = (props: any) => {
               Quick File Uploader
             </h1>
             <p
-              className='m-0 text-capitalize fw-normal p-0 cursor-position fs-12 text-B5B5C3'
+              className='m-0 fw-normal p-0 cursor-position fs-12 text-B5B5C3'
               style={{
                 fontSize: '12px',
               }}
             >
-              Choose files from compute (File upload maximum 200MB and only upload files in .PDF
-              Format).
+              Choose files from compute (file upload maximum 200MB and only upload files in PDF
+              format).
             </p>
           </div>
         </div>

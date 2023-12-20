@@ -92,8 +92,8 @@ const UploadFileCasCheck = () => {
                   </h1>
                 </div>
                 <p className='m-0  fw-normal p-0 text-center cursor-position fs-14 text-B5B5C3 mt-4px'>
-                  Choose files from compute (File upload maximum 200MB and only upload files in .PDF
-                  Format).
+                  Choose files from compute (file upload maximum 200MB and only upload files in PDF
+                  format).
                 </p>
               </div>
             </div>
@@ -209,9 +209,7 @@ const UploadFileCasCheck = () => {
                 swalToast.fire({
                   timer: 1500,
                   icon: 'success',
-                  title: `Upload file "${
-                    !!selectedFiles[0]?.name ? selectedFiles[0]?.name : 'alert_list.pdf'
-                  }" successfully.`,
+                  title: `Upload file "alert_list.pdf" successfully.`,
                 })
               })
               .catch((e) => {
