@@ -601,7 +601,7 @@ export const ROUTER_SETTING = [
   //   priority: [1],
   // },
   {
-    path: 'companies',
+    path: 'business-units',
     labelBreadCrumbs: 'Business Units',
     priority: [1],
     component: CompanyListing,
@@ -676,7 +676,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       // },
       {
         id: uuidv4(),
-        to: '/settings/companies',
+        to: '/settings/business-units',
         label: 'Business Units',
         priority: [1],
       },
