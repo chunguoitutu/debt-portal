@@ -668,12 +668,12 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
     title: 'Organization',
     priority: [1, 2],
     children: [
-      {
-        id: uuidv4(),
-        to: '/settings/company-management',
-        label: 'Organization Information',
-        priority: [1],
-      },
+      // {
+      //   id: uuidv4(),
+      //   to: '/settings/company-management',
+      //   label: 'Organization Information',
+      //   priority: [1],
+      // },
       {
         id: uuidv4(),
         to: '/settings/companies',

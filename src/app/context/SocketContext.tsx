@@ -31,7 +31,7 @@ const SocketProvider: FC<WithChildren> = ({children}) => {
     const token = Cookies.get('token')
 
     if (token && company_id && !socket) {
-      const newSocket = io(import.meta.env.VITE_APP_URL, {
+      const newSocket = io(import.meta.env.VITE_REACT_APP_URL, {
         autoConnect: false,
         query: {
           token,
