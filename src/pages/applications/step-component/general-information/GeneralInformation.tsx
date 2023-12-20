@@ -171,10 +171,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
               i === 0
                 ? {
                     ...item,
-                    postal_code: event.data.regadd.postal.value,
-                    // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
-                    street_1: event.data.regadd.street.value,
-                    country: event.data.regadd.country.desc,
+                    postal_code: event?.data?.regadd?.postal?.value || '',
+                    // street_1: event?.data?.regadd?.unit.value  event?.data?.regadd?.street.value || '',
+                    street_1: event?.data?.regadd?.street?.value || '',
+                    country: event?.data?.regadd?.country?.desc || '',
                   }
                 : item
             ),
@@ -563,16 +563,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {index + 1}
                           </th>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(date).format('MM/DD/YYYY')}
+                            {moment(date).format('MM/DD/YYYY') || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData.employer[index]}
+                            {cpfData?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData.amount[index]}$
+                            {cpfData?.amount[index] || 'No Information'}$
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(cpfData.month[index]).format('YYYY/MM')}
+                            {moment(cpfData?.month[index]).format('YYYY/MM') || 'No Information'}
                           </td>
                         </tr>
                       ))}
@@ -616,16 +616,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {index + 1}
                           </th>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {date}
+                            {date || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData.employer[index]}
+                            {cpfData?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData.amount[index]}$
+                            {cpfData?.amount[index] || 'No Information'}$
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData.month[index]}
+                            {cpfData?.month[index] || 'No Information'}
                           </td>
                         </tr>
                       ))}
@@ -716,16 +716,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {index + 1}
                           </th>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.date[index]).format('MM/DD/YYYY')}
+                            {moment(values?.date[index]).format('MM/DD/YYYY') || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values.employer[index]}
+                            {values?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values.amount[index]}$
+                            {values?.amount[index] || 'No Information'}$
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.month[index]).format('YYYY/MM')}
+                            {moment(values?.month[index]).format('YYYY/MM') || 'No Information'}
                           </td>
                         </tr>
                       ))}
@@ -769,16 +769,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                             {index + 1}
                           </th>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.date[index]).format('MM/DD/YYYY')}
+                            {moment(values?.date[index]).format('MM/DD/YYYY') || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values.employer[index]}
+                            {values?.employer[index] || 'No Information'}
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values.amount[index]}$
+                            {values?.amount[index] || 'No Information'}$
                           </td>
                           <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values.month[index]).format('YYYY/MM')}
+                            {moment(values?.month[index]).format('YYYY/MM') || 'No Information'}
                           </td>
                         </tr>
                       ))}
