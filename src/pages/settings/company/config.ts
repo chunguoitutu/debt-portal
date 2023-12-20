@@ -9,7 +9,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     showViewButton: true,
     endPointDelete: '/config/company',
     endPointGetListing: '/config/company',
-    messageDeleteSuccess: 'Company "/%/" successfully deleted',
+    messageDeleteSuccess: 'Business Unit "/%/" successfully deleted',
     buttonAddNew: 'New Business Unit',
     showMessageTitle: 'company_name',
     showAddNewButton: true,

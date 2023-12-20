@@ -99,11 +99,7 @@ const CreateEditCompanies = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Company${
-                  !!response?.data?.data?.company_name
-                    ? ' "' + response?.data?.data?.company_name + '" '
-                    : ' '
-                }successfully created`,
+                title: `Business Unit "${response?.data?.data?.company_name}" successfully created`,
               })
             }
             handleUpdated()
@@ -136,11 +132,7 @@ const CreateEditCompanies = ({
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Company${
-                  !!response?.data?.data?.company_name
-                    ? ' "' + response?.data?.data?.company_name + '" '
-                    : ' '
-                }successfully updated`,
+                title: `Business Unit "${response?.data?.data?.company_name}" successfully updated`,
               })
 
               // set company name when current company name and edit company have duplicate id
