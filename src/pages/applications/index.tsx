@@ -742,7 +742,7 @@ export const Applications = () => {
         {applicationIdEdit ? 'Edit Application' : 'New Application'}
       </PageTitle>
       <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1 m-0'>
-        <div className='col-12 col-xxl-2 d-flex flex-column overflow-hidden h-unset h-xxl-100 mb-16px m-xxl-0'>
+        <div className='col-12 col-xxl-2 d-flex flex-column overflow-hidden h-unset h-xxl-100 mb-16px m-xxl-0 ps-0'>
           <div className='card bg-white w-100 align-self-start align-self-lg-center overflow-y-auto m-0 d-flex flex-column h-100'>
             <div className='step-application h-fit-content my-auto'>
               <Step
@@ -809,11 +809,11 @@ export const Applications = () => {
         </div>
         <div className='col-12  col-xxl-2 m-0 h-unset h-xxl-100'>
           <div className='d-flex flex-column h-100'>
-            <div className='pb-30px d-none d-xxl-block h-100'>
+            <div style={{height: 'calc(100% -50px)'}} className='pb-30px d-none d-xxl-block '>
               <BackgroundCheck data={data} />
             </div>
 
-            <div className='flex-grow-1 wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
+            <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
               <button
                 onClick={() => {
                   setShowRemark(!showRemark)
