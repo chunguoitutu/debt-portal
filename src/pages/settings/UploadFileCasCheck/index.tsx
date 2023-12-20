@@ -11,6 +11,7 @@ const UploadFileCasCheck = () => {
   const [selectedFiles, setSelectedFiles] = useState<any>([])
   const [files, setFiles] = useState<any>({})
   const [loading, setLoading] = useState(false)
+  console.log(selectedFiles)
 
   const handleFileChange = (event: any) => {
     const files: FileList | null = event.target.files
@@ -63,14 +64,23 @@ const UploadFileCasCheck = () => {
 
   return (
     <div className='card'>
-      <h1 className='p-30px fw-bold fs-20 mb-0'>Upload File</h1>
+      <h1
+        style={{
+          borderBottom: '1px solid #F1F1F2',
+        }}
+        className='p-30px fw-bold fs-20 mb-0'
+      >
+        Upload File
+      </h1>
       <div className='d-flex justify-content-center align-items-center m-0 p-0'>
         <div className='p-30px '>
           <div className='d-flex justify-content-start align-items-center mb-16px p-0'>
             <Icons name={'Warning'} />
-            <p className='m-0 ps-8px'>You are only allowed to upload PDF files.</p>
+            <p className='m-0 ps-8px fs-14 fw-semibold'>
+              You are only allowed to upload PDF files.
+            </p>
           </div>
-          <label className='border border-dashed border-secondary  cursor-pointer position-relative rounded-1 p-30px align-items-center justify-content-center  mb-16px '>
+          <label className='border  border-dashed border-secondary  cursor-pointer position-relative rounded-1 p-30px align-items-center justify-content-center  mb-16px '>
             <div>
               <div className='cursor-position d-flex cursor-pointer justify-content-center align-items-center mb-16px flex-shrink-0'>
                 <Icons name={'ImgUploadFile'} />
@@ -81,9 +91,9 @@ const UploadFileCasCheck = () => {
                     Quick File Uploader
                   </h1>
                 </div>
-                <p className='m-0 text-capitalize fw-normal p-0 cursor-position fs-14 text-B5B5C3 mt-4px'>
-                  Click to browse from your computer (File upload maximum 200MB and only upload
-                  files in .PDF format).
+                <p className='m-0  fw-normal p-0 text-center cursor-position fs-14 text-B5B5C3 mt-4px'>
+                  Choose files from compute (File upload maximum 200MB and only upload files in .PDF
+                  Format).
                 </p>
               </div>
             </div>
@@ -159,13 +169,20 @@ const UploadFileCasCheck = () => {
                   </div>
                 </Tippy>
                 <p className='w-100 p-0 m-0 fs-14 fw-semibold text-gray-800'>{files?.name}</p>
-                <div className='p-0 m-0 text-nowrap'>{convertSize(Number(files?.size) || 0)}</div>
+                <div className='p-0 m-0 text-nowrap  fs-14 fw-semibold'>
+                  {convertSize(Number(files?.size) || 0)}
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
-      <div className='d-flex flex-end p-30px'>
+      <div
+        style={{
+          borderTop: '1px solid #F1F1F2',
+        }}
+        className='d-flex flex-end p-30px'
+      >
         <Button
           type='reset'
           disabled={selectedFiles.length === 0}
@@ -192,7 +209,9 @@ const UploadFileCasCheck = () => {
                 swalToast.fire({
                   timer: 1500,
                   icon: 'success',
-                  title: `Upload file successfully.`,
+                  title: `Upload file "${
+                    !!selectedFiles[0]?.name ? selectedFiles[0]?.name : 'alert_list.pdf'
+                  }" successfully.`,
                 })
               })
               .catch((e) => {
