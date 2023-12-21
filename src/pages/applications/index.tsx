@@ -874,7 +874,10 @@ export const Applications = () => {
               </div>
             )}
 
-            <div className='overflow-lg-auto p-10 flex-grow-1' ref={containerRef}>
+            <div
+              className='overflow-lg-auto p-10 flex-grow-1 d-flex justify-content-center'
+              ref={containerRef}
+            >
               <div
                 className={`${currentStep !== 6 ? 'form-wrap' : ''}`}
                 style={currentStep === 2 ? {width: '91.5%'} : {}}

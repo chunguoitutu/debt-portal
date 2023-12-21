@@ -156,7 +156,15 @@ const CompanyDetail = ({
                 License Number
               </h1>
               <p className='p-0  h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
-                {data?.license_no}
+                {!!data?.license_no ? (
+                  <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
+                    {data?.license_no}
+                  </p>
+                ) : (
+                  <p className='text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                    None
+                  </p>
+                )}
               </p>
             </div>
 
