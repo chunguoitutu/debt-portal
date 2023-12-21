@@ -79,6 +79,9 @@ const CreateEditCompanies = ({
       contact_person: !!data?.contact_person ? data?.['contact_person'] || '' : '',
       address: data ? data?.['address'] : '',
       open_date: data ? data?.['open_date'].slice(0, 11) : '',
+      license_no: data ? data?.['license_no'] : '',
+      license_expiry_date: data ? data?.['license_expiry_date'].slice(0, 11) : '',
+      web_url: data ? data?.['web_url'] : '',
     },
     validationSchema: validationFormik,
     onSubmit: async (values: any) => {
@@ -89,10 +92,13 @@ const CreateEditCompanies = ({
             company_code: values.company_code.trim(),
             business_uen: values.business_uen.trim(),
             contact_person: values.contact_person.trim(),
+            license_no: values.license_no.trim(),
+            web_url: values.web_url.trim(),
             telephone: String(values.telephone).trim(),
             email: values.email.trim(),
             address: values.address.trim(),
             open_date: new Date(values.open_date),
+            license_expiry_date: new Date(values.license_expiry_date),
             status: status ? 1 : 0,
           })
           .then((response) => {
@@ -126,6 +132,9 @@ const CreateEditCompanies = ({
             email: values.email.trim(),
             address: values.address.trim(),
             open_date: new Date(values.open_date),
+            license_no: values.license_no.trim(),
+            license_expiry_date: new Date(values.license_expiry_date),
+            web_url: values.web_url.trim(),
             status: status ? 1 : 0,
           })
           .then((response) => {
@@ -164,10 +173,12 @@ const CreateEditCompanies = ({
       rows.forEach((row) => {
         if (row.key === 'open_date') {
           setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'))
+        } else if (row.key === 'license_expiry_date') {
+          setFieldValue(row.key, moment(information?.['license_expiry_date']).format('YYYY-MM-DD'))
         } else {
           setFieldValue(row.key, information[row.key])
         }
-      }, {})
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [information])
