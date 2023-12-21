@@ -446,19 +446,6 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     ],
   },
   {
-    name: 'ADVANCE',
-    options: [
-      {
-        value: 'TERRACE HOUSE',
-        label: 'Terrace House',
-      },
-      {
-        value: 'SEMI-DETACHED HOUSE',
-        label: 'Semi Detached House',
-      },
-    ],
-  },
-  {
     name: 'PRIVATE',
     options: [
       {
@@ -472,6 +459,14 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
       {
         value: 'Landed',
         label: 'Landed',
+      },
+      {
+        value: 'TERRACE HOUSE',
+        label: 'Terrace House',
+      },
+      {
+        value: 'SEMI-DETACHED HOUSE',
+        label: 'Semi Detached House',
       },
     ],
   },
