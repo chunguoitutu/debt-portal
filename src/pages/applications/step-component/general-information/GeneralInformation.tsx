@@ -18,6 +18,7 @@ import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
 import Singpass from './Singpass'
 import {KTIcon} from '@/_metronic/helpers'
+import {RESIDENTIAL_TYPE} from './../../../../app/utils/global-config'
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
@@ -146,7 +147,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                 }
               : item
           ),
-          gender: event.data.sex.desc === 'MALE' ? 'MALE' : 'FEMALE',
+          gender: event.data.sex.desc,
           residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
           annual_income: annual_api || '',
           month: cpf_months || '',
@@ -178,7 +179,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                   }
                 : item
             ),
-            gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
+            gender: event.data.sex.desc,
             residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
             annual_income: annual_api || '',
             nationality: event.data.race.desc || '',
@@ -229,6 +230,63 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   async function handleFillFormSingpass(dataSingpass: any) {
     let newDataSingpass = {...dataSingpass}
 
+    console.log(newDataSingpass.residential_type, 1234)
+
+    switch (newDataSingpass.residential_type) {
+      case '1-ROOM FLAT (HDB)':
+        newDataSingpass.residential_type = '1 Room'
+        break
+
+      case '2-ROOM FLAT (HDB)':
+        newDataSingpass.residential_type = '2 Room'
+        break
+
+      case '3-ROOM FLAT (HDB)':
+        newDataSingpass.residential_type = '3 Room'
+        break
+
+      case '4-ROOM FLAT (HDB)':
+        newDataSingpass.residential_type = '4 Room'
+        break
+
+      case '5-ROOM FLAT (HDB)':
+        newDataSingpass.residential_type = '5 Room'
+        break
+
+      case 'EXECUTIVE FLAT (HDB)':
+        newDataSingpass.residential_type = 'Exec'
+        break
+
+      case 'apartment':
+        newDataSingpass.residential_type = 'apartment'
+        break
+
+      case 'CONDOMINIUM':
+        newDataSingpass.residential_type = 'Condo'
+        break
+
+      case 'landed':
+        newDataSingpass.residential_type = 'Landed'
+        break
+
+      case 'TERRACE HOUSE':
+        newDataSingpass.residential_type = 'Terrace House'
+        break
+
+      case 'SEMI-DETACHED HOUSE':
+        newDataSingpass.residential_type = 'Semi Detached House'
+        break
+
+      case 'not_own':
+        newDataSingpass.residential_type = 'Does not own any property'
+        break
+
+      default:
+        break
+    }
+
+    console.log(newDataSingpass.residential_type, 'after')
+
     try {
       const NRIC = dataSingpass.identification_no
 
@@ -237,10 +295,12 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         company_id,
       })
 
+      // Update newDataSingpass after the API call
       newDataSingpass = {...newDataSingpass, is_existing: 'existing'}
     } catch (error) {
       //nothing
     } finally {
+      // Update formik values with the modified newDataSingpass
       formik.setValues({...formik.values, ...newDataSingpass})
     }
   }
