@@ -556,15 +556,15 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         </th>
                       </tr>
                     </thead>
-                    {Array.isArray(cpfData?.date) && cpfData?.date?.length > 0 ? (
+                    {Array.isArray(cpfData?.date) ? (
                       <tbody>
-                        {cpfData.date.map((date, index) => (
+                        {cpfData?.date?.map((date, index) => (
                           <tr key={index}>
                             <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
                               {index + 1}
                             </th>
                             <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                              {moment(date)?.format('MM/DD/YYYY') ?? 'No Information'}
+                              {moment(date)?.format('YYYY/MM/DD') ?? 'No Information'}
                             </td>
                             <td className='fs-6 fw-medium' style={{color: '#071437'}}>
                               {cpfData?.employer?.[index] ?? 'No Information'}

@@ -53,7 +53,6 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
       name: 'Email',
       isHide: true,
     },
-
     {
       key: 'open_date',
       name: 'Open Date',

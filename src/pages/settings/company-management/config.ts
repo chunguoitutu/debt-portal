@@ -23,6 +23,7 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
         contact_person: Yup.string()
           .min(0)
           .max(255, 'Contact Person must be at most 255 characters'),
+        license_no: Yup.string().required(`License Number is required`),
       }),
     },
     rows: [
@@ -62,6 +63,22 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
       {
         key: 'email',
         name: 'Email',
+        type: 'text',
+      },
+      {
+        key: 'license_no',
+        name: 'License Number',
+        type: 'text',
+        required: true,
+      },
+      {
+        key: 'license_expiry_date',
+        name: 'License Expiry Date',
+        type: 'date',
+      },
+      {
+        key: 'web_url',
+        name: 'Web Url',
         type: 'text',
       },
       {
