@@ -65,10 +65,12 @@ export const Applications = () => {
   // const [checkAmount, SetCheckAmount] = useState<number>(0)
   // const [popupSingpass, setPopupSingpass] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
+  const [optionsRejectionType, setOptionsRejectionType] = useState<any>([])
+  const [optionsUser, setOptionsUser] = useState<any>([])
 
   const [singpass, setSingpass] = useState(false)
 
-  const [rejectionOne, setRejectionOne] = useState({})
+  const [rejectionOne, setRejectionOne] = useState<any>({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [data, setData] = useState<any>({})
@@ -99,6 +101,28 @@ export const Applications = () => {
 
   useEffect(() => {
     if (!applicationIdEdit) return setIsLoading(false)
+    !!applicationIdEdit &&
+      request
+        .post('config/rejection_type/listing', {
+          status: true,
+          pageSize: 99999,
+          currentPage: 1,
+        })
+        .then((res) => {
+          setOptionsRejectionType(res?.data?.data || [])
+        })
+        .catch()
+    !!applicationIdEdit &&
+      request
+        .post('config/user/listing', {
+          status: true,
+          pageSize: 99999,
+          currentPage: 1,
+        })
+        .then((res) => {
+          setOptionsUser(res?.data?.data || [])
+        })
+        .catch()
     handleGetApplicationById()
     setCurrentStep(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,6 +153,52 @@ export const Applications = () => {
 
     // handleGetPersonData({authCode, codeVerifier})
   }, [])
+
+  // useEffect(() => {
+  //   window.addEventListener('message', (event) => {
+  //     if (event.origin === 'http://localhost:3001') {
+  //       // console.log('Message from popup:', event)
+  //       // console.log(1324, event.data)
+
+  //       const fullName = event.data.name.value
+  //       const firstName = fullName.split(' ')[0]
+  //       const lastName = fullName.substring(firstName.length).trim()
+
+  //       setTimeout(() => {
+  //         formik.setValues({
+  //           ...formik.values,
+  //           firstname: firstName || '',
+  //           lastname: lastName || '',
+  //           date_of_birth: event.data?.dob?.value || '',
+  //           identification_no: event.data?.uinfin?.value || '',
+  //           mobilephone_1: event.data?.mobileno.nbr?.value || '',
+  //           email_1: event.data?.email?.value || '',
+  //           address_contact_info: formik.values.address_contact_info.map((item, i) =>
+  //             i === 0
+  //               ? {
+  //                   ...item,
+  //                   postal_code: event.data.regadd.postal.value,
+  //                   street_1: event.data.regadd.street.value,
+  //                 }
+  //               : item
+  //           ),
+
+  //           // company_name: data?.employment?.value,
+  //         })
+  //       }, 1000)
+  //     }
+  //   })
+  // }, [])
+
+  // async function goToSingpass() {
+  //   const dataPopup = window.open(
+  //     'http://localhost:3001/singPass.html',
+  //     'sharer',
+  //     'toolbar=0,status=0,width=1200,height=900,align=center,menubar=no,location=no'
+  //   )
+
+  //   dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
+  // }
 
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
@@ -741,6 +811,7 @@ export const Applications = () => {
       <PageTitle breadcrumbs={profileBreadCrumbs}>
         {applicationIdEdit ? 'Edit Application' : 'New Application'}
       </PageTitle>
+
       <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1 m-0'>
         <div className='col-12 col-xxl-3 col-2xxl-2 d-flex flex-column overflow-hidden h-unset h-2xxl-100 m-xxl-0'>
           <div className='card bg-white w-100 align-self-start align-self-lg-center overflow-y-auto m-0 d-flex flex-column h-100'>
@@ -767,7 +838,43 @@ export const Applications = () => {
               className='p-10'
             />
 
-            <div className='overflow-lg-auto p-10 flex-grow-1 h-fit-content' ref={containerRef}>
+            {!!rejectionOne?.id && (
+              <div className='px-30px pt-30px'>
+                <div className='p-16px wrapper-reject-title-application'>
+                  <h1 className='h1-reject-title-application'>
+                    Reject Reason:{' '}
+                    {
+                      optionsRejectionType.filter(
+                        (data: any) => data?.id === rejectionOne?.rejection_type_id
+                      )[0]?.rejection_type_name
+                    }
+                  </h1>
+                  <p className='p1-reject-title-application'>
+                    Rejected By{' '}
+                    {
+                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
+                        ?.firstname
+                    }{' '}
+                    {
+                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
+                        ?.middlename
+                    }{' '}
+                    {
+                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
+                        ?.lastname
+                    }
+                  </p>
+                  <p
+                    className='p2-reject-title-application'
+                    dangerouslySetInnerHTML={{
+                      __html: rejectionOne?.rejection_note.replace(/\n/g, '<br>'),
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className='overflow-lg-auto p-10 flex-grow-1' ref={containerRef}>
               <div
                 className={`${currentStep !== 6 ? 'form-wrap' : ''}`}
                 style={currentStep === 2 ? {width: '91.5%'} : {}}
