@@ -18,6 +18,7 @@ import {Mes} from './Mes'
 import GoogleCheck from './GoogleCheck'
 import Warning from './Warning'
 import FolderPdf from './FolderPdf'
+import CloseSmall from './CloseSmall'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -40,6 +41,7 @@ const icons = {
   GoogleCheck: GoogleCheck,
   Warning: Warning,
   FolderPdf: FolderPdf,
+  CloseSmall: CloseSmall,
 }
 
 const Icons = ({name}) => {
