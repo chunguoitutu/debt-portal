@@ -556,7 +556,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         </th>
                       </tr>
                     </thead>
-                    {Array.isArray(cpfData?.date) && cpfData.date.length > 0 ? (
+                    {Array.isArray(cpfData?.date) && cpfData?.date?.length > 0 ? (
                       <tbody>
                         {cpfData.date.map((date, index) => (
                           <tr key={index}>
@@ -564,16 +564,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                               {index + 1}
                             </th>
                             <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                              {moment(date).format('YYYY/MM/DD') || 'No Information'}
+                              {moment(date)?.format('MM/DD/YYYY') ?? 'No Information'}
                             </td>
                             <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                              {cpfData?.employer?.[index] || 'No Information'}
+                              {cpfData?.employer?.[index] ?? 'No Information'}
                             </td>
                             <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                              ${cpfData?.amount?.[index] || 'No Information'}
+                              ${cpfData?.amount?.[index] ?? 'No Information'}
                             </td>
                             <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                              {moment(cpfData?.month?.[index]).format('YYYY/MM') ||
+                              {moment(cpfData?.month?.[index])?.format('YYYY/MM') ??
                                 'No Information'}
                             </td>
                           </tr>
