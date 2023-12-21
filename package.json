@@ -47,7 +47,7 @@
     "react-icons": "^4.11.0",
     "react-inlinesvg": "3.0.0",
     "react-intl": "^6.4.4",
-    "react-pdf": "^7.6.0",
+    "react-pdf": "^6.2.2",
     "react-query": "3.38.0",
     "react-router-dom": "6.3.0",
     "react-signature-canvas": "^1.0.6",

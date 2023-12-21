@@ -36,7 +36,7 @@ export const PdfViewer = () => {
   const layoutPlugin = defaultLayoutPlugin()
 
   return (
-    <Worker workerUrl='https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js'>
+    <Worker workerUrl='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js'>
       {pdfData && <Viewer fileUrl={pdfData} defaultScale={1} plugins={[layoutPlugin]} />}
     </Worker>
   )
