@@ -813,7 +813,7 @@ export const Applications = () => {
       </PageTitle>
 
       <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1 m-0'>
-        <div className='col-12 col-xxl-3 col-2xxl-2 d-flex flex-column overflow-hidden h-unset h-2xxl-100 m-xxl-0'>
+        <div className='col-12 col-xxl-3 col-2xxl-2 d-flex flex-column overflow-hidden h-unset h-2xxl-100 m-xxl-0 ps-0'>
           <div className='card bg-white w-100 align-self-start align-self-lg-center overflow-y-auto m-0 d-flex flex-column h-100'>
             <div className='step-application h-fit-content my-auto'>
               <Step

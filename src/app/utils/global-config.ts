@@ -415,23 +415,23 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'HDB',
     options: [
       {
-        value: '1-ROOM FLAT (HDB)',
+        value: '1 Room',
         label: '1 Room',
       },
       {
-        value: '2-ROOM FLAT (HDB)',
+        value: '2 Room',
         label: '2 Room',
       },
       {
-        value: '3-ROOM FLAT (HDB)',
+        value: '3 Room',
         label: '3 Room',
       },
       {
-        value: '4-ROOM FLAT (HDB)',
+        value: '4 Room',
         label: '4 Room',
       },
       {
-        value: '5-ROOM FLAT (HDB)',
+        value: '5 Room',
         label: '5 Room',
       },
     ],
@@ -440,8 +440,21 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'EXECUTIVE',
     options: [
       {
-        value: 'EXECUTIVE FLAT (HDB)',
+        value: 'Exec',
         label: 'Exec',
+      },
+    ],
+  },
+  {
+    name: 'ADVANCE',
+    options: [
+      {
+        value: 'TERRACE HOUSE',
+        label: 'Terrace House',
+      },
+      {
+        value: 'SEMI-DETACHED HOUSE',
+        label: 'Semi Detached House',
       },
     ],
   },
@@ -449,24 +462,25 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
     name: 'PRIVATE',
     options: [
       {
-        value: 'apartment',
+        value: 'Apartment',
         label: 'Apartment',
       },
       {
-        value: 'CONDOMINIUM',
+        value: 'Condo',
         label: 'Condo',
       },
       {
-        value: 'landed',
+        value: 'Landed',
         label: 'Landed',
       },
     ],
   },
+
   {
     name: 'NONE',
     options: [
       {
-        value: 'not_own',
+        value: 'Does not own any property',
         label: 'Does not own any property',
       },
     ],
