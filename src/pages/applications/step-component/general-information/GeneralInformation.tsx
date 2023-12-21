@@ -584,7 +584,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         <tr>
                           <td
                             colSpan={5}
-                            className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                            className='fs-6 fw-medium text-center text-gray-600 fw-medium'
                             style={{color: '#071437'}}
                           >
                             No matching records found
@@ -746,7 +746,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         <tr>
                           <td
                             colSpan={5}
-                            className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                            className='fs-6 fw-medium text-center text-gray-600 fw-medium'
                             style={{color: '#071437'}}
                           >
                             No matching records found
