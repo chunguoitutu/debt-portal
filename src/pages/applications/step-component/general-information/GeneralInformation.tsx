@@ -556,27 +556,42 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {cpfData?.date?.map((date, index) => (
-                        <tr key={index}>
-                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
-                            {index + 1}
-                          </th>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(date).format('MM/DD/YYYY') || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData?.employer[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            ${cpfData?.amount[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(cpfData?.month[index]).format('YYYY/MM') || 'No Information'}
+                    {Array.isArray(cpfData?.date) && cpfData.date.length > 0 ? (
+                      <tbody>
+                        {cpfData.date.map((date, index) => (
+                          <tr key={index}>
+                            <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                              {index + 1}
+                            </th>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(date).format('YYYY/MM/DD') || 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {cpfData?.employer?.[index] || 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              ${cpfData?.amount?.[index] || 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(cpfData?.month?.[index]).format('YYYY/MM') ||
+                                'No Information'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    ) : (
+                      <tbody>
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                            style={{color: '#071437'}}
+                          >
+                            No matching records found
                           </td>
                         </tr>
-                      ))}
-                    </tbody>
+                      </tbody>
+                    )}
                   </Table>
                 </Tab>
                 <Tab
@@ -609,26 +624,17 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         </th>
                       </tr>
                     </thead>
+
                     <tbody>
-                      {cpfData?.date.map((date, index) => (
-                        <tr key={index}>
-                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
-                            {index + 1}
-                          </th>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {date || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData?.employer[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            ${cpfData?.amount[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {cpfData?.month[index] || 'No Information'}
-                          </td>
-                        </tr>
-                      ))}
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                          style={{color: '#071437'}}
+                        >
+                          No matching records found
+                        </td>
+                      </tr>
                     </tbody>
                   </Table>
                 </Tab>
@@ -709,27 +715,45 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {formik.values?.date?.map((date, index) => (
-                        <tr key={index}>
-                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
-                            {index + 1}
-                          </th>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values?.date[index]).format('MM/DD/YYYY') || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values?.employer[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            ${values?.amount[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values?.month[index]).format('YYYY/MM') || 'No Information'}
+                    {formik.values &&
+                    Array.isArray(formik.values.date) &&
+                    formik.values.date.length > 0 ? (
+                      <tbody>
+                        {formik.values.date.map((date, index) => (
+                          <tr key={index}>
+                            <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                              {index + 1}
+                            </th>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(formik.values.date[index]).format('YYYY/MM/DD') ||
+                                'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {formik.values.employer[index] || 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              ${formik.values.amount[index] || 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(formik.values.month[index]).format('YYYY/MM') ||
+                                'No Information'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    ) : (
+                      <tbody>
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                            style={{color: '#071437'}}
+                          >
+                            No matching records found
                           </td>
                         </tr>
-                      ))}
-                    </tbody>
+                      </tbody>
+                    )}
                   </Table>
                 </Tab>
                 <Tab
@@ -762,26 +786,17 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                         </th>
                       </tr>
                     </thead>
+
                     <tbody>
-                      {formik.values?.date?.map((date, index) => (
-                        <tr key={index}>
-                          <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
-                            {index + 1}
-                          </th>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values?.date[index]).format('MM/DD/YYYY') || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {values?.employer[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            ${values?.amount[index] || 'No Information'}
-                          </td>
-                          <td className='fs-6 fw-medium' style={{color: '#071437'}}>
-                            {moment(values?.month[index]).format('YYYY/MM') || 'No Information'}
-                          </td>
-                        </tr>
-                      ))}
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                          style={{color: '#071437'}}
+                        >
+                          No matching records found
+                        </td>
+                      </tr>
                     </tbody>
                   </Table>
                 </Tab>
