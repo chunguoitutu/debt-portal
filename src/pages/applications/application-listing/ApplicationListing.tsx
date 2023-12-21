@@ -501,8 +501,8 @@ const ApplicationListing = () => {
         )}
 
         {Object.keys(checkFilter).length !== 0 && (
-          <div className='d-flex justify-content align-items-center px-30px pt-30px m-0 gap-16px'>
-            <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-0 me-16px'>Filter:</h1>
+          <div className='d-flex justify-content  px-30px pt-30px m-0 gap-16px'>
+            <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px me-16px'>Filter:</h1>
 
             <div className='d-flex justify-content align-items-center p-0 m-0 flex-wrap gap-4px'>
               {showFilter.map((filter, index) => (
@@ -640,7 +640,12 @@ const ApplicationListing = () => {
               ))}
             </div>
 
-            <button onClick={handleResetFilter} className='reset-all-filter-application'>
+            <button
+              onClick={() => {
+                handleResetFilter()
+              }}
+              className='reset-all-filter-application'
+            >
               Reset All
             </button>
           </div>
