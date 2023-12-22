@@ -182,7 +182,7 @@ export const CompanyManagement = () => {
                   moment(values?.['license_expiry_date']).format('YYYY-MM-DD'))
             }
             loading={isSubmitting}
-            onClick={() => handleBeforeSubmit()}
+            onClick={() => handleSubmit()}
           >
             Update
           </Button>

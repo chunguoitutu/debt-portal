@@ -29,6 +29,7 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   showIconTogglePassword?: boolean
   error?: string
   touched?: boolean
+  classNameAdvanced?: string
 }
 
 const numberAllowDotRegex = /^[0-9.]+$/
@@ -52,6 +53,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     classInputWrap = 'form-control-solid',
     error,
     touched,
+    classNameAdvanced = '',
     ...rest
   },
   ref
@@ -119,7 +121,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         )}
 
         {type === 'web_url' ? (
-          <span className='ps-5 text-gray-600' style={{marginTop: '2px'}}>
+          <span className='ps-5 fs-4 text-gray-600' style={{marginTop: '2px'}}>
             {symbolUrl}
           </span>
         ) : (
@@ -135,7 +137,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
             type === 'number' && handlePaste({e: e, noThereAreCommas: noThereAreCommas})
           }
           type={typeCustom}
-          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className}`}
+          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
           id={id || defaultId || name}
           name={name}
           {...(ref ? {} : {value: value})}

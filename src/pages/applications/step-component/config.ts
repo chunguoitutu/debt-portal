@@ -216,7 +216,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     noThereAreCommas: false,
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Amount'))
-      .moreThan(0, 'Loan Amount must be greater than 0')
+      // .moreThan(0, 'Loan Amount must be greater than 0')
       .max(999999999999, 'Loan Amount must be less than or equal to 999999999999$'),
   },
   {

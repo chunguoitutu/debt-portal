@@ -1,7 +1,7 @@
 import React, {useMemo, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
-import {useFormik} from 'formik'
+import {useFormik, validateYupSchema} from 'formik'
 import moment from 'moment'
 
 import request from '@/app/axios'
@@ -80,7 +80,7 @@ const CreateEditCompanies = ({
       address: data ? data?.['address'] : '',
       open_date: data ? data?.['open_date'].slice(0, 11) || '' : '',
       license_no: data ? data?.['license_no'] : '',
-      license_expiry_date: data ? (data?.['license_expiry_date'] || '').slice(0, 11) : '',
+      license_expiry_date: '',
       web_url: data ? data?.['web_url'] : '',
     },
     validationSchema: validationFormik,
@@ -231,6 +231,11 @@ const CreateEditCompanies = ({
                         error={errors[row.key] as string}
                         touched={!!touched[row.key]}
                         disabled={titleLable === 'Edit' && row.key === 'company_code'}
+                        classInputWrap={
+                          titleLable === 'Edit' && row.key === 'company_code'
+                            ? 'bg-secondary'
+                            : 'form-control-solid'
+                        }
                       />
                     </div>
                   </div>

@@ -125,7 +125,7 @@ export const Applications = () => {
     handleGetApplicationById()
     setCurrentStep(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applicationIdEdit, loadApiEdit])
+  }, [applicationIdEdit, loadApiEdit, pathname])
 
   useEffect(() => {
     resetForm()
@@ -133,6 +133,7 @@ export const Applications = () => {
     if (pathname === '/application/create') {
       setCurrentStep(1)
     }
+    setSingpass(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 

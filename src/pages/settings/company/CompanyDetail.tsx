@@ -73,7 +73,7 @@ const CompanyDetail = ({
                 {data?.telephone}
               </p>
             ) : (
-              <p className='ps-8px text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+              <p className='ps-8px text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
                 None
               </p>
             )}
@@ -169,6 +169,16 @@ const CompanyDetail = ({
             </div>
 
             {/*  */}
+            <div className=' h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
+              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
+                Open Date
+              </h1>
+              <p className='p-0 m-0 h-100 fs-16  fw-semibold text-gray-800'>
+                {moment(data?.open_date).format('MMM DD, YYYY')}
+              </p>
+            </div>
+
+            {/*  */}
             <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 License Expiry Date
@@ -182,15 +192,6 @@ const CompanyDetail = ({
                   None
                 </p>
               )}
-            </div>
-            {/*  */}
-            <div className=' h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
-              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
-                Open Date
-              </h1>
-              <p className='p-0 m-0 h-100 fs-16  fw-semibold text-gray-800'>
-                {moment(data?.open_date).format('MMM DD, YYYY')}
-              </p>
             </div>
 
             <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import * as Yup from 'yup'
 
 export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
@@ -25,10 +26,20 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
         license_no: Yup.string().required(`License Number is required`),
         license_expiry_date: Yup.date()
           .nullable()
+          .notRequired()
+          .default(null)
+          .transform((value, originalObject) => {
+            // Transform the value to a Date or null
+            return value instanceof Date && !isNaN(value as any) ? value : null
+          })
+          .min(
+            Yup.ref('open_date'),
+            ({min}) => `License Expiry Date must be greater than Open Date`
+          )
           .typeError('License Expiry Date must be a valid date')
           .when(['open_date'], (openDate, schema) => {
-            return openDate
-              ? schema.min(openDate, 'License Expiry Date must be greater than Open Date')
+            return openDate[0] && moment(openDate[0]).isValid()
+              ? schema?.min(openDate, 'License Expiry Date must be greater than Open Date')
               : schema
           }),
 
