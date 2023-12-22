@@ -475,7 +475,7 @@ const ApplicationListing = () => {
                     : '#f1f1f4',
               }}
               onClick={showInputFilter}
-              className={` align-self-center fs-6 text-primary h-45px `}
+              className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
               disabled={false}
             >
               <Icons name={'filterIcon'} />
@@ -511,10 +511,8 @@ const ApplicationListing = () => {
           !(
             Object.keys(checkFilter).length === 1 && Object.keys(checkFilter).includes('searchBar')
           ) && (
-            <div className='d-flex justify-content  px-30px pt-14px m-0 gap-16px'>
-              <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px me-16px'>
-                Filter:
-              </h1>
+            <div className='d-flex justify-content  px-30px pt-14px m-0 '>
+              <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
 
               <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
                 {showFilter.map((filter, index) => (
@@ -587,9 +585,7 @@ const ApplicationListing = () => {
                           {filter.value}:{' '}
                           {!!checkFilter?.application_date?.gte &&
                             moment(checkFilter?.application_date?.gte).format('MMM D, YYYY')}{' '}
-                          {!!checkFilter?.application_date?.lte &&
-                            !!checkFilter?.application_date?.gte &&
-                            'to '}
+                          {!!checkFilter?.application_date?.lte && 'To '}
                           {!!checkFilter?.application_date?.lte &&
                             moment(checkFilter?.application_date?.lte)
                               .subtract(1, 'days')
@@ -610,11 +606,18 @@ const ApplicationListing = () => {
                       ['loan_amount_requested'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
-                            {filter.value}: {!!checkFilter?.loan_amount_requested?.gte && 'From '}
-                            {!!checkFilter?.loan_amount_requested?.gte &&
+                            {filter.value}:{' '}
+                            {(!!checkFilter?.loan_amount_requested?.gte ||
+                              checkFilter?.loan_amount_requested?.gte === 0) &&
+                              'From '}
+                            {(!!checkFilter?.loan_amount_requested?.gte ||
+                              checkFilter?.loan_amount_requested?.gte === 0) &&
                               checkFilter?.loan_amount_requested?.gte}{' '}
-                            {!!checkFilter?.loan_amount_requested?.lte && 'To '}
-                            {!!checkFilter?.loan_amount_requested?.lte &&
+                            {(!!checkFilter?.loan_amount_requested?.lte ||
+                              checkFilter?.loan_amount_requested?.lte === 0) &&
+                              'To '}
+                            {(!!checkFilter?.loan_amount_requested?.lte ||
+                              checkFilter?.loan_amount_requested?.lte === 0) &&
                               checkFilter?.loan_amount_requested?.lte}
                           </h2>
                           <div
@@ -659,7 +662,7 @@ const ApplicationListing = () => {
                 onClick={() => {
                   handleResetFilter()
                 }}
-                className='reset-all-filter-application mt-16px'
+                className='reset-all-filter-application mt-16px ms-16px'
               >
                 Reset All
               </button>

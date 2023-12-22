@@ -304,7 +304,7 @@ input[type='number']::-webkit-outer-spin-button {
 
 .reset-all-filter-application {
   border-radius: 8px;
-  background: var(--Gray---bs-gray-200, #f1f1f2);
+  background: #f9f9f9;
   color: var(--Color-Text---Light-Mode-text-gray-700, #4b5675);
   text-align: center;
   font-family: Inter;
@@ -320,6 +320,11 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
   white-space: nowrap;
   height: 29px;
+}
+
+.reset-all-filter-application:hover {
+  background: #e9f3ff;
+  color: #1b84ff;
 }
 
 .wrapper-transition-filter-show {
