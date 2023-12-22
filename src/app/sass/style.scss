@@ -280,9 +280,14 @@ input[type='number']::-webkit-outer-spin-button {
   border-radius: 8px;
   display: flex;
   padding: 4px 8px;
+  height: 29px;
   align-items: center;
   gap: 4px;
   border: 1px solid var(--Gray---bs-gray-200, #f1f1f2);
+}
+.wrapper-filter-application:hover {
+  border: 1px solid var(--Primary---bs-primary, #1b84ff);
+  background: #f1faff;
 }
 
 .filter-title-show {
