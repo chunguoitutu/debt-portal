@@ -18,12 +18,21 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
         email: Yup.string()
           .email('Email is not in valid format')
           .max(255, 'Email must be at most 255 characters'),
-        open_date: Yup.string().required('Open Date is required'),
         address: Yup.string().max(255, 'Address must be at most 255 characters'),
         contact_person: Yup.string()
           .min(0)
           .max(255, 'Contact Person must be at most 255 characters'),
         license_no: Yup.string().required(`License Number is required`),
+        license_expiry_date: Yup.date()
+          .nullable()
+          .typeError('License Expiry Date must be a valid date')
+          .when(['open_date'], (openDate, schema) => {
+            return openDate
+              ? schema.min(openDate, 'License Expiry Date must be greater than Open Date')
+              : schema
+          }),
+
+        open_date: Yup.date().required('Open Date is required'),
       }),
     },
     rows: [
@@ -42,6 +51,12 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
       {
         key: 'business_uen',
         name: `${type} UEN`,
+        type: 'text',
+        required: true,
+      },
+      {
+        key: 'license_no',
+        name: 'License Number',
         type: 'text',
         required: true,
       },
@@ -66,9 +81,9 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
         type: 'text',
       },
       {
-        key: 'license_no',
-        name: 'License Number',
-        type: 'text',
+        key: 'open_date',
+        name: 'Open Date',
+        type: 'date',
         required: true,
       },
       {
@@ -79,13 +94,7 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
       {
         key: 'web_url',
         name: 'Web Url',
-        type: 'text',
-      },
-      {
-        key: 'open_date',
-        name: 'Open Date',
-        type: 'date',
-        required: true,
+        type: 'web_url',
       },
     ],
   }

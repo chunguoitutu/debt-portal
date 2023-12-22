@@ -97,8 +97,6 @@ export const CompanyManagement = () => {
     setSubmitting,
   } = formik
 
-  console.log(formik.values.contact_person, 1234)
-
   const handleBeforeSubmit = async () => {
     const checkingErrors = await validateForm(values)
     if (Object.keys(checkingErrors).length) {
