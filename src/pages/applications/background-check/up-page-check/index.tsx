@@ -63,7 +63,7 @@ const GoogleSearchPageCheck = ({
             <div className='d-flex justify-content-center align-items-center gap-16px'>
               <Input
                 classShared='flex-grow-1 h-30px mb-5'
-                placeholder='Search Customer'
+                placeholder='Search'
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value)

@@ -434,7 +434,7 @@ const ApplicationListing = () => {
         <div className='d-flex flex-row align-items-center'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search Customer'
+            placeholder='Search'
             value={searchValue}
             onChange={handleChangeSearch}
             onKeyDown={(e) => {
@@ -517,7 +517,7 @@ const ApplicationListing = () => {
               <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
                 {showFilter.map((filter, index) => (
                   <div key={index} className='p-0 m-0'>
-                    {!!checkFilter[`${filter.key}`] &&
+                    {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
                       ![
                         'application_date',
                         'loan_amount_requested',

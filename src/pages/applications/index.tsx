@@ -17,6 +17,7 @@ import {useAuth} from '../../app/context/AuthContext'
 import {
   ApplicationFormData,
   ApplicationPayload,
+  ApprovalInfo,
   CreateSuccessResponse,
   PropsStepApplication,
   RemarkItem,
@@ -67,9 +68,7 @@ export const Applications = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [optionsRejectionType, setOptionsRejectionType] = useState<any>([])
   const [optionsUser, setOptionsUser] = useState<any>([])
-
   const [singpass, setSingpass] = useState(false)
-
   const [rejectionOne, setRejectionOne] = useState<any>({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -352,6 +351,7 @@ export const Applications = () => {
         employment,
         address,
         file_documents,
+        approval,
         cpf,
       } = data.data || {}
 
@@ -379,6 +379,7 @@ export const Applications = () => {
           file_documents.map((data) => {
             return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
           }) || [],
+        ...(approval ? {approval} : {}),
       })
 
       if (application?.status !== 0) {
@@ -874,6 +875,21 @@ export const Applications = () => {
               </div>
             )}
 
+            {values.approval && (
+              <div className='p-30px pb-0'>
+                <div className='p-16px bg-light-success rounded-8'>
+                  <h1 className='text-success fs-16 fw-bold m-0'>
+                    Approved By: {values.approval.approved_by}
+                  </h1>
+                  {values.approval.approved_note && (
+                    <span className='text-gray-600 mt-16px d-inline-block white-space-pre-line'>
+                      {values.approval.approved_note}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div
               className='overflow-lg-auto p-10 flex-grow-1 d-flex justify-content-center'
               ref={containerRef}
@@ -917,10 +933,7 @@ export const Applications = () => {
             </div>
           </div>
         </div>
-        <div
-          className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'
-          style={{paddingRight: '5px'}}
-        >
+        <div className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'>
           <div className='d-flex flex-column h-100'>
             <div className='d-none d-2xxl-block'>
               <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>

@@ -1,6 +1,7 @@
 import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
 import {FormikProps} from 'formik'
 import {ObjectSchema, Schema} from 'yup'
+import {ApprovalInfo} from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -471,6 +472,7 @@ export type ApplicationFormData = {
   vehicle_coe_expiry_date?: string | any
   vehicle_open_maket_value?: string | any
   vehicle_effective_date?: string
+  approval?: ApprovalInfo
 }
 
 export type BlockAddress = {
