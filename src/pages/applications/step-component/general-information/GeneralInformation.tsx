@@ -19,6 +19,7 @@ import Button from '@/components/button/Button'
 import Singpass from './Singpass'
 import {KTIcon} from '@/_metronic/helpers'
 import {RESIDENTIAL_TYPE} from './../../../../app/utils/global-config'
+import {convertResidentialTypeSingPass} from '@/app/utils'
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
@@ -128,7 +129,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         const street_full = `${block} ${unit} ${event.data?.regadd?.street?.value || ''}`
 
         const values = {
-          ...formik.values,
           firstname: firstname || '',
           middlename: middlename || '',
           lastname: lastname || '',
@@ -150,48 +150,17 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           gender: event.data.sex.desc,
           residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
           annual_income: annual_api || '',
+          nationality: event.data.race.desc || '',
+          country: event.data.regadd.country.desc,
           month: cpf_months || '',
           amount: cpf_amount || '',
           date: cpf_date || '',
           employer: cpf_employer || '',
+          // marketing_type_id: 1,
+          // vehicle will return result when we have the offical api singpass
         }
 
         handleFillFormSingpass(values)
-
-        setTimeout(() => {
-          formik.setValues({
-            ...formik.values,
-            firstname: firstname || '',
-            middlename: middlename || '',
-            lastname: lastname || '',
-            date_of_birth: event.data?.dob?.value || '',
-            identification_no: event.data?.uinfin?.value || '',
-            mobilephone_1: event.data?.mobileno.nbr?.value || '',
-            email_1: event.data?.email?.value || '',
-            address_contact_info: formik.values.address_contact_info.map((item, i) =>
-              i === 0
-                ? {
-                    ...item,
-                    postal_code: event?.data?.regadd?.postal?.value || '',
-                    // street_1: event?.data?.regadd?.unit.value  event?.data?.regadd?.street.value || '',
-                    street_1: event?.data?.regadd?.street?.value || '',
-                    country: event?.data?.regadd?.country?.desc || '',
-                  }
-                : item
-            ),
-            gender: event.data.sex.desc,
-            residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
-            annual_income: annual_api || '',
-            nationality: event.data.race.desc || '',
-            country: event.data.regadd.country.desc,
-            month: cpf_months || '',
-            amount: cpf_amount || '',
-            date: cpf_date || '',
-            employer: cpf_employer || '',
-
-            // vehicle will return result when we have the offical api singpass
-          })
-        }, 0)
       } else return
     })
   }, [company_id])
@@ -230,63 +199,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   async function handleFillFormSingpass(dataSingpass: any) {
     let newDataSingpass = {...dataSingpass}
 
-    console.log(newDataSingpass.residential_type, 1234)
-
-    switch (newDataSingpass.residential_type) {
-      case '1-ROOM FLAT (HDB)':
-        newDataSingpass.residential_type = '1 Room'
-        break
-
-      case '2-ROOM FLAT (HDB)':
-        newDataSingpass.residential_type = '2 Room'
-        break
-
-      case '3-ROOM FLAT (HDB)':
-        newDataSingpass.residential_type = '3 Room'
-        break
-
-      case '4-ROOM FLAT (HDB)':
-        newDataSingpass.residential_type = '4 Room'
-        break
-
-      case '5-ROOM FLAT (HDB)':
-        newDataSingpass.residential_type = '5 Room'
-        break
-
-      case 'EXECUTIVE FLAT (HDB)':
-        newDataSingpass.residential_type = 'Exec'
-        break
-
-      case 'apartment':
-        newDataSingpass.residential_type = 'apartment'
-        break
-
-      case 'CONDOMINIUM':
-        newDataSingpass.residential_type = 'Condo'
-        break
-
-      case 'landed':
-        newDataSingpass.residential_type = 'Landed'
-        break
-
-      case 'TERRACE HOUSE':
-        newDataSingpass.residential_type = 'Terrace House'
-        break
-
-      case 'SEMI-DETACHED HOUSE':
-        newDataSingpass.residential_type = 'Semi Detached House'
-        break
-
-      case 'not_own':
-        newDataSingpass.residential_type = 'Does not own any property'
-        break
-
-      default:
-        break
-    }
-
-    console.log(newDataSingpass.residential_type, 'after')
-
     try {
       const NRIC = dataSingpass.identification_no
 
@@ -296,12 +208,19 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       })
 
       // Update newDataSingpass after the API call
-      newDataSingpass = {...newDataSingpass, is_existing: 'existing'}
+      newDataSingpass = {
+        ...newDataSingpass,
+        is_existing: 'existing',
+      }
     } catch (error) {
       //nothing
     } finally {
       // Update formik values with the modified newDataSingpass
-      formik.setValues({...formik.values, ...newDataSingpass})
+      formik.setValues({
+        ...formik.values,
+        ...newDataSingpass,
+        residential_type: convertResidentialTypeSingPass(newDataSingpass.residential_type),
+      })
     }
   }
 

@@ -136,23 +136,6 @@ const CompanyDetail = ({
             </div>
             <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
-                Contact Person
-              </h1>
-              {!!data?.contact_person ? (
-                <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
-                  {data?.contact_person}
-                </p>
-              ) : (
-                <p className='text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
-                  None
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className='w-100 d-flex flex-row align-items-center p-0 gap-8px mt-3'>
-            <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
-              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 License Number
               </h1>
               <p className='p-0  h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
@@ -167,26 +150,19 @@ const CompanyDetail = ({
                 )}
               </p>
             </div>
+          </div>
 
-            <div className='w-50 wrapper-company-detail d-flex flex-column gap-4'>
-              <h1 className='text-capitalize fs-14 fw-semibold color-company-detail m-0 p-0'>
-                Web Url
+          <div className=' d-flex justify-content-between align-items-center p-0 gap-8px mt-4'>
+            <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
+              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
+                Contact Person
               </h1>
-              {!!data?.web_url ? (
-                <a
-                  href={data.web_url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='p-0 h-100 fs-16 fw-semibold text-gray-800 text-hover-primary'
-                  style={{
-                    textDecoration: 'underline',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {data?.web_url}
-                </a>
+              {!!data?.contact_person ? (
+                <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
+                  {data?.contact_person}
+                </p>
               ) : (
-                <p className='text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                <p className='text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
                   None
                 </p>
               )}
@@ -212,9 +188,37 @@ const CompanyDetail = ({
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 Open Date
               </h1>
-              <p className='p-0 m-0 h-100 fs-16 text-uppercase fw-semibold text-gray-800'>
+              <p className='p-0 m-0 h-100 fs-16  fw-semibold text-gray-800'>
                 {moment(data?.open_date).format('MMM DD, YYYY')}
               </p>
+            </div>
+
+            <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
+              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
+                Web Url
+              </h1>
+              {!!data?.web_url ? (
+                <a
+                  href={`https://${data.web_url}`}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='fs-16 fw-semibold text-gray-800 text-hover-primary'
+                  style={{
+                    cursor: 'pointer',
+                    maxWidth: '210px',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: 'inline-block',
+                  }}
+                >
+                  {data?.web_url}
+                </a>
+              ) : (
+                <p className='text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                  None
+                </p>
+              )}
             </div>
           </div>
         </div>

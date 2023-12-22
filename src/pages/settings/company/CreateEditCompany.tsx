@@ -230,6 +230,7 @@ const CreateEditCompanies = ({
                         onChange={handleChange}
                         error={errors[row.key] as string}
                         touched={!!touched[row.key]}
+                        disabled={titleLable === 'Edit' && row.key === 'company_code'}
                       />
                     </div>
                   </div>

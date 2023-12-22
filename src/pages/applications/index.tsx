@@ -826,7 +826,7 @@ export const Applications = () => {
             </div>
           </div>
         </div>
-        <div className='col-12 col-xxl-9 col-2xxl-8 d-flex flex-column h-fit-content h-2xxl-100 mt-16px m-xxl-0'>
+        <div className='col-12 col-xxl-9 col-2xxl-8 d-flex flex-column h-fit-content h-2xxl-100 mt-16px m-xxl-0 ps-0'>
           <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
             <HeaderApplication
               labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
@@ -917,7 +917,10 @@ export const Applications = () => {
             </div>
           </div>
         </div>
-        <div className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0'>
+        <div
+          className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'
+          style={{paddingRight: '5px'}}
+        >
           <div className='d-flex flex-column h-100'>
             <div className='d-none d-2xxl-block'>
               <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>

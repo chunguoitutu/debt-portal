@@ -24,6 +24,7 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   insertRight?: ReactNode
   type?: HTMLInputTypeAttribute | 'money'
   symbolMoney?: string
+  symbolUrl?: string
   noThereAreCommas?: boolean
   showIconTogglePassword?: boolean
   error?: string
@@ -43,6 +44,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     className = '',
     classShared = '',
     symbolMoney = '$',
+    symbolUrl = 'https://',
     noThereAreCommas = true,
     required = false,
     showIconTogglePassword = true,
@@ -115,6 +117,15 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         ) : (
           insertLeft && insertLeft
         )}
+
+        {type === 'web_url' ? (
+          <span className='ps-5 text-gray-600' style={{marginTop: '2px'}}>
+            {symbolUrl}
+          </span>
+        ) : (
+          <></>
+        )}
+
         <input
           ref={ref}
           onKeyPressCapture={(e) =>

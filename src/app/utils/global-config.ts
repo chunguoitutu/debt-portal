@@ -434,6 +434,10 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
         value: '5 Room',
         label: '5 Room',
       },
+      {
+        value: 'STUDIO APARTMENT (HDB)',
+        label: 'Studio Apartment',
+      },
     ],
   },
   {
