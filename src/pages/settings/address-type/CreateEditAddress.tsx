@@ -262,7 +262,7 @@ const CreateEditAddress = ({
           </div>
         </div>
       </div>
-      <div className='d-flex flex-end p-30px border-top border-gray-200'>
+      <div className='d-flex flex-end  p-30px border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => handleClose()}
