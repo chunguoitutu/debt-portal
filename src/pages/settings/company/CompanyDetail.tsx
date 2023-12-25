@@ -38,7 +38,7 @@ const CompanyDetail = ({
       animation={true}
     >
       <div className='modal-header p-30px'>
-        <h2>Company Details</h2>
+        <h2>Business Unit Details</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -57,7 +57,7 @@ const CompanyDetail = ({
               )}
               <div>
                 <h1 className='text-capitalize fs-14 fw-semibold color-company-detail mt-4px mb-0'>
-                  Company Name
+                  Business Unit Name
                 </h1>
                 <p className='p-0 m-0 fs-16 text-uppercase fw-bold text-gray-900'>
                   {data?.company_name}
@@ -73,7 +73,7 @@ const CompanyDetail = ({
                 {data?.telephone}
               </p>
             ) : (
-              <p className='ps-8px text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+              <p className='ps-8px text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
                 None
               </p>
             )}
@@ -120,7 +120,7 @@ const CompanyDetail = ({
             </div>
             <div className=' h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
-                company Code
+                Business Unit Code
               </h1>
               <p className='p-0 m-0 h-100 fs-16 text-capitalize fw-semibold text-gray-800'>
                 {data?.company_code}
@@ -128,12 +128,31 @@ const CompanyDetail = ({
             </div>
             <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
-                business UEN
+                Business Unit UEN
               </h1>
               <p className='p-0  h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
                 {data?.business_uen}
               </p>
             </div>
+            <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
+              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
+                License Number
+              </h1>
+              <p className='p-0  h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
+                {!!data?.license_no ? (
+                  <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
+                    {data?.license_no}
+                  </p>
+                ) : (
+                  <p className='text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                    None
+                  </p>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div className=' d-flex justify-content-between align-items-center p-0 gap-8px mt-4'>
             <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 Contact Person
@@ -148,13 +167,59 @@ const CompanyDetail = ({
                 </p>
               )}
             </div>
+
+            {/*  */}
             <div className=' h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 Open Date
               </h1>
-              <p className='p-0 m-0 h-100 fs-16 text-uppercase fw-semibold text-gray-800'>
+              <p className='p-0 m-0 h-100 fs-16  fw-semibold text-gray-800'>
                 {moment(data?.open_date).format('MMM DD, YYYY')}
               </p>
+            </div>
+
+            {/*  */}
+            <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
+              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
+                License Expiry Date
+              </h1>
+              {!!data?.license_expiry_date ? (
+                <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
+                  {moment(data?.license_expiry_date).format('MMM DD, YYYY')}
+                </p>
+              ) : (
+                <p className='text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                  None
+                </p>
+              )}
+            </div>
+
+            <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
+              <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
+                Web Url
+              </h1>
+              {!!data?.web_url ? (
+                <a
+                  href={`https://${data.web_url}`}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='fs-16 fw-semibold text-gray-800 text-hover-primary'
+                  style={{
+                    cursor: 'pointer',
+                    maxWidth: '210px',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: 'inline-block',
+                  }}
+                >
+                  {data?.web_url}
+                </a>
+              ) : (
+                <p className='text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                  None
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -172,7 +237,7 @@ const CompanyDetail = ({
           type='submit'
           onClick={() => handleCloseShowEdit()}
         >
-          Edit Company
+          Edit Business Unit
         </Button>
       </div>
     </Modal>

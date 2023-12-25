@@ -191,7 +191,7 @@ const LookupCustomer = ({show, onClose}: Props) => {
           <div className='d-flex flex-row align-items-center'>
             <Input
               classShared='flex-grow-1 h-30px mb-5'
-              placeholder='Search Customer'
+              placeholder='Search'
               value={searchValue}
               onChange={handleChangeSearch}
               onKeyDown={(e) => {
@@ -219,10 +219,10 @@ const LookupCustomer = ({show, onClose}: Props) => {
                 ) : null
               }
             />
-            <div className='d-flex flex-end'>
+            <div className='d-flex flex-end ms-4 '>
               <Button
                 onClick={showInputFilter}
-                className='btn-secondary align-self-center m-2 fs-5 text-primary h-45px'
+                className='btn-secondary align-self-center my-2  fs-5 text-primary h-45px'
                 disabled={false}
               >
                 <Icons name={'filterIcon'} />

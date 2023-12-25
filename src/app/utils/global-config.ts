@@ -10,6 +10,7 @@ import LoanTypes from '../../pages/settings/loan-type/LoanType'
 import JobType from '../../pages/settings/job-type/JobType'
 import AddressType from '../../pages/settings/address-type/AddressType'
 import MarkettingType from '../../pages/settings/marketing-type/MarketingType'
+import UploadFileCasCheck from '@/pages/settings/UploadFileCasCheck'
 
 export const ROLE_PRIORITY: Option[] = [
   {
@@ -433,6 +434,10 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
         value: '5 Room',
         label: '5 Room',
       },
+      {
+        value: 'STUDIO APARTMENT (HDB)',
+        label: 'Studio Apartment',
+      },
     ],
   },
   {
@@ -459,13 +464,22 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
         value: 'Landed',
         label: 'Landed',
       },
+      {
+        value: 'TERRACE HOUSE',
+        label: 'Terrace House',
+      },
+      {
+        value: 'SEMI-DETACHED HOUSE',
+        label: 'Semi Detached House',
+      },
     ],
   },
+
   {
     name: 'NONE',
     options: [
       {
-        value: 'not_own',
+        value: 'Does not own any property',
         label: 'Does not own any property',
       },
     ],
@@ -593,21 +607,21 @@ export const OBLIGATION: AdvanceConfig[] = [
 ]
 
 export const ROUTER_SETTING = [
+  // {
+  //   path: 'company-management',
+  //   labelBreadCrumbs: 'Organization Information',
+  //   component: CompanyManagement,
+  //   priority: [1],
+  // },
   {
-    path: 'company-management',
-    labelBreadCrumbs: 'Organization Management',
-    component: CompanyManagement,
-    priority: [1],
-  },
-  {
-    path: 'companies',
-    labelBreadCrumbs: 'Company Listing',
+    path: 'business-units',
+    labelBreadCrumbs: 'Business Units',
     priority: [1],
     component: CompanyListing,
   },
   {
     path: 'users',
-    labelBreadCrumbs: 'User Listing',
+    labelBreadCrumbs: 'Manager Users',
     priority: [1, 2],
     component: UserManagement,
   },
@@ -625,7 +639,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'roles',
-    labelBreadCrumbs: 'Role Listing',
+    labelBreadCrumbs: 'Manager Roles',
     priority: [1, 2],
     component: RolePage,
   },
@@ -653,50 +667,50 @@ export const ROUTER_SETTING = [
     priority: [1],
     component: RejectionType,
   },
+  {
+    path: 'upload-pdf-cas-check',
+    labelBreadCrumbs: 'Upload File CAs Check',
+    priority: [1],
+    component: UploadFileCasCheck,
+  },
 ]
 
 export const MENU_SETTING_LISTING: MenuSettingItem[] = [
   {
     activeKey: uuidv4(),
-    title: 'Organization Management',
-    priority: [1],
-    children: [
-      {
-        id: uuidv4(),
-        to: '/settings/company-management',
-        label: 'Organization Information',
-        priority: [1],
-      },
-      {
-        id: uuidv4(),
-        to: '/settings/companies',
-        label: 'Company Listing',
-        priority: [1],
-      },
-    ],
-  },
-  {
-    activeKey: uuidv4(),
-    title: 'User Management',
+    title: 'Organization',
     priority: [1, 2],
     children: [
+      // {
+      //   id: uuidv4(),
+      //   to: '/settings/company-management',
+      //   label: 'Organization Information',
+      //   priority: [1],
+      // },
+      {
+        id: uuidv4(),
+        to: '/settings/business-units',
+        label: 'Business Units',
+        priority: [1],
+      },
       {
         id: uuidv4(),
         to: '/settings/users',
-        label: 'User Listing',
+        label: 'Manager  Users',
         priority: [1, 2],
       },
       {
         id: uuidv4(),
         to: '/settings/roles',
-        label: 'Role Listing',
+        label: 'Manager Roles',
         priority: [1, 2],
       },
     ],
   },
+
   {
     activeKey: uuidv4(),
-    title: 'Listing',
+    title: 'Business Listing',
     priority: [1],
     children: [
       {
@@ -745,8 +759,14 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
     children: [
       {
         id: uuidv4(),
+        to: '/settings/upload-pdf-cas-check',
+        label: 'Upload File CAs Check',
+        priority: [1],
+      },
+      {
+        id: uuidv4(),
         to: '/settings/other',
-        label: 'Config',
+        label: 'Configurations',
         priority: [1],
       },
     ],

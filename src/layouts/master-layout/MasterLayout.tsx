@@ -10,13 +10,21 @@ import {Sidebar} from '@/_metronic/layout/components/sidebar'
 import {ToolbarWrapper} from '@/_metronic/layout/components/toolbar'
 import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
 import {RightToolbar} from '@/_metronic/layout/components/toolbar/right-toll-bar/RightToolbar'
+import {useSocket} from '@/app/context/SocketContext'
 
 const MasterLayout = () => {
-  const {refreshToken} = useAuth()
+  const {company_id, refreshToken} = useAuth()
+  const {setupSocket} = useSocket()
 
   const {pathname} = useLocation()
 
   const token = Cookies.get('token')
+
+  useEffect(() => {
+    if (!company_id) return
+    setupSocket(company_id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company_id])
 
   useEffect(() => {
     if (!token) return
@@ -62,7 +70,7 @@ const MasterLayout = () => {
         </div>
       </div>
 
-      <div className=' d-xxl-none'>{checkBackgroundMobile && <RightToolbar />}</div>
+      <div className='d-2xxl-none'>{checkBackgroundMobile && <RightToolbar />}</div>
 
       <ScrollTop />
     </PageDataProvider>

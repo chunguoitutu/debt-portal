@@ -7,7 +7,13 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {swalConfirm} from '@/app/swal-notification'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import {convertErrorMessageResponse, convertMessageErrorRequired} from '@/app/utils'
+import {
+  COUNTRY_PHONE_CODE,
+  convertErrorMessageResponse,
+  convertMessageErrorRequired,
+} from '@/app/utils'
+import {Select} from '@/components/select'
+import Tippy from '@tippyjs/react'
 
 type Props = {
   onClose: () => void
@@ -115,7 +121,7 @@ const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
     }, '')
 
     if (!otpExpire || otpVerify.length > 6 || otpVerify !== otp) {
-      setError('Please enter valid verification code and try again.')
+      setError('The phone OTP is not match, please try again, or sesend again.')
       return
     }
 
@@ -159,7 +165,7 @@ const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
             </div>
 
             <div className='place-control align-self-start d-flex flex-column gap-8px my-32px'>
-              <h3 className='fs-16'>Type Your 6 Digit Verification Code</h3>
+              <h3 className='fs-16 fw-semibold'>Type your 6-digit verification code</h3>
 
               <div className='d-flex align-items-center gap-12px'>
                 {inputs.map((inputRef, index) => (
@@ -202,6 +208,19 @@ const ValidationPhoneNumber: FC<Props> = ({onClose}) => {
               label='Phone Number'
               error={formik.errors['phone_number']}
               touched={formik.touched['phone_number']}
+              insertLeft={
+                <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                  <span>
+                    <Select
+                      isOptionDefault={false}
+                      classShared='m-0'
+                      className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                      name='country_phone_code'
+                      options={COUNTRY_PHONE_CODE}
+                    />
+                  </span>
+                </Tippy>
+              }
             />
           </>
         )}

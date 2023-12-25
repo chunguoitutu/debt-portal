@@ -78,7 +78,7 @@ const MLCB: FC<Props> = ({onClose}) => {
 
         <ol className='list-style-position-inside p-0'>
           <li className='fs-14 fw-semibold text-gray-700'>
-            We hold a valid moneylending licence under the Moneylenders Act
+            We hold a valid moneylending licence under the Moneylenders Act.
           </li>
           <li className='fs-14 fw-semibold text-gray-700'>
             We submit this request to the Moneylenders Credit Bureau solely for the purpose of

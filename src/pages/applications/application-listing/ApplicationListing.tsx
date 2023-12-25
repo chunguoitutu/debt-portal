@@ -30,6 +30,7 @@ import {Input} from '@/components/input'
 import Pagination from '@/components/table/components/Pagination'
 import {FilterApplication} from './FilterApplication'
 import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
+import {useSocket} from '@/app/context/SocketContext'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -46,11 +47,51 @@ const profileBreadCrumbs: Array<PageLink> = [
   },
 ]
 
+const showFilter = [
+  {
+    key: 'application_no',
+    value: 'Application No',
+  },
+  {
+    key: 'fullname',
+    value: 'Name Of Borrower',
+  },
+  {
+    key: 'identification_type',
+    value: 'Identity Card Type',
+  },
+  {
+    key: 'identification_no',
+    value: 'NRIC No',
+  },
+  {
+    key: 'loan_type_id',
+    value: 'Loan Type',
+  },
+  {
+    key: 'loan_amount_requested',
+    value: 'Loan Amount',
+  },
+  {
+    key: 'loan_terms',
+    value: 'Loan Terms',
+  },
+  {
+    key: 'application_date',
+    value: 'Application Date',
+  },
+  {
+    key: 'status',
+    value: 'Status',
+  },
+]
+
 const ApplicationListing = () => {
   const {settings, rows} = APPLICATION_LISTING_CONFIG || {}
   const {showAction = true, showEditButton} = settings || {}
 
   const {company_id} = useAuth()
+  const {socket} = useSocket()
 
   // Get search criteria from session
   const sessionData = isObject(parseJson(sessionStorage.getItem('application') || ''))
@@ -61,7 +102,7 @@ const ApplicationListing = () => {
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
     isObject(sessionData?.dataFilter) ? sessionData?.dataFilter : {}
   )
-  const [checkFilter, setCheckFilter] = React.useState({})
+  const [checkFilter, setCheckFilter] = React.useState<any>({})
   const [data, setData] = React.useState<ApplicationItem[]>([])
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
@@ -74,7 +115,21 @@ const ApplicationListing = () => {
     currentPage: sessionData?.currentPage || 1,
     total: 0,
   })
+  const [newDataSocket, setNewDataSocket] = React.useState<number>(0) // new data in realtime
   const {pageSize, currentPage} = searchCriteria
+  useEffect(() => {
+    const handleDetectNewApplication = () => {
+      setNewDataSocket((prev) => prev + 1)
+    }
+
+    socket?.on('newApplication', handleDetectNewApplication)
+
+    return () => {
+      socket?.off('newApplication', handleDetectNewApplication) // Clean up event listener on component unmount
+    }
+  }, [socket])
+
+  console.log(dataFilter)
 
   /**
    * get api or filter
@@ -250,6 +305,7 @@ const ApplicationListing = () => {
       )
     })
   }
+  console.log(checkFilter.application_date, 'checkFilter')
 
   // get list application
   async function onFetchDataList(
@@ -348,6 +404,18 @@ const ApplicationListing = () => {
     setLoadApi(!loadApi)
   }
 
+  // Reset force data
+  function handleRefreshDataSocket() {
+    setDataFilter({})
+    setSearchValue('')
+    setNewDataSocket(0)
+    setSearchCriteria({
+      ...searchCriteria,
+      currentPage: 1,
+    })
+    setLoadApi(!loadApi)
+  }
+
   return (
     <div className='card p-5 h-fit-content'>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
@@ -366,7 +434,7 @@ const ApplicationListing = () => {
         <div className='d-flex flex-row align-items-center'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search Customer'
+            placeholder='Search'
             value={searchValue}
             onChange={handleChangeSearch}
             onKeyDown={(e) => {
@@ -397,10 +465,17 @@ const ApplicationListing = () => {
           <div className='d-flex position-relative flex-end ms-4'>
             <Button
               style={{
-                backgroundColor: Object.keys(checkFilter).length === 0 ? '#f1f1f4' : '#c4cada',
+                backgroundColor:
+                  Object.keys(checkFilter).length !== 0 &&
+                  !(
+                    Object.keys(checkFilter).length === 1 &&
+                    Object.keys(checkFilter).includes('searchBar')
+                  )
+                    ? '#c4cada'
+                    : '#f1f1f4',
               }}
               onClick={showInputFilter}
-              className={` align-self-center m-2 fs-6 text-primary h-45px `}
+              className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
               disabled={false}
             >
               <Icons name={'filterIcon'} />
@@ -409,7 +484,7 @@ const ApplicationListing = () => {
 
             <Link to='/application/create'>
               <Button
-                className='btn-primary align-self-center m-2 fs-6 text-white h-45px'
+                className='btn-primary align-self-center ms-4 fs-6 text-white h-45px'
                 disabled={false}
               >
                 <Icons name={'AddIcon'} />
@@ -418,6 +493,181 @@ const ApplicationListing = () => {
             </Link>
           </div>
         </div>
+
+        {!!newDataSocket && (
+          <div className='bg-primary-light wrapper-transition-filter-show p-16px px-32px my-16px d-flex align-items-center justify-content-between gap-16px'>
+            <span className='fs-16 text-primary'>
+              Detected <span className='fw-bold'>{newDataSocket}</span> new records. Do you want to
+              refresh the data now?
+            </span>
+
+            <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
+              Refresh
+            </Button>
+          </div>
+        )}
+
+        {Object.keys(checkFilter).length !== 0 &&
+          !(
+            Object.keys(checkFilter).length === 1 && Object.keys(checkFilter).includes('searchBar')
+          ) && (
+            <div className='d-flex justify-content  px-30px pt-14px m-0 '>
+              <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
+
+              <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
+                {showFilter.map((filter, index) => (
+                  <div key={index} className='p-0 m-0'>
+                    {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
+                      ![
+                        'application_date',
+                        'loan_amount_requested',
+                        'status',
+                        'loan_type_id',
+                        'identification_type',
+                      ].includes(filter.key) && (
+                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <h2 className='filter-title-show'>
+                            {filter.value}: {checkFilter[`${filter.key}`]}
+                          </h2>
+                          <div
+                            onClick={() => {
+                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                              setLoadApi(!loadApi)
+                            }}
+                            className='p-0 m-0 cursor-pointer'
+                          >
+                            <Icons name={'CloseSmall'} />
+                          </div>
+                        </div>
+                      )}
+                    {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
+                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                        <h2 className='filter-title-show'>
+                          {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Draft'}
+                          {+checkFilter[`${filter.key}`] === 1 && 'Awaiting Approval'}
+                          {+checkFilter[`${filter.key}`] === 2 && 'Rejected'}
+                          {+checkFilter[`${filter.key}`] === 3 && 'Approved'}
+                        </h2>
+                        <div
+                          onClick={() => {
+                            setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                            setLoadApi(!loadApi)
+                          }}
+                          className='p-0 m-0 cursor-pointer'
+                        >
+                          <Icons name={'CloseSmall'} />
+                        </div>
+                      </div>
+                    )}
+                    {!!checkFilter[`${filter.key}`] &&
+                      ['identification_type'].includes(filter.key) && (
+                        <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
+                          <h2 className='filter-title-show'>
+                            {filter.value}:{' '}
+                            {checkFilter[`${filter.key}`] === 'foreign_identification_number'
+                              ? 'Foreign Identification Number'
+                              : 'Singapore NRIC No'}
+                          </h2>
+                          <div
+                            onClick={() => {
+                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                              setLoadApi(!loadApi)
+                            }}
+                            className='p-0 m-0 cursor-pointer'
+                          >
+                            <Icons name={'CloseSmall'} />
+                          </div>
+                        </div>
+                      )}
+                    {!!checkFilter?.application_date && ['application_date'].includes(filter.key) && (
+                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                        <h2 className='filter-title-show'>
+                          {filter.value}:{' '}
+                          {!!checkFilter?.application_date?.gte &&
+                            moment(checkFilter?.application_date?.gte).format('MMM D, YYYY')}{' '}
+                          {!!checkFilter?.application_date?.lte && 'To '}
+                          {!!checkFilter?.application_date?.lte &&
+                            moment(checkFilter?.application_date?.lte)
+                              .subtract(1, 'days')
+                              .format('MMM D, YYYY')}
+                        </h2>
+                        <div
+                          onClick={() => {
+                            setDataFilter({...dataFilter, application_date: ''})
+                            setLoadApi(!loadApi)
+                          }}
+                          className='p-0 m-0 cursor-pointer'
+                        >
+                          <Icons name={'CloseSmall'} />
+                        </div>
+                      </div>
+                    )}
+                    {!!checkFilter?.loan_amount_requested &&
+                      ['loan_amount_requested'].includes(filter.key) && (
+                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <h2 className='filter-title-show'>
+                            {filter.value}:{' '}
+                            {(!!checkFilter?.loan_amount_requested?.gte ||
+                              checkFilter?.loan_amount_requested?.gte === 0) &&
+                              'From '}
+                            {(!!checkFilter?.loan_amount_requested?.gte ||
+                              checkFilter?.loan_amount_requested?.gte === 0) &&
+                              checkFilter?.loan_amount_requested?.gte}{' '}
+                            {(!!checkFilter?.loan_amount_requested?.lte ||
+                              checkFilter?.loan_amount_requested?.lte === 0) &&
+                              'To '}
+                            {(!!checkFilter?.loan_amount_requested?.lte ||
+                              checkFilter?.loan_amount_requested?.lte === 0) &&
+                              checkFilter?.loan_amount_requested?.lte}
+                          </h2>
+                          <div
+                            onClick={() => {
+                              setDataFilter({...dataFilter, loan_amount_requested: ''})
+                              setLoadApi(!loadApi)
+                            }}
+                            className='p-0 m-0 cursor-pointer'
+                          >
+                            <Icons name={'CloseSmall'} />
+                          </div>
+                        </div>
+                      )}
+                    {!!checkFilter?.loan_type_id &&
+                      ['loan_type_id'].includes(filter.key) &&
+                      dataOption?.loan_type_id.length !== 0 && (
+                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <h2 className='filter-title-show'>
+                            {filter.value}:{' '}
+                            {
+                              dataOption?.loan_type_id.filter(
+                                (data) => +data?.id === +checkFilter?.loan_type_id
+                              )[0]?.type_name
+                            }
+                          </h2>
+                          <div
+                            onClick={() => {
+                              setDataFilter({...dataFilter, loan_type_id: ''})
+                              setLoadApi(!loadApi)
+                            }}
+                            className='p-0 m-0 cursor-pointer'
+                          >
+                            <Icons name={'CloseSmall'} />
+                          </div>
+                        </div>
+                      )}
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={() => {
+                  handleResetFilter()
+                }}
+                className='reset-all-filter-application mt-16px ms-16px'
+              >
+                Reset All
+              </button>
+            </div>
+          )}
         <KTCardBody className='py-4'>
           <div className='table-responsive'>
             <table

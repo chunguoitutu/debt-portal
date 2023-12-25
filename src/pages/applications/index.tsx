@@ -29,6 +29,7 @@ import clsx from 'clsx'
 import Reject from './step-component/reject/Reject'
 import Icons from '@/components/icons'
 import Cookies from 'js-cookie'
+import {useSocket} from '@/app/context/SocketContext'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -51,6 +52,7 @@ interface ListIdEdit {
   employmentId: number
   applicationId: number
   bankInfoId: number
+  cpfId?: number
 }
 
 export const Applications = () => {
@@ -63,8 +65,10 @@ export const Applications = () => {
   // const [checkAmount, SetCheckAmount] = useState<number>(0)
   // const [popupSingpass, setPopupSingpass] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
-
-  const [rejectionOne, setRejectionOne] = useState({})
+  const [optionsRejectionType, setOptionsRejectionType] = useState<any>([])
+  const [optionsUser, setOptionsUser] = useState<any>([])
+  const [singpass, setSingpass] = useState(false)
+  const [rejectionOne, setRejectionOne] = useState<any>({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [data, setData] = useState<any>({})
@@ -75,6 +79,7 @@ export const Applications = () => {
     employmentId: 0,
     applicationId: 0,
     bankInfoId: 0,
+    cpfId: 0,
   })
   const {pathname} = useLocation()
   const initialValues: ApplicationFormData = useMemo(() => {
@@ -89,14 +94,37 @@ export const Applications = () => {
   }, [STEP_APPLICATION])
 
   const {applicationIdEdit} = useParams()
+  const {socket} = useSocket()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (!applicationIdEdit) return setIsLoading(false)
+    !!applicationIdEdit &&
+      request
+        .post('config/rejection_type/listing', {
+          status: true,
+          pageSize: 99999,
+          currentPage: 1,
+        })
+        .then((res) => {
+          setOptionsRejectionType(res?.data?.data || [])
+        })
+        .catch()
+    !!applicationIdEdit &&
+      request
+        .post('config/user/listing', {
+          status: true,
+          pageSize: 99999,
+          currentPage: 1,
+        })
+        .then((res) => {
+          setOptionsUser(res?.data?.data || [])
+        })
+        .catch()
     handleGetApplicationById()
     setCurrentStep(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applicationIdEdit, loadApiEdit])
+  }, [applicationIdEdit, loadApiEdit, pathname])
 
   useEffect(() => {
     resetForm()
@@ -104,6 +132,7 @@ export const Applications = () => {
     if (pathname === '/application/create') {
       setCurrentStep(1)
     }
+    setSingpass(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
@@ -237,6 +266,7 @@ export const Applications = () => {
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
     const lengthStep = STEP_APPLICATION.length
+
     return STEP_APPLICATION.map((item, i) => {
       // Last step no edit anything
       if (i + 1 === lengthStep) {
@@ -313,9 +343,26 @@ export const Applications = () => {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
       setRejectionOne(data?.rejection || {})
       setData(data?.data || {})
-      const {borrower, application, customer, bank_account, employment, address, file_documents} =
-        data.data || {}
+      const {
+        borrower,
+        application,
+        customer,
+        bank_account,
+        employment,
+        address,
+        file_documents,
+        approval,
+        cpf,
+      } = data.data || {}
+
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
+
+      if (cpf) {
+        const date = JSON.parse(cpf.date)
+        const employer = JSON.parse(cpf.employer)
+        const amount = JSON.parse(cpf.amount)
+        const month = JSON.parse(cpf.month)
+      }
 
       setValues({
         ...values,
@@ -324,6 +371,7 @@ export const Applications = () => {
         ...customer,
         ...bank_account,
         ...employment,
+        ...cpf,
         address_contact_info:
           Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
         date_of_birth: formattedDateOfBirth,
@@ -331,6 +379,7 @@ export const Applications = () => {
           file_documents.map((data) => {
             return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
           }) || [],
+        ...(approval ? {approval} : {}),
       })
 
       if (application?.status !== 0) {
@@ -344,7 +393,7 @@ export const Applications = () => {
         applicationId: application?.id || 0,
         bankInfoId: bank_account?.id || 0,
       })
-
+      cpf && setSingpass(true)
       const applicationNotes = JSON.parse(application?.application_notes) || []
       setRemarkList(applicationNotes)
     } catch (error) {
@@ -434,22 +483,10 @@ export const Applications = () => {
         (values.loan_amount_requested > 3000 &&
           currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
-          values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > +values.six_months_income &&
           currentStep === 6 &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'new' &&
-          values.identification_type === 'singapore_nric_no') ||
-        (values.loan_amount_requested > 5000 &&
-          currentStep === 6 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
-          values.is_existing === 'existing' &&
-          values.identification_type === 'singapore_nric_no') ||
-        (values.loan_amount_requested > +values.six_months_income &&
-          currentStep === 6 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'existing' &&
           values.identification_type === 'singapore_nric_no') ||
         (values.loan_amount_requested > 500 &&
           currentStep === 6 &&
@@ -461,7 +498,7 @@ export const Applications = () => {
           values.identification_type === 'foreign_identification_number') ||
         (values.loan_amount_requested > 3000 &&
           currentStep === 6 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) <= 40000 &&
+          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 40000 &&
           10000 <= (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) &&
           values.identification_type === 'foreign_identification_number')
       ) {
@@ -473,46 +510,19 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 3000`,
+            title: `Cannot borrow more than $3000`,
           })
         }
 
         if (
           values.loan_amount_requested > +values.six_months_income &&
           (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'new' &&
           values.identification_type === 'singapore_nric_no'
         ) {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
-          })
-        }
-
-        if (
-          values.loan_amount_requested > 5000 &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) < 20000 &&
-          values.is_existing === 'existing' &&
-          values.identification_type === 'singapore_nric_no'
-        ) {
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `Cannot borrow more than 5000`,
-          })
-        }
-
-        if (
-          values.loan_amount_requested > +values.six_months_income &&
-          (+values.six_months_income * 2 === 0 ? 1 : +values.six_months_income * 2) >= 20000 &&
-          values.is_existing === 'existing' &&
-          values.identification_type === 'singapore_nric_no'
-        ) {
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
+            title: `Cannot borrow more than $${+values.six_months_income}`,
           })
         }
 
@@ -524,7 +534,7 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 500 `,
+            title: `Cannot borrow more than $500 `,
           })
         }
 
@@ -536,7 +546,7 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than ${+values.six_months_income}`,
+            title: `Cannot borrow more than $${+values.six_months_income}`,
           })
         }
 
@@ -549,7 +559,7 @@ export const Applications = () => {
           swalToast.fire({
             timer: 1500,
             icon: 'error',
-            title: `Cannot borrow more than 3000`,
+            title: `Cannot borrow more than $3000`,
           })
         }
       } else {
@@ -622,10 +632,10 @@ export const Applications = () => {
       interest,
       bankrupt_plan,
       bankrupted,
-      cpf_amount,
-      cpf_date,
-      cpf_employer,
-      cpf_month,
+      amount,
+      date,
+      employer,
+      month,
       vehicle_no,
       vehicle_model,
       vehicle_coe_category,
@@ -643,7 +653,7 @@ export const Applications = () => {
         address_type_id: +item.address_type_id,
       }))
 
-    const {applicationId, bankInfoId, borrowerId, customerId, employmentId} = listIdEdit
+    const {applicationId, bankInfoId, borrowerId, customerId, employmentId, cpfId} = listIdEdit
 
     const payload: ApplicationPayload = {
       customer: {
@@ -715,8 +725,15 @@ export const Applications = () => {
       },
       address: addressList,
       file_documents,
-    }
 
+      cpf: {
+        ...(cpfId && applicationIdEdit && singpass ? {id: cpfId} : {}),
+        amount: JSON.stringify(amount),
+        date: JSON.stringify(date),
+        employer: JSON.stringify(employer),
+        month: JSON.stringify(month),
+      },
+    }
     try {
       setSubmitting(true)
       if (applicationIdEdit) {
@@ -748,6 +765,9 @@ export const Applications = () => {
           icon: 'success',
         })
       }
+
+      // When create successfully -> all user current company will receive notification
+      !applicationIdEdit && socket?.emit('createApplicationSuccess', 1)
     } catch (error: any) {
       const message = convertErrorMessageResponse(error)
 
@@ -792,8 +812,9 @@ export const Applications = () => {
       <PageTitle breadcrumbs={profileBreadCrumbs}>
         {applicationIdEdit ? 'Edit Application' : 'New Application'}
       </PageTitle>
+
       <div className='row gx-3 gx-xl-6 gy-8 overflow-hidden flex-grow-1 m-0'>
-        <div className='col-12 col-xxl-2 d-flex flex-column overflow-hidden h-unset h-xxl-100 mb-16px m-xxl-0'>
+        <div className='col-12 col-xxl-3 col-2xxl-2 d-flex flex-column overflow-hidden h-unset h-2xxl-100 m-xxl-0 ps-0'>
           <div className='card bg-white w-100 align-self-start align-self-lg-center overflow-y-auto m-0 d-flex flex-column h-100'>
             <div className='step-application h-fit-content my-auto'>
               <Step
@@ -806,7 +827,7 @@ export const Applications = () => {
             </div>
           </div>
         </div>
-        <div className='col-12 col-xxl-8 d-flex flex-column h-fit-content h-xxl-100 mb-16px m-xxl-0'>
+        <div className='col-12 col-xxl-9 col-2xxl-8 d-flex flex-column h-fit-content h-2xxl-100 mt-16px m-xxl-0 ps-0'>
           <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
             <HeaderApplication
               labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
@@ -818,7 +839,61 @@ export const Applications = () => {
               className='p-10'
             />
 
-            <div className='overflow-lg-auto p-10 flex-grow-1' ref={containerRef}>
+            {!!rejectionOne?.id && (
+              <div className='px-30px pt-30px'>
+                <div className='p-16px wrapper-reject-title-application'>
+                  <h1 className='h1-reject-title-application'>
+                    Reject Reason:{' '}
+                    {
+                      optionsRejectionType.filter(
+                        (data: any) => data?.id === rejectionOne?.rejection_type_id
+                      )[0]?.rejection_type_name
+                    }
+                  </h1>
+                  <p className='p1-reject-title-application'>
+                    Rejected By{' '}
+                    {
+                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
+                        ?.firstname
+                    }{' '}
+                    {
+                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
+                        ?.middlename
+                    }{' '}
+                    {
+                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
+                        ?.lastname
+                    }
+                  </p>
+                  <p
+                    className='p2-reject-title-application'
+                    dangerouslySetInnerHTML={{
+                      __html: rejectionOne?.rejection_note.replace(/\n/g, '<br>'),
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
+            {values.approval && (
+              <div className='p-30px pb-0'>
+                <div className='p-16px bg-light-success rounded-8'>
+                  <h1 className='text-success fs-16 fw-bold m-0'>
+                    Approved By: {values.approval.approved_by}
+                  </h1>
+                  {values.approval.approved_note && (
+                    <span className='text-gray-600 mt-16px d-inline-block white-space-pre-line'>
+                      {values.approval.approved_note}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div
+              className='overflow-lg-auto p-10 flex-grow-1 d-flex justify-content-center'
+              ref={containerRef}
+            >
               <div
                 className={`${currentStep !== 6 ? 'form-wrap' : ''}`}
                 style={currentStep === 2 ? {width: '91.5%'} : {}}
@@ -828,6 +903,8 @@ export const Applications = () => {
                     setStepCompleted={setStepCompleted}
                     config={STEP_APPLICATION[currentStep - 1].config || []}
                     formik={formik}
+                    setSingpass={setSingpass}
+                    singpass={singpass}
                   />
                 )}
                 {show && (
@@ -845,32 +922,40 @@ export const Applications = () => {
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
                   handleSubmit={handleBeforeSubmit}
+                  handleReloadApi={() => SetLoadApiEdit(!loadApiEdit)}
                   config={STEP_APPLICATION[currentStep - 1].config || []}
                   formik={formik}
                   isDraft={isDraft}
                   currentStep={currentStep}
+                  setSingpass={setSingpass}
+                  singpass={singpass}
                 />
               </div>
             </div>
           </div>
         </div>
-        <div className='col-12  col-xxl-2 m-0 h-unset h-xxl-100'>
+        <div className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'>
           <div className='d-flex flex-column h-100'>
-            <div className='pb-30px d-none d-xxl-block h-100'>
-              <BackgroundCheck data={data} />
-            </div>
+            <div className='d-none d-2xxl-block'>
+              <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
+                <BackgroundCheck data={data} />
+              </div>
 
-            <div className='flex-grow-1 wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
               <button
                 onClick={() => {
                   setShowRemark(!showRemark)
                 }}
-                className='d-none d-xxl-block btn-remark d-flex justify-content-center align-items-center gap-8px'
+                className='btn-remark d-flex justify-content-center align-items-center '
               >
-                <Icons name={'Mes'} />
-                <span className='span-button-remark'>Remark</span>
+                <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
+                  <Icons name={'Mes'} />
+                  <span className='span-button-remark ms-8px pt-1px'>Remark</span>
+                </div>
               </button>
-              <div className='d-block d-xxl-none '>
+            </div>
+
+            <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
+              <div className='d-block d-2xxl-none'>
                 <Remark
                   handleOnClose={() => {
                     setShowRemark(!showRemark)

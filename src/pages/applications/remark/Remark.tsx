@@ -116,7 +116,7 @@ const Remark: FC<Props> = ({
           style={{
             padding: '6px',
           }}
-          className='btn btn-sm btn-icon btn-active-color-primary d-none d-xxl-block'
+          className='btn btn-sm btn-icon btn-active-color-primary d-none d-2xxl-block'
           onClick={handleOnClose}
         >
           <KTIcon className='fs-1' iconName='cross' />

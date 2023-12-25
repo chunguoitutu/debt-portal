@@ -9,8 +9,8 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     showViewButton: true,
     endPointDelete: '/config/company',
     endPointGetListing: '/config/company',
-    messageDeleteSuccess: 'Company "/%/" successfully deleted',
-    buttonAddNew: 'New Company',
+    messageDeleteSuccess: 'Business Unit "/%/" successfully deleted',
+    buttonAddNew: 'New Business Unit',
     showMessageTitle: 'company_name',
     showAddNewButton: true,
   },
@@ -21,17 +21,17 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     },
     {
       key: 'company_name',
-      name: 'Company Name',
+      name: 'Business Unit Name',
       color: '#252F4A',
     },
     {
       key: 'company_code',
-      name: 'Company Code',
+      name: 'Business Unit Code',
       isHide: true,
     },
     {
       key: 'business_uen',
-      name: 'Business UEN',
+      name: 'Business Unit UEN',
     },
     {
       key: 'contact_person',
@@ -53,7 +53,6 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
       name: 'Email',
       isHide: true,
     },
-
     {
       key: 'open_date',
       name: 'Open Date',

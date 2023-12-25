@@ -87,7 +87,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: `Application rejected successfully`,
+            title: `Application successfully rejected`,
           })
         } else {
           await request.put('application/application-reject/' + rejection_one?.id, {

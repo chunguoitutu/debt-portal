@@ -7,6 +7,10 @@ import WrapperGoogleSearch from './google-search'
 import {useParams} from 'react-router-dom'
 import PopupValidationPhoneNumber from './validate-phone-number/PopupValidationPhoneNumber'
 import MLCBReport from './MLCB/MLCBReport'
+import PageCheckDeskTop from './up-page-check/PageCheck'
+import request from '@/app/axios'
+import {swalToast} from '@/app/swal-notification'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
 interface props {
   data: any
 }
@@ -16,6 +20,7 @@ const BackgroundCheck = ({data}: props) => {
 
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
   const [showSearchCheck, setShowSearchCheck] = useState<boolean>(false)
+  const [showSearchPageCheck, setShowSearchPageCheck] = useState<boolean>(false)
 
   const {applicationIdEdit} = useParams()
 
@@ -67,11 +72,55 @@ const BackgroundCheck = ({data}: props) => {
           setShowSearchCheck(true)
         },
       },
+      {
+        value: 'UN Page Check',
+        icon: <Icons name={'GoogleCheck'} />,
+        background: '#E2E5E7',
+        show: !!applicationIdEdit && data.application?.status === 1,
+        onclick: () => {
+          setShowSearchPageCheck(true)
+        },
+      },
+      {
+        value: 'CAs Check',
+        icon: <Icons name={'GoogleCheck'} />,
+        background: '#E2E5E7',
+        show: !!applicationIdEdit && data.application?.status === 1,
+        onclick: () => {
+          request
+            .post('/pdf/ca-check', {})
+            .then((data) => {
+              if (data?.data?.pdf) {
+                fetch(`data:application/pdf;base64,${data?.data?.pdf}`)
+                  .then((response) => response.blob())
+                  .then((blob) => {
+                    const blobUrl = URL.createObjectURL(blob)
+
+                    window.open(blobUrl, '_blank')
+                  })
+                  .catch(() => {
+                    swalToast.fire({
+                      icon: 'error',
+                      title: DEFAULT_MSG_ERROR,
+                    })
+                  })
+              }
+            })
+            .catch((e) => {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `System error, please try again in a few minutes`,
+              })
+            })
+            .finally(() => {})
+        },
+      },
     ],
   }
 
   return (
-    <div className='h-100'>
+    <>
       <ContentListButton config={configBackgroudCheck} />
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
       {showValidationPhone && !!applicationIdEdit && data.application?.status === 1 && (
@@ -82,12 +131,22 @@ const BackgroundCheck = ({data}: props) => {
       )}
       {showSearchCheck && !!applicationIdEdit && data.application?.status === 1 && (
         <WrapperGoogleSearch
-          payload={`${data?.customer?.firstname} ${data?.customer?.middlename}  ${data?.customer?.lastname}`}
+          payload={`${data?.customer?.firstname} ${data?.customer?.middlename}${
+            !!data?.customer?.middlename ? ' ' : ''
+          }${data?.customer?.lastname}`}
           show={showSearchCheck}
           handleClose={() => setShowSearchCheck(false)}
         />
       )}
-    </div>
+
+      {showSearchPageCheck && !!applicationIdEdit && data.application?.status === 1 && (
+        <PageCheckDeskTop
+          payload={`${data?.customer?.lastname}`}
+          show={showSearchPageCheck}
+          handleClose={() => setShowSearchPageCheck(false)}
+        />
+      )}
+    </>
   )
 }
 

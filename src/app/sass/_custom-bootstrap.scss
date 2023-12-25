@@ -9,6 +9,10 @@
   border-radius: 8px !important;
   padding: 12px 16px;
 
+  &::after {
+    background-image: none !important;
+  }
+
   &:not(.collapsed) {
     border-left: 2.6px solid var(--bs-primary) !important;
     background-color: var(--bg-gray-color) !important;

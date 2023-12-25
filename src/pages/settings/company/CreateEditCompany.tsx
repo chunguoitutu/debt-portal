@@ -1,7 +1,7 @@
-import React, {useRef, useState} from 'react'
+import React, {useMemo, useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
-import {useFormik} from 'formik'
+import {useFormik, validateYupSchema} from 'formik'
 import moment from 'moment'
 
 import request from '@/app/axios'
@@ -10,7 +10,7 @@ import {KTIcon} from '@/_metronic/helpers'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
-import {COMPANY_MANAGEMENT_CONFIG} from '../company-management/config'
+import {CREATE_COMPANY_CONFIG} from '../company-management/config'
 import {useAuth} from '@/app/context/AuthContext'
 import Cookies from 'js-cookie'
 
@@ -36,7 +36,8 @@ const CreateEditCompanies = ({
   handleUpdated,
 }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
-  const {rows, settings} = COMPANY_MANAGEMENT_CONFIG
+
+  const {rows, settings} = CREATE_COMPANY_CONFIG('Business Unit')
   const {validationFormik} = settings || {}
   const [information, setInformation] = React.useState<any>(null)
 
@@ -77,7 +78,10 @@ const CreateEditCompanies = ({
       email: data ? data?.['email'] : '',
       contact_person: !!data?.contact_person ? data?.['contact_person'] || '' : '',
       address: data ? data?.['address'] : '',
-      open_date: data ? data?.['open_date'].slice(0, 11) : '',
+      open_date: data ? data?.['open_date'].slice(0, 11) || '' : '',
+      license_no: data ? data?.['license_no'] : '',
+      license_expiry_date: '',
+      web_url: data ? data?.['web_url'] : '',
     },
     validationSchema: validationFormik,
     onSubmit: async (values: any) => {
@@ -88,21 +92,20 @@ const CreateEditCompanies = ({
             company_code: values.company_code.trim(),
             business_uen: values.business_uen.trim(),
             contact_person: values.contact_person.trim(),
+            license_no: values.license_no.trim(),
+            web_url: values.web_url.trim(),
             telephone: String(values.telephone).trim(),
             email: values.email.trim(),
             address: values.address.trim(),
             open_date: new Date(values.open_date),
+            license_expiry_date: new Date(values.license_expiry_date),
             status: status ? 1 : 0,
           })
           .then((response) => {
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Company${
-                  !!response?.data?.data?.company_name
-                    ? ' "' + response?.data?.data?.company_name + '" '
-                    : ' '
-                }successfully created`,
+                title: `Business Unit "${response?.data?.data?.company_name}" successfully created`,
               })
             }
             handleUpdated()
@@ -129,17 +132,16 @@ const CreateEditCompanies = ({
             email: values.email.trim(),
             address: values.address.trim(),
             open_date: new Date(values.open_date),
+            license_no: values.license_no.trim(),
+            license_expiry_date: new Date(values.license_expiry_date),
+            web_url: values.web_url.trim(),
             status: status ? 1 : 0,
           })
           .then((response) => {
             if (!response.data?.error) {
               swalToast.fire({
                 icon: 'success',
-                title: `Company${
-                  !!response?.data?.data?.company_name
-                    ? ' "' + response?.data?.data?.company_name + '" '
-                    : ' '
-                }successfully updated`,
+                title: `Business Unit "${response?.data?.data?.company_name}" successfully updated`,
               })
 
               // set company name when current company name and edit company have duplicate id
@@ -171,10 +173,12 @@ const CreateEditCompanies = ({
       rows.forEach((row) => {
         if (row.key === 'open_date') {
           setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'))
+        } else if (row.key === 'license_expiry_date') {
+          setFieldValue(row.key, moment(information?.['license_expiry_date']).format('YYYY-MM-DD'))
         } else {
           setFieldValue(row.key, information[row.key])
         }
-      }, {})
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [information])
@@ -195,7 +199,7 @@ const CreateEditCompanies = ({
         }}
         className='modal-header'
       >
-        <h2>{titleLable} Company</h2>
+        <h2>{titleLable} Business Unit</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -226,6 +230,12 @@ const CreateEditCompanies = ({
                         onChange={handleChange}
                         error={errors[row.key] as string}
                         touched={!!touched[row.key]}
+                        disabled={titleLable === 'Edit' && row.key === 'company_code'}
+                        classInputWrap={
+                          titleLable === 'Edit' && row.key === 'company_code'
+                            ? 'bg-secondary'
+                            : 'form-control-solid'
+                        }
                       />
                     </div>
                   </div>

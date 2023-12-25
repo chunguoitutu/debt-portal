@@ -37,13 +37,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       })
 
       setDataOption(updatedDataMarketing)
-      setDefaultValueCountry(updatedDataMarketing?.country.length > 0 ? 'Singapore' : '')
 
-      !applicationIdEdit &&
-        setFieldValue(
-          `address_contact_info[0][country]`,
-          updatedDataMarketing?.country.length > 0 ? 'Singapore' : ''
-        )
       !applicationIdEdit &&
         setFieldValue(
           `address_contact_info[0][address_type_id]`,
@@ -97,7 +91,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
     const className = !column
       ? 'flex-grow-1'
-      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-250px'
 
     if (typeComponent === 'Select') {
       return (
@@ -264,7 +258,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
           const classNameComponent = !column
             ? 'flex-grow-1'
-            : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
+            : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-250px'
 
           return (
             <Fragment key={i}>

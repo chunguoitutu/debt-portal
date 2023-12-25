@@ -78,6 +78,9 @@ function TableRender({title, config = [], data}: Props) {
                               textAlign: !!element_config.img ? 'center' : 'start',
                             }}
                           >
+                            {!!element_config?.dollars &&
+                              !!data[element_config.key] &&
+                              element_config?.dollars}
                             {element_config.key === 'bankrupted'
                               ? !!data[element_config.key] === false
                                 ? 'No'

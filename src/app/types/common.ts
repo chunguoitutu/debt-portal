@@ -1,6 +1,7 @@
 import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
 import {FormikProps} from 'formik'
 import {ObjectSchema, Schema} from 'yup'
+import {ApprovalInfo} from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -279,6 +280,8 @@ export type PropsStepApplication = {
   setStepCompleted: any
   config: ApplicationConfig[]
   formik: FormikProps<ApplicationFormData>
+  setSingpass: any
+  singpass: boolean
 }
 
 export type ApplicationPayload = {
@@ -361,6 +364,24 @@ export type ApplicationPayload = {
     bankrupted?: string | any
     bankrupt_plan?: string | any
   }
+  cpf?: {
+    id?: any
+    date?: string | any
+    employer?: string | any
+    amount?: string | any
+    month?: string | any
+  }
+  // vehicle?: {
+  //   id?: any
+  //   vehicle_no?: string | any
+  //   vehicle_model?: string | any
+  //   vehicle_type?: string | any
+  //   vehicle_maker?: string | any
+  //   vehicle_coe_category?: string | any
+  //   vehicle_coe_expiry_date?: string | any
+  //   vehicle_open_maket_value?: string | any
+  //   vehicle_effective_date?: string
+  // }
   address: BlockAddress[]
   customerId?: number
   borrowerId?: number
@@ -439,10 +460,10 @@ export type ApplicationFormData = {
   status?: number
   bankrupted?: string | any
   bankrupt_plan?: string | any
-  cpf_date?: string | any
-  cpf_employer?: string | any
-  cpf_amount?: string | any
-  cpf_month?: string | any
+  date?: string | any
+  employer?: string | any
+  amount?: string | any
+  month?: string | any
   vehicle_no?: string | any
   vehicle_model?: string | any
   vehicle_type?: string | any
@@ -451,6 +472,7 @@ export type ApplicationFormData = {
   vehicle_coe_expiry_date?: string | any
   vehicle_open_maket_value?: string | any
   vehicle_effective_date?: string
+  approval?: ApprovalInfo
 }
 
 export type BlockAddress = {

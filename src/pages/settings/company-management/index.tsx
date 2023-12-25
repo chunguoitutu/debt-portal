@@ -2,14 +2,14 @@ import * as React from 'react'
 import {useFormik} from 'formik'
 import moment from 'moment'
 
-import {COMPANY_MANAGEMENT_CONFIG} from './config'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {swalToast} from '@/app/swal-notification'
 import request from '@/app/axios'
+import {CREATE_COMPANY_CONFIG} from './config'
 
 export const CompanyManagement = () => {
-  const {settings, rows} = COMPANY_MANAGEMENT_CONFIG
+  const {settings, rows} = CREATE_COMPANY_CONFIG('Organization')
   const {endpoint, validationFormik} = settings || {}
   const [information, setInformation] = React.useState<any>(null)
   const [loadapi, setLoadApi] = React.useState<any>(false)
@@ -25,10 +25,16 @@ export const CompanyManagement = () => {
         rows.forEach((row) => {
           if (row.key === 'open_date') {
             setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'), false)
+          } else if (row.key === 'license_expiry_date') {
+            setFieldValue(
+              row.key,
+              moment(information?.['license_expiry_date']).format('YYYY-MM-DD'),
+              false
+            )
           } else {
             setFieldValue(row.key, information[row.key], false)
           }
-        }, {})
+        })
       })
       .catch((error) => {
         console.error('Error: ', error?.message)
@@ -49,6 +55,9 @@ export const CompanyManagement = () => {
           contact_person: values.contact_person.trim(),
           email: values.email.trim(),
           open_date: new Date(values.open_date),
+          license_no: values.license_no.trim(),
+          license_expiry_date: new Date(values.license_expiry_date),
+          web_url: values.web_url.trim(),
         })
         .then((response) => {
           if (!response.data?.error) {
@@ -131,6 +140,8 @@ export const CompanyManagement = () => {
               ((information?.company_name || '').trim() === (values?.company_name || '').trim() &&
                 (information?.company_code || '').trim() === (values?.company_code || '').trim() &&
                 (information?.business_uen || '').trim() === (values?.business_uen || '').trim() &&
+                (information?.license_no || '').trim() === (values?.license_no || '').trim() &&
+                (information?.web_url || '').trim() === (values?.web_url || '').trim() &&
                 (information?.contact_person || '').trim() ===
                   (values?.contact_person || '').trim() &&
                 (information?.address || '').trim() === (values?.address || '').trim() &&
@@ -138,7 +149,9 @@ export const CompanyManagement = () => {
                 Number(information?.telephone) ===
                   Number(!!values?.telephone ? values?.telephone : 0) &&
                 moment(information?.['open_date']).format('YYYY-MM-DD') ===
-                  moment(values?.['open_date']).format('YYYY-MM-DD'))
+                  moment(values?.['open_date']).format('YYYY-MM-DD') &&
+                moment(information?.['license_expiry_date']).format('YYYY-MM-DD') ===
+                  moment(values?.['license_expiry_date']).format('YYYY-MM-DD'))
             }
             type='reset'
             onClick={() => setLoadApi(!loadapi)}
@@ -155,6 +168,8 @@ export const CompanyManagement = () => {
               ((information?.company_name || '').trim() === (values?.company_name || '').trim() &&
                 (information?.company_code || '').trim() === (values?.company_code || '').trim() &&
                 (information?.business_uen || '').trim() === (values?.business_uen || '').trim() &&
+                (information?.license_no || '').trim() === (values?.license_no || '').trim() &&
+                (information?.web_url || '').trim() === (values?.web_url || '').trim() &&
                 (information?.contact_person || '').trim() ===
                   (values?.contact_person || '').trim() &&
                 (information?.address || '').trim() === (values?.address || '').trim() &&
@@ -162,10 +177,12 @@ export const CompanyManagement = () => {
                 Number(information?.telephone) ===
                   Number(!!values?.telephone ? values?.telephone : 0) &&
                 moment(information?.['open_date']).format('YYYY-MM-DD') ===
-                  moment(values?.['open_date']).format('YYYY-MM-DD'))
+                  moment(values?.['open_date']).format('YYYY-MM-DD') &&
+                moment(information?.['license_expiry_date']).format('YYYY-MM-DD') ===
+                  moment(values?.['license_expiry_date']).format('YYYY-MM-DD'))
             }
             loading={isSubmitting}
-            onClick={() => handleBeforeSubmit()}
+            onClick={() => handleSubmit()}
           >
             Update
           </Button>

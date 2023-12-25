@@ -90,7 +90,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     let Component: any = item?.component
 
-    const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0 w-100 w-xxl-200px'
+    const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0 w-100 w-xxl-250px'
 
     // nothing
     if (!Component) return

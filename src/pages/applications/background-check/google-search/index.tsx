@@ -21,7 +21,7 @@ const WrapperGoogleSearch = ({show, handleClose, payload}: Props) => {
 
   useEffect(() => {
     request
-      .get('/google-search/' + `${payload}`)
+      .get('/google-search/google/' + `${payload}`)
       .then((data) => {
         setDataSeacrch({
           screenshot: data?.data?.screenshot || '',

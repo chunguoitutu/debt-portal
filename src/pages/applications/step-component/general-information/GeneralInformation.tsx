@@ -1,10 +1,12 @@
 import clsx from 'clsx'
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useRef, useState} from 'react'
 import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import './style.scss'
 import Cookies from 'js-cookie'
+import {createPortal} from 'react-dom'
+import {Modal, Tab, Table, Tabs} from 'react-bootstrap'
 
 import LookupCustomer from './LookupCustomer'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
@@ -15,15 +17,29 @@ import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
 import Singpass from './Singpass'
+import {KTIcon} from '@/_metronic/helpers'
+import {RESIDENTIAL_TYPE} from './../../../../app/utils/global-config'
+import {convertResidentialTypeSingPass} from '@/app/utils'
+
+const modalsRoot = document.getElementById('root-modals') || document.body
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
-  const {config = [], formik, setStepCompleted} = props
+  const {config = [], formik, setStepCompleted, setSingpass, singpass} = props
   const [searchParams, setSearchParams] = useSearchParams()
+  const [useSingpass, setUseSingpass] = useState(false)
+  const [activeTab, setActiveTab] = useState('cpf')
+
+  const [cpfData, setCpfData] = useState<{
+    date: string[]
+    employer: string[]
+    amount: string[]
+    month: string[]
+  } | null>(null)
 
   const {applicationIdEdit} = useParams()
   const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
-  const [popupSingpass, setPopupSingpass] = useState(false)
+  const [popupSingpass, setPopupSingpass] = useState<boolean>(false)
   const {company_id} = useAuth()
   const {values, touched, errors, handleChange, handleBlur, setFieldValue, setValues} = formik
 
@@ -83,28 +99,36 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   useEffect(() => {
     if (!company_id) return
     window.addEventListener('message', (event) => {
-      if (event.origin === 'http://54.255.250.147:3001/') {
+      if (event.origin === 'http://localhost:3001') {
         // console.log(1324, event.data)
+        setSingpass(true)
+
+        // console.log(123456, event.data)
 
         const fullName = event.data.name.value
         const {firstname, middlename, lastname} = splitName(fullName)
 
-        const annual_api = event.data['noa-basic'].amount.value
+        const annual_api = event.data['noa-basic']?.amount?.value
         const cpf_months = event.data?.cpfcontributions?.history?.map(
           (entry: any) => entry.month.value
         )
         const cpf_amount = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry.amount.value
+          (entry: any) => entry?.amount?.value
         )
         const cpf_date = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry.date.value
+          (entry: any) => entry?.date?.value
         )
         const cpf_employer = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry.employer.value
+          (entry: any) => entry?.employer?.value
         )
 
+        const unit = event.data?.regadd?.unit?.value || ''
+
+        const block = event.data?.regadd?.block?.value || ''
+
+        const street_full = `${block} ${unit} ${event.data?.regadd?.street?.value || ''}`
+
         const values = {
-          ...formik.values,
           firstname: firstname || '',
           middlename: middlename || '',
           lastname: lastname || '',
@@ -118,53 +142,25 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                   ...item,
                   postal_code: event.data.regadd.postal.value,
                   // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
-                  street_1: event.data.regadd.street.value,
+                  street_1: street_full,
+                  country: event.data.regadd.country.desc,
                 }
               : item
           ),
-          gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
+          gender: event.data.sex.desc,
           residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
           annual_income: annual_api || '',
-          cpf_month: cpf_months || '',
-          cpf_amount: cpf_amount || '',
-          cpf_date: cpf_date || '',
-          cpf_employer: cpf_employer || '',
+          nationality: event.data.race.desc || '',
+          country: event.data.regadd.country.desc,
+          month: cpf_months || '',
+          amount: cpf_amount || '',
+          date: cpf_date || '',
+          employer: cpf_employer || '',
+          // marketing_type_id: 1,
+          // vehicle will return result when we have the offical api singpass
         }
+
         handleFillFormSingpass(values)
-
-        setTimeout(() => {
-          formik.setValues({
-            ...formik.values,
-            firstname: firstname || '',
-            middlename: middlename || '',
-            lastname: lastname || '',
-            date_of_birth: event.data?.dob?.value || '',
-            identification_no: event.data?.uinfin?.value || '',
-            mobilephone_1: event.data?.mobileno.nbr?.value || '',
-            email_1: event.data?.email?.value || '',
-            address_contact_info: formik.values.address_contact_info.map((item, i) =>
-              i === 0
-                ? {
-                    ...item,
-                    postal_code: event.data.regadd.postal.value,
-                    // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
-                    street_1: event.data.regadd.street.value,
-                  }
-                : item
-            ),
-            gender: event.data.sex.desc === 'MALE' ? 'male' : 'female',
-            residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
-            annual_income: annual_api || '',
-            nationality: event.data.race.desc || '',
-            country: event.data.regadd.country.desc,
-            cpf_month: cpf_months || '',
-            cpf_amount: cpf_amount || '',
-            cpf_date: cpf_date || '',
-            cpf_employer: cpf_employer || '',
-
-            // vehicle will return result when we have the offical api singpass
-          })
-        }, 0)
       } else return
     })
   }, [company_id])
@@ -211,11 +207,20 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         company_id,
       })
 
-      newDataSingpass = {...newDataSingpass, is_existing: 'existing'}
+      // Update newDataSingpass after the API call
+      newDataSingpass = {
+        ...newDataSingpass,
+        is_existing: 'existing',
+      }
     } catch (error) {
       //nothing
     } finally {
-      formik.setValues({...formik.values, ...newDataSingpass})
+      // Update formik values with the modified newDataSingpass
+      formik.setValues({
+        ...formik.values,
+        ...newDataSingpass,
+        residential_type: convertResidentialTypeSingPass(newDataSingpass.residential_type),
+      })
     }
   }
 
@@ -242,25 +247,38 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
   }
 
-  // async function handleGetPersonData(payload) {
-  //   try {
-  //     const {data} = await axios.post('http://localhost:3001/getPersonData', payload)
-  //   } catch (error) {
-  //   } finally {
-  //     Cookies.remove('sid')
-  //     Cookies.remove('codeVerifier')
-  //     setSearchParams('')
-  //   }
-  // }
+  async function handleGetDataFromSingpass() {
+    try {
+      const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
+      const {cpf} = data.data || {}
+
+      if (cpf) {
+        const date = JSON.parse(cpf.date)
+        const employer = JSON.parse(cpf.employer)
+        const amount = JSON.parse(cpf.amount)
+        const month = JSON.parse(cpf.month)
+
+        setCpfData({date, employer, amount, month})
+      }
+    } catch (error) {
+      //nothing
+    }
+  }
 
   async function goToSingpass() {
     const dataPopup = window.open(
-      // 'http://localhost:3001/singPass.html',
-      'http://54.255.250.147:3001/',
+      'http://localhost:3001/singPass.html',
       'sharer',
       `resizeable=yes,width=1100,height=900,top=75,left=2300`
     )
-    dataPopup?.postMessage({message: 'Singpass'}, 'http://54.255.250.147:3001/')
+    dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
+  }
+
+  const [showMoreInformation, setShowMoreInformation] = useState(false)
+
+  function handleShowMoreInformation() {
+    setShowMoreInformation(true)
+    handleGetDataFromSingpass()
   }
 
   function renderComponent(item: ApplicationConfig) {
@@ -280,7 +298,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
     const className = !column
       ? 'flex-grow-1'
-      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-200px'
+      : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-250px'
 
     // nothing
     if (!Component) return
@@ -363,10 +381,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     if (typeComponent === 'Button') {
       if (applicationIdEdit || values.is_existing === 'existing') return <></>
       return (
-        <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px hihihaha'>
+        <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px fill-singpass'>
           <div>
             <span className='fs-6 fw-medium text-gray-900'>
-              You Can Fil Out The Form Using Your Singpass
+              You can fill out the form using your Singpass
             </span>
             <br />
             <span className='fs-7 fw-normal text-gray-400'>Or fill the form to register</span>
@@ -413,6 +431,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // unexpected
     return <Component />
   }
+
   return (
     <>
       {config.map((item, i) => {
@@ -441,15 +460,342 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             >
               {label}
             </div>
-
             {renderComponent(item)}
           </div>
         )
       })}
+      {singpass && (
+        <div className='d-flex justify-content-end align-items-end'>
+          <Button className='w-50 btn btn-secondary' onClick={() => handleShowMoreInformation()}>
+            More Information
+          </Button>
+        </div>
+      )}
 
       {showPopup && <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} />}
 
       {popupSingpass && <Singpass show={popupSingpass} onClose={() => setPopupSingpass(false)} />}
+
+      {showMoreInformation && (
+        <div>
+          {/* Render your popup content here */}
+          <Modal
+            id='kt_modal_create_app'
+            tabIndex={-1}
+            style={{}}
+            aria-hidden='true'
+            dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+            show={showMoreInformation}
+            backdrop={true}
+            onHide={() => setShowMoreInformation(false)}
+          >
+            <div className='modal-header p-30px'>
+              <h2 className='m-0'>More Information From Singpass</h2>
+              <div
+                className='btn btn-sm btn-icon btn-active-color-primary'
+                onClick={() => setShowMoreInformation(false)}
+              >
+                <KTIcon className='fs-1' iconName='cross' />
+              </div>
+            </div>
+            <div
+              style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
+              className='modal-body p-30px  '
+            >
+              <Tabs
+                activeKey={activeTab}
+                onSelect={(key: any) => setActiveTab(key)}
+                id='controlled-tab-example'
+              >
+                <Tab
+                  eventKey='cpf'
+                  title='CPF'
+                  tabClassName={
+                    activeTab === 'cpf' ? 'select-tab-information' : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+                    {Array.isArray(cpfData?.date) ? (
+                      <tbody>
+                        {cpfData?.date?.map((date, index) => (
+                          <tr key={index}>
+                            <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                              {index + 1}
+                            </th>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(date)?.format('YYYY/MM/DD') ?? 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {cpfData?.employer?.[index] ?? 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              ${cpfData?.amount?.[index] ?? 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(cpfData?.month?.[index])?.format('YYYY/MM') ??
+                                'No Information'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    ) : (
+                      <tbody>
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className='fs-6 fw-medium text-center text-gray-600 fw-medium'
+                            style={{color: '#071437'}}
+                          >
+                            No matching records found
+                          </td>
+                        </tr>
+                      </tbody>
+                    )}
+                  </Table>
+                </Tab>
+                <Tab
+                  eventKey='vehicle'
+                  title='Vehicle'
+                  tabClassName={
+                    activeTab === 'vehicle'
+                      ? 'select-tab-information'
+                      : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-5 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                          style={{color: '#071437'}}
+                        >
+                          No matching records found
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Tab>
+              </Tabs>
+            </div>
+
+            <div className='border-top border-gray-200'>
+              <div className='d-flex justify-content-end p-30px'>
+                <Button
+                  type='reset'
+                  onClick={() => setShowMoreInformation(false)}
+                  className='btn-lg btn-secondary align-self-center me-8px fs-6'
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
+
+      {showMoreInformation && !applicationIdEdit && (
+        <div>
+          {/* Render your popup content here */}
+          <Modal
+            id='kt_modal_create_app'
+            tabIndex={-1}
+            style={{}}
+            aria-hidden='true'
+            dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+            show={showMoreInformation}
+            backdrop={true}
+            onHide={() => setShowMoreInformation(false)}
+          >
+            <div className='modal-header p-30px'>
+              <h2 className='m-0'>More Information From Singpass</h2>
+              <div
+                className='btn btn-sm btn-icon btn-active-color-primary'
+                onClick={() => setShowMoreInformation(false)}
+              >
+                <KTIcon className='fs-1' iconName='cross' />
+              </div>
+            </div>
+            <div
+              style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
+              className='modal-body p-30px  '
+            >
+              <Tabs
+                activeKey={activeTab}
+                onSelect={(key: any) => setActiveTab(key)}
+                id='controlled-tab-example'
+              >
+                <Tab
+                  eventKey='cpf'
+                  title='CPF'
+                  tabClassName={
+                    activeTab === 'cpf' ? 'select-tab-information' : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+                    {formik.values &&
+                    Array.isArray(formik.values.date) &&
+                    formik.values.date.length > 0 ? (
+                      <tbody>
+                        {formik.values.date.map((date, index) => (
+                          <tr key={index}>
+                            <th className='fs-6 fw-medium text-center' style={{color: '#071437'}}>
+                              {index + 1}
+                            </th>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(formik.values.date[index]).format('YYYY/MM/DD') ||
+                                'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {formik.values.employer[index] || 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              ${formik.values.amount[index] || 'No Information'}
+                            </td>
+                            <td className='fs-6 fw-medium' style={{color: '#071437'}}>
+                              {moment(formik.values.month[index]).format('YYYY/MM') ||
+                                'No Information'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    ) : (
+                      <tbody>
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className='fs-6 fw-medium text-center text-gray-600 fw-medium'
+                            style={{color: '#071437'}}
+                          >
+                            No matching records found
+                          </td>
+                        </tr>
+                      </tbody>
+                    )}
+                  </Table>
+                </Tab>
+                <Tab
+                  eventKey='vehicle'
+                  title='Vehicle'
+                  tabClassName={
+                    activeTab === 'vehicle'
+                      ? 'select-tab-information'
+                      : 'fs-6 fw-bold text-gray-600'
+                  }
+                >
+                  <Table responsive='sm' className='table-bordered p-4'>
+                    <thead
+                      style={{backgroundColor: '#F9F9F9'}}
+                      className='fs-16 fw-medium text-gray-600'
+                    >
+                      <tr>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'></th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Date
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Employer
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Amount
+                        </th>
+                        <th className='fs-4 fw-medium' style={{color: '#78829d'}} scope='col'>
+                          Month
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className='fs-6 fw-medium text-center text-gray-600 fw-bold'
+                          style={{color: '#071437'}}
+                        >
+                          No matching records found
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Tab>
+              </Tabs>
+            </div>
+
+            <div className='border-top border-gray-200'>
+              <div className='d-flex justify-content-end p-30px'>
+                <Button
+                  type='reset'
+                  onClick={() => setShowMoreInformation(false)}
+                  className='btn-lg btn-secondary align-self-center me-8px fs-6'
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
     </>
   )
 }

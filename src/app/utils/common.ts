@@ -140,3 +140,49 @@ export function handleFormatFilter<T = any>(config: {
 
   return newDataFilter
 }
+
+export function convertResidentialTypeSingPass(residentialType: string) {
+  switch (residentialType) {
+    case '1-ROOM FLAT (HDB)':
+      return '1 Room'
+
+    case '2-ROOM FLAT (HDB)':
+      return '2 Room'
+
+    case '3-ROOM FLAT (HDB)':
+      return '3 Room'
+
+    case '4-ROOM FLAT (HDB)':
+      return '4 Room'
+
+    case '5-ROOM FLAT (HDB)':
+      return '5 Room'
+
+    case 'STUDIO APARTMENT (HDB)':
+      return 'STUDIO APARTMENT (HDB)'
+
+    case 'EXECUTIVE FLAT (HDB)':
+      return 'Exec'
+
+    case 'apartment':
+      return 'apartment'
+
+    case 'CONDOMINIUM':
+      return 'Condo'
+
+    case 'landed':
+      return 'Landed'
+
+    case 'TERRACE HOUSE':
+      return 'TERRACE HOUSE'
+
+    case 'SEMI-DETACHED HOUSE':
+      return 'SEMI-DETACHED HOUSE'
+
+    case 'not_own':
+      return 'Does not own any property'
+
+    default:
+      return 'Does not own any property'
+  }
+}
