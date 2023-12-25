@@ -1,29 +1,29 @@
 import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
+import {useSocket} from '@/app/context/SocketContext'
 import {swalToast} from '@/app/swal-notification'
 import {ApplicationFormData} from '@/app/types'
 import {convertErrorMessageResponse} from '@/app/utils'
 import Button from '@/components/button/Button'
-import {Input} from '@/components/input'
 import Modal from '@/components/modal/Modal'
-import {Select} from '@/components/select'
 import {TextArea} from '@/components/textarea'
 import {FormikProps, useFormik} from 'formik'
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
-import * as Yup from 'yup'
 
 type Props = {
   onClose: () => void
   data: {[key: string]: any}
   formik: FormikProps<ApplicationFormData>
+  handleReloadApi: () => void
 }
 
-const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose}) => {
+const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloadApi}) => {
   const {id, approved_note} = data || {}
 
   const {applicationIdEdit = 0} = useParams()
   const {currentUser} = useAuth()
+  const {socket} = useSocket()
 
   const {
     values,
@@ -59,17 +59,16 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose}) => {
 
     try {
       if (id) {
-        delete payload.approved_by
-        const {data} = await request.put(`application/approval/${id}`, payload)
-
-        formik.setFieldValue('approval', {
-          ...formik.values.approval,
-          ...data.data,
-        })
+        await request.put(`application/approval/${id}`, payload)
       } else {
-        await request.post(`application/approval/${applicationIdEdit}`, payload)
+        const {data} = await request.post(`application/approval/${applicationIdEdit}`, payload)
+        console.log('success', data)
+
+        // Only emit when create approval
+        socket?.emit('approvalApplicationSuccess', data.loan_id)
       }
 
+      handleReloadApi()
       onClose()
       swalToast.fire({
         timer: 1500,

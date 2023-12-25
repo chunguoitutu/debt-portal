@@ -11,8 +11,9 @@ import clsx from 'clsx'
 interface Props extends PropsStepApplication {
   handleSubmit: () => void
   handleSaveDraft: () => void
-  data: any
   handleClose: () => void
+  handleReloadApi: () => void
+  data: any
   isDraft: boolean
   currentStep: number
 }
@@ -21,6 +22,7 @@ const GeneralButton: FC<Props> = ({
   handleSubmit,
   handleSaveDraft,
   handleClose,
+  handleReloadApi,
   formik,
   data,
   isDraft,
@@ -118,13 +120,13 @@ const GeneralButton: FC<Props> = ({
     }
 
     setShowPopupApproval(true)
-    // Logic can approval
   }
 
   return (
     <>
       {showPopupApproval && (
         <ApprovalApplicationModal
+          handleReloadApi={handleReloadApi}
           formik={formik}
           data={{...values.approval}}
           onClose={() => setShowPopupApproval(!showPopupApproval)}
