@@ -153,52 +153,6 @@ export const Applications = () => {
     // handleGetPersonData({authCode, codeVerifier})
   }, [])
 
-  // useEffect(() => {
-  //   window.addEventListener('message', (event) => {
-  //     if (event.origin === 'http://localhost:3001') {
-  //       // console.log('Message from popup:', event)
-  //       // console.log(1324, event.data)
-
-  //       const fullName = event.data.name.value
-  //       const firstName = fullName.split(' ')[0]
-  //       const lastName = fullName.substring(firstName.length).trim()
-
-  //       setTimeout(() => {
-  //         formik.setValues({
-  //           ...formik.values,
-  //           firstname: firstName || '',
-  //           lastname: lastName || '',
-  //           date_of_birth: event.data?.dob?.value || '',
-  //           identification_no: event.data?.uinfin?.value || '',
-  //           mobilephone_1: event.data?.mobileno.nbr?.value || '',
-  //           email_1: event.data?.email?.value || '',
-  //           address_contact_info: formik.values.address_contact_info.map((item, i) =>
-  //             i === 0
-  //               ? {
-  //                   ...item,
-  //                   postal_code: event.data.regadd.postal.value,
-  //                   street_1: event.data.regadd.street.value,
-  //                 }
-  //               : item
-  //           ),
-
-  //           // company_name: data?.employment?.value,
-  //         })
-  //       }, 1000)
-  //     }
-  //   })
-  // }, [])
-
-  // async function goToSingpass() {
-  //   const dataPopup = window.open(
-  //     'http://localhost:3001/singPass.html',
-  //     'sharer',
-  //     'toolbar=0,status=0,width=1200,height=900,align=center,menubar=no,location=no'
-  //   )
-
-  //   dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
-  // }
-
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
 
@@ -628,6 +582,7 @@ export const Applications = () => {
       country_id,
       file_documents,
       customer_no,
+      application_no,
       job_type_id,
       interest,
       bankrupt_plan,
@@ -718,6 +673,7 @@ export const Applications = () => {
         status: isDraft ? 0 : 1,
         application_date: new Date(),
         application_notes: JSON.stringify(remarkList),
+        application_no,
         is_existing,
         company_id: +company_id,
         loan_reason,
@@ -832,7 +788,7 @@ export const Applications = () => {
             <HeaderApplication
               labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
               info={{
-                customer_no: values.customer_no || '',
+                application_no: values.application_no || '',
                 application_date: values.application_date || '',
               }}
               percentCompleted={percentCompleted}

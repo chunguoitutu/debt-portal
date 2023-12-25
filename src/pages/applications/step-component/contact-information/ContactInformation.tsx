@@ -1,4 +1,4 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useRef, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
 
@@ -15,6 +15,8 @@ import {useParams} from 'react-router-dom'
 
 const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
+  const errorContainerRef = useRef<HTMLDivElement | null>(null)
+
   const [defaultValueAddress, setDefaultValueAddress] = useState<number | string>('')
   const [defaultValueCountry, setDefaultValueCountry] = useState<number | string>('')
   const {applicationIdEdit} = useParams()
@@ -93,6 +95,15 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       ? 'flex-grow-1'
       : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-250px'
 
+    useEffect(() => {
+      if (errors[key] && touched[key]) {
+        errorContainerRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      }
+    }, [errors[key], touched[key]])
+
     if (typeComponent === 'Select') {
       return (
         <Component
@@ -138,7 +149,9 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
             }
           />
 
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key]} />}
+          {errors[key] && touched[key] && (
+            <ErrorMessage message={errors[key]} containerRef={errorContainerRef} />
+          )}
         </div>
       )
     }

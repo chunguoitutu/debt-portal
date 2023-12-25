@@ -1,4 +1,4 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useRef, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
 import {useParams} from 'react-router-dom'
@@ -12,6 +12,7 @@ import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
   const {applicationIdEdit} = useParams()
+  const errorContainerRef = useRef<HTMLDivElement | null>(null)
 
   const [annualIncome, setAnnualIncome] = useState({
     monthly_income_1: 0,
@@ -92,6 +93,15 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0 w-100 w-xxl-250px'
 
+    useEffect(() => {
+      if (errors[key] && touched[key]) {
+        errorContainerRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      }
+    }, [errors[key], touched[key]])
+
     // nothing
     if (!Component) return
 
@@ -119,7 +129,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
             touched={touched}
             onBlur={handleBlur}
           />
-          {errors[key] && touched[key] && <ErrorMessage className='mt-2' message={errors[key]} />}
+          {errors[key] && touched[key] && (
+            <ErrorMessage className='mt-2' message={errors[key]} containerRef={errorContainerRef} />
+          )}
         </div>
       )
     }
@@ -223,7 +235,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
           />
 
           {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
-          {errors[key] && touched[key] && <ErrorMessage className='mt-2' message={errors[key]} />}
+          {errors[key] && touched[key] && (
+            <ErrorMessage className='mt-2' message={errors[key]} containerRef={errorContainerRef} />
+          )}
         </div>
       )
     }

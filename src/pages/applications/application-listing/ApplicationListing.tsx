@@ -129,8 +129,6 @@ const ApplicationListing = () => {
     }
   }, [socket])
 
-  console.log(dataFilter)
-
   /**
    * get api or filter
    */
@@ -305,7 +303,6 @@ const ApplicationListing = () => {
       )
     })
   }
-  console.log(checkFilter.application_date, 'checkFilter')
 
   // get list application
   async function onFetchDataList(

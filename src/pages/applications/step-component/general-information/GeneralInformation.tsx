@@ -18,7 +18,6 @@ import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
 import Singpass from './Singpass'
 import {KTIcon} from '@/_metronic/helpers'
-import {RESIDENTIAL_TYPE} from './../../../../app/utils/global-config'
 import {convertResidentialTypeSingPass} from '@/app/utils'
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -232,6 +231,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
       const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
       setStepCompleted(0)
+      //step 1
       setFieldValue('country_id', data?.data.country_id || '')
       setFieldValue('customer_no', data?.data.customer_no || '')
       setFieldValue('firstname', data?.data.firstname || '')
@@ -240,9 +240,75 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       setFieldValue('lastname', data?.data.lastname || '')
       setFieldValue('middlename', data?.data.middlename || '')
       setFieldValue('is_existing', 'existing')
-
       setFieldValue('date_of_birth', formattedDateOfBirth || '')
+
+      //step 3
+      setFieldValue('mobilephone_1', data?.data?.borrower[0].mobilephone_1 || '')
+      setFieldValue('mobilephone_2', data?.data?.borrower[0].mobilephone_2 || '')
+      setFieldValue('mobilephone_3', data?.data?.borrower[0].mobilephone_3 || '')
+      setFieldValue('homephone', data?.data?.borrower[0].homephone || '')
+      setFieldValue('email_1', data?.data?.borrower[0].email_1 || '')
+      setFieldValue('email_2', data?.data?.borrower[0].email_2 || '')
+
+      //address
+      setFieldValue(
+        'address_contact_info[0].address_type_id',
+        data?.data?.borrower[0].address[0]?.address_type_id || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].street_1',
+        data?.data?.borrower[0].address[0]?.street_1 || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].street_2',
+        data?.data?.borrower[0].address[0]?.street_2 || ''
+      )
+      setFieldValue('address_contact_info[0].city', data?.data?.borrower[0].address[0]?.city || '')
+      setFieldValue(
+        'address_contact_info[0].state',
+        data?.data?.borrower[0].address[0]?.state || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].address_label',
+        data?.data?.borrower[0].address[0]?.address_label || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].postal_code',
+        data?.data?.borrower[0].address[0]?.postal_code || '123'
+      )
+
+      //step 4
+      setFieldValue('company_name', data?.data?.borrower[0].employment[0].company_name || '')
+      setFieldValue(
+        'company_telephone',
+        data?.data?.borrower[0].employment[0].company_telephone || ''
+      )
+      setFieldValue('specialization', data?.data?.borrower[0].employment[0].specialization || '')
+      setFieldValue('position', data?.data?.borrower[0].employment[0].position || '')
+      setFieldValue('occupation', data?.data?.borrower[0].employment[0].occupation || '')
+      setFieldValue('address', data?.data?.borrower[0].employment[0].address || '')
+      setFieldValue('portal_code', data?.data?.borrower[0].employment[0].portal_code || '')
+      setFieldValue('annual_income', data?.data?.borrower[0].employment[0].annual_income || '')
+      setFieldValue('pay_date', data?.data?.borrower[0].employment[0].pay_date || '')
+      setFieldValue('bankrupted', data?.data?.borrower[0].employment[0].bankrupted || '')
+      setFieldValue('bankrupt_plan', data?.data?.borrower[0].employment[0].bankrupt_plan || '')
+
+      //step 5
+      setFieldValue('bank_name_1', data?.data?.borrower[0].bank_account[0].bank_name_1 || '')
+      setFieldValue('bank_code_1', data?.data?.borrower[0].bank_account[0].bank_code_1 || '')
+      setFieldValue(
+        'account_number_1',
+        data?.data?.borrower[0].bank_account[0].account_number_1 || ''
+      )
+      /////
+      setFieldValue('bank_name_2', data?.data?.borrower[0].bank_account[0].bank_name_2 || '')
+      setFieldValue('bank_code_2', data?.data?.borrower[0].bank_account[0].bank_code_2 || '')
+      setFieldValue(
+        'account_number_2',
+        data?.data?.borrower[0].bank_account[0].account_number_2 || ''
+      )
     } catch (error) {
+      setFieldValue('is_existing', 'new')
     } finally {
     }
   }
@@ -472,7 +538,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         </div>
       )}
 
-      {showPopup && <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} />}
+      {showPopup && (
+        <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} formik={formik} />
+      )}
 
       {popupSingpass && <Singpass show={popupSingpass} onClose={() => setPopupSingpass(false)} />}
 
