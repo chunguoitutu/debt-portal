@@ -5,18 +5,19 @@ type Props = {
   labelStep?: string
   percentCompleted?: number
   info?: {
-    customer_no: string
+    customer_no?: string
     application_date: string
+    application_no: string
   }
   className?: string
 }
 
 const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, info}) => {
-  const {application_date = '', customer_no = ''} = info || {}
+  const {application_date = '', customer_no = '', application_no} = info || {}
 
   const newLabel = useMemo(
-    () => (customer_no ? `Application Number: #${customer_no}` : labelStep),
-    [labelStep, application_date, customer_no]
+    () => (application_no ? `Application Number: #${application_no}` : labelStep),
+    [labelStep, application_date, application_no]
   )
 
   return (

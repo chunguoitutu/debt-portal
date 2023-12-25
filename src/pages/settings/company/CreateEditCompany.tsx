@@ -233,7 +233,7 @@ const CreateEditCompanies = ({
                         disabled={titleLable === 'Edit' && row.key === 'company_code'}
                         classInputWrap={
                           titleLable === 'Edit' && row.key === 'company_code'
-                            ? 'bg-secondary'
+                            ? 'form-control-solid opacity-50'
                             : 'form-control-solid'
                         }
                       />

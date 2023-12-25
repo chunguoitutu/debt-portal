@@ -424,6 +424,7 @@ export type ApplicationFormData = {
   company_name: string
   address: string
   office_no: string
+  application_no: string
   portal_code: string
   specialization: string
   monthly_income_1: string | number

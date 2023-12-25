@@ -12,21 +12,33 @@ import Icons from '@/components/icons'
 import Button from '@/components/button/Button'
 import RowPerPage from '@/components/row-per-page'
 import {Input} from '@/components/input'
-import {OrderBy, SearchCriteria, TableRow, ResponseLookupListing} from '@/app/types'
+import {
+  OrderBy,
+  SearchCriteria,
+  TableRow,
+  ResponseLookupListing,
+  ApplicationFormData,
+} from '@/app/types'
 import SortBy from '@/components/sort-by'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import Pagination from '@/components/table/components/Pagination'
-import {handleFormatFilter} from '@/app/utils'
+import {convertResidentialTypeSingPass, handleFormatFilter} from '@/app/utils'
 import Loading from '@/components/table/components/Loading'
+import {Checkbox} from '@/components/checkbox'
+import {useAuth} from '@/app/context/AuthContext'
+import {FormikProps} from 'formik'
+import moment from 'moment'
 
 type Props = {
   show?: boolean
   onClose: () => void
+  formik: FormikProps<ApplicationFormData>
 }
 
-const LookupCustomer = ({show, onClose}: Props) => {
+const LookupCustomer = ({show, onClose, formik}: Props) => {
   const {settings, rows} = TABLE_LOOKUP_CUSTOMER
   const {showAction = true, showViewButton, defaultSort} = settings
+  const [checkFilter, setCheckFilter] = React.useState<any>({})
   const [showInput, setShowInput] = React.useState<boolean>(false)
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
   const [searchValue, setSearchValue] = React.useState<string>('')
@@ -41,16 +53,43 @@ const LookupCustomer = ({show, onClose}: Props) => {
   const {pageSize, currentPage} = searchCriteria
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponseLookupListing>>({})
   const [loading, setLoading] = React.useState<boolean>(false)
+  const [filterButtonClicked, setFilterButtonClicked] = React.useState(false)
+
+  const {company_id} = useAuth()
 
   function showInputFilter() {
     setShowInput(!showInput)
   }
+
+  function isUseFilterButton() {
+    setFilterButtonClicked(!filterButtonClicked)
+  }
+
+  const showFilter = [
+    {
+      key: 'customer_no',
+      value: 'Customer No',
+    },
+    {
+      key: 'identification_no',
+      value: 'Nric',
+    },
+    {
+      key: 'firstname',
+      value: 'Fist Name',
+    },
+    {
+      key: 'lastname',
+      value: 'Last Name',
+    },
+  ]
 
   async function onFetchDataList(
     body?: Omit<SearchCriteria<Partial<ResponseLookupListing>>, 'total'>
   ) {
     setLoading(true)
     try {
+      setCheckFilter(body?.filters || {})
       const {data: response} = await request.post(settings.endPointGetListing + '/listing', {
         ...body,
         keySort: keySort,
@@ -62,6 +101,99 @@ const LookupCustomer = ({show, onClose}: Props) => {
       // no thing
     } finally {
       setLoading(false)
+    }
+  }
+
+  const {setFieldValue} = formik
+
+  async function handleGetApplicationById(nric: any) {
+    try {
+      const {data} = await request.post(`/application/nric_no/${nric}`, {
+        company_id,
+      })
+
+      const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
+      //step 1
+      setFieldValue('identification_no', data?.data.identification_no || '')
+      setFieldValue('country_id', data?.data.country_id || '')
+      setFieldValue('customer_no', data?.data.customer_no || '')
+      setFieldValue('firstname', data?.data.firstname || '')
+      setFieldValue('gender', data?.data.gender || '')
+      setFieldValue('identification_type', data?.data.identification_type || '')
+      setFieldValue('lastname', data?.data.lastname || '')
+      setFieldValue('middlename', data?.data.middlename || '')
+      setFieldValue('is_existing', 'existing')
+      setFieldValue('date_of_birth', formattedDateOfBirth || '')
+
+      //step 3
+      setFieldValue('mobilephone_1', data?.data?.borrower[0].mobilephone_1 || '')
+      setFieldValue('mobilephone_2', data?.data?.borrower[0].mobilephone_2 || '')
+      setFieldValue('mobilephone_3', data?.data?.borrower[0].mobilephone_3 || '')
+      setFieldValue('homephone', data?.data?.borrower[0].homephone || '')
+      setFieldValue('email_1', data?.data?.borrower[0].email_1 || '')
+      setFieldValue('email_2', data?.data?.borrower[0].email_2 || '')
+
+      //address
+      setFieldValue(
+        'address_contact_info[0].address_type_id',
+        data?.data?.borrower[0].address[0]?.address_type_id || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].street_1',
+        data?.data?.borrower[0].address[0]?.street_1 || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].street_2',
+        data?.data?.borrower[0].address[0]?.street_2 || ''
+      )
+      setFieldValue('address_contact_info[0].city', data?.data?.borrower[0].address[0]?.city || '')
+      setFieldValue(
+        'address_contact_info[0].state',
+        data?.data?.borrower[0].address[0]?.state || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].address_label',
+        data?.data?.borrower[0].address[0]?.address_label || ''
+      )
+      setFieldValue(
+        'address_contact_info[0].postal_code',
+        data?.data?.borrower[0].address[0]?.postal_code || '123'
+      )
+
+      //step 4
+      setFieldValue('company_name', data?.data?.borrower[0].employment[0].company_name || '')
+      setFieldValue(
+        'company_telephone',
+        data?.data?.borrower[0].employment[0].company_telephone || ''
+      )
+      setFieldValue('specialization', data?.data?.borrower[0].employment[0].specialization || '')
+      setFieldValue('position', data?.data?.borrower[0].employment[0].position || '')
+      setFieldValue('occupation', data?.data?.borrower[0].employment[0].occupation || '')
+      setFieldValue('address', data?.data?.borrower[0].employment[0].address || '')
+      setFieldValue('portal_code', data?.data?.borrower[0].employment[0].portal_code || '')
+      setFieldValue('annual_income', data?.data?.borrower[0].employment[0].annual_income || '')
+      setFieldValue('pay_date', data?.data?.borrower[0].employment[0].pay_date || '')
+      setFieldValue('bankrupted', data?.data?.borrower[0].employment[0].bankrupted || '')
+      setFieldValue('bankrupt_plan', data?.data?.borrower[0].employment[0].bankrupt_plan || '')
+
+      //step 5
+      setFieldValue('bank_name_1', data?.data?.borrower[0].bank_account[0].bank_name_1 || '')
+      setFieldValue('bank_code_1', data?.data?.borrower[0].bank_account[0].bank_code_1 || '')
+      setFieldValue(
+        'account_number_1',
+        data?.data?.borrower[0].bank_account[0].account_number_1 || ''
+      )
+      /////
+      setFieldValue('bank_name_2', data?.data?.borrower[0].bank_account[0].bank_name_2 || '')
+      setFieldValue('bank_code_2', data?.data?.borrower[0].bank_account[0].bank_code_2 || '')
+      setFieldValue(
+        'account_number_2',
+        data?.data?.borrower[0].bank_account[0].account_number_2 || ''
+      )
+      onClose()
+    } catch (error) {
+      setFieldValue('is_existing', 'new')
+    } finally {
     }
   }
 
@@ -111,21 +243,23 @@ const LookupCustomer = ({show, onClose}: Props) => {
           {showAction && showViewButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
-                {showViewButton && <ButtonViewDetail onClick={() => {}} />}
+                {showViewButton && (
+                  <Button
+                    className='btn btn-secondary text-hover-primary'
+                    style={{height: 44, width: 59, padding: 8}}
+                    onClick={() => {
+                      handleGetApplicationById(item.identification_no)
+                    }}
+                  >
+                    Select
+                  </Button>
+                )}
               </div>
             </td>
           )}
         </tr>
       )
     })
-  }
-
-  const handleLookup = async () => {
-    loadApi &&
-      onFetchDataList({
-        ...searchCriteria,
-        filters: dataFilters,
-      })
   }
 
   React.useEffect(() => {
@@ -221,7 +355,19 @@ const LookupCustomer = ({show, onClose}: Props) => {
             />
             <div className='d-flex flex-end ms-4 '>
               <Button
-                onClick={showInputFilter}
+                style={{
+                  backgroundColor:
+                    Object.keys(checkFilter).length !== 0 &&
+                    !(
+                      Object.keys(checkFilter).length === 1 &&
+                      Object.keys(checkFilter).includes('searchBar')
+                    )
+                      ? '#c4cada'
+                      : '#f1f1f4',
+                }}
+                onClick={() => {
+                  showInputFilter(), isUseFilterButton()
+                }}
                 className='btn-secondary align-self-center my-2  fs-5 text-primary h-45px'
                 disabled={false}
               >
@@ -229,6 +375,63 @@ const LookupCustomer = ({show, onClose}: Props) => {
                 Filter
               </Button>
             </div>
+
+            <div className='d-flex flex-end ms-2'>
+              <Button
+                onClick={() => {
+                  handleReGetApi()
+                }}
+                className='btn btn-primary align-self-center my-2  fs-5 h-45px'
+                disabled={filterButtonClicked}
+              >
+                Search
+              </Button>
+            </div>
+          </div>
+          <div>
+            {/*  */}
+            {Object.keys(checkFilter).length !== 0 &&
+              !(
+                Object.keys(checkFilter).length === 1 &&
+                Object.keys(checkFilter).includes('searchBar')
+              ) && (
+                <div className='d-flex justify-content  pt-24px pb-24px pt-14px m-0 '>
+                  <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
+
+                  <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
+                    {showFilter.map((filter, index) => (
+                      <div key={index} className='p-0 m-0'>
+                        {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) && (
+                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}: {checkFilter[`${filter.key}`]}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilters, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      handleResetFilter()
+                    }}
+                    className='reset-all-filter-application mt-16px ms-16px'
+                  >
+                    Reset All
+                  </button>
+                </div>
+              )}
+            {/*  */}
           </div>
           <KTCardBody className='py-4'>
             <div className='table-responsive'>
@@ -295,18 +498,25 @@ const LookupCustomer = ({show, onClose}: Props) => {
                           </td>
                         )
                       })}
-                      <td className='text-center'>
-                        <div className='d-flex align-items-center justify-content-center gap-3'>
+                      <td className='text-center' style={{height: 44}}>
+                        <div
+                          className='d-flex align-items-center justify-content-center gap-3'
+                          style={{height: 44}}
+                        >
                           <div
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary'
+                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary reload-apply-filter'
                             onClick={() => handleResetFilter()}
+                            style={{width: 44}}
                           >
                             <FontAwesomeIcon icon={faArrowsRotate} />
                           </div>
 
                           <Button
-                            className='btn text-primary btn-secondary fw-medium fs-14 btn-sm me-1 fw-medium text-primary'
-                            style={{backgroundColor: '#f9f9f9', height: '35px'}}
+                            className='btn text-primary btn-secondary fw-medium fs-14 btn-sm me-1 fw-medium text-primary reload-apply-filter'
+                            style={{
+                              backgroundColor: '#f9f9f9',
+                              width: 55,
+                            }}
                             onClick={handleReGetApi}
                           >
                             Apply
@@ -355,15 +565,6 @@ const LookupCustomer = ({show, onClose}: Props) => {
               disabled={false}
             >
               Cancel
-            </Button>
-            <Button
-              type='submit'
-              loading={false}
-              disabled={false}
-              onClick={handleLookup}
-              className='fs-5 btn btn-primary'
-            >
-              Lookup
             </Button>
           </div>
         </Modal.Footer>
