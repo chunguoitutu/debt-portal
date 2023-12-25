@@ -17,7 +17,6 @@ import {useAuth} from '../../app/context/AuthContext'
 import {
   ApplicationFormData,
   ApplicationPayload,
-  ApprovalInfo,
   CreateSuccessResponse,
   PropsStepApplication,
   RemarkItem,
@@ -923,6 +922,7 @@ export const Applications = () => {
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
                   handleSubmit={handleBeforeSubmit}
+                  handleReloadApi={() => SetLoadApiEdit(!loadApiEdit)}
                   config={STEP_APPLICATION[currentStep - 1].config || []}
                   formik={formik}
                   isDraft={isDraft}
