@@ -5,12 +5,13 @@ import {Dispatch, FC, SetStateAction, useRef, useState} from 'react'
 import SignatureCanvas from 'react-signature-canvas'
 
 type Props = {
+  setImgBase64: any
   onClose: () => void
   setBase64Pdf: Dispatch<SetStateAction<string | null>>
   setIsSignature: Dispatch<SetStateAction<boolean>>
 }
 
-const CreateSignatureModal: FC<Props> = ({onClose, setBase64Pdf, setIsSignature}) => {
+const CreateSignatureModal: FC<Props> = ({onClose, setBase64Pdf, setIsSignature, setImgBase64}) => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const signatureRef = useRef<any>({})
@@ -30,6 +31,7 @@ const CreateSignatureModal: FC<Props> = ({onClose, setBase64Pdf, setIsSignature}
 
     setLoading(true)
     const base64Signature = signatureRef.current.getTrimmedCanvas().toDataURL('image/png')
+    setImgBase64(base64Signature)
 
     try {
       // Request to be
