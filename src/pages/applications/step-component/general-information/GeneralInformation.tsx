@@ -12,7 +12,7 @@ import LookupCustomer from './LookupCustomer'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
 import {getCurrentDate} from '@/app/utils/get-current-date'
-import {useParams, useSearchParams} from 'react-router-dom'
+import {useLocation, useParams, useSearchParams} from 'react-router-dom'
 import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
@@ -41,6 +41,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const [popupSingpass, setPopupSingpass] = useState<boolean>(false)
   const {company_id} = useAuth()
   const {values, touched, errors, handleChange, handleBlur, setFieldValue, setValues} = formik
+  const {pathname} = useLocation()
 
   async function onFetchDataList() {
     try {
@@ -155,14 +156,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           amount: cpf_amount || '',
           date: cpf_date || '',
           employer: cpf_employer || '',
+          // marketing_type_id: dataMarketing,
           // marketing_type_id: 1,
           // vehicle will return result when we have the offical api singpass
         }
 
         handleFillFormSingpass(values)
+        onFetchDataList()
       } else return
     })
-  }, [company_id])
+  }, [company_id, pathname])
 
   function splitName(fullName: string) {
     const arr = fullName?.trim()?.split(' ')
@@ -541,8 +544,26 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         </div>
       )}
 
+      {(values.month && values.month.length > 0) ||
+        (values.amount && values.amount.length > 0) ||
+        (values.employer && values.employer.length > 0) ||
+        (values.date && JSON.parse(values.date)?.length > 0 && (
+          <div className='d-flex justify-content-end align-items-end'>
+            <Button className='w-50 btn btn-secondary' onClick={() => handleShowMoreInformation()}>
+              More Information
+            </Button>
+          </div>
+        ))}
+
       {showPopup && values.status !== 2 && values.status !== 3 && (
-        <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} formik={formik} />
+        <LookupCustomer
+          show={showPopup}
+          onClose={() => {
+            setShowPopup(false)
+            console.log('close')
+          }}
+          formik={formik}
+        />
       )}
 
       {popupSingpass && <Singpass show={popupSingpass} onClose={() => setPopupSingpass(false)} />}

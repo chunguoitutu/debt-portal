@@ -136,6 +136,16 @@ export type ResponseApplicationListing = {
   searchBar?: string
 }
 
+export type ResponseLoanListing = {
+  id: number
+  loan_number: number
+  name_of_borrower: string
+  id_no: string
+  loan_amount: number
+  monthly_due_date: Date
+  searchBar?: string
+}
+
 export type TableRow = {
   key: string
   name: string

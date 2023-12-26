@@ -112,6 +112,8 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
         company_id,
       })
 
+      console.log(data)
+
       const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
       //step 1
       setFieldValue('identification_no', data?.data.identification_no || '')
@@ -124,6 +126,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
       setFieldValue('middlename', data?.data.middlename || '')
       setFieldValue('is_existing', 'existing')
       setFieldValue('date_of_birth', formattedDateOfBirth || '')
+      setFieldValue('residential_type', data?.data.borrower[0]?.residential_type || '')
 
       //step 3
       setFieldValue('mobilephone_1', data?.data?.borrower[0].mobilephone_1 || '')
@@ -190,6 +193,12 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
         'account_number_2',
         data?.data?.borrower[0].bank_account[0].account_number_2 || ''
       )
+
+      // cpf table
+      setFieldValue('date', data?.data.borrower[0].cpf[0].date || '')
+      setFieldValue('employer', data?.data.borrower[0].cpf[0].employer || '')
+      setFieldValue('amount', data?.data.borrower[0].cpf[0].amount || '')
+      setFieldValue('month', data?.data.borrower[0].cpf[0].month || '')
       onClose()
     } catch (error) {
       setFieldValue('is_existing', 'new')
@@ -249,6 +258,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                     style={{height: 44, width: 59, padding: 8}}
                     onClick={() => {
                       handleGetApplicationById(item.identification_no)
+                      onClose()
                     }}
                   >
                     Select

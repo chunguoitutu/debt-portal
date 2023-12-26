@@ -20,6 +20,11 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       name: 'ID',
       classNameTableHead: 'ps-5',
       classNameTableBody: 'w-50px ps-5',
+      infoFilter: {
+        typeComponent: 'input',
+        component: Input,
+        isSort: true,
+      },
     },
     {
       key: 'application_no',
