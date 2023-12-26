@@ -126,6 +126,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
           <Component
             value={values[key]}
             onChange={handleChange}
+            disabled={values.status == 3 ? true : false}
             name={key}
             classShared={className}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
@@ -298,6 +299,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                       value={values['address_contact_info']?.[indexParent]?.[key]}
                       onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}
                       name={key}
+                      disabled={values.status == 3 ? true : false}
                       classShared={classNameComponent}
                       options={!!dependencyApi ? dataOption[key] || [] : ''}
                       error={errors['address_contact_info']?.[indexParent]?.[key]}
@@ -308,6 +310,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
                   ) : (
                     <div className='d-flex flex-column w-100'>
                       <Component
+                        disabled={values.status == 3 ? true : false}
                         value={values['address_contact_info']?.[indexParent]?.[key]}
                         onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}
                         name={key}

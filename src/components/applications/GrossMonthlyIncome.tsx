@@ -36,6 +36,7 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
           <Input
             name={key}
             value={values?.[key]}
+            disabled={values.status == 3 ? true : false}
             placeholder={placeholder}
             onBlur={(e) => {
               if (+Number(e.target.value).toFixed(2) !== +Number(annualIncome[key]).toFixed(2)) {
