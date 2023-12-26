@@ -393,7 +393,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           error={errors[key]}
           min='1900-01-01'
           max={getCurrentDate()}
-          disabled={values.status == 3 ? true : false}
+          disabled={values.status === 3 || values.status === 2 ? true : false}
           insertRight={
             key === 'identification_no' ? (
               <Tippy offset={[40, 0]} content='Lookup Customer'>
@@ -416,7 +416,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         <Component
           error={errors[key]}
           touched={touched[key]}
-          disabled={values.status == 3 ? true : false}
+          disabled={values.status === 3 || values.status === 2 ? true : false}
           value={values[key]}
           onChange={handleChange}
           name={key}
@@ -474,7 +474,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             type={typeInput}
             name={key}
             classShared={className}
-            disabled={values.status == 3 ? true : false}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             touched={touched[key]}
             error={errors[key]}
             min='1900-01-01'

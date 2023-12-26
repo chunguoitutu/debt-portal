@@ -135,7 +135,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
         <div className='d-flex flex-column w-100'>
           <Component
             classShared='flex-grow-1'
-            disabled={values.status == 3 ? true : false}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             value={values[key]}
             onChange={handleChange}
             name={key}
@@ -154,7 +154,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             onChange={handleChange}
             name={key}
             classShared={className}
-            disabled={values.status == 3 ? true : false}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             type={typeInput}
             noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
           />
@@ -168,7 +168,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
-            disabled={values.status == 3 ? true : false}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             value={values[key]}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleAutoSelect(key, e)}
             name={key}
