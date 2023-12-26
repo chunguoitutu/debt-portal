@@ -25,7 +25,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
       return data.map((item, i) => (
         <Component
           key={i}
-          disabled={values.status == 3 ? true : false}
+          disabled={values.status === 3 || values.status === 2 ? true : false}
           classNameLabel={clsx([
             values[key] === item.value ? 'fs-4 fw-medium' : 'text-gray-600 fs-4 fw-medium',
           ])}
@@ -43,7 +43,7 @@ const BankInfo: FC<PropsStepApplication> = ({config = [], formik}) => {
         <div className='d-flex flex-column w-100'>
           <Component
             value={values[key]}
-            disabled={values.status == 3 ? true : false}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             onChange={handleChange}
             name={key}
             classShared={className}
