@@ -541,7 +541,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         </div>
       )}
 
-      {showPopup && (
+      {showPopup && values.status !== 2 && values.status !== 3 && (
         <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} formik={formik} />
       )}
 
