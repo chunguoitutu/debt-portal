@@ -8,7 +8,6 @@ import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 import Cookies from 'js-cookie'
-import {useAuth} from '@/app/context/AuthContext'
 
 const Guest = () => {
   const [loanId, setLoadId] = useState<string | null>(Cookies.get('approval_loan_id') || null)
@@ -65,6 +64,7 @@ const Guest = () => {
         title: 'Email sent successfully, please check your email',
       })
       setLoadId(null)
+      setBase64data('')
       setBase64Pdf(null)
       setIsSignature(false)
       Cookies.remove('approval_loan_id')
