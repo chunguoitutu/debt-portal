@@ -120,6 +120,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
       setFieldValue('firstname', data?.data.firstname || '')
       setFieldValue('gender', data?.data.gender || '')
       setFieldValue('identification_type', data?.data.identification_type || '')
+      setFieldValue('residential_type', data?.data.borrower[0]?.residential_type || '')
       setFieldValue('lastname', data?.data.lastname || '')
       setFieldValue('middlename', data?.data.middlename || '')
       setFieldValue('is_existing', 'existing')
@@ -249,6 +250,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                     style={{height: 44, width: 59, padding: 8}}
                     onClick={() => {
                       handleGetApplicationById(item.identification_no)
+                      onClose()
                     }}
                   >
                     Select

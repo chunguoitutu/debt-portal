@@ -160,6 +160,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         }
 
         handleFillFormSingpass(values)
+        onFetchDataList()
       } else return
     })
   }, [company_id])
