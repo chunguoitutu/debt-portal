@@ -30,6 +30,7 @@ const NameOfApplication: FC<PropsStepApplication> = ({formik}) => {
           placeholder={placeholder}
           onChange={handleChange}
           onBlur={handleBlur}
+          disabled={values.status == 3 ? true : false}
           classShared=''
           error={errors[key] as string}
           touched={!!touched[key]}
