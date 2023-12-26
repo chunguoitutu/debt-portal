@@ -9,7 +9,7 @@ const RowPerPage = ({limit = 10, page = 1, lenghtData = 0, setLimit}: Props) => 
       <div className='ms-16px me-16px'>
         <Select
           classShared=''
-          className='pt-1 pb-1 ps-4 pe-9 '
+          className='pt-1 pb-1 ps-4 pe-9 fs-6'
           onChange={(e) => setLimit(e)}
           name='RowPerPage'
           isOptionDefault={false}
