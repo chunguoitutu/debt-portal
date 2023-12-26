@@ -14,6 +14,8 @@ const Guest = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [base64Pdf, setBase64Pdf] = useState<string | null>(null)
   const [imgBase64, setImgBase64] = useState('')
+  const [email, setEmail] = useState('')
+
   const [base64data, setBase64data] = useState<string | null>(null)
 
   const [popup, setPopup] = useState<boolean>(false)
@@ -24,7 +26,7 @@ const Guest = () => {
   useEffect(() => {
     socket?.on('newLoan', (loan_id) => {
       Cookies.set('approval_loan_id', loan_id)
-      setLoadId(loan_id)
+      !imgBase64 && setLoadId(loan_id)
     })
   }, [socket])
 
@@ -36,7 +38,8 @@ const Guest = () => {
           img_base64: imgBase64,
         })
         .then((data) => {
-          setBase64data(data.data.file_base64)
+          setEmail(data?.data?.email)
+          setBase64data(data?.data?.file_base64)
         })
   }, [loanId, imgBase64])
   function handleTogglePopup() {
@@ -44,8 +47,6 @@ const Guest = () => {
   }
 
   async function handleSendMail() {
-    let value = ''
-
     // while (!value) {
     //   value = prompt('Enter the email you want to send: ') || ''
     // }
@@ -53,7 +54,7 @@ const Guest = () => {
     const payload = {
       loan_id: Number(loanId),
       contract_base64: '',
-      email: value?.trim(),
+      email: email?.trim(),
     }
 
     try {
