@@ -24,7 +24,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'loan_no',
       name: 'Loan No',
-      classNameTableBody: 'mw-220px ps-5',
+      classNameTableBody: 'mw-250px ps-5',
       classNameTableHead: 'ps-5 w-220px',
       infoFilter: {
         typeComponent: 'input',
@@ -35,7 +35,8 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'fullname',
       name: 'Name of Borrower',
-      classNameTableHead: 'ps-5 mw-400px',
+      classNameTableHead: 'ps-5 mw-400px pe-0',
+      classNameTableBody: 'pe-0',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -45,7 +46,8 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'identification_no',
       name: 'NRIC No',
-      classNameTableHead: 'ps-5 mw-250px',
+      classNameTableHead: 'ps-5 mw-250px pe-0',
+      classNameTableBody: 'pe-0',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -53,9 +55,10 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       },
     },
     {
-      key: 'u_f_o',
+      key: 'status',
       name: 'UFO',
-      classNameTableHead: 'ps-5 mw-100px',
+      classNameTableHead: 'ps-5 mw-100px pe-0',
+      classNameTableBody: 'pe-0',
       infoFilter: {
         typeComponent: 'select',
         component: Select,
@@ -63,9 +66,10 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       },
     },
     {
-      key: 'loan_amount_request',
+      key: 'loan_amount',
       name: 'Loan Amount',
-      classNameTableHead: 'ps-5 mw-250px',
+      classNameTableHead: 'ps-0 mw-250px pe-5 text-end',
+      classNameTableBody: 'pe-8  text-end',
       infoFilter: {
         typeComponent: 'select',
         component: Select,
@@ -75,7 +79,8 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'monthly_due_date',
       name: 'Monthly Due Date',
-      classNameTableHead: 'ps-5 mw-250px',
+      classNameTableHead: 'ps-8 mw-200px pe-8 text-end',
+      classNameTableBody: 'pe-8 text-end',
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',

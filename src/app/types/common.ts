@@ -138,11 +138,11 @@ export type ResponseApplicationListing = {
 
 export type ResponseLoanListing = {
   id: number
-  loan_number: number
-  name_of_borrower: string
-  id_no: string
+  loan_no: number
+  identification_no: number
+  fullname: string
   loan_amount: number
-  monthly_due_date: Date
+  status: number
   searchBar?: string
 }
 
@@ -516,6 +516,24 @@ export type ApplicationItem = {
   identification_no: string
   fullname: string
   loan_type: string
+}
+
+export type LoanItem = {
+  id: number
+  loan_no: null | string
+  status: number
+  borrower_id: number
+  loan_type_id: number
+  application_id: string
+  loan_amount: string
+  loan_terms: number
+  interest_rate: string
+  approval_date: string
+  identification_no: string
+  fullname: string
+  loan_type: string
+  borrower: any
+  application: any
 }
 
 export type RemarkItem = {

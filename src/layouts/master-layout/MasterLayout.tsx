@@ -33,7 +33,7 @@ const MasterLayout = () => {
   }, [pathname])
   const checkBackgroundMobile = ['create', 'edit'].includes(pathname.split('/').filter(Boolean)[1])
   const isViewHeight = useMemo(() => {
-    const arrCheck = ['loans', 'application/create', 'application/edit']
+    const arrCheck = ['application/create', 'application/edit']
     return arrCheck.some((el) => pathname.includes(el))
   }, [pathname])
 
@@ -54,7 +54,7 @@ const MasterLayout = () => {
           <HeaderWrapper />
           <div className='app-wrapper flex-column flex-row-fluid' id='kt_app_wrapper'>
             <Sidebar />
-            <div className='app-main flex-column flex-row-fluid' id='kt_app_main'>
+            <div className='app-main flex-column flex-row-fluid overflow-y-auto' id='kt_app_main'>
               <div
                 className={clsx([
                   'd-flex flex-column flex-column-fluid app-container flex-grow-1',

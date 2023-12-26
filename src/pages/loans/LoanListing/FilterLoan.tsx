@@ -41,6 +41,8 @@ export function FilterLoan({
             const {infoFilter, key, options, name} = row || {}
             const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
 
+            console.log(infoFilter, '123')
+
             const Component = component
             let props: {[key: string]: any} = {
               name: key,
