@@ -8,7 +8,7 @@ import {swalConfirm, swalToast} from '../../../../app/swal-notification'
 import {Select} from '@/components/select'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {AddressTypeItem, ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
-import {DEFAULT_MESSAGE_ERROR_500, handleCreateBlockAddress} from '@/app/constants'
+import {DEFAULT_MESSAGE_ERROR_500} from '@/app/constants'
 import {COUNTRY_PHONE_CODE, PROPERTY_TYPE} from '@/app/utils'
 import {useParams} from 'react-router-dom'
 import AddressGroup from './AddressGroup'
@@ -91,8 +91,9 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
           setActive(itemDefault?.address_type_name)
 
-          // Only create
-          if (!applicationIdEdit) {
+          // Only create and first mount component
+          // !values.address_contact_info[0].address_type_id -> first mount
+          if (!applicationIdEdit && !values.address_contact_info[0].address_type_id) {
             let newValue = {
               ...values.address_contact_info[0],
               address_type_id: itemDefault.id,
@@ -122,6 +123,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
               delete newValue.existing_staying
               delete newValue.housing_type
             }
+
             setFieldValue(`address_contact_info[0]`, {
               ...newValue,
             })
@@ -333,7 +335,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       })}
 
       {dataOption?.address_type_id?.map((addressType: AddressTypeItem, i) => {
-        // if (i > 0) return null
+        if (i > 0) return null
         return (
           <AddressGroup
             key={addressType.id}

@@ -230,7 +230,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
-      .max(999999, convertMessageErrorMaximum(100, true)),
+      .max(100, convertMessageErrorMaximum(100, true)),
   },
   {
     key: 'loan_reason',
