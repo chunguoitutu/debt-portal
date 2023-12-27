@@ -80,7 +80,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       },
     },
     {
-      key: 'monthly_due_date',
+      key: 'approval_date',
       name: 'Monthly Due Date',
       classNameTableHead: 'ps-8 mw-200px pe-8 text-end',
       classNameTableBody: 'pe-8 text-end',

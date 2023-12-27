@@ -184,6 +184,7 @@ const CreateLoanType = ({
               const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
 
               if (typeComponent === 'checkbox-rounded') {
+                console.log(values[key], 'heuhad')
                 return (
                   <div className='mt-16px' key={i}>
                     <Component

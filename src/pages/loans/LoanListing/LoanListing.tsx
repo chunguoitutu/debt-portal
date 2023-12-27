@@ -56,7 +56,7 @@ const showFilter = [
     value: 'Loan Amount',
   },
   {
-    key: 'monthly_due_date',
+    key: 'approval_date',
     value: 'Monthly Due Date',
   },
   {
@@ -187,7 +187,7 @@ const LoanListing = () => {
               )
             }
 
-            if (key === 'monthly_due_date') {
+            if (key === 'approval_date') {
               return (
                 <td
                   key={i}
@@ -282,7 +282,7 @@ const LoanListing = () => {
         ...dataFilter,
         searchBar: searchValue,
       },
-      keyDate: ['monthly_due_Date'],
+      keyDate: ['approval_date'],
       keyNumber: ['id'],
     })
   }
@@ -444,7 +444,7 @@ const LoanListing = () => {
                 {showFilter.map((filter, index) => (
                   <div key={index} className='p-0 m-0'>
                     {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                      !['monthly_due_date', 'status', 'loan_amount'].includes(filter.key) && (
+                      !['approval_date', 'status', 'loan_amount'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
                             {filter.value}: {checkFilter[`${filter.key}`]}
@@ -461,21 +461,21 @@ const LoanListing = () => {
                         </div>
                       )}
 
-                    {!!checkFilter?.monthly_due_date && ['monthly_due_date'].includes(filter.key) && (
+                    {!!checkFilter?.approval_date && ['approval_date'].includes(filter.key) && (
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
-                          {!!checkFilter?.monthly_due_date?.gte &&
-                            moment(checkFilter?.monthly_due_date?.gte).format('MMM DD, YYYY')}{' '}
-                          {!!checkFilter?.monthly_due_date?.lte && 'To '}
-                          {!!checkFilter?.monthly_due_date?.lte &&
-                            moment(checkFilter?.monthly_due_date?.lte)
+                          {!!checkFilter?.approval_date?.gte &&
+                            moment(checkFilter?.approval_date?.gte).format('MMM DD, YYYY')}{' '}
+                          {!!checkFilter?.approval_date?.lte && 'To '}
+                          {!!checkFilter?.approval_date?.lte &&
+                            moment(checkFilter?.approval_date?.lte)
                               .subtract(1, 'days')
                               .format('MMM D, YYYY')}
                         </h2>
                         <div
                           onClick={() => {
-                            setDataFilter({...dataFilter, monthly_due_date: ''})
+                            setDataFilter({...dataFilter, approval_date: ''})
                             setLoadApi(!loadApi)
                           }}
                           className='p-0 m-0 cursor-pointer'
