@@ -287,12 +287,26 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
           <h3 className='mb-24px fw-bold'>Information</h3>
           <div className='row gx-5'>
             {dataInformation.map((item, i) => {
-              const {infoCreateEdit, key} = item
+              const {infoCreateEdit, key, name} = item
               const {component, typeComponent, column} = infoCreateEdit || {}
 
               if (component) {
                 const Component = component as FC
                 const props = generatePropsComponent(item)
+
+                if (key === 'is_active') {
+                  const Component = component as any
+                  return (
+                    <div className='mt-16px' key={i}>
+                      <Component
+                        label={name}
+                        checked={values[key]}
+                        onChange={handleChange}
+                        id={key}
+                      />
+                    </div>
+                  )
+                }
 
                 return (
                   <div className={clsx(['mb-16px', column ? 'col-6' : 'col-12'])} key={i}>
@@ -316,8 +330,10 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
           <h3 className='mb-24px fw-bold'>Account</h3>
           <div className='row gx-5 last-child-marin-0'>
             {dataAccount.map((item, i) => {
-              const {infoCreateEdit, key} = item
+              const {infoCreateEdit, key, name} = item
               const {component, typeComponent, column, isLastChild} = infoCreateEdit || {}
+
+              const Component = component as any
 
               if (component) {
                 const Component = component as FC
