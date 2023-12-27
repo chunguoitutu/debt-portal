@@ -119,9 +119,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
                 housing_type: ' ',
               } // home_ownership, staying_condition: create fake spaces to avoid required
 
-              delete newValue.housing_type
               delete newValue.existing_staying
-              delete newValue.housing_type
             }
             !singpass &&
               setFieldValue(`address_contact_info[0]`, {
