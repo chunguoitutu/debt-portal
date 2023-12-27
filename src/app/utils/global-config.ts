@@ -481,7 +481,11 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
       },
       {
         value: 'SEMI-DETACHED HOUSE',
-        label: 'Semi Detached House',
+        label: 'Semi-Detached House',
+      },
+      {
+        value: 'DETACHED HOUSE',
+        label: 'Bungalow',
       },
     ],
   },
@@ -666,7 +670,7 @@ export const ROUTER_SETTING = [
     component: CompanyListing,
   },
   {
-    path: 'users',
+    path: 'manager-users',
     labelBreadCrumbs: 'Manager Users',
     priority: [1, 2],
     component: UserManagement,
@@ -684,7 +688,7 @@ export const ROUTER_SETTING = [
     component: LoanTypes,
   },
   {
-    path: 'roles',
+    path: 'manager-roles',
     labelBreadCrumbs: 'Manager Roles',
     priority: [1, 2],
     component: RolePage,
@@ -741,13 +745,13 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       },
       {
         id: uuidv4(),
-        to: '/settings/users',
+        to: '/settings/manager-users',
         label: 'Manager  Users',
         priority: [1, 2],
       },
       {
         id: uuidv4(),
-        to: '/settings/roles',
+        to: '/settings/manager-roles',
         label: 'Manager Roles',
         priority: [1, 2],
       },

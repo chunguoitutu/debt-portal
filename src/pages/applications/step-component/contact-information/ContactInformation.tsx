@@ -19,7 +19,7 @@ type BlockAddressCustom = {
   'work-site': BlockAddress[]
 }
 
-const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
+const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}) => {
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const errorContainerRef = useRef<HTMLDivElement | null>(null)
   const {values, touched, errors, handleChange, setValues, setFieldValue} = formik
@@ -123,10 +123,10 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
               delete newValue.existing_staying
               delete newValue.housing_type
             }
-
-            setFieldValue(`address_contact_info[0]`, {
-              ...newValue,
-            })
+            !singpass &&
+              setFieldValue(`address_contact_info[0]`, {
+                ...newValue,
+              })
           }
         }
 
@@ -335,7 +335,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
       })}
 
       {dataOption?.address_type_id?.map((addressType: AddressTypeItem, i) => {
-        if (i > 0) return null
+        // if (i > 0) return null
         return (
           <AddressGroup
             key={addressType.id}
