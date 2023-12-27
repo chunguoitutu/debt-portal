@@ -1,4 +1,4 @@
-import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
 import {FormikProps} from 'formik'
 import {ObjectSchema, Schema} from 'yup'
 import {ApprovalInfo} from './response'
@@ -277,11 +277,13 @@ export type ApplicationConfig = {
 }
 
 export type PropsStepApplication = {
-  setStepCompleted: any
+  setStepCompleted: Dispatch<SetStateAction<number>>
   config: ApplicationConfig[]
   formik: FormikProps<ApplicationFormData>
-  setSingpass: any
+  setSingpass: Dispatch<SetStateAction<boolean>>
   singpass: boolean
+  // setIsMountedAddress: Dispatch<SetStateAction<boolean>>
+  // isMountedAddress: boolean
 }
 
 export type ApplicationPayload = {

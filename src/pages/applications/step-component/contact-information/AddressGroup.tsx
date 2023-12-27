@@ -181,6 +181,7 @@ const AddressGroup: FC<Props> = ({
               staying_condition,
               property_type,
             } = address
+
             const isHomeAddress = address_type_name?.toLowerCase()?.includes('home')
             const isBelongGroup = address_type_id === addressGroupId
 
