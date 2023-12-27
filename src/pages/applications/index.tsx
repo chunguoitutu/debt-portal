@@ -22,7 +22,7 @@ import {
   RemarkItem,
   StepItem,
 } from '@/app/types'
-import {INIT_BLOCK_ADDRESS, STEP_APPLICATION} from '@/app/constants'
+import {STEP_APPLICATION, handleCreateBlockAddress} from '@/app/constants'
 import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
@@ -64,7 +64,7 @@ export const Applications = () => {
   const [showRemark, setShowRemark] = useState<boolean>(false)
   // const [checkAmount, SetCheckAmount] = useState<number>(0)
   // const [popupSingpass, setPopupSingpass] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const [optionsRejectionType, setOptionsRejectionType] = useState<any>([])
   const [optionsUser, setOptionsUser] = useState<any>([])
   const [singpass, setSingpass] = useState(false)
@@ -88,7 +88,7 @@ export const Applications = () => {
         ...result,
         [current?.key as string]: current?.defaultValue || '',
       }),
-      {address_contact_info: [INIT_BLOCK_ADDRESS]}
+      {address_contact_info: [handleCreateBlockAddress(false)]}
     ) as ApplicationFormData
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [STEP_APPLICATION])
@@ -122,7 +122,6 @@ export const Applications = () => {
         })
         .catch()
     handleGetApplicationById()
-    setCurrentStep(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationIdEdit, loadApiEdit, pathname])
 
@@ -851,8 +850,11 @@ export const Applications = () => {
               ref={containerRef}
             >
               <div
-                className={`${currentStep !== 6 ? 'form-wrap' : ''}`}
-                style={currentStep === 2 ? {width: '91.5%'} : {}}
+                className={clsx([
+                  currentStep !== 6 && 'form-wrap',
+                  currentStep === 3 && 'w-100',
+                  currentStep === 2 && 'w-90',
+                ])}
               >
                 {CurrentComponentControl && (
                   <CurrentComponentControl

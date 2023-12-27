@@ -257,6 +257,17 @@ export const EMPLOYMENT_STATUS: Option[] = [
   },
 ]
 
+export const PROPERTY_TYPE: Option[] = [
+  {
+    value: 'HDB',
+    label: 'HDB',
+  },
+  {
+    value: 'Private Residential',
+    label: 'Private Residential',
+  },
+]
+
 export const LANGUAGES: Option[] = [
   {
     value: 'english',
@@ -484,6 +495,41 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
       },
     ],
   },
+]
+
+export const HOUSING_HDB_TYPE: Option[] = [
+  {label: '1-Room Flat (HDB)', value: '111'},
+  {label: '2-Room Flat (HDB)', value: '112'},
+  {label: '3-Room Flat (HDB)', value: '113'},
+  {label: '4-Room Flat (HDB)', value: '114'},
+  {label: '5-Room Flat (HDB)', value: '115'},
+  {label: 'Executive Flat (HDB)', value: '116'},
+  {
+    label: 'Housing and Urban Development Company (HUDC) Flat (excluding those privatized)',
+    value: '117',
+  },
+  {label: 'Studio Apartment', value: '118'},
+]
+
+export const HOUSING_PRIVATE_RESIDENTIAL: Option[] = [
+  {label: 'Bungalow', value: '121'},
+  {label: 'Semi-Detached House', value: '122'},
+  {label: 'Terrace House', value: '123'},
+  {label: 'Condominium', value: '131'},
+  {label: 'Executive Condominium', value: '132'},
+  {label: 'Other Apartments nec', value: '139'},
+  {label: 'Shophouse', value: '141'},
+  {label: 'Other Housing Units nec', value: '149'},
+]
+
+export const HOME_OWNERSHIP: Option[] = [
+  {label: 'Self-Owned', value: 'Self-Owned'},
+  {label: 'Rental', value: 'Rental'},
+]
+
+export const STAYING_CONDITION: Option[] = [
+  {label: 'Alone', value: 'Alone'},
+  {label: 'Family Members', value: 'Family Members'},
 ]
 
 export const SALUTATION_OPTION: Option[] = [

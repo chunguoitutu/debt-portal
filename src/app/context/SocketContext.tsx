@@ -40,7 +40,7 @@ const SocketProvider: FC<WithChildren> = ({children}) => {
       })
 
       newSocket.on('connect', () => {
-        import.meta.env.NODE_ENV !== 'production' && console.log('Socket connect success!')
+        console.log('Socket connect success!')
       })
 
       newSocket.on('disconnect', () => {
