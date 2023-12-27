@@ -16,7 +16,7 @@ const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, i
   const {application_date = '', customer_no = '', application_no} = info || {}
 
   const newLabel = useMemo(
-    () => (application_no ? `Application Number: #${application_no}` : labelStep),
+    () => (application_no ? `Application Number: ${application_no}` : labelStep),
     [labelStep, application_date, application_no]
   )
 
