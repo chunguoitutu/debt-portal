@@ -5,6 +5,7 @@ import {
   HOUSING_PRIVATE_RESIDENTIAL,
   PROPERTY_TYPE,
   STAYING_CONDITION,
+  YES_NO_OPTION,
 } from '@/app/utils'
 import {CheckboxRounded} from '@/components/checkbox'
 import Radio from '@/components/radio/Radio'
@@ -54,6 +55,10 @@ const AddressGroup: FC<Props> = ({
 
     return isError
   }, [errors.address_contact_info, active])
+
+  const qtyAddressAdded = useMemo(() => {
+    return values.address_contact_info.filter((el) => el.address_type_id === addressGroupId).length
+  }, [active, values.address_contact_info])
 
   function handleChangeCustom(e: ChangeEvent<any>, index: number) {
     const {type, checked, value, name} = e.target
@@ -164,6 +169,12 @@ const AddressGroup: FC<Props> = ({
 
         {address_type_name}
 
+        {active !== address_type_name && qtyAddressAdded > 0 && (
+          <span className='text-gray-600 fs-14 fw-semibold'>
+            ({qtyAddressAdded} address has been added)
+          </span>
+        )}
+
         {isGroupError && <FontAwesomeIcon className='fs-20px text-danger' icon={faWarning} />}
       </h3>
 
@@ -197,7 +208,7 @@ const AddressGroup: FC<Props> = ({
               <Fragment key={index}>
                 <div
                   className={clsx([
-                    'card gx-0 border border-gray-300 overflow-hidden mb-24px',
+                    'card gx-0 border border-gray-300 overflow-hidden mb-24px rounded-12',
                     times > 1 && 'mt-24px',
                   ])}
                 >
@@ -216,46 +227,24 @@ const AddressGroup: FC<Props> = ({
                   </div>
 
                   <div className='row p-24px pt-16px gy-12px gx-30px'>
-                    <div className='col-12'>
-                      <CheckboxRounded
-                        disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
-                        name={isHomeAddress ? 'existing_staying' : 'is_default'}
-                        label={isHomeAddress ? 'Existing Staying' : `Default ${address_type_name}`}
-                        request_info
-                        checked={isHomeAddress ? !!existing_staying : !!is_default}
-                        onChange={(e) => handleChangeCustom(e, index)}
-                      />
-                    </div>
-
                     {isHomeAddress && (
                       <>
-                        <div className='col-12 d-flex align-items-center gap-16px'>
-                          <label className='text-gray-900 fs-16 text-capitalize fw-semibold'>
-                            Property Type
-                          </label>
-
-                          <div className='d-flex align-items-center gap-16px'>
-                            {PROPERTY_TYPE.map((el, i) => (
-                              <Radio
-                                disabled={
-                                  !!applicationIdEdit && [2, 3].includes(values.status || 0)
-                                }
-                                key={i}
-                                classNameLabel={clsx([
-                                  'fw-semibold',
-                                  property_type === el.value ? 'text-dark' : 'text-gray-600',
-                                ])}
-                                checked={property_type === el.value}
-                                name='property_type'
-                                onChange={(e) => handleChangeCustom(e, index)}
-                                value={el.value}
-                                label={el.label}
-                              />
-                            ))}
-                          </div>
+                        <div className='col-6'>
+                          <Select
+                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            label='Property Type'
+                            classShared='m-0 flex-grow-1'
+                            name={'property_type'}
+                            options={PROPERTY_TYPE}
+                            value={property_type}
+                            isOptionDefault={false}
+                            onChange={(e: any) => handleChangeCustom(e, index)}
+                            error={errors['address_contact_info']?.[index]?.['property_type']}
+                            touched={touched['address_contact_info']?.[index]?.['property_type']}
+                          />
                         </div>
 
-                        <div className='col-12 d-flex gap-16px'>
+                        <div className='col-6'>
                           <Select
                             disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
                             label='Housing Type'
@@ -274,41 +263,53 @@ const AddressGroup: FC<Props> = ({
                           />
                         </div>
 
-                        <div className='col-12 d-flex gap-30px'>
-                          <div className='flex-grow-1'>
-                            <Select
-                              disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
-                              value={home_ownership || ''}
-                              onChange={(e: any) => handleChangeCustom(e, index)}
-                              required={true}
-                              label='Home Ownership'
-                              classShared='m-0 flex-grow-1'
-                              name='home_ownership'
-                              options={HOME_OWNERSHIP}
-                              keyValueOption={'label'}
-                              keyLabelOption={'value'}
-                              error={errors['address_contact_info']?.[index]?.['home_ownership']}
-                              touched={touched['address_contact_info']?.[index]?.['home_ownership']}
-                            />
-                          </div>
-                          <div className='flex-grow-1'>
-                            <Select
-                              disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
-                              value={staying_condition || ''}
-                              onChange={(e: any) => handleChangeCustom(e, index)}
-                              required={true}
-                              label='Staying Condition'
-                              classShared='m-0 flex-grow-1'
-                              name={'staying_condition'}
-                              options={STAYING_CONDITION}
-                              keyValueOption={'label'}
-                              keyLabelOption={'value'}
-                              error={errors['address_contact_info']?.[index]?.['staying_condition']}
-                              touched={
-                                touched['address_contact_info']?.[index]?.['staying_condition']
-                              }
-                            />
-                          </div>
+                        <div className='col-4'>
+                          <Select
+                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            label='Existing Staying'
+                            classShared='m-0 flex-grow-1'
+                            name={'existing_staying'}
+                            options={YES_NO_OPTION.map((item) => ({...item, value: +item.value}))}
+                            value={existing_staying}
+                            isOptionDefault={false}
+                            onChange={(e: any) => handleChangeCustom(e, index)}
+                          />
+                        </div>
+
+                        <div className='col-4'>
+                          <Select
+                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            value={home_ownership || ''}
+                            onChange={(e: any) => handleChangeCustom(e, index)}
+                            required={true}
+                            label='Home Ownership'
+                            classShared='m-0 flex-grow-1'
+                            name='home_ownership'
+                            options={HOME_OWNERSHIP}
+                            keyValueOption={'label'}
+                            keyLabelOption={'value'}
+                            error={errors['address_contact_info']?.[index]?.['home_ownership']}
+                            touched={touched['address_contact_info']?.[index]?.['home_ownership']}
+                          />
+                        </div>
+
+                        <div className='col-4'>
+                          <Select
+                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            value={staying_condition || ''}
+                            onChange={(e: any) => handleChangeCustom(e, index)}
+                            required={true}
+                            label='Staying Condition'
+                            classShared='m-0 flex-grow-1'
+                            name={'staying_condition'}
+                            options={STAYING_CONDITION}
+                            keyValueOption={'label'}
+                            keyLabelOption={'value'}
+                            error={errors['address_contact_info']?.[index]?.['staying_condition']}
+                            touched={
+                              touched['address_contact_info']?.[index]?.['staying_condition']
+                            }
+                          />
                         </div>
 
                         {/* Separator */}

@@ -1,7 +1,6 @@
 import {FC, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
-
 import request from '../../../../app/axios'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
 import {swalConfirm, swalToast} from '../../../../app/swal-notification'
@@ -12,6 +11,7 @@ import {DEFAULT_MESSAGE_ERROR_500} from '@/app/constants'
 import {COUNTRY_PHONE_CODE, PROPERTY_TYPE} from '@/app/utils'
 import {useParams} from 'react-router-dom'
 import AddressGroup from './AddressGroup'
+import {handleCreateBlockAddress} from '@/app/constants'
 
 type BlockAddressCustom = {
   home: BlockAddress[]
@@ -335,7 +335,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
       })}
 
       {dataOption?.address_type_id?.map((addressType: AddressTypeItem, i) => {
-        // if (i > 0) return null
         return (
           <AddressGroup
             key={addressType.id}
@@ -347,27 +346,27 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
             handleToggleActive={(dataAddressType) => {
               handleToggleAddress(dataAddressType.address_type_name)
 
-              // const item = values.address_contact_info.find(
-              //   (el) => el.address_type_id === dataAddressType.id
-              // )
+              const item = values.address_contact_info.find(
+                (el) => el.address_type_id === dataAddressType.id
+              )
 
-              // if (!item) {
-              //   const isHomeAddress = dataAddressType.address_type_name
-              //     ?.toLowerCase()
-              //     ?.includes('home')
+              if (!item) {
+                const isHomeAddress = dataAddressType.address_type_name
+                  ?.toLowerCase()
+                  ?.includes('home')
 
-              //   setFieldValue(
-              //     'address_contact_info',
-              //     [
-              //       ...values['address_contact_info'],
-              //       {
-              //         ...handleCreateBlockAddress(isHomeAddress),
-              //         address_type_id: dataAddressType.id,
-              //       } as BlockAddress,
-              //     ],
-              //     false
-              //   )
-              // }
+                setFieldValue(
+                  'address_contact_info',
+                  [
+                    ...values['address_contact_info'],
+                    {
+                      ...handleCreateBlockAddress(isHomeAddress),
+                      address_type_id: dataAddressType.id,
+                    } as BlockAddress,
+                  ],
+                  false
+                )
+              }
             }}
           />
         )

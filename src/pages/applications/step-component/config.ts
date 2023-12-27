@@ -251,7 +251,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     typeInput: 'phone',
     validationFormik: Yup.string()
       .max(64, convertMessageErrorMaximum(64))
-      .required(convertMessageErrorRequired('Mobile 1(NIL)')),
+      .required(convertMessageErrorRequired('Phone Number 1')),
     required: true,
   },
   {

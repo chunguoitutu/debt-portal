@@ -785,7 +785,7 @@ export const Applications = () => {
         <div className='col-12 col-xxl-9 col-2xxl-8 d-flex flex-column h-fit-content h-2xxl-100 mt-16px m-xxl-0 ps-0'>
           <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
             <HeaderApplication
-              labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
+              labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
               info={{
                 application_no: values.application_no || '',
                 application_date: values.application_date || '',
