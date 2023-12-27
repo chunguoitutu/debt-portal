@@ -46,6 +46,7 @@ const CheckboxRounded: FC<Props> = ({
               checked={checked}
               onChange={onChange}
               id={id || defaultId || name}
+              name={name}
               {...rest}
             />
           </div>

@@ -15,3 +15,13 @@ export type ApprovalInfo = {
   created_at: Date
   updated_at: Date
 }
+
+export type AddressTypeItem = {
+  id: number
+  address_type_name: string
+  description: string
+  status: number
+  delete_at: string | null
+  deleted: number
+  is_default: number
+}

@@ -23,6 +23,7 @@ const Guest = () => {
 
   const {socket} = useSocket()
   const company_id = Cookies.get('company_id')
+
   useEffect(() => {
     socket?.on('newLoan', (loan_id) => {
       Cookies.set('approval_loan_id', loan_id)

@@ -36,8 +36,8 @@ export const PdfViewer = ({base64}: any) => {
   }
 
   return (
-    <Worker workerUrl='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'>
-      {pdfUrl && <Viewer fileUrl={pdfUrl} defaultScale={1} plugins={[layoutPlugin]} />}
+    <Worker workerUrl='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js'>
+      {pdfUrl && <Viewer fileUrl={pdfUrl} defaultScale={1.7} plugins={[layoutPlugin]} />}
     </Worker>
   )
 }
