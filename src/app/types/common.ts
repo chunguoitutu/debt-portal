@@ -130,7 +130,7 @@ export type ResponseApplicationListing = {
   application_name: string
   id_type: string
   loan_type: string
-  loan_amount: number
+  loan_amount_requested: number
   application_date: Date
   status: number
   searchBar?: string
@@ -141,7 +141,7 @@ export type ResponseLoanListing = {
   loan_no: number
   identification_no: number
   fullname: string
-  loan_amount: number
+  loan_amount_requested: number
   status: number
   searchBar?: string
 }

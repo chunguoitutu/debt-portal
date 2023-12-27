@@ -41,8 +41,6 @@ export function FilterApplication({
             const {infoFilter, key, options, name} = row || {}
             const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
 
-            console.log(infoFilter, 'hiehiehie')
-
             const Component = component
             let props: {[key: string]: any} = {
               name: key,

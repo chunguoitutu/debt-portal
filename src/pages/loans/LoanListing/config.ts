@@ -1,5 +1,5 @@
 import {TableConfig} from '@/app/types'
-import {ID_TYPE, STATUS_APPLICATION_FILTER} from '@/app/utils'
+import {ID_TYPE, LOAN_U_F_0, STATUS_APPLICATION_FILTER} from '@/app/utils'
 import {Input} from '@/components/input'
 import {Select} from '@/components/select'
 
@@ -59,6 +59,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       name: 'UFO',
       classNameTableHead: 'ps-5 mw-100px pe-0',
       classNameTableBody: 'pe-0',
+      options: LOAN_U_F_0,
       infoFilter: {
         typeComponent: 'select',
         component: Select,
@@ -68,11 +69,13 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'loan_amount',
       name: 'Loan Amount',
-      classNameTableHead: 'ps-0 mw-250px pe-5 text-end',
-      classNameTableBody: 'pe-8  text-end',
+      classNameTableBody: 'text-end pe-0',
+      classNameTableHead: 'text-end',
       infoFilter: {
-        typeComponent: 'select',
-        component: Select,
+        isFromTo: true,
+        typeComponent: 'input',
+        typeInput: 'number',
+        component: Input,
         isSort: true,
       },
     },
@@ -84,6 +87,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',
+        typeInput: 'date',
         component: Input,
         isSort: true,
       },

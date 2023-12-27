@@ -560,7 +560,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           show={showPopup}
           onClose={() => {
             setShowPopup(false)
-            console.log('close')
           }}
           formik={formik}
         />

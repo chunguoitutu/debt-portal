@@ -52,13 +52,13 @@ const showFilter = [
     value: 'NRIC No',
   },
   {
-    key: 'loan_amount_requested',
+    key: 'loan_amount',
     value: 'Loan Amount',
   },
-  // {
-  //   key: 'monthly_due_date',
-  //   value: 'Monthly Due Date',
-  // },
+  {
+    key: 'monthly_due_date',
+    value: 'Monthly Due Date',
+  },
   {
     key: 'status',
     value: 'UFO',
@@ -211,23 +211,25 @@ const LoanListing = () => {
                       classNameTableBody,
                     ])}
                   >
-                    U
+                    F
                   </td>
                 )
               } else if (item[key] === 1) {
                 return (
                   <td
+                    key={i}
                     className={clsx([
                       'fs-14 fw-semibold hover-applications-listing ps-7',
                       classNameTableBody,
                     ])}
                   >
-                    F
+                    U
                   </td>
                 )
               } else {
                 return (
                   <td
+                    key={i}
                     className={clsx([
                       'fs-14 fw-semibold hover-applications-listing ps-7',
                       classNameTableBody,
@@ -442,10 +444,7 @@ const LoanListing = () => {
                 {showFilter.map((filter, index) => (
                   <div key={index} className='p-0 m-0'>
                     {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                      ![
-                        // 'monthly_due_date',
-                        'loan_amount_requested',
-                      ].includes(filter.key) && (
+                      !['monthly_due_date', 'status', 'loan_amount'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
                             {filter.value}: {checkFilter[`${filter.key}`]}
@@ -462,12 +461,12 @@ const LoanListing = () => {
                         </div>
                       )}
 
-                    {/* {!!checkFilter?.monthly_due_date && ['monthly_due_date'].includes(filter.key) && (
+                    {!!checkFilter?.monthly_due_date && ['monthly_due_date'].includes(filter.key) && (
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
                           {!!checkFilter?.monthly_due_date?.gte &&
-                            moment(checkFilter?.monthly_due_date?.gte).format('MMM D, YYYY')}{' '}
+                            moment(checkFilter?.monthly_due_date?.gte).format('MMM DD, YYYY')}{' '}
                           {!!checkFilter?.monthly_due_date?.lte && 'To '}
                           {!!checkFilter?.monthly_due_date?.lte &&
                             moment(checkFilter?.monthly_due_date?.lte)
@@ -484,7 +483,7 @@ const LoanListing = () => {
                           <Icons name={'CloseSmall'} />
                         </div>
                       </div>
-                    )} */}
+                    )}
 
                     {!!checkFilter?.loan_amount && ['loan_amount'].includes(filter.key) && (
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
@@ -506,6 +505,25 @@ const LoanListing = () => {
                         <div
                           onClick={() => {
                             setDataFilter({...dataFilter, loan_amount: ''})
+                            setLoadApi(!loadApi)
+                          }}
+                          className='p-0 m-0 cursor-pointer'
+                        >
+                          <Icons name={'CloseSmall'} />
+                        </div>
+                      </div>
+                    )}
+
+                    {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
+                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                        <h2 className='filter-title-show'>
+                          {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'F'}
+                          {+checkFilter[`${filter.key}`] === 1 && 'U'}
+                          {+checkFilter[`${filter.key}`] === 2 && 'O'}
+                        </h2>
+                        <div
+                          onClick={() => {
+                            setDataFilter({...dataFilter, [`${filter.key}`]: ''})
                             setLoadApi(!loadApi)
                           }}
                           className='p-0 m-0 cursor-pointer'

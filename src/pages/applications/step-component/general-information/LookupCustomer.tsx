@@ -112,8 +112,6 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
         company_id,
       })
 
-      console.log(data)
-
       const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
       //step 1
       setFieldValue('identification_no', data?.data.identification_no || '')
@@ -318,10 +316,10 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
       scrollable={true}
     >
       <>
-        <Modal.Header>
+        <Modal.Header className='p-30px'>
           <div className='flex-row-fluid'>
             <div className='d-flex justify-content-between'>
-              <h2 className='m-0'>Lookup Customer</h2>
+              <h2 className='mt-2'>Lookup Customer</h2>
               <div
                 className='btn btn-sm btn-icon btn-active-color-primary'
                 onClick={() => onClose()}
@@ -567,7 +565,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
           />
           {loading && <Loading />}
         </div>
-        <Modal.Footer>
+        <Modal.Footer style={{padding: 23}}>
           <div className='d-flex flex-end full'>
             <Button
               onClick={onClose}
