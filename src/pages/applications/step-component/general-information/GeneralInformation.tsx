@@ -216,10 +216,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                           unit: event.data.regadd.unit.value || '',
                           block: event.data.regadd.block.value || '',
                           building: event.data.regadd.bbuilding || '',
-                          country: event.data.regadd.country.desc || '',
                           street: event.data.regadd.street.value || '',
                         }
                       : {}),
+                    country: event.data.regadd.country.desc || '',
                   }
                 : item
             ),
@@ -324,16 +324,18 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       setFieldValue('date_of_birth', formattedDateOfBirth || '')
       setFieldValue('country_id', data?.data.country_id || '')
     } catch (error) {
-      setFieldValue('is_existing', 'new')
-      setFieldValue('firstname', '')
-      setFieldValue('middlename', '')
-      setFieldValue('lastname', '')
-      setFieldValue('customer_no', '')
-      setFieldValue('identification_type', '')
-      setFieldValue('residential_type', '')
-      setFieldValue('gender', '')
-      setFieldValue('date_of_birth', '')
-      setFieldValue('country_id', 192)
+      if (!singpass) {
+        setFieldValue('is_existing', 'new')
+        setFieldValue('firstname', '')
+        setFieldValue('middlename', '')
+        setFieldValue('lastname', '')
+        setFieldValue('customer_no', '')
+        setFieldValue('identification_type', '')
+        setFieldValue('residential_type', '')
+        setFieldValue('gender', '')
+        setFieldValue('date_of_birth', '')
+        setFieldValue('country_id', 192)
+      }
     } finally {
     }
   }
