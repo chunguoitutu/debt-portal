@@ -74,7 +74,7 @@ const configHome = [
 const configOffice = [
   [
     {
-      key: 'property_type',
+      key: 'is_default',
       Component: ShowYesNo,
       value: 'Default work site',
     },
