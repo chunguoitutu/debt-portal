@@ -171,7 +171,7 @@ const AddressGroup: FC<Props> = ({
 
         {active !== address_type_name && qtyAddressAdded > 0 && (
           <span className='text-gray-600 fs-14 fw-semibold'>
-            ({qtyAddressAdded} address has been added)
+            ({qtyAddressAdded} addresses has been added)
           </span>
         )}
 
@@ -227,6 +227,20 @@ const AddressGroup: FC<Props> = ({
                   </div>
 
                   <div className='row p-24px pt-16px gy-12px gx-30px'>
+                    {!isHomeAddress && (
+                      <div className='col-12'>
+                        <CheckboxRounded
+                          disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                          name={isHomeAddress ? 'existing_staying' : 'is_default'}
+                          label={
+                            isHomeAddress ? 'Existing Staying' : `Default ${address_type_name}`
+                          }
+                          request_info
+                          checked={isHomeAddress ? !!existing_staying : !!is_default}
+                          onChange={(e) => handleChangeCustom(e, index)}
+                        />
+                      </div>
+                    )}
                     {isHomeAddress && (
                       <>
                         <div className='col-6'>
