@@ -718,13 +718,13 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           key: 'identification_no',
           value: 'NRIC No./FIN',
         },
+      ],
+      [
         {
           key: 'date_of_birth',
           value: 'Date of Birth',
           date: true,
         },
-      ],
-      [
         {
           key: 'gender',
           value: 'Gender',
@@ -732,6 +732,8 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: LableOptions,
           keyFilter: 'value',
         },
+      ],
+      [
         {
           key: 'country_id',
           value: 'nationality',
@@ -747,6 +749,22 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: LableOptions,
           keyFilter: 'value',
         },
+
+        // {
+        //   key: 'residential_type',
+        //   value: 'Residential Type',
+        //   options: RESIDENTIAL_TYPE,
+        //   Component: SpecialZation,
+        //   keyFilter: 'value',
+        // },
+        // {
+        //   key: 'marketing_type_id',
+        //   value: 'Marketing type',
+        //   dependencyApi: '/config/marketing_type/listing',
+        //   Component: RenderOptionsApi,
+        //   keyFilter: 'id',
+        //   lable: 'marketing_type_name',
+        // },
       ],
       [
         {
@@ -756,23 +774,6 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: LableOptions,
           keyFilter: 'value',
         },
-        {
-          key: 'residential_type',
-          value: 'Residential Type',
-          options: RESIDENTIAL_TYPE,
-          Component: SpecialZation,
-          keyFilter: 'value',
-        },
-        {
-          key: 'marketing_type_id',
-          value: 'Marketing type',
-          dependencyApi: '/config/marketing_type/listing',
-          Component: RenderOptionsApi,
-          keyFilter: 'id',
-          lable: 'marketing_type_name',
-        },
-      ],
-      [
         {
           key: 'spoken_language',
           value: 'Language Spoken',

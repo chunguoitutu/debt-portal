@@ -61,7 +61,6 @@ const configHome = [
     },
     {
       key: 'country',
-
       value: 'Country',
     },
     {
@@ -99,7 +98,7 @@ const configOffice = [
       value: 'Block',
     },
     {
-      key: 'building',
+      key: 'country',
       value: 'Country',
     },
   ],
@@ -189,6 +188,7 @@ const Address = ({data}: Props) => {
                               </h2>
                               {!!Component ? (
                                 <Component
+                                  dataChildren={e}
                                   data={data}
                                   config={element_config}
                                   keyData={e[element_config.key]}
