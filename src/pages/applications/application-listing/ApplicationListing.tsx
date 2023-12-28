@@ -23,7 +23,7 @@ import Badge from '@/components/badge/Badge'
 import Loading from '@/components/table/components/Loading'
 import ButtonEdit from '@/components/button/ButtonEdit'
 import SortBy from '@/components/sort-by'
-import {PageLink, PageTitle} from '@/components/breadcrumbs'
+import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import {Input} from '@/components/input'
@@ -128,8 +128,6 @@ const ApplicationListing = () => {
       socket?.off('newApplication', handleDetectNewApplication) // Clean up event listener on component unmount
     }
   }, [socket])
-
-  console.log(dataFilter)
 
   /**
    * get api or filter
@@ -305,7 +303,6 @@ const ApplicationListing = () => {
       )
     })
   }
-  console.log(checkFilter.application_date, 'checkFilter')
 
   // get list application
   async function onFetchDataList(
@@ -481,16 +478,6 @@ const ApplicationListing = () => {
               <Icons name={'filterIcon'} />
               Filter
             </Button>
-
-            <Link to='/application/create'>
-              <Button
-                className='btn-primary align-self-center ms-4 fs-6 text-white h-45px'
-                disabled={false}
-              >
-                <Icons name={'AddIcon'} />
-                Add New Application
-              </Button>
-            </Link>
           </div>
         </div>
 

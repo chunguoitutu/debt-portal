@@ -24,6 +24,7 @@ import {
   CUSTOMER_TYPE,
   EMPLOYMENT_STATUS,
   GENDER,
+  HOME_OWNERSHIP,
   ID_TYPE,
   INCOME_DOCUMENT,
   LANGUAGES,
@@ -32,6 +33,7 @@ import {
   POSITION,
   RESIDENTIAL_TYPE,
   SPECIALIZATION,
+  STAYING_CONDITION,
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
@@ -103,30 +105,33 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
       .max(64, convertMessageErrorMaximum(64))
       .required(convertMessageErrorRequired('NRIC No./FIN')),
   },
-  {
-    key: 'residential_type',
-    component: Select,
-    typeComponent: 'Select',
-    column: 6,
-    label: 'Residential Type',
-    required: true,
-    options: RESIDENTIAL_TYPE,
-    dropDownGroup: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Residential Type')),
-  },
-  {
-    key: 'marketing_type_id',
-    component: Select,
-    typeComponent: 'Select',
-    column: 6,
-    label: 'Marketing Type',
-    className: 'justify-content-xxl-end',
-    required: true,
-    keyLabelOfOptions: 'marketing_type_name',
-    keyValueOfOptions: 'id',
-    dependencyApi: 'config/marketing_type/listing',
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Marketing Type')),
-  },
+
+  //**HOLD */
+  // {
+  //   key: 'residential_type',
+  //   component: Select,
+  //   typeComponent: 'Select',
+  //   column: 6,
+  //   label: 'Residential Type',
+  //   required: true,
+  //   options: RESIDENTIAL_TYPE,
+  //   dropDownGroup: true,
+  //   validationFormik: Yup.string().required(convertMessageErrorRequired('Residential Type')),
+  // },
+  // {
+  //   key: 'marketing_type_id',
+  //   component: Select,
+  //   typeComponent: 'Select',
+  //   column: 6,
+  //   label: 'Marketing Type',
+  //   className: 'justify-content-xxl-end',
+  //   required: true,
+  //   keyLabelOfOptions: 'marketing_type_name',
+  //   keyValueOfOptions: 'id',
+  //   dependencyApi: 'config/marketing_type/listing',
+  //   validationFormik: Yup.number().required(convertMessageErrorRequired('Marketing Type')),
+  // },
+
   {
     key: 'gender',
     component: Select,
@@ -228,7 +233,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
-      .max(999999, convertMessageErrorMaximum(100, true)),
+      .max(100, convertMessageErrorMaximum(100, true)),
   },
   {
     key: 'loan_reason',
@@ -244,19 +249,19 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     key: 'mobilephone_1',
     component: Input,
     typeComponent: 'Input',
-    label: 'Mobile 1(NIL)',
+    label: 'Phone Number 1',
     column: 6,
     typeInput: 'phone',
     validationFormik: Yup.string()
       .max(64, convertMessageErrorMaximum(64))
-      .required(convertMessageErrorRequired('Mobile 1(NIL)')),
+      .required(convertMessageErrorRequired('Phone Number 1')),
     required: true,
   },
   {
     key: 'mobilephone_2',
     component: Input,
     typeComponent: 'Input',
-    label: 'Mobile 2(NIL)',
+    label: 'Phone Number 2',
     column: 6,
     typeInput: 'phone',
     className: 'justify-content-xxl-end',
@@ -266,7 +271,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     key: 'mobilephone_3',
     component: Input,
     typeComponent: 'Input',
-    label: 'Mobile 3(NIL)',
+    label: 'Phone Number 3',
     column: 6,
     typeInput: 'phone',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
@@ -277,7 +282,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     typeInput: 'phone',
-    label: 'Home Phone(NIL)',
+    label: 'Phone Number 4',
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
@@ -518,89 +523,142 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
 const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
   {
     key: 'address_type_id',
-    component: Select,
-    typeComponent: 'Select',
-    label: 'Address Type',
-    column: 6,
     dependencyApi: '/config/address_type/listing',
-    keyLabelOfOptions: 'address_type_name',
-    keyValueOfOptions: 'id',
-    required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Address Type')),
+    isHide: true,
+    // component: Select,
+    // typeComponent: 'Select',
+    // label: 'Address Type',
+    // column: 6,
+    // keyLabelOfOptions: 'address_type_name',
+    // keyValueOfOptions: 'id',
+    // required: true,
+    // validationFormik: Yup.string().required(convertMessageErrorRequired('Address Type')),
   },
   {
-    key: 'address_label',
-    component: Input,
-    typeComponent: 'Input',
-    label: 'Address Label',
+    key: 'housing_type',
+    isHide: true,
+    component: Select,
+    typeComponent: 'Select',
+    label: 'Housing Type',
     column: 6,
     className: 'justify-content-xxl-end',
     required: true,
-    validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Address Label'))
-      .max(1024, convertMessageErrorMaximum(1024)),
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Housing Type')),
   },
   {
-    key: 'street_1',
+    key: 'home_ownership',
+    isHide: true,
+    component: Select,
+    typeComponent: 'Select',
+    label: 'Home Ownership',
+    column: 6,
+    className: 'justify-content-xxl-end',
+    options: HOME_OWNERSHIP,
+    required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Home Ownership')),
+  },
+  {
+    key: 'staying_condition',
+    isHide: true,
+    component: Select,
+    typeComponent: 'Select',
+    label: 'Staying Condition',
+    column: 6,
+    className: 'justify-content-xxl-end',
+    options: STAYING_CONDITION,
+    required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Country')),
+  },
+  {
+    key: 'unit',
     component: Input,
     typeComponent: 'Input',
-    label: 'Street 1',
-    column: 6,
-    required: true,
+    label: 'Unit',
+    column: 2,
     validationFormik: Yup.string()
       .required(convertMessageErrorRequired('Street 1'))
       .max(255, convertMessageErrorMaximum(255)),
   },
   {
-    key: 'street_2',
+    key: 'block',
     component: Input,
     typeComponent: 'Input',
-    label: 'Street 2',
-    column: 6,
+    label: 'Block',
+    column: 2,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Street 1'))
+      .max(255, convertMessageErrorMaximum(255)),
+  },
+  {
+    key: 'building',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Building Name',
+    column: 8,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Street 1'))
+      .max(255, convertMessageErrorMaximum(255)),
+  },
+  {
+    key: 'street',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Street',
+    column: 12,
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
-  },
-  {
-    key: 'city',
-    component: Input,
-    typeComponent: 'Input',
-    label: 'City',
-    column: 6,
-  },
-  {
-    key: 'state',
-    component: Input,
-    typeComponent: 'Input',
-    label: 'State',
-    column: 6,
-    className: 'justify-content-xxl-end',
   },
   {
     key: 'postal_code',
     component: Input,
     typeComponent: 'Input',
-    label: 'Postal Code',
-    column: 6,
+    label: 'Postal',
+    column: 4,
     required: true,
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Postal Code'))
-      .max(64, convertMessageErrorMaximum(64)),
+      .required(convertMessageErrorRequired('Postal'))
+      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'country',
     component: Select,
     typeComponent: 'Select',
     label: 'Country',
-    column: 6,
+    column: 4,
     className: 'justify-content-xxl-end',
     keyLabelOfOptions: 'nicename',
     keyValueOfOptions: 'name',
     defaultValue: 'SINGAPORE', //default value country is Singapore
     dependencyApi: 'config/country/listing',
     required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Country')),
+  },
+  // {
+  //   key: 'city',
+  //   component: Input,
+  //   typeComponent: 'Input',
+  //   label: 'City',
+  //   column: 4,
+  // },
+  // {
+  //   key: 'state',
+  //   component: Input,
+  //   typeComponent: 'Input',
+  //   label: 'State',
+  //   column: 4,
+  //   className: 'justify-content-xxl-end',
+  // },
+  {
+    key: 'address_label',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Address Label',
+    column: 4,
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Country'))
-      .max(255, convertMessageErrorMaximum(255)),
+      .required(convertMessageErrorRequired('Address Label'))
+      .max(1024, convertMessageErrorMaximum(1024)),
   },
 ]
 
@@ -660,13 +718,13 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           key: 'identification_no',
           value: 'NRIC No./FIN',
         },
+      ],
+      [
         {
           key: 'date_of_birth',
           value: 'Date of Birth',
           date: true,
         },
-      ],
-      [
         {
           key: 'gender',
           value: 'Gender',
@@ -674,6 +732,8 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: LableOptions,
           keyFilter: 'value',
         },
+      ],
+      [
         {
           key: 'country_id',
           value: 'nationality',
@@ -689,6 +749,22 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: LableOptions,
           keyFilter: 'value',
         },
+
+        // {
+        //   key: 'residential_type',
+        //   value: 'Residential Type',
+        //   options: RESIDENTIAL_TYPE,
+        //   Component: SpecialZation,
+        //   keyFilter: 'value',
+        // },
+        // {
+        //   key: 'marketing_type_id',
+        //   value: 'Marketing type',
+        //   dependencyApi: '/config/marketing_type/listing',
+        //   Component: RenderOptionsApi,
+        //   keyFilter: 'id',
+        //   lable: 'marketing_type_name',
+        // },
       ],
       [
         {
@@ -698,23 +774,6 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: LableOptions,
           keyFilter: 'value',
         },
-        {
-          key: 'residential_type',
-          value: 'Residential Type',
-          options: RESIDENTIAL_TYPE,
-          Component: SpecialZation,
-          keyFilter: 'value',
-        },
-        {
-          key: 'marketing_type_id',
-          value: 'Marketing type',
-          dependencyApi: '/config/marketing_type/listing',
-          Component: RenderOptionsApi,
-          keyFilter: 'id',
-          lable: 'marketing_type_name',
-        },
-      ],
-      [
         {
           key: 'spoken_language',
           value: 'Language Spoken',
@@ -809,51 +868,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     col: 'col-xl-6',
     title: 'Address',
     Component: Address,
-    config: [
-      [
-        {
-          key: 'address_type_id',
-          value: 'Address Type',
-          dependencyApi: '/config/address_type/listing',
-          Component: RenderOptionsApiAddress,
-          keyFilter: 'id',
-          lable: 'address_type_name',
-        },
-        {
-          key: 'street_1',
-          value: 'Street 1',
-        },
-        {
-          key: 'city',
-          value: 'City',
-        },
-        {
-          key: 'postal_code',
-          value: 'Postal Code',
-        },
-      ],
-      [
-        {
-          key: 'address_label',
-          value: 'Address Label',
-        },
-        {
-          key: 'street_2',
-          value: 'Street 2',
-        },
-        {
-          key: 'state',
-          value: 'State',
-        },
-        {
-          key: 'country',
-          value: 'Country',
-          dependencyApi: 'config/country/listing',
-          keyFilter: 'id',
-          lable: 'nicename',
-        },
-      ],
-    ],
+    config: [],
   },
   {
     col: 'col-xxl-8',

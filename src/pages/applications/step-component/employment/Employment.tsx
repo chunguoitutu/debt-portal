@@ -1,4 +1,4 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useRef, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
 import {useParams} from 'react-router-dom'
@@ -12,6 +12,7 @@ import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik} = props
   const {applicationIdEdit} = useParams()
+  const errorContainerRef = useRef<HTMLDivElement | null>(null)
 
   const [annualIncome, setAnnualIncome] = useState({
     monthly_income_1: 0,
@@ -92,6 +93,15 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0 w-100 w-xxl-250px'
 
+    useEffect(() => {
+      if (errors[key] && touched[key]) {
+        errorContainerRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      }
+    }, [errors[key], touched[key]])
+
     // nothing
     if (!Component) return
 
@@ -109,6 +119,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
       return (
         <div className={clsx(['d-flex flex-column w-100', column && 'w-xxl-unset'])}>
           <Component
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             value={values[key] || ''}
             onChange={handleChange}
             name={key}
@@ -119,7 +130,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
             touched={touched}
             onBlur={handleBlur}
           />
-          {errors[key] && touched[key] && <ErrorMessage className='mt-2' message={errors[key]} />}
+          {errors[key] && touched[key] && (
+            <ErrorMessage className='mt-2' message={errors[key]} containerRef={errorContainerRef} />
+          )}
         </div>
       )
     }
@@ -134,6 +147,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
           ])}
           name={key}
           label={item.label}
+          disabled={values.status === 3 || values.status === 2 ? true : false}
           checked={values[key] === item.value}
           value={item.value}
           onChange={handleChange}
@@ -154,6 +168,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
           name={key}
           label={item.label}
           value={item.value}
+          disabled={values.status === 3 || values.status === 2 ? true : false}
           onChange={(e: any) => {
             if (typeCheckbox === 'array' && Array.isArray(values[key])) {
               const {value, checked} = e.target
@@ -186,7 +201,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
             name={key}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
             classShared={className}
-            disabled={disabled}
+            disabled={disabled || values.status === 3 || values.status === 2 ? true : false}
             onBlur={(e: any) => {
               if (key === 'annual_income') {
                 setAnnualIncome({
@@ -223,7 +238,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
           />
 
           {desc && <span className='text-gray-600 mt-2 fs-sm'>{desc}</span>}
-          {errors[key] && touched[key] && <ErrorMessage className='mt-2' message={errors[key]} />}
+          {errors[key] && touched[key] && (
+            <ErrorMessage className='mt-2' message={errors[key]} containerRef={errorContainerRef} />
+          )}
         </div>
       )
     }

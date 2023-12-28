@@ -179,6 +179,9 @@ export function convertResidentialTypeSingPass(residentialType: string) {
     case 'SEMI-DETACHED HOUSE':
       return 'SEMI-DETACHED HOUSE'
 
+    case 'DETACHED HOUSE':
+      return 'DETACHED HOUSE'
+
     case 'not_own':
       return 'Does not own any property'
 

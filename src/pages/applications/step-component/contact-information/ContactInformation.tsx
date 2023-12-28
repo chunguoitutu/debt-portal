@@ -1,28 +1,65 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
-
 import request from '../../../../app/axios'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
 import {swalConfirm, swalToast} from '../../../../app/swal-notification'
 import {Select} from '@/components/select'
-import Button from '@/components/button/Button'
 import ErrorMessage from '@/components/error/ErrorMessage'
-import {ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
-import {DEFAULT_MESSAGE_ERROR_500, INIT_BLOCK_ADDRESS} from '@/app/constants'
-import {COUNTRY_PHONE_CODE} from '@/app/utils'
+import {AddressTypeItem, ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
+import {DEFAULT_MESSAGE_ERROR_500} from '@/app/constants'
+import {COUNTRY_PHONE_CODE, PROPERTY_TYPE} from '@/app/utils'
 import {useParams} from 'react-router-dom'
+import AddressGroup from './AddressGroup'
+import {handleCreateBlockAddress} from '@/app/constants'
 
-const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
+type BlockAddressCustom = {
+  home: BlockAddress[]
+  office: BlockAddress[]
+  'work-site': BlockAddress[]
+}
+
+const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}) => {
   const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
-  const [defaultValueAddress, setDefaultValueAddress] = useState<number | string>('')
-  const [defaultValueCountry, setDefaultValueCountry] = useState<number | string>('')
-  const {applicationIdEdit} = useParams()
+  const errorContainerRef = useRef<HTMLDivElement | null>(null)
   const {values, touched, errors, handleChange, setValues, setFieldValue} = formik
+  const [active, setActive] = useState<string | null>(null)
+
+  const {applicationIdEdit} = useParams()
+
+  useEffect(() => {
+    onFetchDataList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const blockAddressData = useMemo(() => {
+    const data = values.address_contact_info.reduce(
+      (acc: BlockAddressCustom, item: BlockAddress) => {
+        return {
+          ...acc,
+          home: [...acc['home'], item],
+        }
+      },
+      {
+        home: [],
+        office: [],
+        'work-site': [],
+      }
+    )
+
+    return data
+  }, [values.address_contact_info])
+
+  function handleChangeBlockAddress(e: React.ChangeEvent<any>, index: number, key: string) {
+    const {value} = e.target
+
+    setFieldValue(`address_contact_info[${index}][${key}]`, value)
+  }
 
   async function onFetchDataList() {
     try {
       const updatedDataMarketing = {...dataOption}
+
       const endpoint = [...config, ...BLOCK_ADDRESS_CONFIG].filter((data) => !!data.dependencyApi)
 
       const requests = endpoint.map((d) =>
@@ -33,44 +70,92 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
 
       responses.forEach((res, index) => {
         const key = endpoint[index].key
-        updatedDataMarketing[key] = res?.data?.data
+
+        let data = [...res?.data?.data]
+
+        // Move the first default item to the array[0]
+        if (key === 'address_type_id') {
+          const dataClone = [...data]
+          const index = dataClone.findIndex((el) => el.is_default === 1)
+
+          // Default data[0]
+          let itemDefault = dataClone[0] || {}
+          let isHomeAddress = itemDefault.address_type_name?.toLowerCase()?.includes('home')
+
+          if (index !== -1) {
+            itemDefault = dataClone.splice(index, 1)?.[0] || {}
+            isHomeAddress = itemDefault.address_type_name?.toLowerCase()?.includes('home')
+
+            data = [itemDefault, ...dataClone]
+          }
+
+          setActive(itemDefault?.address_type_name)
+
+          // Only create and first mount component
+          // !values.address_contact_info[0].address_type_id -> first mount
+          if (!applicationIdEdit && !values.address_contact_info[0].address_type_id) {
+            let newValue = {
+              ...values.address_contact_info[0],
+              address_type_id: itemDefault.id,
+            } as BlockAddress
+
+            if (isHomeAddress) {
+              newValue = {
+                ...newValue,
+                property_type: PROPERTY_TYPE[0].value as string,
+                housing_type: '',
+                home_ownership: '',
+                staying_condition: '',
+                existing_staying: 0,
+              }
+
+              delete newValue.is_default
+            } else {
+              newValue = {
+                ...newValue,
+                is_default: 0,
+                home_ownership: ' ',
+                staying_condition: ' ',
+                housing_type: ' ',
+              } // home_ownership, staying_condition: create fake spaces to avoid required
+
+              delete newValue.existing_staying
+            }
+            !singpass &&
+              setFieldValue(`address_contact_info[0]`, {
+                ...newValue,
+              })
+          }
+        }
+
+        updatedDataMarketing[key] = data
       })
 
       setDataOption(updatedDataMarketing)
 
-      !applicationIdEdit &&
-        setFieldValue(
-          `address_contact_info[0][address_type_id]`,
-          updatedDataMarketing?.address_type_id.length > 0
-            ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)
-                .length > 0
-              ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0]
-                  .id
-              : updatedDataMarketing?.address_type_id[0].id
-            : ''
-        )
-      setDefaultValueAddress(
-        updatedDataMarketing?.address_type_id.length > 0
-          ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
-            0
-            ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0].id
-            : updatedDataMarketing?.address_type_id[0].id
-          : ''
-      )
+      // !applicationIdEdit &&
+      //   setFieldValue(
+      //     `address_contact_info[0][address_type_id]`,
+      //     updatedDataMarketing?.address_type_id.length > 0
+      //       ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)
+      //           .length > 0
+      //         ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0]
+      //             .id
+      //         : updatedDataMarketing?.address_type_id[0].id
+      //       : ''
+      //   )
+
+      // setDefaultValueAddress(
+      //   updatedDataMarketing?.address_type_id.length > 0
+      //     ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
+      //       0
+      //       ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0].id
+      //       : updatedDataMarketing?.address_type_id[0].id
+      //     : ''
+      // )
     } catch (error) {
     } finally {
     }
-  }
-
-  useEffect(() => {
-    onFetchDataList()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  function handleChangeBlockAddress(e: React.ChangeEvent<any>, index: number, key: string) {
-    const {value} = e.target
-
-    setFieldValue(`address_contact_info[${index}][${key}]`, value)
   }
 
   function renderComponent(item: ApplicationConfig) {
@@ -92,6 +177,15 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     const className = !column
       ? 'flex-grow-1'
       : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-250px'
+
+    useEffect(() => {
+      if (errors[key] && touched[key]) {
+        errorContainerRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      }
+    }, [errors[key], touched[key]])
 
     if (typeComponent === 'Select') {
       return (
@@ -115,6 +209,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
           <Component
             value={values[key]}
             onChange={handleChange}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             name={key}
             classShared={className}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
@@ -138,7 +233,9 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
             }
           />
 
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key]} />}
+          {errors[key] && touched[key] && (
+            <ErrorMessage message={errors[key]} containerRef={errorContainerRef} />
+          )}
         </div>
       )
     }
@@ -147,21 +244,17 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     return <Component />
   }
 
-  function handleAddBlock() {
-    setValues(
-      {
-        ...values,
-        address_contact_info: [
-          ...values.address_contact_info,
-          {
-            ...INIT_BLOCK_ADDRESS,
-            address_type_id: defaultValueAddress || '',
-            country: (defaultValueCountry as string) || '',
-          },
-        ],
-      },
-      false
-    )
+  function handleSwitchLabel(label) {
+    switch (label) {
+      case 'home':
+        return 'Home Address'
+      case 'office':
+        return 'Office Address'
+      case 'work-site':
+        return 'Work Site Address'
+      default:
+        return 'Other'
+    }
   }
 
   function handleShowConfirmDelete(item: BlockAddress, index: number) {
@@ -204,6 +297,10 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
     }
   }
 
+  function handleToggleAddress(newLabelActive: string) {
+    setActive(active === newLabelActive ? null : newLabelActive)
+  }
+
   return (
     <>
       {config?.map((item, i) => {
@@ -235,112 +332,42 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik}) => {
         )
       })}
 
-      {/* Block address */}
-      {values.address_contact_info.map((blockAddress, indexParent) => {
-        return BLOCK_ADDRESS_CONFIG.map((item, i) => {
-          const {
-            label,
-            column,
-            isHide,
-            required,
-            className,
-            key,
-            dependencyApi,
-            component,
-            keyLabelOfOptions,
-            keyValueOfOptions,
-            typeComponent,
-          } = item
+      {dataOption?.address_type_id?.map((addressType: AddressTypeItem, i) => {
+        return (
+          <AddressGroup
+            key={addressType.id}
+            data={addressType}
+            dataOption={dataOption}
+            active={active}
+            formik={formik}
+            indexGroup={i}
+            handleToggleActive={(dataAddressType) => {
+              handleToggleAddress(dataAddressType.address_type_name)
 
-          if (isHide) return <Fragment key={i}></Fragment>
+              const item = values.address_contact_info.find(
+                (el) => el.address_type_id === dataAddressType.id
+              )
 
-          let Component = component
+              if (!item) {
+                const isHomeAddress = dataAddressType.address_type_name
+                  ?.toLowerCase()
+                  ?.includes('home')
 
-          const classNameComponent = !column
-            ? 'flex-grow-1'
-            : 'input-wrap flex-shrink-0 flex-grow-1 flex-grow-xxl-0 w-100 w-xxl-250px'
-
-          return (
-            <Fragment key={i}>
-              {i === 0 && <div className='separator-contact full'></div>}
-              <div
-                className={clsx([
-                  'd-flex flex-column flex-xxl-row align-items-start align-items-xxl-stretch gap-3 gap-xxl-8',
-                  !column ? 'full' : '',
-                  className,
-                ])}
-              >
-                <div
-                  className={clsx([
-                    'input-title-application left fs-4 text-start text-lg-end',
-                    required && 'required',
-                  ])}
-                >
-                  {label}
-                </div>
-
-                {Component &&
-                  (typeComponent === 'Select' ? (
-                    <Component
-                      value={values['address_contact_info']?.[indexParent]?.[key]}
-                      onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}
-                      name={key}
-                      classShared={classNameComponent}
-                      options={!!dependencyApi ? dataOption[key] || [] : ''}
-                      error={errors['address_contact_info']?.[indexParent]?.[key]}
-                      touched={touched['address_contact_info']?.[indexParent]?.[key]}
-                      keyValueOption={keyValueOfOptions || 'label'}
-                      keyLabelOption={keyLabelOfOptions || 'value'}
-                    />
-                  ) : (
-                    <div className='d-flex flex-column w-100'>
-                      <Component
-                        value={values['address_contact_info']?.[indexParent]?.[key]}
-                        onChange={(e) => handleChangeBlockAddress(e, indexParent, key)}
-                        name={key}
-                        classShared={classNameComponent}
-                      />
-
-                      {errors['address_contact_info']?.[indexParent]?.[key] &&
-                        touched['address_contact_info']?.[indexParent]?.[key] && (
-                          <ErrorMessage
-                            message={errors['address_contact_info']?.[indexParent]?.[key]}
-                          />
-                        )}
-                    </div>
-                  ))}
-              </div>
-
-              {BLOCK_ADDRESS_CONFIG.length === i + 1 && (
-                <div
-                  className={clsx([
-                    'd-flex align-items-center justify-content-end full gap-3',
-                    indexParent === 0 && values.address_contact_info.length > 1
-                      ? 'd-none'
-                      : 'd-block',
-                  ])}
-                >
-                  {indexParent > 0 && (
-                    <Button
-                      className='btn-sm btn-light-danger h-45px fs-14'
-                      onClick={() => handleShowConfirmDelete(blockAddress, indexParent)}
-                    >
-                      Close Block
-                    </Button>
-                  )}
-                  {values.address_contact_info.length === indexParent + 1 && (
-                    <Button
-                      className='btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary'
-                      onClick={handleAddBlock}
-                    >
-                      + Add New Block
-                    </Button>
-                  )}
-                </div>
-              )}
-            </Fragment>
-          )
-        })
+                setFieldValue(
+                  'address_contact_info',
+                  [
+                    ...values['address_contact_info'],
+                    {
+                      ...handleCreateBlockAddress(isHomeAddress),
+                      address_type_id: dataAddressType.id,
+                    } as BlockAddress,
+                  ],
+                  false
+                )
+              }
+            }}
+          />
+        )
       })}
     </>
   )

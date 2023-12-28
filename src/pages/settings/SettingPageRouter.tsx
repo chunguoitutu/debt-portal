@@ -34,7 +34,7 @@ const SettingPageRouter = () => {
             const Comp = component
 
             if (priority === 2) {
-              profileBreadCrumbs[0]['path'] = '/settings/users'
+              profileBreadCrumbs[0]['path'] = '/settings/manager-users'
             }
 
             return (

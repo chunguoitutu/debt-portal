@@ -137,7 +137,14 @@ const FileInput = (props: any) => {
             </p>
           </div>
         </div>
-        <input className='opacity-0 ' hidden type={'file'} multiple onChange={handleFileChange} />
+        <input
+          className='opacity-0 '
+          disabled={formik?.values?.status === 2 || formik?.values?.status === 3 ? true : false}
+          hidden
+          type={'file'}
+          multiple
+          onChange={handleFileChange}
+        />
       </label>
     </div>
   )

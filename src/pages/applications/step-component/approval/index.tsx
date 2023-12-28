@@ -62,7 +62,6 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
         await request.put(`application/approval/${id}`, payload)
       } else {
         const {data} = await request.post(`application/approval/${applicationIdEdit}`, payload)
-        console.log('success', data)
 
         // Only emit when create approval
         socket?.emit('approvalApplicationSuccess', data.loan_id)

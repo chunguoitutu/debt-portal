@@ -1,4 +1,4 @@
-import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
 import {FormikProps} from 'formik'
 import {ObjectSchema, Schema} from 'yup'
 import {ApprovalInfo} from './response'
@@ -260,7 +260,7 @@ export type ApplicationConfig = {
   component?: FC<any>
   typeComponent?: string
   label?: string
-  column?: 12 | 6
+  column?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   isHide?: boolean
   typeInput?: HTMLInputTypeAttribute | 'money' | 'phone'
   typeCheckbox?: 'array'
@@ -277,11 +277,13 @@ export type ApplicationConfig = {
 }
 
 export type PropsStepApplication = {
-  setStepCompleted: any
+  setStepCompleted: Dispatch<SetStateAction<number>>
   config: ApplicationConfig[]
   formik: FormikProps<ApplicationFormData>
-  setSingpass: any
+  setSingpass: Dispatch<SetStateAction<boolean>>
   singpass: boolean
+  // setIsMountedAddress: Dispatch<SetStateAction<boolean>>
+  // isMountedAddress: boolean
 }
 
 export type ApplicationPayload = {
@@ -424,6 +426,7 @@ export type ApplicationFormData = {
   company_name: string
   address: string
   office_no: string
+  application_no: string
   portal_code: string
   specialization: string
   monthly_income_1: string | number
@@ -478,13 +481,21 @@ export type ApplicationFormData = {
 export type BlockAddress = {
   id?: number
   address_type_id: string | number
-  address_label: string
-  street_1: string
-  street_2: string
-  city: string
-  state: string
+  address_label?: string
+  city?: string
+  state?: string
   postal_code: string
   country: string
+  housing_type?: string
+  property_type?: string
+  existing_staying?: number
+  home_ownership?: string
+  staying_condition?: string
+  is_default?: number
+  unit: string
+  block: string
+  building: string
+  street: String
 }
 
 export type BadgeProps = {

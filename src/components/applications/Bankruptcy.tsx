@@ -23,6 +23,7 @@ const Bankruptcy: FC<PropsStepApplication> = ({formik}) => {
           name={key}
           checked={values[key]}
           label={label}
+          disabled={values?.status === 2 || values?.status === 3 ? true : false}
           onChange={(e) => {
             setFieldValue(key, e.target.checked)
           }}

@@ -9,7 +9,7 @@ import {createPortal} from 'react-dom'
 import {Modal, Tab, Table, Tabs} from 'react-bootstrap'
 
 import LookupCustomer from './LookupCustomer'
-import {ApplicationConfig, PropsStepApplication} from '@/app/types'
+import {AddressTypeItem, ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
 import {getCurrentDate} from '@/app/utils/get-current-date'
 import {useParams, useSearchParams} from 'react-router-dom'
@@ -18,8 +18,7 @@ import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
 import Singpass from './Singpass'
 import {KTIcon} from '@/_metronic/helpers'
-import {RESIDENTIAL_TYPE} from './../../../../app/utils/global-config'
-import {convertResidentialTypeSingPass} from '@/app/utils'
+import {PROPERTY_TYPE, convertResidentialTypeSingPass} from '@/app/utils'
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
@@ -85,6 +84,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
   useEffect(() => {
     onFetchDataList()
+    GetDefaultAddressType()
   }, [])
 
   useEffect(() => {
@@ -96,72 +96,151 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // handleGetPersonData({authCode, codeVerifier})
   }, [])
 
-  useEffect(() => {
-    if (!company_id) return
-    window.addEventListener('message', (event) => {
-      if (event.origin === 'http://localhost:3001') {
-        // console.log(1324, event.data)
-        setSingpass(true)
+  async function GetDefaultAddressType() {
+    let defaultData = {}
 
-        // console.log(123456, event.data)
+    try {
+      const {data} = await request.post('/config/address_type/listing', {
+        status: true,
+        pageSize: 99999,
+        currentPage: 1,
+      })
 
-        const fullName = event.data.name.value
-        const {firstname, middlename, lastname} = splitName(fullName)
+      const addressList = [...(data.data as AddressTypeItem[])]
 
-        const annual_api = event.data['noa-basic']?.amount?.value
-        const cpf_months = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry.month.value
-        )
-        const cpf_amount = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry?.amount?.value
-        )
-        const cpf_date = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry?.date?.value
-        )
-        const cpf_employer = event.data?.cpfcontributions?.history?.map(
-          (entry: any) => entry?.employer?.value
-        )
+      const homeAddress = addressList.find((el) =>
+        el.address_type_name?.toLowerCase().includes('home')
+      )
 
-        const unit = event.data?.regadd?.unit?.value || ''
+      if (homeAddress) {
+        defaultData = {
+          property_type: PROPERTY_TYPE[0].value,
+          existing_staying: 1,
+          housing_type: '',
+          home_ownership: '',
+          staying_condition: '',
+          address_type_id: homeAddress.id,
+        }
+      } else {
+        let addressDefault = addressList.find((el) => el.is_default)
 
-        const block = event.data?.regadd?.block?.value || ''
-
-        const street_full = `${block} ${unit} ${event.data?.regadd?.street?.value || ''}`
-
-        const values = {
-          firstname: firstname || '',
-          middlename: middlename || '',
-          lastname: lastname || '',
-          date_of_birth: event.data?.dob?.value || '',
-          identification_no: event.data?.uinfin?.value || '',
-          mobilephone_1: event.data?.mobileno.nbr?.value || '',
-          email_1: event.data?.email?.value || '',
-          address_contact_info: formik.values.address_contact_info.map((item, i) =>
-            i === 0
-              ? {
-                  ...item,
-                  postal_code: event.data.regadd.postal.value,
-                  // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
-                  street_1: street_full,
-                  country: event.data.regadd.country.desc,
-                }
-              : item
-          ),
-          gender: event.data.sex.desc,
-          residential_type: event.data.hdbtype?.desc || event.data.housingtype.desc || '',
-          annual_income: annual_api || '',
-          nationality: event.data.race.desc || '',
-          country: event.data.regadd.country.desc,
-          month: cpf_months || '',
-          amount: cpf_amount || '',
-          date: cpf_date || '',
-          employer: cpf_employer || '',
-          // marketing_type_id: 1,
-          // vehicle will return result when we have the offical api singpass
+        if (!addressDefault) {
+          addressDefault = addressList[0]
         }
 
-        handleFillFormSingpass(values)
-      } else return
+        defaultData = {
+          is_default: 0,
+          home_ownership: ' ',
+          staying_condition: ' ',
+          housing_type: ' ',
+          address_type_id: addressDefault.id,
+        }
+      }
+    } catch (error) {
+      console.error('Address Type error')
+    } finally {
+      return defaultData
+    }
+  }
+
+  useEffect(() => {
+    if (!company_id) return
+    window.addEventListener('message', async (event) => {
+      try {
+        /***
+         * pick the address type in here
+         */
+
+        if (event.origin === 'http://localhost:3001') {
+          // console.log(1324, event.data)
+          setSingpass(true)
+
+          const addressInfo: any = await GetDefaultAddressType()
+          // console.log(123456, event.data)
+
+          let property_type = 'HDB'
+          let housing_type = ''
+
+          if (event.data.housingtype.code) {
+            property_type = 'Private Residential'
+            housing_type = event.data.housingtype.code
+          } else {
+            housing_type = event.data.hdbtype.code
+          }
+
+          let residential_type = ''
+
+          if (event.data.hdbtype?.desc !== '') {
+            residential_type = event.data.hdbtype.desc
+          } else if (event.data.housingtype?.desc !== '') {
+            residential_type = event.data.housingtype.desc
+          }
+
+          const fullName = event.data.name.value
+          const {firstname, middlename, lastname} = splitName(fullName)
+
+          const annual_api = event.data['noa-basic']?.amount?.value
+          const cpf_months = event.data?.cpfcontributions?.history?.map(
+            (entry: any) => entry.month.value
+          )
+          const cpf_amount = event.data?.cpfcontributions?.history?.map(
+            (entry: any) => entry?.amount?.value
+          )
+          const cpf_date = event.data?.cpfcontributions?.history?.map(
+            (entry: any) => entry?.date?.value
+          )
+          const cpf_employer = event.data?.cpfcontributions?.history?.map(
+            (entry: any) => entry?.employer?.value
+          )
+
+          const values = {
+            firstname: firstname || '',
+            middlename: middlename || '',
+            lastname: lastname || '',
+            date_of_birth: event.data?.dob?.value || '',
+            identification_no: event.data?.uinfin?.value || '',
+            mobilephone_1: event.data?.mobileno.nbr?.value || '',
+            email_1: event.data?.email?.value || '',
+            address_contact_info: formik.values.address_contact_info.map((item, i) =>
+              i === 0
+                ? {
+                    ...item,
+                    ...(addressInfo as any),
+                    postal_code: event.data.regadd.postal.value || '',
+                    // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
+                    ...(addressInfo?.existing_staying
+                      ? {
+                          property_type,
+                          housing_type,
+                          unit: event.data.regadd.unit.value || '',
+                          block: event.data.regadd.block.value || '',
+                          building: event.data.regadd.bbuilding || '',
+                          street: event.data.regadd.street.value || '',
+                        }
+                      : {}),
+                    country: event.data.regadd.country.desc || '',
+                  }
+                : item
+            ),
+            gender: event.data.sex.desc,
+            residential_type: residential_type || '',
+            annual_income: annual_api || '',
+            nationality: event.data.race.desc || '',
+            country: event.data.regadd.country.desc,
+            month: cpf_months || '',
+            amount: cpf_amount || '',
+            date: cpf_date || '',
+            employer: cpf_employer || '',
+            // marketing_type_id: 1,
+            // vehicle will return result when we have the offical api singpass
+          }
+
+          handleFillFormSingpass(values)
+          onFetchDataList()
+        } else return
+      } catch (error) {
+        //nothing
+      }
     })
   }, [company_id])
 
@@ -224,6 +303,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
   }
 
+  const prevFirstName = formik.values.firstname
+  const prevMiddleName = formik.values.middlename
+  const prevLastName = formik.values.lastname
+  const prevID = formik.values.identification_type
+
   async function handleGetApplicationById() {
     try {
       const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
@@ -232,17 +316,30 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
       const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
       setStepCompleted(0)
-      setFieldValue('country_id', data?.data.country_id || '')
-      setFieldValue('customer_no', data?.data.customer_no || '')
-      setFieldValue('firstname', data?.data.firstname || '')
-      setFieldValue('gender', data?.data.gender || '')
-      setFieldValue('identification_type', data?.data.identification_type || '')
-      setFieldValue('lastname', data?.data.lastname || '')
-      setFieldValue('middlename', data?.data.middlename || '')
+      //step 1
       setFieldValue('is_existing', 'existing')
-
+      setFieldValue('firstname', data?.data.firstname || '')
+      setFieldValue('middlename', data?.data.middlename || '')
+      setFieldValue('lastname', data?.data.lastname || '')
+      setFieldValue('customer_no', data?.data.customer_no || '')
+      setFieldValue('residential_type', data?.data.borrower[0]?.residential_type || '')
+      setFieldValue('identification_type', data?.data.identification_type || '')
+      setFieldValue('gender', data?.data.gender || '')
       setFieldValue('date_of_birth', formattedDateOfBirth || '')
+      setFieldValue('country_id', data?.data.country_id || '')
     } catch (error) {
+      if (!singpass) {
+        setFieldValue('is_existing', 'new')
+        setFieldValue('firstname', '')
+        setFieldValue('middlename', '')
+        setFieldValue('lastname', '')
+        setFieldValue('customer_no', '')
+        setFieldValue('identification_type', '')
+        setFieldValue('residential_type', '')
+        setFieldValue('gender', '')
+        setFieldValue('date_of_birth', '')
+        setFieldValue('country_id', 192)
+      }
     } finally {
     }
   }
@@ -327,6 +424,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           error={errors[key]}
           min='1900-01-01'
           max={getCurrentDate()}
+          disabled={values.status === 3 || values.status === 2 ? true : false}
           insertRight={
             key === 'identification_no' ? (
               <Tippy offset={[40, 0]} content='Lookup Customer'>
@@ -349,6 +447,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         <Component
           error={errors[key]}
           touched={touched[key]}
+          disabled={values.status === 3 || values.status === 2 ? true : false}
           value={values[key]}
           onChange={handleChange}
           name={key}
@@ -379,7 +478,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       ))
     }
     if (typeComponent === 'Button') {
-      if (applicationIdEdit || values.is_existing === 'existing') return <></>
+      if (values.status === 2 || values.status === 3) return <></>
       return (
         <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px fill-singpass'>
           <div>
@@ -390,7 +489,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             <span className='fs-7 fw-normal text-gray-400'>Or fill the form to register</span>
           </div>
           <div>
-            <Button onClick={goToSingpass}>Go To Singpass</Button>
+            <Button onClick={goToSingpass}>Login With Singpass</Button>
           </div>
         </div>
       )
@@ -406,6 +505,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             type={typeInput}
             name={key}
             classShared={className}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
             touched={touched[key]}
             error={errors[key]}
             min='1900-01-01'
@@ -472,7 +572,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         </div>
       )}
 
-      {showPopup && <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} />}
+      {showPopup && values.status !== 2 && values.status !== 3 && (
+        <LookupCustomer show={showPopup} onClose={() => setShowPopup(false)} formik={formik} />
+      )}
 
       {popupSingpass && <Singpass show={popupSingpass} onClose={() => setPopupSingpass(false)} />}
 
