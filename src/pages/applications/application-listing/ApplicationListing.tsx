@@ -414,335 +414,333 @@ const ApplicationListing = () => {
   }
 
   return (
-    <div className='card p-5 h-fit-content'>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
-      {showInput && (
-        <FilterApplication
-          onClose={showInputFilter}
-          handleResetFilter={handleResetFilter}
-          rows={rows}
-          handleLoadApi={handleFilter}
-          dataFilter={dataFilter}
-          handleChangeFilter={handleChangeFilter}
-          dataOption={dataOption}
-        />
-      )}
-      <div>
-        <div className='d-flex flex-row align-items-center'>
-          <Input
-            classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search'
-            value={searchValue}
-            onChange={handleChangeSearch}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleReGetApi()
-              }
-            }}
-            insertLeft={
-              <FontAwesomeIcon
-                className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                icon={faSearch}
-                onClick={handleReGetApi}
-              />
-            }
-            insertRight={
-              searchValue ? (
-                <FontAwesomeIcon
-                  className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                  icon={faClose}
-                  onClick={() => {
-                    setSearchValue('')
-                    handleReGetApi()
-                  }}
-                />
-              ) : null
-            }
+    <>
+      <div className='d-flex flex-row align-items-center justify-content-between'>
+        <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
+      </div>
+      <div className='card p-5 h-fit-content'>
+        {showInput && (
+          <FilterApplication
+            onClose={showInputFilter}
+            handleResetFilter={handleResetFilter}
+            rows={rows}
+            handleLoadApi={handleFilter}
+            dataFilter={dataFilter}
+            handleChangeFilter={handleChangeFilter}
+            dataOption={dataOption}
           />
-          <div className='d-flex position-relative flex-end ms-4'>
-            <Button
-              style={{
-                backgroundColor:
-                  Object.keys(checkFilter).length !== 0 &&
-                  !(
-                    Object.keys(checkFilter).length === 1 &&
-                    Object.keys(checkFilter).includes('searchBar')
-                  )
-                    ? '#c4cada'
-                    : '#f1f1f4',
+        )}
+        <div>
+          <div className='d-flex flex-row align-items-center'>
+            <Input
+              classShared='flex-grow-1 h-30px mb-5'
+              placeholder='Search'
+              value={searchValue}
+              onChange={handleChangeSearch}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleReGetApi()
+                }
               }}
-              onClick={showInputFilter}
-              className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
-              disabled={false}
-            >
-              <Icons name={'filterIcon'} />
-              Filter
-            </Button>
-
-            <Link to='/application/create'>
+              insertLeft={
+                <FontAwesomeIcon
+                  className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                  icon={faSearch}
+                  onClick={handleReGetApi}
+                />
+              }
+              insertRight={
+                searchValue ? (
+                  <FontAwesomeIcon
+                    className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                    icon={faClose}
+                    onClick={() => {
+                      setSearchValue('')
+                      handleReGetApi()
+                    }}
+                  />
+                ) : null
+              }
+            />
+            <div className='d-flex position-relative flex-end ms-4'>
               <Button
-                className='btn-primary align-self-center ms-4 fs-6 text-white h-45px'
+                style={{
+                  backgroundColor:
+                    Object.keys(checkFilter).length !== 0 &&
+                    !(
+                      Object.keys(checkFilter).length === 1 &&
+                      Object.keys(checkFilter).includes('searchBar')
+                    )
+                      ? '#c4cada'
+                      : '#f1f1f4',
+                }}
+                onClick={showInputFilter}
+                className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
                 disabled={false}
               >
-                <Icons name={'AddIcon'} />
-                Add New Application
+                <Icons name={'filterIcon'} />
+                Filter
               </Button>
-            </Link>
+            </div>
           </div>
-        </div>
 
-        {!!newDataSocket && (
-          <div className='bg-primary-light wrapper-transition-filter-show p-16px px-32px my-16px d-flex align-items-center justify-content-between gap-16px'>
-            <span className='fs-16 text-primary'>
-              Detected <span className='fw-bold'>{newDataSocket}</span> new records. Do you want to
-              refresh the data now?
-            </span>
+          {!!newDataSocket && (
+            <div className='bg-primary-light wrapper-transition-filter-show p-16px px-32px my-16px d-flex align-items-center justify-content-between gap-16px'>
+              <span className='fs-16 text-primary'>
+                Detected <span className='fw-bold'>{newDataSocket}</span> new records. Do you want
+                to refresh the data now?
+              </span>
 
-            <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
-              Refresh
-            </Button>
-          </div>
-        )}
-
-        {Object.keys(checkFilter).length !== 0 &&
-          !(
-            Object.keys(checkFilter).length === 1 && Object.keys(checkFilter).includes('searchBar')
-          ) && (
-            <div className='d-flex justify-content  px-30px pt-14px m-0 '>
-              <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
-
-              <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
-                {showFilter.map((filter, index) => (
-                  <div key={index} className='p-0 m-0'>
-                    {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                      ![
-                        'application_date',
-                        'loan_amount_requested',
-                        'status',
-                        'loan_type_id',
-                        'identification_type',
-                      ].includes(filter.key) && (
-                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                          <h2 className='filter-title-show'>
-                            {filter.value}: {checkFilter[`${filter.key}`]}
-                          </h2>
-                          <div
-                            onClick={() => {
-                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                              setLoadApi(!loadApi)
-                            }}
-                            className='p-0 m-0 cursor-pointer'
-                          >
-                            <Icons name={'CloseSmall'} />
-                          </div>
-                        </div>
-                      )}
-                    {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
-                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                        <h2 className='filter-title-show'>
-                          {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Draft'}
-                          {+checkFilter[`${filter.key}`] === 1 && 'Awaiting Approval'}
-                          {+checkFilter[`${filter.key}`] === 2 && 'Rejected'}
-                          {+checkFilter[`${filter.key}`] === 3 && 'Approved'}
-                        </h2>
-                        <div
-                          onClick={() => {
-                            setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                            setLoadApi(!loadApi)
-                          }}
-                          className='p-0 m-0 cursor-pointer'
-                        >
-                          <Icons name={'CloseSmall'} />
-                        </div>
-                      </div>
-                    )}
-                    {!!checkFilter[`${filter.key}`] &&
-                      ['identification_type'].includes(filter.key) && (
-                        <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
-                          <h2 className='filter-title-show'>
-                            {filter.value}:{' '}
-                            {checkFilter[`${filter.key}`] === 'foreign_identification_number'
-                              ? 'Foreign Identification Number'
-                              : 'Singapore NRIC No'}
-                          </h2>
-                          <div
-                            onClick={() => {
-                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                              setLoadApi(!loadApi)
-                            }}
-                            className='p-0 m-0 cursor-pointer'
-                          >
-                            <Icons name={'CloseSmall'} />
-                          </div>
-                        </div>
-                      )}
-                    {!!checkFilter?.application_date && ['application_date'].includes(filter.key) && (
-                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                        <h2 className='filter-title-show'>
-                          {filter.value}:{' '}
-                          {!!checkFilter?.application_date?.gte &&
-                            moment(checkFilter?.application_date?.gte).format('MMM D, YYYY')}{' '}
-                          {!!checkFilter?.application_date?.lte && 'To '}
-                          {!!checkFilter?.application_date?.lte &&
-                            moment(checkFilter?.application_date?.lte)
-                              .subtract(1, 'days')
-                              .format('MMM D, YYYY')}
-                        </h2>
-                        <div
-                          onClick={() => {
-                            setDataFilter({...dataFilter, application_date: ''})
-                            setLoadApi(!loadApi)
-                          }}
-                          className='p-0 m-0 cursor-pointer'
-                        >
-                          <Icons name={'CloseSmall'} />
-                        </div>
-                      </div>
-                    )}
-                    {!!checkFilter?.loan_amount_requested &&
-                      ['loan_amount_requested'].includes(filter.key) && (
-                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                          <h2 className='filter-title-show'>
-                            {filter.value}:{' '}
-                            {(!!checkFilter?.loan_amount_requested?.gte ||
-                              checkFilter?.loan_amount_requested?.gte === 0) &&
-                              'From '}
-                            {(!!checkFilter?.loan_amount_requested?.gte ||
-                              checkFilter?.loan_amount_requested?.gte === 0) &&
-                              checkFilter?.loan_amount_requested?.gte}{' '}
-                            {(!!checkFilter?.loan_amount_requested?.lte ||
-                              checkFilter?.loan_amount_requested?.lte === 0) &&
-                              'To '}
-                            {(!!checkFilter?.loan_amount_requested?.lte ||
-                              checkFilter?.loan_amount_requested?.lte === 0) &&
-                              checkFilter?.loan_amount_requested?.lte}
-                          </h2>
-                          <div
-                            onClick={() => {
-                              setDataFilter({...dataFilter, loan_amount_requested: ''})
-                              setLoadApi(!loadApi)
-                            }}
-                            className='p-0 m-0 cursor-pointer'
-                          >
-                            <Icons name={'CloseSmall'} />
-                          </div>
-                        </div>
-                      )}
-                    {!!checkFilter?.loan_type_id &&
-                      ['loan_type_id'].includes(filter.key) &&
-                      dataOption?.loan_type_id.length !== 0 && (
-                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                          <h2 className='filter-title-show'>
-                            {filter.value}:{' '}
-                            {
-                              dataOption?.loan_type_id.filter(
-                                (data) => +data?.id === +checkFilter?.loan_type_id
-                              )[0]?.type_name
-                            }
-                          </h2>
-                          <div
-                            onClick={() => {
-                              setDataFilter({...dataFilter, loan_type_id: ''})
-                              setLoadApi(!loadApi)
-                            }}
-                            className='p-0 m-0 cursor-pointer'
-                          >
-                            <Icons name={'CloseSmall'} />
-                          </div>
-                        </div>
-                      )}
-                  </div>
-                ))}
-              </div>
-
-              <button
-                onClick={() => {
-                  handleResetFilter()
-                }}
-                className='reset-all-filter-application mt-16px ms-16px'
-              >
-                Reset All
-              </button>
+              <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
+                Refresh
+              </Button>
             </div>
           )}
-        <KTCardBody className='py-4'>
-          <div className='table-responsive'>
-            <table
-              id='kt_table_users'
-              className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-            >
-              <thead>
-                <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                  {rows
-                    .filter((item) => !item.isHide)
-                    .map((item, i) => {
-                      const {classNameTableHead, name, infoFilter, key} = item
 
-                      const {isSort} = infoFilter || {}
+          {Object.keys(checkFilter).length !== 0 &&
+            !(
+              Object.keys(checkFilter).length === 1 &&
+              Object.keys(checkFilter).includes('searchBar')
+            ) && (
+              <div className='d-flex justify-content  px-30px pt-14px m-0 '>
+                <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
 
-                      return (
-                        <th
-                          className={clsx([
-                            'text-nowrap min-w-75px user-select-none',
-                            classNameTableHead,
-                          ])}
-                          data-title={item.key}
-                          key={i}
-                          onClick={() => isSort && handleChangeSortBy(item)}
-                        >
-                          <div className='cursor-pointer'>
-                            <span className='fs-14 fw-bold'>{name}</span>
-
-                            {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
+                <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
+                  {showFilter.map((filter, index) => (
+                    <div key={index} className='p-0 m-0'>
+                      {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
+                        ![
+                          'application_date',
+                          'loan_amount_requested',
+                          'status',
+                          'loan_type_id',
+                          'identification_type',
+                        ].includes(filter.key) && (
+                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}: {checkFilter[`${filter.key}`]}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
                           </div>
-                        </th>
-                      )
-                    })}
-                  {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
-                </tr>
-              </thead>
-              <tbody>
-                {data.length ? (
-                  renderRows()
-                ) : (
-                  <tr>
-                    <td colSpan={rows.length + 1}>
-                      <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
-                        No matching records found
-                      </div>
-                    </td>
+                        )}
+                      {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
+                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <h2 className='filter-title-show'>
+                            {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Draft'}
+                            {+checkFilter[`${filter.key}`] === 1 && 'Awaiting Approval'}
+                            {+checkFilter[`${filter.key}`] === 2 && 'Rejected'}
+                            {+checkFilter[`${filter.key}`] === 3 && 'Approved'}
+                          </h2>
+                          <div
+                            onClick={() => {
+                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                              setLoadApi(!loadApi)
+                            }}
+                            className='p-0 m-0 cursor-pointer'
+                          >
+                            <Icons name={'CloseSmall'} />
+                          </div>
+                        </div>
+                      )}
+                      {!!checkFilter[`${filter.key}`] &&
+                        ['identification_type'].includes(filter.key) && (
+                          <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}:{' '}
+                              {checkFilter[`${filter.key}`] === 'foreign_identification_number'
+                                ? 'Foreign Identification Number'
+                                : 'Singapore NRIC No'}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                      {!!checkFilter?.application_date &&
+                        ['application_date'].includes(filter.key) && (
+                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}:{' '}
+                              {!!checkFilter?.application_date?.gte &&
+                                moment(checkFilter?.application_date?.gte).format(
+                                  'MMM D, YYYY'
+                                )}{' '}
+                              {!!checkFilter?.application_date?.lte && 'To '}
+                              {!!checkFilter?.application_date?.lte &&
+                                moment(checkFilter?.application_date?.lte)
+                                  .subtract(1, 'days')
+                                  .format('MMM D, YYYY')}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, application_date: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                      {!!checkFilter?.loan_amount_requested &&
+                        ['loan_amount_requested'].includes(filter.key) && (
+                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}:{' '}
+                              {(!!checkFilter?.loan_amount_requested?.gte ||
+                                checkFilter?.loan_amount_requested?.gte === 0) &&
+                                'From '}
+                              {(!!checkFilter?.loan_amount_requested?.gte ||
+                                checkFilter?.loan_amount_requested?.gte === 0) &&
+                                checkFilter?.loan_amount_requested?.gte}{' '}
+                              {(!!checkFilter?.loan_amount_requested?.lte ||
+                                checkFilter?.loan_amount_requested?.lte === 0) &&
+                                'To '}
+                              {(!!checkFilter?.loan_amount_requested?.lte ||
+                                checkFilter?.loan_amount_requested?.lte === 0) &&
+                                checkFilter?.loan_amount_requested?.lte}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, loan_amount_requested: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                      {!!checkFilter?.loan_type_id &&
+                        ['loan_type_id'].includes(filter.key) &&
+                        dataOption?.loan_type_id.length !== 0 && (
+                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}:{' '}
+                              {
+                                dataOption?.loan_type_id.filter(
+                                  (data) => +data?.id === +checkFilter?.loan_type_id
+                                )[0]?.type_name
+                              }
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, loan_type_id: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => {
+                    handleResetFilter()
+                  }}
+                  className='reset-all-filter-application mt-16px ms-16px'
+                >
+                  Reset All
+                </button>
+              </div>
+            )}
+          <KTCardBody className='py-4'>
+            <div className='table-responsive'>
+              <table
+                id='kt_table_users'
+                className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
+              >
+                <thead>
+                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                    {rows
+                      .filter((item) => !item.isHide)
+                      .map((item, i) => {
+                        const {classNameTableHead, name, infoFilter, key} = item
+
+                        const {isSort} = infoFilter || {}
+
+                        return (
+                          <th
+                            className={clsx([
+                              'text-nowrap min-w-75px user-select-none',
+                              classNameTableHead,
+                            ])}
+                            data-title={item.key}
+                            key={i}
+                            onClick={() => isSort && handleChangeSortBy(item)}
+                          >
+                            <div className='cursor-pointer'>
+                              <span className='fs-14 fw-bold'>{name}</span>
+
+                              {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
+                            </div>
+                          </th>
+                        )
+                      })}
+                    {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </KTCardBody>
+                </thead>
+                <tbody>
+                  {data.length ? (
+                    renderRows()
+                  ) : (
+                    <tr>
+                      <td colSpan={rows.length + 1}>
+                        <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
+                          No matching records found
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </KTCardBody>
 
-        <div
-          style={{
-            padding: '10px 22.75px',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <RowPerPage
-            lenghtData={searchCriteria.total}
-            limit={searchCriteria.pageSize}
-            page={searchCriteria.currentPage}
-            setLimit={(e: any) => {
-              setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+          <div
+            style={{
+              padding: '10px 22.75px',
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
-          />
+          >
+            <RowPerPage
+              lenghtData={searchCriteria.total}
+              limit={searchCriteria.pageSize}
+              page={searchCriteria.currentPage}
+              setLimit={(e: any) => {
+                setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+              }}
+            />
 
-          <Pagination
-            onChangePagePagination={handleChangePagination}
-            searchCriteria={searchCriteria}
-          />
+            <Pagination
+              onChangePagePagination={handleChangePagination}
+              searchCriteria={searchCriteria}
+            />
 
-          {loading && <Loading />}
+            {loading && <Loading />}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
