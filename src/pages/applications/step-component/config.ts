@@ -867,51 +867,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     col: 'col-xl-6',
     title: 'Address',
     Component: Address,
-    config: [
-      [
-        {
-          key: 'address_type_id',
-          value: 'Address Type',
-          dependencyApi: '/config/address_type/listing',
-          Component: RenderOptionsApiAddress,
-          keyFilter: 'id',
-          lable: 'address_type_name',
-        },
-        {
-          key: 'street_1',
-          value: 'Street 1',
-        },
-        {
-          key: 'city',
-          value: 'City',
-        },
-        {
-          key: 'postal_code',
-          value: 'Postal Code',
-        },
-      ],
-      [
-        {
-          key: 'address_label',
-          value: 'Address Label',
-        },
-        {
-          key: 'street_2',
-          value: 'Street 2',
-        },
-        {
-          key: 'state',
-          value: 'State',
-        },
-        {
-          key: 'country',
-          value: 'Country',
-          dependencyApi: 'config/country/listing',
-          keyFilter: 'id',
-          lable: 'nicename',
-        },
-      ],
-    ],
+    config: [],
   },
   {
     col: 'col-xxl-8',

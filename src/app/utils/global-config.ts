@@ -718,7 +718,7 @@ export const ROUTER_SETTING = [
     component: RejectionType,
   },
   {
-    path: 'upload-pdf-cas-check',
+    path: 'upload-pdf-cas-listing',
     labelBreadCrumbs: 'Upload File CAs Check',
     priority: [1],
     component: UploadFileCasCheck,
@@ -800,6 +800,12 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
         label: 'Rejection Type',
         priority: [1],
       },
+      {
+        id: uuidv4(),
+        to: '/settings/upload-pdf-cas-listing',
+        label: 'Upload File CAs Listing',
+        priority: [1],
+      },
     ],
   },
   {
@@ -807,12 +813,6 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
     title: 'Settings',
     priority: [1],
     children: [
-      {
-        id: uuidv4(),
-        to: '/settings/upload-pdf-cas-check',
-        label: 'Upload File CAs Check',
-        priority: [1],
-      },
       {
         id: uuidv4(),
         to: '/settings/other',
