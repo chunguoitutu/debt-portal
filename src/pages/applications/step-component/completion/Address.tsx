@@ -61,7 +61,6 @@ const configHome = [
     },
     {
       key: 'country',
-
       value: 'Country',
     },
     {
@@ -78,19 +77,10 @@ const configOffice = [
       Component: ShowYesNo,
       value: 'Default work site',
     },
-    {
-      key: 'street',
-      value: 'Street',
-    },
-  ],
-  [
+    ,
     {
       key: 'unit',
       value: 'Unit',
-    },
-    {
-      key: 'postal_code',
-      value: 'Postal',
     },
   ],
   [
@@ -100,13 +90,23 @@ const configOffice = [
     },
     {
       key: 'building',
-      value: 'Country',
+      value: 'Building Name',
     },
   ],
   [
     {
-      key: 'building',
-      value: 'Building Name',
+      key: 'street',
+      value: 'Street',
+    },
+    {
+      key: 'postal_code',
+      value: 'Postal',
+    },
+  ],
+  [
+    {
+      key: 'country',
+      value: 'Country',
     },
     {
       key: 'address_label',
@@ -189,6 +189,7 @@ const Address = ({data}: Props) => {
                               </h2>
                               {!!Component ? (
                                 <Component
+                                  dataChildren={e}
                                   data={data}
                                   config={element_config}
                                   keyData={e[element_config.key]}

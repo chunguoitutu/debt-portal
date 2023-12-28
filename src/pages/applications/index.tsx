@@ -96,7 +96,6 @@ export const Applications = () => {
   const {applicationIdEdit} = useParams()
   const {socket} = useSocket()
   const navigate = useNavigate()
-
   useEffect(() => {
     if (!applicationIdEdit) return setIsLoading(false)
     !!applicationIdEdit &&
@@ -516,6 +515,161 @@ export const Applications = () => {
           })
         }
       } else {
+        const {
+          identification_type,
+          identification_no,
+          date_of_birth,
+          firstname,
+          lastname,
+          middlename,
+          gender,
+          email_1,
+          email_2,
+          employment_status,
+          mobilephone_1,
+          mobilephone_2,
+          mobilephone_3,
+          homephone,
+          monthly_income,
+          spoken_language,
+          loan_amount_requested,
+          loan_type_id,
+          account_number_1,
+          account_number_2,
+          bank_code_1,
+          bank_code_2,
+          bank_name_1,
+          bank_name_2,
+          monthly_income_1,
+          monthly_income_2,
+          monthly_income_3,
+          annual_income,
+          portal_code,
+          company_name,
+          address_contact_info,
+          address,
+          loan_terms,
+          marketing_type_id,
+          company_telephone,
+          occupation,
+          position,
+          specialization,
+          six_months_income,
+          is_existing,
+          residential_type,
+          loan_reason,
+          country_id,
+          file_documents,
+          customer_no,
+          application_no,
+          job_type_id,
+          interest,
+          bankrupt_plan,
+          bankrupted,
+          amount,
+          date,
+          employer,
+          month,
+          vehicle_no,
+          vehicle_model,
+          vehicle_coe_category,
+          vehicle_coe_expiry_date,
+          vehicle_effective_date,
+          vehicle_maker,
+          vehicle_open_maket_value,
+          vehicle_type,
+        } = values
+
+        const addressList = address_contact_info
+          .filter((item) => item.address_type_id)
+          .map((item) => ({
+            ...item,
+            address_type_id: +item.address_type_id,
+          }))
+
+        const {applicationId, bankInfoId, borrowerId, customerId, employmentId, cpfId} = listIdEdit
+
+        const payload: ApplicationPayload = {
+          customer: {
+            ...(customerId && applicationIdEdit ? {id: customerId} : {}),
+            company_id: +company_id,
+            country_id: +country_id,
+            customer_no: customer_no || '',
+            identification_type,
+            identification_no,
+            date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
+            firstname,
+            lastname,
+            middlename,
+            gender,
+          },
+          borrower: {
+            ...(borrowerId && applicationIdEdit ? {id: borrowerId} : {}),
+            email_1,
+            email_2,
+            employment_status,
+            mobilephone_1: String(mobilephone_1),
+            mobilephone_2: String(mobilephone_2),
+            mobilephone_3: String(mobilephone_3),
+            homephone: String(homephone),
+            monthly_income: +monthly_income || 0,
+            job_type_id: +job_type_id || null,
+            spoken_language,
+            marketing_type_id: +marketing_type_id,
+            residential_type,
+          },
+          bank_account: {
+            ...(bankInfoId && applicationIdEdit ? {id: bankInfoId} : {}),
+            account_number_1,
+            account_number_2,
+            bank_code_1,
+            bank_code_2,
+            bank_name_1,
+            bank_name_2,
+          },
+          employment: {
+            ...(employmentId && applicationIdEdit ? {id: employmentId} : {}),
+            portal_code,
+            annual_income: +annual_income,
+            address,
+            company_telephone: String(company_telephone),
+            company_name,
+            monthly_income_1: +monthly_income_1,
+            monthly_income_2: +monthly_income_2,
+            monthly_income_3: +monthly_income_3,
+            occupation,
+            position,
+            specialization,
+            six_months_income: +six_months_income,
+            bankrupt_plan: bankrupt_plan ? 1 : 0,
+            bankrupted: bankrupted ? 1 : 0,
+          },
+          application: {
+            ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
+            loan_terms: +loan_terms,
+            loan_amount_requested: +loan_amount_requested,
+            loan_type_id: +loan_type_id || null,
+            status: isDraft ? 0 : 1,
+            application_date: new Date(),
+            application_notes: JSON.stringify(remarkList),
+            application_no,
+            is_existing,
+            company_id: +company_id,
+            loan_reason,
+            interest: +interest,
+          },
+          address: addressList,
+          file_documents,
+
+          cpf: {
+            ...(cpfId && applicationIdEdit && singpass ? {id: cpfId} : {}),
+            amount: JSON.stringify(amount),
+            date: JSON.stringify(date),
+            employer: JSON.stringify(employer),
+            month: JSON.stringify(month),
+          },
+        }
+        Cookies.set('createAplication', JSON.stringify(payload))
         handleContinue()
       }
     })
@@ -689,6 +843,7 @@ export const Applications = () => {
         month: JSON.stringify(month),
       },
     }
+
     try {
       setSubmitting(true)
       if (applicationIdEdit) {
@@ -731,6 +886,7 @@ export const Applications = () => {
         icon: 'error',
       })
     } finally {
+      Cookies.remove('createAplication')
       setSubmitting(false)
     }
   }

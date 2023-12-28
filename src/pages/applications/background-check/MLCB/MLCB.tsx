@@ -22,7 +22,6 @@ const MLCB: FC<Props> = ({onClose}) => {
       })
     }
     setLoading(type)
-
     try {
       const {data} = await request.post(`/site/mlcb-check`, {
         id: +applicationIdEdit,
