@@ -10,7 +10,7 @@ const ToggleHelpDrawer: FC = () => (
     data-bs-dismiss='click'
     data-bs-trigger='hover'
   >
-    Background Check
+    Tools
   </button>
 )
 

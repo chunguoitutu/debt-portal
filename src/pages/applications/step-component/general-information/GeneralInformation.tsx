@@ -136,7 +136,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           address_type_id: addressDefault.id,
         }
       }
-      console.log(addressList)
     } catch (error) {
       console.error('Address Type error')
     } finally {
@@ -303,6 +302,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       })
     }
   }
+
+  const prevFirstName = formik.values.firstname
+  const prevMiddleName = formik.values.middlename
+  const prevLastName = formik.values.lastname
+  const prevID = formik.values.identification_type
 
   async function handleGetApplicationById() {
     try {
@@ -485,7 +489,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             <span className='fs-7 fw-normal text-gray-400'>Or fill the form to register</span>
           </div>
           <div>
-            <Button onClick={goToSingpass}>Go To Singpass</Button>
+            <Button onClick={goToSingpass}>Login With Singpass</Button>
           </div>
         </div>
       )
