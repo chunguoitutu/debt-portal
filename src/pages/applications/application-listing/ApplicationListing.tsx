@@ -478,16 +478,6 @@ const ApplicationListing = () => {
               <Icons name={'filterIcon'} />
               Filter
             </Button>
-
-            <Link to='/application/create'>
-              <Button
-                className='btn-primary align-self-center ms-4 fs-6 text-white h-45px'
-                disabled={false}
-              >
-                <Icons name={'AddIcon'} />
-                Add New Application
-              </Button>
-            </Link>
           </div>
         </div>
 
