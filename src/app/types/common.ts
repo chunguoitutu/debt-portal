@@ -136,6 +136,14 @@ export type ResponseApplicationListing = {
   searchBar?: string
 }
 
+export type ResponseBorrowerListing = {
+  id: number
+  customer_no: string
+  id_type: string
+  status: number
+  searchBar?: string
+}
+
 export type TableRow = {
   key: string
   name: string
@@ -516,6 +524,20 @@ export type ApplicationItem = {
   identification_no: string
   fullname: string
   loan_type: string
+}
+
+export type BorrowerItem = {
+  id: number
+  customer_no: null | string
+  date_of_birth: string
+  identification_type: string
+  identification_no: string
+  application_no: string
+  firstname: string
+  middlename: string
+  lastname: string
+  loan_type: string
+  company_id: string
 }
 
 export type RemarkItem = {

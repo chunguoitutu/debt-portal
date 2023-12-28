@@ -171,7 +171,9 @@ const AddressGroup: FC<Props> = ({
 
         {active !== address_type_name && qtyAddressAdded > 0 && (
           <span className='text-gray-600 fs-14 fw-semibold'>
-            ({qtyAddressAdded} addresses has been added)
+            {qtyAddressAdded > 1
+              ? `(${qtyAddressAdded} addresses have been added)`
+              : `(${qtyAddressAdded} address has been added)`}
           </span>
         )}
 

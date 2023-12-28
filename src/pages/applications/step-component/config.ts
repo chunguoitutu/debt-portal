@@ -593,7 +593,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     key: 'building',
     component: Input,
     typeComponent: 'Input',
-    label: 'Building Name',
+    label: 'Building',
     column: 8,
     validationFormik: Yup.string()
       .required(convertMessageErrorRequired('Street 1'))

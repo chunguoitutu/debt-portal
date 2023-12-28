@@ -512,7 +512,7 @@ export const HOUSING_HDB_TYPE: Option[] = [
     label: 'Housing and Urban Development Company (HUDC) Flat (excluding those privatized)',
     value: '117',
   },
-  {label: 'Studio Apartment', value: '118'},
+  {label: 'Studio Apartment (HDB)', value: '118'},
 ]
 
 export const HOUSING_PRIVATE_RESIDENTIAL: Option[] = [
