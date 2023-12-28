@@ -18,14 +18,14 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'id',
       name: 'ID',
-      classNameTableHead: 'ps-5 w-50px',
-      classNameTableBody: 'mw-50px ps-5',
+      classNameTableHead: 'ps-5 min-w-30px',
+      classNameTableBody: 'w-50px ps-5',
     },
     {
       key: 'loan_no',
       name: 'Loan No',
-      classNameTableBody: 'mw-250px ps-5',
-      classNameTableHead: 'ps-5 w-220px',
+      classNameTableHead: 'ps-5 min-w-175px',
+      classNameTableBody: 'min-w-175px',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -35,7 +35,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'fullname',
       name: 'Name of Borrower',
-      classNameTableHead: 'ps-5 mw-400px pe-0',
+      classNameTableHead: 'ps-5',
       classNameTableBody: 'pe-0',
       infoFilter: {
         typeComponent: 'input',
@@ -46,7 +46,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'identification_no',
       name: 'NRIC No',
-      classNameTableHead: 'ps-5 mw-250px pe-0',
+      classNameTableHead: 'ps-5',
       classNameTableBody: 'pe-0',
       infoFilter: {
         typeComponent: 'input',
@@ -57,7 +57,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'status',
       name: 'UFO',
-      classNameTableHead: 'ps-5 mw-100px pe-0',
+      classNameTableHead: 'ps-5',
       classNameTableBody: 'pe-0',
       options: LOAN_U_F_0,
       infoFilter: {
@@ -82,12 +82,23 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'approval_date',
       name: 'Monthly Due Date',
-      classNameTableHead: 'ps-8 mw-200px pe-8 text-end',
+      classNameTableHead: 'ps-8 pe-8 text-end',
       classNameTableBody: 'pe-8 text-end',
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'date',
+        component: Input,
+        isSort: true,
+      },
+    },
+    {
+      key: 'loan_term',
+      name: 'No. Of Instalment',
+      classNameTableHead: 'ps-8 pe-8 text-end',
+      classNameTableBody: 'pe-8 text-end',
+      infoFilter: {
+        typeComponent: 'input',
         component: Input,
         isSort: true,
       },

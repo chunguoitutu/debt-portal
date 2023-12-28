@@ -73,6 +73,10 @@ export const USER_TABLE_CONFIG: TableConfig = {
       name: 'Role',
     },
     {
+      key: 'company_name',
+      name: 'Company Name',
+    },
+    {
       key: 'firstname',
       name: 'First Name',
       infoCreateEdit: {

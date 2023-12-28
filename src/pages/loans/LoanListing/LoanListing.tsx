@@ -60,6 +60,10 @@ const showFilter = [
     value: 'Monthly Due Date',
   },
   {
+    key: 'loan_term',
+    value: 'No. Of Instalment',
+  },
+  {
     key: 'status',
     value: 'UFO',
   },
@@ -245,6 +249,18 @@ const LoanListing = () => {
               return (
                 <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
                   {identificationNo}
+                </td>
+              )
+            }
+
+            if (key === 'loan_term') {
+              return (
+                <td
+                  key={i}
+                  className='ps-8 pe-8 text-end fs-6 fw-medium'
+                  style={{color: '#071437'}}
+                >
+                  {value} Months
                 </td>
               )
             }
@@ -566,7 +582,7 @@ const LoanListing = () => {
                       return (
                         <th
                           className={clsx([
-                            'text-nowrap min-w-100px user-select-none',
+                            'text-nowrap min-w-75px user-select-none',
                             classNameTableHead,
                           ])}
                           data-title={item.key}
