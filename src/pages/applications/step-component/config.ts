@@ -710,9 +710,25 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     config: [
       [
         {
+          key: 'is_existing',
+          value: 'Customer Type',
+          options: CUSTOMER_TYPE,
+          Component: LableOptions,
+          keyFilter: 'value',
+        },
+        {
           key: 'name_of_applicant',
           value: 'Name of applicant',
           Component: FullName,
+        },
+      ],
+      [
+        {
+          key: 'identification_type',
+          value: 'ID Type',
+          options: ID_TYPE,
+          Component: LableOptions,
+          keyFilter: 'value',
         },
         {
           key: 'identification_no',
@@ -721,33 +737,16 @@ const COMPLETION_CONFIG: children_config_completion[] = [
       ],
       [
         {
-          key: 'date_of_birth',
-          value: 'Date of Birth',
-          date: true,
-        },
-        {
           key: 'gender',
           value: 'Gender',
           options: GENDER,
           Component: LableOptions,
           keyFilter: 'value',
         },
-      ],
-      [
         {
-          key: 'country_id',
-          value: 'nationality',
-          dependencyApi: 'config/country/listing',
-          Component: RenderOptionsApi,
-          keyFilter: 'id',
-          lable: 'nationality',
-        },
-        {
-          key: 'identification_type',
-          value: 'ID Type',
-          options: ID_TYPE,
-          Component: LableOptions,
-          keyFilter: 'value',
+          key: 'date_of_birth',
+          value: 'Date of Birth',
+          date: true,
         },
 
         // {
@@ -768,11 +767,12 @@ const COMPLETION_CONFIG: children_config_completion[] = [
       ],
       [
         {
-          key: 'is_existing',
-          value: 'Customer Type',
-          options: CUSTOMER_TYPE,
-          Component: LableOptions,
-          keyFilter: 'value',
+          key: 'country_id',
+          value: 'nationality',
+          dependencyApi: 'config/country/listing',
+          Component: RenderOptionsApi,
+          keyFilter: 'id',
+          lable: 'nationality',
         },
         {
           key: 'spoken_language',
@@ -833,24 +833,24 @@ const COMPLETION_CONFIG: children_config_completion[] = [
       [
         {
           key: 'mobilephone_1',
-          value: 'Mobile 1 (NIL)',
+          value: 'Phone Number 1',
           dollars: '+65',
         },
         {
           key: 'mobilephone_2',
-          value: 'Mobile 2 (NIL)',
+          value: 'Phone Number 2',
           dollars: '+65',
         },
         {
           key: 'mobilephone_3',
-          value: 'Mobile 3 (NIL)',
+          value: 'Phone Number 3',
           dollars: '+65',
         },
       ],
       [
         {
           key: 'homephone',
-          value: 'Home Phone (NIL)',
+          value: 'Phone Number 4',
           dollars: '+65',
         },
         {

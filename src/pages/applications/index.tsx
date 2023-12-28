@@ -97,7 +97,6 @@ export const Applications = () => {
   const {socket} = useSocket()
   const navigate = useNavigate()
   useEffect(() => {
-    Cookies.remove('createAplication')
     if (!applicationIdEdit) return setIsLoading(false)
     !!applicationIdEdit &&
       request

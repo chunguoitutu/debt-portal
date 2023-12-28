@@ -6,7 +6,7 @@ type Props = {
 
 const ShowYesNo = ({keyData}: Props) => {
   return (
-    <div className='text-start fw-semibold pt-4px pt-0 px-0 m-0 min-h-20px td-completion fs-14 text-gray-900'>
+    <div className='fw-semibold pt-4px pt-0 px-0 m-0 min-h-20px text-gray-900 fs-14'>
       {Number(keyData) === 1 ? 'Yes' : 'No'}
     </div>
   )

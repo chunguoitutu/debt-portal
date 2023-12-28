@@ -39,7 +39,7 @@ const BackgroundCheck = ({data}: props) => {
     row: [
       {
         value: 'Google Search Check',
-        icon: <Icons name={'GoogleCheck'} />,
+        icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
         show: ![2, 3].includes(
           !!data.application?.status ? data?.application?.status : dataCookie?.application?.status
@@ -69,7 +69,7 @@ const BackgroundCheck = ({data}: props) => {
       },
       {
         value: 'UN Page Check',
-        icon: <Icons name={'GoogleCheck'} />,
+        icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
         show: ![2, 3].includes(
           !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
@@ -96,7 +96,7 @@ const BackgroundCheck = ({data}: props) => {
       },
       {
         value: 'CAs Check',
-        icon: <Icons name={'GoogleCheck'} />,
+        icon: <Icons name={'Cascheck'} />,
         background: '#E2E5E7',
         show: ![2, 3].includes(
           !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
@@ -134,7 +134,7 @@ const BackgroundCheck = ({data}: props) => {
 
       {
         value: 'Get MLCB Report',
-        icon: <Icons name={'ImgLoanCrossCheck'} />,
+        icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
         show: ![2, 3].includes(
           !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
@@ -162,7 +162,7 @@ const BackgroundCheck = ({data}: props) => {
 
       {
         value: 'Validation Phone Number',
-        icon: <Icons name={'ImgLoanCrossCheck'} />,
+        icon: <Icons name={'Telephone'} />,
         show: ![2, 3].includes(
           !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
         ),
@@ -216,7 +216,9 @@ const BackgroundCheck = ({data}: props) => {
             } ${
               !!data?.customer?.middlename
                 ? data?.customer?.middlename
-                : dataCookie?.customer?.middlename
+                : !!dataCookie?.customer?.middlename
+                ? dataCookie?.customer?.middlename
+                : ''
             }${!!data?.customer?.middlename || dataCookie?.customer?.middlename ? ' ' : ''}${
               !!data?.customer?.lastname ? data?.customer?.lastname : dataCookie?.customer?.lastname
             }`}

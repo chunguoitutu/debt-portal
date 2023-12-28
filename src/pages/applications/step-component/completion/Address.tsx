@@ -77,19 +77,10 @@ const configOffice = [
       Component: ShowYesNo,
       value: 'Default work site',
     },
-    {
-      key: 'street',
-      value: 'Street',
-    },
-  ],
-  [
+    ,
     {
       key: 'unit',
       value: 'Unit',
-    },
-    {
-      key: 'postal_code',
-      value: 'Postal',
     },
   ],
   [
@@ -98,14 +89,24 @@ const configOffice = [
       value: 'Block',
     },
     {
-      key: 'country',
-      value: 'Country',
+      key: 'building',
+      value: 'Building Name',
     },
   ],
   [
     {
-      key: 'building',
-      value: 'Building Name',
+      key: 'street',
+      value: 'Street',
+    },
+    {
+      key: 'postal_code',
+      value: 'Postal',
+    },
+  ],
+  [
+    {
+      key: 'country',
+      value: 'Country',
     },
     {
       key: 'address_label',
