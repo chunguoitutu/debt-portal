@@ -25,7 +25,7 @@ const AuthLayout = () => {
             className='w-50px w-lg-140px  mw-100 object-fit-contain'
           />
           <div>
-            <img
+            {/* <img
               style={{
                 padding: '0',
                 marginLeft: '-8px',
@@ -33,9 +33,12 @@ const AuthLayout = () => {
               className='mw-100 object-fit-contain'
               src={welcomeText}
               alt='welcome'
-            />
+            /> */}
+            <h1 className='text-capitalize text-white m-0 fw-bolder' style={{fontSize: 60}}>
+              Welcome To
+            </h1>
             <h1 className='text-capitalize text-white m-0 fw-normal fs-xl-2tx'>
-              The Money Lending System
+              The Finance 360 System
             </h1>
           </div>
           <span className='text-capitalize text-white fs-2 fw-semibold'>

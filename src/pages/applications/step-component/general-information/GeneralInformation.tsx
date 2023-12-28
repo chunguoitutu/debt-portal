@@ -155,6 +155,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           // console.log(1324, event.data)
           setSingpass(true)
 
+          console.log(event.data, '124')
+
           const addressInfo: any = await GetDefaultAddressType()
           // console.log(123456, event.data)
 
@@ -214,7 +216,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                           housing_type,
                           unit: event.data.regadd.unit.value || '',
                           block: event.data.regadd.block.value || '',
-                          building: event.data.regadd.bbuilding || '',
+                          building: event.data.regadd.building.value || '',
                           street: event.data.regadd.street.value || '',
                         }
                       : {}),
