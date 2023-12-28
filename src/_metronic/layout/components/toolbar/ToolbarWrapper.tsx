@@ -11,7 +11,7 @@ const ToolbarWrapper = ({}: IProps) => {
   const pathname = useLocation()
   return (
     <div className={clsx('pt-6 pb-6')}>
-      {pathname.pathname === '/application' || pathname.pathname === '/application/lising' ? (
+      {pathname.pathname === '/application' || pathname.pathname === '/application/listing' ? (
         <div className='d-flex flex-row align-items-center justify-content-between'>
           <PageTitleWrapper />
           <Link to='/application/create'>
