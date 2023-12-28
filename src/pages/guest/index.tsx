@@ -43,7 +43,6 @@ const Guest = () => {
           setBase64data(data?.data?.file_base64)
         })
   }, [loanId, imgBase64])
-  console.log(base64data, email)
 
   function handleTogglePopup() {
     setPopup(!popup)

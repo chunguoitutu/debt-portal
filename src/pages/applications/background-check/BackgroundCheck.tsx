@@ -25,7 +25,7 @@ const BackgroundCheck = ({data}: props) => {
   const {applicationIdEdit} = useParams()
 
   const configBackgroudCheck = {
-    title: 'Background check',
+    title: 'Tools',
     row: [
       {
         value: 'Repayment Schedule Calculator',
