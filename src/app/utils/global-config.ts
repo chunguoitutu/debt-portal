@@ -719,7 +719,7 @@ export const ROUTER_SETTING = [
   },
   {
     path: 'upload-pdf-cas-listing',
-    labelBreadCrumbs: 'Upload File CAs Check',
+    labelBreadCrumbs: 'Upload File CAs Listing',
     priority: [1],
     component: UploadFileCasCheck,
   },
