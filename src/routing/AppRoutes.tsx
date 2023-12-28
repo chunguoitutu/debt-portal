@@ -22,13 +22,13 @@ import SettingPageRouter from '../pages/settings/SettingPageRouter'
 import {Applications} from '../pages/applications'
 import Dashboard from '../pages/dashboard'
 import Loans from '../pages/loans'
-import Borrowers from '../pages/borrowers'
 import Transactions from '../pages/transactions'
 import MyTasks from '../pages/my-tasks'
 import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
 import {Logout} from '../pages/auth/logout/Logout'
 import {useAuth} from '../app/context/AuthContext'
 import Guest from '@/pages/guest'
+import BorrowersListing from '@/pages/borrowers/BorrowerListing'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -68,7 +68,10 @@ const AppRoutes: FC = () => {
               <Route path='edit/:applicationIdEdit' element={<Applications />} />
             </Route>
             <Route path='/loans' element={<Loans />} />
-            <Route path='/borrowers' element={<Borrowers />} />
+            <Route path='/borrowers'>
+              <Route index element={<BorrowersListing />} />
+              <Route path='listing' element={<BorrowersListing />} />
+            </Route>
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/my-tasks' element={<MyTasks />} />
             <Route path='guest' element={<Guest />} />

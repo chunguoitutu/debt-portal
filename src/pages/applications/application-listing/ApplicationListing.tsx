@@ -212,7 +212,7 @@ const ApplicationListing = () => {
 
             if (key === 'id') {
               return (
-                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-6'>
+                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
                   {Number(idx) +
                     1 +
                     (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -

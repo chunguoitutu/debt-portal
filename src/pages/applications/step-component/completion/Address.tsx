@@ -47,7 +47,7 @@ const configHome = [
     },
     {
       key: 'building',
-      value: 'Building Name',
+      value: 'Building',
     },
     {
       key: 'street',
