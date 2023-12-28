@@ -57,6 +57,10 @@ export const USER_TABLE_CONFIG: TableConfig = {
       name: 'ID',
     },
     {
+      key: 'company_name',
+      name: 'Company Name',
+    },
+    {
       key: 'username',
       name: 'Username',
       color: '#252F4A',
