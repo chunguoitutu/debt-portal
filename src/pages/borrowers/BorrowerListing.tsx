@@ -25,7 +25,7 @@ type Props = {}
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Borrower',
+    title: 'Borrowers',
     path: '/borrower/listing',
     isSeparator: false,
     isActive: false,
@@ -64,7 +64,7 @@ const showFilter = [
     value: 'Date Of Birth',
   },
   {
-    key: 'telephone',
+    key: 'mobilephone_1',
     value: 'Telephone',
   },
 ]
@@ -137,7 +137,7 @@ const BorrowersListing = (props: Props) => {
         ...dataFilter,
         searchBar: searchValue,
       },
-      keyDate: [''],
+      keyDate: ['date_of_birth'],
       keyNumber: ['loan_type_id', 'id', 'loan_terms'],
     })
   }
@@ -223,6 +223,8 @@ const BorrowersListing = (props: Props) => {
 
             const fullname = `${firstname} ${middlename ? middlename + ' ' : ''}${lastname}`
 
+            const phoneNumber = item.borrower[0].mobilephone_1
+
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
             }
@@ -270,6 +272,14 @@ const BorrowersListing = (props: Props) => {
               )
             }
 
+            if (key === 'mobilephone_1') {
+              return (
+                <td key={i} className='fs-6 fw-medium w-250px ps-10' style={{color: '#071437'}}>
+                  {phoneNumber}
+                </td>
+              )
+            }
+
             if (key === 'date_of_birth') {
               value = moment(item[key]).format('MMM D, YYYY')
             }
@@ -298,7 +308,7 @@ const BorrowersListing = (props: Props) => {
 
   return (
     <div className='card p-5 h-fit-content'>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
+      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrowers Listing'}</PageTitle>
       {showInput && (
         <FilterBorrower
           onClose={showInputFilter}
