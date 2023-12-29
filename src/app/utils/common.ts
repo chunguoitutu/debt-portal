@@ -189,3 +189,9 @@ export function convertResidentialTypeSingPass(residentialType: string) {
       return 'Does not own any property'
   }
 }
+
+export function capitalizeFirstText(text: string) {
+  if (!text || typeof text !== 'string') return ''
+
+  return `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}`
+}
