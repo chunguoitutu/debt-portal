@@ -88,8 +88,7 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     {
       key: 'mobilephone_1',
       name: 'Telephone',
-      classNameTableBody: 'ps-10 ',
-      classNameTableHead: 'ps-10 ',
+      classNameTableHead: 'ps-20 ',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
