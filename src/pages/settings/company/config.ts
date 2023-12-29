@@ -58,6 +58,8 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'open_date',
       name: 'Open Date',
+      classNameTableHead: 'w-250px pe-3 text-end',
+      classNameTableBody: 'text-end',
     },
     {
       key: 'status',

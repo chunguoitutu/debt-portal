@@ -282,9 +282,17 @@ const Table: FC<Props> = ({
                           )
                         }
 
-                        if (['open_date', 'created_date', 'updated_date'].includes(key)) {
+                        if (['created_date', 'updated_date'].includes(key)) {
                           return (
                             <td className='fs-14 fw-semibold' key={i}>
+                              {moment(value).format('MMM DD, YYYY')}
+                            </td>
+                          )
+                        }
+
+                        if (['open_date'].includes(key)) {
+                          return (
+                            <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={i}>
                               {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )
