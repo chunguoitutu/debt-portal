@@ -717,25 +717,12 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           keyFilter: 'value',
         },
         {
-          key: 'name_of_applicant',
-          value: 'Name of applicant',
-          Component: FullName,
-        },
-      ],
-      [
-        {
           key: 'identification_type',
           value: 'ID Type',
           options: ID_TYPE,
           Component: LableOptions,
           keyFilter: 'value',
         },
-        {
-          key: 'identification_no',
-          value: 'NRIC No./FIN',
-        },
-      ],
-      [
         {
           key: 'gender',
           value: 'Gender',
@@ -744,12 +731,36 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           keyFilter: 'value',
         },
         {
+          key: 'country_id',
+          value: 'nationality',
+          dependencyApi: 'config/country/listing',
+          Component: RenderOptionsApi,
+          keyFilter: 'id',
+          lable: 'nationality',
+        },
+      ],
+      [
+        {
+          key: 'name_of_applicant',
+          value: 'Name of applicant',
+          Component: FullName,
+        },
+        {
+          key: 'identification_no',
+          value: 'NRIC No./FIN',
+        },
+        {
           key: 'date_of_birth',
           value: 'Date of Birth',
           date: true,
         },
-
-        // {
+        {
+          key: 'spoken_language',
+          value: 'Language Spoken',
+          options: LANGUAGES,
+          Component: LableOptions,
+          keyFilter: 'value',
+        }, // {
         //   key: 'residential_type',
         //   value: 'Residential Type',
         //   options: RESIDENTIAL_TYPE,
@@ -765,23 +776,6 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         //   lable: 'marketing_type_name',
         // },
       ],
-      [
-        {
-          key: 'country_id',
-          value: 'nationality',
-          dependencyApi: 'config/country/listing',
-          Component: RenderOptionsApi,
-          keyFilter: 'id',
-          lable: 'nationality',
-        },
-        {
-          key: 'spoken_language',
-          value: 'Language Spoken',
-          options: LANGUAGES,
-          Component: LableOptions,
-          keyFilter: 'value',
-        },
-      ],
     ],
   },
   {
@@ -795,6 +789,13 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: MLCBCheck,
         },
         {
+          key: 'loan_terms',
+          value: 'Loan Terms (months)',
+          elBehind: 'Months',
+        },
+      ],
+      [
+        {
           key: 'loan_type_id',
           value: 'Loan type',
           dependencyApi: '/config/loan_type/listing',
@@ -803,8 +804,8 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'type_name',
         },
         {
-          key: 'interest',
-          value: 'Interest (%)',
+          key: 'loan_reason',
+          value: 'Reason For Loan',
         },
       ],
       [
@@ -815,13 +816,8 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           dollars: '$',
         },
         {
-          key: 'loan_terms',
-          value: 'Loan Terms (months)',
-          elBehind: 'Months',
-        },
-        {
-          key: 'loan_reason',
-          value: 'Reason For Loan',
+          key: 'interest',
+          value: 'Interest (%)',
         },
       ],
     ],
@@ -837,25 +833,27 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           dollars: '+65',
         },
         {
-          key: 'mobilephone_2',
-          value: 'Phone Number 2',
-          dollars: '+65',
-        },
-        {
-          key: 'mobilephone_3',
-          value: 'Phone Number 3',
+          key: 'homephone',
+          value: 'Phone Number 4',
           dollars: '+65',
         },
       ],
       [
         {
-          key: 'homephone',
-          value: 'Phone Number 4',
+          key: 'mobilephone_2',
+          value: 'Phone Number 2',
           dollars: '+65',
         },
         {
           key: 'email_1',
           value: 'Email',
+        },
+      ],
+      [
+        {
+          key: 'mobilephone_3',
+          value: 'Phone Number 3',
+          dollars: '+65',
         },
         {
           key: 'email_2',
@@ -881,23 +879,19 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: EmploymentStatus,
         },
         {
-          key: 'company_name',
-          value: 'Company Name',
+          key: 'address',
+          value: 'Address',
         },
         {
-          key: 'company_telephone',
-          value: 'Telephone',
-          dollars: '+65',
-        },
-        {
-          key: 'portal_code',
-          value: 'Postal Code',
+          key: 'monthly_income_1',
+          value: 'Gross Monthly Income',
+          Component: GrossMonthlyIncomeCompletion,
         },
       ],
       [
         {
-          key: 'address',
-          value: 'Address',
+          key: 'company_name',
+          value: 'Company Name',
         },
         {
           key: 'position',
@@ -905,8 +899,33 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: PositionName,
         },
         {
+          key: 'monthly_income',
+          value: 'Average Monthly Income',
+          dollars: '$',
+          number: true,
+        },
+      ],
+      [
+        {
+          key: 'company_telephone',
+          value: 'Telephone',
+          dollars: '+65',
+        },
+        {
           key: 'occupation',
           value: 'Occupation',
+        },
+        {
+          key: 'six_months_income',
+          value: 'Past 6 Month Gross Income',
+          dollars: '$',
+          number: true,
+        },
+      ],
+      [
+        {
+          key: 'portal_code',
+          value: 'Postal Code',
         },
         {
           key: 'job_type_id',
@@ -917,37 +936,20 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'job_type_name',
         },
         {
+          key: 'annual_income',
+          value: 'Annual Gross Income',
+          dollars: '$',
+          number: true,
+        },
+      ],
+      [
+        {
           key: 'bankrupted',
           value: 'Declared bankrupt in the last 5 years',
         },
         {
           key: 'bankrupt_plan',
           value: 'Plan to declare bankrupt in the next 3 months',
-        },
-      ],
-      [
-        {
-          key: 'monthly_income_1',
-          value: 'Gross Monthly Income',
-          Component: GrossMonthlyIncomeCompletion,
-        },
-        {
-          key: 'monthly_income',
-          value: 'Average Monthly Income',
-          dollars: '$',
-          number: true,
-        },
-        {
-          key: 'six_months_income',
-          value: 'Past 6 Month Gross Income',
-          dollars: '$',
-          number: true,
-        },
-        {
-          key: 'annual_income',
-          value: 'Annual Gross Income',
-          dollars: '$',
-          number: true,
         },
       ],
     ],
@@ -965,30 +967,34 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           keyFilter: 'value',
         },
         {
-          key: 'bank_name_1',
-          value: 'Bank Name 1',
-        },
-        {
-          key: 'account_number_1',
-          value: 'Bank Acc 1',
-        },
-        {
-          key: 'bank_code_1',
-          value: 'Bank Code 1',
+          key: 'bank_name_2',
+          value: 'Bank Name 2',
         },
       ],
       [
         {
-          key: 'bank_name_2',
-          value: 'Bank Name 2',
+          key: 'bank_name_1',
+          value: 'Bank Name 1',
         },
         {
           key: 'account_number_2',
           value: 'Bank Acc 2',
         },
+      ],
+      [
+        {
+          key: 'account_number_1',
+          value: 'Bank Acc 1',
+        },
         {
           key: 'bank_code_2',
           value: 'Bank Code 2',
+        },
+      ],
+      [
+        {
+          key: 'bank_code_1',
+          value: 'Bank Code 1',
         },
       ],
     ],

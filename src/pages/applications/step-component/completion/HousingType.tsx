@@ -8,8 +8,6 @@ type Props = {
 }
 
 const HousingType = ({config, keyData, dataChildren}: Props) => {
-  console.log(dataChildren?.property_type)
-
   const lable = (
     dataChildren?.property_type === 'HDB' ? HOUSING_HDB_TYPE : HOUSING_PRIVATE_RESIDENTIAL
   ).filter((d: any) => d[config.keyFilter] === keyData)
