@@ -308,7 +308,7 @@ const BorrowersListing = (props: Props) => {
 
   return (
     <div className='card p-5 h-fit-content'>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrowers Listing'}</PageTitle>
+      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
       {showInput && (
         <FilterBorrower
           onClose={showInputFilter}
