@@ -43,18 +43,18 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
         typeInput: 'text',
       },
     },
-    {
-      classNameTableHead: 'w-200px text-center',
-      key: 'is_default',
-      name: 'Default',
-      component: Badge,
-      infoCreateEdit: {
-        typeComponent: 'checkbox-rounded',
-        component: CheckboxRounded,
-        subTextWhenChecked: 'Yes',
-        subTextWhenNoChecked: 'No',
-      },
-    },
+    // {
+    //   classNameTableHead: 'w-200px text-center',
+    //   key: 'is_default',
+    //   name: 'Default',
+    //   component: Badge,
+    //   infoCreateEdit: {
+    //     typeComponent: 'checkbox-rounded',
+    //     component: CheckboxRounded,
+    //     subTextWhenChecked: 'Yes',
+    //     subTextWhenNoChecked: 'No',
+    //   },
+    // },
     {
       key: 'status',
       name: 'Status',

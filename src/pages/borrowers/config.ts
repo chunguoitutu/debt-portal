@@ -75,8 +75,8 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     {
       key: 'date_of_birth',
       name: 'Date Of Birth',
-      classNameTableBody: 'text-end pe-5',
-      classNameTableHead: 'text-end pe-3',
+      classNameTableBody: 'pe-8 text-end',
+      classNameTableHead: 'pe-8 text-end',
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',
@@ -85,12 +85,10 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
         isSort: true,
       },
     },
-
     {
-      key: 'telephone',
+      key: 'mobilephone_1',
       name: 'Telephone',
-      classNameTableBody: 'ps-6 text-end',
-      classNameTableHead: 'ps-3 text-end',
+      classNameTableHead: 'ps-20 ',
       infoFilter: {
         typeComponent: 'input',
         component: Input,

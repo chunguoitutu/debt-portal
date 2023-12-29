@@ -122,11 +122,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           address_type_id: homeAddress.id,
         }
       } else {
-        let addressDefault = addressList.find((el) => el.is_default)
-
-        if (!addressDefault) {
-          addressDefault = addressList[0]
-        }
+        const addressDefault = addressList[0]
 
         defaultData = {
           is_default: 0,
@@ -304,11 +300,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       })
     }
   }
-
-  const prevFirstName = formik.values.firstname
-  const prevMiddleName = formik.values.middlename
-  const prevLastName = formik.values.lastname
-  const prevID = formik.values.identification_type
 
   async function handleGetApplicationById() {
     try {

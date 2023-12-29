@@ -25,7 +25,7 @@ type Props = {}
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Borrower',
+    title: 'Borrowers',
     path: '/borrower/listing',
     isSeparator: false,
     isActive: false,
@@ -64,7 +64,7 @@ const showFilter = [
     value: 'Date Of Birth',
   },
   {
-    key: 'telephone',
+    key: 'mobilephone_1',
     value: 'Telephone',
   },
 ]
@@ -137,7 +137,7 @@ const BorrowersListing = (props: Props) => {
         ...dataFilter,
         searchBar: searchValue,
       },
-      keyDate: [''],
+      keyDate: ['date_of_birth'],
       keyNumber: ['loan_type_id', 'id', 'loan_terms'],
     })
   }
@@ -223,6 +223,8 @@ const BorrowersListing = (props: Props) => {
 
             const fullname = `${firstname} ${middlename ? middlename + ' ' : ''}${lastname}`
 
+            const phoneNumber = item.borrower[0].mobilephone_1
+
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
             }
@@ -266,6 +268,18 @@ const BorrowersListing = (props: Props) => {
               return (
                 <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
                   {fullname}
+                </td>
+              )
+            }
+
+            if (key === 'mobilephone_1') {
+              return (
+                <td
+                  key={i}
+                  className={`${classNameTableBody} fs-6 fw-medium w-250px ps-20`}
+                  style={{color: '#071437'}}
+                >
+                  {phoneNumber}
                 </td>
               )
             }

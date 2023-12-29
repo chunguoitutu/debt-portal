@@ -75,21 +75,20 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
 
         // Move the first default item to the array[0]
         if (key === 'address_type_id') {
-          const dataClone = [...data]
-          const index = dataClone.findIndex((el) => el.is_default === 1)
+          const dataClone = [...data] as AddressTypeItem[]
+          const indexHomeAddress = dataClone.findIndex((el) =>
+            el.address_type_name.toLowerCase()?.includes('home')
+          ) // filter address type home
 
-          // Default data[0]
-          let itemDefault = dataClone[0] || {}
-          let isHomeAddress = itemDefault.address_type_name?.toLowerCase()?.includes('home')
+          let itemDefault = dataClone[0]
+          let isHomeAddress = indexHomeAddress === -1 ? false : true
 
-          if (index !== -1) {
-            itemDefault = dataClone.splice(index, 1)?.[0] || {}
-            isHomeAddress = itemDefault.address_type_name?.toLowerCase()?.includes('home')
-
+          if (dataClone.length) {
+            itemDefault =
+              dataClone.splice(indexHomeAddress === -1 ? 0 : indexHomeAddress, 1)?.[0] || {}
             data = [itemDefault, ...dataClone]
+            setActive(itemDefault?.address_type_name)
           }
-
-          setActive(itemDefault?.address_type_name)
 
           // Only create and first mount component
           // !values.address_contact_info[0].address_type_id -> first mount
@@ -348,7 +347,9 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
                 (el) => el.address_type_id === dataAddressType.id
               )
 
-              if (!item) {
+              const isShow = dataAddressType.address_type_name === active ? false : true
+
+              if (!item && ![2, 3].includes(values.status || 0) && isShow) {
                 const isHomeAddress = dataAddressType.address_type_name
                   ?.toLowerCase()
                   ?.includes('home')
