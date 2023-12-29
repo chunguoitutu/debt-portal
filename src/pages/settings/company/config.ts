@@ -27,7 +27,8 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'company_code',
       name: 'Business Unit Code',
-      isHide: true,
+      classNameTableHead: 'w-250px pe-5 ps-10',
+      classNameTableBody: 'ps-7',
     },
     {
       key: 'business_uen',
