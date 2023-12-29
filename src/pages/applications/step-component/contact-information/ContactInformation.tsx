@@ -347,7 +347,9 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
                 (el) => el.address_type_id === dataAddressType.id
               )
 
-              if (!item) {
+              const isShow = dataAddressType.address_type_name === active ? false : true
+
+              if (!item && ![2, 3].includes(values.status || 0) && isShow) {
                 const isHomeAddress = dataAddressType.address_type_name
                   ?.toLowerCase()
                   ?.includes('home')
