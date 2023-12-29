@@ -31,16 +31,19 @@ function TableRender({title, config = [], data}: Props) {
           {title}
         </h1>
       )}
-      <div className='d-flex p-24px justify-content-between w-100 gap-16px'>
+      <div className='p-24px d-flex flex-column gap-16px'>
         {config?.map((children_config: element_config[], index: number) => {
           return (
-            <div key={index} className='d-flex flex-column gap-16px w-100'>
+            <div
+              key={index}
+              className='d-flex w-100 justify-content-between align-items-start gap-16px'
+            >
               {children_config?.map((element_config: element_config, indx) => {
                 const {Component} = element_config
                 return (
-                  <div key={indx} className='mb-5'>
+                  <div key={indx} className='w-100'>
                     <div
-                      className='d-flex flex-column mb-3'
+                      className='d-flex flex-column p-0'
                       style={{
                         justifyContent: !!element_config.img ? 'center' : 'start',
                         alignItems: !!element_config.img ? 'center' : 'start',

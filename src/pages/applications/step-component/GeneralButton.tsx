@@ -88,6 +88,7 @@ const GeneralButton: FC<Props> = ({
       values.identification_type === 'foreign_identification_number'
     ) {
       setNumber(3000)
+
       return false
     }
     return true

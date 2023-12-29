@@ -2,6 +2,7 @@ import request from '@/app/axios'
 import {useEffect, useState} from 'react'
 import HousingType from './HousingType'
 import ShowYesNo from './ShowYesNo'
+import CountryAddress from './CountryAddress'
 
 type Props = {
   config?: any
@@ -15,53 +16,52 @@ const configHome = [
       value: 'Property Type',
     },
     {
+      key: 'home_ownership',
+      value: 'Home Ownership',
+    },
+    {
+      key: 'block',
+      value: 'Block',
+    },
+    {
+      key: 'postal_code',
+      value: 'Postal',
+    },
+  ],
+  [
+    {
       key: 'housing_type',
       value: 'Housing Type',
       Component: HousingType,
       keyFilter: 'value',
     },
     {
-      key: 'existing_staying',
-      Component: ShowYesNo,
-      value: 'Existing Staying',
-    },
-  ],
-  [
-    {
-      key: 'home_ownership',
-      value: 'Home Ownership',
-    },
-    {
       key: 'staying_condition',
       value: 'Staying Condition',
-    },
-    {
-      key: 'unit',
-      value: 'Unit',
-    },
-  ],
-  [
-    {
-      key: 'block',
-      value: 'Block',
     },
     {
       key: 'building',
       value: 'Building',
     },
     {
-      key: 'street',
-      value: 'Street',
+      key: 'country',
+      value: 'Country',
+      Component: CountryAddress,
     },
   ],
   [
     {
-      key: 'postal_code',
-      value: 'Postal',
+      key: 'existing_staying',
+      Component: ShowYesNo,
+      value: 'Existing Staying',
     },
     {
-      key: 'country',
-      value: 'Country',
+      key: 'unit',
+      value: 'Unit',
+    },
+    {
+      key: 'street',
+      value: 'Street',
     },
     {
       key: 'address_label',
@@ -77,36 +77,32 @@ const configOffice = [
       Component: ShowYesNo,
       value: 'Default work site',
     },
-    ,
-    {
-      key: 'unit',
-      value: 'Unit',
-    },
-  ],
-  [
     {
       key: 'block',
       value: 'Block',
     },
     {
-      key: 'building',
-      value: 'Building',
-    },
-  ],
-  [
-    {
       key: 'street',
       value: 'Street',
     },
     {
-      key: 'postal_code',
-      value: 'Postal',
+      key: 'country',
+      value: 'Country',
+      Component: CountryAddress,
     },
   ],
   [
     {
-      key: 'country',
-      value: 'Country',
+      key: 'unit',
+      value: 'Unit',
+    },
+    {
+      key: 'building',
+      value: 'Building',
+    },
+    {
+      key: 'postal_code',
+      value: 'Postal',
     },
     {
       key: 'address_label',
@@ -158,7 +154,7 @@ const Address = ({data}: Props) => {
             {addresses.map((e: any, indx: number) => (
               <div
                 key={indx}
-                className='d-flex justify-content-between w-100 gap-16px p-24px'
+                className='p-24px d-flex flex-column gap-16px'
                 style={{
                   borderBottom:
                     i < data?.address_contact_info.length - 1 ? '1px solid #D4D4D4' : '',
@@ -172,11 +168,14 @@ const Address = ({data}: Props) => {
                   : configOffice
                 )?.map((children_config: any, index: number) => {
                   return (
-                    <div key={index} className='d-flex flex-column gap-16px w-100'>
+                    <div
+                      key={index}
+                      className='d-flex w-100 justify-content-between align-items-start '
+                    >
                       {children_config?.map((element_config: any) => {
                         const {Component} = element_config
                         return (
-                          <div key={element_config.key}>
+                          <div key={element_config.key} className='w-100'>
                             <div
                               className='d-flex flex-column'
                               style={{
