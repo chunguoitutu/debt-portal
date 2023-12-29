@@ -90,7 +90,7 @@ const configOffice = [
     },
     {
       key: 'building',
-      value: 'Building Name',
+      value: 'Building',
     },
   ],
   [

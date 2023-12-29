@@ -615,7 +615,7 @@ export const Applications = () => {
             monthly_income: +monthly_income || 0,
             job_type_id: +job_type_id || null,
             spoken_language,
-            marketing_type_id: +marketing_type_id,
+            marketing_type_id: +marketing_type_id || null,
             residential_type,
           },
           bank_account: {
@@ -789,7 +789,7 @@ export const Applications = () => {
         monthly_income: +monthly_income || 0,
         job_type_id: +job_type_id || null,
         spoken_language,
-        marketing_type_id: +marketing_type_id,
+        marketing_type_id: +marketing_type_id || null,
         residential_type,
       },
       bank_account: {

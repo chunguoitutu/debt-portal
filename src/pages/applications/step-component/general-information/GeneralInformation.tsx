@@ -122,11 +122,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           address_type_id: homeAddress.id,
         }
       } else {
-        let addressDefault = addressList.find((el) => el.is_default)
-
-        if (!addressDefault) {
-          addressDefault = addressList[0]
-        }
+        const addressDefault = addressList[0]
 
         defaultData = {
           is_default: 0,

@@ -328,7 +328,7 @@ export type ApplicationPayload = {
     credit_score?: string
     residential_type?: string
     spoken_language?: string
-    marketing_type_id: number
+    marketing_type_id: number | null
   }
   application: {
     id?: number
@@ -538,6 +538,7 @@ export type BorrowerItem = {
   lastname: string
   loan_type: string
   company_id: string
+  borrower: any
 }
 
 export type RemarkItem = {
