@@ -274,7 +274,11 @@ const BorrowersListing = (props: Props) => {
 
             if (key === 'mobilephone_1') {
               return (
-                <td key={i} className='fs-6 fw-medium w-250px ps-10' style={{color: '#071437'}}>
+                <td
+                  key={i}
+                  className={`${classNameTableBody} fs-6 fw-medium w-250px ps-20`}
+                  style={{color: '#071437'}}
+                >
                   {phoneNumber}
                 </td>
               )
