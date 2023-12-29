@@ -159,7 +159,15 @@ const BackgroundCheck = ({data}: props) => {
           }
         },
       },
-
+      {
+        value: 'Loan Cross Check',
+        icon: <Icons name={'ImgLoanCrossCheck'} />,
+        background: 'rgba(232, 255, 243, 0.85)',
+        show: true,
+        onclick: () => {
+          alert('Loan Cross Check')
+        },
+      },
       {
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
@@ -171,15 +179,7 @@ const BackgroundCheck = ({data}: props) => {
           setShowValidationPhone(true)
         },
       },
-      {
-        value: 'Loan Cross Check',
-        icon: <Icons name={'ImgLoanCrossCheck'} />,
-        background: 'rgba(232, 255, 243, 0.85)',
-        show: true,
-        onclick: () => {
-          alert('Loan Cross Check')
-        },
-      },
+
       {
         value: 'Repayment Schedule Calculator',
         icon: <Icons name={'ImgCalendar'} />,

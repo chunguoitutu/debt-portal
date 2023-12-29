@@ -30,6 +30,7 @@ import Reject from './step-component/reject/Reject'
 import Icons from '@/components/icons'
 import Cookies from 'js-cookie'
 import {useSocket} from '@/app/context/SocketContext'
+import {RightToolbar} from '@/_metronic/layout/components/toolbar/right-toll-bar/RightToolbar'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -669,7 +670,7 @@ export const Applications = () => {
             month: JSON.stringify(month),
           },
         }
-        Cookies.set('createAplication', JSON.stringify(payload))
+        Cookies.set('createApplication', JSON.stringify(payload))
         handleContinue()
       }
     })
@@ -899,6 +900,7 @@ export const Applications = () => {
 
   return (
     <>
+      {/* <RightToolbar /> */}
       <div className='position-fixed' style={{zIndex: '1000000'}}>
         {showRemark && (
           <div className='wrapper-show-remark'>
@@ -1049,39 +1051,54 @@ export const Applications = () => {
           </div>
         </div>
         <div className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'>
-          <div className='d-flex flex-column h-100'>
-            <div className='d-none d-2xxl-block'>
-              <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
-                <BackgroundCheck data={data} />
-              </div>
-
-              <button
-                onClick={() => {
+          {[2, 3].includes(Number(formik.values.status) || 0) ? (
+            <div className='h-100 '>
+              <Remark
+                handleOnClose={() => {
                   setShowRemark(!showRemark)
                 }}
-                className='btn-remark d-flex justify-content-center align-items-center '
-              >
-                <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
-                  <Icons name={'Mes'} />
-                  <span className='span-button-remark ms-8px pt-1px'>Remark</span>
-                </div>
-              </button>
+                showClose={true}
+                small={true}
+                setRemarkList={setRemarkList}
+                idUpdate={applicationIdEdit}
+                remarkList={remarkList}
+              />
             </div>
+          ) : (
+            <div className='d-flex flex-column h-100'>
+              <div className='d-none d-2xxl-block'>
+                <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
+                  <BackgroundCheck data={data} />
+                </div>
 
-            <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
-              <div className='d-block d-2xxl-none'>
-                <Remark
-                  handleOnClose={() => {
+                <button
+                  onClick={() => {
                     setShowRemark(!showRemark)
                   }}
-                  small={true}
-                  setRemarkList={setRemarkList}
-                  idUpdate={applicationIdEdit}
-                  remarkList={remarkList}
-                />
+                  className='btn-remark d-flex justify-content-center align-items-center '
+                >
+                  <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
+                    <Icons name={'Mes'} />
+                    <span className='span-button-remark ms-8px pt-1px'>Remark</span>
+                  </div>
+                </button>
+              </div>
+
+              <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
+                <div className='d-block d-2xxl-none'>
+                  <Remark
+                    handleOnClose={() => {
+                      setShowRemark(!showRemark)
+                    }}
+                    small={true}
+                    setRemarkList={setRemarkList}
+                    idUpdate={applicationIdEdit}
+                    remarkList={remarkList}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>

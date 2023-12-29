@@ -14,7 +14,7 @@ import {KTIcon} from '@/_metronic/helpers'
 
 type Props = {
   remarkList: RemarkItem[]
-
+  showClose?: boolean
   idUpdate: string | number | any
   setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
   handleOnClose: () => void
@@ -24,6 +24,7 @@ const Remark: FC<Props> = ({
   remarkList = [],
   setRemarkList,
   idUpdate,
+  showClose = false,
   handleOnClose,
   small = false,
 }) => {
@@ -110,22 +111,27 @@ const Remark: FC<Props> = ({
       }}
       className={`card h-100  ${small ? 'w-100' : 'w-900px min-w-100px'}   wrapper-remark-mes`}
     >
-      <div className='modal-header p-30px  border-bottom border-gray-200'>
+      <div
+        style={{
+          padding: !showClose ? '30px' : '42px',
+        }}
+        className='modal-header  border-bottom border-gray-200'
+      >
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
-        <div
-          style={{
-            padding: '6px',
-          }}
-          className='btn btn-sm btn-icon btn-active-color-primary d-none d-2xxl-block'
-          onClick={handleOnClose}
-        >
-          <KTIcon className='fs-1' iconName='cross' />
-        </div>
+        {!showClose && (
+          <div
+            style={{
+              padding: '6px',
+            }}
+            className='btn btn-sm btn-icon btn-active-color-primary d-none d-2xxl-block'
+            onClick={handleOnClose}
+          >
+            <KTIcon className='fs-1' iconName='cross' />
+          </div>
+        )}
       </div>
       <div
-        className={`px-30px pt-30px  min-h-50px overflow-y-auto ${
-          small ? 'min-h-100px mh-500px' : 'h-100'
-        }`}
+        className={`px-30px pt-30px   overflow-y-auto ${small ? 'h-100 min-h-200px' : 'h-100 '}`}
         ref={contentRef}
       >
         <div className='pb-30px'>
@@ -209,6 +215,7 @@ const Remark: FC<Props> = ({
                 {!!(showMenu === index + 1) && (
                   <div className='dropdown-menu-remark card   position-absolute'>
                     <button
+                      disabled={showClose}
                       onClick={(e) => {
                         setShowMenu(0)
                         setInfoEdit(message)
@@ -218,6 +225,7 @@ const Remark: FC<Props> = ({
                       Edit
                     </button>
                     <button
+                      disabled={showClose}
                       onClick={() => {
                         handleRemoveRemark(message)
                         setShowMenu(0)
@@ -234,29 +242,32 @@ const Remark: FC<Props> = ({
         </div>
       </div>
       <div className='mt-auto border-top border-gray-200 p-4'>
-        <div className='d-flex align-items-center gap-3'>
+        <div className='d-flex justify-content-center align-items-end gap-4'>
           <textarea
+            disabled={showClose}
             placeholder='Enter remark...'
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
             ref={textareaRef}
             id='myInput'
-            className='w-100 min-h-50px mh-100px  pe-10px input-remark-import'
+            className='w-100 min-h-50px  input-remark-import'
             style={{
               border: 'none',
               outline: 'none',
             }}
           />
-          <Button
-            style={{display: 'flex', flexShrink: '0'}}
-            onClick={() => {
-              handleSubmit()
-            }}
-            className='btn-primary p-8px rounded-pill'
-          >
-            <Icons name='ImgSend' />
-          </Button>
+          <div className=' flex justify-content-end align-items-end'>
+            <Button
+              style={{display: 'flex', flexShrink: '0'}}
+              onClick={() => {
+                handleSubmit()
+              }}
+              className='btn-primary p-8px rounded-pill'
+            >
+              <Icons name='ImgSend' />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
