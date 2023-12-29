@@ -27,12 +27,13 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'company_code',
       name: 'Business Unit Code',
-      classNameTableHead: 'w-250px pe-5 ps-10',
+      classNameTableHead: 'w-250px ps-10',
       classNameTableBody: 'ps-7',
     },
     {
       key: 'business_uen',
       name: 'Business Unit UEN',
+      classNameTableHead: 'pe-10',
     },
     {
       key: 'contact_person',
