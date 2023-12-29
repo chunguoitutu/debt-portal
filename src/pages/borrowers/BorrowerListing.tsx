@@ -223,7 +223,7 @@ const BorrowersListing = (props: Props) => {
 
             const fullname = `${firstname} ${middlename ? middlename + ' ' : ''}${lastname}`
 
-            const phoneNumber = item.borrower[0].mobilephone_1
+            const phoneNumber = item.borrower?.[0].mobilephone_1 || ''
 
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
