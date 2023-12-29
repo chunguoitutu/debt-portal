@@ -301,11 +301,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
   }
 
-  const prevFirstName = formik.values.firstname
-  const prevMiddleName = formik.values.middlename
-  const prevLastName = formik.values.lastname
-  const prevID = formik.values.identification_type
-
   async function handleGetApplicationById() {
     try {
       const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
