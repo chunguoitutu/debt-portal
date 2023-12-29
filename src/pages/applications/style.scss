@@ -390,13 +390,23 @@
 }
 
 .input-remark-import {
-  background: #f1f1f4;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 22px; /* 146.667% */
-  color: var(--color-text-light-mode-text-gray-700, #4b5675);
+  display: block;
+  width: 100%;
+  padding: 0.775rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--gray-bs-gray-700);
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #dbdfe9;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.475rem;
+  box-shadow: false;
+  max-height: 200px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .wrapper-show-remark {
