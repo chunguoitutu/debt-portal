@@ -23,7 +23,11 @@ import {
   StepItem,
 } from '@/app/types'
 import {STEP_APPLICATION, handleCreateBlockAddress} from '@/app/constants'
-import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
+import {
+  capitalizeFirstText,
+  convertErrorMessageResponse,
+  filterObjectKeyNotEmpty,
+} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
 import Reject from './step-component/reject/Reject'
@@ -773,9 +777,9 @@ export const Applications = () => {
         identification_type,
         identification_no,
         date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
-        firstname,
-        lastname,
-        middlename,
+        firstname: capitalizeFirstText(firstname),
+        lastname: capitalizeFirstText(lastname),
+        middlename: capitalizeFirstText(middlename),
         gender,
       },
       borrower: {
