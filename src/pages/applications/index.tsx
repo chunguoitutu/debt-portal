@@ -75,7 +75,6 @@ export const Applications = () => {
   const [rejectionOne, setRejectionOne] = useState<any>({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
-  const [data, setData] = useState<any>({})
   const [isLoading, setIsLoading] = useState(true)
   const [listIdEdit, setListIdEdit] = useState<ListIdEdit>({
     customerId: 0,
@@ -299,7 +298,6 @@ export const Applications = () => {
     try {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
       setRejectionOne(data?.rejection || {})
-      setData(data?.data || {})
       const {
         borrower,
         application,
@@ -1030,7 +1028,6 @@ export const Applications = () => {
                   />
                 )}
                 <GeneralButton
-                  data={data}
                   setStepCompleted={setStepCompleted}
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
@@ -1065,7 +1062,13 @@ export const Applications = () => {
             <div className='d-flex flex-column h-100'>
               <div className='d-none d-2xxl-block'>
                 <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
-                  <BackgroundCheck data={data} />
+                  <BackgroundCheck
+                    setStepCompleted={setStepCompleted}
+                    formik={formik}
+                    config={STEP_APPLICATION[currentStep - 1].config || []}
+                    setSingpass={setSingpass}
+                    singpass={singpass}
+                  />
                 </div>
 
                 <button

@@ -13,7 +13,6 @@ interface Props extends PropsStepApplication {
   handleSaveDraft: () => void
   handleClose: () => void
   handleReloadApi: () => void
-  data: any
   isDraft: boolean
   currentStep: number
 }
@@ -24,7 +23,6 @@ const GeneralButton: FC<Props> = ({
   handleClose,
   handleReloadApi,
   formik,
-  data,
   isDraft,
   currentStep,
 }) => {
