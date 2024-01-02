@@ -1,5 +1,5 @@
 import {Navigate, Outlet} from 'react-router-dom'
-import logo from './../../app/images/logo-auth.png'
+import logo from './../../app/images/logo-login.png'
 import Cookies from 'js-cookie'
 import {FooterWrapper} from '@/components/footer'
 import './style.scss'
@@ -29,7 +29,7 @@ const AuthLayout = () => {
           <div className='d-flex flex-column justify-content-center'>
             <h1 className='text-capitalize  m-0 title-company-welcome'>Welcome To</h1>
             <h1 className='text-capitalize m-0 name-company-signin'>The Finance 360 System</h1>
-            <span className='text-capitalize text-white fs-2 fw-semibold' style={{paddingTop: 32}}>
+            <span className='text-capitalize fs-2 fw-semibold text-FCFCFC' style={{paddingTop: 32}}>
               Sign In To Access Your Account
             </span>
           </div>

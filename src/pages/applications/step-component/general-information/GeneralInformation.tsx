@@ -189,9 +189,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           )
 
           const values = {
-            firstname: firstname || '',
-            middlename: middlename || '',
-            lastname: lastname || '',
+            firstname: capitalizeFirstText(firstname as any) || '',
+            middlename: capitalizeFirstText(middlename as any) || '',
+            lastname: capitalizeFirstText(lastname as any) || '',
             date_of_birth: event.data?.dob?.value || '',
             identification_no: event.data?.uinfin?.value || '',
             mobilephone_1: event.data?.mobileno.nbr?.value || '',
