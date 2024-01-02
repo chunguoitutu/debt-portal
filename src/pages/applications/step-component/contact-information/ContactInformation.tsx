@@ -50,12 +50,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
     return data
   }, [values.address_contact_info])
 
-  function handleChangeBlockAddress(e: React.ChangeEvent<any>, index: number, key: string) {
-    const {value} = e.target
-
-    setFieldValue(`address_contact_info[${index}][${key}]`, value)
-  }
-
   async function onFetchDataList() {
     try {
       const updatedDataMarketing = {...dataOption}
@@ -90,9 +84,12 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
             setActive(itemDefault?.address_type_name)
           }
 
-          // Only create and first mount component
+          // Only create or draft status and first mount component
           // !values.address_contact_info[0].address_type_id -> first mount
-          if (!applicationIdEdit && !values.address_contact_info[0].address_type_id) {
+          if (
+            [0, undefined].includes(values.status) &&
+            !values.address_contact_info[0].address_type_id
+          ) {
             let newValue = {
               ...values.address_contact_info[0],
               address_type_id: itemDefault.id,
@@ -120,10 +117,11 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
 
               delete newValue.existing_staying
             }
-            !singpass &&
-              setFieldValue(`address_contact_info[0]`, {
-                ...newValue,
-              })
+
+            setFieldValue(`address_contact_info`, [
+              {...newValue},
+              ...values?.address_contact_info?.slice(1), // for draft status
+            ])
           }
         }
 

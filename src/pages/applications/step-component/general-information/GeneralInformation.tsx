@@ -148,13 +148,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
          */
 
         if (event.origin === 'http://localhost:3001') {
-          // console.log(1324, event.data)
           setSingpass(true)
 
-          console.log(event.data, '124')
-
           const addressInfo: any = await GetDefaultAddressType()
-          // console.log(123456, event.data)
 
           let property_type = 'HDB'
           let housing_type = ''

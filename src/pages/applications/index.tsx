@@ -34,7 +34,6 @@ import Reject from './step-component/reject/Reject'
 import Icons from '@/components/icons'
 import Cookies from 'js-cookie'
 import {useSocket} from '@/app/context/SocketContext'
-import {RightToolbar} from '@/_metronic/layout/components/toolbar/right-toll-bar/RightToolbar'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -72,7 +71,7 @@ export const Applications = () => {
   const [searchParams] = useSearchParams()
   const [optionsRejectionType, setOptionsRejectionType] = useState<any>([])
   const [optionsUser, setOptionsUser] = useState<any>([])
-  const [singpass, setSingpass] = useState(false)
+  const [singpass, setSingpass] = useState<boolean>(false)
   const [rejectionOne, setRejectionOne] = useState<any>({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -101,6 +100,7 @@ export const Applications = () => {
   const {applicationIdEdit} = useParams()
   const {socket} = useSocket()
   const navigate = useNavigate()
+
   useEffect(() => {
     if (!applicationIdEdit) return setIsLoading(false)
     !!applicationIdEdit &&
