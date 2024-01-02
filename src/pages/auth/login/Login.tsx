@@ -151,7 +151,7 @@ export function Login() {
   return (
     <>
       {!!listBranch ? (
-        <Form.Group controlId='formBasicSelect'>
+        <Form.Group controlId='formBasicSelect' style={{height: 204, marginTop: 132}}>
           <label className='form-label fs-6 fw-bolder text-dark mb-2'>Please Select Company:</label>
           <Form.Select as='select' onChange={handleSelectBranch}>
             <option value=''>{''}</option>

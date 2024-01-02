@@ -1,0 +1,37 @@
+.sign-in-page-custom-dev {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  padding-left: 65px;
+  padding-right: 65px;
+  //   max-width: 500px !important;
+  //   min-width: 300px !important;
+
+  @media screen and (max-width: 1440) {
+    width: 300px;
+  }
+}
+
+.responsive-sign-in {
+  width: 470px;
+  @media screen and (max-width: 1440px) {
+    width: 300px;
+  }
+}
+
+.bg-norepeat-sign-in {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.title-company-welcome {
+  font-size: 34px;
+  padding-top: 70px;
+  font-weight: 800;
+  color: #fcfcfc;
+}
+
+.name-company-signin {
+  font-size: 34px;
+  font-weight: 800;
+  color: #fcfcfc;
+}

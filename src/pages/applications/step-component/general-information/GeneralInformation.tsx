@@ -18,14 +18,14 @@ import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
 import Singpass from './Singpass'
 import {KTIcon} from '@/_metronic/helpers'
-import {PROPERTY_TYPE, convertResidentialTypeSingPass} from '@/app/utils'
+import {PROPERTY_TYPE, capitalizeFirstText, convertResidentialTypeSingPass} from '@/app/utils'
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {config = [], formik, setStepCompleted, setSingpass, singpass} = props
   const [searchParams, setSearchParams] = useSearchParams()
-  const [useSingpass, setUseSingpass] = useState(false)
+  let [singpassValues, setSingpassValues] = useState<any>()
   const [activeTab, setActiveTab] = useState('cpf')
 
   const [cpfData, setCpfData] = useState<{
@@ -208,8 +208,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
                           housing_type,
                           unit: event.data.regadd.unit.value || '',
                           block: event.data.regadd.block.value || '',
-                          building: event.data.regadd.building.value || '',
-                          street: event.data.regadd.street.value || '',
+                          building: capitalizeFirstText(event.data.regadd.building.value) || '',
+                          street: capitalizeFirstText(event.data.regadd.street.value) || '',
                         }
                       : {}),
                     country: event.data.regadd.country.desc || '',
@@ -228,6 +228,49 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             // marketing_type_id: 1,
             // vehicle will return result when we have the offical api singpass
           }
+
+          singpassValues = {
+            // Create a copy of the values
+            firstname: firstname || '',
+            middlename: middlename || '',
+            lastname: lastname || '',
+            date_of_birth: event.data?.dob?.value || '',
+            identification_no: event.data?.uinfin?.value || '',
+            mobilephone_1: event.data?.mobileno.nbr?.value || '',
+            email_1: event.data?.email?.value || '',
+            address_contact_info: formik.values.address_contact_info.map((item, i) =>
+              i === 0
+                ? {
+                    ...item,
+                    ...(addressInfo as any),
+                    postal_code: event.data.regadd.postal.value || '',
+                    // street_1: event.data.regadd.unit.value  event.data.regadd.street.value,
+                    ...(addressInfo?.existing_staying
+                      ? {
+                          property_type,
+                          housing_type,
+                          unit: event.data.regadd.unit.value || '',
+                          block: event.data.regadd.block.value || '',
+                          building: capitalizeFirstText(event.data.regadd.building.value) || '',
+                          street: capitalizeFirstText(event.data.regadd.street.value) || '',
+                        }
+                      : {}),
+                    country: event.data.regadd.country.desc || '',
+                  }
+                : item
+            ),
+            gender: event.data.sex.desc,
+            residential_type: residential_type || '',
+            annual_income: annual_api || '',
+            nationality: event.data.race.desc || '',
+            country: event.data.regadd.country.desc,
+            month: cpf_months || '',
+            amount: cpf_amount || '',
+            date: cpf_date || '',
+            employer: cpf_employer || '',
+          }
+
+          setSingpassValues(singpassValues)
 
           handleFillFormSingpass(values)
           onFetchDataList()
@@ -297,8 +340,45 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
   }
 
+  // async function handleGetApplicationById() {
+  //   try {
+  //     const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
+  //       company_id,
+  //     })
+  //     const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
+  //     setStepCompleted(0)
+  //     //step 1
+  //     setFieldValue('is_existing', 'existing')
+  //     setFieldValue('firstname', data?.data.firstname || '')
+  //     setFieldValue('middlename', data?.data.middlename || '')
+  //     setFieldValue('lastname', data?.data.lastname || '')
+  //     setFieldValue('customer_no', data?.data.customer_no || '')
+  //     setFieldValue('residential_type', data?.data.borrower[0]?.residential_type || '')
+  //     setFieldValue('identification_type', data?.data.identification_type || '')
+  //     setFieldValue('gender', data?.data.gender || '')
+  //     setFieldValue('date_of_birth', formattedDateOfBirth || '')
+  //     setFieldValue('country_id', data?.data.country_id || '')
+  //   } catch (error) {
+  //     if (!singpass) {
+  //       setFieldValue('is_existing', 'new')
+  //       setFieldValue('firstname', '')
+  //       setFieldValue('middlename', '')
+  //       setFieldValue('lastname', '')
+  //       setFieldValue('customer_no', '')
+  //       setFieldValue('identification_type', '')
+  //       setFieldValue('residential_type', '')
+  //       setFieldValue('gender', '')
+  //       setFieldValue('date_of_birth', '')
+  //       setFieldValue('country_id', 192)
+  //     }
+  //   } finally {
+  //   }
+  // }
+
   async function handleGetApplicationById() {
     try {
+      if (singpass && values.identification_no === singpassValues.identification_no) return
+
       const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
         company_id,
       })
@@ -317,18 +397,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       setFieldValue('date_of_birth', formattedDateOfBirth || '')
       setFieldValue('country_id', data?.data.country_id || '')
     } catch (error) {
-      if (!singpass) {
-        setFieldValue('is_existing', 'new')
-        setFieldValue('firstname', '')
-        setFieldValue('middlename', '')
-        setFieldValue('lastname', '')
-        setFieldValue('customer_no', '')
-        setFieldValue('identification_type', '')
-        setFieldValue('residential_type', '')
-        setFieldValue('gender', '')
-        setFieldValue('date_of_birth', '')
-        setFieldValue('country_id', 192)
-      }
+      setFieldValue('is_existing', 'new')
+      setFieldValue('firstname', '')
+      setFieldValue('middlename', '')
+      setFieldValue('lastname', '')
+      setFieldValue('customer_no', '')
+      setFieldValue('identification_type', '')
+      setFieldValue('residential_type', '')
+      setFieldValue('gender', '')
+      setFieldValue('date_of_birth', '')
+      setFieldValue('country_id', 192)
     } finally {
     }
   }
