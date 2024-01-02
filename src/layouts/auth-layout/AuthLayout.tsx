@@ -1,5 +1,5 @@
 import {Navigate, Outlet} from 'react-router-dom'
-import logo from './../../app/images/logo-login.png'
+import logo from './../../app/images/logoMC.png'
 import Cookies from 'js-cookie'
 import {FooterWrapper} from '@/components/footer'
 import './style.scss'
@@ -19,8 +19,6 @@ const AuthLayout = () => {
             src={logo}
             alt='logo'
             style={{
-              backgroundBlendMode: 'overlay',
-              mixBlendMode: 'overlay',
               width: '59.43px',
               height: '80px',
             }}

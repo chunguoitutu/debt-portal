@@ -70,15 +70,19 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Button',
     label: '',
   },
+
   {
-    key: 'firstname',
-    component: NameOfApplication,
-    typeComponent: 'NameOfApplication',
-    label: 'Name Of Applicant',
+    key: 'identification_no',
+    component: Input,
+    typeComponent: 'Input',
+    column: 6,
+    label: 'NRIC No./FIN',
+    className: 'justify-content-xxl-end',
     required: true,
     validationFormik: Yup.string()
-      .max(255, convertMessageErrorMaximum(255))
-      .required(convertMessageErrorRequired('First Name')),
+      .min(4, 'Minimum 4 characters')
+      .max(64, convertMessageErrorMaximum(64))
+      .required(convertMessageErrorRequired('NRIC No./FIN')),
   },
   {
     key: 'identification_type',
@@ -93,18 +97,16 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
       .required(convertMessageErrorRequired('ID Type')),
   },
   {
-    key: 'identification_no',
-    component: Input,
-    typeComponent: 'Input',
-    column: 6,
-    label: 'NRIC No./FIN',
-    className: 'justify-content-xxl-end',
+    key: 'firstname',
+    component: NameOfApplication,
+    typeComponent: 'NameOfApplication',
+    label: 'Name Of Applicant',
     required: true,
     validationFormik: Yup.string()
-      .min(4, 'Minimum 4 characters')
-      .max(64, convertMessageErrorMaximum(64))
-      .required(convertMessageErrorRequired('NRIC No./FIN')),
+      .max(255, convertMessageErrorMaximum(255))
+      .required(convertMessageErrorRequired('First Name')),
   },
+
 
   //**HOLD */
   // {
