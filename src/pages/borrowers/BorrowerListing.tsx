@@ -1,32 +1,32 @@
 import {KTCardBody} from '@/_metronic/helpers'
+import {PageLink, PageTitle} from '@/_metronic/layout/core'
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {Input} from '@/components/input'
 import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {LOAN_LISTING_CONFIG} from './config'
-import clsx from 'clsx'
-import SortBy from '@/components/sort-by'
-import ButtonViewDetail from '@/components/button/ButtonViewDetail'
-import Pagination from '@/components/table/components/Pagination'
-import RowPerPage from '@/components/row-per-page'
-import Loading from '@/components/table/components/Loading'
 import React, {useEffect, useState} from 'react'
-import {LoanItem, OrderBy, ResponseLoanListing, SearchCriteria, TableRow} from '@/app/types'
-import {FilterLoan} from './FilterLoan'
-import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
+import clsx from 'clsx'
+import RowPerPage from '@/components/row-per-page'
+import {BorrowerItem, OrderBy, ResponseBorrowerListing, SearchCriteria, TableRow} from '@/app/types'
+import Pagination from '@/components/table/components/Pagination'
+
+import SortBy from '@/components/sort-by'
 import moment from 'moment'
-import {useAuth} from '@/app/context/AuthContext'
+import Loading from '@/components/table/components/Loading'
+import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import request from '@/app/axios'
-import {Badge} from 'react-bootstrap'
-import numeral from 'numeral'
-import {Footer} from '@/components/footer/Footer'
-import {PageTitle, PageLink} from '@/_metronic/layout/core'
+import {useAuth} from '@/app/context/AuthContext'
+import {FilterBorrower} from './FilterBorrower'
+import ButtonViewDetail from '@/components/button/ButtonViewDetail'
+import {BORROWER_CONFIG_LISTING} from './config'
+
+type Props = {}
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Loans',
-    path: '/loan/listing',
+    title: 'Borrowers',
+    path: '/borrower/listing',
     isSeparator: false,
     isActive: false,
   },
@@ -40,63 +40,76 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 const showFilter = [
   {
-    key: 'loan_no',
-    value: 'Loan No',
+    key: 'customer_no',
+    value: 'Customer No',
   },
   {
     key: 'fullname',
-    value: 'Name Of Borrower',
+    value: 'Full Name',
+  },
+  {
+    key: 'identification_type',
+    value: 'Identity Card Type',
   },
   {
     key: 'identification_no',
     value: 'NRIC No',
   },
   {
-    key: 'loan_amount',
-    value: 'Loan Amount',
+    key: 'gender',
+    value: 'Gender',
   },
   {
-    key: 'approval_date',
-    value: 'Monthly Due Date',
+    key: 'date_of_birth',
+    value: 'Date Of Birth',
   },
   {
-    key: 'loan_term',
-    value: 'No. Of Instalment',
-  },
-  {
-    key: 'status',
-    value: 'UFO',
+    key: 'mobilephone_1',
+    value: 'Telephone',
   },
 ]
 
-const LoanListing = () => {
-  const sessionData = isObject(parseJson(sessionStorage.getItem('loan') || ''))
-    ? parseJson(sessionStorage.getItem('loan') || '')
+const BorrowersListing = (props: Props) => {
+  const sessionData = isObject(parseJson(sessionStorage.getItem('borrower') || ''))
+    ? parseJson(sessionStorage.getItem('borrower') || '')
     : {}
 
-  const {settings, rows} = LOAN_LISTING_CONFIG || {}
+  const {settings, rows} = BORROWER_CONFIG_LISTING || {}
   const {showAction = true, showEditButton} = settings || {}
+  const [loadApi, setLoadApi] = React.useState<boolean>(true)
+
+  const [data, setData] = React.useState<BorrowerItem[]>([])
+  const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
-  const [showInput, setShowInput] = useState<boolean>(false)
-  const [data, setData] = useState<LoanItem[]>([])
-  const [dataFilter, setDataFilter] = useState<{[key: string]: any}>(
+  const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
     isObject(sessionData?.dataFilter) ? sessionData?.dataFilter : {}
   )
-  const [loadApi, setLoadApi] = React.useState<boolean>(true)
-  const [searchValue, setSearchValue] = useState<string>('')
-  const [checkFilter, setCheckFilter] = useState<any>({})
-  const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
-  const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
-    pageSize: 10,
-    currentPage: 1,
+  const [checkFilter, setCheckFilter] = React.useState<any>({})
+  const [showInput, setShowInput] = React.useState<boolean>(false)
+
+  const [orderBy, setOrderBy] = useState<OrderBy>(sessionData?.orderBy || 'desc')
+  const [keySort, setKeySort] = useState<string>(sessionData?.keySort || 'id')
+  const [searchValue, setSearchValue] = useState<string>(sessionData?.searchValue || '')
+
+  const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
+    pageSize: sessionData?.pageSize || 10,
+    currentPage: sessionData?.currentPage || 1,
     total: 0,
   })
-  const [keySort, setKeySort] = useState<string>('id')
-  const [orderBy, setOrderBy] = useState<OrderBy>('desc')
 
   const {pageSize, currentPage} = searchCriteria
-
   const {company_id} = useAuth()
+
+  function handleSaveSearchToSession() {
+    const data = {
+      searchValue,
+      dataFilter,
+      pageSize,
+      currentPage,
+    }
+
+    sessionStorage.setItem('borrower', JSON.stringify(data))
+  }
 
   useEffect(() => {
     if (!+company_id) return
@@ -118,21 +131,85 @@ const LoanListing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company_id, keySort, orderBy, pageSize, currentPage, loadApi])
 
-  function getDayWithSuffix(day) {
-    if (day >= 11 && day <= 13) {
-      return `${day}th`
+  function handleConvertDataFilter(dataFilter: {[key: string]: any}) {
+    return handleFormatFilter({
+      dataFilter: {
+        ...dataFilter,
+        searchBar: searchValue,
+      },
+      keyDate: ['date_of_birth'],
+      keyNumber: ['loan_type_id', 'id', 'loan_terms'],
+    })
+  }
+
+  function handleResetFilter() {
+    setDataFilter({})
+    setSearchValue('')
+    setLoadApi(!loadApi)
+  }
+
+  async function onFetchDataList(
+    body?: Omit<SearchCriteria<Partial<ResponseBorrowerListing>>, 'total'>
+  ) {
+    setLoading(true)
+    try {
+      setCheckFilter(body?.filters || {})
+      const {data: response} = await request.post(settings.endPointGetListing, {
+        ...body,
+        company_id: +company_id,
+        keySort: keySort,
+        orderBy: orderBy,
+      })
+      Array.isArray(response.data) && setData(response.data)
+      response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
+    } catch (error) {
+      // no thing
+    } finally {
+      setLoading(false)
     }
-    const lastDigit = day % 10
-    switch (lastDigit) {
-      case 1:
-        return `${day}st`
-      case 2:
-        return `${day}nd`
-      case 3:
-        return `${day}rd`
-      default:
-        return `${day}th`
+  }
+
+  async function handleChangePagination(goToPage: number) {
+    setSearchCriteria({...searchCriteria, currentPage: goToPage})
+    setLoadApi(!loadApi)
+  }
+  function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchValue(e.target.value)
+  }
+
+  function handleReGetApi() {
+    setLoadApi(!loadApi)
+  }
+
+  function handleChangeSortBy(item: TableRow) {
+    if (item.key === keySort) {
+      setOrderBy(orderBy === 'desc' ? 'asc' : 'desc')
+    } else {
+      setKeySort(item.key)
+      setOrderBy('asc')
     }
+  }
+
+  function showInputFilter() {
+    setShowInput(!showInput)
+  }
+
+  function handleFilter() {
+    setSearchCriteria({...searchCriteria, currentPage: 1})
+    setLoadApi(!loadApi)
+  }
+
+  function handleChangeFilter(e: React.ChangeEvent<HTMLInputElement>, key?: 'gte' | 'lte') {
+    const {value, name} = e.target
+    setDataFilter({
+      ...dataFilter,
+      [name]: key
+        ? {
+            ...dataFilter[name],
+            [key]: value,
+          }
+        : value,
+    })
   }
 
   const renderRows = () => {
@@ -142,15 +219,11 @@ const LoanListing = () => {
           {rows.map(({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
             const {keyLabelOption, keyValueOption} = infoFilter || {}
 
-            const identificationNo = item?.borrower?.customer?.identification_no
+            const {firstname, middlename, lastname} = item
 
-            const {firstname, lastname, middlename} = item?.borrower?.customer || {}
+            const fullname = `${firstname} ${middlename ? middlename + ' ' : ''}${lastname}`
 
-            const fullname = `${firstname || ''} ${middlename || ''} ${lastname || ''}`.trim()
-
-            const month_due_date = moment(item.approval_date).format('DD')
-
-            const dayWithSuffix = getDayWithSuffix(parseInt(month_due_date, 10))
+            const phoneNumber = item.borrower?.[0].mobilephone_1 || ''
 
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
@@ -160,7 +233,7 @@ const LoanListing = () => {
 
             if (key === 'id') {
               return (
-                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-6'>
+                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
                   {Number(idx) +
                     1 +
                     (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
@@ -169,8 +242,8 @@ const LoanListing = () => {
               )
             }
 
-            if (key === 'loan_amount') {
-              value = numeral(item[key]).format('$0,0.00')
+            if (key === 'application_date') {
+              value = moment(item[key]).format('MMM D, YYYY')
             }
 
             // handle for select
@@ -183,86 +256,36 @@ const LoanListing = () => {
               value = currentItem[keyLabelOption || 'label'] || ''
             }
 
-            if (key === 'fullname') {
+            if (key === 'identification_no') {
               return (
                 <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
+                  {value}
+                </td>
+              )
+            }
+
+            if (key === 'fullname') {
+              return (
+                <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
                   {fullname}
                 </td>
               )
             }
 
-            if (key === 'approval_date') {
+            if (key === 'mobilephone_1') {
               return (
                 <td
                   key={i}
-                  className={clsx([
-                    'fs-14 fw-semibold hover-applications-listing ps-7',
-                    classNameTableBody,
-                  ])}
+                  className={`${classNameTableBody} fs-6 fw-medium w-250px ps-20`}
                   style={{color: '#071437'}}
                 >
-                  {dayWithSuffix}
+                  {phoneNumber}
                 </td>
               )
             }
 
-            if (key === 'status') {
-              if (item[key] === 0) {
-                return (
-                  <td
-                    className={clsx([
-                      'fs-14 fw-semibold hover-applications-listing ps-7',
-                      classNameTableBody,
-                    ])}
-                  >
-                    F
-                  </td>
-                )
-              } else if (item[key] === 1) {
-                return (
-                  <td
-                    key={i}
-                    className={clsx([
-                      'fs-14 fw-semibold hover-applications-listing ps-7',
-                      classNameTableBody,
-                    ])}
-                  >
-                    U
-                  </td>
-                )
-              } else {
-                return (
-                  <td
-                    key={i}
-                    className={clsx([
-                      'fs-14 fw-semibold hover-applications-listing ps-7',
-                      classNameTableBody,
-                    ])}
-                  >
-                    0
-                  </td>
-                )
-              }
-            }
-
-            if (key === 'identification_no') {
-              return (
-                <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
-                  {identificationNo}
-                </td>
-              )
-            }
-
-            if (key === 'loan_term') {
-              return (
-                <td
-                  key={i}
-                  className='ps-8 pe-8 text-end fs-6 fw-medium'
-                  style={{color: '#071437'}}
-                >
-                  {value} Months
-                </td>
-              )
+            if (key === 'date_of_birth') {
+              value = moment(item[key]).format('MMM D, YYYY')
             }
 
             return (
@@ -287,105 +310,11 @@ const LoanListing = () => {
     })
   }
 
-  async function handleChangePagination(goToPage: number) {
-    setSearchCriteria({...searchCriteria, currentPage: goToPage})
-    setLoadApi(!loadApi)
-  }
-
-  function handleConvertDataFilter(dataFilter: {[key: string]: any}) {
-    return handleFormatFilter({
-      dataFilter: {
-        ...dataFilter,
-        searchBar: searchValue,
-      },
-      keyDate: ['approval_date'],
-      keyNumber: ['id'],
-    })
-  }
-
-  function handleSaveSearchToSession() {
-    const data = {
-      searchValue,
-      dataFilter,
-      pageSize,
-      currentPage,
-    }
-
-    sessionStorage.setItem('loan', JSON.stringify(data))
-  }
-
-  function showInputFilter() {
-    setShowInput(!showInput)
-  }
-
-  function handleResetFilter() {
-    setDataFilter({})
-    setSearchValue('')
-    setLoadApi(!loadApi)
-  }
-
-  function handleFilter() {
-    setSearchCriteria({...searchCriteria, currentPage: 1})
-    setLoadApi(!loadApi)
-  }
-
-  function handleChangeFilter(e: React.ChangeEvent<HTMLInputElement>, key?: 'gte' | 'lte') {
-    const {value, name} = e.target
-    setDataFilter({
-      ...dataFilter,
-      [name]: key
-        ? {
-            ...dataFilter[name],
-            [key]: value,
-          }
-        : value,
-    })
-  }
-
-  async function onFetchDataList(
-    body?: Omit<SearchCriteria<Partial<ResponseLoanListing>>, 'total'>
-  ) {
-    setLoading(true)
-    try {
-      setCheckFilter(body?.filters || {})
-
-      const {data: response} = await request.post(settings.endPointGetListing, {
-        ...body,
-        company_id: +company_id,
-        keySort: keySort,
-        orderBy: orderBy,
-      })
-      Array.isArray(response.data) && setData(response.data)
-      response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
-    } catch (error) {
-      // no thing
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  function handleChangeSortBy(item: TableRow) {
-    if (item.key === keySort) {
-      setOrderBy(orderBy === 'desc' ? 'asc' : 'desc')
-    } else {
-      setKeySort(item.key)
-      setOrderBy('asc')
-    }
-  }
-
-  function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchValue(e.target.value)
-  }
-
-  function handleReGetApi() {
-    setLoadApi(!loadApi)
-  }
-
   return (
     <div className='card p-5 h-fit-content'>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Loan Listing'}</PageTitle>
+      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
       {showInput && (
-        <FilterLoan
+        <FilterBorrower
           onClose={showInputFilter}
           handleResetFilter={handleResetFilter}
           rows={rows}
@@ -439,9 +368,9 @@ const LoanListing = () => {
                     ? '#c4cada'
                     : '#f1f1f4',
               }}
-              onClick={showInputFilter}
               className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
               disabled={false}
+              onClick={showInputFilter}
             >
               <Icons name={'filterIcon'} />
               Filter
@@ -460,7 +389,7 @@ const LoanListing = () => {
                 {showFilter.map((filter, index) => (
                   <div key={index} className='p-0 m-0'>
                     {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                      !['approval_date', 'status', 'loan_amount'].includes(filter.key) && (
+                      !['identification_type', 'date_of_birth'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
                             {filter.value}: {checkFilter[`${filter.key}`]}
@@ -477,69 +406,41 @@ const LoanListing = () => {
                         </div>
                       )}
 
-                    {!!checkFilter?.approval_date && ['approval_date'].includes(filter.key) && (
+                    {!!checkFilter[`${filter.key}`] &&
+                      ['identification_type'].includes(filter.key) && (
+                        <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
+                          <h2 className='filter-title-show'>
+                            {filter.value}:{' '}
+                            {checkFilter[`${filter.key}`] === 'foreign_identification_number'
+                              ? 'Foreign Identification Number'
+                              : 'Singapore NRIC No'}
+                          </h2>
+                          <div
+                            onClick={() => {
+                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                              setLoadApi(!loadApi)
+                            }}
+                            className='p-0 m-0 cursor-pointer'
+                          >
+                            <Icons name={'CloseSmall'} />
+                          </div>
+                        </div>
+                      )}
+                    {!!checkFilter?.date_of_birth && ['date_of_birth'].includes(filter.key) && (
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
-                          {!!checkFilter?.approval_date?.gte &&
-                            moment(checkFilter?.approval_date?.gte).format('MMM DD, YYYY')}{' '}
-                          {!!checkFilter?.approval_date?.lte && 'To '}
-                          {!!checkFilter?.approval_date?.lte &&
-                            moment(checkFilter?.approval_date?.lte)
+                          {!!checkFilter?.date_of_birth?.gte &&
+                            moment(checkFilter?.date_of_birth?.gte).format('MMM D, YYYY')}{' '}
+                          {!!checkFilter?.date_of_birth?.lte && 'To '}
+                          {!!checkFilter?.date_of_birth?.lte &&
+                            moment(checkFilter?.date_of_birth?.lte)
                               .subtract(1, 'days')
                               .format('MMM D, YYYY')}
                         </h2>
                         <div
                           onClick={() => {
-                            setDataFilter({...dataFilter, approval_date: ''})
-                            setLoadApi(!loadApi)
-                          }}
-                          className='p-0 m-0 cursor-pointer'
-                        >
-                          <Icons name={'CloseSmall'} />
-                        </div>
-                      </div>
-                    )}
-
-                    {!!checkFilter?.loan_amount && ['loan_amount'].includes(filter.key) && (
-                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                        <h2 className='filter-title-show'>
-                          {filter.value}:{' '}
-                          {(!!checkFilter?.loan_amount?.gte ||
-                            checkFilter?.loan_amount?.gte === 0) &&
-                            'From '}
-                          {(!!checkFilter?.loan_amount?.gte ||
-                            checkFilter?.loan_amount?.gte === 0) &&
-                            checkFilter?.loan_amount?.gte}{' '}
-                          {(!!checkFilter?.loan_amount?.lte ||
-                            checkFilter?.loan_amount?.lte === 0) &&
-                            'To '}
-                          {(!!checkFilter?.loan_amount?.lte ||
-                            checkFilter?.loan_amount?.lte === 0) &&
-                            checkFilter?.loan_amount?.lte}
-                        </h2>
-                        <div
-                          onClick={() => {
-                            setDataFilter({...dataFilter, loan_amount: ''})
-                            setLoadApi(!loadApi)
-                          }}
-                          className='p-0 m-0 cursor-pointer'
-                        >
-                          <Icons name={'CloseSmall'} />
-                        </div>
-                      </div>
-                    )}
-
-                    {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
-                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                        <h2 className='filter-title-show'>
-                          {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'F'}
-                          {+checkFilter[`${filter.key}`] === 1 && 'U'}
-                          {+checkFilter[`${filter.key}`] === 2 && 'O'}
-                        </h2>
-                        <div
-                          onClick={() => {
-                            setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                            setDataFilter({...dataFilter, date_of_birth: ''})
                             setLoadApi(!loadApi)
                           }}
                           className='p-0 m-0 cursor-pointer'
@@ -563,7 +464,6 @@ const LoanListing = () => {
             </div>
           )}
 
-        {/* listing rows */}
         <KTCardBody className='py-4'>
           <div className='table-responsive'>
             <table
@@ -597,7 +497,7 @@ const LoanListing = () => {
                         </th>
                       )
                     })}
-                  {showAction && <th className='text-center w-150px fs-6 fw-bold'>Actions</th>}
+                  {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -645,4 +545,4 @@ const LoanListing = () => {
   )
 }
 
-export default LoanListing
+export default BorrowersListing

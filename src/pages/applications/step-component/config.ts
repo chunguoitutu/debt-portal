@@ -1,9 +1,9 @@
 import * as Yup from 'yup'
 import NameOfApplication from '@/components/applications/NameOfApplication'
-import {Input} from '@/components/input'
+import { Input } from '@/components/input'
 import Radio from '@/components/radio/Radio'
-import {Select} from '@/components/select'
-import {TextArea} from '@/components/textarea'
+import { Select } from '@/components/select'
+import { TextArea } from '@/components/textarea'
 import GrossMonthlyIncome from '@/components/applications/GrossMonthlyIncome'
 import FullName from './completion/FullName'
 import Address from './completion/Address'
@@ -16,14 +16,15 @@ import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
 import FileDocument from './employment/FileDocument'
 import RenderFileDocument from './completion/RenderFileDocument'
-import {children_config_completion} from './completion'
-import {ApplicationConfig, TableConfig} from '@/app/types'
-import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
+import { children_config_completion } from './completion'
+import { ApplicationConfig, TableConfig } from '@/app/types'
+import { convertMessageErrorMaximum, convertMessageErrorRequired } from '@/app/utils'
 import {
   BANKRUPTCY,
   CUSTOMER_TYPE,
   EMPLOYMENT_STATUS,
   GENDER,
+  HOME_OWNERSHIP,
   ID_TYPE,
   INCOME_DOCUMENT,
   LANGUAGES,
@@ -32,10 +33,11 @@ import {
   POSITION,
   RESIDENTIAL_TYPE,
   SPECIALIZATION,
+  STAYING_CONDITION,
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
-import {Checkbox} from '@/components/checkbox'
+import { Checkbox } from '@/components/checkbox'
 import Bankruptcy from '@/components/applications/Bankruptcy'
 import Button from '@/components/button/Button'
 
@@ -104,8 +106,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
       .required(convertMessageErrorRequired('NRIC No./FIN')),
   },
 
-  /**hold */
-
+  //**HOLD */
   // {
   //   key: 'residential_type',
   //   component: Select,
@@ -232,7 +233,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
-      .max(999999, convertMessageErrorMaximum(100, true)),
+      .max(100, convertMessageErrorMaximum(100, true)),
   },
   {
     key: 'loan_reason',
@@ -248,19 +249,19 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     key: 'mobilephone_1',
     component: Input,
     typeComponent: 'Input',
-    label: 'Mobile 1(NIL)',
+    label: 'Phone Number 1',
     column: 6,
     typeInput: 'phone',
     validationFormik: Yup.string()
       .max(64, convertMessageErrorMaximum(64))
-      .required(convertMessageErrorRequired('Mobile 1(NIL)')),
+      .required(convertMessageErrorRequired('Phone Number 1')),
     required: true,
   },
   {
     key: 'mobilephone_2',
     component: Input,
     typeComponent: 'Input',
-    label: 'Mobile 2(NIL)',
+    label: 'Phone Number 2',
     column: 6,
     typeInput: 'phone',
     className: 'justify-content-xxl-end',
@@ -270,7 +271,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     key: 'mobilephone_3',
     component: Input,
     typeComponent: 'Input',
-    label: 'Mobile 3(NIL)',
+    label: 'Phone Number 3',
     column: 6,
     typeInput: 'phone',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
@@ -281,7 +282,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     typeInput: 'phone',
-    label: 'Home Phone(NIL)',
+    label: 'Phone Number 4',
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
   },
@@ -522,89 +523,142 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
 const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
   {
     key: 'address_type_id',
-    component: Select,
-    typeComponent: 'Select',
-    label: 'Address Type',
-    column: 6,
     dependencyApi: '/config/address_type/listing',
-    keyLabelOfOptions: 'address_type_name',
-    keyValueOfOptions: 'id',
-    required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Address Type')),
+    isHide: true,
+    // component: Select,
+    // typeComponent: 'Select',
+    // label: 'Address Type',
+    // column: 6,
+    // keyLabelOfOptions: 'address_type_name',
+    // keyValueOfOptions: 'id',
+    // required: true,
+    // validationFormik: Yup.string().required(convertMessageErrorRequired('Address Type')),
   },
   {
-    key: 'address_label',
-    component: Input,
-    typeComponent: 'Input',
-    label: 'Address Label',
+    key: 'housing_type',
+    isHide: true,
+    component: Select,
+    typeComponent: 'Select',
+    label: 'Housing Type',
     column: 6,
     className: 'justify-content-xxl-end',
     required: true,
-    validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Address Label'))
-      .max(1024, convertMessageErrorMaximum(1024)),
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Housing Type')),
   },
   {
-    key: 'street_1',
+    key: 'home_ownership',
+    isHide: true,
+    component: Select,
+    typeComponent: 'Select',
+    label: 'Home Ownership',
+    column: 6,
+    className: 'justify-content-xxl-end',
+    options: HOME_OWNERSHIP,
+    required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Home Ownership')),
+  },
+  {
+    key: 'staying_condition',
+    isHide: true,
+    component: Select,
+    typeComponent: 'Select',
+    label: 'Staying Condition',
+    column: 6,
+    className: 'justify-content-xxl-end',
+    options: STAYING_CONDITION,
+    required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Country')),
+  },
+  {
+    key: 'unit',
     component: Input,
     typeComponent: 'Input',
-    label: 'Street 1',
-    column: 6,
-    required: true,
+    label: 'Unit',
+    column: 2,
     validationFormik: Yup.string()
       .required(convertMessageErrorRequired('Street 1'))
       .max(255, convertMessageErrorMaximum(255)),
   },
   {
-    key: 'street_2',
+    key: 'block',
     component: Input,
     typeComponent: 'Input',
-    label: 'Street 2',
-    column: 6,
+    label: 'Block',
+    column: 2,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Street 1'))
+      .max(255, convertMessageErrorMaximum(255)),
+  },
+  {
+    key: 'building',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Building',
+    column: 8,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Street 1'))
+      .max(255, convertMessageErrorMaximum(255)),
+  },
+  {
+    key: 'street',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Street',
+    column: 12,
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
-  },
-  {
-    key: 'city',
-    component: Input,
-    typeComponent: 'Input',
-    label: 'City',
-    column: 6,
-  },
-  {
-    key: 'state',
-    component: Input,
-    typeComponent: 'Input',
-    label: 'State',
-    column: 6,
-    className: 'justify-content-xxl-end',
   },
   {
     key: 'postal_code',
     component: Input,
     typeComponent: 'Input',
-    label: 'Postal Code',
-    column: 6,
+    label: 'Postal',
+    column: 4,
     required: true,
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Postal Code'))
-      .max(64, convertMessageErrorMaximum(64)),
+      .required(convertMessageErrorRequired('Postal'))
+      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'country',
     component: Select,
     typeComponent: 'Select',
     label: 'Country',
-    column: 6,
+    column: 4,
     className: 'justify-content-xxl-end',
     keyLabelOfOptions: 'nicename',
     keyValueOfOptions: 'name',
     defaultValue: 'SINGAPORE', //default value country is Singapore
     dependencyApi: 'config/country/listing',
     required: true,
+    validationFormik: Yup.string().required(convertMessageErrorRequired('Country')),
+  },
+  // {
+  //   key: 'city',
+  //   component: Input,
+  //   typeComponent: 'Input',
+  //   label: 'City',
+  //   column: 4,
+  // },
+  // {
+  //   key: 'state',
+  //   component: Input,
+  //   typeComponent: 'Input',
+  //   label: 'State',
+  //   column: 4,
+  //   className: 'justify-content-xxl-end',
+  // },
+  {
+    key: 'address_label',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Address Label',
+    column: 4,
+    className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Country'))
-      .max(255, convertMessageErrorMaximum(255)),
+      .required(convertMessageErrorRequired('Address Label'))
+      .max(1024, convertMessageErrorMaximum(1024)),
   },
 ]
 
@@ -656,21 +710,19 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     config: [
       [
         {
-          key: 'name_of_applicant',
-          value: 'Name of applicant',
-          Component: FullName,
+          key: 'is_existing',
+          value: 'Customer Type',
+          options: CUSTOMER_TYPE,
+          Component: LableOptions,
+          keyFilter: 'value',
         },
         {
-          key: 'identification_no',
-          value: 'NRIC No./FIN',
+          key: 'identification_type',
+          value: 'ID Type',
+          options: ID_TYPE,
+          Component: LableOptions,
+          keyFilter: 'value',
         },
-        {
-          key: 'date_of_birth',
-          value: 'Date of Birth',
-          date: true,
-        },
-      ],
-      [
         {
           key: 'gender',
           value: 'Gender',
@@ -686,46 +738,43 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           keyFilter: 'id',
           lable: 'nationality',
         },
-        {
-          key: 'identification_type',
-          value: 'ID Type',
-          options: ID_TYPE,
-          Component: LableOptions,
-          keyFilter: 'value',
-        },
       ],
       [
         {
-          key: 'is_existing',
-          value: 'Customer Type',
-          options: CUSTOMER_TYPE,
-          Component: LableOptions,
-          keyFilter: 'value',
+          key: 'name_of_applicant',
+          value: 'Name of applicant',
+          Component: FullName,
         },
         {
-          key: 'residential_type',
-          value: 'Residential Type',
-          options: RESIDENTIAL_TYPE,
-          Component: SpecialZation,
-          keyFilter: 'value',
+          key: 'identification_no',
+          value: 'NRIC No./FIN',
         },
         {
-          key: 'marketing_type_id',
-          value: 'Marketing type',
-          dependencyApi: '/config/marketing_type/listing',
-          Component: RenderOptionsApi,
-          keyFilter: 'id',
-          lable: 'marketing_type_name',
+          key: 'date_of_birth',
+          value: 'Date of Birth',
+          date: true,
         },
-      ],
-      [
         {
           key: 'spoken_language',
           value: 'Language Spoken',
           options: LANGUAGES,
           Component: LableOptions,
           keyFilter: 'value',
-        },
+        }, // {
+        //   key: 'residential_type',
+        //   value: 'Residential Type',
+        //   options: RESIDENTIAL_TYPE,
+        //   Component: SpecialZation,
+        //   keyFilter: 'value',
+        // },
+        // {
+        //   key: 'marketing_type_id',
+        //   value: 'Marketing type',
+        //   dependencyApi: '/config/marketing_type/listing',
+        //   Component: RenderOptionsApi,
+        //   keyFilter: 'id',
+        //   lable: 'marketing_type_name',
+        // },
       ],
     ],
   },
@@ -740,6 +789,14 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: MLCBCheck,
         },
         {
+          key: 'loan_amount_requested',
+          value: 'Loan Amount Required',
+          number: true,
+          dollars: '$',
+        },
+      ],
+      [
+        {
           key: 'loan_type_id',
           value: 'Loan type',
           dependencyApi: '/config/loan_type/listing',
@@ -748,22 +805,17 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'type_name',
         },
         {
-          key: 'interest',
-          value: 'Interest (%)',
-        },
-      ],
-      [
-        {
-          key: 'loan_amount_requested',
-          value: 'Loan Amount Required',
-          number: true,
-          dollars: '$',
-        },
-        {
           key: 'loan_terms',
           value: 'Loan Terms (months)',
           elBehind: 'Months',
         },
+      ],
+      [
+        {
+          key: 'interest',
+          value: 'Interest (%)',
+        },
+
         {
           key: 'loan_reason',
           value: 'Reason For Loan',
@@ -778,29 +830,31 @@ const COMPLETION_CONFIG: children_config_completion[] = [
       [
         {
           key: 'mobilephone_1',
-          value: 'Mobile 1 (NIL)',
+          value: 'Phone Number 1',
           dollars: '+65',
         },
         {
-          key: 'mobilephone_2',
-          value: 'Mobile 2 (NIL)',
-          dollars: '+65',
-        },
-        {
-          key: 'mobilephone_3',
-          value: 'Mobile 3 (NIL)',
+          key: 'homephone',
+          value: 'Phone Number 4',
           dollars: '+65',
         },
       ],
       [
         {
-          key: 'homephone',
-          value: 'Home Phone (NIL)',
+          key: 'mobilephone_2',
+          value: 'Phone Number 2',
           dollars: '+65',
         },
         {
           key: 'email_1',
           value: 'Email',
+        },
+      ],
+      [
+        {
+          key: 'mobilephone_3',
+          value: 'Phone Number 3',
+          dollars: '+65',
         },
         {
           key: 'email_2',
@@ -813,51 +867,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     col: 'col-xl-6',
     title: 'Address',
     Component: Address,
-    config: [
-      [
-        {
-          key: 'address_type_id',
-          value: 'Address Type',
-          dependencyApi: '/config/address_type/listing',
-          Component: RenderOptionsApiAddress,
-          keyFilter: 'id',
-          lable: 'address_type_name',
-        },
-        {
-          key: 'street_1',
-          value: 'Street 1',
-        },
-        {
-          key: 'city',
-          value: 'City',
-        },
-        {
-          key: 'postal_code',
-          value: 'Postal Code',
-        },
-      ],
-      [
-        {
-          key: 'address_label',
-          value: 'Address Label',
-        },
-        {
-          key: 'street_2',
-          value: 'Street 2',
-        },
-        {
-          key: 'state',
-          value: 'State',
-        },
-        {
-          key: 'country',
-          value: 'Country',
-          dependencyApi: 'config/country/listing',
-          keyFilter: 'id',
-          lable: 'nicename',
-        },
-      ],
-    ],
+    config: [],
   },
   {
     col: 'col-xxl-8',
@@ -870,23 +880,19 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: EmploymentStatus,
         },
         {
-          key: 'company_name',
-          value: 'Company Name',
+          key: 'address',
+          value: 'Address',
         },
         {
-          key: 'company_telephone',
-          value: 'Telephone',
-          dollars: '+65',
-        },
-        {
-          key: 'portal_code',
-          value: 'Postal Code',
+          key: 'monthly_income_1',
+          value: 'Gross Monthly Income',
+          Component: GrossMonthlyIncomeCompletion,
         },
       ],
       [
         {
-          key: 'address',
-          value: 'Address',
+          key: 'company_name',
+          value: 'Company Name',
         },
         {
           key: 'position',
@@ -894,8 +900,33 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: PositionName,
         },
         {
+          key: 'monthly_income',
+          value: 'Average Monthly Income',
+          dollars: '$',
+          number: true,
+        },
+      ],
+      [
+        {
+          key: 'company_telephone',
+          value: 'Telephone',
+          dollars: '+65',
+        },
+        {
           key: 'occupation',
           value: 'Occupation',
+        },
+        {
+          key: 'six_months_income',
+          value: 'Past 6 Month Gross Income',
+          dollars: '$',
+          number: true,
+        },
+      ],
+      [
+        {
+          key: 'portal_code',
+          value: 'Postal Code',
         },
         {
           key: 'job_type_id',
@@ -906,37 +937,22 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'job_type_name',
         },
         {
-          key: 'bankrupted',
-          value: 'Declared bankrupt in the last 5 years',
-        },
-        {
-          key: 'bankrupt_plan',
-          value: 'Plan to declare bankrupt in the next 3 months',
-        },
-      ],
-      [
-        {
-          key: 'monthly_income_1',
-          value: 'Gross Monthly Income',
-          Component: GrossMonthlyIncomeCompletion,
-        },
-        {
-          key: 'monthly_income',
-          value: 'Average Monthly Income',
-          dollars: '$',
-          number: true,
-        },
-        {
-          key: 'six_months_income',
-          value: 'Past 6 Month Gross Income',
-          dollars: '$',
-          number: true,
-        },
-        {
           key: 'annual_income',
           value: 'Annual Gross Income',
           dollars: '$',
           number: true,
+        },
+      ],
+      [
+        {
+          key: 'bankrupted',
+          value: 'Declared bankrupt in the last 5 years',
+        },
+      ],
+      [
+        {
+          key: 'bankrupt_plan',
+          value: 'Plan to declare bankrupt in the next 3 months',
         },
       ],
     ],
@@ -954,30 +970,34 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           keyFilter: 'value',
         },
         {
-          key: 'bank_name_1',
-          value: 'Bank Name 1',
-        },
-        {
-          key: 'account_number_1',
-          value: 'Bank Acc 1',
-        },
-        {
-          key: 'bank_code_1',
-          value: 'Bank Code 1',
+          key: 'bank_name_2',
+          value: 'Bank Name 2',
         },
       ],
       [
         {
-          key: 'bank_name_2',
-          value: 'Bank Name 2',
+          key: 'bank_name_1',
+          value: 'Bank Name 1',
         },
         {
           key: 'account_number_2',
           value: 'Bank Acc 2',
         },
+      ],
+      [
+        {
+          key: 'account_number_1',
+          value: 'Bank Acc 1',
+        },
         {
           key: 'bank_code_2',
           value: 'Bank Code 2',
+        },
+      ],
+      [
+        {
+          key: 'bank_code_1',
+          value: 'Bank Code 1',
         },
       ],
     ],

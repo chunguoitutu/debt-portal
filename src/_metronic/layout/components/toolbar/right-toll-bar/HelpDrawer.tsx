@@ -33,7 +33,7 @@ const HelpDrawer = () => {
   }, [applicationIdEdit])
 
   const configBackgroudCheck = {
-    title: 'Background check',
+    title: 'Tools',
     row: [
       {
         value: 'Repayment Schedule Calculator',

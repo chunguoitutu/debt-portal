@@ -19,6 +19,10 @@ import GoogleCheck from './GoogleCheck'
 import Warning from './Warning'
 import FolderPdf from './FolderPdf'
 import CloseSmall from './CloseSmall'
+import MLCB from './MLCB'
+import Google from './Google'
+import Cascheck from './Cascheck'
+import UPCheck from './UPCheck'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -40,8 +44,12 @@ const icons = {
   Mes: Mes,
   GoogleCheck: GoogleCheck,
   Warning: Warning,
+  Google: Google,
   FolderPdf: FolderPdf,
   CloseSmall: CloseSmall,
+  MLCB: MLCB,
+  Cascheck: Cascheck,
+  UPCheck: UPCheck,
 }
 
 const Icons = ({name}) => {

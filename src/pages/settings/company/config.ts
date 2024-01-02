@@ -27,11 +27,13 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'company_code',
       name: 'Business Unit Code',
-      isHide: true,
+      classNameTableHead: 'w-250px ps-10',
+      classNameTableBody: 'ps-7',
     },
     {
       key: 'business_uen',
       name: 'Business Unit UEN',
+      classNameTableHead: 'pe-10',
     },
     {
       key: 'contact_person',
@@ -56,6 +58,8 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'open_date',
       name: 'Open Date',
+      classNameTableHead: 'w-250px pe-3 text-end',
+      classNameTableBody: 'text-end',
     },
     {
       key: 'status',

@@ -22,8 +22,12 @@ import {
   RemarkItem,
   StepItem,
 } from '@/app/types'
-import {INIT_BLOCK_ADDRESS, STEP_APPLICATION} from '@/app/constants'
-import {convertErrorMessageResponse, filterObjectKeyNotEmpty} from '@/app/utils'
+import {STEP_APPLICATION, handleCreateBlockAddress} from '@/app/constants'
+import {
+  capitalizeFirstText,
+  convertErrorMessageResponse,
+  filterObjectKeyNotEmpty,
+} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
 import Reject from './step-component/reject/Reject'
@@ -64,10 +68,10 @@ export const Applications = () => {
   const [showRemark, setShowRemark] = useState<boolean>(false)
   // const [checkAmount, SetCheckAmount] = useState<number>(0)
   // const [popupSingpass, setPopupSingpass] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const [optionsRejectionType, setOptionsRejectionType] = useState<any>([])
   const [optionsUser, setOptionsUser] = useState<any>([])
-  const [singpass, setSingpass] = useState(false)
+  const [singpass, setSingpass] = useState<boolean>(false)
   const [rejectionOne, setRejectionOne] = useState<any>({})
   const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
@@ -88,7 +92,7 @@ export const Applications = () => {
         ...result,
         [current?.key as string]: current?.defaultValue || '',
       }),
-      {address_contact_info: [INIT_BLOCK_ADDRESS]}
+      {address_contact_info: [handleCreateBlockAddress(false)]}
     ) as ApplicationFormData
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [STEP_APPLICATION])
@@ -122,7 +126,6 @@ export const Applications = () => {
         })
         .catch()
     handleGetApplicationById()
-    setCurrentStep(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationIdEdit, loadApiEdit, pathname])
 
@@ -510,6 +513,161 @@ export const Applications = () => {
           })
         }
       } else {
+        const {
+          identification_type,
+          identification_no,
+          date_of_birth,
+          firstname,
+          lastname,
+          middlename,
+          gender,
+          email_1,
+          email_2,
+          employment_status,
+          mobilephone_1,
+          mobilephone_2,
+          mobilephone_3,
+          homephone,
+          monthly_income,
+          spoken_language,
+          loan_amount_requested,
+          loan_type_id,
+          account_number_1,
+          account_number_2,
+          bank_code_1,
+          bank_code_2,
+          bank_name_1,
+          bank_name_2,
+          monthly_income_1,
+          monthly_income_2,
+          monthly_income_3,
+          annual_income,
+          portal_code,
+          company_name,
+          address_contact_info,
+          address,
+          loan_terms,
+          marketing_type_id,
+          company_telephone,
+          occupation,
+          position,
+          specialization,
+          six_months_income,
+          is_existing,
+          residential_type,
+          loan_reason,
+          country_id,
+          file_documents,
+          customer_no,
+          application_no,
+          job_type_id,
+          interest,
+          bankrupt_plan,
+          bankrupted,
+          amount,
+          date,
+          employer,
+          month,
+          vehicle_no,
+          vehicle_model,
+          vehicle_coe_category,
+          vehicle_coe_expiry_date,
+          vehicle_effective_date,
+          vehicle_maker,
+          vehicle_open_maket_value,
+          vehicle_type,
+        } = values
+
+        const addressList = address_contact_info
+          .filter((item) => item.address_type_id)
+          .map((item) => ({
+            ...item,
+            address_type_id: +item.address_type_id,
+          }))
+
+        const {applicationId, bankInfoId, borrowerId, customerId, employmentId, cpfId} = listIdEdit
+
+        const payload: ApplicationPayload = {
+          customer: {
+            ...(customerId && applicationIdEdit ? {id: customerId} : {}),
+            company_id: +company_id,
+            country_id: +country_id,
+            customer_no: customer_no || '',
+            identification_type,
+            identification_no,
+            date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
+            firstname,
+            lastname,
+            middlename,
+            gender,
+          },
+          borrower: {
+            ...(borrowerId && applicationIdEdit ? {id: borrowerId} : {}),
+            email_1,
+            email_2,
+            employment_status,
+            mobilephone_1: String(mobilephone_1),
+            mobilephone_2: String(mobilephone_2),
+            mobilephone_3: String(mobilephone_3),
+            homephone: String(homephone),
+            monthly_income: +monthly_income || 0,
+            job_type_id: +job_type_id || null,
+            spoken_language,
+            marketing_type_id: +marketing_type_id || null,
+            residential_type,
+          },
+          bank_account: {
+            ...(bankInfoId && applicationIdEdit ? {id: bankInfoId} : {}),
+            account_number_1,
+            account_number_2,
+            bank_code_1,
+            bank_code_2,
+            bank_name_1,
+            bank_name_2,
+          },
+          employment: {
+            ...(employmentId && applicationIdEdit ? {id: employmentId} : {}),
+            portal_code,
+            annual_income: +annual_income,
+            address,
+            company_telephone: String(company_telephone),
+            company_name,
+            monthly_income_1: +monthly_income_1,
+            monthly_income_2: +monthly_income_2,
+            monthly_income_3: +monthly_income_3,
+            occupation,
+            position,
+            specialization,
+            six_months_income: +six_months_income,
+            bankrupt_plan: bankrupt_plan ? 1 : 0,
+            bankrupted: bankrupted ? 1 : 0,
+          },
+          application: {
+            ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
+            loan_terms: +loan_terms,
+            loan_amount_requested: +loan_amount_requested,
+            loan_type_id: +loan_type_id || null,
+            status: isDraft ? 0 : 1,
+            application_date: new Date(),
+            application_notes: JSON.stringify(remarkList),
+            application_no,
+            is_existing,
+            company_id: +company_id,
+            loan_reason,
+            interest: +interest,
+          },
+          address: addressList,
+          file_documents,
+
+          cpf: {
+            ...(cpfId && applicationIdEdit && singpass ? {id: cpfId} : {}),
+            amount: JSON.stringify(amount),
+            date: JSON.stringify(date),
+            employer: JSON.stringify(employer),
+            month: JSON.stringify(month),
+          },
+        }
+        Cookies.set('createApplication', JSON.stringify(payload))
         handleContinue()
       }
     })
@@ -612,9 +770,9 @@ export const Applications = () => {
         identification_type,
         identification_no,
         date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
-        firstname,
-        lastname,
-        middlename,
+        firstname: capitalizeFirstText(firstname),
+        lastname: capitalizeFirstText(lastname),
+        middlename: capitalizeFirstText(middlename),
         gender,
       },
       borrower: {
@@ -629,7 +787,7 @@ export const Applications = () => {
         monthly_income: +monthly_income || 0,
         job_type_id: +job_type_id || null,
         spoken_language,
-        marketing_type_id: +marketing_type_id,
+        marketing_type_id: +marketing_type_id || null,
         residential_type,
       },
       bank_account: {
@@ -683,6 +841,7 @@ export const Applications = () => {
         month: JSON.stringify(month),
       },
     }
+
     try {
       setSubmitting(true)
       if (applicationIdEdit) {
@@ -725,6 +884,7 @@ export const Applications = () => {
         icon: 'error',
       })
     } finally {
+      Cookies.remove('createAplication')
       setSubmitting(false)
     }
   }
@@ -737,6 +897,7 @@ export const Applications = () => {
 
   return (
     <>
+      {/* <RightToolbar /> */}
       <div className='position-fixed' style={{zIndex: '1000000'}}>
         {showRemark && (
           <div className='wrapper-show-remark'>
@@ -779,7 +940,7 @@ export const Applications = () => {
         <div className='col-12 col-xxl-9 col-2xxl-8 d-flex flex-column h-fit-content h-2xxl-100 mt-16px m-xxl-0 ps-0'>
           <div className='application-details-form d-flex flex-column card card-body p-0 m-0'>
             <HeaderApplication
-              labelStep={`${STEP_APPLICATION[currentStep - 1].label}`}
+              labelStep={`${currentStep}. ${STEP_APPLICATION[currentStep - 1].label}`}
               info={{
                 application_no: values.application_no || '',
                 application_date: values.application_date || '',
@@ -844,8 +1005,11 @@ export const Applications = () => {
               ref={containerRef}
             >
               <div
-                className={`${currentStep !== 6 ? 'form-wrap' : ''}`}
-                style={currentStep === 2 ? {width: '91.5%'} : {}}
+                className={clsx([
+                  currentStep !== 6 && 'form-wrap',
+                  currentStep === 3 && 'w-100',
+                  currentStep === 2 && 'w-90',
+                ])}
               >
                 {CurrentComponentControl && (
                   <CurrentComponentControl
@@ -884,39 +1048,54 @@ export const Applications = () => {
           </div>
         </div>
         <div className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'>
-          <div className='d-flex flex-column h-100'>
-            <div className='d-none d-2xxl-block'>
-              <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
-                <BackgroundCheck data={data} />
-              </div>
-
-              <button
-                onClick={() => {
+          {[2, 3].includes(Number(formik.values.status) || 0) ? (
+            <div className='h-100 '>
+              <Remark
+                handleOnClose={() => {
                   setShowRemark(!showRemark)
                 }}
-                className='btn-remark d-flex justify-content-center align-items-center '
-              >
-                <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
-                  <Icons name={'Mes'} />
-                  <span className='span-button-remark ms-8px pt-1px'>Remark</span>
-                </div>
-              </button>
+                showClose={true}
+                small={true}
+                setRemarkList={setRemarkList}
+                idUpdate={applicationIdEdit}
+                remarkList={remarkList}
+              />
             </div>
+          ) : (
+            <div className='d-flex flex-column h-100'>
+              <div className='d-none d-2xxl-block'>
+                <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
+                  <BackgroundCheck data={data} />
+                </div>
 
-            <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
-              <div className='d-block d-2xxl-none'>
-                <Remark
-                  handleOnClose={() => {
+                <button
+                  onClick={() => {
                     setShowRemark(!showRemark)
                   }}
-                  small={true}
-                  setRemarkList={setRemarkList}
-                  idUpdate={applicationIdEdit}
-                  remarkList={remarkList}
-                />
+                  className='btn-remark d-flex justify-content-center align-items-center '
+                >
+                  <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
+                    <Icons name={'Mes'} />
+                    <span className='span-button-remark ms-8px pt-1px'>Remark</span>
+                  </div>
+                </button>
+              </div>
+
+              <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
+                <div className='d-block d-2xxl-none'>
+                  <Remark
+                    handleOnClose={() => {
+                      setShowRemark(!showRemark)
+                    }}
+                    small={true}
+                    setRemarkList={setRemarkList}
+                    idUpdate={applicationIdEdit}
+                    remarkList={remarkList}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>

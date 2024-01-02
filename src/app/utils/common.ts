@@ -179,10 +179,23 @@ export function convertResidentialTypeSingPass(residentialType: string) {
     case 'SEMI-DETACHED HOUSE':
       return 'SEMI-DETACHED HOUSE'
 
+    case 'DETACHED HOUSE':
+      return 'DETACHED HOUSE'
+
     case 'not_own':
       return 'Does not own any property'
 
     default:
       return 'Does not own any property'
   }
+}
+
+export function capitalizeFirstText(text: string) {
+  if (!text || typeof text !== 'string') return ''
+
+  return text
+    .split(' ')
+    .filter(Boolean)
+    .map((text) => `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}`)
+    .join(' ')
 }

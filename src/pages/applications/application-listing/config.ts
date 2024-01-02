@@ -1,7 +1,7 @@
-import {TableConfig} from '@/app/types'
-import {ID_TYPE, STATUS_APPLICATION_FILTER} from '@/app/utils'
-import {Input} from '@/components/input'
-import {Select} from '@/components/select'
+import { TableConfig } from '@/app/types'
+import { ID_TYPE, STATUS_APPLICATION_FILTER } from '@/app/utils'
+import { Input } from '@/components/input'
+import { Select } from '@/components/select'
 
 export const APPLICATION_LISTING_CONFIG: TableConfig = {
   endpoint: '',
@@ -19,12 +19,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'id',
       name: 'ID',
       classNameTableHead: 'ps-5',
-      classNameTableBody: 'w-50px ps-5',
-      infoFilter: {
-        typeComponent: 'input',
-        component: Input,
-        isSort: true,
-      },
+      classNameTableBody: 'w-50px ps-3',
     },
     {
       key: 'application_no',
@@ -38,7 +33,6 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'fullname',
       name: 'Name of Borrower',
-
       infoFilter: {
         typeComponent: 'input',
         component: Input,

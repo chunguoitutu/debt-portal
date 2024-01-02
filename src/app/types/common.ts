@@ -1,7 +1,7 @@
-import {FC, HTMLInputTypeAttribute, ReactNode} from 'react'
-import {FormikProps} from 'formik'
-import {ObjectSchema, Schema} from 'yup'
-import {ApprovalInfo} from './response'
+import { Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction } from 'react'
+import { FormikProps } from 'formik'
+import { ObjectSchema, Schema } from 'yup'
+import { ApprovalInfo } from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -26,7 +26,7 @@ export type ErrorResponse = {
 export type DataResponse<T> = {
   error: boolean
   message: string
-  searchCriteria?: {[key: string]: string}
+  searchCriteria?: { [key: string]: string }
   data: T
 }
 
@@ -142,6 +142,11 @@ export type ResponseLoanListing = {
   identification_no: number
   fullname: string
   loan_amount_requested: number
+}
+export type ResponseBorrowerListing = {
+  id: number
+  customer_no: string
+  id_type: string
   status: number
   searchBar?: string
 }
@@ -201,7 +206,7 @@ export type TableConfig = {
     messageEditSuccess?: string
     messageCreateError?: string
     messageCreateSuccess?: string
-    dependencies?: {[key: string]: string}
+    dependencies?: { [key: string]: string }
     buttonAddNew?: string
     showSearch?: boolean
     showMessageTitle?: string
@@ -248,8 +253,8 @@ export type CheckboxTreeItem = {
   value: string
   label: string
   active?: boolean
-  children?: CheckboxTreeItem[] & {[key: string]: any}
-} & {[key: string]: any}
+  children?: CheckboxTreeItem[] & { [key: string]: any }
+} & { [key: string]: any }
 
 export type Option = {
   label: string
@@ -270,13 +275,13 @@ export type ApplicationConfig = {
   component?: FC<any>
   typeComponent?: string
   label?: string
-  column?: 12 | 6
+  column?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   isHide?: boolean
   typeInput?: HTMLInputTypeAttribute | 'money' | 'phone'
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: {[key: string]: string | number}[] | DropDownGroup[]
+  options?: { [key: string]: string | number }[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
@@ -287,11 +292,13 @@ export type ApplicationConfig = {
 }
 
 export type PropsStepApplication = {
-  setStepCompleted: any
+  setStepCompleted: Dispatch<SetStateAction<number>>
   config: ApplicationConfig[]
   formik: FormikProps<ApplicationFormData>
-  setSingpass: any
+  setSingpass: Dispatch<SetStateAction<boolean>>
   singpass: boolean
+  // setIsMountedAddress: Dispatch<SetStateAction<boolean>>
+  // isMountedAddress: boolean
 }
 
 export type ApplicationPayload = {
@@ -328,7 +335,7 @@ export type ApplicationPayload = {
     credit_score?: string
     residential_type?: string
     spoken_language?: string
-    marketing_type_id: number
+    marketing_type_id: number | null
   }
   application: {
     id?: number
@@ -489,13 +496,21 @@ export type ApplicationFormData = {
 export type BlockAddress = {
   id?: number
   address_type_id: string | number
-  address_label: string
-  street_1: string
-  street_2: string
-  city: string
-  state: string
+  address_label?: string
+  city?: string
+  state?: string
   postal_code: string
   country: string
+  housing_type?: string
+  property_type?: string
+  existing_staying?: number
+  home_ownership?: string
+  staying_condition?: string
+  is_default?: number
+  unit: string
+  block: string
+  building: string
+  street: String
 }
 
 export type BadgeProps = {
@@ -534,6 +549,21 @@ export type LoanItem = {
   loan_type: string
   borrower: any
   application: any
+}
+
+export type BorrowerItem = {
+  id: number
+  customer_no: null | string
+  date_of_birth: string
+  identification_type: string
+  identification_no: string
+  application_no: string
+  firstname: string
+  middlename: string
+  lastname: string
+  loan_type: string
+  company_id: string
+  borrower: any
 }
 
 export type RemarkItem = {
