@@ -204,10 +204,6 @@
   background-position: 0 bottom;
 }
 
-.bgi-position-center {
-  background-position: center;
-}
-
 // Responsive helpers
 @each $breakpoint in map-keys($grid-breakpoints) {
   @include media-breakpoint-up($breakpoint) {
