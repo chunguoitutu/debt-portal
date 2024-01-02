@@ -789,9 +789,10 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: MLCBCheck,
         },
         {
-          key: 'loan_terms',
-          value: 'Loan Terms (months)',
-          elBehind: 'Months',
+          key: 'loan_amount_requested',
+          value: 'Loan Amount Required',
+          number: true,
+          dollars: '$',
         },
       ],
       [
@@ -804,20 +805,20 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'type_name',
         },
         {
-          key: 'loan_reason',
-          value: 'Reason For Loan',
+          key: 'loan_terms',
+          value: 'Loan Terms (months)',
+          elBehind: 'Months',
         },
       ],
       [
         {
-          key: 'loan_amount_requested',
-          value: 'Loan Amount Required',
-          number: true,
-          dollars: '$',
-        },
-        {
           key: 'interest',
           value: 'Interest (%)',
+        },
+
+        {
+          key: 'loan_reason',
+          value: 'Reason For Loan',
         },
       ],
     ],
@@ -947,6 +948,8 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           key: 'bankrupted',
           value: 'Declared bankrupt in the last 5 years',
         },
+      ],
+      [
         {
           key: 'bankrupt_plan',
           value: 'Plan to declare bankrupt in the next 3 months',
