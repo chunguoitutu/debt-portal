@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {FC, useEffect, useMemo, useState} from 'react'
 
 import ContentListButton from '@/components/list-button/ContentListButton'
 import RepaymentScheduleCalculator from './repayment-schedule-calculator/RepaymentScheduleCalculator'
@@ -12,43 +12,33 @@ import request from '@/app/axios'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import Cookies from 'js-cookie'
-interface props {
-  data: any
-}
-const BackgroundCheck = ({data}: props) => {
+import {PropsStepApplication} from '@/app/types'
+
+const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
   const [show, setShow] = useState<boolean>(false)
   const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
-  const [dataCookie, setDataCookie] = useState<any>({})
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
   const [showSearchCheck, setShowSearchCheck] = useState<boolean>(false)
   const [showSearchPageCheck, setShowSearchPageCheck] = useState<boolean>(false)
 
+  const {values} = formik
   const {applicationIdEdit} = useParams()
 
-  useEffect(() => {
-    try {
-      const cookie: any = Cookies.get('createAplication')
-      setDataCookie(JSON.parse(cookie || ''))
-    } catch (error) {
-      setDataCookie({})
-    }
-  }, [Cookies.get('createAplication')])
+  const fullname = useMemo(
+    () => [values.firstname, values.middlename, values.lastname].filter(Boolean).join(' '),
+    [values.firstname, values.middlename, values.lastname]
+  )
 
-  const configBackgroudCheck = {
+  const configBackgroundCheck = {
     title: 'Tools',
     row: [
       {
         value: 'Google Search Check',
         icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(
-          !!data.application?.status ? data?.application?.status : dataCookie?.application?.status
-        ),
+        show: ![2, 3].includes(values.status || 0),
         onclick: () => {
-          if (
-            (!!data?.customer?.lastname || !!dataCookie?.customer?.lastname) &&
-            (!!data?.customer?.firstname || !!dataCookie?.customer?.firstname)
-          ) {
+          if (fullname) {
             setShowSearchCheck(true)
           } else {
             swalConfirm.fire({
@@ -71,11 +61,9 @@ const BackgroundCheck = ({data}: props) => {
         value: 'UN Page Check',
         icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(
-          !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
-        ),
+        show: ![2, 3].includes(values.status || 0),
         onclick: () => {
-          if (!!data?.customer?.lastname || !!dataCookie?.customer?.lastname) {
+          if (fullname) {
             setShowSearchPageCheck(true)
           } else {
             swalConfirm.fire({
@@ -98,9 +86,7 @@ const BackgroundCheck = ({data}: props) => {
         value: 'CAs Check',
         icon: <Icons name={'Cascheck'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(
-          !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
-        ),
+        show: ![2, 3].includes(values.status || 0),
         onclick: () => {
           request
             .post('/pdf/ca-check', {})
@@ -136,9 +122,7 @@ const BackgroundCheck = ({data}: props) => {
         value: 'Get MLCB Report',
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
-        show: ![2, 3].includes(
-          !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
-        ),
+        show: ![2, 3].includes(values.status || 0),
         onclick: () => {
           if (!!applicationIdEdit) {
             setShowMLCBReport(true)
@@ -171,9 +155,7 @@ const BackgroundCheck = ({data}: props) => {
       {
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
-        show: ![2, 3].includes(
-          !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
-        ),
+        show: ![2, 3].includes(values.status || 0),
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
           setShowValidationPhone(true)
@@ -194,51 +176,29 @@ const BackgroundCheck = ({data}: props) => {
 
   return (
     <>
-      <ContentListButton config={configBackgroudCheck} />
+      <ContentListButton config={configBackgroundCheck} />
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
-      {showValidationPhone &&
-        ![2, 3].includes(
-          !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
-        ) && <PopupValidationPhoneNumber onClose={() => setShowValidationPhone(false)} />}
-      {showMLCBReport &&
-        ![2, 3].includes(
-          !!data?.application?.status ? data.application?.status : dataCookie?.application?.status
-        ) && <MLCBReport onClose={() => setShowMLCBReport(false)} />}
-      {showSearchCheck &&
-        ![2, 3].includes(
-          !!data.application?.status ? data.application?.status : dataCookie?.application?.status
-        ) && (
-          <WrapperGoogleSearch
-            payload={`${
-              !!data?.customer?.firstname
-                ? data?.customer?.firstname
-                : dataCookie?.customer?.firstname
-            } ${
-              !!data?.customer?.middlename
-                ? data?.customer?.middlename
-                : !!dataCookie?.customer?.middlename
-                ? dataCookie?.customer?.middlename
-                : ''
-            }${!!data?.customer?.middlename || dataCookie?.customer?.middlename ? ' ' : ''}${
-              !!data?.customer?.lastname ? data?.customer?.lastname : dataCookie?.customer?.lastname
-            }`}
-            show={showSearchCheck}
-            handleClose={() => setShowSearchCheck(false)}
-          />
-        )}
+      {showValidationPhone && ![2, 3].includes(values.status || 0) && (
+        <PopupValidationPhoneNumber onClose={() => setShowValidationPhone(false)} />
+      )}
+      {showMLCBReport && ![2, 3].includes(values.status || 0) && (
+        <MLCBReport onClose={() => setShowMLCBReport(false)} />
+      )}
+      {showSearchCheck && ![2, 3].includes(values.status || 0) && (
+        <WrapperGoogleSearch
+          payload={fullname}
+          show={showSearchCheck}
+          handleClose={() => setShowSearchCheck(false)}
+        />
+      )}
 
-      {showSearchPageCheck &&
-        ![2, 3].includes(
-          !!data?.application?.status ? data?.application?.status : dataCookie?.application?.status
-        ) && (
-          <PageCheckDeskTop
-            payload={`${
-              !!data?.customer?.lastname ? data?.customer?.lastname : dataCookie?.customer?.lastname
-            }`}
-            show={showSearchPageCheck}
-            handleClose={() => setShowSearchPageCheck(false)}
-          />
-        )}
+      {showSearchPageCheck && ![2, 3].includes(values.status || 0) && (
+        <PageCheckDeskTop
+          payload={values.lastname}
+          show={showSearchPageCheck}
+          handleClose={() => setShowSearchPageCheck(false)}
+        />
+      )}
     </>
   )
 }

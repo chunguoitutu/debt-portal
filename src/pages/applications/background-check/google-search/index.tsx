@@ -13,6 +13,7 @@ type Props = {
   payload: string
 }
 const modalsRoot = document.getElementById('root-modals') || document.body
+
 const WrapperGoogleSearch = ({show, handleClose, payload}: Props) => {
   const [dataSearch, setDataSeacrch] = useState({
     url: '',
