@@ -1,7 +1,7 @@
-import {TableConfig} from '@/app/types'
-import {ID_TYPE, LOAN_U_F_0, STATUS_APPLICATION_FILTER} from '@/app/utils'
-import {Input} from '@/components/input'
-import {Select} from '@/components/select'
+import { TableConfig } from '@/app/types'
+import { ID_TYPE, LOAN_U_F_0, STATUS_APPLICATION_FILTER } from '@/app/utils'
+import { Input } from '@/components/input'
+import { Select } from '@/components/select'
 
 export const LOAN_LISTING_CONFIG: TableConfig = {
   endpoint: '',
@@ -24,7 +24,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'loan_no',
       name: 'Loan No',
-      classNameTableHead: 'ps-5 min-w-175px',
+      classNameTableHead: 'min-w-175px',
       classNameTableBody: 'min-w-175px',
       infoFilter: {
         typeComponent: 'input',
@@ -35,7 +35,6 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'fullname',
       name: 'Name of Borrower',
-      classNameTableHead: 'ps-5',
       classNameTableBody: 'pe-0',
       infoFilter: {
         typeComponent: 'input',
@@ -46,7 +45,6 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'identification_no',
       name: 'NRIC No',
-      classNameTableHead: 'ps-5',
       classNameTableBody: 'pe-0',
       infoFilter: {
         typeComponent: 'input',
