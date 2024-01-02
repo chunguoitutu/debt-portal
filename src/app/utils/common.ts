@@ -170,7 +170,7 @@ export function convertResidentialTypeSingPass(residentialType: string) {
     case 'CONDOMINIUM':
       return 'Condo'
 
-    case 'landed':
+    case 'Landed':
       return 'Landed'
 
     case 'TERRACE HOUSE':

@@ -1,7 +1,7 @@
-import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
-import {FormikProps} from 'formik'
-import {ObjectSchema, Schema} from 'yup'
-import {ApprovalInfo} from './response'
+import { Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction } from 'react'
+import { FormikProps } from 'formik'
+import { ObjectSchema, Schema } from 'yup'
+import { ApprovalInfo } from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -26,7 +26,7 @@ export type ErrorResponse = {
 export type DataResponse<T> = {
   error: boolean
   message: string
-  searchCriteria?: {[key: string]: string}
+  searchCriteria?: { [key: string]: string }
   data: T
 }
 
@@ -130,12 +130,19 @@ export type ResponseApplicationListing = {
   application_name: string
   id_type: string
   loan_type: string
-  loan_amount: number
+  loan_amount_requested: number
   application_date: Date
   status: number
   searchBar?: string
 }
 
+export type ResponseLoanListing = {
+  id: number
+  loan_no: number
+  identification_no: number
+  fullname: string
+  loan_amount_requested: number
+}
 export type ResponseBorrowerListing = {
   id: number
   customer_no: string
@@ -199,7 +206,7 @@ export type TableConfig = {
     messageEditSuccess?: string
     messageCreateError?: string
     messageCreateSuccess?: string
-    dependencies?: {[key: string]: string}
+    dependencies?: { [key: string]: string }
     buttonAddNew?: string
     showSearch?: boolean
     showMessageTitle?: string
@@ -246,8 +253,8 @@ export type CheckboxTreeItem = {
   value: string
   label: string
   active?: boolean
-  children?: CheckboxTreeItem[] & {[key: string]: any}
-} & {[key: string]: any}
+  children?: CheckboxTreeItem[] & { [key: string]: any }
+} & { [key: string]: any }
 
 export type Option = {
   label: string
@@ -274,7 +281,7 @@ export type ApplicationConfig = {
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: {[key: string]: string | number}[] | DropDownGroup[]
+  options?: { [key: string]: string | number }[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
@@ -524,6 +531,24 @@ export type ApplicationItem = {
   identification_no: string
   fullname: string
   loan_type: string
+}
+
+export type LoanItem = {
+  id: number
+  loan_no: null | string
+  status: number
+  borrower_id: number
+  loan_type_id: number
+  application_id: string
+  loan_amount: string
+  loan_terms: number
+  interest_rate: string
+  approval_date: string
+  identification_no: string
+  fullname: string
+  loan_type: string
+  borrower: any
+  application: any
 }
 
 export type BorrowerItem = {

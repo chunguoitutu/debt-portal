@@ -386,6 +386,21 @@ export const STATUS_APPLICATION_FILTER: Option[] = [
   },
 ]
 
+export const LOAN_U_F_0: Option[] = [
+  {
+    value: '0',
+    label: 'F',
+  },
+  {
+    value: '1',
+    label: 'U',
+  },
+  {
+    value: '2',
+    label: 'O',
+  },
+]
+
 export const MARKETING_TYPE: Option[] = [
   {
     value: 'yellow_pages',

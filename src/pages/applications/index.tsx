@@ -314,13 +314,6 @@ export const Applications = () => {
 
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
 
-      if (cpf) {
-        const date = JSON.parse(cpf.date)
-        const employer = JSON.parse(cpf.employer)
-        const amount = JSON.parse(cpf.amount)
-        const month = JSON.parse(cpf.month)
-      }
-
       setValues({
         ...values,
         ...borrower,

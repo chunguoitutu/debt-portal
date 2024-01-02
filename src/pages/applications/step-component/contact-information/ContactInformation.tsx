@@ -3,11 +3,9 @@ import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
 import request from '../../../../app/axios'
 import {BLOCK_ADDRESS_CONFIG} from '../config'
-import {swalConfirm, swalToast} from '../../../../app/swal-notification'
 import {Select} from '@/components/select'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {AddressTypeItem, ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
-import {DEFAULT_MESSAGE_ERROR_500} from '@/app/constants'
 import {COUNTRY_PHONE_CODE, PROPERTY_TYPE} from '@/app/utils'
 import {useParams} from 'react-router-dom'
 import AddressGroup from './AddressGroup'
@@ -129,27 +127,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
       })
 
       setDataOption(updatedDataMarketing)
-
-      // !applicationIdEdit &&
-      //   setFieldValue(
-      //     `address_contact_info[0][address_type_id]`,
-      //     updatedDataMarketing?.address_type_id.length > 0
-      //       ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)
-      //           .length > 0
-      //         ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0]
-      //             .id
-      //         : updatedDataMarketing?.address_type_id[0].id
-      //       : ''
-      //   )
-
-      // setDefaultValueAddress(
-      //   updatedDataMarketing?.address_type_id.length > 0
-      //     ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1).length >
-      //       0
-      //       ? updatedDataMarketing?.address_type_id.filter((el: any) => +el.is_default === 1)[0].id
-      //       : updatedDataMarketing?.address_type_id[0].id
-      //     : ''
-      // )
     } catch (error) {
     } finally {
     }
@@ -239,59 +216,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
 
     // unexpected
     return <Component />
-  }
-
-  function handleSwitchLabel(label) {
-    switch (label) {
-      case 'home':
-        return 'Home Address'
-      case 'office':
-        return 'Office Address'
-      case 'work-site':
-        return 'Work Site Address'
-      default:
-        return 'Other'
-    }
-  }
-
-  function handleShowConfirmDelete(item: BlockAddress, index: number) {
-    if (!item.id) return handleRemoveBlockAddress(item, index)
-
-    swalConfirm
-      .fire({
-        title: 'Are You Sure?',
-        text: `You Won't Be Able To Revert This.`,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          handleRemoveBlockAddress(item, index)
-        }
-      })
-  }
-
-  async function handleRemoveBlockAddress(item: BlockAddress, index: number) {
-    try {
-      item.id && (await request.delete(`/address/${item.id}`))
-      setValues(
-        {
-          ...values,
-          address_contact_info: values.address_contact_info.filter((_, i) => i !== index),
-        },
-        false
-      )
-
-      formik.setErrors({
-        ...errors,
-        address_contact_info: (errors?.address_contact_info as string[])?.filter(
-          (_, i) => i !== index
-        ),
-      })
-    } catch (error) {
-      swalToast.fire({
-        title: DEFAULT_MESSAGE_ERROR_500,
-        icon: 'error',
-      })
-    }
   }
 
   function handleToggleAddress(newLabelActive: string) {

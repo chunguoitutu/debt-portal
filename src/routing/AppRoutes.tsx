@@ -21,13 +21,13 @@ import TopBarProgress from 'react-topbar-progress-indicator'
 import SettingPageRouter from '../pages/settings/SettingPageRouter'
 import {Applications} from '../pages/applications'
 import Dashboard from '../pages/dashboard'
-import Loans from '../pages/loans'
 import Transactions from '../pages/transactions'
 import MyTasks from '../pages/my-tasks'
 import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
 import {Logout} from '../pages/auth/logout/Logout'
 import {useAuth} from '../app/context/AuthContext'
 import Guest from '@/pages/guest'
+import LoanListing from '@/pages/loans/LoanListing/LoanListing'
 import BorrowersListing from '@/pages/borrowers/BorrowerListing'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
@@ -67,7 +67,10 @@ const AppRoutes: FC = () => {
               <Route path='create' element={<Applications />} />
               <Route path='edit/:applicationIdEdit' element={<Applications />} />
             </Route>
-            <Route path='/loans' element={<Loans />} />
+            <Route path='/loans'>
+              <Route index element={<LoanListing />} />
+              <Route path='listing' element={<LoanListing />} />
+            </Route>
             <Route path='/borrowers'>
               <Route index element={<BorrowersListing />} />
               <Route path='listing' element={<BorrowersListing />} />
