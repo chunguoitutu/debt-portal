@@ -193,5 +193,9 @@ export function convertResidentialTypeSingPass(residentialType: string) {
 export function capitalizeFirstText(text: string) {
   if (!text || typeof text !== 'string') return ''
 
-  return `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}`
+  return text
+    .split(' ')
+    .filter(Boolean)
+    .map((text) => `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}`)
+    .join(' ')
 }
