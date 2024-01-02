@@ -19,6 +19,7 @@ import Button from '@/components/button/Button'
 import Singpass from './Singpass'
 import {KTIcon} from '@/_metronic/helpers'
 import {PROPERTY_TYPE, capitalizeFirstText, convertResidentialTypeSingPass} from '@/app/utils'
+import FileInput from '../employment/FileDocument'
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 

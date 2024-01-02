@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {AiOutlineClose} from 'react-icons/ai'
 import './style.scss'
 
@@ -8,8 +8,8 @@ import request from '../../../../app/axios'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import {convertSize} from '@/app/utils'
 
-export interface file {
-  id?: Number
+export interface File {
+  id?: number
   borrower_id?: number
   document_name: string
   document_path: string
@@ -19,10 +19,16 @@ export interface file {
   type: string
 }
 
-const FileInput = (props: any) => {
-  const {formik} = props.props
+interface Document {
+  desc?: string // Update the name of the prop here
+  formik?: any
+}
+
+const FileInput: React.FC<Document> = (props: Document) => {
+  const {formik, desc} = props // Update the destructuring here
 
   const [selectedFiles, setSelectedFiles] = useState<any>([])
+
   const handleFileChange = (event: any) => {
     const files: FileList | null = event.target.files
     if (files) {
@@ -53,7 +59,7 @@ const FileInput = (props: any) => {
   return (
     <div className='w-100'>
       <div className='d-flex flex-wrap mb-24px gap-24px'>
-        {formik?.values?.file_documents.map((data: file, index: number) => {
+        {formik?.values?.file_documents.map((data: File, index: number) => {
           return (
             <div key={index} className='file-document-style'>
               {!!data?.base64 && (
@@ -132,8 +138,7 @@ const FileInput = (props: any) => {
                 fontSize: '12px',
               }}
             >
-              Choose files from the computer (file upload maximum 200MB and only upload files in PDF
-              format).
+              {`${desc}`} {/* Use the updated prop name here */}
             </p>
           </div>
         </div>
