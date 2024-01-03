@@ -91,6 +91,7 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
       classNameTableHead: 'ps-20 ',
       infoFilter: {
         typeComponent: 'input',
+        typeInput: 'phone',
         component: Input,
         isSort: true,
       },

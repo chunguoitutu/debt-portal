@@ -72,7 +72,9 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
       swalToast.fire({
         timer: 1500,
         icon: 'success',
-        title: id ? `Update application approve successfully` : `Application successfully approval`,
+        title: id
+          ? `Description of approval successfully updated`
+          : `Application successfully approval`,
       })
     } catch (error) {
       const message = convertErrorMessageResponse(error)

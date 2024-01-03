@@ -84,7 +84,7 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
       {
         key: 'telephone',
         name: 'Telephone',
-        type: 'number',
+        type: 'phone',
       },
       {
         key: 'email',

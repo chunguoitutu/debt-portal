@@ -14,10 +14,12 @@ interface Props extends PropsStepApplication {
   handleClose: () => void
   handleReloadApi: () => void
   isDraft: boolean
+  dataEdit: any
   currentStep: number
 }
 
 const GeneralButton: FC<Props> = ({
+  dataEdit,
   handleSubmit,
   handleSaveDraft,
   handleClose,
@@ -30,6 +32,37 @@ const GeneralButton: FC<Props> = ({
   const [showPopupApproval, setShowPopupApproval] = useState<boolean>(false)
   const {priority} = useAuth()
   const {isSubmitting, values} = formik
+  const checks = useMemo(() => {
+    if (currentStep !== 6) return true
+
+    const check = Object.keys(values).map((check) => {
+      if (Array.isArray(values[check]) && !!dataEdit) {
+        if (values[check]?.length == 0) {
+          return true
+        }
+        if (values[check]?.length === dataEdit[check]?.length) {
+          const test = values[check].map((data, index) => {
+            const d = Object.keys(data).map((d) => {
+              if ((data[d] || '').toString() === (dataEdit[check][index][d] || '').toString()) {
+                return true
+              } else {
+                return false
+              }
+            })
+
+            return d.includes(false)
+          })
+          return !test.includes(true)
+        }
+        return false
+      }
+      if (!Array.isArray(values[check]) && values[check] === dataEdit[check] && !!dataEdit) {
+        return true
+      }
+      return false
+    })
+    return check.includes(false)
+  }, [currentStep])
 
   const checkApprove = useMemo(() => {
     if (priority <= 2) {
@@ -159,7 +192,7 @@ const GeneralButton: FC<Props> = ({
             <Button
               type='submit'
               loading={isSubmitting && !isDraft}
-              disabled={isSubmitting}
+              disabled={isSubmitting || (!checks && !!applicationIdEdit && currentStep === 6)}
               onClick={handleSubmit}
               className='fs-6 btn btn-primary'
             >
@@ -171,7 +204,7 @@ const GeneralButton: FC<Props> = ({
             <Button
               className='fs-6 btn btn-primary'
               type='submit'
-              disabled={isSubmitting}
+              disabled={isSubmitting || (checks && !!applicationIdEdit && currentStep === 6)}
               onClick={handleApproval}
             >
               {values.status === 3 && 'Update'} Approve

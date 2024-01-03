@@ -70,7 +70,7 @@ const CompanyDetail = ({
             <KTIcon iconName='phone' className='fs-20' />
             {!!data?.telephone ? (
               <p className='ps-8px pe-0 pt-0 pb-0 m-0 fs-16 text-gray-800 fw-semibold text-lowercase'>
-                {data?.telephone}
+                +65{data?.telephone}
               </p>
             ) : (
               <p className='ps-8px text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>

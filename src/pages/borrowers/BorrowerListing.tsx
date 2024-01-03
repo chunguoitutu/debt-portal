@@ -42,30 +42,37 @@ const showFilter = [
   {
     key: 'customer_no',
     value: 'Customer No',
+    valueStart: '',
   },
   {
     key: 'fullname',
     value: 'Full Name',
+    valueStart: '',
   },
   {
     key: 'identification_type',
     value: 'Identity Card Type',
+    valueStart: '',
   },
   {
     key: 'identification_no',
     value: 'NRIC No',
+    valueStart: '',
   },
   {
     key: 'gender',
     value: 'Gender',
+    valueStart: '',
   },
   {
     key: 'date_of_birth',
     value: 'Date Of Birth',
+    valueStart: '',
   },
   {
     key: 'mobilephone_1',
     value: 'Telephone',
+    valueStart: '+65',
   },
 ]
 
@@ -279,6 +286,7 @@ const BorrowersListing = (props: Props) => {
                   className={`${classNameTableBody} fs-6 fw-medium w-250px ps-20`}
                   style={{color: '#071437'}}
                 >
+                  {!!phoneNumber && '+65'}
                   {phoneNumber}
                 </td>
               )
@@ -392,7 +400,8 @@ const BorrowersListing = (props: Props) => {
                       !['identification_type', 'date_of_birth'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
-                            {filter.value}: {checkFilter[`${filter.key}`]}
+                            {filter.value}: {filter.valueStart}
+                            {checkFilter[`${filter.key}`]}
                           </h2>
                           <div
                             onClick={() => {

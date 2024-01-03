@@ -67,6 +67,7 @@ export const Applications = () => {
   const [show, setShow] = useState<boolean>(false)
   const [loadApiEdit, SetLoadApiEdit] = useState<boolean>(false)
   const [showRemark, setShowRemark] = useState<boolean>(false)
+  const [dataEdit, setdataEdit] = useState({})
   // const [checkAmount, SetCheckAmount] = useState<number>(0)
   // const [popupSingpass, setPopupSingpass] = useState(false)
   const [searchParams] = useSearchParams()
@@ -314,6 +315,24 @@ export const Applications = () => {
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
 
       setValues({
+        ...values,
+        ...borrower,
+        ...application,
+        ...customer,
+        ...bank_account,
+        ...employment,
+        ...cpf,
+        address_contact_info:
+          Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
+        date_of_birth: formattedDateOfBirth,
+        file_documents:
+          file_documents.map((data) => {
+            return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
+          }) || [],
+        ...(approval ? {approval} : {}),
+      })
+
+      setdataEdit({
         ...values,
         ...borrower,
         ...application,
@@ -674,7 +693,14 @@ export const Applications = () => {
         loan_reason,
         interest: +interest,
       },
-      address: addressList,
+      address: addressList
+        .filter((el) => el.address_type_id)
+        .map((el) => ({
+          ...el,
+          ...(['0', '1'].includes(el.existing_staying?.toString() || '')
+            ? {existing_staying: Number(el?.existing_staying || 0)}
+            : {}),
+        })),
       file_documents,
 
       cpf: {
@@ -883,6 +909,7 @@ export const Applications = () => {
                   />
                 )}
                 <GeneralButton
+                  dataEdit={dataEdit}
                   setStepCompleted={setStepCompleted}
                   handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}

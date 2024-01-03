@@ -59,7 +59,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
   ref
 ) => {
   const [typeCustom, setTypeCustom] = useState<string>(
-    type === 'money' ? 'number' : type === 'number' ? 'text' : type
+    type === 'money' ? 'text' : type === 'number' ? 'text' : type
   )
 
   const defaultId = useId()
@@ -73,8 +73,6 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 
   // handle deleting characters on firefox
   function handleKeyPress({noThereAreCommas = true, e}: any) {
-    if (type !== 'number') return
-
     // Only allow integer values
     if (noThereAreCommas && e.key === '.') return e.preventDefault()
 
@@ -131,10 +129,12 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         <input
           ref={ref}
           onKeyPressCapture={(e) =>
-            type === 'number' && handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
+            ['number', 'money'].includes(type) &&
+            handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
           }
           onPaste={(e) =>
-            type === 'number' && handlePaste({e: e, noThereAreCommas: noThereAreCommas})
+            ['number', 'money'].includes(type) &&
+            handlePaste({e: e, noThereAreCommas: noThereAreCommas})
           }
           type={typeCustom}
           className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
