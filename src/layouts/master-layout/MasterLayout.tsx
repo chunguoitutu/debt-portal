@@ -70,8 +70,6 @@ const MasterLayout = () => {
         </div>
       </div>
 
-      <div className='d-2xxl-none'>{checkBackgroundMobile && <RightToolbar />}</div>
-
       <ScrollTop />
     </PageDataProvider>
   )

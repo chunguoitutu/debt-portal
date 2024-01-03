@@ -47,34 +47,52 @@ const Guest = () => {
   function handleTogglePopup() {
     setPopup(!popup)
   }
+  const isValidEmail = (email: string): boolean => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    return regex.test(email)
+  }
 
   async function handleSendMail() {
+    let input: any = ''
+    if (!email) {
+      const inputEmail = prompt('Enter the email you want to send:', '')
+      if (inputEmail !== null) {
+        if (isValidEmail(inputEmail)) {
+          input = inputEmail
+        } else {
+          alert('Please enter a valid email.')
+        }
+      }
+    }
+
     const payload = {
       loan_id: Number(loanId),
       contract_base64: base64data,
-      email: email?.trim(),
+      email: !!email?.trim() ? email?.trim() : input,
     }
 
-    try {
-      await request.post('/application/send-mail', payload)
+    if (!!email.trim() || !!input.trim()) {
+      try {
+        await request.post('/application/send-mail', payload)
 
-      swalToast.fire({
-        icon: 'success',
-        title: 'Email successfully sent. Please check your email',
-      })
-      setLoadId(null)
-      setBase64data('')
-      setImgBase64('')
-      setBase64Pdf(null)
-      setIsSignature(false)
-      Cookies.remove('approval_loan_id')
-    } catch (error) {
-      swalToast.fire({
-        icon: 'error',
-        title: convertErrorMessageResponse(error),
-      })
-    } finally {
-      setLoading(false)
+        swalToast.fire({
+          icon: 'success',
+          title: 'Email successfully sent. Please check your email',
+        })
+        setLoadId(null)
+        setBase64data('')
+        setImgBase64('')
+        setBase64Pdf(null)
+        setIsSignature(false)
+        Cookies.remove('approval_loan_id')
+      } catch (error) {
+        swalToast.fire({
+          icon: 'error',
+          title: convertErrorMessageResponse(error),
+        })
+      } finally {
+        setLoading(false)
+      }
     }
   }
 
