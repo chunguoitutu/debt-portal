@@ -1,7 +1,7 @@
-import { Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction } from 'react'
-import { FormikProps } from 'formik'
-import { ObjectSchema, Schema } from 'yup'
-import { ApprovalInfo } from './response'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
+import {FormikProps} from 'formik'
+import {ObjectSchema, Schema} from 'yup'
+import {ApprovalInfo} from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -26,7 +26,7 @@ export type ErrorResponse = {
 export type DataResponse<T> = {
   error: boolean
   message: string
-  searchCriteria?: { [key: string]: string }
+  searchCriteria?: {[key: string]: string}
   data: T
 }
 
@@ -105,6 +105,11 @@ export type SearchCriteria<T = any> = {
   company_id?: number
   filters?: T
   searchBar?: string
+}
+
+export type PaginationType = {
+  pageSize: number
+  currentPage: number
 }
 
 export type ResponseLookupListing = {
@@ -206,7 +211,7 @@ export type TableConfig = {
     messageEditSuccess?: string
     messageCreateError?: string
     messageCreateSuccess?: string
-    dependencies?: { [key: string]: string }
+    dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
     showMessageTitle?: string
@@ -253,8 +258,8 @@ export type CheckboxTreeItem = {
   value: string
   label: string
   active?: boolean
-  children?: CheckboxTreeItem[] & { [key: string]: any }
-} & { [key: string]: any }
+  children?: CheckboxTreeItem[] & {[key: string]: any}
+} & {[key: string]: any}
 
 export type Option = {
   label: string
@@ -281,7 +286,7 @@ export type ApplicationConfig = {
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: { [key: string]: string | number }[] | DropDownGroup[]
+  options?: {[key: string]: string | number}[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
@@ -579,3 +584,9 @@ export type JwtDecode = {
 }
 
 export type OrderBy = 'desc' | 'asc'
+
+export type MenuProps<T = any> = {
+  label: string
+  value: string
+  component?: FC<T>
+}

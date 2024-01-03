@@ -1,5 +1,5 @@
 import {LoanDetailsProps} from '@/app/types'
-import {faArrowRight, faChevronRight} from '@fortawesome/free-solid-svg-icons'
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import moment from 'moment'
 import {FC} from 'react'

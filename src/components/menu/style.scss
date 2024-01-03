@@ -1,0 +1,33 @@
+.horizontal-menu {
+  .menu-item {
+    transition: all 0.2s linear;
+
+    &:hover {
+      color: var(--bs-gray-900) !important;
+    }
+
+    .pseudo {
+      visibility: hidden;
+      $size: 4px;
+      content: '';
+      position: absolute;
+      top: calc(100% - $size);
+      left: 0;
+      width: 100%;
+      background-color: var(--bs-primary);
+      height: $size;
+      border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
+      opacity: 0;
+    }
+
+    &:hover,
+    &.active {
+      .pseudo {
+        transition: all 0.2s linear;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
