@@ -484,8 +484,9 @@ const ApplicationListing = () => {
         {!!newDataSocket && (
           <div className='bg-primary-light wrapper-transition-filter-show p-16px px-32px my-16px d-flex align-items-center justify-content-between gap-16px'>
             <span className='fs-16 text-primary'>
-              Detected <span className='fw-bold'>{newDataSocket}</span> new records. Do you want to
-              refresh the data now?
+              Detected <span className='fw-bold'>{newDataSocket}</span> new{' '}
+              {Number(newDataSocket) === 1 ? 'record' : 'records'}. Do you want to refresh the data
+              now?
             </span>
 
             <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
@@ -570,13 +571,15 @@ const ApplicationListing = () => {
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
-                          {!!checkFilter?.application_date?.gte &&
-                            moment(checkFilter?.application_date?.gte).format('MMM D, YYYY')}{' '}
-                          {!!checkFilter?.application_date?.lte && 'To '}
-                          {!!checkFilter?.application_date?.lte &&
-                            moment(checkFilter?.application_date?.lte)
-                              .subtract(1, 'days')
-                              .format('MMM D, YYYY')}
+                          {!!checkFilter?.application_date?.gte
+                            ? moment(checkFilter?.application_date?.gte).format('MMM D, YYYY')
+                            : '...'}{' '}
+                          -{' '}
+                          {!!checkFilter?.application_date?.lte
+                            ? moment(checkFilter?.application_date?.lte)
+                                .subtract(1, 'days')
+                                .format('MMM D, YYYY')
+                            : '...'}
                         </h2>
                         <div
                           onClick={() => {
@@ -593,19 +596,16 @@ const ApplicationListing = () => {
                       ['loan_amount_requested'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
-                            {filter.value}:{' '}
-                            {(!!checkFilter?.loan_amount_requested?.gte ||
-                              checkFilter?.loan_amount_requested?.gte === 0) &&
-                              'From '}
-                            {(!!checkFilter?.loan_amount_requested?.gte ||
-                              checkFilter?.loan_amount_requested?.gte === 0) &&
-                              checkFilter?.loan_amount_requested?.gte}{' '}
-                            {(!!checkFilter?.loan_amount_requested?.lte ||
-                              checkFilter?.loan_amount_requested?.lte === 0) &&
-                              'To '}
-                            {(!!checkFilter?.loan_amount_requested?.lte ||
-                              checkFilter?.loan_amount_requested?.lte === 0) &&
-                              checkFilter?.loan_amount_requested?.lte}
+                            {filter.value}:
+                            {!!checkFilter?.loan_amount_requested?.gte ||
+                            checkFilter?.loan_amount_requested?.gte === 0
+                              ? checkFilter?.loan_amount_requested?.gte
+                              : '...'}{' '}
+                            -{' '}
+                            {!!checkFilter?.loan_amount_requested?.lte ||
+                            checkFilter?.loan_amount_requested?.lte === 0
+                              ? checkFilter?.loan_amount_requested?.lte
+                              : '...'}
                           </h2>
                           <div
                             onClick={() => {

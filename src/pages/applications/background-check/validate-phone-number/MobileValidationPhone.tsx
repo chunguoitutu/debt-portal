@@ -2,10 +2,11 @@ import {KTIcon} from '@/_metronic/helpers'
 import ValidationPhoneNumber from './ValidationPhoneNumber'
 
 type Props = {
+  payload: string | number
   handleShow: () => void
 }
 
-const MobileValidationPhoneNumber = ({handleShow}: Props) => {
+const MobileValidationPhoneNumber = ({handleShow, payload}: Props) => {
   return (
     <div className='w-100'>
       <div
@@ -25,7 +26,7 @@ const MobileValidationPhoneNumber = ({handleShow}: Props) => {
         </button>
       </div>
       <div style={{maxHeight: 'calc(100vh - 100px)', overflowY: 'auto'}}>
-        <ValidationPhoneNumber onClose={handleShow} />
+        <ValidationPhoneNumber payload={payload} onClose={handleShow} />
       </div>
     </div>
   )

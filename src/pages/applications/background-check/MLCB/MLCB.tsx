@@ -14,7 +14,7 @@ const MLCB: FC<Props> = ({onClose}) => {
   const {applicationIdEdit} = useParams()
 
   async function handleGetMLCBReport(type: 'BM' | 'ME') {
-    if (!applicationIdEdit || !+applicationIdEdit) {
+    if (!applicationIdEdit) {
       onClose()
       return swalToast.fire({
         icon: 'error',

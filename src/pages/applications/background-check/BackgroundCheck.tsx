@@ -158,7 +158,23 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         show: ![2, 3].includes(values.status || 0),
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
-          setShowValidationPhone(true)
+          if (!!values.mobilephone_1) {
+            setShowValidationPhone(true)
+          } else {
+            swalConfirm.fire({
+              icon: 'error',
+              title: 'You must complete entering Contact Information',
+              showCancelButton: false,
+              confirmButtonText: 'OK',
+              customClass: {
+                popup: 'm-w-300px',
+                htmlContainer: 'fs-3',
+                cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+                confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+                actions: 'd-flex justify-content-center w-100 ',
+              },
+            })
+          }
         },
       },
 
@@ -179,7 +195,10 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
       <ContentListButton config={configBackgroundCheck} />
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
       {showValidationPhone && ![2, 3].includes(values.status || 0) && (
-        <PopupValidationPhoneNumber onClose={() => setShowValidationPhone(false)} />
+        <PopupValidationPhoneNumber
+          payload={Number(values.mobilephone_1)}
+          onClose={() => setShowValidationPhone(false)}
+        />
       )}
       {showMLCBReport && [1].includes(values.status || 0) && (
         <MLCBReport onClose={() => setShowMLCBReport(false)} />

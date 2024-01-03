@@ -13,6 +13,9 @@ import {CheckboxRounded} from '@/components/checkbox'
 import {CREATE_COMPANY_CONFIG} from '../company-management/config'
 import {useAuth} from '@/app/context/AuthContext'
 import Cookies from 'js-cookie'
+import Tippy from '@tippyjs/react'
+import {Select} from '@/components/select'
+import {COUNTRY_PHONE_CODE} from '@/app/utils'
 
 type Props = {
   setLoadApi: any
@@ -225,11 +228,32 @@ const CreateEditCompanies = ({
                         label={row.name}
                         onBlur={handleBlur}
                         name={row?.key}
-                        type={row?.type || 'text'}
+                        type={row?.type === 'phone' ? 'number' : row?.type || 'text'}
                         value={values[row?.key] || ''}
                         onChange={handleChange}
                         error={errors[row.key] as string}
                         touched={!!touched[row.key]}
+                        insertLeft={
+                          row?.type === 'phone' ? (
+                            <Tippy
+                              offset={[120, 0]}
+                              content='Please choose the phone number you prefer.'
+                            >
+                              {/* Wrapper with a span tag to show tooltip */}
+                              <span>
+                                <Select
+                                  onChange={handleChange}
+                                  value={values[row?.key]}
+                                  isOptionDefault={false}
+                                  classShared='m-0'
+                                  className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                                  name='country_phone_code'
+                                  options={COUNTRY_PHONE_CODE}
+                                />
+                              </span>
+                            </Tippy>
+                          ) : undefined
+                        }
                         disabled={titleLable === 'Edit' && row.key === 'company_code'}
                         classInputWrap={
                           titleLable === 'Edit' && row.key === 'company_code'

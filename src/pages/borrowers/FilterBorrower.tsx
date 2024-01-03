@@ -1,4 +1,7 @@
 import {KTIcon} from '@/_metronic/helpers'
+import {COUNTRY_PHONE_CODE} from '@/app/utils'
+import {Select} from '@/components/select'
+import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 
 interface Props {
@@ -100,6 +103,26 @@ export function FilterBorrower({
                     label={name}
                     classShared={''}
                     {...props}
+                    type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
+                    insertLeft={
+                      typeInput === 'phone' ? (
+                        <Tippy
+                          offset={[120, 0]}
+                          content='Please choose the phone number you prefer.'
+                        >
+                          {/* Wrapper with a span tag to show tooltip */}
+                          <span>
+                            <Select
+                              isOptionDefault={false}
+                              classShared='m-0'
+                              className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                              name='country_phone_code'
+                              options={COUNTRY_PHONE_CODE}
+                            />
+                          </span>
+                        </Tippy>
+                      ) : undefined
+                    }
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         handleLoadApi()
