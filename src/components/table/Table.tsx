@@ -175,6 +175,7 @@ const Table: FC<Props> = ({
       })
     }
   }
+
   async function handleChangePagination(goToPage: number) {
     setSearchCriteria((prev) => ({...prev, currentPage: goToPage}))
     setSearchCriterias((prev) => ({...prev, currentPage: goToPage}))

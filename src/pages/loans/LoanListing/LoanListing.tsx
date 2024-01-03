@@ -18,9 +18,7 @@ import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
 import request from '@/app/axios'
-import {Badge} from 'react-bootstrap'
 import numeral from 'numeral'
-import {Footer} from '@/components/footer/Footer'
 import {PageTitle, PageLink} from '@/_metronic/layout/core'
 
 const profileBreadCrumbs: Array<PageLink> = [

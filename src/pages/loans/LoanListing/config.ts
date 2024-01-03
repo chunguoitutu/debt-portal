@@ -1,7 +1,7 @@
-import { TableConfig } from '@/app/types'
-import { ID_TYPE, LOAN_U_F_0, STATUS_APPLICATION_FILTER } from '@/app/utils'
-import { Input } from '@/components/input'
-import { Select } from '@/components/select'
+import {TableConfig} from '@/app/types'
+import {ID_TYPE, LOAN_U_F_0, STATUS_APPLICATION_FILTER} from '@/app/utils'
+import {Input} from '@/components/input'
+import {Select} from '@/components/select'
 
 export const LOAN_LISTING_CONFIG: TableConfig = {
   endpoint: '',
@@ -92,7 +92,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     },
     {
       key: 'loan_term',
-      name: 'No. Of Instalment',
+      name: 'Loan Terms',
       classNameTableHead: 'ps-8 pe-8 text-end',
       classNameTableBody: 'pe-8 text-end',
       infoFilter: {

@@ -1,11 +1,15 @@
 import {PageLink, PageTitle} from '@/_metronic/layout/core'
 import Loading from '@/components/loading'
 import NotFoundPage from '@/pages/not-found-page/NotFoundPage'
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import LoanHeader from './LoanHeader'
 
 import './style.scss'
+import NextPayment from './NextPayment'
+import HorizontalMenu from '@/components/menu'
+import {LOAN_DETAILS_MENU} from '@/app/constants/menu'
+import {LoanInfo} from '@/app/types'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -24,7 +28,8 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 const LoanDetails = () => {
   const [error, setError] = useState<boolean>(false)
-  const [loanInfo, setLoanInfo] = useState<{[key: string]: any} | null>(null)
+  const [loanInfo, setLoanInfo] = useState<LoanInfo | null>(null)
+  const [activeMenu, setActiveMenu] = useState<string>(LOAN_DETAILS_MENU[0].value)
 
   const {loanId = 0} = useParams()
 
@@ -32,10 +37,328 @@ const LoanDetails = () => {
     if (!+loanId) return setError(true)
 
     setTimeout(() => {
-      setLoanInfo({a: 1})
+      setLoanInfo({
+        loan_payment: [
+          {
+            id: 1,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+          {
+            id: 2,
+            due_date: '2023-12-19 07:49:54',
+            interest_amount: 4,
+            loan_id: 1,
+            payment_status: 'active',
+            principal_amount: 13,
+            total_amount: 100,
+          },
+        ],
+      })
     }, 500)
   }, [loanId])
 
+  const CurrentComponent = useMemo(() => {
+    return LOAN_DETAILS_MENU.find((el) => el.value === activeMenu)?.component
+  }, [activeMenu])
+
+  function handleChangeActiveMenu(newValue: string) {
+    setActiveMenu(newValue)
+  }
+
+  // ============================== RENDER JSX, handle logic above ======================================================
   if (error) return <NotFoundPage />
 
   if (!loanInfo) return <Loading />
@@ -44,10 +367,33 @@ const LoanDetails = () => {
     <div className='loan-details-page'>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Loan Details'}</PageTitle>
       <div className='row gy-20px'>
-        <div className='col-12 col-lg-4'>
-          <LoanHeader loanInfo={loanInfo} />
+        <div className='col-12 col-xxl-4'>
+          <div className='row gy-20px'>
+            <div className='col-12 col-lg-6 col-xxl-12'>
+              <LoanHeader loanInfo={loanInfo} />
+            </div>
 
-          <div className='d-flex flex-lg-column mt-20px'>{/* <div>h1</div> */}</div>
+            <div className='col-12 col-lg-6 col-xxl-12'>
+              <NextPayment loanInfo={loanInfo} />
+            </div>
+          </div>
+        </div>
+
+        <div className='col-12 col-xxl-8'>
+          <div className='card p-30px h-100'>
+            <h2 className='fs-20 fw-bolder mb-4'>Transactions History, Schedule And Bad Debt</h2>
+
+            <HorizontalMenu
+              className='mt-24px'
+              data={LOAN_DETAILS_MENU}
+              active={activeMenu}
+              onChangeActiveMenu={(newValue: string) => {
+                handleChangeActiveMenu(newValue)
+              }}
+            />
+
+            {CurrentComponent && <CurrentComponent loanInfo={loanInfo} />}
+          </div>
         </div>
       </div>
     </div>
