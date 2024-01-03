@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useState} from 'react'
+import {FC, useMemo, useState} from 'react'
 
 import ContentListButton from '@/components/list-button/ContentListButton'
 import RepaymentScheduleCalculator from './repayment-schedule-calculator/RepaymentScheduleCalculator'
@@ -63,7 +63,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         background: '#E2E5E7',
         show: ![2, 3].includes(values.status || 0),
         onclick: () => {
-          if (fullname) {
+          if (formik.values.lastname) {
             setShowSearchPageCheck(true)
           } else {
             swalConfirm.fire({
@@ -122,7 +122,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'Get MLCB Report',
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
-        show: ![2, 3].includes(values.status || 0),
+        show: [1].includes(values.status || 0),
         onclick: () => {
           if (!!applicationIdEdit) {
             setShowMLCBReport(true)
@@ -181,7 +181,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
       {showValidationPhone && ![2, 3].includes(values.status || 0) && (
         <PopupValidationPhoneNumber onClose={() => setShowValidationPhone(false)} />
       )}
-      {showMLCBReport && ![2, 3].includes(values.status || 0) && (
+      {showMLCBReport && [1].includes(values.status || 0) && (
         <MLCBReport onClose={() => setShowMLCBReport(false)} />
       )}
       {showSearchCheck && ![2, 3].includes(values.status || 0) && (
