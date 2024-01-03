@@ -45,7 +45,7 @@ const CreateSignatureModal: FC<Props> = ({onClose, setBase64Pdf, setIsSignature,
       //   notification
       swalToast.fire({
         icon: 'success',
-        title: 'Created signature successfully. Please review your signature.',
+        title: 'Signature successfully created. Please review your signature',
       })
       onClose()
     } catch (error) {
@@ -61,7 +61,7 @@ const CreateSignatureModal: FC<Props> = ({onClose, setBase64Pdf, setIsSignature,
   return (
     <Modal onClose={onClose} dialogClassName='mw-500px' show={true} title='Create Signature'>
       <div className='p-30px'>
-        <h3 className='fs-20 fw-medium mb-24px'>Create your signature below:</h3>
+        <h3 className='fs-16 fw-medium mb-24px'>Create your signature below:</h3>
         <SignatureCanvas
           ref={signatureRef}
           penColor='black'

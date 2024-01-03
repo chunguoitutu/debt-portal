@@ -60,7 +60,7 @@ const Guest = () => {
 
       swalToast.fire({
         icon: 'success',
-        title: 'Email sent successfully, please check your email',
+        title: 'Email successfully sent. Please check your email',
       })
       setLoadId(null)
       setBase64data('')

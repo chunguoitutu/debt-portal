@@ -29,6 +29,7 @@ import {useAuth} from '../app/context/AuthContext'
 import Guest from '@/pages/guest'
 import LoanListing from '@/pages/loans/LoanListing/LoanListing'
 import BorrowersListing from '@/pages/borrowers/BorrowerListing'
+import LoanDetails from '@/pages/loans/loan-details'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -70,6 +71,7 @@ const AppRoutes: FC = () => {
             <Route path='/loans'>
               <Route index element={<LoanListing />} />
               <Route path='listing' element={<LoanListing />} />
+              <Route path=':loanId' element={<LoanDetails />} />
             </Route>
             <Route path='/borrowers'>
               <Route index element={<BorrowersListing />} />

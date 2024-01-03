@@ -1,0 +1,17 @@
+.loan-details-page {
+  .loan-identification-no,
+  .loan-amount,
+  .loan-interest {
+    font-size: 32px;
+    line-height: 39px;
+  }
+
+  .loan-ribbon {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 30px;
+    padding-bottom: 50px;
+    clip-path: polygon(100% 0%, 100% 0, 0 0, 0 100%, 50% calc(100% - 20px), 100% 100%);
+  }
+}

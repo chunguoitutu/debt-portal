@@ -13,7 +13,7 @@ import {RightToolbar} from '@/_metronic/layout/components/toolbar/right-toll-bar
 import {useSocket} from '@/app/context/SocketContext'
 
 const MasterLayout = () => {
-  const {company_id, refreshToken} = useAuth()
+  const {company_id, currentUser, refreshToken} = useAuth()
   const {setupSocket} = useSocket()
 
   const {pathname} = useLocation()
@@ -62,7 +62,7 @@ const MasterLayout = () => {
                 ])}
               >
                 <ToolbarWrapper />
-                <Outlet />
+                {currentUser && <Outlet />}
               </div>
               <FooterWrapper className='py-5' />
             </div>

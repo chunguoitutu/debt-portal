@@ -221,7 +221,7 @@ const BorrowersListing = (props: Props) => {
 
             const {firstname, middlename, lastname} = item
 
-            const fullname = `${firstname} ${middlename ? middlename + ' ' : ''}${lastname}`
+            const fullname = [firstname, middlename, lastname].filter(Boolean).join(' ')
 
             const phoneNumber = item.borrower?.[0].mobilephone_1 || ''
 
