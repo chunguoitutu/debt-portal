@@ -240,11 +240,7 @@ const ApplicationListing = () => {
             }
             if (key === 'loan_terms') {
               return (
-                <td
-                  key={i}
-                  className='ps-8 pe-8 text-end fs-6 fw-medium'
-                  style={{color: '#071437'}}
-                >
+                <td key={i} className='ps-8  text-end fs-6 fw-medium' style={{color: '#071437'}}>
                   {[1, 0].includes(Number(value) || 0)
                     ? `${value} Month`
                     : !!value
@@ -527,6 +523,7 @@ const ApplicationListing = () => {
                         'loan_amount_requested',
                         'status',
                         'loan_type_id',
+                        'loan_terms',
                         'identification_type',
                       ].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
@@ -551,6 +548,25 @@ const ApplicationListing = () => {
                           {+checkFilter[`${filter.key}`] === 1 && 'Awaiting Approval'}
                           {+checkFilter[`${filter.key}`] === 2 && 'Rejected'}
                           {+checkFilter[`${filter.key}`] === 3 && 'Approved'}
+                        </h2>
+                        <div
+                          onClick={() => {
+                            setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                            setLoadApi(!loadApi)
+                          }}
+                          className='p-0 m-0 cursor-pointer'
+                        >
+                          <Icons name={'CloseSmall'} />
+                        </div>
+                      </div>
+                    )}
+                    {['loan_terms'].includes(filter.key) && (
+                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                        <h2 className='filter-title-show'>
+                          {filter.value}:{' '}
+                          {[1, 0].includes(Number(checkFilter[`${filter.key}`]) || 0)
+                            ? `${checkFilter[`${filter.key}`]} Month`
+                            : `${checkFilter[`${filter.key}`]} Months`}
                         </h2>
                         <div
                           onClick={() => {
