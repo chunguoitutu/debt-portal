@@ -72,7 +72,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',
-        typeInput: 'number',
+        typeInput: 'money',
         component: Input,
         isSort: true,
       },

@@ -479,13 +479,15 @@ const LoanListing = () => {
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
-                          {!!checkFilter?.approval_date?.gte &&
-                            moment(checkFilter?.approval_date?.gte).format('MMM DD, YYYY')}{' '}
-                          {!!checkFilter?.approval_date?.lte && 'To '}
-                          {!!checkFilter?.approval_date?.lte &&
-                            moment(checkFilter?.approval_date?.lte)
-                              .subtract(1, 'days')
-                              .format('MMM D, YYYY')}
+                          {!!checkFilter?.approval_date?.gte
+                            ? moment(checkFilter?.approval_date?.gte).format('MMM DD, YYYY')
+                            : '...'}{' '}
+                          -{' '}
+                          {!!checkFilter?.approval_date?.lte
+                            ? moment(checkFilter?.approval_date?.lte)
+                                .subtract(1, 'days')
+                                .format('MMM D, YYYY')
+                            : '...'}
                         </h2>
                         <div
                           onClick={() => {
@@ -503,18 +505,13 @@ const LoanListing = () => {
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
-                          {(!!checkFilter?.loan_amount?.gte ||
-                            checkFilter?.loan_amount?.gte === 0) &&
-                            'From '}
-                          {(!!checkFilter?.loan_amount?.gte ||
-                            checkFilter?.loan_amount?.gte === 0) &&
-                            checkFilter?.loan_amount?.gte}{' '}
-                          {(!!checkFilter?.loan_amount?.lte ||
-                            checkFilter?.loan_amount?.lte === 0) &&
-                            'To '}
-                          {(!!checkFilter?.loan_amount?.lte ||
-                            checkFilter?.loan_amount?.lte === 0) &&
-                            checkFilter?.loan_amount?.lte}
+                          {!!checkFilter?.loan_amount?.gte || checkFilter?.loan_amount?.gte === 0
+                            ? `$${checkFilter?.loan_amount?.gte}`
+                            : '...'}{' '}
+                          -{' '}
+                          {!!checkFilter?.loan_amount?.lte || checkFilter?.loan_amount?.lte === 0
+                            ? `$${checkFilter?.loan_amount?.lte}`
+                            : '...'}
                         </h2>
                         <div
                           onClick={() => {
