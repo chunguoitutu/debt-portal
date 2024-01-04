@@ -560,25 +560,27 @@ const ApplicationListing = () => {
                         </div>
                       </div>
                     )}
-                    {['loan_terms'].includes(filter.key) && (
-                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                        <h2 className='filter-title-show'>
-                          {filter.value}:{' '}
-                          {[1, 0].includes(Number(checkFilter[`${filter.key}`]) || 0)
-                            ? `${checkFilter[`${filter.key}`]} Month`
-                            : `${checkFilter[`${filter.key}`]} Months`}
-                        </h2>
-                        <div
-                          onClick={() => {
-                            setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                            setLoadApi(!loadApi)
-                          }}
-                          className='p-0 m-0 cursor-pointer'
-                        >
-                          <Icons name={'CloseSmall'} />
+                    {(!!checkFilter[`${filter.key}`] ||
+                      Number(checkFilter[`${filter.key}`]) == 0) &&
+                      ['loan_terms'].includes(filter.key) && (
+                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <h2 className='filter-title-show'>
+                            {filter.value}:{' '}
+                            {[1, 0].includes(Number(checkFilter[`${filter.key}`]) || 0)
+                              ? `${checkFilter[`${filter.key}`]} Month`
+                              : `${checkFilter[`${filter.key}`]} Months`}
+                          </h2>
+                          <div
+                            onClick={() => {
+                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                              setLoadApi(!loadApi)
+                            }}
+                            className='p-0 m-0 cursor-pointer'
+                          >
+                            <Icons name={'CloseSmall'} />
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                     {!!checkFilter[`${filter.key}`] &&
                       ['identification_type'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
