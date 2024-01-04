@@ -439,13 +439,15 @@ const BorrowersListing = (props: Props) => {
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
-                          {!!checkFilter?.date_of_birth?.gte &&
-                            moment(checkFilter?.date_of_birth?.gte).format('MMM D, YYYY')}{' '}
-                          {!!checkFilter?.date_of_birth?.lte && 'To '}
-                          {!!checkFilter?.date_of_birth?.lte &&
-                            moment(checkFilter?.date_of_birth?.lte)
-                              .subtract(1, 'days')
-                              .format('MMM D, YYYY')}
+                          {!!checkFilter?.date_of_birth?.gte
+                            ? moment(checkFilter?.date_of_birth?.gte).format('MMM D, YYYY')
+                            : '...'}{' '}
+                          -{' '}
+                          {!!checkFilter?.date_of_birth?.lte
+                            ? moment(checkFilter?.date_of_birth?.lte)
+                                .subtract(1, 'days')
+                                .format('MMM D, YYYY')
+                            : '...'}
                         </h2>
                         <div
                           onClick={() => {
