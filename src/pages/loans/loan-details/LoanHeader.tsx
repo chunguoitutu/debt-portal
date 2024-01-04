@@ -38,7 +38,7 @@ const LoanHeader: FC<LoanDetailsProps> = ({loanInfo}) => {
           </div>
 
           <div className='d-flex flex-column fs-14 flex-grow-1'>
-            <span className='loan-interest fw-bolder'>%4</span>
+            <span className='loan-interest fw-bolder'>$2.50</span>
             <span>Interest Rate</span>
           </div>
         </div>

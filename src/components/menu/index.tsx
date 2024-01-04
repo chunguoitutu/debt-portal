@@ -12,7 +12,12 @@ type Props = {
 
 const HorizontalMenu: FC<Props> = ({data, active, className, onChangeActiveMenu}) => {
   return (
-    <div className={clsx(['horizontal-menu d-flex align-items-center gap-16px', className])}>
+    <div
+      className={clsx([
+        'horizontal-menu d-flex align-items-center gap-16px text-nowrap overflow-x-auto',
+        className,
+      ])}
+    >
       {data.map((item, i) => {
         const isActive = active === item.value
         return (

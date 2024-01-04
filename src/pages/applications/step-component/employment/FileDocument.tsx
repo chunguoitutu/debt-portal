@@ -50,6 +50,8 @@ const FileInput = (props: any) => {
   return (
     <div className='w-100'>
       <RenderFile
+        disabled={[2, 3].includes(formik?.values?.status || 0)}
+        className='mb-24px'
         url='/borrower-document/'
         arrayMap={formik?.values?.file_documents || []}
         setUploadFile={(index) => {
@@ -59,6 +61,8 @@ const FileInput = (props: any) => {
         }}
       />
       <UploadFile
+        disabled={[2, 3].includes(formik?.values?.status || 0)}
+        className='w-360px'
         handleFileChange={(e) => {
           handleFileChange(e)
         }}

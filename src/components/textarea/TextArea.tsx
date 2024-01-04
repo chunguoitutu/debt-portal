@@ -1,6 +1,7 @@
 import {FC, TextareaHTMLAttributes, useId} from 'react'
 import Label from '../label'
 import ErrorMessage from '../error/ErrorMessage'
+import clsx from 'clsx'
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   classShared?: string
@@ -34,7 +35,10 @@ const TextArea: FC<TextAreaProps> = ({
       )}
 
       <textarea
-        className='form-control p-12px form-control-lg form-control-solid fs-4 min-h-120px rounded-8'
+        className={clsx([
+          'form-control p-12px form-control-lg form-control-solid fs-4 min-h-120px rounded-8',
+          className,
+        ])}
         id={id || defaultId || name}
         name={name}
         {...rest}

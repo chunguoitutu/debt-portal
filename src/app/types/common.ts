@@ -590,3 +590,10 @@ export type MenuProps<T = any> = {
   value: string
   component?: FC<T>
 }
+
+export type Base64Item = {
+  document_name: string
+  base64: string
+  size: number
+  type: string
+}

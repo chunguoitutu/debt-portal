@@ -1,6 +1,6 @@
 import {LoanDetailsProps, OrderBy, PaginationType} from '@/app/types'
 import {FC, useEffect, useMemo, useState} from 'react'
-import {CONFIG_REPAYMENT_SCHEDULE} from './config'
+import {CONFIG_RECEIPT_HISTORY} from './config'
 import {TableSecondary} from '@/components/table'
 import RowPerPage from '@/components/row-per-page'
 import Pagination from '@/components/table/components/Pagination'
@@ -11,8 +11,8 @@ import {FilterPopup} from '@/components/filter/FilterPopup'
 import {filterObjectKeyNotEmpty, handleFormatFilter, isObject} from '@/app/utils'
 import moment from 'moment'
 
-const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
-  const {loan_payment = []} = loanInfo || {}
+const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
+  const {loan_payment_history = []} = loanInfo || {}
 
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
@@ -146,7 +146,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
             handleLoadApi={handleFilter}
             handleResetFilter={handleResetFilter}
             handleChangeFilter={handleChangeFilter}
-            rows={CONFIG_REPAYMENT_SCHEDULE.rows}
+            rows={CONFIG_RECEIPT_HISTORY.rows}
           />
         )}
 
@@ -165,7 +165,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
           <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap'>
             {Object.keys(filterHasValue).map((key, i) => {
-              const currentConfig = CONFIG_REPAYMENT_SCHEDULE.rows.find((row) => row.key === key)
+              const currentConfig = CONFIG_RECEIPT_HISTORY.rows.find((row) => row.key === key)
 
               const name = currentConfig?.name
               const isDate = currentConfig?.infoFilter?.typeInput === 'date' ? true : false
@@ -220,9 +220,9 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
         keySort={keySort}
         orderBy={orderBy}
         className='mt-16px mh-350px'
-        config={CONFIG_REPAYMENT_SCHEDULE}
+        config={CONFIG_RECEIPT_HISTORY}
         onChangeSortBy={handleChangeSortBy}
-        data={loan_payment}
+        data={loan_payment_history}
         loading={loading}
         pageSize={pageSize}
         currentPage={currentPage}
@@ -230,7 +230,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
       <div className='d-flex align-items-center justify-content-between gap-16px mt-30px'>
         <RowPerPage
-          lenghtData={loan_payment.length}
+          lenghtData={loan_payment_history.length}
           limit={pagination.pageSize}
           page={pagination.currentPage}
           setLimit={(e: any) => {
@@ -240,11 +240,11 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
         <Pagination
           onChangePagePagination={handleChangePagination}
-          searchCriteria={{...pagination, total: loan_payment?.length || 0}}
+          searchCriteria={{...pagination, total: loan_payment_history?.length || 0}}
         />
       </div>
     </div>
   )
 }
 
-export default RepaymentSchedule
+export default Receipt

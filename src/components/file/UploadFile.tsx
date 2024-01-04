@@ -1,13 +1,20 @@
 import Icons from '@/components/icons'
+import clsx from 'clsx'
 
 type Props = {
   disabled?: boolean
   handleFileChange: (e) => void
+  className?: string
 }
 
-const UploadFile = ({disabled = false, handleFileChange}: Props) => {
+const UploadFile = ({disabled = false, className, handleFileChange}: Props) => {
   return (
-    <label className='border border-dashed border-primary d-flex position-relative rounded-3 bg-primary-light align-items-center w-360px h-100px justify-content-center padding-24px '>
+    <label
+      className={clsx([
+        'border border-dashed border-primary d-flex position-relative rounded-3 bg-primary-light align-items-center h-100px justify-content-center padding-24px',
+        className,
+      ])}
+    >
       <div className='d-flex cursor-pointer gap-16px ps-24px pe-24px align-items-center justify-content-center'>
         <div className='cursor-position w-40px h-40px flex-shrink-0'>
           <Icons name={'ImgUploadFile'} />
