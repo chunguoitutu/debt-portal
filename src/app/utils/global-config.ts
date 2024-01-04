@@ -564,6 +564,13 @@ export const YES_NO_OPTION: Option[] = [
   {label: 'No', value: '0'},
 ]
 
+export const REASON_BAD_DEBT: Option[] = [
+  {label: 'In-Prison', value: 'In-Prison'},
+  {label: 'Deceased', value: 'Deceased'},
+  {label: 'Bankrupt', value: 'Bankrupt'},
+  {label: 'MIA', value: 'MIA'},
+]
+
 export const COUNTRY_PHONE_CODE: Option[] = [{label: '+65', value: '+65'}]
 
 const nth = (d) => {

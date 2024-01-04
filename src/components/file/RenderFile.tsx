@@ -5,16 +5,19 @@ import {swalConfirm, swalToast} from '@/app/swal-notification'
 import request from '@/app/axios'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import {file} from '@/pages/applications/step-component/employment/FileDocument'
+import clsx from 'clsx'
 
 type Props = {
-  arrayMap: []
-  url: string
+  arrayMap: any[]
+  url?: string
   setUploadFile: (e) => void
+  className?: string
+  disabled?: boolean
 }
 
-const RenderFile = ({arrayMap, setUploadFile, url}: Props) => {
+const RenderFile = ({arrayMap, setUploadFile, url = '', className, disabled}: Props) => {
   return (
-    <div className='d-flex flex-wrap mb-24px gap-24px'>
+    <div className={clsx(['d-flex flex-wrap gap-24px', className])}>
       {arrayMap.map((data: file, index: number) => {
         return (
           <div key={index} className='file-document-style'>
@@ -25,6 +28,7 @@ const RenderFile = ({arrayMap, setUploadFile, url}: Props) => {
                     <Icons name={'ImgFoder'} />
                   </div>
                   <button
+                    disabled={disabled}
                     className='close text-16px button-file cursor-position position-absolute border-0 bg-transparent'
                     onClick={() => {
                       if (!!data?.id) {

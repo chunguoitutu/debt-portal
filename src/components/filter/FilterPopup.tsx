@@ -26,7 +26,10 @@ export function FilterPopup({
 }: Props) {
   return (
     <div
-      className={clsx(['menu-filter-application card w-xxl-400px w-300px', className])}
+      className={clsx([
+        'menu-filter-application card w-xxl-400px w-300px min-h-200px overflow-hidden d-flex flex-column',
+        className,
+      ])}
       data-kt-menu='true'
     >
       <div className='position-relative p-0'>
@@ -40,12 +43,20 @@ export function FilterPopup({
         <div className='separator p-0 border-gray-200'></div>
 
         <div
-          style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}}
-          className='p-30px pt-8px pb-30px'
+          className='p-30px pt-8px pb-30px h-300px min-h-100px overflow-auto'
+          style={{
+            maxHeight: 'calc(100vh - 400px)',
+          }}
         >
           {rows.map((row, i) => {
             const {infoFilter, key, options, name} = row || {}
-            const {component, typeComponent, typeInput, isFromTo} = infoFilter || {}
+            const {
+              component,
+              typeComponent,
+              typeInput,
+              isFromTo,
+              noThereAreCommas = false,
+            } = infoFilter || {}
 
             const Component = component
 
@@ -67,6 +78,7 @@ export function FilterPopup({
               props = {
                 ...props,
                 type: typeInput || 'text',
+                ...(typeInput === 'number' ? {noThereAreCommas} : {}),
               }
             }
 

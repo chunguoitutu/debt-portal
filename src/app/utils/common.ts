@@ -199,3 +199,21 @@ export function capitalizeFirstText(text: string) {
     .map((text) => `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}`)
     .join(' ')
 }
+
+export function convertFileToBase64(file: File): Promise<string | null> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result)
+      } else {
+        reject(null)
+      }
+    }
+    reader.onerror = (error) => {
+      console.error('Error: ', error)
+      reject(null)
+    }
+  })
+}

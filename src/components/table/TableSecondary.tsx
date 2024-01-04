@@ -41,10 +41,13 @@ const TableSecondary: FC<Props> = ({
       case 'id':
         return index + 1 + pageSize * (currentPage - 1)
       case 'due_date':
+      case 'repayment_date':
         return moment(value).format('MMM D, YYYY')
       case 'interest_amount':
-        return `%${value}`
       case 'principal_amount':
+      case 'principal_paid':
+      case 'interest_paid':
+      case 'penalty_paid':
         return numeral(value).format('$0,0.00')
       default:
         return value
