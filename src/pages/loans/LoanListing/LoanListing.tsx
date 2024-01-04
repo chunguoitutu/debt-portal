@@ -59,7 +59,7 @@ const showFilter = [
   },
   {
     key: 'loan_term',
-    value: 'No. Of Instalment',
+    value: 'Loan Term',
   },
   {
     key: 'status',
@@ -297,7 +297,7 @@ const LoanListing = () => {
         searchBar: searchValue,
       },
       keyDate: ['approval_date'],
-      keyNumber: ['id'],
+      keyNumber: ['id', 'loan_term'],
     })
   }
 
