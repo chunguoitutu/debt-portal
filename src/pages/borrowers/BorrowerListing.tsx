@@ -186,6 +186,7 @@ const BorrowersListing = (props: Props) => {
 
   function handleReGetApi() {
     setLoadApi(!loadApi)
+    setSearchCriteria({...searchCriteria, currentPage: 1})
   }
 
   function handleChangeSortBy(item: TableRow) {
