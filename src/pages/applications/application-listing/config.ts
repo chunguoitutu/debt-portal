@@ -99,7 +99,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'application_date',
       name: 'Application Date',
-      classNameTableBody: 'text-end pe-5',
+      classNameTableBody: 'text-end ',
       classNameTableHead: 'text-end pe-3',
       infoFilter: {
         isFromTo: true,
