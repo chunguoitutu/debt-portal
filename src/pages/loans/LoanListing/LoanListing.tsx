@@ -20,6 +20,7 @@ import {useAuth} from '@/app/context/AuthContext'
 import request from '@/app/axios'
 import numeral from 'numeral'
 import {PageTitle, PageLink} from '@/_metronic/layout/core'
+import {useNavigate} from 'react-router-dom'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -93,6 +94,8 @@ const LoanListing = () => {
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
 
   const {pageSize, currentPage} = searchCriteria
+
+  const navigate = useNavigate()
 
   const {company_id} = useAuth()
 
@@ -276,7 +279,13 @@ const LoanListing = () => {
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
-                {showEditButton && <ButtonViewDetail onClick={() => {}} />}
+                {showEditButton && (
+                  <ButtonViewDetail
+                    onClick={() => {
+                      navigate(`/loans/details/${item?.id}`)
+                    }}
+                  />
+                )}
               </div>
             </td>
           )}
