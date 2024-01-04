@@ -230,7 +230,7 @@ const BorrowersListing = (props: Props) => {
 
             const fullname = [firstname, middlename, lastname].filter(Boolean).join(' ')
 
-            const phoneNumber = item.borrower?.[0].mobilephone_1 || ''
+            const phoneNumber = item?.borrower?.[0]?.mobilephone_1 || ''
 
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
@@ -287,7 +287,7 @@ const BorrowersListing = (props: Props) => {
                   style={{color: '#071437'}}
                 >
                   {!!phoneNumber && '+65'}
-                  {phoneNumber}
+                  {phoneNumber || ''}
                 </td>
               )
             }
