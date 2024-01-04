@@ -21,6 +21,7 @@ import request from '@/app/axios'
 import numeral from 'numeral'
 import {PageTitle, PageLink} from '@/_metronic/layout/core'
 import {useNavigate} from 'react-router-dom'
+import Badge from '@/components/badge/Badge'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -64,7 +65,7 @@ const showFilter = [
   },
   {
     key: 'status',
-    value: 'UFO',
+    value: 'Status',
   },
 ]
 
@@ -207,45 +208,6 @@ const LoanListing = () => {
               )
             }
 
-            if (key === 'status') {
-              if (item[key] === 0) {
-                return (
-                  <td
-                    className={clsx([
-                      'fs-14 fw-semibold hover-applications-listing ps-7',
-                      classNameTableBody,
-                    ])}
-                  >
-                    F
-                  </td>
-                )
-              } else if (item[key] === 1) {
-                return (
-                  <td
-                    key={i}
-                    className={clsx([
-                      'fs-14 fw-semibold hover-applications-listing ps-7',
-                      classNameTableBody,
-                    ])}
-                  >
-                    U
-                  </td>
-                )
-              } else {
-                return (
-                  <td
-                    key={i}
-                    className={clsx([
-                      'fs-14 fw-semibold hover-applications-listing ps-7',
-                      classNameTableBody,
-                    ])}
-                  >
-                    0
-                  </td>
-                )
-              }
-            }
-
             if (key === 'identification_no') {
               return (
                 <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
@@ -261,7 +223,37 @@ const LoanListing = () => {
                   className='ps-8 pe-8 text-end fs-6 fw-medium'
                   style={{color: '#071437'}}
                 >
-                  {value} Months
+                  {value < 2 ? `${value} Month` : `${value} Months`}
+                </td>
+              )
+            }
+
+            if (key === 'status') {
+              let title: string = ''
+              let color: string = ''
+              if (item[key] === 1) {
+                title = 'Active'
+                color = 'success'
+              } else if (item[key] === 2) {
+                title = 'Close'
+                color = 'info'
+              } else if (item[key] === 3) {
+                title = 'Cancelled'
+                color = 'danger'
+              } else {
+                title = 'Peding'
+                color = 'warning'
+              }
+
+              return (
+                <td
+                  key={i}
+                  className={clsx([
+                    'fs-14 fw-semibold hover-applications-listing',
+                    classNameTableBody,
+                  ])}
+                >
+                  <Badge color={color as any} title={title as any} key={i} />
                 </td>
               )
             }
@@ -467,7 +459,9 @@ const LoanListing = () => {
                 {showFilter.map((filter, index) => (
                   <div key={index} className='p-0 m-0'>
                     {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                      !['approval_date', 'status', 'loan_amount'].includes(filter.key) && (
+                      !['approval_date', 'status', 'loan_amount', 'loan_term'].includes(
+                        filter.key
+                      ) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
                             {filter.value}: {checkFilter[`${filter.key}`]}
@@ -488,19 +482,31 @@ const LoanListing = () => {
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
-                          {!!checkFilter?.approval_date?.gte
-                            ? moment(checkFilter?.approval_date?.gte).format('MMM DD, YYYY')
-                            : '...'}{' '}
-                          -{' '}
-                          {!!checkFilter?.approval_date?.lte
-                            ? moment(checkFilter?.approval_date?.lte)
-                                .subtract(1, 'days')
-                                .format('MMM D, YYYY')
-                            : '...'}
+                          {getDayWithSuffix(parseInt(checkFilter[`${filter.key}`], 10))}
                         </h2>
                         <div
                           onClick={() => {
                             setDataFilter({...dataFilter, approval_date: ''})
+                            setLoadApi(!loadApi)
+                          }}
+                          className='p-0 m-0 cursor-pointer'
+                        >
+                          <Icons name={'CloseSmall'} />
+                        </div>
+                      </div>
+                    )}
+
+                    {!!checkFilter?.loan_term && ['loan_term'].includes(filter.key) && (
+                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                        <h2 className='filter-title-show'>
+                          {filter.value}:{' '}
+                          {checkFilter[`${filter.key}`] < 2
+                            ? `${checkFilter[`${filter.key}`]} Month`
+                            : `${checkFilter[`${filter.key}`]} Months`}
+                        </h2>
+                        <div
+                          onClick={() => {
+                            setDataFilter({...dataFilter, loan_term: ''})
                             setLoadApi(!loadApi)
                           }}
                           className='p-0 m-0 cursor-pointer'
@@ -537,9 +543,10 @@ const LoanListing = () => {
                     {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
                       <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                         <h2 className='filter-title-show'>
-                          {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'F'}
-                          {+checkFilter[`${filter.key}`] === 1 && 'U'}
-                          {+checkFilter[`${filter.key}`] === 2 && 'O'}
+                          {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Peding'}
+                          {+checkFilter[`${filter.key}`] === 1 && 'Active'}
+                          {+checkFilter[`${filter.key}`] === 2 && 'Close'}
+                          {+checkFilter[`${filter.key}`] === 3 && 'Cancelled'}
                         </h2>
                         <div
                           onClick={() => {
