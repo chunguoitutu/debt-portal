@@ -404,7 +404,7 @@ export const LOAN_U_F_0: Option[] = [
 export const STATUS_OF_LOAN: Option[] = [
   {
     value: '0',
-    label: 'Peding',
+    label: 'Pending',
   },
   {
     value: '1',

@@ -409,6 +409,7 @@ const ApplicationListing = () => {
   //to call api when get listing/filter/search
   function handleReGetApi() {
     setLoadApi(!loadApi)
+    setSearchCriteria({...searchCriteria, currentPage: 1})
   }
 
   function handleFilter() {

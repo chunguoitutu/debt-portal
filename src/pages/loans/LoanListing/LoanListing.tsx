@@ -210,7 +210,11 @@ const LoanListing = () => {
 
             if (key === 'identification_no') {
               return (
-                <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
+                <td
+                  key={i}
+                  className='fs-6 fw-medium text-hover-primary cursor-pointer'
+                  style={{color: '#071437'}}
+                >
                   {identificationNo}
                 </td>
               )
@@ -378,6 +382,7 @@ const LoanListing = () => {
 
   function handleReGetApi() {
     setLoadApi(!loadApi)
+    setSearchCriteria({...searchCriteria, currentPage: 1})
   }
 
   return (
