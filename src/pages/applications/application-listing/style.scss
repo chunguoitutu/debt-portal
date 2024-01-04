@@ -36,3 +36,38 @@
     top: 60px;
   }
 }
+
+.wrapper-records-applications {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 20px;
+  align-items: center;
+  gap: var(--Form-Control-input-padding-x, 10px);
+  border-radius: 6px;
+  border: 1px dashed var(--Primary---bs-primary, #1b84ff);
+  background: #f1faff;
+  align-self: stretch;
+}
+.records-applications {
+  color: #3f4254;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 137.5% */
+  text-transform: capitalize;
+  margin: 0;
+  padding: 0;
+}
+
+.records-applications-reset {
+  color: #7e8299;
+  padding: 0;
+  margin: 0;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 137.5% */
+}

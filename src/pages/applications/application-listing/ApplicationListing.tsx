@@ -482,12 +482,13 @@ const ApplicationListing = () => {
         </div>
 
         {!!newDataSocket && (
-          <div className='bg-primary-light wrapper-transition-filter-show p-16px px-32px my-16px d-flex align-items-center justify-content-between gap-16px'>
-            <span className='fs-16 text-primary'>
-              Detected <span className='fw-bold'>{newDataSocket}</span> new{' '}
-              {Number(newDataSocket) === 1 ? 'record' : 'records'}. Do you want to refresh the data
-              now?
-            </span>
+          <div className='wrapper-records-applications'>
+            <div className='p-0 m-0'>
+              <p className='records-applications'>
+                Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
+              </p>
+              <p className='records-applications-reset'>Do you want to refresh the data now?</p>
+            </div>
 
             <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
               Refresh
@@ -596,15 +597,15 @@ const ApplicationListing = () => {
                       ['loan_amount_requested'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
-                            {filter.value}:
+                            {filter.value}:{' '}
                             {!!checkFilter?.loan_amount_requested?.gte ||
                             checkFilter?.loan_amount_requested?.gte === 0
-                              ? checkFilter?.loan_amount_requested?.gte
+                              ? `$${checkFilter?.loan_amount_requested?.gte}`
                               : '...'}{' '}
                             -{' '}
                             {!!checkFilter?.loan_amount_requested?.lte ||
                             checkFilter?.loan_amount_requested?.lte === 0
-                              ? checkFilter?.loan_amount_requested?.lte
+                              ? `$${checkFilter?.loan_amount_requested?.lte}`
                               : '...'}
                           </h2>
                           <div
