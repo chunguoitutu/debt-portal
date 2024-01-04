@@ -1,7 +1,7 @@
-import {TableConfig} from '@/app/types'
-import {ID_TYPE, LOAN_U_F_0, STATUS_APPLICATION_FILTER} from '@/app/utils'
-import {Input} from '@/components/input'
-import {Select} from '@/components/select'
+import { TableConfig } from '@/app/types'
+import { LOAN_U_F_0, STATUS_OF_LOAN } from '@/app/utils'
+import { Input } from '@/components/input'
+import { Select } from '@/components/select'
 
 export const LOAN_LISTING_CONFIG: TableConfig = {
   endpoint: '',
@@ -53,18 +53,6 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       },
     },
     {
-      key: 'status',
-      name: 'UFO',
-      classNameTableHead: 'ps-5',
-      classNameTableBody: 'pe-0',
-      options: LOAN_U_F_0,
-      infoFilter: {
-        typeComponent: 'select',
-        component: Select,
-        isSort: true,
-      },
-    },
-    {
       key: 'loan_amount',
       name: 'Loan Amount',
       classNameTableBody: 'text-end pe-0',
@@ -83,9 +71,8 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       classNameTableHead: 'ps-8 pe-8 text-end',
       classNameTableBody: 'pe-8 text-end',
       infoFilter: {
-        isFromTo: true,
         typeComponent: 'input',
-        typeInput: 'date',
+        typeInput: 'number',
         component: Input,
         isSort: true,
       },
@@ -98,6 +85,19 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       infoFilter: {
         typeComponent: 'input',
         component: Input,
+        typeInput: 'number',
+        isSort: true,
+      },
+    },
+    {
+      key: 'status',
+      name: 'Status',
+      classNameTableBody: 'text-center',
+      classNameTableHead: 'text-center pe-3',
+      options: STATUS_OF_LOAN,
+      infoFilter: {
+        typeComponent: 'select',
+        component: Select,
         isSort: true,
       },
     },
