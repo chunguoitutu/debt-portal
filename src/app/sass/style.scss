@@ -331,3 +331,17 @@ input[type='number']::-webkit-outer-spin-button {
 .wrapper-transition-filter-show {
   transition: all 0.3s ease;
 }
+.img-next-payment {
+  border: 1px dashed var(--Gray---bs-gray-300, #dbdfe9);
+  border-radius: 50%;
+  padding: 12px;
+}
+
+.border-vertical-next-payment {
+  position: absolute;
+  width: 1px;
+  height: 37px;
+  top: 50px;
+  left: 24px;
+  border-right: 1px dashed var(--Gray---bs-gray-300, #dbdfe9);
+}
