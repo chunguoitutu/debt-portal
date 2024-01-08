@@ -34,6 +34,7 @@ import {
   RESIDENTIAL_TYPE,
   SPECIALIZATION,
   STAYING_CONDITION,
+  TERM_UNIT,
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
@@ -202,6 +203,14 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     keyValueOfOptions: 'id',
     dependencyApi: '/config/loan_type/listing',
     validationFormik: Yup.number().required(convertMessageErrorRequired('Loan Type')),
+  },
+  {
+    key: 'term_unit',
+    component: Select,
+    typeComponent: 'Select',
+    options: TERM_UNIT,
+    label: 'Term Unit',
+    validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'interest',

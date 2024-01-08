@@ -5,14 +5,13 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 import {useParams} from 'react-router-dom'
+import {formatNumber} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 
 const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   const [dataLoanType, setDataLoanType] = useState<any>({})
   const {applicationIdEdit} = useParams()
-
-  const {priority} = useAuth()
-  console.log(priority)
+  const {company_id} = useAuth()
 
   useEffect(() => {
     onFetchDataList()
@@ -24,13 +23,19 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
     const currentItem = dataLoanType.loan_type_id.find(
       (el: any) => el.id === +formik.values.loan_type_id
     )
-    setFieldValue(
-      'interest',
-      formik.values.loan_terms.toString() === '1'
-        ? currentItem.interest_1_month
-        : currentItem.interest
-    )
-  }, [formik.values.loan_terms])
+
+    const interestByDay = formatNumber(currentItem.interest / 31)
+
+    const interestByYear = currentItem.interest * 12
+
+    if (formik.values.term_unit.toString() === '0') {
+      setFieldValue('interest', interestByDay)
+    } else if (formik.values.term_unit.toString() === '1') {
+      setFieldValue('interest', +currentItem.interest)
+    } else if (formik.values.term_unit.toString() === '2') {
+      setFieldValue('interest', interestByYear)
+    }
+  }, [formik.values.term_unit])
 
   async function onFetchDataList() {
     try {
@@ -41,11 +46,14 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             status: true,
             pageSize: 99999,
             currentPage: 1,
+            company_id: +company_id,
           })
 
           return {key: d.key, data: res?.data?.data}
         })
       )
+
+      console.log(results, 'data')
 
       results &&
         results.forEach((result) => {
@@ -61,7 +69,8 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
           }
           if (!applicationIdEdit) {
             setFieldValue(`${result.key}`, itemDefault.id)
-            setFieldValue(`interest`, itemDefault.interest_1_month || '')
+            setFieldValue(`interest`, itemDefault.interest || '')
+            setFieldValue('term_unit', 1)
           }
         })
     } catch (error) {
@@ -157,26 +166,6 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       )
     }
 
-    if (item.key === 'interest' && typeComponent === 'Input') {
-      const cannotEditRate = priority !== 1 && priority !== 3
-
-      return (
-        <div className='d-flex flex-column w-100'>
-          <Component
-            value={values[key]}
-            onChange={handleChange}
-            name={key}
-            classShared={className}
-            // Update the disabled condition to check canEditRate
-            disabled={cannotEditRate || values.status === 3 || values.status === 2}
-            type={typeInput}
-            noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
-          />
-
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
-        </div>
-      )
-    }
     if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column w-100'>
