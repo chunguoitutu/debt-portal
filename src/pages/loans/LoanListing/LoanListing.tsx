@@ -224,8 +224,7 @@ const LoanListing = () => {
               return (
                 <td
                   key={i}
-                  className='ps-8 pe-8 text-end fs-6 fw-medium'
-                  style={{color: '#071437'}}
+                  className='ps-8 pe-0 text-end fs-6 fw-medium text-gray-900'
                 >
                   {value < 2 ? `${value} Month` : `${value} Months`}
                 </td>

@@ -12,10 +12,12 @@
   min-height: 100vh;
 }
 
-*::-webkit-scrollbar {
-  width: 6px;
+// Use media to avoid auto-scaling horizontal scrolling on screens <= 990
+@media screen and (min-width: 991px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 }
-
 *::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: var(--bs-gray-300);

@@ -10,6 +10,7 @@ import NextPayment from './NextPayment'
 import HorizontalMenu from '@/components/menu'
 import {LOAN_DETAILS_MENU} from '@/app/constants/menu'
 import {LoanInfo} from '@/app/types'
+import request from '@/app/axios'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -36,114 +37,7 @@ const LoanDetails = () => {
   useEffect(() => {
     if (!+loanId) return setError(true)
 
-    setTimeout(() => {
-      setLoanInfo({
-        loan_payment: [
-          {
-            id: 1,
-            due_date: '2023-12-19 07:49:54',
-            interest_amount: 4,
-            loan_id: 1,
-            payment_status: 'active',
-            principal_amount: 13,
-            total_amount: 100,
-          },
-          {
-            id: 2,
-            due_date: '2023-12-19 07:49:54',
-            interest_amount: 4,
-            loan_id: 1,
-            payment_status: 'active',
-            principal_amount: 13,
-            total_amount: 100,
-          },
-          {
-            id: 2,
-            due_date: '2023-12-19 07:49:54',
-            interest_amount: 4,
-            loan_id: 1,
-            payment_status: 'active',
-            principal_amount: 13,
-            total_amount: 100,
-          },
-          {
-            id: 2,
-            due_date: '2023-12-19 07:49:54',
-            interest_amount: 4,
-            loan_id: 1,
-            payment_status: 'active',
-            principal_amount: 13,
-            total_amount: 100,
-          },
-        ],
-        loan_payment_history: [
-          {
-            id: 1,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 4,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-          {
-            id: 2,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 3.95,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-          {
-            id: 2,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 3.95,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-          {
-            id: 2,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 3.95,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-          {
-            id: 2,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 3.95,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-          {
-            id: 2,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 3.95,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-          {
-            id: 2,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 3.95,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-          {
-            id: 2,
-            repayment_date: '2023-12-19 07:49:54',
-            interest_paid: 3.95,
-            penalty_paid: 120,
-            principal_paid: 12,
-            repayment_id: 1,
-          },
-        ],
-      })
-    }, 500)
+    handleGetLoanDetails()
   }, [loanId])
 
   const CurrentComponent = useMemo(() => {
@@ -152,6 +46,23 @@ const LoanDetails = () => {
 
   function handleChangeActiveMenu(newValue: string) {
     setActiveMenu(newValue)
+  }
+
+  async function handleGetLoanDetails() {
+    // Expect a number
+    if (!+loanId) return
+
+    try {
+      const {data} = await request.get(`/loan/details/${loanId}`)
+
+      if (data.error) {
+        setError(true)
+      }
+
+      setLoanInfo(data.data)
+    } catch (error) {
+      setError(true)
+    }
   }
 
   // ============================== RENDER JSX, handle logic above ======================================================
