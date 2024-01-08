@@ -1,6 +1,6 @@
-import {TableConfig} from '@/app/types'
+import { TableConfig } from '@/app/types'
 import Badge from '@/components/badge/Badge'
-import {CheckboxRounded} from '@/components/checkbox'
+import { CheckboxRounded } from '@/components/checkbox'
 
 export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/loan_type',
@@ -34,15 +34,27 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     },
     {
       classNameTableHead: 'w-200px min-w-150px',
-      key: 'interest',
+      key: 'interest_1_month',
       color: '#252F4A',
-      name: 'Default Interest',
+      name: 'Interest One Month',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
         isRequired: true,
       },
     },
+    {
+      classNameTableHead: 'w-200px min-w-150px',
+      key: 'interest',
+      color: '#252F4A',
+      name: 'Interest',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+      },
+    },
+
     {
       classNameTableHead: 'w-500px min-w-150px',
       classNameTableBody: 'four-line',

@@ -5,14 +5,33 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 import {useParams} from 'react-router-dom'
+import {useAuth} from '@/app/context/AuthContext'
 
 const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
-  const [dataLoanType, setDataLoanType] = useState({})
+  const [dataLoanType, setDataLoanType] = useState<any>({})
   const {applicationIdEdit} = useParams()
+
+  const {priority} = useAuth()
+  console.log(priority)
+
   useEffect(() => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (!dataLoanType.loan_type_id) return
+    const currentItem = dataLoanType.loan_type_id.find(
+      (el: any) => el.id === +formik.values.loan_type_id
+    )
+    setFieldValue(
+      'interest',
+      formik.values.loan_terms.toString() === '1'
+        ? currentItem.interest_1_month
+        : currentItem.interest
+    )
+  }, [formik.values.loan_terms])
+
   async function onFetchDataList() {
     try {
       const endpoints = config.filter((data) => !!data.dependencyApi)
@@ -34,24 +53,16 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             ...dataLoanType,
             [result.key]: result?.data,
           })
-          !applicationIdEdit &&
-            setFieldValue(
-              `${result.key}`,
-              result?.data.length > 0
-                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
-                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].id
-                  : result?.data[0].id
-                : ''
-            )
-          !applicationIdEdit &&
-            setFieldValue(
-              `interest`,
-              result?.data.length > 0
-                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
-                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].interest
-                  : result?.data[0].interest
-                : ''
-            )
+
+          let itemDefault = result?.data.find((el: any) => +el.is_default === 1)
+
+          if (!itemDefault) {
+            itemDefault = result?.data?.[0]
+          }
+          if (!applicationIdEdit) {
+            setFieldValue(`${result.key}`, itemDefault.id)
+            setFieldValue(`interest`, itemDefault.interest_1_month || '')
+          }
         })
     } catch (error) {
     } finally {
@@ -146,6 +157,26 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       )
     }
 
+    if (item.key === 'interest' && typeComponent === 'Input') {
+      const cannotEditRate = priority !== 1 && priority !== 3
+
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={values[key]}
+            onChange={handleChange}
+            name={key}
+            classShared={className}
+            // Update the disabled condition to check canEditRate
+            disabled={cannotEditRate || values.status === 3 || values.status === 2}
+            type={typeInput}
+            noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
+          />
+
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
+        </div>
+      )
+    }
     if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column w-100'>

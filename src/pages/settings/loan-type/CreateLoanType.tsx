@@ -32,6 +32,7 @@ export const CreateLoanTypeSchema = Yup.object().shape({
     .max(45, 'Loan Type must be at most 45 characters'),
   description: Yup.string().max(45, 'Description must be at most 45 characters').nullable(),
   interest: Yup.string().required('Default Interest is required'),
+  interest_1_month: Yup.string().required('Interest One Month is required'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
