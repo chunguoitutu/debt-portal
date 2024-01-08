@@ -342,41 +342,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
   }
 
-  // async function handleGetApplicationById() {
-  //   try {
-  //     const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
-  //       company_id,
-  //     })
-  //     const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
-  //     setStepCompleted(0)
-  //     //step 1
-  //     setFieldValue('is_existing', 'existing')
-  //     setFieldValue('firstname', data?.data.firstname || '')
-  //     setFieldValue('middlename', data?.data.middlename || '')
-  //     setFieldValue('lastname', data?.data.lastname || '')
-  //     setFieldValue('customer_no', data?.data.customer_no || '')
-  //     setFieldValue('residential_type', data?.data.borrower[0]?.residential_type || '')
-  //     setFieldValue('identification_type', data?.data.identification_type || '')
-  //     setFieldValue('gender', data?.data.gender || '')
-  //     setFieldValue('date_of_birth', formattedDateOfBirth || '')
-  //     setFieldValue('country_id', data?.data.country_id || '')
-  //   } catch (error) {
-  //     if (!singpass) {
-  //       setFieldValue('is_existing', 'new')
-  //       setFieldValue('firstname', '')
-  //       setFieldValue('middlename', '')
-  //       setFieldValue('lastname', '')
-  //       setFieldValue('customer_no', '')
-  //       setFieldValue('identification_type', '')
-  //       setFieldValue('residential_type', '')
-  //       setFieldValue('gender', '')
-  //       setFieldValue('date_of_birth', '')
-  //       setFieldValue('country_id', 192)
-  //     }
-  //   } finally {
-  //   }
-  // }
-
   async function handleGetApplicationById() {
     try {
       if (singpass && values.identification_no === singpassValues.identification_no) return

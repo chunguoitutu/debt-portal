@@ -299,6 +299,14 @@ const Table: FC<Props> = ({
                           )
                         }
 
+                        if (['late_fee'].includes(key)) {
+                          return (
+                            <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={i}>
+                              {value !== null && value !== undefined ? `${value}%` : ''}
+                            </td>
+                          )
+                        }
+
                         if (component) {
                           if (
                             [

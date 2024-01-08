@@ -592,6 +592,7 @@ export const Applications = () => {
       six_months_income,
       is_existing,
       residential_type,
+      term_unit,
       loan_reason,
       country_id,
       file_documents,
@@ -682,6 +683,7 @@ export const Applications = () => {
       application: {
         ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
         loan_terms: +loan_terms,
+        term_unit: +term_unit,
         loan_amount_requested: +loan_amount_requested,
         loan_type_id: +loan_type_id || null,
         status: isDraft ? 0 : 1,

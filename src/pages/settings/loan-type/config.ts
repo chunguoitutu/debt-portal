@@ -1,6 +1,6 @@
-import {TableConfig} from '@/app/types'
+import { TableConfig } from '@/app/types'
 import Badge from '@/components/badge/Badge'
-import {CheckboxRounded} from '@/components/checkbox'
+import { CheckboxRounded } from '@/components/checkbox'
 
 export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/loan_type',
@@ -33,10 +33,16 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px min-w-150px',
+      classNameTableHead: 'w-500px min-w-150px',
+      classNameTableBody: 'four-line',
+      key: 'description',
+      name: 'Description',
+    },
+    {
+      classNameTableHead: 'w-200px min-w-100px',
       key: 'interest',
       color: '#252F4A',
-      name: 'Default Interest',
+      name: 'Interest',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
@@ -44,13 +50,48 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-500px min-w-150px',
-      classNameTableBody: 'four-line',
-      key: 'description',
-      name: 'Description',
+      classNameTableHead: 'w-200px min-w-120px',
+      key: 'quota_new',
+      color: '#252F4A',
+      name: 'Quota New',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+      },
     },
     {
-      classNameTableHead: 'w-200px text-center',
+      classNameTableHead: 'w-200px min-w-150px',
+      key: 'quota_existing',
+      color: '#252F4A',
+      name: 'Quota Existing',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+      },
+    },
+    {
+      classNameTableHead: 'w-200px min-w-150px',
+      key: 'quota_foreigner',
+      color: '#252F4A',
+      name: 'Quota Foreigner',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+      },
+    },
+    {
+      classNameTableHead: 'w-200px min-w-120px',
+      key: 'late_fee',
+      color: '#252F4A',
+      name: 'Late Fee (%)',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+      },
+    },
+    {
+      classNameTableHead: 'w-200px min-w-150px  text-center',
       key: 'is_default',
       name: 'Default',
       component: Badge,

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import {createPortal} from 'react-dom'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -15,6 +15,7 @@ import {TextArea} from '@/components/textarea'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
+import {useAuth} from '@/app/context/AuthContext'
 
 type Props = {
   setLoadApi: any
@@ -32,6 +33,10 @@ export const CreateLoanTypeSchema = Yup.object().shape({
     .max(45, 'Loan Type must be at most 45 characters'),
   description: Yup.string().max(45, 'Description must be at most 45 characters').nullable(),
   interest: Yup.string().required('Default Interest is required'),
+  late_fee: Yup.number()
+    .max(100, 'Late Fee must be at most 100')
+    .positive('Late Fee must be a positive number')
+    .integer('Late Fee must be an integer'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -45,8 +50,10 @@ const CreateLoanType = ({
   setLoadApi,
   handleUpdated,
 }: Props) => {
+  const stepperRef = useRef<HTMLDivElement | null>(null)
   const [status, setStatus] = useState(data?.status === 0 ? false : true)
   const {rows, endpoint} = LOAN_TYPE_TABLE_CONFIG
+  const {company_id} = useAuth()
   const {
     values,
     touched,
@@ -72,6 +79,7 @@ const CreateLoanType = ({
             ...values,
             status: status ? 1 : 0,
             is_default: values.is_default ? 1 : 0,
+            company_id: +company_id,
           })
           if (!data.error) {
             const loan_name = values.type_name
@@ -108,6 +116,7 @@ const CreateLoanType = ({
             ...values,
             status: status ? 1 : 0,
             is_default: values.is_default ? 1 : 0,
+            company_id: +company_id,
           })
           const loan_name = values.type_name
           handleUpdated()
@@ -156,90 +165,107 @@ const CreateLoanType = ({
       backdrop={true}
     >
       <>
-        <div className='modal-header p-30px'>
+        <div
+          style={{
+            padding: '30px',
+          }}
+          className='modal-header'
+        >
           <h2>{title} Loan Type</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>
         </div>
-        <div className='flex-row-fluid p-30px'>
-          <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-            {rows.map((row, i) => {
-              const {infoCreateEdit, name, key} = row
-              const {
-                typeInput,
-                isRequired,
-                typeComponent,
-                component,
-                subTextWhenChecked,
-                subTextWhenNoChecked,
-              } = infoCreateEdit || {}
+        <div
+          style={{maxHeight: 'calc(100vh - 500px)', overflowY: 'auto'}}
+          className='modal-body  p-30px '
+        >
+          <div
+            ref={stepperRef}
+            className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
+            id='kt_modal_create_app_stepper'
+          >
+            <div className='flex-row-fluid'>
+              <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
+                {rows.map((row, i) => {
+                  const {infoCreateEdit, name, key} = row
+                  const {
+                    typeInput,
+                    isRequired,
+                    typeComponent,
+                    component,
+                    subTextWhenChecked,
+                    subTextWhenNoChecked,
+                  } = infoCreateEdit || {}
 
-              const Component = component as any
+                  const Component = component as any
 
-              if (['id', 'status'].includes(row.key)) {
-                return null
-              }
+                  if (['id', 'status'].includes(row.key)) {
+                    return null
+                  }
 
-              const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
+                  const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
 
-              if (typeComponent === 'checkbox-rounded') {
-                return (
-                  <div className='mt-16px' key={i}>
-                    <Component
-                      label={name}
-                      checked={values[key]}
-                      onChange={handleChange}
-                      subTextWhenChecked={subTextWhenChecked}
-                      subTextWhenNoChecked={subTextWhenNoChecked}
-                      id={key}
-                    />
-                  </div>
-                )
-              }
+                  if (typeComponent === 'checkbox-rounded') {
+                    return (
+                      <div className='mt-16px' key={i}>
+                        <Component
+                          label={name}
+                          checked={values[key]}
+                          onChange={handleChange}
+                          subTextWhenChecked={subTextWhenChecked}
+                          subTextWhenNoChecked={subTextWhenNoChecked}
+                          id={key}
+                        />
+                      </div>
+                    )
+                  }
 
-              return (
-                <div key={row.key} style={{flex: '0 0 50%'}}>
-                  {row.key === 'description' ? (
-                    <div>
-                      <TextArea
-                        label={row.name}
-                        name={row.key}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                        error={errors[row.key] as string}
-                        touched={!!touched[row.key]}
-                      />
+                  return (
+                    <div key={row.key} style={{flex: '0 0 50%'}}>
+                      {row.key === 'description' ? (
+                        <div>
+                          <TextArea
+                            label={row.name}
+                            name={row.key}
+                            value={values[row.key] || ''}
+                            onChange={handleChange}
+                            error={errors[row.key] as string}
+                            touched={!!touched[row.key]}
+                          />
+                        </div>
+                      ) : (
+                        <div className='d-flex flex-column mb-16px '>
+                          <Input
+                            type={typeInput || 'text'}
+                            label={row.name}
+                            name={row.key}
+                            value={values[row.key] || ''}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required={isRequired}
+                            error={errors[row.key] as string}
+                            touched={!!touched[row.key]}
+                            {...props}
+                          />
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div className='d-flex flex-column mb-16px'>
-                      <Input
-                        type={typeInput || 'text'}
-                        label={row.name}
-                        name={row.key}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required={isRequired}
-                        error={errors[row.key] as string}
-                        touched={!!touched[row.key]}
-                        {...props}
-                      />
-                    </div>
-                  )}
+                  )
+                })}
+                <div className='mt-16px'>
+                  <CheckboxRounded
+                    label='Status'
+                    checked={status}
+                    onChange={() => setStatus(!status)}
+                    id='status'
+                  />
                 </div>
-              )
-            })}
-            <div className='mt-16px'>
-              <CheckboxRounded
-                label='Status'
-                checked={status}
-                onChange={() => setStatus(!status)}
-                id='status'
-              />
+              </form>
             </div>
-          </form>
+          </div>
         </div>
+
         <div className='border-top border-gray-200'>
           <div className='d-flex justify-content-end p-30px'>
             <Button

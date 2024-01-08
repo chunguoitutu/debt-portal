@@ -6,11 +6,11 @@ import { DropDownGroup, MenuSettingItem, Option } from '../types/common'
 import { CompanyManagement } from '../../pages/settings/company-management'
 import CompanyListing from '../../pages/settings/company/CompanyManagement'
 import DocumentTypes from '../../pages/settings/document-types/DocumentTypes'
-import LoanTypes from '../../pages/settings/loan-type/LoanType'
 import JobType from '../../pages/settings/job-type/JobType'
 import AddressType from '../../pages/settings/address-type/AddressType'
 import MarkettingType from '../../pages/settings/marketing-type/MarketingType'
 import UploadFileCasCheck from '@/pages/settings/UploadFileCasCheck'
+import LoanTypes from './../../pages/settings/loan-type/LoanType';
 
 export const ROLE_PRIORITY: Option[] = [
   {
@@ -319,6 +319,21 @@ export const LOAN_TYPE: Option[] = [
   {
     value: 'business',
     label: 'Business Loan (BL)',
+  },
+]
+
+export const TERM_UNIT: Option[] = [
+  {
+    value: '0',
+    label: 'By Day',
+  },
+  {
+    value: '1',
+    label: 'By Month',
+  },
+  {
+    value: '2',
+    label: 'By Year',
   },
 ]
 

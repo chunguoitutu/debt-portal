@@ -5,14 +5,38 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 import {useParams} from 'react-router-dom'
+import {formatNumber} from '@/app/utils'
+import {useAuth} from '@/app/context/AuthContext'
 
 const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
-  const [dataLoanType, setDataLoanType] = useState({})
+  const [dataLoanType, setDataLoanType] = useState<any>({})
   const {applicationIdEdit} = useParams()
+  const {company_id} = useAuth()
+
   useEffect(() => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (!dataLoanType.loan_type_id) return
+    const currentItem = dataLoanType.loan_type_id.find(
+      (el: any) => el.id === +formik.values.loan_type_id
+    )
+
+    const interestByDay = formatNumber(currentItem.interest / 31)
+
+    const interestByYear = currentItem.interest * 12
+
+    if (formik.values.term_unit.toString() === '0') {
+      setFieldValue('interest', interestByDay)
+    } else if (formik.values.term_unit.toString() === '1') {
+      setFieldValue('interest', +currentItem.interest)
+    } else if (formik.values.term_unit.toString() === '2') {
+      setFieldValue('interest', interestByYear)
+    }
+  }, [formik.values.term_unit])
+
   async function onFetchDataList() {
     try {
       const endpoints = config.filter((data) => !!data.dependencyApi)
@@ -22,11 +46,14 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             status: true,
             pageSize: 99999,
             currentPage: 1,
+            company_id: +company_id,
           })
 
           return {key: d.key, data: res?.data?.data}
         })
       )
+
+      console.log(results, 'data')
 
       results &&
         results.forEach((result) => {
@@ -34,24 +61,17 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             ...dataLoanType,
             [result.key]: result?.data,
           })
-          !applicationIdEdit &&
-            setFieldValue(
-              `${result.key}`,
-              result?.data.length > 0
-                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
-                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].id
-                  : result?.data[0].id
-                : ''
-            )
-          !applicationIdEdit &&
-            setFieldValue(
-              `interest`,
-              result?.data.length > 0
-                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
-                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].interest
-                  : result?.data[0].interest
-                : ''
-            )
+
+          let itemDefault = result?.data.find((el: any) => +el.is_default === 1)
+
+          if (!itemDefault) {
+            itemDefault = result?.data?.[0]
+          }
+          if (!applicationIdEdit) {
+            setFieldValue(`${result.key}`, itemDefault.id)
+            setFieldValue(`interest`, itemDefault.interest || '')
+            setFieldValue('term_unit', 1)
+          }
         })
     } catch (error) {
     } finally {
