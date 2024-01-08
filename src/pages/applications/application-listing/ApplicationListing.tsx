@@ -135,9 +135,17 @@ const ApplicationListing = () => {
   React.useEffect(() => {
     const allApi = rows
       .filter((item) => item?.infoFilter?.dependencyApi)
-      .map((item) => request.post(item?.infoFilter?.dependencyApi as string), {
-        status: true,
-      })
+      .map(
+        (item) =>
+          request.post(item?.infoFilter?.dependencyApi as string, {
+            company_id: +company_id,
+            pageSize: 9999,
+            currentPage: 1,
+          }),
+        {
+          status: true,
+        }
+      )
 
     Promise.all(allApi).then((res) => {
       let result: {[key: string]: any[]} = {}
@@ -240,11 +248,7 @@ const ApplicationListing = () => {
             }
             if (key === 'loan_terms') {
               return (
-                <td
-                  key={i}
-                  className='ps-8 text-end fs-6 fw-medium'
-                  style={{color: '#071437'}}
-                >
+                <td key={i} className='ps-8 text-end fs-6 fw-medium' style={{color: '#071437'}}>
                   {[1, 0].includes(Number(value) || 0)
                     ? `${value} Month`
                     : !!value
