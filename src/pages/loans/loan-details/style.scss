@@ -14,4 +14,28 @@
     padding-bottom: 50px;
     clip-path: polygon(100% 0%, 100% 0, 0 0, 0 100%, 50% calc(100% - 20px), 100% 100%);
   }
+
+  .repayment-id {
+    min-width: 25px !important;
+  }
+
+  .table-foot-repayment {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--bs-gray-300);
+    }
+  }
+
+  .config-column-grid {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(calc(-100% - 8px));
+    z-index: 4;
+  }
 }

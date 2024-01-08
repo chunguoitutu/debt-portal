@@ -25,3 +25,7 @@ export function handleCreateBlockAddress(isHomeAddress: boolean): BlockAddress {
 
   return {...value, ...defaultValue}
 }
+
+export const GLOBAL_CONSTANTS = {
+  loanRepaymentConfigColumn: 'loan-repayment-config-column',
+}
