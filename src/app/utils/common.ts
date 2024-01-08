@@ -217,3 +217,9 @@ export function convertFileToBase64(file: File): Promise<string | null> {
     }
   })
 }
+
+export function formatMoney(value: number) {
+  let newValue = +value || 0
+
+  return numeral(newValue).format('$0,0.00')
+}

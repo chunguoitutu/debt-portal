@@ -242,7 +242,7 @@ const ApplicationListing = () => {
               return (
                 <td
                   key={i}
-                  className='ps-8  pe-0 text-end fs-6 fw-medium'
+                  className='ps-8 text-end fs-6 fw-medium'
                   style={{color: '#071437'}}
                 >
                   {[1, 0].includes(Number(value) || 0)

@@ -1,10 +1,11 @@
 import {OrderBy, TableConfig} from '@/app/types'
 import clsx from 'clsx'
-import {FC, useMemo} from 'react'
+import {FC, ReactNode, useMemo} from 'react'
 import SortBy from '../sort-by'
 import moment from 'moment'
 import numeral from 'numeral'
 import Loading from './components/Loading'
+import {formatMoney} from '@/app/utils'
 
 type Props = {
   config: TableConfig
@@ -16,6 +17,7 @@ type Props = {
   data: any[]
   currentPage?: number
   pageSize?: number
+  tableFooter?: ReactNode
 }
 
 const TableSecondary: FC<Props> = ({
@@ -28,6 +30,7 @@ const TableSecondary: FC<Props> = ({
   currentPage = 1,
   pageSize = 10,
   onChangeSortBy,
+  tableFooter,
 }) => {
   const {rows} = config
 
@@ -40,15 +43,18 @@ const TableSecondary: FC<Props> = ({
     switch (key) {
       case 'id':
         return index + 1 + pageSize * (currentPage - 1)
-      case 'due_date':
+      case 'instalment_due_date':
+        return moment(value, 'YYYY-MM-DD').format('MMM D, YYYY')
       case 'repayment_date':
         return moment(value).format('MMM D, YYYY')
-      case 'interest_amount':
-      case 'principal_amount':
-      case 'principal_paid':
-      case 'interest_paid':
-      case 'penalty_paid':
-        return numeral(value).format('$0,0.00')
+      case 'principal':
+      case 'principal_balance':
+      case 'interest':
+      case 'interest_balance':
+      case 'late_interest':
+      case 'instalment_total':
+      case 'instalment_total_balance':
+        return formatMoney(value)
       default:
         return value
     }
@@ -133,6 +139,9 @@ const TableSecondary: FC<Props> = ({
             </tr>
           )}
         </tbody>
+
+        {/* Table footer */}
+        {tableFooter && tableFooter}
       </table>
     </div>
   )

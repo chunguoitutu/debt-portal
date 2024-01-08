@@ -164,6 +164,7 @@ export type TableRow = {
   classNameTableBody?: string
   component?: any
   isHide?: boolean // hide io table listing
+  defaultShow?: boolean
   options?: Option[]
   infoCreateEdit?: {
     type?: string
