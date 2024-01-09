@@ -174,21 +174,6 @@ const CountApplication: React.FC<Props> = ({className, description, color, img}:
         backgroundImage: `url('${img}')`,
       }}
     >
-      {!!newDataSocket && (
-        <div className='wrapper-records-applications'>
-          <div className='p-0 m-0'>
-            <p className='records-applications'>
-              Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
-            </p>
-            <p className='records-applications-reset'>Do you want to refresh the data now?</p>
-          </div>
-
-          <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
-            Refresh
-          </Button>
-        </div>
-      )}
-
       <div className='card-header pt-5'>
         <div className='card-title d-flex flex-column'>
           <span className='fs-2hx fw-bold text-white me-2 lh-1 ls-n2'>{searchCriteria.total}</span>
@@ -221,6 +206,22 @@ const CountApplication: React.FC<Props> = ({className, description, color, img}:
             )}
         </div>
       </div>
+      {!!newDataSocket && (
+        <div className='hihihaha d-flex flex-row align-items-center justify-content-between '>
+          <div className='p-0 m-0'>
+            <p className='text-white fs-16 fw-bold mb-0'>
+              Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
+            </p>
+            <p className='text-white fs-13 fw-semibold mb-0'>
+              Do you want to refresh the data now?
+            </p>
+          </div>
+
+          <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
+            Refresh
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

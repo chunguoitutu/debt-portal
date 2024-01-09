@@ -43,7 +43,7 @@ const ChartDashboard: FC<Props> = ({
           <div className='d-flex align-items-center'>
             <span className='fs-4 fw-semibold text-gray-400 me-1 align-self-start'>$</span>
 
-            <span className='fs-2hx fw-bold text-dark me-2 lh-1 ls-n2'>60.785</span>
+            <span className='fs-2hx fw-bold text-dark me-2 lh-1 ls-n2'>60,785</span>
 
             <span className='badge badge-light-success fs-base'>
               <KTIcon iconName='arrow-up' className='fs-5 text-success ms-n1' /> 2.2%
@@ -72,7 +72,7 @@ const ChartDashboard: FC<Props> = ({
           </div>
           <div className='d-flex fw-semibold align-items-center my-3'>
             <div className='bullet w-8px h-3px rounded-2 bg-primary me-3'></div>
-            <div className='text-gray-500 flex-grow-1 me-4'>Wedding Loan</div>
+            <div className='text-gray-500 flex-grow-1 me-4'>Business Loan</div>
             <div className='fw-bolder text-gray-700 text-xxl-end'>$6,868</div>
           </div>
           <div className='d-flex fw-semibold align-items-center'>
@@ -80,7 +80,7 @@ const ChartDashboard: FC<Props> = ({
               className='bullet w-8px h-3px rounded-2 me-3'
               style={{backgroundColor: '#E4E6EF'}}
             ></div>
-            <div className='text-gray-500 flex-grow-1 me-4'>Orther</div>
+            <div className='text-gray-500 flex-grow-1 me-4'>Others</div>
             <div className='fw-bolder text-gray-700 text-xxl-end'>$8,660</div>
           </div>
         </div>
