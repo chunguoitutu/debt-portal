@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {Link, useNavigate} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import numeral from 'numeral'
@@ -18,13 +19,14 @@ import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import Badge from '@/components/badge/Badge'
 import Loading from '@/components/table/components/Loading'
 import ButtonEdit from '@/components/button/ButtonEdit'
-import SortBy from '@/components/sort-by'
 import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import {useSocket} from '@/app/context/SocketContext'
-import {APPLICATION_LISTING_CONFIG_DASHBOARD} from '../../../../../pages/dashboard/config/config-application-dashboard'
+import {APPLICATION_LISTING_CONFIG_DASHBOARD} from '../config/config-application-dashboard'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons'
 
-const ApplicationDashboard = () => {
+const ApplicationDemoDashBoard = () => {
   const {settings, rows} = APPLICATION_LISTING_CONFIG_DASHBOARD || {}
   const {showAction = true, showEditButton} = settings || {}
 
@@ -36,7 +38,6 @@ const ApplicationDashboard = () => {
     ? parseJson(sessionStorage.getItem('application') || '')
     : {}
 
-  const [showInput, setShowInput] = React.useState<boolean>(false)
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
     isObject(sessionData?.dataFilter) ? sessionData?.dataFilter : {}
   )
@@ -54,6 +55,7 @@ const ApplicationDashboard = () => {
   })
   const [newDataSocket, setNewDataSocket] = React.useState<number>(0) // new data in realtime
   const {pageSize, currentPage} = searchCriteria
+
   useEffect(() => {
     const handleDetectNewApplication = () => {
       setNewDataSocket((prev) => prev + 1)
@@ -245,85 +247,136 @@ const ApplicationDashboard = () => {
     })
     setLoadApi(!loadApi)
   }
-
   return (
-    <div className='card p-5 h-fit-content'>
-      <div>
-        {!!newDataSocket && (
-          <div className='wrapper-records-applications'>
-            <div className='p-0 m-0'>
-              <p className='records-applications'>
-                Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
-              </p>
-              <p className='records-applications-reset'>Do you want to refresh the data now?</p>
+    <div
+      className={`card border-0 card-xxl-stretch mb-5 mb-xxl-8 bg-white border-custom-card h-md-100`}
+    >
+      {/* begin::Header */}
+      <div className='card-header border-0 pt-5'>
+        <h3 className='card-title align-items-start flex-column'>
+          <span className='card-label fw-bold fs-3 mb-1'>Latest Application</span>
+          <span className='text-muted mt-1 fw-semibold fs-7'>{`More than ${searchCriteria.total} application`}</span>
+        </h3>
+        <div className='card-toolbar'>
+          <ul className='nav'>
+            <li className='nav-item'>
+              <a
+                className='nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary active fw-bold px-4 me-1'
+                data-bs-toggle='tab'
+                href='#kt_table_widget_5_tab_1'
+              >
+                Month
+              </a>
+            </li>
+            <li className='nav-item'>
+              <a
+                className='nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4 me-1'
+                data-bs-toggle='tab'
+                href='#kt_table_widget_5_tab_2'
+              >
+                Week
+              </a>
+            </li>
+            <li className='nav-item'>
+              <a
+                className='nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4'
+                data-bs-toggle='tab'
+                href='#kt_table_widget_5_tab_3'
+              >
+                Day
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {/* end::Header */}
+      {/* begin::Body */}
+      <div className='h-fit-content'>
+        <div>
+          {!!newDataSocket && (
+            <div className='wrapper-records-applications'>
+              <div className='p-0 m-0'>
+                <p className='records-applications'>
+                  Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
+                </p>
+                <p className='records-applications-reset'>Do you want to refresh the data now?</p>
+              </div>
+
+              <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
+                Refresh
+              </Button>
             </div>
+          )}
 
-            <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>
-              Refresh
-            </Button>
-          </div>
-        )}
+          <KTCardBody className='py-4'>
+            <div className='table-responsive'>
+              <table
+                id='kt_table_users'
+                className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
+              >
+                <thead>
+                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                    {rows
+                      .filter((item) => !item.isHide)
+                      .map((item, i) => {
+                        const {classNameTableHead, name, infoFilter, key} = item
 
-        <KTCardBody className='py-4'>
-          <div className='table-responsive'>
-            <table
-              id='kt_table_users'
-              className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-            >
-              <thead>
-                <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                  {rows
-                    .filter((item) => !item.isHide)
-                    .map((item, i) => {
-                      const {classNameTableHead, name, infoFilter, key} = item
-
-                      return (
-                        <th
-                          className={clsx([
-                            'text-nowrap min-w-75px user-select-none',
-                            classNameTableHead,
-                          ])}
-                          data-title={item.key}
-                          key={i}
-                        >
-                          <div className='cursor-pointer'>
-                            <span className='fs-14 fw-bold'>{name}</span>
-                          </div>
-                        </th>
-                      )
-                    })}
-                  {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
-                </tr>
-              </thead>
-              <tbody>
-                {data.length ? (
-                  renderRows()
-                ) : (
-                  <tr>
-                    <td colSpan={rows.length + 1}>
-                      <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
-                        No matching records found
-                      </div>
-                    </td>
+                        return (
+                          <th
+                            className={clsx([
+                              'text-nowrap min-w-75px user-select-none',
+                              classNameTableHead,
+                            ])}
+                            data-title={item.key}
+                            key={i}
+                          >
+                            <div className='cursor-pointer'>
+                              <span className='fs-14 fw-bold'>{name}</span>
+                            </div>
+                          </th>
+                        )
+                      })}
+                    {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </KTCardBody>
+                </thead>
+                <tbody>
+                  {data.length ? (
+                    renderRows()
+                  ) : (
+                    <tr>
+                      <td colSpan={rows.length + 1}>
+                        <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
+                          No matching records found
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </KTCardBody>
 
-        <div
-          style={{
-            padding: '10px 22.75px',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          {loading && <Loading />}
+          <div
+            style={{
+              padding: '10px 42px',
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+            className='w-100 algin-items-center justify-content-between'
+          >
+            <div></div>
+            <div className='fs-14 text-hover-primary hover-underline-link'>
+              <Link to={'/application'} className='text-primary text-hover-primary fw-medium'>
+                Go To Application Listing
+              </Link>
+              <FontAwesomeIcon icon={faArrowRight} className='text-primary ms-2 mt-1' />
+            </div>
+            {loading && <Loading />}
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default ApplicationDashboard
+export {ApplicationDemoDashBoard}

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {Fragment} from 'react'
-import {KTIcon} from '../../../../helpers'
+import {KTIcon} from '../../../_metronic/helpers'
 
 type Props = {
   className: string
@@ -12,7 +12,7 @@ const rows: Array<{description: string}> = [
   {description: 'Google Ads CPC'},
 ]
 
-const ListsWidget26 = ({className}: Props) => (
+const ExternalLinks = ({className}: Props) => (
   <div className={`card card-flush ${className}`}>
     <div className='card-header pt-5'>
       <h3 className='card-title text-gray-800 fw-bold'>External Links</h3>
@@ -22,8 +22,8 @@ const ListsWidget26 = ({className}: Props) => (
       {rows.map((row, index) => (
         <Fragment key={`lw26-rows-${index}`}>
           <div className='d-flex flex-stack'>
-            <a href='#' className='text-primary fw-semibold fs-6 me-2'>
-              {row.description}
+            <a href='https://monetiumcredit.com.sg/' className='text-primary fw-semibold fs-6 me-2'>
+              Monetium Credit
             </a>
             <button
               type='button'
@@ -38,4 +38,4 @@ const ListsWidget26 = ({className}: Props) => (
     </div>
   </div>
 )
-export {ListsWidget26}
+export {ExternalLinks}
