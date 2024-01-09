@@ -4,12 +4,10 @@ import {
   TablesWidget2,
   TablesWidget3,
   TablesWidget4,
-  TablesWidget5,
   TablesWidget6,
   TablesWidget7,
   TablesWidget8,
   TablesWidget9,
-  TablesWidget10,
   TablesWidget11,
   TablesWidget12,
   TablesWidget13,
@@ -53,9 +51,7 @@ const Tables: FC = () => {
       {/* begin::Row */}
       <div className='row g-5 g-xl-8'>
         {/* begin::Col */}
-        <div className='col-xl-6'>
-          <TablesWidget5 className='card-xl-stretch mb-xl-8' />
-        </div>
+        <div className='col-xl-6'></div>
         {/* end::Col */}
 
         {/* begin::Col */}
@@ -83,8 +79,6 @@ const Tables: FC = () => {
       {/* end::Row */}
 
       <TablesWidget9 className='mb-5 mb-xl-8' />
-
-      <TablesWidget10 className='mb-5 mb-xl-8' />
 
       <TablesWidget11 className='mb-5 mb-xl-8' />
 
