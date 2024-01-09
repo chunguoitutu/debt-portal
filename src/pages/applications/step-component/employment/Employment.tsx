@@ -199,6 +199,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
             value={values[key]}
             onChange={handleChange}
             name={key}
+            transparent={key === 'company_telephone' ? false : true}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
             classShared={className}
             disabled={disabled || values.status === 3 || values.status === 2 ? true : false}

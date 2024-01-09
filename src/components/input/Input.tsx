@@ -29,6 +29,7 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   showIconTogglePassword?: boolean
   error?: string
   touched?: boolean
+  transparent?: boolean
   classNameAdvanced?: string
 }
 
@@ -39,6 +40,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     id,
     name,
     label,
+    transparent = false,
     insertLeft,
     insertRight,
     type = 'text',
@@ -106,12 +108,14 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
       )}
       <div
         className={clsx([
-          'input-advance form-control form-control-lg p-0 d-flex align-items-center overflow-hidden',
+          ` ${
+            transparent ? 'input-advance_transparent' : 'input-advance'
+          }  form-control form-control-lg  p-0 d-flex align-items-center overflow-hidden `,
           classInputWrap,
         ])}
       >
         {type === 'money' ? (
-          <span className='ps-5 text-gray-600' style={{marginTop: '2px'}}>
+          <span className='ps-5 text-gray-600 bg-transparent' style={{marginTop: '2px'}}>
             {symbolMoney}
           </span>
         ) : (
@@ -137,7 +141,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
             handlePaste({e: e, noThereAreCommas: noThereAreCommas})
           }
           type={typeCustom}
-          className={`form-control bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
+          className={`bg-inherit rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
           id={id || defaultId || name}
           name={name}
           {...(ref ? {} : {value: value})}
@@ -146,7 +150,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         {type === 'password'
           ? !!value.toString().length &&
             showIconTogglePassword && (
-              <span className='pwd-icon text-gray-400 text-hover-gray-600 cursor-pointer'>
+              <span className='pwd-icon text-gray-400 w-30px text-hover-gray-600 cursor-pointer'>
                 <FontAwesomeIcon
                   icon={typeCustom === 'password' ? faEyeSlash : faEye}
                   onClick={handleChangeTypeInput}

@@ -243,6 +243,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     if (typeComponent === 'input') {
       props = {
         ...props,
+        transparent: true,
         required: key === 'password' && data ? false : isRequired,
         type: typeInput,
         label: name,

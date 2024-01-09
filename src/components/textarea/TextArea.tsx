@@ -36,7 +36,7 @@ const TextArea: FC<TextAreaProps> = ({
 
       <textarea
         className={clsx([
-          'form-control p-12px form-control-lg form-control-solid fs-4 min-h-120px rounded-8',
+          'form-control  bg-inherit_textarea p-12px form-control-lg  fs-4 min-h-120px rounded-8',
           className,
         ])}
         id={id || defaultId || name}

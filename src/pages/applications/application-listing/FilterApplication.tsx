@@ -68,6 +68,7 @@ export function FilterApplication({
                 {isFromTo ? (
                   <div className='d-flex flex-column gap-3 w-full'>
                     <Component
+                      transparent={true}
                       label={name}
                       {...props}
                       placeholder='from'
@@ -82,6 +83,7 @@ export function FilterApplication({
                       }}
                     />
                     <Component
+                      transparent={true}
                       {...props}
                       placeholder='to'
                       value={dataFilter[key]?.['lte'] || ''}
