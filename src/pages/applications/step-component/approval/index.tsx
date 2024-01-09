@@ -118,14 +118,17 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
   return (
     <Modal dialogClassName='mw-800px' show={true} onClose={onClose} title='Approval Application'>
       <form className='p-30px'>
-        <Select
-          label='Assignee To'
-          name='officer_id'
-          options={userListing}
-          keyValueOption={'id'}
-          keyLabelOption={'fullname'}
-          onChange={handleChange}
-        />
+        {/* Only show when current user is admin or super admin. If the employee approves, the loan will be assigned to that employee  */}
+        {priority <= 2 && (
+          <Select
+            label='Assignee To'
+            name='officer_id'
+            options={userListing}
+            keyValueOption={'id'}
+            keyLabelOption={'fullname'}
+            onChange={handleChange}
+          />
+        )}
 
         <TextArea
           id='approved_note'
