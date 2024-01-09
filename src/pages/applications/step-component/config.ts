@@ -1,9 +1,9 @@
 import * as Yup from 'yup'
 import NameOfApplication from '@/components/applications/NameOfApplication'
-import { Input } from '@/components/input'
+import {Input} from '@/components/input'
 import Radio from '@/components/radio/Radio'
-import { Select } from '@/components/select'
-import { TextArea } from '@/components/textarea'
+import {Select} from '@/components/select'
+import {TextArea} from '@/components/textarea'
 import GrossMonthlyIncome from '@/components/applications/GrossMonthlyIncome'
 import FullName from './completion/FullName'
 import Address from './completion/Address'
@@ -16,9 +16,9 @@ import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
 import FileDocument from './employment/FileDocument'
 import RenderFileDocument from './completion/RenderFileDocument'
-import { children_config_completion } from './completion'
-import { ApplicationConfig, TableConfig } from '@/app/types'
-import { convertMessageErrorMaximum, convertMessageErrorRequired } from '@/app/utils'
+import {children_config_completion} from './completion'
+import {ApplicationConfig, TableConfig} from '@/app/types'
+import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
 import {
   BANKRUPTCY,
   CUSTOMER_TYPE,
@@ -38,7 +38,7 @@ import {
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
-import { Checkbox } from '@/components/checkbox'
+import {Checkbox} from '@/components/checkbox'
 import Bankruptcy from '@/components/applications/Bankruptcy'
 import Button from '@/components/button/Button'
 
@@ -209,7 +209,6 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Select,
     typeComponent: 'Select',
     options: TERM_UNIT,
-    defaultValue: TERM_UNIT[1].value,
     label: 'Term Unit',
     validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
   },
