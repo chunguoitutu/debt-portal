@@ -2,13 +2,14 @@ import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {useSocket} from '@/app/context/SocketContext'
 import {swalToast} from '@/app/swal-notification'
-import {ApplicationFormData} from '@/app/types'
+import {ApplicationFormData, DataResponse, UserInfo} from '@/app/types'
 import {convertErrorMessageResponse} from '@/app/utils'
 import Button from '@/components/button/Button'
 import Modal from '@/components/modal/Modal'
+import {Select} from '@/components/select'
 import {TextArea} from '@/components/textarea'
 import {FormikProps, useFormik} from 'formik'
-import {FC, useEffect} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
 type Props = {
@@ -21,8 +22,10 @@ type Props = {
 const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloadApi}) => {
   const {id, approved_note} = data || {}
 
+  const [userListing, setUserListing] = useState<(UserInfo & {fullname: string})[]>([])
+
   const {applicationIdEdit = 0} = useParams()
-  const {currentUser} = useAuth()
+  const {currentUser, priority, company_id} = useAuth()
   const {socket} = useSocket()
 
   const {
@@ -37,22 +40,44 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
   } = useFormik({
     initialValues: {
       approved_note: approved_note || '',
+      officer_id: priority <= 2 ? '' : currentUser?.id, // if the loan approver is an employee then auto transfer the loan to that person.
     },
     onSubmit: handleApproval,
   })
 
   useEffect(() => {
+    handleGetUsers()
+
     return () => {
       resetForm()
     }
   }, [])
 
+  async function handleGetUsers() {
+    try {
+      const {data} = await request.post<DataResponse<UserInfo[]>>('/user/listing', {
+        company_id: +company_id,
+        priority_great_than: 2, // except super admin and admin
+        pageSize: 999999999999999,
+        currentPage: 1,
+      })
+
+      Array.isArray(data.data) &&
+        setUserListing(
+          data.data.map((el) => ({
+            ...el,
+            fullname: [el.firstname, el.middlename, el.lastname].filter(Boolean).join(' '),
+          }))
+        )
+    } catch (error) {}
+  }
+
   async function handleApproval() {
-    const {approved_note} = values
+    const {approved_note, officer_id = 0} = values
 
     if (!+applicationIdEdit) return setSubmitting(false)
 
-    const payload = {
+    let payload: {[key: string]: any} = {
       approved_by: currentUser?.id,
       approved_note,
     }
@@ -61,7 +86,8 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
       if (id) {
         await request.put(`application/approval/${id}`, payload)
       } else {
-        const {data} = await request.post(`application/approval/${applicationIdEdit}`, payload)
+        payload = {...payload, application_id: +applicationIdEdit, officer_id: +officer_id}
+        const {data} = await request.post(`application/approval`, payload)
 
         // Only emit when create approval
         socket?.emit('approvalApplicationSuccess', data.loan_id)
@@ -92,6 +118,15 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
   return (
     <Modal dialogClassName='mw-800px' show={true} onClose={onClose} title='Approval Application'>
       <form className='p-30px'>
+        <Select
+          label='Assignee To'
+          name='officer_id'
+          options={userListing}
+          keyValueOption={'id'}
+          keyLabelOption={'fullname'}
+          onChange={handleChange}
+        />
+
         <TextArea
           id='approved_note'
           label={'Description'}

@@ -318,11 +318,12 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
         {/* Popup */}
         <div className={clsx(['position-relative ', showConfigColumn && 'text-gray-900'])}>
-          <div className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900'>
+          <div
+            className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900'
+            onClick={handleToggleConfigColumn}
+          >
             <img src={gridImg} alt='grid' />
-            <span className='fs-14 d-inline-block fw-semibold' onClick={handleToggleConfigColumn}>
-              Show Columns
-            </span>
+            <span className='fs-14 d-inline-block fw-semibold'>Show Columns</span>
           </div>
 
           {/* config */}
