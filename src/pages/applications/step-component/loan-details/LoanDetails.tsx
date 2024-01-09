@@ -251,6 +251,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             value={values[key]}
             onChange={handleChange}
             name={key}
+            transparent={true}
             classShared={className}
             disabled={values.status === 3 || values.status === 2 ? true : false}
             type={typeInput}

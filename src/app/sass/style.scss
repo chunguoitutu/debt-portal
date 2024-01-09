@@ -6,6 +6,15 @@
   --bg-gray-color: #f9f9f9;
   --height-header: 80px;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px transparent;
+}
 
 #root {
   height: 100%;
@@ -41,9 +50,26 @@ input[type='number']::-webkit-outer-spin-button {
 
 // not include input login page
 .input-advance.form-control-solid {
+  background: #f1f1f2;
   &:focus-within:has(input:focus) {
-    background-color: var(--bs-gray-200);
-    border-color: var(--bs-gray-200);
+    border: 1px solid #0c2de2;
+    background: #f1f1f2 !important;
+    box-shadow: 0px 0px 2px 3px rgba(27, 132, 255, 0.16), 0px 2px 2px 0px rgba(0, 0, 0, 0.16);
+    color: var(--bs-gray-700);
+    transition: color 0.2s ease;
+  }
+
+  &:focus,
+  &:active {
+    background-color: #f1f1f2 !important;
+  }
+}
+.input-advance_transparent.form-control-solid {
+  background: transparent;
+  &:focus-within:has(input:focus) {
+    border: 1px solid #0c2de2;
+    background: var(--bs-gray-100) !important;
+    box-shadow: 0px 0px 2px 3px rgba(27, 132, 255, 0.16), 0px 2px 2px 0px rgba(0, 0, 0, 0.16);
     color: var(--bs-gray-700);
     transition: color 0.2s ease;
   }
@@ -53,7 +79,6 @@ input[type='number']::-webkit-outer-spin-button {
     background-color: var(--bs-gray-100) !important;
   }
 }
-
 #kt_app_header_container {
   height: 80px;
 }
@@ -177,8 +202,11 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
-.bg-inherit {
-  background-color: inherit !important;
+.bg-inherit:focus {
+  background-color: #f9f9f9 !important;
+}
+.bg-inherit:disabled {
+  background-color: transparent !important;
 }
 
 .btn-repayment-schedule-calculator {
@@ -377,4 +405,10 @@ input[type='number']::-webkit-outer-spin-button {
   font-weight: 500;
   background: none;
   margin: 0 1rem;
+}
+
+.bg-inherit_textarea:focus {
+  border: 1px solid #0c2de2;
+  background: var(--Gray---bs-gray-100, #f9f9f9);
+  box-shadow: 0px 0px 2px 3px rgba(27, 132, 255, 0.16), 0px 2px 2px 0px rgba(0, 0, 0, 0.16);
 }

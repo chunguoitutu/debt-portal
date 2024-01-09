@@ -88,22 +88,23 @@ const CreateEditCompanies = ({
     },
     validationSchema: validationFormik,
     onSubmit: async (values: any) => {
+      const payload = {
+        company_name: values.company_name.trim(),
+        company_code: values.company_code.trim(),
+        business_uen: values.business_uen.trim(),
+        contact_person: values.contact_person.trim(),
+        license_no: values.license_no.trim(),
+        web_url: values.web_url.trim(),
+        telephone: String(values.telephone).trim(),
+        email: values.email.trim(),
+        address: values.address.trim(),
+        open_date: new Date(values.open_date),
+        license_expiry_date: new Date(values.license_expiry_date),
+        status: status ? 1 : 0,
+      }
       if (!information?.id) {
         await request
-          .post('config/company', {
-            company_name: values.company_name.trim(),
-            company_code: values.company_code.trim(),
-            business_uen: values.business_uen.trim(),
-            contact_person: values.contact_person.trim(),
-            license_no: values.license_no.trim(),
-            web_url: values.web_url.trim(),
-            telephone: String(values.telephone).trim(),
-            email: values.email.trim(),
-            address: values.address.trim(),
-            open_date: new Date(values.open_date),
-            license_expiry_date: new Date(values.license_expiry_date),
-            status: status ? 1 : 0,
-          })
+          .post('config/company', payload)
           .then((response) => {
             if (!response.data?.error) {
               swalToast.fire({
@@ -126,20 +127,7 @@ const CreateEditCompanies = ({
           .finally(() => setSubmitting(false))
       } else {
         await request
-          .post('config/company/' + information?.id, {
-            company_name: values.company_name.trim(),
-            company_code: values.company_code.trim(),
-            business_uen: values.business_uen.trim(),
-            telephone: String(values.telephone).trim(),
-            contact_person: values.contact_person.trim(),
-            email: values.email.trim(),
-            address: values.address.trim(),
-            open_date: new Date(values.open_date),
-            license_no: values.license_no.trim(),
-            license_expiry_date: new Date(values.license_expiry_date),
-            web_url: values.web_url.trim(),
-            status: status ? 1 : 0,
-          })
+          .post('config/company/' + information?.id, payload)
           .then((response) => {
             if (!response.data?.error) {
               swalToast.fire({
@@ -228,6 +216,7 @@ const CreateEditCompanies = ({
                         label={row.name}
                         onBlur={handleBlur}
                         name={row?.key}
+                        transparent={row?.key === 'telephone' ? false : true}
                         type={row?.type === 'phone' ? 'number' : row?.type || 'text'}
                         value={values[row?.key] || ''}
                         onChange={handleChange}

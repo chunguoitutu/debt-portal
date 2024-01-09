@@ -19,7 +19,7 @@
 
   &:disabled {
     color: $form-select-disabled-color;
-    background-color: $form-select-disabled-bg;
+    background-color: transparent;
     border-color: $form-select-disabled-border-color;
   }
 
@@ -31,7 +31,7 @@
   // Solid style
   &.form-select-solid {
     @include placeholder($input-solid-placeholder-color);
-    background-color: $input-solid-bg;
+    background-color: transparent;
     border-color: $input-solid-bg;
     color: $input-solid-color;
     transition: $transition-input;
@@ -41,8 +41,9 @@
     &.active,
     &:focus,
     &.focus {
-      background-color: $input-solid-bg-focus;
-      border-color: $input-solid-bg-focus !important;
+      background-color: #f9f9f9;
+      border: 1px solid #0c2de2 !important;
+      box-shadow: 0px 0px 2px 3px rgba(27, 132, 255, 0.16), 0px 2px 2px 0px rgba(0, 0, 0, 0.16) !important;
       color: $input-solid-color;
       transition: $transition-input;
     }

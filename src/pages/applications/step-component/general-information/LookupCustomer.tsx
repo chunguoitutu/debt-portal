@@ -262,6 +262,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
         <Modal.Body style={{maxHeight: 450}}>
           <div className='d-flex flex-row align-items-center'>
             <Input
+              transparent={true}
               classShared='flex-grow-1 h-30px mb-5'
               placeholder='Search'
               value={searchValue}

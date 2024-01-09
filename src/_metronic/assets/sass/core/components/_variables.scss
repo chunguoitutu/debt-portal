@@ -591,7 +591,7 @@ $font-sizes: (
   // 88.25px
   7hx: $font-size-base * 7.5,
   // 91.5px
-  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ) !default;
 
 $headings-font-weight: 600 !default;
@@ -749,7 +749,7 @@ $inpur-autifill-bg-color: var(--#{$prefix}gray-100) !default;
 
 // Keenthemes solid input style
 $input-solid-color: var(--#{$prefix}gray-700) !default;
-$input-solid-bg: var(--#{$prefix}gray-100) !default;
+$input-solid-bg: #d5d5d8 !default;
 $input-solid-bg-focus: var(--#{$prefix}gray-200) !default;
 $input-solid-placeholder-color: var(--#{$prefix}gray-500) !default;
 

@@ -70,6 +70,7 @@ export function FilterLoan({
                     <Component
                       label={name}
                       {...props}
+                      transparent={true}
                       placeholder='from'
                       value={dataFilter[key]?.['gte'] || ''}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +84,7 @@ export function FilterLoan({
                     />
                     <Component
                       {...props}
+                      transparent={true}
                       placeholder='to'
                       value={dataFilter[key]?.['lte'] || ''}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

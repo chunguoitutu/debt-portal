@@ -222,10 +222,7 @@ const LoanListing = () => {
 
             if (key === 'loan_term') {
               return (
-                <td
-                  key={i}
-                  className='ps-8 pe-0 text-end fs-6 fw-medium text-gray-900'
-                >
+                <td key={i} className='ps-8 pe-0 text-end fs-6 fw-medium text-gray-900'>
                   {value < 2 ? `${value} Month` : `${value} Months`}
                 </td>
               )
@@ -404,6 +401,7 @@ const LoanListing = () => {
             classShared='flex-grow-1 h-30px mb-5'
             placeholder='Search'
             value={searchValue}
+            transparent={true}
             onChange={handleChangeSearch}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {

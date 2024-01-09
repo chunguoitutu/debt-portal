@@ -36,7 +36,7 @@ const Guest = () => {
 
   useEffect(() => {
     setInput('')
-    !!(!!loanId || !!imgBase64) &&
+    !!loanId &&
       request
         .post('/pdf/personal-loan-application/' + Number(loanId), {
           company_id: company_id,

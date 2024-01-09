@@ -71,6 +71,7 @@ export function FilterBorrower({
                 {isFromTo ? (
                   <div className='d-flex flex-column gap-3 w-full'>
                     <Component
+                      transparent={true}
                       label={name}
                       {...props}
                       placeholder='from'
@@ -86,6 +87,7 @@ export function FilterBorrower({
                     />
                     <Component
                       {...props}
+                      transparent={true}
                       placeholder='to'
                       value={dataFilter[key]?.['lte'] || ''}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
