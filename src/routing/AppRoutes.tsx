@@ -20,7 +20,7 @@ import {getCSSVariableValue} from '../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import SettingPageRouter from '../pages/settings/SettingPageRouter'
 import {Applications} from '../pages/applications'
-import Dashboard from '../pages/dashboard'
+import {DashboardWrapper} from '../pages/dashboard'
 import Transactions from '../pages/transactions'
 import MyTasks from '../pages/my-tasks'
 import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
@@ -61,7 +61,7 @@ const AppRoutes: FC = () => {
           <Route path='logout' element={<Logout />} />
 
           <Route element={<MasterLayout />}>
-            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='dashboard' element={<DashboardWrapper />} />
             <Route path='/application'>
               <Route index element={<ApplicationListing />} />
               <Route path='listing' element={<ApplicationListing />} />

@@ -33,10 +33,14 @@ export const CreateLoanTypeSchema = Yup.object().shape({
     .max(45, 'Loan Type must be at most 45 characters'),
   description: Yup.string().max(45, 'Description must be at most 45 characters').nullable(),
   interest: Yup.string().required('Default Interest is required'),
-  late_fee: Yup.number()
+  quota_new: Yup.string().required('Quota For New Borrower is required'),
+  quota_existing: Yup.string().required('Quota For Existing Borrower is required'),
+  quota_foreigner: Yup.string().required('Quota For Foreigner Borrower is required'),
+  late_fee: Yup.string().required('Late Fee is required'),
+  late_interest: Yup.number()
+    .required('Late Interest is required')
     .max(100, 'Late Fee must be at most 100')
-    .positive('Late Fee must be a positive number')
-    .integer('Late Fee must be an integer'),
+    .positive('Late Fee must be a positive number'),
 })
 
 const modalsRoot = document.getElementById('root-modals') || document.body
@@ -80,6 +84,7 @@ const CreateLoanType = ({
             status: status ? 1 : 0,
             is_default: values.is_default ? 1 : 0,
             company_id: +company_id,
+            late_interest: +values.late_interest,
           })
           if (!data.error) {
             const loan_name = values.type_name
@@ -117,6 +122,7 @@ const CreateLoanType = ({
             status: status ? 1 : 0,
             is_default: values.is_default ? 1 : 0,
             company_id: +company_id,
+            late_interest: +values.late_interest,
           })
           const loan_name = values.type_name
           handleUpdated()
@@ -177,7 +183,7 @@ const CreateLoanType = ({
           </div>
         </div>
         <div
-          style={{maxHeight: 'calc(100vh - 500px)', overflowY: 'auto'}}
+          style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
           className='modal-body  p-30px '
         >
           <div
@@ -224,7 +230,7 @@ const CreateLoanType = ({
                   return (
                     <div key={row.key} style={{flex: '0 0 50%'}}>
                       {row.key === 'description' ? (
-                        <div>
+                        <div className='mb-16px'>
                           <TextArea
                             label={row.name}
                             name={row.key}

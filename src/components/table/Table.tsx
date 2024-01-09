@@ -299,9 +299,9 @@ const Table: FC<Props> = ({
                           )
                         }
 
-                        if (['late_fee'].includes(key)) {
+                        if (['late_interest'].includes(key)) {
                           return (
-                            <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={i}>
+                            <td className={`fs-14 fw-semibold text-gray-900`} key={i}>
                               {value !== null && value !== undefined ? `${value}%` : ''}
                             </td>
                           )
