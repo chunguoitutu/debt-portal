@@ -9,14 +9,19 @@ import {formatNumber} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 
 const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
-  const [dataLoanType, setDataLoanType] = useState<any>({})
   const {applicationIdEdit} = useParams()
   const {company_id} = useAuth()
+
+  const [dataLoanType, setDataLoanType] = useState<any>({})
+  const [errorMessages, setErrorMessages] = useState<any>({})
 
   useEffect(() => {
     onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const {values, touched, errors, handleChange, setFieldValue, setFieldError, setFieldTouched} =
+    formik
 
   useEffect(() => {
     if (!dataLoanType.loan_type_id) return
@@ -53,8 +58,6 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
         })
       )
 
-      console.log(results, 'data')
-
       results &&
         results.forEach((result) => {
           setDataLoanType({
@@ -78,7 +81,82 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
     }
   }
 
-  const {values, touched, errors, handleChange, setFieldValue} = formik
+  useEffect(() => {
+    if (!dataLoanType.loan_type_id) return
+
+    const currentItem = dataLoanType.loan_type_id.find(
+      (el: any) => el.id === +formik.values.loan_type_id
+    )
+
+    const loanAmountRequested = +formik.values.loan_amount_requested
+    const identification_type = formik.values.identification_type
+
+    if (formik.values.is_existing === 'existing') {
+      const quotaExisting = currentItem?.quota_existing
+      if (quotaExisting < loanAmountRequested) {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: `Loan Amount should not exceed ${quotaExisting}$`,
+        })
+      } else {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: undefined,
+        })
+      }
+    }
+
+    if (formik.values.is_existing === 'new') {
+      const quotaNew = currentItem?.quota_new
+      if (quotaNew < loanAmountRequested) {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: `Loan Amount should not exceed ${quotaNew}$`,
+        })
+      } else {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: undefined,
+        })
+      }
+    }
+
+    if (
+      identification_type === 'foreign_identification_number' &&
+      formik.values.is_existing === 'existing'
+    ) {
+      const quotaExisting = currentItem?.quota_existing
+      if (quotaExisting < loanAmountRequested) {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: `Loan Amount should not exceed ${quotaExisting}$`,
+        })
+      } else {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: undefined,
+        })
+      }
+    }
+
+    if (
+      identification_type === 'foreign_identification_number' &&
+      formik.values.is_existing === 'new'
+    ) {
+      const quotaNew = currentItem?.quota_new
+      if (quotaNew < loanAmountRequested) {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: `Loan Amount should not exceed ${quotaNew}$`,
+        })
+      } else {
+        setErrorMessages({
+          ...errorMessages,
+          loan_amount_requested: undefined,
+        })
+      }
+    }
+  }, [formik.values.loan_amount_requested])
 
   const handleAutoSelect = (key: string, e: React.ChangeEvent<HTMLSelectElement>) => {
     if (key === 'loan_type_id') {
@@ -162,6 +240,27 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             touched={touched[key]}
             error={errors[key]}
           />
+        </div>
+      )
+    }
+
+    if (key === 'loan_amount_requested' && typeComponent === 'Input') {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <Component
+            value={values[key]}
+            onChange={handleChange}
+            name={key}
+            classShared={className}
+            disabled={values.status === 3 || values.status === 2 ? true : false}
+            type={typeInput}
+            noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
+          />
+
+          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
+          {errorMessages.loan_amount_requested && (
+            <ErrorMessage message={errorMessages.loan_amount_requested} />
+          )}
         </div>
       )
     }

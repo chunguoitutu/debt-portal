@@ -39,7 +39,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'Description',
     },
     {
-      classNameTableHead: 'w-200px min-w-100px',
+      classNameTableHead: 'w-200px mt-3 min-w-100px',
       key: 'interest',
       color: '#252F4A',
       name: 'Interest',
@@ -57,6 +57,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
+        isRequired: true,
       },
     },
     {
@@ -67,6 +68,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
+        isRequired: true,
       },
     },
     {
@@ -77,13 +79,25 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
+        isRequired: true,
       },
     },
     {
       classNameTableHead: 'w-200px min-w-120px',
       key: 'late_fee',
       color: '#252F4A',
-      name: 'Late Fee (%)',
+      name: 'Late Fee',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+      },
+    },
+    {
+      classNameTableHead: 'w-200px min-w-120px',
+      key: 'late_interest',
+      color: '#252F4A',
+      name: 'Late Interest',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
