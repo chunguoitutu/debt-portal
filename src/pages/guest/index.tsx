@@ -5,9 +5,10 @@ import {PdfViewer} from './PdfViewer'
 import Button from '@/components/button/Button'
 import CreateSignatureModal from './CreateSignatureModal'
 import request from '@/app/axios'
-import {swalToast} from '@/app/swal-notification'
+import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 import Cookies from 'js-cookie'
+import {Input} from '@/components/input'
 
 const Guest = () => {
   const [loanId, setLoadId] = useState<string | null>(Cookies.get('approval_loan_id') || null)
@@ -15,6 +16,8 @@ const Guest = () => {
   const [base64Pdf, setBase64Pdf] = useState<string | null>(null)
   const [imgBase64, setImgBase64] = useState('')
   const [email, setEmail] = useState('')
+  const [input, setInput] = useState('')
+  const [errorMes, setErrorMes] = useState('')
 
   const [base64data, setBase64data] = useState<string | null>(null)
 
@@ -32,6 +35,7 @@ const Guest = () => {
   }, [socket])
 
   useEffect(() => {
+    setInput('')
     !!(!!loanId || !!imgBase64) &&
       request
         .post('/pdf/personal-loan-application/' + Number(loanId), {
@@ -39,6 +43,8 @@ const Guest = () => {
           img_base64: imgBase64,
         })
         .then((data) => {
+          setInput('')
+          setErrorMes('')
           setEmail(data?.data?.email)
           setBase64data(data?.data?.file_base64)
         })
@@ -53,15 +59,27 @@ const Guest = () => {
   }
 
   async function handleSendMail() {
-    let input: any = ''
-    if (!email) {
-      const inputEmail = prompt('Enter the email you want to send:', '')
-      if (inputEmail !== null) {
-        if (isValidEmail(inputEmail)) {
-          input = inputEmail
-        } else {
-          alert('Please enter a valid email.')
-        }
+    if (!email && !input) {
+      swalConfirm.fire({
+        icon: 'error',
+        title: 'You do not have an email, please enter your email',
+        showCancelButton: false,
+        confirmButtonText: 'OK',
+        customClass: {
+          popup: 'm-w-300px',
+          htmlContainer: 'fs-3',
+          cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+          confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+          actions: 'd-flex justify-content-center w-100 ',
+        },
+      })
+    }
+
+    if (!email && input !== null) {
+      if (isValidEmail(input)) {
+      } else {
+        setErrorMes('Please enter a valid email.')
+        return
       }
     }
 
@@ -107,24 +125,43 @@ const Guest = () => {
             setIsSignature={setIsSignature}
           />
         )}
-        <div className='d-flex align-items-center justify-content-end gap-16px'>
-          <Button
-            className='btn-light-primary mb-24px'
-            disabled={loading}
-            onClick={handleTogglePopup}
-          >
-            Create Signature
-          </Button>
-          {isSignature && (
+        <div className='d-flex align-items-center justify-content-between  gap-16px py-30px'>
+          <div>
+            {!email && !!isSignature && (
+              <div className='p-24px card'>
+                <p className='m-0 pb-8px fs-16 text-gray-900 fw-semibold'>
+                  Please enter your email to revise the contract
+                </p>
+                <Input
+                  value={input}
+                  onChange={(e) => {
+                    setInput(e.target.value)
+                  }}
+                  error={errorMes}
+                  touched={!!errorMes}
+                />
+              </div>
+            )}
+          </div>
+          <div className=''>
             <Button
-              className='btn-primary mb-24px'
+              className='btn-light-primary  me-24px'
               disabled={loading}
-              loading={loading}
-              onClick={handleSendMail}
+              onClick={handleTogglePopup}
             >
-              Confirm Contract
+              Create Signature
             </Button>
-          )}
+            {isSignature && (
+              <Button
+                className='btn-primary'
+                disabled={loading}
+                loading={loading}
+                onClick={handleSendMail}
+              >
+                Confirm Contract
+              </Button>
+            )}
+          </div>
         </div>
 
         <PdfViewer base64={base64data} />
