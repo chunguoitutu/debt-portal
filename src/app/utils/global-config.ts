@@ -740,7 +740,7 @@ export const ROUTER_SETTING = [
   {
     path: 'loan-type',
     labelBreadCrumbs: 'Loan Type',
-    priority: [1],
+    priority: [1, 2],
     component: LoanTypes,
   },
   {
@@ -817,7 +817,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
   {
     activeKey: uuidv4(),
     title: 'Business Listing',
-    priority: [1],
+    priority: [1, 2],
     children: [
       {
         id: uuidv4(),
@@ -830,7 +830,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
         id: uuidv4(),
         to: '/settings/loan-type',
         label: 'Loan Type',
-        priority: [1],
+        priority: [1, 2],
       },
       {
         id: uuidv4(),
