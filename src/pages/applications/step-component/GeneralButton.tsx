@@ -1,5 +1,5 @@
 import {FC, useMemo, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 import Button from '@/components/button/Button'
 import {PropsStepApplication} from '@/app/types'
@@ -32,6 +32,9 @@ const GeneralButton: FC<Props> = ({
   const [showPopupApproval, setShowPopupApproval] = useState<boolean>(false)
   const {priority} = useAuth()
   const {isSubmitting, values} = formik
+
+  const navigate = useNavigate()
+
   const checks = useMemo(() => {
     if (currentStep !== 6) return true
 
@@ -154,6 +157,12 @@ const GeneralButton: FC<Props> = ({
     setShowPopupApproval(true)
   }
 
+  async function handleNavigateLoan() {
+    if (!values.approval?.loan_id) return
+
+    navigate(`/loans/details/${values.approval?.loan_id}`)
+  }
+
   return (
     <>
       {showPopupApproval && (
@@ -171,9 +180,9 @@ const GeneralButton: FC<Props> = ({
         ])}
       >
         <div>
-          {!!applicationIdEdit && (values.status === 1 || values.status === 2) && (
+          {!!applicationIdEdit && values.status === 1 && (
             <Button type='submit' onClick={handleClose} className={`fs-6 btn btn-danger`}>
-              {values.status === 2 && 'Update'} Reject
+              Reject
             </Button>
           )}
         </div>
@@ -199,17 +208,22 @@ const GeneralButton: FC<Props> = ({
               {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
             </Button>
           )}
-          {!!applicationIdEdit &&
-          (values.status === 3 ? true : values.status === 1 && currentStep === 6) ? (
+          {!!applicationIdEdit && values.status === 1 && currentStep === 6 && (
             <Button
               className='fs-6 btn btn-primary'
               type='submit'
               disabled={isSubmitting || (checks && !!applicationIdEdit && currentStep === 6)}
               onClick={handleApproval}
             >
-              {values.status === 3 && 'Update'} Approve
+              Approve
             </Button>
-          ) : null}
+          )}
+
+          {!!applicationIdEdit && values.status === 3 && (
+            <Button className='fs-6 btn btn-success' type='submit' onClick={handleNavigateLoan}>
+              Go To Loan
+            </Button>
+          )}
         </div>
       </div>
     </>

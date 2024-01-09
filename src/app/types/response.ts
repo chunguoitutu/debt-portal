@@ -14,6 +14,7 @@ export type ApprovalInfo = {
   approved_note: string
   created_at: Date
   updated_at: Date
+  loan_id: number
 }
 
 export type AddressTypeItem = {

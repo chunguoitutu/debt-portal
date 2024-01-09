@@ -30,7 +30,9 @@ export type LoanPaymentHistory = {
 export type LoanDetails = {
   //* Reference number -------------------------------------------------------
   loan_acc_no: string
+  application_no: string
   receipt_no: string
+  application_id: number
   //* Dates related to loan repayment ----------------------------------------
   first_repayment_date: string
   loan_date: string
