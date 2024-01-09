@@ -75,7 +75,7 @@ const Guest = () => {
       })
     }
 
-    if (input !== null) {
+    if (!email && input !== null) {
       if (isValidEmail(input)) {
       } else {
         setErrorMes('Please enter a valid email.')
