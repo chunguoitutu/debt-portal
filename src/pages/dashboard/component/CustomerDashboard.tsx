@@ -113,8 +113,9 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
     return data.map((item, idx) => {
       return (
         <tr key={idx}>
-          {rows.map(({key, component, classNameTableBody, isHide}, i) => {
+          {rows.map(({key, component, classNameTableBody, isHide, infoFilter, options}, i) => {
             const {firstname, middlename, lastname} = item
+            const {keyLabelOption, keyValueOption} = infoFilter || {}
 
             const fullname = [firstname, middlename, lastname].filter(Boolean).join(' ')
 
@@ -151,6 +152,15 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
               )
             }
 
+            if (dataOption[key] || options) {
+              const currentItem =
+                (options || dataOption[key]).find(
+                  (item) => item[keyValueOption || 'value'] === value
+                ) || {}
+
+              value = currentItem[keyLabelOption || 'label'] || ''
+            }
+
             return (
               <td key={i} className={classNameTableBody}>
                 {component ? (
@@ -177,7 +187,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-start flex-column'>
-          <span className='card-label fw-bold fs-3 mb-1'>Latest Borrower</span>
+          <span className='card-label fw-bold fs-3 mb-1'>Latest Borrowers</span>
           <span className='text-muted mt-1 fw-semibold fs-7'>{`Over ${searchCriteria.total} members`}</span>
         </h3>
       </div>
@@ -244,8 +254,8 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
           >
             <div></div>
             <div className='fs-14 text-hover-primary hover-underline-link'>
-              <Link to={'/customer'} className='text-primary text-hover-primary fw-medium'>
-                Go To Customer Listing
+              <Link to={'/borrowers'} className='text-primary text-hover-primary fw-medium'>
+                Go To Borrower Listing
               </Link>
               <FontAwesomeIcon icon={faArrowRight} className='text-primary ms-2 mt-1' />
             </div>

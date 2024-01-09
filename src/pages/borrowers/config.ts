@@ -1,7 +1,7 @@
-import {TableConfig} from '@/app/types'
-import {GENDER, ID_TYPE, STATUS_APPLICATION_FILTER} from '@/app/utils'
-import {Input} from '@/components/input'
-import {Select} from '@/components/select'
+import { TableConfig } from '@/app/types'
+import { GENDER, ID_TYPE, STATUS_APPLICATION_FILTER } from '@/app/utils'
+import { Input } from '@/components/input'
+import { Select } from '@/components/select'
 
 export const BORROWER_CONFIG_LISTING: TableConfig = {
   endpoint: '',
@@ -42,7 +42,6 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     {
       key: 'identification_type',
       name: 'Identity Card Type',
-
       options: ID_TYPE,
       infoFilter: {
         typeComponent: 'select',
