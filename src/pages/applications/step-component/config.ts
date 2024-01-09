@@ -209,6 +209,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Select,
     typeComponent: 'Select',
     options: TERM_UNIT,
+    defaultValue: TERM_UNIT[1].value,
     label: 'Term Unit',
     validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
   },
