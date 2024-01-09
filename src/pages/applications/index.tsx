@@ -929,60 +929,45 @@ export const Applications = () => {
           </div>
         </div>
         <div className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'>
-          {[2, 3].includes(Number(formik.values.status) || 0) ? (
-            <div className='h-100 '>
-              <Remark
-                handleOnClose={() => {
+          <div className='d-flex flex-column h-100'>
+            <div className='d-none d-2xxl-block'>
+              <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
+                <BackgroundCheck
+                  setStepCompleted={setStepCompleted}
+                  formik={formik}
+                  config={STEP_APPLICATION[currentStep - 1].config || []}
+                  setSingpass={setSingpass}
+                  singpass={singpass}
+                />
+              </div>
+
+              <button
+                onClick={() => {
                   setShowRemark(!showRemark)
                 }}
-                showClose={true}
-                small={true}
-                setRemarkList={setRemarkList}
-                idUpdate={applicationIdEdit}
-                remarkList={remarkList}
-              />
-            </div>
-          ) : (
-            <div className='d-flex flex-column h-100'>
-              <div className='d-none d-2xxl-block'>
-                <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
-                  <BackgroundCheck
-                    setStepCompleted={setStepCompleted}
-                    formik={formik}
-                    config={STEP_APPLICATION[currentStep - 1].config || []}
-                    setSingpass={setSingpass}
-                    singpass={singpass}
-                  />
+                className='btn-remark d-flex justify-content-center align-items-center '
+              >
+                <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
+                  <Icons name={'Mes'} />
+                  <span className='span-button-remark ms-8px pt-1px'>Remark</span>
                 </div>
+              </button>
+            </div>
 
-                <button
-                  onClick={() => {
+            <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
+              <div className='d-block d-2xxl-none'>
+                <Remark
+                  handleOnClose={() => {
                     setShowRemark(!showRemark)
                   }}
-                  className='btn-remark d-flex justify-content-center align-items-center '
-                >
-                  <div className='d-flex w-100 d-flex justify-content-center align-items-center'>
-                    <Icons name={'Mes'} />
-                    <span className='span-button-remark ms-8px pt-1px'>Remark</span>
-                  </div>
-                </button>
-              </div>
-
-              <div className='wrapper-button-remark overflow-hidden min-h-300px min-h-xxl-unset'>
-                <div className='d-block d-2xxl-none'>
-                  <Remark
-                    handleOnClose={() => {
-                      setShowRemark(!showRemark)
-                    }}
-                    small={true}
-                    setRemarkList={setRemarkList}
-                    idUpdate={applicationIdEdit}
-                    remarkList={remarkList}
-                  />
-                </div>
+                  small={true}
+                  setRemarkList={setRemarkList}
+                  idUpdate={applicationIdEdit}
+                  remarkList={remarkList}
+                />
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </>

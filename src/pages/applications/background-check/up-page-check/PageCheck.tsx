@@ -5,14 +5,17 @@ import {useEffect, useState} from 'react'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import GoogleSearchPageCheck from '.'
+import {useAuth} from '@/app/context/AuthContext'
 
 type Props = {
   show: boolean
   handleClose: () => void
   payload: string
+  status: boolean
+  Nric_no: string
 }
 const modalsRoot = document.getElementById('root-modals') || document.body
-const PageCheckDeskTop = ({show, handleClose, payload}: Props) => {
+const PageCheckDeskTop = ({show, handleClose, payload, status, Nric_no}: Props) => {
   const [search, setSearch] = useState(payload || '')
   const [loadApi, setLoadApi] = useState(false)
   const [loadApiCheck, setLoadApiCheck] = useState(false)
@@ -20,30 +23,65 @@ const PageCheckDeskTop = ({show, handleClose, payload}: Props) => {
     url: '',
     screenshot: '',
   })
+  const [loading, setLoading] = useState(false)
+  const {company_id} = useAuth()
 
   useEffect(() => {
-    setLoadApiCheck(true)
-    request
-      .post('/google-search/up-page-check', {
-        searchTerm: search,
-      })
-      .then((data) => {
-        setDataSeacrch({
-          screenshot: data?.data?.screenshot || '',
-          url: data?.data?.url || '',
+    setLoading(true)
+    if (!status) {
+      setLoadApiCheck(true)
+      request
+        .post('/google-search/up-page-check', {
+          searchTerm: search,
+          Nric_no,
+          company_id,
         })
-      })
-      .catch((e) => {
-        handleClose()
-        swalToast.fire({
-          timer: 1500,
-          icon: 'error',
-          title: `System error, please try again in a few minutes`,
+        .then((data) => {
+          setDataSeacrch({
+            screenshot: data?.data?.screenshot || '',
+            url: data?.data?.url || '',
+          })
         })
-      })
-      .finally(() => {
-        setLoadApiCheck(false)
-      })
+        .catch((e) => {
+          handleClose()
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `System error, please try again in a few minutes`,
+          })
+        })
+        .finally(() => {
+          setLoadApiCheck(false)
+          setLoading(false)
+        })
+    } else {
+      setLoadApiCheck(true)
+      request
+        .post('/google-search/get/up-page-check', {
+          searchTerm: search,
+          Nric_no,
+          company_id,
+        })
+        .then((data) => {
+          setDataSeacrch({
+            screenshot: data?.data?.screenshot || '',
+            url: '',
+          })
+        })
+        .catch((e) => {
+          handleClose()
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `System error, please try again in a few minutes`,
+          })
+        })
+        .finally(() => {
+          setLoading(false)
+
+          setLoadApiCheck(false)
+        })
+    }
   }, [loadApi])
   return createPortal(
     <Modal
@@ -87,6 +125,7 @@ const PageCheckDeskTop = ({show, handleClose, payload}: Props) => {
           handleReGetApi={() => {
             setLoadApi(!loadApi)
           }}
+          status={loading}
           loadApiCheck={loadApiCheck}
           setSearch={setSearch}
           search={search}

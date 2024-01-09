@@ -7,6 +7,7 @@ import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
 import Icons from '@/components/icons'
 import MobileMLCB from '@/pages/applications/background-check/MLCB/MobileMLCB'
+import MobileCaCheck from '@/pages/applications/background-check/ca-check/MobileCaCheck'
 import MobileGoogleSearch from '@/pages/applications/background-check/google-search/MobileGoogleSearch'
 import MobileRepayment from '@/pages/applications/background-check/repayment-schedule-calculator/MobileRepayment'
 import MobilePageCheck from '@/pages/applications/background-check/up-page-check/MobilePageCheck'
@@ -18,11 +19,10 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
   const {values} = formik
   const [show, setShow] = useState<boolean>(false)
   const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
-  const [data, setData] = useState<any>({})
+  const [showCaCheck, setShowCaCheck] = useState<boolean>(false)
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
   const [showSearchCheck, setShowSearchCheck] = useState<boolean>(false)
   const [showSearchPageCheck, setShowSearchPageCheck] = useState<boolean>(false)
-  const [checkPending, setCheckPending] = useState(0)
   const {applicationIdEdit} = useParams()
   const fullname = useMemo(
     () => [values.firstname, values.middlename, values.lastname].filter(Boolean).join(' '),
@@ -35,13 +35,14 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         value: 'Google Search Check',
         icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
-          if (fullname) {
+          if (fullname && !!values.identification_no) {
             setShow(false)
             setShowValidationPhone(false)
             setShowMLCBReport(false)
             setShowSearchCheck(true)
+            setShowCaCheck(false)
             setShowSearchPageCheck(false)
           } else {
             swalConfirm.fire({
@@ -64,12 +65,14 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         value: 'UN Page Check',
         icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
-          if (formik.values.lastname) {
+          if (formik.values.lastname && !!values.identification_no) {
             setShowSearchPageCheck(true)
             setShow(false)
             setShowValidationPhone(false)
+            setShowCaCheck(false)
+
             setShowMLCBReport(false)
             setShowSearchCheck(false)
           } else {
@@ -93,35 +96,30 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         value: 'CAs Check',
         icon: <Icons name={'Cascheck'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
-          request
-            .post('/pdf/ca-check', {})
-            .then((data) => {
-              if (data?.data?.pdf) {
-                fetch(`data:application/pdf;base64,${data?.data?.pdf}`)
-                  .then((response) => response.blob())
-                  .then((blob) => {
-                    const blobUrl = URL.createObjectURL(blob)
-
-                    window.open(blobUrl, '_blank')
-                  })
-                  .catch(() => {
-                    swalToast.fire({
-                      icon: 'error',
-                      title: DEFAULT_MSG_ERROR,
-                    })
-                  })
-              }
+          if (fullname && !!values.identification_no) {
+            setShow(false)
+            setShowValidationPhone(false)
+            setShowMLCBReport(false)
+            setShowSearchCheck(false)
+            setShowCaCheck(true)
+            setShowSearchPageCheck(false)
+          } else {
+            swalConfirm.fire({
+              icon: 'error',
+              title: 'You must complete entering Personal Information',
+              showCancelButton: false,
+              confirmButtonText: 'OK',
+              customClass: {
+                popup: 'm-w-300px',
+                htmlContainer: 'fs-3',
+                cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+                confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+                actions: 'd-flex justify-content-center w-100 ',
+              },
             })
-            .catch((e) => {
-              swalToast.fire({
-                timer: 1500,
-                icon: 'error',
-                title: `System error, please try again in a few minutes`,
-              })
-            })
-            .finally(() => {})
+          }
         },
       },
       {
@@ -131,6 +129,8 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         show: [1].includes(values.status || 0),
         onclick: () => {
           if (!!applicationIdEdit) {
+            setShowCaCheck(false)
+
             setShow(false)
             setShowValidationPhone(false)
             setShowMLCBReport(true)
@@ -157,7 +157,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         value: 'Loan Cross Check',
         icon: <Icons name={'ImgLoanCrossCheck'} />,
         background: 'rgba(232, 255, 243, 0.85)',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
           alert('Loan Cross Check')
         },
@@ -165,13 +165,14 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
       {
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
           if (!!values.mobilephone_1) {
             setShow(false)
             setShowValidationPhone(true)
             setShowMLCBReport(false)
+            setShowCaCheck(false)
             setShowSearchCheck(false)
             setShowSearchPageCheck(false)
           } else {
@@ -195,7 +196,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         value: 'Repayment Schedule Calculator',
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
           setShow(true)
           setShowValidationPhone(false)
@@ -211,7 +212,12 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
       id='kt_help'
       style={{
         width:
-          show || showValidationPhone || showMLCBReport || showSearchCheck || showSearchPageCheck
+          show ||
+          showValidationPhone ||
+          showMLCBReport ||
+          showSearchCheck ||
+          showSearchPageCheck ||
+          showCaCheck
             ? '100%'
             : '350px',
       }}
@@ -225,13 +231,16 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
       data-kt-drawer-close='#kt_help_close'
     >
       <div className='d-flex w-100'>
-        {show && ![2, 3].includes(values.status || 0) && (
-          <MobileRepayment handleShow={() => setShow(false)} />
+        {show && true && <MobileRepayment handleShow={() => setShow(false)} />}
+        {showSearchCheck && true && (
+          <MobileGoogleSearch
+            status={[2, 3].includes(values.status || 0)}
+            Nric_no={values.identification_no}
+            payload={fullname}
+            handleShow={() => setShowSearchCheck(false)}
+          />
         )}
-        {showSearchCheck && ![2, 3].includes(values.status || 0) && (
-          <MobileGoogleSearch payload={fullname} handleShow={() => setShowSearchCheck(false)} />
-        )}
-        {showValidationPhone && ![2, 3].includes(values.status || 0) && (
+        {showValidationPhone && true && (
           <MobileValidationPhoneNumber
             payload={+values.mobilephone_1}
             handleShow={() => setShowValidationPhone(false)}
@@ -240,13 +249,22 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         {showMLCBReport && [1].includes(values.status || 0) && (
           <MobileMLCB handleShow={() => setShowMLCBReport(false)} />
         )}
-        {showSearchPageCheck && ![2, 3].includes(values.status || 0) && (
+        {showSearchPageCheck && true && (
           <MobilePageCheck
+            status={[2, 3].includes(values.status || 0)}
+            Nric_no={values.identification_no}
             payload={values.lastname}
             handleShow={() => setShowSearchPageCheck(false)}
           />
         )}
-
+        {showCaCheck && true && (
+          <MobileCaCheck
+            status={[2, 3].includes(values.status || 0)}
+            Nric_no={values.identification_no}
+            payload={fullname}
+            handleShow={() => setShowCaCheck(false)}
+          />
+        )}
         <div className='card shadow-none rounded-0 w-350px flex-shrink-0'>
           <div
             className=' p-30px d-flex justify-content-between align-items-center'
@@ -263,6 +281,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
                   setShowValidationPhone(false)
                   setShowMLCBReport(false)
                   setShowSearchCheck(false)
+                  setShowCaCheck(false)
                   setShowSearchPageCheck(false)
                 }}
                 type='button'

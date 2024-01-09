@@ -8,17 +8,17 @@ import {useParams} from 'react-router-dom'
 import PopupValidationPhoneNumber from './validate-phone-number/PopupValidationPhoneNumber'
 import MLCBReport from './MLCB/MLCBReport'
 import PageCheckDeskTop from './up-page-check/PageCheck'
-import request from '@/app/axios'
-import {swalConfirm, swalToast} from '@/app/swal-notification'
-import {DEFAULT_MSG_ERROR} from '@/app/constants'
-import Cookies from 'js-cookie'
+import {swalConfirm} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
+import CaCheckDeskTop from './ca-check/DesktopCaCheck'
 
 const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
   const [show, setShow] = useState<boolean>(false)
   const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
   const [showSearchCheck, setShowSearchCheck] = useState<boolean>(false)
+  const [showCaCheck, setShowCaCheck] = useState<boolean>(false)
+
   const [showSearchPageCheck, setShowSearchPageCheck] = useState<boolean>(false)
 
   const {values} = formik
@@ -36,9 +36,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'Google Search Check',
         icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
-          if (fullname) {
+          if (fullname && !!values.identification_no) {
             setShowSearchCheck(true)
           } else {
             swalConfirm.fire({
@@ -61,9 +61,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'UN Page Check',
         icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
-          if (formik.values.lastname) {
+          if (formik.values.lastname && !!values.identification_no) {
             setShowSearchPageCheck(true)
           } else {
             swalConfirm.fire({
@@ -86,35 +86,25 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'CAs Check',
         icon: <Icons name={'Cascheck'} />,
         background: '#E2E5E7',
-        show: ![2, 3].includes(values.status || 0),
+        show: true,
         onclick: () => {
-          request
-            .post('/pdf/ca-check', {})
-            .then((data) => {
-              if (data?.data?.pdf) {
-                fetch(`data:application/pdf;base64,${data?.data?.pdf}`)
-                  .then((response) => response.blob())
-                  .then((blob) => {
-                    const blobUrl = URL.createObjectURL(blob)
-
-                    window.open(blobUrl, '_blank')
-                  })
-                  .catch(() => {
-                    swalToast.fire({
-                      icon: 'error',
-                      title: DEFAULT_MSG_ERROR,
-                    })
-                  })
-              }
+          if (fullname && !!values.identification_no) {
+            setShowCaCheck(true)
+          } else {
+            swalConfirm.fire({
+              icon: 'error',
+              title: 'You must complete entering Personal Information',
+              showCancelButton: false,
+              confirmButtonText: 'OK',
+              customClass: {
+                popup: 'm-w-300px',
+                htmlContainer: 'fs-3',
+                cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+                confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+                actions: 'd-flex justify-content-center w-100 ',
+              },
             })
-            .catch((e) => {
-              swalToast.fire({
-                timer: 1500,
-                icon: 'error',
-                title: `System error, please try again in a few minutes`,
-              })
-            })
-            .finally(() => {})
+          }
         },
       },
 
@@ -182,7 +172,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'Repayment Schedule Calculator',
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
-        show: true,
+        show: ![2, 3].includes(values.status || 0),
         onclick: () => {
           setShow(true)
         },
@@ -194,7 +184,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
     <>
       <ContentListButton config={configBackgroundCheck} />
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
-      {showValidationPhone && ![2, 3].includes(values.status || 0) && (
+      {showValidationPhone && true && (
         <PopupValidationPhoneNumber
           payload={Number(values.mobilephone_1)}
           onClose={() => setShowValidationPhone(false)}
@@ -203,19 +193,32 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
       {showMLCBReport && [1].includes(values.status || 0) && (
         <MLCBReport onClose={() => setShowMLCBReport(false)} />
       )}
-      {showSearchCheck && ![2, 3].includes(values.status || 0) && (
+      {showSearchCheck && true && (
         <WrapperGoogleSearch
+          status={[2, 3].includes(values.status || 0)}
           payload={fullname}
+          Nric_no={values.identification_no}
           show={showSearchCheck}
           handleClose={() => setShowSearchCheck(false)}
         />
       )}
 
-      {showSearchPageCheck && ![2, 3].includes(values.status || 0) && (
+      {showSearchPageCheck && true && (
         <PageCheckDeskTop
+          Nric_no={values.identification_no}
+          status={[2, 3].includes(values.status || 0)}
           payload={values.lastname}
           show={showSearchPageCheck}
           handleClose={() => setShowSearchPageCheck(false)}
+        />
+      )}
+      {showCaCheck && true && (
+        <CaCheckDeskTop
+          Nric_no={values.identification_no}
+          status={[2, 3].includes(values.status || 0)}
+          payload={fullname}
+          show={showCaCheck}
+          handleClose={() => setShowCaCheck(false)}
         />
       )}
     </>

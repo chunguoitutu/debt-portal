@@ -30,6 +30,7 @@ import Guest from '@/pages/guest'
 import LoanListing from '@/pages/loans/LoanListing/LoanListing'
 import BorrowersListing from '@/pages/borrowers/BorrowerListing'
 import LoanDetails from '@/pages/loans/loan-details'
+import CaCheck from '@/pages/applications/background-check/ca-check'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -104,7 +105,7 @@ const AppRoutes: FC = () => {
             <Route path='login' element={<Login />} />
             <Route path='forgot-password' element={<ForgotPassword />} />
           </Route>
-
+          <Route path='cas_check_listing_pdf' element={<CaCheck />} />
           {/* Not match any router */}
           <Route path='/' element={<Navigate to={currentUser ? '/dashboard' : '/login'} />} />
           <Route path='*' element={<Navigate to={currentUser ? '/error/404' : '/login'} />} />

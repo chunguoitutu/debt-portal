@@ -10,6 +10,7 @@ type Props = {
   mobile?: boolean
   search: string
   setSearch: any
+  status: boolean
   dataSearch: {
     url: string
     screenshot: string
@@ -24,6 +25,7 @@ const GoogleSearchPageCheck = ({
   dataSearch,
   handleReGetApi,
   mobile = false,
+  status,
 }: Props) => {
   const handleLinkClick = (url) => {
     window.open(url, '_blank')
@@ -31,7 +33,7 @@ const GoogleSearchPageCheck = ({
   return (
     <div className='h'>
       <div className='p-30px h-100'>
-        {!dataSearch?.url ? (
+        {status ? (
           <div className='text-center h-100'>
             <div className='spinner-grow text-primary' role='status'>
               <span className='sr-only'>Loading...</span>
@@ -65,6 +67,7 @@ const GoogleSearchPageCheck = ({
                 classShared='flex-grow-1 h-30px mb-5'
                 placeholder='Search'
                 value={search}
+                disabled={!dataSearch?.url}
                 onChange={(e) => {
                   setSearch(e.target.value)
                 }}
@@ -74,14 +77,16 @@ const GoogleSearchPageCheck = ({
                   }
                 }}
                 insertLeft={
-                  <FontAwesomeIcon
-                    className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                    icon={faSearch}
-                    onClick={handleReGetApi}
-                  />
+                  !!dataSearch?.url ? (
+                    <FontAwesomeIcon
+                      className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                      icon={faSearch}
+                      onClick={handleReGetApi}
+                    />
+                  ) : null
                 }
                 insertRight={
-                  search ? (
+                  !!dataSearch?.url ? (
                     <FontAwesomeIcon
                       className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
                       icon={faClose}
@@ -98,7 +103,7 @@ const GoogleSearchPageCheck = ({
                   handleReGetApi()
                 }}
                 className='btn-primary align-self-center m-2 fs-6 text-white h-45px'
-                disabled={false}
+                disabled={!dataSearch?.url}
               >
                 Search
               </Button>

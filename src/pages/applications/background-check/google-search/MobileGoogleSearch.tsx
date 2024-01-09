@@ -3,34 +3,61 @@ import React, {useEffect, useState} from 'react'
 import GoogleSearch from './GoogleSearch'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
+import {useAuth} from '@/app/context/AuthContext'
 
 type Props = {
   handleShow: () => void
   payload: string
+  status: boolean
+  Nric_no: string
 }
 
-const MobileGoogleSearch = ({handleShow, payload}: Props) => {
+const MobileGoogleSearch = ({handleShow, payload, status, Nric_no}: Props) => {
   const [dataSearch, setDataSeacrch] = useState({
     url: '',
     screenshot: '',
   })
+  const [loading, setLoading] = useState(false)
+  const {company_id} = useAuth()
   useEffect(() => {
-    request
-      .post('/google-search/google', {search: payload})
-      .then((data) => {
-        setDataSeacrch({
-          screenshot: data?.data?.screenshot || '',
-          url: data?.data?.url || '',
+    setLoading(true)
+    if (!status) {
+      request
+        .post('/google-search/google', {search: payload, Nric_no, company_id})
+        .then((data) => {
+          setDataSeacrch({
+            screenshot: data?.data?.screenshot || '',
+            url: data?.data?.url || '',
+          })
         })
-      })
-      .catch((e) => {
-        handleShow()
-        swalToast.fire({
-          timer: 1500,
-          icon: 'error',
-          title: `System error, please try again in a few minutes`,
+        .catch((e) => {
+          handleShow()
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `System error, please try again in a few minutes`,
+          })
         })
-      })
+        .finally(() => setLoading(false))
+    } else {
+      request
+        .post('/google-search/get/google', {search: payload, Nric_no, company_id})
+        .then((data) => {
+          setDataSeacrch({
+            screenshot: data?.data?.screenshot || '',
+            url: '',
+          })
+        })
+        .catch((e) => {
+          handleShow()
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `System error, please try again in a few minutes`,
+          })
+        })
+        .finally(() => setLoading(false))
+    }
   }, [])
   return (
     <div className='w-100'>
@@ -50,7 +77,12 @@ const MobileGoogleSearch = ({handleShow, payload}: Props) => {
           <KTIcon iconName='cross' className='fs-2' />
         </button>
       </div>
-      <GoogleSearch dataSearch={dataSearch} handleClose={handleShow} mobile={true} />
+      <GoogleSearch
+        status={loading}
+        dataSearch={dataSearch}
+        handleClose={handleShow}
+        mobile={true}
+      />
     </div>
   )
 }

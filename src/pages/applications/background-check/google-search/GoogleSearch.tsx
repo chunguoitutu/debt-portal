@@ -7,16 +7,17 @@ type Props = {
     url: string
     screenshot: string
   }
+  status: boolean
 }
 
-const GoogleSearch = ({handleClose, dataSearch, mobile = false}: Props) => {
+const GoogleSearch = ({handleClose, dataSearch, mobile = false, status}: Props) => {
   const handleLinkClick = (url) => {
     window.open(url, '_blank')
   }
   return (
     <div className='h'>
       <div className='p-30px h-100'>
-        {!dataSearch?.url ? (
+        {status ? (
           <div className='text-center h-100'>
             <div className='spinner-grow text-primary' role='status'>
               <span className='sr-only'>Loading...</span>
