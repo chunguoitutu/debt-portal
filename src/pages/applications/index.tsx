@@ -863,7 +863,7 @@ export const Applications = () => {
             )}
 
             <div
-              className='overflow-lg-auto p-10 flex-grow-1 d-flex justify-content-center'
+              className='overflow-lg-auto p-30px flex-grow-1 d-flex justify-content-center'
               ref={containerRef}
             >
               <div
