@@ -298,7 +298,7 @@ const Table: FC<Props> = ({
                         ) {
                           return (
                             <td className='fs-14 fw-semibold text-end' key={i}>
-                              {value}$
+                              ${value}
                             </td>
                           )
                         }

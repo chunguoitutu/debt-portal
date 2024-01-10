@@ -104,7 +104,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
     }
   }
 
-  const {setFieldValue} = formik
+  const {setFieldValue, setFieldError} = formik
 
   async function handleGetApplicationById(nric: any) {
     try {

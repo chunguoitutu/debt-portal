@@ -310,7 +310,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           </tr>
                           <tr>
                             <td className='label-calculator'>Term</td>
-                            <td className='content-calculator text-transform-none p-12px w-200px'>
+                            <td className='content-calculator text-transform-none w-200px'>
                               {values.totalsMonthPayment} Month(s)
                             </td>
                           </tr>

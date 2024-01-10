@@ -28,8 +28,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const {values, touched, errors, handleChange, setFieldValue, setFieldError, setFieldTouched} =
-    formik
+  const {values, touched, errors, handleChange, setFieldValue} = formik
 
   useEffect(() => {
     if (!optionListing.loan_type) return
@@ -48,7 +47,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
     } else if (formik.values.term_unit.toString() === '2') {
       setFieldValue('interest', interestByYear || '')
     }
-  }, [formik.values.term_unit])
+  }, [formik.values.term_unit, optionListing.loan_type_id, formik.values.interest])
 
   async function onFetchDataList() {
     try {
