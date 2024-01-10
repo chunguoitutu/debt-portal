@@ -41,39 +41,14 @@ const ChartsWidget1: React.FC<Props> = ({className}) => {
 
   return (
     <div className={`card ${className}`}>
-      {/* begin::Header */}
-      <div className='card-header border-0 pt-5'>
-        {/* begin::Title */}
-        <h3 className='card-title align-items-start flex-column'>
-          <span className='card-label fw-bold fs-3 mb-1'>Recent Statistics</span>
-
-          <span className='text-muted fw-semibold fs-7'>More than 400 new members</span>
-        </h3>
-        {/* end::Title */}
-
-        {/* begin::Toolbar */}
-        <div className='card-toolbar'>
-          {/* begin::Menu */}
-          <button
-            type='button'
-            className='btn btn-sm btn-icon btn-color-primary btn-active-light-primary'
-            data-kt-menu-trigger='click'
-            data-kt-menu-placement='bottom-end'
-            data-kt-menu-flip='top-end'
-          >
-            <KTIcon iconName='category' className='fs-2' />
-          </button>
-          <Dropdown1 />
-          {/* end::Menu */}
-        </div>
-        {/* end::Toolbar */}
-      </div>
-      {/* end::Header */}
-
       {/* begin::Body */}
-      <div className='card-body'>
+      <div>
         {/* begin::Chart */}
-        <div ref={chartRef} id='kt_charts_widget_1_chart' style={{height: '350px'}} />
+        <div
+          ref={chartRef}
+          id='kt_charts_widget_1_chart'
+          style={{height: '350px', width: '100%'}}
+        />
         {/* end::Chart */}
       </div>
       {/* end::Body */}
@@ -94,10 +69,6 @@ function getChartOptions(height: number): ApexOptions {
       {
         name: 'Net Profit',
         data: [44, 55, 57, 56, 61, 58],
-      },
-      {
-        name: 'Revenue',
-        data: [76, 85, 101, 98, 87, 105],
       },
     ],
     chart: {
@@ -127,7 +98,7 @@ function getChartOptions(height: number): ApexOptions {
       colors: ['transparent'],
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      categories: ['', '', '', '', '', ''],
       axisBorder: {
         show: false,
       },
@@ -152,46 +123,46 @@ function getChartOptions(height: number): ApexOptions {
     fill: {
       opacity: 1,
     },
-    states: {
-      normal: {
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-      hover: {
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-      active: {
-        allowMultipleDataPointsSelection: false,
-        filter: {
-          type: 'none',
-          value: 0,
-        },
-      },
-    },
-    tooltip: {
-      style: {
-        fontSize: '12px',
-      },
-      y: {
-        formatter: function (val) {
-          return '$' + val + ' thousands'
-        },
-      },
-    },
+    // states: {
+    //   normal: {
+    //     filter: {
+    //       type: 'none',
+    //       value: 0,
+    //     },
+    //   },
+    //   hover: {
+    //     filter: {
+    //       type: 'none',
+    //       value: 0,
+    //     },
+    //   },
+    //   active: {
+    //     allowMultipleDataPointsSelection: false,
+    //     filter: {
+    //       type: 'none',
+    //       value: 0,
+    //     },
+    //   },
+    // },
+    // tooltip: {
+    //   style: {
+    //     fontSize: '12px',
+    //   },
+    //   y: {
+    //     formatter: function (val) {
+    //       return '$' + val + ' thousands'
+    //     },
+    //   },
+    // },
     colors: [baseColor, secondaryColor],
-    grid: {
-      borderColor: borderColor,
-      strokeDashArray: 4,
-      yaxis: {
-        lines: {
-          show: true,
-        },
-      },
-    },
+    // grid: {
+    //   borderColor: borderColor,
+    //   strokeDashArray: 4,
+    //   yaxis: {
+    //     lines: {
+    //       show: true,
+    //     },
+    //   },
+    // },
   }
 }

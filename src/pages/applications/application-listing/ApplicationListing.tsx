@@ -134,6 +134,9 @@ const ApplicationListing = () => {
   })
   const [newDataSocket, setNewDataSocket] = React.useState<number>(0) // new data in realtime
   const {pageSize, currentPage} = searchCriteria
+
+  const [typeTermUnit, setTypeTermUnit] = useState(null)
+
   useEffect(() => {
     const handleDetectNewApplication = () => {
       setNewDataSocket((prev) => prev + 1)
@@ -224,6 +227,7 @@ const ApplicationListing = () => {
 
   const renderRows = () => {
     return data.map((item, idx) => {
+      const termUnit = item?.term_unit
       return (
         <tr key={idx}>
           {rowsConfigColumn.map(
@@ -265,13 +269,19 @@ const ApplicationListing = () => {
                 value = currentItem[keyLabelOption || 'label'] || ''
               }
               if (key === 'loan_terms') {
+                let unitLabel = ''
+
+                if (termUnit === 0) {
+                  unitLabel = value > 1 ? 'Days' : 'Day'
+                } else if (termUnit === 1) {
+                  unitLabel = value > 1 ? 'Months' : 'Month'
+                } else if (termUnit === 2) {
+                  unitLabel = value > 1 ? 'Years' : 'Year'
+                }
+
                 return (
                   <td key={i} className='ps-8 text-end fs-6 fw-medium' style={{color: '#071437'}}>
-                    {[1, 0].includes(Number(value) || 0)
-                      ? `${value} Month`
-                      : !!value
-                      ? `${value} Months`
-                      : ''}
+                    {`${value} ${unitLabel}`}
                   </td>
                 )
               }
@@ -355,6 +365,8 @@ const ApplicationListing = () => {
         keySort: keySort,
         orderBy: orderBy,
       })
+
+      setTypeTermUnit(response.term_unit)
       Array.isArray(response.data) && setData(response.data)
       response?.searchCriteria && setSearchCriteria(response?.searchCriteria)
     } catch (error) {

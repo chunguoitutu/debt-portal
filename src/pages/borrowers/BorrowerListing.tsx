@@ -5,10 +5,17 @@ import Icons from '@/components/icons'
 import {Input} from '@/components/input'
 import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import React, {ChangeEvent, Fragment, useEffect, useMemo, useState} from 'react'
+import React, {ChangeEvent, FC, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import clsx from 'clsx'
 import RowPerPage from '@/components/row-per-page'
-import {BorrowerItem, OrderBy, ResponseBorrowerListing, SearchCriteria, TableRow} from '@/app/types'
+import {
+  BorrowerItem,
+  LoanInfo,
+  OrderBy,
+  ResponseBorrowerListing,
+  SearchCriteria,
+  TableRow,
+} from '@/app/types'
 import Pagination from '@/components/table/components/Pagination'
 
 import SortBy from '@/components/sort-by'
@@ -23,8 +30,16 @@ import {BORROWER_CONFIG_LISTING} from './config'
 import {GLOBAL_CONSTANTS} from '@/app/constants'
 import {Checkbox} from '@/components/checkbox'
 import gridImg from '@/app/images/grid.svg'
+import './style.scss'
+import {getCSSVariableValue} from '@/_metronic/assets/ts/_utils'
+import {useThemeMode} from '@/_metronic/partials'
+import {ChartsWidget1} from '@/_metronic/partials/widgets'
 
-type Props = {}
+type Props = {
+  chartSize?: number
+  chartLine?: number
+  chartRotate?: number
+}
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -79,7 +94,7 @@ const showFilter = [
   },
 ]
 
-const BorrowersListing = (props: Props) => {
+const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRotate = 145}) => {
   const sessionData = isObject(parseJson(sessionStorage.getItem('borrower') || ''))
     ? parseJson(sessionStorage.getItem('borrower') || '')
     : {}
@@ -280,7 +295,6 @@ const BorrowersListing = (props: Props) => {
       )
       config = {...config, ...newConfig}
     }
-
     return config
   }
 
@@ -385,175 +399,362 @@ const BorrowersListing = (props: Props) => {
     })
   }
 
+  const chartRef = useRef<HTMLDivElement | null>(null)
+
+  const initChart = function (
+    chartSize: number = 120,
+    chartLine: number = 18,
+    chartRotate: number = 145
+  ) {
+    const el = document.getElementById('kt_card_widget_17_chart')
+    if (!el) {
+      return
+    }
+    el.innerHTML = ''
+
+    var options = {
+      size: chartSize,
+      lineWidth: chartLine,
+      rotate: chartRotate,
+    }
+
+    const canvas = document.createElement('canvas')
+    const span = document.createElement('span')
+
+    // @ts-ignore
+    if (typeof G_vmlCanvasManager !== 'undefined') {
+      // @ts-ignore
+      G_vmlCanvasManager.initElement(canvas)
+    }
+
+    const ctx = canvas.getContext('2d')
+    canvas.width = canvas.height = options.size
+
+    el.appendChild(span)
+    el.appendChild(canvas)
+
+    // @ts-ignore
+    ctx.translate(options.size / 2, options.size / 2) // change center
+    // @ts-ignore
+    ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI) // rotate -90 deg
+
+    //imd = ctx.getImageData(0, 0, 240, 240);
+    const radius = (options.size - options.lineWidth) / 2
+
+    const drawCircle = function (color: string, lineWidth: number, percent: number) {
+      percent = Math.min(Math.max(0, percent || 1), 1)
+      if (!ctx) {
+        return
+      }
+
+      ctx.beginPath()
+      ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false)
+      ctx.strokeStyle = color
+      ctx.lineCap = 'round' // butt, round or square
+      ctx.lineWidth = lineWidth
+      ctx.stroke()
+    }
+
+    // Init 2
+    drawCircle('#E4E6EF', options.lineWidth, 100 / 100)
+    drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 100 / 125)
+    drawCircle('#071437', options.lineWidth, 100 / 175)
+    drawCircle('#C62828', options.lineWidth, 100 / 350)
+  }
+
+  const {mode} = useThemeMode()
+
+  const refreshChart = () => {
+    if (!chartRef.current) {
+      return
+    }
+
+    setTimeout(() => {
+      initChart(chartSize, chartLine, chartRotate)
+    }, 10)
+  }
+
+  useEffect(() => {
+    refreshChart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode])
+
   return (
-    <div className='card p-5 h-fit-content'>
-      <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
-      {showInput && (
-        <FilterBorrower
-          onClose={showInputFilter}
-          handleResetFilter={handleResetFilter}
-          rows={rows}
-          handleLoadApi={handleFilter}
-          dataFilter={dataFilter}
-          handleChangeFilter={handleChangeFilter}
-          dataOption={dataOption}
-        />
-      )}
-      <div>
-        <div className='d-flex flex-row align-items-center'>
-          <Input
-            classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search'
-            value={searchValue}
-            transparent={true}
-            onChange={handleChangeSearch}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleReGetApi()
-              }
-            }}
-            insertLeft={
-              <FontAwesomeIcon
-                className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                icon={faSearch}
-                onClick={handleReGetApi}
-              />
-            }
-            insertRight={
-              searchValue ? (
-                <FontAwesomeIcon
-                  className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                  icon={faClose}
-                  onClick={() => {
-                    setSearchValue('')
-                    handleReGetApi()
-                  }}
-                />
-              ) : null
-            }
-          />
-          <div className='d-flex position-relative flex-end ms-4'>
-            <Button
-              style={{
-                backgroundColor:
-                  Object.keys(checkFilter).length !== 0 &&
-                  !(
-                    Object.keys(checkFilter).length === 1 &&
-                    Object.keys(checkFilter).includes('searchBar')
-                  )
-                    ? '#c4cada'
-                    : '#f1f1f4',
-              }}
-              className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
-              disabled={false}
-              onClick={showInputFilter}
-            >
-              <Icons name={'filterIcon'} />
-              Filter
-            </Button>
-          </div>
-        </div>
+    <div className='col-12 gap-4 d-flex flex-row'>
+      <div className='col-3'>
+        <div className='row h-100 flex-column flex-lg-row flex-xxl-column'>
+          <div className='col-12 col-lg-6 col-xxl-12'>
+            <div className='loan-header card p-30px position-relative'>
+              <div className='d-flex flex-column gap-4px pb-30px'>
+                <span className='fs-2 fw-bold' style={{color: '#071437'}}>
+                  {searchCriteria.total} Customer
+                </span>
+                <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
+                  Total number of customers in the company.
+                </span>
+              </div>
 
-        <div className={clsx(['position-relative mt-4', showConfigColumn && 'text-gray-900'])}>
-          <div
-            className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
-            onClick={handleToggleConfigColumn}
-          >
-            <img src={gridImg} alt='grid' />
-            <span className='fs-14 d-inline-block fw-semibold'>Show Columns</span>
-          </div>
-
-          {/* config */}
-          {showConfigColumn && (
-            <div className='config-column-grid-other card justify-content-end'>
-              {/* Header */}
-              <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
-                <span className='fw-bold'>Config Column</span>
-
-                <div
-                  className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
-                  onClick={handleToggleConfigColumn}
-                >
-                  <KTIcon className='fs-1' iconName='cross' />
+              <div className='card-body pt-2 pb-4 d-flex flex-wrap align-items-center justify-content-center'>
+                <div className='d-flex flex-center me-5 pt-2'>
+                  <div
+                    id='kt_card_widget_17_chart'
+                    ref={chartRef}
+                    style={{minWidth: chartSize + 'px', minHeight: chartSize + 'px'}}
+                    data-kt-size={chartSize}
+                    data-kt-line={chartLine}
+                  ></div>
+                </div>
+              </div>
+              <div className='d-flex flex-column content-justify-center flex-row-fluid'>
+                <div className='d-flex fw-semibold align-items-center'>
+                  <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
+                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
+                  <div className=' fw-bolder text-gray-700 text-xxl-end'>50 Customer</div>
+                </div>
+                <div className='d-flex fw-semibold align-items-center my-3'>
+                  <div
+                    className='bullet w-15px h-6px rounded-2 me-3'
+                    style={{backgroundColor: '#071437'}}
+                  ></div>
+                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
+                  <div className='fw-bolder text-gray-700 text-xxl-end'>1 Customer</div>
+                </div>
+                <div className='d-flex fw-semibold align-items-center'>
+                  <div
+                    className='bullet w-15px h-6px rounded-2 me-3'
+                    style={{backgroundColor: '#C62828'}}
+                  ></div>
+                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
+                  <div className=' fw-bolder text-gray-700 text-xxl-end'>14 Customer</div>
+                </div>
+                <div className='d-flex fw-semibold align-items-center mt-3'>
+                  <div
+                    className='bullet w-15px h-6px rounded-2 me-3'
+                    style={{backgroundColor: '#E4E6EF'}}
+                  ></div>
+                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
+                  <div className='fw-bolder text-gray-700 text-xxl-end'>12 Customer</div>
                 </div>
               </div>
 
-              {/* Body */}
-              <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
-                {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
-                  if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+              <div className='p-16px mt-16px'></div>
+            </div>
 
-                  return (
-                    <Checkbox
-                      name={el.key}
-                      label={el.name}
-                      classNameLabel='ms-8px'
-                      key={i}
-                      checked={configColumn[el.key]}
-                      onChange={handleChangeConfigColumn}
-                    />
-                  )
-                })}
-              </div>
+            <div className='col-12 col-lg-6 col-xxl-12 flex-grow-1 mt-20px mt-lg-0 mt-xxl-20px'>
+              <div className='loan-header card p-30px position-relative'>
+                <div className='d-flex flex-column gap-4px pb-30px'>
+                  <span className='fs-2 fw-bold' style={{color: '#071437'}}>
+                    32 Customer Blacklisteed
+                  </span>
+                  <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
+                    Total number of customers blacklisted in the company.
+                  </span>
+                </div>
 
-              {/* Footer */}
-              <div className='d-flex justify-content-end p-30px gap-8px'>
-                <Button
-                  className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
-                  onClick={handleResetConfigColumn}
-                >
-                  Reset
-                </Button>
+                <div className='card-body pt-2 pb-4 d-flex flex-wrap align-items-center justify-content-center'>
+                  {/* <ChartsWidget1 className='mb-5 mb-xxl-8' /> */}
+                </div>
 
-                <Button className='btn btn-lg btn-primary fs-6' onClick={handleApplyConfigColumn}>
-                  Apply
-                </Button>
+                <div className='p-16px mt-16px'></div>
               </div>
             </div>
-          )}
+          </div>
         </div>
+      </div>
+      <div className='card p-5 h-fit-content col-9'>
+        <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
+        {showInput && (
+          <FilterBorrower
+            onClose={showInputFilter}
+            handleResetFilter={handleResetFilter}
+            rows={rows}
+            handleLoadApi={handleFilter}
+            dataFilter={dataFilter}
+            handleChangeFilter={handleChangeFilter}
+            dataOption={dataOption}
+          />
+        )}
+        <div>
+          <div className='d-flex flex-row align-items-center'>
+            <Input
+              classShared='flex-grow-1 h-30px mb-5'
+              placeholder='Search'
+              value={searchValue}
+              transparent={true}
+              onChange={handleChangeSearch}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleReGetApi()
+                }
+              }}
+              insertLeft={
+                <FontAwesomeIcon
+                  className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                  icon={faSearch}
+                  onClick={handleReGetApi}
+                />
+              }
+              insertRight={
+                searchValue ? (
+                  <FontAwesomeIcon
+                    className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                    icon={faClose}
+                    onClick={() => {
+                      setSearchValue('')
+                      handleReGetApi()
+                    }}
+                  />
+                ) : null
+              }
+            />
+            <div className='d-flex position-relative flex-end ms-4'>
+              <Button
+                style={{
+                  backgroundColor:
+                    Object.keys(checkFilter).length !== 0 &&
+                    !(
+                      Object.keys(checkFilter).length === 1 &&
+                      Object.keys(checkFilter).includes('searchBar')
+                    )
+                      ? '#c4cada'
+                      : '#f1f1f4',
+                }}
+                className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
+                disabled={false}
+                onClick={showInputFilter}
+              >
+                <Icons name={'filterIcon'} />
+                Filter
+              </Button>
+            </div>
+          </div>
 
-        {Object.keys(checkFilter).length !== 0 &&
-          !(
-            Object.keys(checkFilter).length === 1 && Object.keys(checkFilter).includes('searchBar')
-          ) && (
-            <div className='d-flex justify-content  px-30px pt-14px m-0 '>
-              <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
+          <div className={clsx(['position-relative mt-4', showConfigColumn && 'text-gray-900'])}>
+            <div
+              className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
+              onClick={handleToggleConfigColumn}
+            >
+              <img src={gridImg} alt='grid' />
+              <span className='fs-14 d-inline-block fw-semibold'>Show Columns</span>
+            </div>
 
-              <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
-                {showFilter.map((filter, index) => (
-                  <div key={index} className='p-0 m-0'>
-                    {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                      !['identification_type', 'date_of_birth'].includes(filter.key) && (
+            {/* config */}
+            {showConfigColumn && (
+              <div className='config-column-grid-other card justify-content-end'>
+                {/* Header */}
+                <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
+                  <span className='fw-bold'>Config Column</span>
+
+                  <div
+                    className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
+                    onClick={handleToggleConfigColumn}
+                  >
+                    <KTIcon className='fs-1' iconName='cross' />
+                  </div>
+                </div>
+
+                {/* Body */}
+                <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
+                  {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
+                    if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+
+                    return (
+                      <Checkbox
+                        name={el.key}
+                        label={el.name}
+                        classNameLabel='ms-8px'
+                        key={i}
+                        checked={configColumn[el.key]}
+                        onChange={handleChangeConfigColumn}
+                      />
+                    )
+                  })}
+                </div>
+
+                {/* Footer */}
+                <div className='d-flex justify-content-end p-30px gap-8px'>
+                  <Button
+                    className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
+                    onClick={handleResetConfigColumn}
+                  >
+                    Reset
+                  </Button>
+
+                  <Button className='btn btn-lg btn-primary fs-6' onClick={handleApplyConfigColumn}>
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {Object.keys(checkFilter).length !== 0 &&
+            !(
+              Object.keys(checkFilter).length === 1 &&
+              Object.keys(checkFilter).includes('searchBar')
+            ) && (
+              <div className='d-flex justify-content  px-30px pt-14px m-0 '>
+                <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
+
+                <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
+                  {showFilter.map((filter, index) => (
+                    <div key={index} className='p-0 m-0'>
+                      {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
+                        !['identification_type', 'date_of_birth'].includes(filter.key) && (
+                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}: {filter.valueStart}
+                              {checkFilter[`${filter.key}`]}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+
+                      {!!checkFilter[`${filter.key}`] &&
+                        ['identification_type'].includes(filter.key) && (
+                          <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}:{' '}
+                              {checkFilter[`${filter.key}`] === 'foreign_identification_number'
+                                ? 'Foreign Identification Number'
+                                : 'Singapore NRIC No'}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                      {!!checkFilter?.date_of_birth && ['date_of_birth'].includes(filter.key) && (
                         <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
                           <h2 className='filter-title-show'>
-                            {filter.value}: {filter.valueStart}
-                            {checkFilter[`${filter.key}`]}
-                          </h2>
-                          <div
-                            onClick={() => {
-                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                              setLoadApi(!loadApi)
-                            }}
-                            className='p-0 m-0 cursor-pointer'
-                          >
-                            <Icons name={'CloseSmall'} />
-                          </div>
-                        </div>
-                      )}
-
-                    {!!checkFilter[`${filter.key}`] &&
-                      ['identification_type'].includes(filter.key) && (
-                        <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
-                          <h2 className='filter-title-show'>
                             {filter.value}:{' '}
-                            {checkFilter[`${filter.key}`] === 'foreign_identification_number'
-                              ? 'Foreign Identification Number'
-                              : 'Singapore NRIC No'}
+                            {!!checkFilter?.date_of_birth?.gte
+                              ? moment(checkFilter?.date_of_birth?.gte).format('MMM D, YYYY')
+                              : '...'}{' '}
+                            -{' '}
+                            {!!checkFilter?.date_of_birth?.lte
+                              ? moment(checkFilter?.date_of_birth?.lte)
+                                  .subtract(1, 'days')
+                                  .format('MMM D, YYYY')
+                              : '...'}
                           </h2>
                           <div
                             onClick={() => {
-                              setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                              setDataFilter({...dataFilter, date_of_birth: ''})
                               setLoadApi(!loadApi)
                             }}
                             className='p-0 m-0 cursor-pointer'
@@ -562,121 +763,97 @@ const BorrowersListing = (props: Props) => {
                           </div>
                         </div>
                       )}
-                    {!!checkFilter?.date_of_birth && ['date_of_birth'].includes(filter.key) && (
-                      <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                        <h2 className='filter-title-show'>
-                          {filter.value}:{' '}
-                          {!!checkFilter?.date_of_birth?.gte
-                            ? moment(checkFilter?.date_of_birth?.gte).format('MMM D, YYYY')
-                            : '...'}{' '}
-                          -{' '}
-                          {!!checkFilter?.date_of_birth?.lte
-                            ? moment(checkFilter?.date_of_birth?.lte)
-                                .subtract(1, 'days')
-                                .format('MMM D, YYYY')
-                            : '...'}
-                        </h2>
-                        <div
-                          onClick={() => {
-                            setDataFilter({...dataFilter, date_of_birth: ''})
-                            setLoadApi(!loadApi)
-                          }}
-                          className='p-0 m-0 cursor-pointer'
-                        >
-                          <Icons name={'CloseSmall'} />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => {
+                    handleResetFilter()
+                  }}
+                  className='reset-all-filter-application mt-16px ms-16px'
+                >
+                  Reset All
+                </button>
               </div>
+            )}
 
-              <button
-                onClick={() => {
-                  handleResetFilter()
-                }}
-                className='reset-all-filter-application mt-16px ms-16px'
+          <KTCardBody className='py-4'>
+            <div className='table-responsive'>
+              <table
+                id='kt_table_users'
+                className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
               >
-                Reset All
-              </button>
-            </div>
-          )}
+                <thead>
+                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                    {rowsConfigColumn
+                      .filter((item) => !item.isHide)
+                      .map((item, i) => {
+                        const {classNameTableHead, name, infoFilter, key} = item
 
-        <KTCardBody className='py-4'>
-          <div className='table-responsive'>
-            <table
-              id='kt_table_users'
-              className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-            >
-              <thead>
-                <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                  {rowsConfigColumn
-                    .filter((item) => !item.isHide)
-                    .map((item, i) => {
-                      const {classNameTableHead, name, infoFilter, key} = item
+                        const {isSort} = infoFilter || {}
 
-                      const {isSort} = infoFilter || {}
+                        return (
+                          <th
+                            className={clsx([
+                              'text-nowrap min-w-75px user-select-none',
+                              classNameTableHead,
+                            ])}
+                            data-title={item.key}
+                            key={i}
+                            onClick={() => isSort && handleChangeSortBy(item)}
+                          >
+                            <div className='cursor-pointer'>
+                              <span className='fs-14 fw-bold'>{name}</span>
 
-                      return (
-                        <th
-                          className={clsx([
-                            'text-nowrap min-w-75px user-select-none',
-                            classNameTableHead,
-                          ])}
-                          data-title={item.key}
-                          key={i}
-                          onClick={() => isSort && handleChangeSortBy(item)}
-                        >
-                          <div className='cursor-pointer'>
-                            <span className='fs-14 fw-bold'>{name}</span>
-
-                            {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
-                          </div>
-                        </th>
-                      )
-                    })}
-                  {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
-                </tr>
-              </thead>
-              <tbody>
-                {data.length ? (
-                  renderRows()
-                ) : (
-                  <tr>
-                    <td colSpan={rows.length + 1}>
-                      <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
-                        No matching records found
-                      </div>
-                    </td>
+                              {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
+                            </div>
+                          </th>
+                        )
+                      })}
+                    {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </KTCardBody>
+                </thead>
+                <tbody>
+                  {data.length ? (
+                    renderRows()
+                  ) : (
+                    <tr>
+                      <td colSpan={rows.length + 1}>
+                        <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
+                          No matching records found
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </KTCardBody>
 
-        <div
-          style={{
-            padding: '10px 22.75px',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <RowPerPage
-            lenghtData={searchCriteria.total}
-            limit={searchCriteria.pageSize}
-            page={searchCriteria.currentPage}
-            setLimit={(e: any) => {
-              setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+          <div
+            style={{
+              padding: '10px 22.75px',
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
-          />
+          >
+            <RowPerPage
+              lenghtData={searchCriteria.total}
+              limit={searchCriteria.pageSize}
+              page={searchCriteria.currentPage}
+              setLimit={(e: any) => {
+                setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+              }}
+            />
 
-          <Pagination
-            onChangePagePagination={handleChangePagination}
-            searchCriteria={searchCriteria}
-          />
+            <Pagination
+              onChangePagePagination={handleChangePagination}
+              searchCriteria={searchCriteria}
+            />
 
-          {loading && <Loading />}
+            {loading && <Loading />}
+          </div>
         </div>
       </div>
     </div>

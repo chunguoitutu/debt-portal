@@ -87,8 +87,8 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'loan_terms',
       name: 'Loan Terms',
-      classNameTableBody: 'text-end pe-0',
-      classNameTableHead: 'text-end',
+      classNameTableBody: 'text-end',
+      classNameTableHead: 'text-end pe-3',
       infoFilter: {
         typeComponent: 'input',
         typeInput: 'number',
