@@ -144,16 +144,12 @@ const Guest = () => {
             )}
           </div>
           <div className=''>
-            <Button
-              className='btn-light-primary  me-24px'
-              disabled={loading}
-              onClick={handleTogglePopup}
-            >
+            <Button className='btn-light-primary ' disabled={loading} onClick={handleTogglePopup}>
               Create Signature
             </Button>
             {isSignature && (
               <Button
-                className='btn-primary'
+                className='btn-primary  ms-24px'
                 disabled={loading}
                 loading={loading}
                 onClick={handleSendMail}

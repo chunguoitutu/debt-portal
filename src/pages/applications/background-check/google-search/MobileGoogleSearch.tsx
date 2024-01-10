@@ -4,59 +4,87 @@ import GoogleSearch from './GoogleSearch'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {useAuth} from '@/app/context/AuthContext'
+import {useParams} from 'react-router-dom'
 
 type Props = {
   handleShow: () => void
   payload: string
   status: boolean
   Nric_no: string
+  tools: {googleSearchCheck: string; upPageCheck: string; casCheck: string}
+  setTools: any
+  borrower_id: number
 }
 
-const MobileGoogleSearch = ({handleShow, payload, status, Nric_no}: Props) => {
+const MobileGoogleSearch = ({
+  handleShow,
+  payload,
+  status,
+  Nric_no,
+  setTools,
+  tools,
+  borrower_id,
+}: Props) => {
   const [dataSearch, setDataSeacrch] = useState({
     url: '',
     screenshot: '',
   })
   const [loading, setLoading] = useState(false)
   const {company_id} = useAuth()
+  const {applicationIdEdit} = useParams()
+
   useEffect(() => {
     setLoading(true)
     if (!status) {
-      request
-        .post('/google-search/google', {search: payload, Nric_no, company_id})
-        .then((data) => {
-          setDataSeacrch({
-            screenshot: data?.data?.screenshot || '',
-            url: data?.data?.url || '',
+      !applicationIdEdit &&
+        request
+          .post('/google-search/google', {search: payload, Nric_no, company_id})
+          .then((data) => {
+            setDataSeacrch({
+              screenshot: data?.data?.screenshot || '',
+              url: data?.data?.url || '',
+            })
+            setTools({...tools, googleSearchCheck: data?.data?.screenshot || ''})
           })
-        })
-        .catch((e) => {
-          handleShow()
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `System error, please try again in a few minutes`,
+          .catch((e) => {
+            handleShow()
+            swalToast.fire({
+              timer: 1500,
+              icon: 'error',
+              title: `System error, please try again in a few minutes`,
+            })
           })
-        })
-        .finally(() => setLoading(false))
+          .finally(() => setLoading(false))
+      !!applicationIdEdit &&
+        request
+          .post('/google-search/edit-check', {
+            searchTerm: payload,
+            name_check: 'googleSearchCheck',
+            company_id,
+            borrower_id,
+          })
+          .then((data) => {
+            setDataSeacrch({
+              screenshot: data?.data?.screenshot || '',
+              url: data?.data?.url || '',
+            })
+            setTools({...tools, googleSearchCheck: data?.data?.screenshot || ''})
+          })
+          .catch((e) => {
+            handleShow()
+            swalToast.fire({
+              timer: 1500,
+              icon: 'error',
+              title: `System error, please try again in a few minutes`,
+            })
+          })
+          .finally(() => setLoading(false))
     } else {
-      request
-        .post('/google-search/get/google', {search: payload, Nric_no, company_id})
-        .then((data) => {
-          setDataSeacrch({
-            screenshot: data?.data?.screenshot || '',
-            url: '',
-          })
-        })
-        .catch((e) => {
-          handleShow()
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `System error, please try again in a few minutes`,
-          })
-        })
-        .finally(() => setLoading(false))
+      setDataSeacrch({
+        screenshot: tools?.googleSearchCheck || '',
+        url: '',
+      })
+      setLoading(false)
     }
   }, [])
   return (

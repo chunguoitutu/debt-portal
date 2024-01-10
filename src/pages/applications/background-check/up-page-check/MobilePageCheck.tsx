@@ -4,15 +4,31 @@ import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import GoogleSearchPageCheck from '.'
 import {useAuth} from '@/app/context/AuthContext'
+import {useParams} from 'react-router-dom'
 
 type Props = {
   handleShow: () => void
   payload: string
   status: boolean
   Nric_no: string
+  tools: {
+    googleSearchCheck: string
+    upPageCheck: string
+    casCheck: string
+  }
+  setTools: any
+  borrower_id: number
 }
 
-const MobilePageCheck = ({handleShow, payload, status, Nric_no}: Props) => {
+const MobilePageCheck = ({
+  handleShow,
+  payload,
+  status,
+  Nric_no,
+  setTools,
+  tools,
+  borrower_id,
+}: Props) => {
   const [search, setSearch] = useState(payload || '')
   const [loadApi, setLoadApi] = useState(false)
   const [loadApiCheck, setLoadApiCheck] = useState(false)
@@ -23,61 +39,73 @@ const MobilePageCheck = ({handleShow, payload, status, Nric_no}: Props) => {
   const [loading, setLoading] = useState(false)
   const {company_id} = useAuth()
 
+  const {applicationIdEdit} = useParams()
+
   useEffect(() => {
     setLoading(true)
     if (!status) {
       setLoadApiCheck(true)
-      request
-        .post('/google-search/up-page-check', {
-          searchTerm: search,
-          Nric_no,
-          company_id,
-        })
-        .then((data) => {
-          setDataSeacrch({
-            screenshot: data?.data?.screenshot || '',
-            url: data?.data?.url || '',
+      !applicationIdEdit &&
+        request
+          .post('/google-search/up-page-check', {
+            searchTerm: search,
+            Nric_no,
+            company_id,
           })
-        })
-        .catch((e) => {
-          handleShow()
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `System error, please try again in a few minutes`,
+          .then((data) => {
+            setDataSeacrch({
+              screenshot: data?.data?.screenshot || '',
+              url: data?.data?.url || '',
+            })
+            setTools({...tools, upPageCheck: data?.data?.screenshot || ''})
           })
-        })
-        .finally(() => {
-          setLoadApiCheck(false)
-          setLoading(false)
-        })
-    } else {
-      setLoadApiCheck(true)
-      request
-        .post('/google-search/get/up-page-check', {
-          searchTerm: search,
-          Nric_no,
-          company_id,
-        })
-        .then((data) => {
-          setDataSeacrch({
-            screenshot: data?.data?.screenshot || '',
-            url: '',
+          .catch((e) => {
+            handleShow()
+            swalToast.fire({
+              timer: 1500,
+              icon: 'error',
+              title: `System error, please try again in a few minutes`,
+            })
           })
-        })
-        .catch((e) => {
-          handleShow()
-          swalToast.fire({
-            timer: 1500,
-            icon: 'error',
-            title: `System error, please try again in a few minutes`,
+          .finally(() => {
+            setLoadApiCheck(false)
+            setLoading(false)
           })
-        })
-        .finally(() => {
-          setLoading(false)
 
-          setLoadApiCheck(false)
-        })
+      !!applicationIdEdit &&
+        request
+          .post('/google-search/edit-check', {
+            searchTerm: search,
+            name_check: 'upPageCheck',
+            company_id,
+            borrower_id,
+          })
+          .then((data) => {
+            setDataSeacrch({
+              screenshot: data?.data?.screenshot || '',
+              url: data?.data?.url || '',
+            })
+            setTools({...tools, upPageCheck: data?.data?.screenshot || ''})
+          })
+          .catch((e) => {
+            handleShow()
+            swalToast.fire({
+              timer: 1500,
+              icon: 'error',
+              title: `System error, please try again in a few minutes`,
+            })
+          })
+          .finally(() => {
+            setLoadApiCheck(false)
+            setLoading(false)
+          })
+    } else {
+      setDataSeacrch({
+        screenshot: tools?.upPageCheck || '',
+        url: '',
+      })
+      setLoadApiCheck(false)
+      setLoading(false)
     }
   }, [loadApi])
   return (
