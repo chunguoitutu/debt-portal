@@ -41,7 +41,7 @@ const ChartDashboard: FC<Props> = ({
       <div className='card-header pt-5'>
         <div className='card-title d-flex flex-column'>
           <div className='d-flex align-items-center'>
-            <span className='fs-4 fw-semibold text-gray-400 me-1 align-self-start'>$</span>
+            <span className='fs-4 fw-semibold text-gray-500 me-1 align-self-start'>$</span>
 
             <span className='fs-2hx fw-bold text-dark me-2 lh-1 ls-n2'>60,785</span>
 
