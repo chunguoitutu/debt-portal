@@ -853,6 +853,12 @@ export const Applications = () => {
                   <h1 className='text-success fs-16 fw-bold m-0'>
                     Approved By: {values.approval.approved_by}
                   </h1>
+
+                  {
+                    <h3 className='fs-14 text-gray-900 m-0 mt-12px fw-normal'>
+                      Assignee To: {values.approval.assignee_to || 'Unassigned'}
+                    </h3>
+                  }
                   {values.approval.approved_note && (
                     <span className='text-gray-600 mt-16px d-inline-block white-space-pre-line'>
                       {values.approval.approved_note}
