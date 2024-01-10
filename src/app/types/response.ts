@@ -15,6 +15,7 @@ export type ApprovalInfo = {
   created_at: Date
   updated_at: Date
   loan_id: number
+  assignee_to: string | null
 }
 
 export type RejectedInfo = {

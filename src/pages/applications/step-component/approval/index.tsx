@@ -86,7 +86,7 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
       if (id) {
         await request.put(`application/approval/${id}`, payload)
       } else {
-        payload = {...payload, application_id: +applicationIdEdit, officer_id: +officer_id}
+        payload = {...payload, application_id: +applicationIdEdit, officer_id: +officer_id || null}
         const {data} = await request.post(`application/approval`, payload)
 
         // Only emit when create approval
