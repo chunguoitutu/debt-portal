@@ -219,7 +219,7 @@ const Table: FC<Props> = ({
       <TableHelper config={config} handleAddNew={handleAddNew} />
 
       <KTCardBody className='py-4'>
-        <div className='table-responsive'>
+        <div className='table-responsive mb-3'>
           <table
             id='kt_table_users'
             className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
@@ -291,6 +291,18 @@ const Table: FC<Props> = ({
                           )
                         }
 
+                        if (
+                          ['quota_new', 'quota_existing', 'quota_foreigner', 'late_fee'].includes(
+                            key
+                          )
+                        ) {
+                          return (
+                            <td className='fs-14 fw-semibold text-end' key={i}>
+                              {value}$
+                            </td>
+                          )
+                        }
+
                         if (['open_date'].includes(key)) {
                           return (
                             <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={i}>
@@ -299,9 +311,9 @@ const Table: FC<Props> = ({
                           )
                         }
 
-                        if (['late_interest'].includes(key)) {
+                        if (['late_interest', 'interest'].includes(key)) {
                           return (
-                            <td className={`fs-14 fw-semibold text-gray-900`} key={i}>
+                            <td className={`fs-14 fw-semibold text-end`} key={i}>
                               {value !== null && value !== undefined ? `${value}%` : ''}
                             </td>
                           )

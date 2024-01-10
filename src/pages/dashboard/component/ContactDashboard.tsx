@@ -35,7 +35,7 @@ const ContactDashBoard = ({className, description, icon, stats, labelColor, text
         </div>
       </div>
     </div>
-    <div className='card-body d-flex flex-column justify-content-end pe-0'>
+    <div className='d-flex flex-column justify-content-end p-4 ms-5 mb-5'>
       <span className='fs-6 fw-bolder text-gray-800 d-block mb-2'>Manager</span>
       <div className='symbol-group symbol-hover flex-nowrap'>
         {items.map((item, index) => (

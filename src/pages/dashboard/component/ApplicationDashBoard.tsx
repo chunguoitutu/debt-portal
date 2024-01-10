@@ -247,6 +247,7 @@ const ApplicationDemoDashBoard = () => {
     })
     setLoadApi(!loadApi)
   }
+
   return (
     <div
       className={`card border-0 card-xxl-stretch mb-5 mb-xxl-8 bg-white border-custom-card h-md-100`}
@@ -255,7 +256,9 @@ const ApplicationDemoDashBoard = () => {
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-start flex-column'>
           <span className='card-label fw-bold fs-3 mb-1'>Latest Applications</span>
-          <span className='text-muted mt-1 fw-semibold fs-7'>{`More than ${searchCriteria.total} application`}</span>
+          <span className='text-muted mt-1 fw-semibold fs-7'>
+            {`More than ${searchCriteria.total} application${searchCriteria.total > 1 ? 's' : ''}`}
+          </span>
         </h3>
         <div className='card-toolbar'>
           <ul className='nav'>
@@ -294,12 +297,14 @@ const ApplicationDemoDashBoard = () => {
       <div className='h-fit-content'>
         <div>
           {!!newDataSocket && (
-            <div className='wrapper-records-applications'>
+            <div className='wrapper-records-applications ms-9 me-9'>
               <div className='p-0 m-0'>
                 <p className='records-applications'>
                   Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
                 </p>
-                <p className='records-applications-reset'>Do you want to refresh the data now?</p>
+                <p className='records-applications-reset' style={{fontSize: 13, fontWeight: 500}}>
+                  Do you want to refresh the data now?
+                </p>
               </div>
 
               <Button disabled={loading} loading={loading} onClick={handleRefreshDataSocket}>

@@ -68,6 +68,7 @@ const CasCheckSearch = ({
                 placeholder='Search'
                 value={search}
                 disabled={!dataSearch?.url}
+                transparent={true}
                 onChange={(e) => {
                   setSearch(e.target.value)
                 }}

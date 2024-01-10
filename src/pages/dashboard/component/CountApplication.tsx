@@ -177,7 +177,10 @@ const CountApplication: React.FC<Props> = ({className, description, color, img}:
       <div className='card-header pt-5'>
         <div className='card-title d-flex flex-column'>
           <span className='fs-2hx fw-bold text-white me-2 lh-1 ls-n2'>{searchCriteria.total}</span>
-          <span className='text-white opacity-75 pt-1 fw-semibold fs-6'> Total Application</span>
+          <span className='text-white opacity-75 pt-1 fw-semibold fs-6'>
+            {' '}
+            Total {searchCriteria.total > 1 ? 'Applications' : 'Application'}
+          </span>
         </div>
       </div>
       <div className='card-body d-flex align-items-end pt-0'>
@@ -210,9 +213,9 @@ const CountApplication: React.FC<Props> = ({className, description, color, img}:
         <div className='hihihaha d-flex flex-row align-items-center justify-content-between '>
           <div className='p-0 m-0'>
             <p className='text-white fs-16 fw-bold mb-0'>
-              Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
+              Detected {newDataSocket} New {Number(newDataSocket) === 1 ? 'Record' : 'Records'}.
             </p>
-            <p className='text-white fs-13 fw-semibold mb-0'>
+            <p className='text-white fs-13 fw-semibold mb-0 text-gray-300'>
               Do you want to refresh the data now?
             </p>
           </div>
