@@ -62,6 +62,8 @@ interface ListIdEdit {
 
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
+  const [stepCompleted, setStepCompleted] = useState<number>(0)
+  const [optionListing, setOptionListing] = useState<{[key: string]: any[]}>({})
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
   const [show, setShow] = useState<boolean>(false)
@@ -71,11 +73,7 @@ export const Applications = () => {
   // const [checkAmount, SetCheckAmount] = useState<number>(0)
   // const [popupSingpass, setPopupSingpass] = useState(false)
   const [searchParams] = useSearchParams()
-  const [optionsRejectionType, setOptionsRejectionType] = useState<any>([])
-  const [optionsUser, setOptionsUser] = useState<any>([])
   const [singpass, setSingpass] = useState<boolean>(false)
-  const [rejectionOne, setRejectionOne] = useState<any>({})
-  const [stepCompleted, setStepCompleted] = useState<number>(0)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [listIdEdit, setListIdEdit] = useState<ListIdEdit>({
@@ -104,31 +102,10 @@ export const Applications = () => {
 
   useEffect(() => {
     if (!applicationIdEdit) return setIsLoading(false)
-    !!applicationIdEdit &&
-      request
-        .post('config/rejection_type/listing', {
-          status: true,
-          pageSize: 99999,
-          currentPage: 1,
-        })
-        .then((res) => {
-          setOptionsRejectionType(res?.data?.data || [])
-        })
-        .catch()
-    !!applicationIdEdit &&
-      request
-        .post('config/user/listing', {
-          status: true,
-          pageSize: 99999,
-          currentPage: 1,
-        })
-        .then((res) => {
-          setOptionsUser(res?.data?.data || [])
-        })
-        .catch()
+
     handleGetApplicationById()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applicationIdEdit, loadApiEdit, pathname])
+  }, [applicationIdEdit, loadApiEdit])
 
   useEffect(() => {
     resetForm()
@@ -299,7 +276,6 @@ export const Applications = () => {
   async function handleGetApplicationById() {
     try {
       const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
-      setRejectionOne(data?.rejection || {})
       const {
         borrower,
         application,
@@ -308,7 +284,8 @@ export const Applications = () => {
         employment,
         address,
         file_documents,
-        approval,
+        approval, // only approval (status = 3)
+        rejection, // only rejected (status = 2)
         cpf,
       } = data.data || {}
 
@@ -330,6 +307,7 @@ export const Applications = () => {
             return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
           }) || [],
         ...(approval ? {approval} : {}),
+        ...(rejection ? {rejection} : {}),
       })
 
       setdataEdit({
@@ -776,6 +754,8 @@ export const Applications = () => {
           config={STEP_APPLICATION[currentStep - 1].config || []}
           setSingpass={setSingpass}
           singpass={singpass}
+          optionListing={optionListing}
+          setOptionListing={setOptionListing}
         />
       </div>
 
@@ -830,38 +810,20 @@ export const Applications = () => {
               className='p-10'
             />
 
-            {!!rejectionOne?.id && (
+            {values.rejection?.id && (
               <div className='px-30px pt-30px'>
                 <div className='p-16px wrapper-reject-title-application'>
                   <h1 className='h1-reject-title-application'>
-                    Reject Reason:{' '}
-                    {
-                      optionsRejectionType.filter(
-                        (data: any) => data?.id === rejectionOne?.rejection_type_id
-                      )[0]?.rejection_type_name
-                    }
+                    Reject Reason: {values.rejection.rejected_reason}
                   </h1>
                   <p className='p1-reject-title-application'>
-                    Rejected By{' '}
-                    {
-                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
-                        ?.firstname
-                    }{' '}
-                    {
-                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
-                        ?.middlename
-                    }{' '}
-                    {
-                      optionsUser.filter((data: any) => data?.id === rejectionOne?.rejected_by)[0]
-                        ?.lastname
-                    }
+                    Rejected By {values.rejection.rejected_by}
                   </p>
-                  <p
-                    className='p2-reject-title-application'
-                    dangerouslySetInnerHTML={{
-                      __html: rejectionOne?.rejection_note.replace(/\n/g, '<br>'),
-                    }}
-                  />
+                  {values.rejection.rejection_note && (
+                    <span className='text-gray-600 mt-16px d-inline-block white-space-pre-line'>
+                      {values.rejection.rejection_note}
+                    </span>
+                  )}
                 </div>
               </div>
             )}
@@ -899,15 +861,21 @@ export const Applications = () => {
                     formik={formik}
                     setSingpass={setSingpass}
                     singpass={singpass}
+                    optionListing={optionListing}
+                    setOptionListing={setOptionListing}
                   />
                 )}
                 {show && (
                   <Reject
                     handleloadApi={() => SetLoadApiEdit(!loadApiEdit)}
-                    id={applicationIdEdit}
-                    show={show}
-                    rejection_one={rejectionOne}
                     handleClose={() => setShow(!show)}
+                    setStepCompleted={setStepCompleted}
+                    config={STEP_APPLICATION[currentStep - 1].config || []}
+                    formik={formik}
+                    setSingpass={setSingpass}
+                    singpass={singpass}
+                    optionListing={optionListing}
+                    setOptionListing={setOptionListing}
                   />
                 )}
                 <GeneralButton
@@ -923,6 +891,8 @@ export const Applications = () => {
                   currentStep={currentStep}
                   setSingpass={setSingpass}
                   singpass={singpass}
+                  optionListing={optionListing}
+                  setOptionListing={setOptionListing}
                 />
               </div>
             </div>
@@ -938,6 +908,8 @@ export const Applications = () => {
                   config={STEP_APPLICATION[currentStep - 1].config || []}
                   setSingpass={setSingpass}
                   singpass={singpass}
+                  optionListing={optionListing}
+                  setOptionListing={setOptionListing}
                 />
               </div>
 

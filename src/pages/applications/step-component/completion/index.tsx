@@ -6,6 +6,7 @@ import {PropsStepApplication} from '@/app/types'
 
 export interface DEF_completion {
   key?: string
+  keyOfOptionFromApi?: string
   value?: string
   Component?: any
   options?: any[]
@@ -27,8 +28,8 @@ export interface children_config_completion {
 }
 
 const Completion: FC<PropsStepApplication> = (Props) => {
-  const {config} = Props
-  const data = Props.formik.values
+  const {config, optionListing, formik} = Props
+
   return (
     <div>
       <div style={{paddingBottom: '30px'}}>
@@ -43,7 +44,12 @@ const Completion: FC<PropsStepApplication> = (Props) => {
             if (!!Component) {
               return (
                 <div key={index} className='p-0'>
-                  <Component data={data} config={children_config} options={options} />
+                  <Component
+                    data={formik.values}
+                    config={children_config}
+                    options={options}
+                    optionListing={optionListing}
+                  />
                 </div>
               )
             }
@@ -52,7 +58,7 @@ const Completion: FC<PropsStepApplication> = (Props) => {
                 <TableRender
                   title={children_config.title}
                   config={children_config.config}
-                  data={data}
+                  data={formik.values}
                 />
               </div>
             )

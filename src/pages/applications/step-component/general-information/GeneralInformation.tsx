@@ -18,13 +18,27 @@ import {useAuth} from '@/app/context/AuthContext'
 import Button from '@/components/button/Button'
 import Singpass from './Singpass'
 import {KTIcon} from '@/_metronic/helpers'
-import {PROPERTY_TYPE, capitalizeFirstText, convertResidentialTypeSingPass} from '@/app/utils'
+import {
+  PROPERTY_TYPE,
+  capitalizeFirstText,
+  convertResidentialTypeSingPass,
+  getIdDefault,
+  isFirstGetStepApplication,
+} from '@/app/utils'
 import FileInput from '../employment/FileDocument'
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
-  const {config = [], formik, setStepCompleted, setSingpass, singpass} = props
+  const {
+    config = [],
+    formik,
+    singpass,
+    optionListing,
+    setOptionListing,
+    setStepCompleted,
+    setSingpass,
+  } = props
   const [searchParams, setSearchParams] = useSearchParams()
   let [singpassValues, setSingpassValues] = useState<any>()
   const [activeTab, setActiveTab] = useState('cpf')
@@ -37,7 +51,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   } | null>(null)
 
   const {applicationIdEdit} = useParams()
-  const [dataMarketing, setDataMarketing] = useState<any>({})
   const [showPopup, setShowPopup] = useState(false)
   const [popupSingpass, setPopupSingpass] = useState<boolean>(false)
   const {company_id} = useAuth()
@@ -46,47 +59,56 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
   async function onFetchDataList() {
     try {
-      const updatedDataMarketing: any = {...dataMarketing}
+      const newOption: {[key: string]: any[]} = {}
+
       const endpoint = config.filter((data) => !!data.dependencyApi)
 
       const requests = endpoint.map((d) =>
         request.post(d.dependencyApi || '', {status: true, pageSize: 99999, currentPage: 1})
       )
 
+      if (!requests?.length) return
+
       const responses = await Promise.all(requests)
 
       responses.forEach((res, index) => {
-        const key = endpoint[index].key
+        const config = endpoint[index]
 
         let data = res?.data?.data || []
-        if (key === 'country_id') {
+
+        if (config.key === 'country_id') {
           data = data.filter((el: any) => el.nationality)
         }
-        updatedDataMarketing[key] = data
+
+        if (Array.isArray(data) && data?.length) {
+          newOption[config.keyOfOptionFromApi || config.key] = data
+
+          config.key !== 'country_id' &&
+            !applicationIdEdit &&
+            setFieldValue(config.key, getIdDefault(data)) // country uses default value in config
+        }
       })
 
-      setDataMarketing(updatedDataMarketing)
-      !applicationIdEdit &&
-        setFieldValue(
-          `marketing_type_id`,
-          updatedDataMarketing?.marketing_type_id.length > 0
-            ? updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1)
-                .length > 0
-              ? updatedDataMarketing?.marketing_type_id.filter((el: any) => +el.is_default === 1)[0]
-                  .id
-              : updatedDataMarketing?.marketing_type_id[0].id
-            : ''
-        )
-      !applicationIdEdit &&
-        setFieldValue(`country_id`, updatedDataMarketing?.country_id.length > 0 ? '192' : '')
+      setOptionListing((prev) => ({...prev, ...newOption}))
     } catch (error) {
     } finally {
     }
   }
 
   useEffect(() => {
-    onFetchDataList()
-    GetDefaultAddressType()
+    const keyOptionListing = Object.keys(optionListing)
+    const isFirstGet = isFirstGetStepApplication({
+      optionListing,
+      config,
+    })
+    const isFirstGetAddressType = !keyOptionListing.includes('address_type')
+    if (isFirstGet) {
+      onFetchDataList()
+    }
+
+    if (isFirstGetAddressType) {
+      GetDefaultAddressType()
+    }
   }, [])
 
   useEffect(() => {
@@ -109,6 +131,10 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       })
 
       const addressList = [...(data.data as AddressTypeItem[])]
+
+      if (addressList.length) {
+        setOptionListing((prev) => ({...prev, address_type: addressList}))
+      }
 
       const homeAddress = addressList.find((el) =>
         el.address_type_name?.toLowerCase().includes('home')
@@ -415,6 +441,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   function renderComponent(item: ApplicationConfig) {
     const {
       key,
+      keyOfOptionFromApi,
       data = [],
       column,
       options,
@@ -488,7 +515,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           keyValueOption={keyValueOfOptions}
           keyLabelOption={keyLabelOfOptions}
           classShared={className}
-          options={!!dependencyApi ? dataMarketing[key] || [] : options}
+          options={!!dependencyApi ? optionListing[keyOfOptionFromApi || key] || [] : options}
           dropDownGroup={item.dropDownGroup}
         />
       )

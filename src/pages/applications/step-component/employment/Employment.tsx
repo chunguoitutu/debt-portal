@@ -5,12 +5,12 @@ import {useParams} from 'react-router-dom'
 
 import request from '@/app/axios'
 import {Select} from '@/components/select'
-import {COUNTRY_PHONE_CODE} from '@/app/utils'
+import {COUNTRY_PHONE_CODE, getIdDefault, isFirstGetStepApplication} from '@/app/utils'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 
 const Employment: FC<PropsStepApplication> = (props) => {
-  const {config = [], formik} = props
+  const {config = [], formik, optionListing, setOptionListing} = props
   const {applicationIdEdit} = useParams()
   const errorContainerRef = useRef<HTMLDivElement | null>(null)
 
@@ -20,52 +20,46 @@ const Employment: FC<PropsStepApplication> = (props) => {
     monthly_income_3: 0,
   })
 
-  const [dataLoanType, setDataLoanType] = useState({})
-
   useEffect(() => {
-    onFetchDataList()
+    const isFirstGet = isFirstGetStepApplication({
+      optionListing,
+      config,
+    })
+
+    isFirstGet && onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   async function onFetchDataList() {
     try {
-      const endpoints = config.filter((data) => !!data.dependencyApi)
+      const newOption: {[key: string]: any[]} = {}
 
-      const results = await Promise.all(
-        endpoints.map(async (d) => {
-          const res = await request.post(d.dependencyApi || '', {
-            status: true,
-            pageSize: 99999,
-            currentPage: 1,
-          })
-
-          return {key: d.key, data: res?.data?.data}
+      const endpoint = config.filter((data) => !!data.dependencyApi)
+      const requests = endpoint.map((d) =>
+        request.post(d.dependencyApi || '', {
+          status: true,
+          pageSize: 99999,
+          currentPage: 1,
         })
       )
 
-      const newDataLoanType = {}
-      results &&
-        results.forEach((result) => {
-          newDataLoanType[result.key] = result?.data
-          !applicationIdEdit &&
-            setFieldValue(
-              `${result.key}`,
-              result?.data.length > 0
-                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
-                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].id
-                  : result?.data[0].id
-                : ''
-            )
-          !applicationIdEdit &&
-            setFieldValue(
-              `job_type_name`,
-              result?.data.length > 0
-                ? result?.data.filter((el: any) => +el.is_default === 1).length > 0
-                  ? result?.data.filter((el: any) => +el.is_default === 1)[0].job_type_name
-                  : result?.data[0].job_type_name
-                : ''
-            )
-        })
-      setDataLoanType({...dataLoanType, ...newDataLoanType})
+      if (!requests?.length) return
+
+      const responses = await Promise.all(requests)
+
+      responses.forEach((res, index) => {
+        const config = endpoint[index]
+
+        const data = res?.data?.data || []
+
+        if (!Array.isArray(data) || !data?.length) return
+
+        // Change options listing
+        newOption[config.keyOfOptionFromApi || config.key] = data
+
+        !applicationIdEdit && setFieldValue(config.key, getIdDefault(data))
+      })
+
+      setOptionListing((prev) => ({...prev, ...newOption}))
     } catch (error) {
     } finally {
     }
@@ -76,6 +70,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
   function renderComponent(item: ApplicationConfig) {
     const {
       key,
+      keyOfOptionFromApi,
       data = [],
       column,
       options,
@@ -126,7 +121,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
             classShared={className}
             keyValueOption={keyValueOfOptions}
             keyLabelOption={keyLabelOfOptions}
-            options={!!dependencyApi ? dataLoanType[key] || [] : options}
+            options={!!dependencyApi ? optionListing[keyOfOptionFromApi || key] || [] : options}
             touched={touched}
             onBlur={handleBlur}
           />

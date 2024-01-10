@@ -1,6 +1,6 @@
 import axios, {AxiosError} from 'axios'
 import numeral from 'numeral'
-import {ErrorResponse} from '../types/common'
+import {ApplicationConfig, ErrorResponse} from '../types/common'
 import {DEFAULT_MESSAGE_ERROR_500} from '../constants'
 import moment from 'moment'
 
@@ -222,4 +222,23 @@ export function formatMoney(value: number) {
   let newValue = +value || 0
 
   return numeral(newValue).format('$0,0.00')
+}
+
+export function getIdDefault(data: any[], keyDefault: string = 'is_default') {
+  if (!Array.isArray(data) || !data?.length) return ''
+
+  const itemDefault = data?.find((el: any) => el[keyDefault]) || data?.[0]
+  return itemDefault.id || ''
+}
+
+export function isFirstGetStepApplication({
+  optionListing,
+  config,
+}: {
+  optionListing: {[key: string]: any[]}
+  config: ApplicationConfig[]
+}) {
+  const keyOptionListing = Object.keys(optionListing)
+  const endpoint = config.filter((data) => !!data.dependencyApi)
+  return !endpoint.some((el) => keyOptionListing.includes(el.keyOfOptionFromApi || el.key))
 }

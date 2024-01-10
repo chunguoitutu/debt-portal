@@ -5,18 +5,26 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 import {useParams} from 'react-router-dom'
-import {formatNumber} from '@/app/utils'
+import {formatNumber, getIdDefault, isFirstGetStepApplication} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 
-const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
+const LoanDetails: FC<PropsStepApplication> = ({
+  config = [],
+  formik,
+  optionListing,
+  setOptionListing,
+}) => {
   const {applicationIdEdit} = useParams()
   const {company_id} = useAuth()
 
-  const [dataLoanType, setDataLoanType] = useState<any>({})
   const [errorMessages, setErrorMessages] = useState<any>({})
 
   useEffect(() => {
-    onFetchDataList()
+    const isFirstGet = isFirstGetStepApplication({
+      optionListing,
+      config,
+    })
+    isFirstGet && onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -24,8 +32,8 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
     formik
 
   useEffect(() => {
-    if (!dataLoanType.loan_type_id) return
-    const currentItem = dataLoanType.loan_type_id.find(
+    if (!optionListing.loan_type) return
+    const currentItem = optionListing.loan_type.find(
       (el: any) => el.id === +formik.values.loan_type_id
     )
 
@@ -44,47 +52,55 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
 
   async function onFetchDataList() {
     try {
-      const endpoints = config.filter((data) => !!data.dependencyApi)
-      const results = await Promise.all(
-        endpoints.map(async (d) => {
-          const res = await request.post(d.dependencyApi || '', {
-            status: true,
-            pageSize: 99999,
-            currentPage: 1,
-            company_id: +company_id,
-          })
-
-          return {key: d.key, data: res?.data?.data}
+      const endpoint = config.filter((data) => !!data.dependencyApi)
+      const requests = endpoint.map((d) =>
+        request.post(d.dependencyApi || '', {
+          status: true,
+          pageSize: 99999,
+          currentPage: 1,
+          company_id,
         })
       )
 
-      results &&
-        results.forEach((result) => {
-          setDataLoanType({
-            ...dataLoanType,
-            [result.key]: result?.data,
-          })
+      if (!requests?.length) return
 
-          let itemDefault = result?.data.find((el: any) => +el.is_default === 1)
+      const responses = await Promise.all(requests)
 
-          if (!itemDefault) {
-            itemDefault = result?.data?.[0]
-          }
-          if (!applicationIdEdit) {
-            setFieldValue(`${result.key}`, itemDefault?.id)
-            setFieldValue(`interest`, itemDefault?.interest || '')
-            setFieldValue('term_unit', 1)
-          }
-        })
+      const newOption: {[key: string]: any[]} = {}
+
+      responses.forEach((res, index) => {
+        const config = endpoint[index]
+
+        const data = res?.data?.data || []
+
+        if (!Array.isArray(data) || !data?.length) return
+
+        // Change options listing
+        newOption[config.keyOfOptionFromApi || config.key] = data
+
+        !applicationIdEdit && setFieldValue(config.key, getIdDefault(data))
+
+        let itemDefault = data?.find((el: any) => +el.is_default === 1) || data?.[0]
+
+        const isDraftOrCreate = [0, undefined].includes(values.status || 0)
+
+        if (isDraftOrCreate) {
+          setFieldValue(`${config.key}`, itemDefault.id)
+          setFieldValue(`interest`, itemDefault.interest || '')
+          setFieldValue('term_unit', 1)
+        }
+      })
+
+      setOptionListing((prev) => ({...prev, ...newOption}))
     } catch (error) {
     } finally {
     }
   }
 
   useEffect(() => {
-    if (!dataLoanType.loan_type_id) return
+    if (!optionListing.loan_type) return
 
-    const currentItem = dataLoanType.loan_type_id.find(
+    const currentItem = optionListing.loan_type.find(
       (el: any) => el.id === +formik.values.loan_type_id
     )
 
@@ -161,8 +177,8 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   const handleAutoSelect = (key: string, e: React.ChangeEvent<HTMLSelectElement>) => {
     if (key === 'loan_type_id') {
       const value = e.target.value
-      if (value && dataLoanType[key]) {
-        const {interest} = dataLoanType[key].find((el) => el.id == value)
+      if (value && optionListing[key]) {
+        const {interest} = optionListing[key].find((el) => el.id == value)
         if (interest) setFieldValue('interest', +interest)
       } else {
         setFieldValue('interest', '')
@@ -176,6 +192,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
   function renderComponent(item: ApplicationConfig) {
     const {
       key,
+      keyOfOptionFromApi,
       data = [],
       noThereAreCommas,
       column,
@@ -295,7 +312,7 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             classShared={className}
             keyValueOption={keyValueOfOptions}
             keyLabelOption={keyLabelOfOptions}
-            options={!!dependencyApi ? dataLoanType[key] || [] : options}
+            options={!!dependencyApi ? optionListing[keyOfOptionFromApi || key] || [] : options}
             touched={touched}
             errors={errors}
           />
