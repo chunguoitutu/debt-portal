@@ -1,9 +1,11 @@
 import {useEffect, useState} from 'react'
 import request from '../../../../app/axios'
+import {useAuth} from '@/app/context/AuthContext'
 
 type Props = {config?: any; data?: any; options?: any}
 
 const RenderOptionsApi = ({config, data}: Props) => {
+  const {company_id} = useAuth()
   const [dataLoanType, setDataLoanType] = useState([])
 
   useEffect(() => {
@@ -13,7 +15,12 @@ const RenderOptionsApi = ({config, data}: Props) => {
   async function onFetchDataList() {
     try {
       request
-        .post(config.dependencyApi || '', {status: true, pageSize: 99999, currentPage: 1})
+        .post(config.dependencyApi || '', {
+          status: true,
+          pageSize: 99999,
+          currentPage: 1,
+          company_id: +company_id,
+        })
         .then((res) => {
           setDataLoanType(res.data.data)
         })

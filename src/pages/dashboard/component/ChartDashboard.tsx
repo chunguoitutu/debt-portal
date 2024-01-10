@@ -49,7 +49,7 @@ const ChartDashboard: FC<Props> = ({
               <KTIcon iconName='arrow-up' className='fs-5 text-success ms-n1' /> 2.2%
             </span>
           </div>
-          <span className='text-gray-600 pt-1 fw-semibold fs-6'>{`Disbursed amount in ${year}`}</span>
+          <span className='text-gray-400 pt-1 fw-semibold fs-6'>{`Disbursed amount in ${year}`}</span>
         </div>
       </div>
 

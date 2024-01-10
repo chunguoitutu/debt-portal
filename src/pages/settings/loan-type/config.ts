@@ -39,10 +39,9 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'Description',
     },
     {
-      classNameTableHead: 'w-200px mt-3 min-w-100px',
+      classNameTableHead: 'w-200px mt-3 pe-3 min-w-100px',
       key: 'interest',
-      color: '#252F4A',
-      name: 'Interest',
+      name: 'Default Interest',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
@@ -50,9 +49,8 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px min-w-120px',
+      classNameTableHead: 'w-200px ps-7 min-w-120px',
       key: 'quota_new',
-      color: '#252F4A',
       name: 'Quota New',
       infoCreateEdit: {
         type: 'input',
@@ -61,9 +59,8 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px min-w-150px',
+      classNameTableHead: 'w-200px ps-7 min-w-150px',
       key: 'quota_existing',
-      color: '#252F4A',
       name: 'Quota Existing',
       infoCreateEdit: {
         type: 'input',
@@ -72,9 +69,8 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px min-w-150px',
+      classNameTableHead: 'w-200px pe-3 min-w-150px',
       key: 'quota_foreigner',
-      color: '#252F4A',
       name: 'Quota Foreigner',
       infoCreateEdit: {
         type: 'input',
@@ -83,10 +79,9 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px min-w-120px',
+      classNameTableHead: 'w-200px pe-3 min-w-120px',
       key: 'late_fee',
-      color: '#252F4A',
-      name: 'Late Fee',
+      name: 'Monthly Late Fee $',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
@@ -94,10 +89,9 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
-      classNameTableHead: 'w-200px min-w-120px',
+      classNameTableHead: 'w-200px pe-3 min-w-120px',
       key: 'late_interest',
-      color: '#252F4A',
-      name: 'Late Interest',
+      name: 'Late Interest per month %',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',

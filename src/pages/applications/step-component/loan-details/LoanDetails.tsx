@@ -29,16 +29,16 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
       (el: any) => el.id === +formik.values.loan_type_id
     )
 
-    const interestByDay = formatNumber(currentItem.interest / 31)
+    const interestByDay = formatNumber(currentItem?.interest / 31)
 
-    const interestByYear = currentItem.interest * 12
+    const interestByYear = currentItem?.interest * 12
 
     if (formik.values.term_unit.toString() === '0') {
-      setFieldValue('interest', interestByDay)
+      setFieldValue('interest', interestByDay || '')
     } else if (formik.values.term_unit.toString() === '1') {
-      setFieldValue('interest', +currentItem.interest)
+      setFieldValue('interest', +currentItem?.interest || '')
     } else if (formik.values.term_unit.toString() === '2') {
-      setFieldValue('interest', interestByYear)
+      setFieldValue('interest', interestByYear || '')
     }
   }, [formik.values.term_unit])
 
@@ -71,8 +71,8 @@ const LoanDetails: FC<PropsStepApplication> = ({config = [], formik}) => {
             itemDefault = result?.data?.[0]
           }
           if (!applicationIdEdit) {
-            setFieldValue(`${result.key}`, itemDefault.id)
-            setFieldValue(`interest`, itemDefault.interest || '')
+            setFieldValue(`${result.key}`, itemDefault?.id)
+            setFieldValue(`interest`, itemDefault?.interest || '')
             setFieldValue('term_unit', 1)
           }
         })

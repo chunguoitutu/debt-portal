@@ -41,6 +41,7 @@ import PositionName from './completion/PositionName'
 import {Checkbox} from '@/components/checkbox'
 import Bankruptcy from '@/components/applications/Bankruptcy'
 import Button from '@/components/button/Button'
+import TermUnit from './completion/TermUnit'
 
 const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -239,7 +240,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     key: 'loan_terms',
     component: Input,
     typeComponent: 'Input',
-    label: 'Loan Terms (months)',
+    label: 'Loan Terms ',
     required: true,
     typeInput: 'number',
     validationFormik: Yup.number()
@@ -816,22 +817,27 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'type_name',
         },
         {
-          key: 'loan_terms',
-          value: 'Loan Terms (months)',
-          elBehind: 'Months',
+          key: 'interest',
+          value: 'Interest (%)',
         },
       ],
       [
         {
-          key: 'interest',
-          value: 'Interest (%)',
+          key: 'loan_terms',
+          value: 'Loan Terms',
         },
-
+        {
+          key: 'term_unit',
+          value: 'Term Unit',
+          Component: TermUnit
+        }
+      ],
+      [
         {
           key: 'loan_reason',
           value: 'Reason For Loan',
-        },
-      ],
+        }
+      ]
     ],
   },
   {

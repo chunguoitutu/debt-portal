@@ -25,7 +25,7 @@
   position: absolute;
   right: 128px;
   background-color: white;
-  animation: animate-application 0.1s;
+  animation: dropdownAnimation 0.3s ease;
 }
 
 @keyframes animate-application {
@@ -70,4 +70,25 @@
   font-style: normal;
   font-weight: 500;
   line-height: 22px; /* 137.5% */
+}
+
+.table-foot-repayment {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--bs-gray-300);
+  }
+}
+
+.config-column-grid-other {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 130px;
+  z-index: 4;
+  animation: dropdownAnimation 0.3s ease;
+  box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.18);
 }

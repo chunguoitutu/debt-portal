@@ -1,11 +1,11 @@
-import {KTCardBody} from '@/_metronic/helpers'
+import {KTCardBody, KTIcon} from '@/_metronic/helpers'
 import {PageLink, PageTitle} from '@/_metronic/layout/core'
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {Input} from '@/components/input'
 import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import React, {useEffect, useState} from 'react'
+import React, {ChangeEvent, Fragment, useEffect, useMemo, useState} from 'react'
 import clsx from 'clsx'
 import RowPerPage from '@/components/row-per-page'
 import {BorrowerItem, OrderBy, ResponseBorrowerListing, SearchCriteria, TableRow} from '@/app/types'
@@ -20,6 +20,9 @@ import {useAuth} from '@/app/context/AuthContext'
 import {FilterBorrower} from './FilterBorrower'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import {BORROWER_CONFIG_LISTING} from './config'
+import {GLOBAL_CONSTANTS} from '@/app/constants'
+import {Checkbox} from '@/components/checkbox'
+import gridImg from '@/app/images/grid.svg'
 
 type Props = {}
 
@@ -106,6 +109,20 @@ const BorrowersListing = (props: Props) => {
 
   const {pageSize, currentPage} = searchCriteria
   const {company_id} = useAuth()
+
+  const [showConfigColumn, setShowConfigColumn] = useState<boolean>(false)
+
+  const [configColumn, setConfigColumn] = useState<any>(handleInitialConfigColumn())
+  const [configColumnSubmitted, setConfigColumnSubmitted] = useState<any>(
+    handleInitialConfigColumn()
+  )
+
+  const rowsConfigColumn = useMemo(() => {
+    const keyIgnored = Object.keys(configColumnSubmitted).filter(
+      (key) => configColumnSubmitted[key] === false
+    )
+    return rows.filter((el) => !keyIgnored.includes(el.key))
+  }, [configColumnSubmitted])
 
   function handleSaveSearchToSession() {
     const data = {
@@ -220,93 +237,142 @@ const BorrowersListing = (props: Props) => {
     })
   }
 
+  function handleToggleConfigColumn() {
+    setShowConfigColumn(!showConfigColumn)
+  }
+
+  function handleChangeConfigColumn(e: ChangeEvent<HTMLInputElement>) {
+    const {name, checked} = e.target
+    setConfigColumn({
+      ...configColumn,
+      [name]: checked,
+    })
+  }
+
+  function handleApplyConfigColumn() {
+    setConfigColumnSubmitted(configColumn)
+    localStorage.setItem(GLOBAL_CONSTANTS.borrowerConfigColumn, JSON.stringify(configColumn))
+  }
+
+  function handleResetConfigColumn() {
+    const config = BORROWER_CONFIG_LISTING.rows
+      .filter((el) => !el.isHide)
+      .reduce((acc, el) => ({...acc, [el.key]: el.defaultShow === false ? false : true}), {})
+
+    setConfigColumn(config)
+    setConfigColumnSubmitted(config)
+    localStorage.setItem(GLOBAL_CONSTANTS.borrowerConfigColumn, JSON.stringify(config))
+  }
+
+  function handleInitialConfigColumn() {
+    let config = BORROWER_CONFIG_LISTING.rows
+      .filter((el) => !el.isHide)
+      .reduce((acc, el) => ({...acc, [el.key]: el.defaultShow === false ? false : true}), {})
+
+    const configFromLocalStorage = parseJson(
+      localStorage.getItem(GLOBAL_CONSTANTS.borrowerConfigColumn) || ''
+    )
+
+    if (isObject(configFromLocalStorage)) {
+      const newConfig = Object.keys(configFromLocalStorage).reduce(
+        (acc, key) => ({...acc, [key]: !!configFromLocalStorage[key]}),
+        {}
+      )
+      config = {...config, ...newConfig}
+    }
+
+    return config
+  }
+
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
         <tr key={idx}>
-          {rows.map(({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
-            const {keyLabelOption, keyValueOption} = infoFilter || {}
+          {rowsConfigColumn.map(
+            ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
+              const {keyLabelOption, keyValueOption} = infoFilter || {}
 
-            const {firstname, middlename, lastname} = item
+              const {firstname, middlename, lastname} = item
 
-            const fullname = [firstname, middlename, lastname].filter(Boolean).join(' ')
+              const fullname = [firstname, middlename, lastname].filter(Boolean).join(' ')
 
-            const phoneNumber = item?.borrower?.[0]?.mobilephone_1 || ''
+              const phoneNumber = item?.borrower?.[0]?.mobilephone_1 || ''
 
-            if (isHide) {
-              return <React.Fragment key={i}></React.Fragment>
-            }
-            let Component = component || React.Fragment
-            let value = item[key]
+              if (isHide) {
+                return <React.Fragment key={i}></React.Fragment>
+              }
+              let Component = component || React.Fragment
+              let value = item[key]
 
-            if (key === 'id') {
+              if (key === 'id') {
+                return (
+                  <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
+                    {Number(idx) +
+                      1 +
+                      (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
+                        Number(searchCriteria.pageSize))}
+                  </td>
+                )
+              }
+
+              if (key === 'application_date') {
+                value = moment(item[key]).format('MMM D, YYYY')
+              }
+
+              // handle for select
+              if (dataOption[key] || options) {
+                const currentItem =
+                  (options || dataOption[key]).find(
+                    (item) => item[keyValueOption || 'value'] === value
+                  ) || {}
+
+                value = currentItem[keyLabelOption || 'label'] || ''
+              }
+
+              if (key === 'identification_no') {
+                return (
+                  <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
+                    {value}
+                  </td>
+                )
+              }
+
+              if (key === 'fullname') {
+                return (
+                  <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
+                    {fullname}
+                  </td>
+                )
+              }
+
+              if (key === 'mobilephone_1') {
+                return (
+                  <td
+                    key={i}
+                    className={`${classNameTableBody} fs-6 fw-medium w-250px ps-20`}
+                    style={{color: '#071437'}}
+                  >
+                    {!!phoneNumber && '+65'}
+                    {phoneNumber || ''}
+                  </td>
+                )
+              }
+
+              if (key === 'date_of_birth') {
+                value = moment(item[key]).format('MMM D, YYYY')
+              }
+
               return (
-                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
-                  {Number(idx) +
-                    1 +
-                    (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
-                      Number(searchCriteria.pageSize))}
+                <td key={i} className={classNameTableBody}>
+                  {component ? (
+                    <Component />
+                  ) : (
+                    <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
+                  )}
                 </td>
               )
             }
-
-            if (key === 'application_date') {
-              value = moment(item[key]).format('MMM D, YYYY')
-            }
-
-            // handle for select
-            if (dataOption[key] || options) {
-              const currentItem =
-                (options || dataOption[key]).find(
-                  (item) => item[keyValueOption || 'value'] === value
-                ) || {}
-
-              value = currentItem[keyLabelOption || 'label'] || ''
-            }
-
-            if (key === 'identification_no') {
-              return (
-                <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
-                  {value}
-                </td>
-              )
-            }
-
-            if (key === 'fullname') {
-              return (
-                <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
-                  {fullname}
-                </td>
-              )
-            }
-
-            if (key === 'mobilephone_1') {
-              return (
-                <td
-                  key={i}
-                  className={`${classNameTableBody} fs-6 fw-medium w-250px ps-20`}
-                  style={{color: '#071437'}}
-                >
-                  {!!phoneNumber && '+65'}
-                  {phoneNumber || ''}
-                </td>
-              )
-            }
-
-            if (key === 'date_of_birth') {
-              value = moment(item[key]).format('MMM D, YYYY')
-            }
-
-            return (
-              <td key={i} className={classNameTableBody}>
-                {component ? (
-                  <Component />
-                ) : (
-                  <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
-                )}
-              </td>
-            )
-          })}
+          )}
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
@@ -386,6 +452,65 @@ const BorrowersListing = (props: Props) => {
               Filter
             </Button>
           </div>
+        </div>
+
+        <div className={clsx(['position-relative mt-4', showConfigColumn && 'text-gray-900'])}>
+          <div
+            className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
+            onClick={handleToggleConfigColumn}
+          >
+            <img src={gridImg} alt='grid' />
+            <span className='fs-14 d-inline-block fw-semibold'>Show Columns</span>
+          </div>
+
+          {/* config */}
+          {showConfigColumn && (
+            <div className='config-column-grid-other card justify-content-end'>
+              {/* Header */}
+              <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
+                <span className='fw-bold'>Config Column</span>
+
+                <div
+                  className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
+                  onClick={handleToggleConfigColumn}
+                >
+                  <KTIcon className='fs-1' iconName='cross' />
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
+                {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
+                  if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+
+                  return (
+                    <Checkbox
+                      name={el.key}
+                      label={el.name}
+                      classNameLabel='ms-8px'
+                      key={i}
+                      checked={configColumn[el.key]}
+                      onChange={handleChangeConfigColumn}
+                    />
+                  )
+                })}
+              </div>
+
+              {/* Footer */}
+              <div className='d-flex justify-content-end p-30px gap-8px'>
+                <Button
+                  className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
+                  onClick={handleResetConfigColumn}
+                >
+                  Reset
+                </Button>
+
+                <Button className='btn btn-lg btn-primary fs-6' onClick={handleApplyConfigColumn}>
+                  Apply
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
 
         {Object.keys(checkFilter).length !== 0 &&
@@ -485,7 +610,7 @@ const BorrowersListing = (props: Props) => {
             >
               <thead>
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                  {rows
+                  {rowsConfigColumn
                     .filter((item) => !item.isHide)
                     .map((item, i) => {
                       const {classNameTableHead, name, infoFilter, key} = item
