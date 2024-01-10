@@ -20,7 +20,7 @@ type Props = {
 
 function TableRender({title, config = [], data}: Props) {
   return (
-    <div className='w-100 p-0 h-100' style={{border: '1px solid #D4D4D4'}}>
+    <div className='w-101 p-0 h-100' style={{border: '1px solid #D4D4D4'}}>
       {!!title && (
         <h1
           className='pt-8px pb-8px ps-24px pe-24px fw-semibold m-0 fs-14 text-gray-700'

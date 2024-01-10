@@ -848,7 +848,7 @@ export const Applications = () => {
             )}
 
             {values.approval && (
-              <div className='p-30px pb-0'>
+              <div className='p-30px pb-0 me-1'>
                 <div className='p-16px bg-light-success rounded-8'>
                   <h1 className='text-success fs-16 fw-bold m-0'>
                     Approved By: {values.approval.approved_by}
