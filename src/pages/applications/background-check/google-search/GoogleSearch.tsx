@@ -1,5 +1,5 @@
 import Button from '@/components/button/Button'
-
+import error from '../../../../app/images/error.jpg'
 type Props = {
   handleClose: () => void
   mobile?: boolean
@@ -63,12 +63,21 @@ const GoogleSearch = ({handleClose, dataSearch, mobile = false, status}: Props) 
                 className='p-0 m-0 img-google-check'
                 style={{
                   maxHeight: mobile ? 'calc(100vh - 350px)' : 'calc(100vh - 450px)',
+
                   overflowY: 'auto',
                 }}
               >
                 <img
-                  src={`data:image/png;base64,${dataSearch?.screenshot}`}
+                  src={`${
+                    !!dataSearch?.screenshot
+                      ? `data:image/png;base64,${dataSearch?.screenshot}`
+                      : error
+                  }`}
                   alt='google'
+                  style={{
+                    height: !!dataSearch?.screenshot ? 'auto' : 'calc(100vh - 460px)',
+                    objectFit: 'cover',
+                  }}
                   className='w-100 '
                 />
               </div>

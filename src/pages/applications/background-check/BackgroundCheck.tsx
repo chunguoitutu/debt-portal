@@ -12,7 +12,7 @@ import {swalConfirm} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
 import CaCheckDeskTop from './ca-check/DesktopCaCheck'
 
-const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
+const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, borrower_id}) => {
   const [show, setShow] = useState<boolean>(false)
   const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
@@ -36,6 +36,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'Google Search Check',
         icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
+        opacity: !!tools?.googleSearchCheck,
         show: true,
         onclick: () => {
           if (fullname && !!values.identification_no) {
@@ -61,6 +62,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'UN Page Check',
         icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
+        opacity: !!tools?.upPageCheck,
         show: true,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
@@ -85,6 +87,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
       {
         value: 'CAs Check',
         icon: <Icons name={'Cascheck'} />,
+        opacity: !!tools?.casCheck,
         background: '#E2E5E7',
         show: true,
         onclick: () => {
@@ -112,6 +115,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'Get MLCB Report',
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
+        opacity: true,
         show: [1].includes(values.status || 0),
         onclick: () => {
           if (!!applicationIdEdit) {
@@ -136,6 +140,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
       {
         value: 'Loan Cross Check',
         icon: <Icons name={'ImgLoanCrossCheck'} />,
+        opacity: true,
         background: 'rgba(232, 255, 243, 0.85)',
         show: true,
         onclick: () => {
@@ -146,6 +151,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
         show: ![2, 3].includes(values.status || 0),
+        opacity: true,
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
           if (!!values.mobilephone_1) {
@@ -172,6 +178,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
         value: 'Repayment Schedule Calculator',
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
+        opacity: true,
         show: ![2, 3].includes(values.status || 0),
         onclick: () => {
           setShow(true)
@@ -195,6 +202,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
       )}
       {showSearchCheck && true && (
         <WrapperGoogleSearch
+          borrower_id={borrower_id || 0}
+          tools={tools}
+          setTools={setTools}
           status={[2, 3].includes(values.status || 0)}
           payload={fullname}
           Nric_no={values.identification_no}
@@ -205,6 +215,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
 
       {showSearchPageCheck && true && (
         <PageCheckDeskTop
+          tools={tools}
+          borrower_id={borrower_id || 0}
+          setTools={setTools}
           Nric_no={values.identification_no}
           status={[2, 3].includes(values.status || 0)}
           payload={values.lastname}
@@ -214,6 +227,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik}) => {
       )}
       {showCaCheck && true && (
         <CaCheckDeskTop
+          tools={tools}
+          borrower_id={borrower_id || 0}
+          setTools={setTools}
           Nric_no={values.identification_no}
           status={[2, 3].includes(values.status || 0)}
           payload={fullname}

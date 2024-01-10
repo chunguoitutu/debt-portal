@@ -3,6 +3,7 @@ interface config {
   classIcons?: string
   classWrapper?: string
   title: string
+  opacity?: boolean
   row: any
 }
 type Props = {
@@ -28,6 +29,7 @@ const ContentListButton = ({config}: Props) => {
                 } bg-transparent d-flex justify-content-center align-items-center`}
                 onClick={data.onclick}
                 style={{
+                  opacity: !!data?.opacity ? '1' : '0.6',
                   border: 'none',
                 }}
               >

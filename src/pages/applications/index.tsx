@@ -76,6 +76,7 @@ export const Applications = () => {
   const [singpass, setSingpass] = useState<boolean>(false)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+
   const [listIdEdit, setListIdEdit] = useState<ListIdEdit>({
     customerId: 0,
     borrowerId: 0,
@@ -84,6 +85,12 @@ export const Applications = () => {
     bankInfoId: 0,
     cpfId: 0,
   })
+  const [tools, setTools] = useState({
+    googleSearchCheck: '',
+    upPageCheck: '',
+    casCheck: '',
+  })
+
   const {pathname} = useLocation()
   const initialValues: ApplicationFormData = useMemo(() => {
     return STEP_APPLICATION.flatMap((item) => item.config).reduce(
@@ -112,6 +119,7 @@ export const Applications = () => {
     setStepCompleted(0)
     if (pathname === '/application/create') {
       setCurrentStep(1)
+      setTools({googleSearchCheck: '', upPageCheck: '', casCheck: ''})
     }
     setSingpass(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -288,6 +296,13 @@ export const Applications = () => {
         rejection, // only rejected (status = 2)
         cpf,
       } = data.data || {}
+      setTools(
+        data?.tools || {
+          googleSearchCheck: '',
+          upPageCheck: '',
+          casCheck: '',
+        }
+      )
 
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
 
@@ -690,6 +705,7 @@ export const Applications = () => {
         employer: JSON.stringify(employer),
         month: JSON.stringify(month),
       },
+      tools: tools,
     }
 
     try {
@@ -749,6 +765,9 @@ export const Applications = () => {
     <>
       <div className='d-2xxl-none'>
         <RightToolbar
+          borrower_id={listIdEdit.borrowerId}
+          tools={tools}
+          setTools={setTools}
           setStepCompleted={setStepCompleted}
           formik={formik}
           config={STEP_APPLICATION[currentStep - 1].config || []}
@@ -903,6 +922,9 @@ export const Applications = () => {
             <div className='d-none d-2xxl-block'>
               <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
                 <BackgroundCheck
+                  borrower_id={listIdEdit.borrowerId}
+                  tools={tools}
+                  setTools={setTools}
                   setStepCompleted={setStepCompleted}
                   formik={formik}
                   config={STEP_APPLICATION[currentStep - 1].config || []}

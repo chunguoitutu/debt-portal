@@ -68,7 +68,7 @@ input[type='number']::-webkit-outer-spin-button {
   background: transparent;
   &:focus-within:has(input:focus) {
     border: 1px solid #0c2de2;
-    background: var(--bs-gray-100) !important;
+    background: #fff !important;
     box-shadow: 0px 0px 2px 3px rgba(27, 132, 255, 0.16), 0px 2px 2px 0px rgba(0, 0, 0, 0.16);
     color: var(--bs-gray-700);
     transition: color 0.2s ease;
@@ -76,7 +76,7 @@ input[type='number']::-webkit-outer-spin-button {
 
   &:focus,
   &:active {
-    background-color: var(--bs-gray-100) !important;
+    background-color: #fff !important;
   }
 }
 #kt_app_header_container {
@@ -203,10 +203,10 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .bg-inherit:focus {
-  background-color: #f9f9f9 !important;
+  background-color: #fff !important;
 }
 .bg-inherit:disabled {
-  background-color: transparent !important;
+  background-color: #fff !important;
 }
 
 .btn-repayment-schedule-calculator {
@@ -409,6 +409,6 @@ input[type='number']::-webkit-outer-spin-button {
 
 .bg-inherit_textarea:focus {
   border: 1px solid #0c2de2;
-  background: var(--Gray---bs-gray-100, #f9f9f9);
+  background: #fff;
   box-shadow: 0px 0px 2px 3px rgba(27, 132, 255, 0.16), 0px 2px 2px 0px rgba(0, 0, 0, 0.16);
 }

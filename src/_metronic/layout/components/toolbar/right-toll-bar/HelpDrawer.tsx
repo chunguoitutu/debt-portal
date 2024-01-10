@@ -15,7 +15,7 @@ import MobileValidationPhoneNumber from '@/pages/applications/background-check/v
 import {FC, useMemo, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
-const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
+const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower_id}) => {
   const {values} = formik
   const [show, setShow] = useState<boolean>(false)
   const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
@@ -28,6 +28,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
     () => [values.firstname, values.middlename, values.lastname].filter(Boolean).join(' '),
     [values.firstname, values.middlename, values.lastname]
   )
+
   const configBackgroudCheck = {
     title: 'Tools',
     row: [
@@ -36,6 +37,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
         show: true,
+        opacity: !!tools?.googleSearchCheck,
         onclick: () => {
           if (fullname && !!values.identification_no) {
             setShow(false)
@@ -66,6 +68,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
         show: true,
+        opacity: !!tools?.upPageCheck,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
             setShowSearchPageCheck(true)
@@ -97,6 +100,8 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         icon: <Icons name={'Cascheck'} />,
         background: '#E2E5E7',
         show: true,
+        opacity: !!tools?.casCheck,
+
         onclick: () => {
           if (fullname && !!values.identification_no) {
             setShow(false)
@@ -127,6 +132,8 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
         show: [1].includes(values.status || 0),
+        opacity: true,
+
         onclick: () => {
           if (!!applicationIdEdit) {
             setShowCaCheck(false)
@@ -157,6 +164,8 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         value: 'Loan Cross Check',
         icon: <Icons name={'ImgLoanCrossCheck'} />,
         background: 'rgba(232, 255, 243, 0.85)',
+        opacity: true,
+
         show: true,
         onclick: () => {
           alert('Loan Cross Check')
@@ -196,6 +205,8 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         value: 'Repayment Schedule Calculator',
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
+        opacity: true,
+
         show: true,
         onclick: () => {
           setShow(true)
@@ -234,6 +245,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         {show && true && <MobileRepayment handleShow={() => setShow(false)} />}
         {showSearchCheck && true && (
           <MobileGoogleSearch
+            tools={tools}
+            borrower_id={borrower_id || 0}
+            setTools={setTools}
             status={[2, 3].includes(values.status || 0)}
             Nric_no={values.identification_no}
             payload={fullname}
@@ -251,6 +265,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         )}
         {showSearchPageCheck && true && (
           <MobilePageCheck
+            tools={tools}
+            borrower_id={borrower_id || 0}
+            setTools={setTools}
             status={[2, 3].includes(values.status || 0)}
             Nric_no={values.identification_no}
             payload={values.lastname}
@@ -259,6 +276,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
         )}
         {showCaCheck && true && (
           <MobileCaCheck
+            tools={tools}
+            borrower_id={borrower_id || 0}
+            setTools={setTools}
             status={[2, 3].includes(values.status || 0)}
             Nric_no={values.identification_no}
             payload={fullname}
@@ -302,6 +322,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik}) => {
                bg-transparent d-flex justify-content-center align-items-center`}
                       onClick={data.onclick}
                       style={{
+                        opacity: !!data?.opacity ? '1' : '0.6',
                         border: 'none',
                       }}
                     >

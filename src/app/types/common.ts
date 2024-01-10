@@ -312,6 +312,11 @@ export type PropsStepApplication = {
       [key: string]: any[]
     }>
   >
+  // setIsMountedAddress: Dispatch<SetStateAction<boolean>>
+  // isMountedAddress: boolean
+  setTools?: Dispatch<SetStateAction<any>>
+  tools?: any
+  borrower_id?: number
 }
 
 export type ApplicationPayload = {
@@ -417,6 +422,11 @@ export type ApplicationPayload = {
   customerId?: number
   borrowerId?: number
   file_documents?: any
+  tools?: {
+    googleSearchCheck: string
+    upPageCheck: string
+    casCheck: string
+  }
 }
 
 export type ApplicationFormData = {

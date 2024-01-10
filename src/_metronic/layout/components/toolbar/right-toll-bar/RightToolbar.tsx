@@ -9,6 +9,11 @@ const RightToolbar: FC<PropsStepApplication> = ({
   config,
   setSingpass,
   singpass,
+  borrower_id,
+  tools,
+  setTools,
+  optionListing,
+  setOptionListing,
 }) => {
   return (
     <>
@@ -16,6 +21,11 @@ const RightToolbar: FC<PropsStepApplication> = ({
         <ToggleHelpDrawer />
       </div>
       <HelpDrawer
+        setOptionListing={setOptionListing}
+        optionListing={optionListing}
+        borrower_id={borrower_id}
+        tools={tools}
+        setTools={setTools}
         setStepCompleted={setStepCompleted}
         formik={formik}
         config={config}
