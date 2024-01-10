@@ -1,7 +1,7 @@
-import { Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction } from 'react'
-import { FormikProps } from 'formik'
-import { ObjectSchema, Schema } from 'yup'
-import { ApprovalInfo } from './response'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
+import {FormikProps} from 'formik'
+import {ObjectSchema, Schema} from 'yup'
+import {ApprovalInfo, RejectedInfo} from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -26,7 +26,7 @@ export type ErrorResponse = {
 export type DataResponse<T> = {
   error: boolean
   message: string
-  searchCriteria?: { [key: string]: string }
+  searchCriteria?: {[key: string]: string}
   data: T
 }
 
@@ -212,7 +212,7 @@ export type TableConfig = {
     messageEditSuccess?: string
     messageCreateError?: string
     messageCreateSuccess?: string
-    dependencies?: { [key: string]: string }
+    dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
     showMessageTitle?: string
@@ -259,8 +259,8 @@ export type CheckboxTreeItem = {
   value: string
   label: string
   active?: boolean
-  children?: CheckboxTreeItem[] & { [key: string]: any }
-} & { [key: string]: any }
+  children?: CheckboxTreeItem[] & {[key: string]: any}
+} & {[key: string]: any}
 
 export type Option = {
   label: string
@@ -274,7 +274,8 @@ export type DropDownGroup = {
 
 // type money use for input advanced
 export type ApplicationConfig = {
-  key: string
+  key: string // key identifies the field
+  keyOfOptionFromApi?: string // key identifies the option
   data?: Option[]
   className?: string
   defaultValue?: string | number | any[] | boolean
@@ -287,7 +288,7 @@ export type ApplicationConfig = {
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: { [key: string]: string | number }[] | DropDownGroup[]
+  options?: {[key: string]: string | number}[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
@@ -303,8 +304,14 @@ export type PropsStepApplication = {
   formik: FormikProps<ApplicationFormData>
   setSingpass: Dispatch<SetStateAction<boolean>>
   singpass: boolean
-  // setIsMountedAddress: Dispatch<SetStateAction<boolean>>
-  // isMountedAddress: boolean
+  optionListing: {
+    [key: string]: any[]
+  }
+  setOptionListing: Dispatch<
+    SetStateAction<{
+      [key: string]: any[]
+    }>
+  >
 }
 
 export type ApplicationPayload = {
@@ -499,6 +506,7 @@ export type ApplicationFormData = {
   vehicle_open_maket_value?: string | any
   vehicle_effective_date?: string
   approval?: ApprovalInfo
+  rejection?: RejectedInfo
 }
 
 export type BlockAddress = {

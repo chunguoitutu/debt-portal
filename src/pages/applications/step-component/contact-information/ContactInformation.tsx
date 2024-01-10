@@ -6,7 +6,7 @@ import {BLOCK_ADDRESS_CONFIG} from '../config'
 import {Select} from '@/components/select'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {AddressTypeItem, ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
-import {COUNTRY_PHONE_CODE, PROPERTY_TYPE} from '@/app/utils'
+import {COUNTRY_PHONE_CODE, PROPERTY_TYPE, isFirstGetStepApplication} from '@/app/utils'
 import {useParams} from 'react-router-dom'
 import AddressGroup from './AddressGroup'
 import {handleCreateBlockAddress} from '@/app/constants'
@@ -17,40 +17,36 @@ type BlockAddressCustom = {
   'work-site': BlockAddress[]
 }
 
-const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}) => {
-  const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
+const ContactInformation: FC<PropsStepApplication> = ({
+  config,
+  formik,
+  optionListing,
+  setOptionListing,
+}) => {
   const errorContainerRef = useRef<HTMLDivElement | null>(null)
   const {values, touched, errors, handleChange, setValues, setFieldValue} = formik
   const [active, setActive] = useState<string | null>(null)
 
-  const {applicationIdEdit} = useParams()
-
   useEffect(() => {
-    onFetchDataList()
+    const isFirstGet = isFirstGetStepApplication({
+      optionListing,
+      config: [...config, ...BLOCK_ADDRESS_CONFIG],
+    })
+    const isHasLeast1Address = !!values?.address_contact_info?.[0]?.address_type_id
+
+    if (isFirstGet || !isHasLeast1Address) {
+      onFetchDataList()
+    } else {
+      // only handle when edit. show
+      const {itemDefault} = handleSortAddressTypeListing(optionListing['address_type'])
+      setActive(itemDefault.address_type_name)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const blockAddressData = useMemo(() => {
-    const data = values.address_contact_info.reduce(
-      (acc: BlockAddressCustom, item: BlockAddress) => {
-        return {
-          ...acc,
-          home: [...acc['home'], item],
-        }
-      },
-      {
-        home: [],
-        office: [],
-        'work-site': [],
-      }
-    )
-
-    return data
-  }, [values.address_contact_info])
-
   async function onFetchDataList() {
     try {
-      const updatedDataMarketing = {...dataOption}
+      const newOption: {[key: string]: any[]} = {}
 
       const endpoint = [...config, ...BLOCK_ADDRESS_CONFIG].filter((data) => !!data.dependencyApi)
 
@@ -58,36 +54,29 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
         request.post(d.dependencyApi || '', {status: true, pageSize: 99999, currentPage: 1})
       )
 
+      if (!requests?.length) return
+
       const responses = await Promise.all(requests)
 
       responses.forEach((res, index) => {
-        const key = endpoint[index].key
+        const config = endpoint[index]
 
         let data = [...res?.data?.data]
 
-        // Move the first default item to the array[0]
-        if (key === 'address_type_id') {
-          const dataClone = [...data] as AddressTypeItem[]
-          const indexHomeAddress = dataClone.findIndex((el) =>
-            el.address_type_name.toLowerCase()?.includes('home')
-          ) // filter address type home
+        if (!Array.isArray(data) || !data?.length) return
 
-          let itemDefault = dataClone[0]
-          let isHomeAddress = indexHomeAddress === -1 ? false : true
+        newOption[config.keyOfOptionFromApi || config.key] = data
 
-          if (dataClone.length) {
-            itemDefault =
-              dataClone.splice(indexHomeAddress === -1 ? 0 : indexHomeAddress, 1)?.[0] || {}
-            data = [itemDefault, ...dataClone]
-            setActive(itemDefault?.address_type_name)
-          }
+        if (config.key === 'address_type_id') {
+          const {newData, itemDefault, isHomeAddress} = handleSortAddressTypeListing(data)
 
-          // Only create or draft status and first mount component
-          // !values.address_contact_info[0].address_type_id -> first mount
-          if (
-            [0, undefined].includes(values.status) &&
-            !values.address_contact_info[0].address_type_id
-          ) {
+          data = [...newData]
+          setActive(itemDefault?.address_type_name)
+          const isDraftOrCreate = [0, undefined].includes(values.status)
+          const isHasLeast1Address = values.address_contact_info[0].address_type_id
+
+          // Change first address block
+          if (isDraftOrCreate && !isHasLeast1Address) {
             let newValue = {
               ...values.address_contact_info[0],
               address_type_id: itemDefault.id,
@@ -111,30 +100,54 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
                 home_ownership: ' ',
                 staying_condition: ' ',
                 housing_type: ' ',
-              } // home_ownership, staying_condition: create fake spaces to avoid required
+              } // home_ownership, staying_condition: create fake spaces to avoid formik required
 
               delete newValue.existing_staying
             }
 
-            setFieldValue(`address_contact_info`, [
-              {...newValue},
-              ...values?.address_contact_info?.slice(1), // for draft status
-            ])
+            setFieldValue(`address_contact_info[0]`, newValue)
           }
         }
-
-        updatedDataMarketing[key] = data
       })
 
-      setDataOption(updatedDataMarketing)
+      setOptionListing((prev) => ({...prev, ...newOption}))
     } catch (error) {
     } finally {
     }
   }
 
+  /**
+   * Put the address containing "home" character at the beginning of the array
+   */
+  function handleSortAddressTypeListing(data: AddressTypeItem[]) {
+    let newData = [...data]
+
+    const dataClone = [...data] as AddressTypeItem[]
+    const indexHomeAddress = dataClone.findIndex((el) =>
+      el.address_type_name.toLowerCase()?.includes('home')
+    ) // filter address type home
+
+    let itemDefault = dataClone[0]
+    let isHomeAddress = indexHomeAddress === -1 ? false : true
+
+    itemDefault = dataClone.splice(indexHomeAddress === -1 ? 0 : indexHomeAddress, 1)?.[0] || {}
+    newData = [itemDefault, ...dataClone]
+
+    return {
+      itemDefault,
+      newData: newData,
+      isHomeAddress,
+    }
+  }
+
+  function handleToggleAddress(newLabelActive: string) {
+    setActive(active === newLabelActive ? null : newLabelActive)
+  }
+
   function renderComponent(item: ApplicationConfig) {
     const {
       key,
+      keyOfOptionFromApi,
       column,
       options,
       keyLabelOfOptions,
@@ -168,7 +181,7 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
           onChange={handleChange}
           name={key}
           classShared={className}
-          options={!!dependencyApi ? dataOption[key] || [] : options}
+          options={!!dependencyApi ? optionListing[keyOfOptionFromApi || key] || [] : options}
           error={errors[key]}
           touched={touched[key]}
           keyValueOption={keyValueOfOptions}
@@ -218,10 +231,6 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
     return <Component />
   }
 
-  function handleToggleAddress(newLabelActive: string) {
-    setActive(active === newLabelActive ? null : newLabelActive)
-  }
-
   return (
     <>
       {config?.map((item, i) => {
@@ -253,12 +262,12 @@ const ContactInformation: FC<PropsStepApplication> = ({config, formik, singpass}
         )
       })}
 
-      {dataOption?.address_type_id?.map((addressType: AddressTypeItem, i) => {
+      {optionListing?.address_type?.map((addressType: AddressTypeItem, i) => {
         return (
           <AddressGroup
             key={addressType.id}
             data={addressType}
-            dataOption={dataOption}
+            dataOption={optionListing}
             active={active}
             formik={formik}
             indexGroup={i}

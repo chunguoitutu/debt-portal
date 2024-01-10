@@ -11,7 +11,6 @@ import GrossMonthlyIncomeCompletion from './completion/GrossMonthlyIncomeComplet
 import LableOptions from './completion/LableOptions'
 import SpecialZation from './completion/SpecialZation'
 import RenderOptionsApi from './completion/RenderOptionsApi'
-import RenderOptionsApiAddress from './completion/AddressType'
 import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
 import FileDocument from './employment/FileDocument'
@@ -159,6 +158,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'country_id',
+    keyOfOptionFromApi: 'country',
     component: Select,
     typeComponent: 'Select',
     column: 6,
@@ -195,6 +195,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'loan_type_id',
+    keyOfOptionFromApi: 'loan_type',
     component: Select,
     typeComponent: 'Select',
     label: 'Loan Type',
@@ -255,7 +256,6 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
   },
 ]
 
-// Yup string will not validate (because typeInput phone === type number)
 const CONTACT_INFORMATION: ApplicationConfig[] = [
   {
     key: 'mobilephone_1',
@@ -455,6 +455,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'job_type_id',
+    keyOfOptionFromApi: 'job_type',
     component: Select,
     typeComponent: 'Select',
     label: 'Job Type',
@@ -535,6 +536,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
 const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
   {
     key: 'address_type_id',
+    keyOfOptionFromApi: 'address_type',
     dependencyApi: '/config/address_type/listing',
     isHide: true,
     // component: Select,
@@ -634,6 +636,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'country',
+    keyOfOptionFromApi: 'country',
     component: Select,
     typeComponent: 'Select',
     label: 'Country',
@@ -744,6 +747,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         },
         {
           key: 'country_id',
+          keyOfOptionFromApi: 'country',
           value: 'nationality',
           dependencyApi: 'config/country/listing',
           Component: RenderOptionsApi,
@@ -810,6 +814,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
       [
         {
           key: 'loan_type_id',
+          keyOfOptionFromApi: 'loan_type',
           value: 'Loan type',
           dependencyApi: '/config/loan_type/listing',
           Component: RenderOptionsApi,
@@ -947,6 +952,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         },
         {
           key: 'job_type_id',
+          keyOfOptionFromApi: 'job_type',
           value: 'Job Type',
           dependencyApi: 'config/job_type/listing',
           Component: RenderOptionsApi,

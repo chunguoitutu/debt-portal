@@ -9,17 +9,16 @@ import {KTIcon} from '@/_metronic/helpers'
 import {TextArea} from '@/components/textarea'
 import Button from '@/components/button/Button'
 import {Select} from '@/components/select'
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import request from '@/app/axios'
 import {convertErrorMessageResponse} from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import {useAuth} from '@/app/context/AuthContext'
+import {PropsStepApplication} from '@/app/types'
+import {useParams} from 'react-router-dom'
 
 type Props = {
-  id: string | number | any
-  show: boolean
   handleClose: () => void
-  rejection_one: {} | any
   handleloadApi: () => void
 }
 
@@ -30,33 +29,48 @@ export const CreateLoanTypeSchema = Yup.object().shape({
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) => {
-  const [options, setOptions] = useState([])
+const Reject = ({
+  handleClose,
+  handleloadApi,
+  formik,
+  setOptionListing,
+  optionListing = {},
+}: Props & PropsStepApplication) => {
+  const {rejection} = formik.values
+
   const {currentUser} = useAuth()
+  const {applicationIdEdit = 0} = useParams()
+  const tableName = useMemo(() => 'rejection_type', [])
 
   useEffect(() => {
-    !!id &&
-      request
-        .post('config/rejection_type/listing', {
-          status: true,
-          pageSize: 99999,
-          currentPage: 1,
-        })
-        .then((res) => {
-          setOptions(res?.data?.data || [])
-          !rejection_one?.id &&
-            setFieldValue(
-              'rejection_id',
-              res?.data?.data.length > 0
-                ? res?.data?.data.filter((el: any) => +el.is_default === 1).length > 0 &&
-                  res?.data?.data.length > 0
-                  ? res?.data?.data.filter((el: any) => +el.is_default === 1)[0].id
-                  : res?.data?.data[0].id
-                : ''
-            )
-        })
-        .catch()
+    const data = optionListing[tableName]
+
+    if (data) return
+
+    request
+      .post(`config/${tableName}/listing`, {
+        status: true,
+        pageSize: 99999,
+        currentPage: 1,
+      })
+      .then(({data}) => {
+        if (!Array.isArray(data.data) || !data.data.length) return
+
+        setOptionListing((prev) => ({...prev, [tableName]: data.data}))
+
+        setFieldValue('rejection_id', getRejectionIdDefault(data.data))
+      })
+      .catch((error: any) => {
+        console.error(error)
+      })
   }, [])
+
+  function getRejectionIdDefault(data: any[]): string {
+    if (!Array.isArray(data)) return ''
+
+    const itemDefault = data?.find((el: any) => el.is_default) || data?.[0]
+    return itemDefault.id || ''
+  }
 
   const {
     values,
@@ -70,17 +84,17 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
     setFieldValue,
   } = useFormik({
     initialValues: {
-      rejection_id: !!rejection_one ? rejection_one?.rejection_type_id : '',
-      description: !!rejection_one?.rejection_note ? rejection_one?.rejection_note : '',
+      rejection_id: rejection?.id || getRejectionIdDefault(optionListing[tableName]) || '',
+      description: rejection?.rejection_note || '',
     },
     validationSchema: CreateLoanTypeSchema,
     onSubmit: async (values: any, actions: any) => {
       setSubmitting(true)
       try {
-        if (!rejection_one?.id) {
+        if (!rejection?.id) {
           await request.post('application/application-reject', {
             rejection_type_id: +values.rejection_id,
-            application_id: +id,
+            application_id: +applicationIdEdit,
             rejection_note: values.description,
             rejected_by: currentUser?.id,
           })
@@ -90,7 +104,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
             title: `Application successfully rejected`,
           })
         } else {
-          await request.put('application/application-reject/' + rejection_one?.id, {
+          await request.put('application/application-reject/' + rejection?.id, {
             rejection_type_id: +values.rejection_id,
             rejection_note: values.description,
             rejected_by: currentUser?.id,
@@ -122,13 +136,13 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
       tabIndex={-1}
       aria-hidden='true'
       dialogClassName='modal-dialog modal-dialog-centered mw-900px'
-      show={show}
+      show={true}
       onHide={handleClose}
       backdrop={true}
     >
       <>
         <div className='modal-header p-30px'>
-          <h2>{!rejection_one?.id ? '' : 'Update'} Reject Application</h2>
+          <h2>{!rejection?.id ? '' : 'Update'} Reject Application</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>
@@ -139,7 +153,7 @@ const Reject = ({handleClose, show, id, rejection_one, handleloadApi}: Props) =>
               <Select
                 keyLabelOption='rejection_type_name'
                 keyValueOption='id'
-                options={options}
+                options={optionListing[tableName]}
                 id='rejection_id'
                 label={'Rejection Type'}
                 name={'rejection_id'}
