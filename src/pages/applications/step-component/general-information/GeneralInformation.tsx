@@ -54,7 +54,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const [showPopup, setShowPopup] = useState(false)
   const [popupSingpass, setPopupSingpass] = useState<boolean>(false)
   const {company_id} = useAuth()
-  const {values, touched, errors, handleChange, handleBlur, setFieldValue, setValues} = formik
+  const {values, touched, errors, handleChange, handleBlur, setFieldValue, setErrors} = formik
   const {pathname} = useLocation()
 
   async function onFetchDataList() {
@@ -110,6 +110,12 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       GetDefaultAddressType()
     }
   }, [])
+
+  useEffect(() => {
+    if (values.is_existing === 'existing') {
+      setErrors({})
+    }
+  }, [values.is_existing])
 
   useEffect(() => {
     const authCode = searchParams.get('code')
@@ -474,9 +480,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           onChange={handleChange}
           onBlur={(e) => {
             handleBlur(e)
-            if (!!values[key].trim()) {
-              handleGetApplicationById()
-            }
+            handleGetApplicationById()
           }}
           type={typeInput}
           name={key}
