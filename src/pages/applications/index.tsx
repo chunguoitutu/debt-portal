@@ -543,6 +543,7 @@ export const Applications = () => {
    * @param isDraft status of application
    */
   async function handleSubmitForm(isDraft: boolean = false) {
+<<<<<<< Updated upstream
     const {
       identification_type,
       identification_no,
@@ -609,6 +610,9 @@ export const Applications = () => {
     } = values
 
     const addressList = address_contact_info
+=======
+    const addressList = values.address_contact_info
+>>>>>>> Stashed changes
       .filter((item) => item.address_type_id)
       .map((item) => ({
         ...item,
@@ -621,6 +625,7 @@ export const Applications = () => {
       customer: {
         ...(customerId && applicationIdEdit ? {id: customerId} : {}),
         company_id: +company_id,
+<<<<<<< Updated upstream
         country_id: +country_id,
         customer_no: customer_no || '',
         identification_type,
@@ -629,62 +634,72 @@ export const Applications = () => {
         firstname: capitalizeFirstText(firstname),
         lastname: capitalizeFirstText(lastname),
         gender,
+=======
+        country_id: +values.country_id,
+        customer_no: values.customer_no || '',
+        identification_type: values.identification_type,
+        identification_no: values.identification_no,
+        date_of_birth: values.date_of_birth ? new Date(values.date_of_birth) : '',
+        firstname: capitalizeFirstText(values.firstname),
+        lastname: capitalizeFirstText(values.lastname),
+        gender: values.gender,
+>>>>>>> Stashed changes
       },
       borrower: {
         ...(borrowerId && applicationIdEdit ? {id: borrowerId} : {}),
-        email_1,
-        email_2,
-        employment_status,
-        mobilephone_1: String(mobilephone_1),
-        mobilephone_2: String(mobilephone_2),
-        mobilephone_3: String(mobilephone_3),
-        homephone: String(homephone),
-        monthly_income: +monthly_income || 0,
-        job_type_id: +job_type_id || null,
-        spoken_language,
-        marketing_type_id: +marketing_type_id || null,
-        residential_type,
+        email_1: values.email_1,
+        email_2: values.email_2,
+        employment_status: values.employment_status,
+        mobilephone_1: String(values.mobilephone_1),
+        mobilephone_2: String(values.mobilephone_2),
+        mobilephone_3: String(values.mobilephone_3),
+        homephone: String(values.homephone),
+        monthly_income: +values.monthly_income || 0,
+        job_type_id: +values.job_type_id || null,
+        spoken_language: values.spoken_language,
+        marketing_type_id: +values.marketing_type_id || null,
+        residential_type: values.residential_type,
       },
       bank_account: {
         ...(bankInfoId && applicationIdEdit ? {id: bankInfoId} : {}),
-        account_number_1,
-        account_number_2,
-        bank_code_1,
-        bank_code_2,
-        bank_name_1,
-        bank_name_2,
+        account_number_1: values.account_number_1,
+        account_number_2: values.account_number_2,
+        bank_code_1: values.bank_code_1,
+        bank_code_2: values.bank_code_2,
+        bank_name_1: values.bank_name_1,
+        bank_name_2: values.bank_name_2,
       },
       employment: {
         ...(employmentId && applicationIdEdit ? {id: employmentId} : {}),
-        portal_code,
-        annual_income: +annual_income,
-        address,
-        company_telephone: String(company_telephone),
-        company_name,
-        monthly_income_1: +monthly_income_1,
-        monthly_income_2: +monthly_income_2,
-        monthly_income_3: +monthly_income_3,
-        occupation,
-        position,
-        specialization,
-        six_months_income: +six_months_income,
-        bankrupt_plan: bankrupt_plan ? 1 : 0,
-        bankrupted: bankrupted ? 1 : 0,
+        portal_code: values.portal_code,
+        annual_income: +values.annual_income,
+        address: values.address,
+        company_telephone: String(values.company_telephone),
+        company_name: values.company_name,
+        monthly_income_1: +values.monthly_income_1,
+        monthly_income_2: +values.monthly_income_2,
+        monthly_income_3: +values.monthly_income_3,
+        occupation: values.occupation,
+        position: values.position,
+        specialization: values.specialization,
+        six_months_income: +values.six_months_income,
+        bankrupt_plan: values.bankrupt_plan ? 1 : 0,
+        bankrupted: values.bankrupted ? 1 : 0,
       },
       application: {
         ...(applicationId && applicationIdEdit ? {id: applicationId} : {}),
-        loan_terms: +loan_terms,
-        term_unit: +term_unit,
-        loan_amount_requested: +loan_amount_requested,
-        loan_type_id: +loan_type_id || null,
+        loan_terms: +values.loan_terms,
+        term_unit: +values.term_unit,
+        loan_amount_requested: +values.loan_amount_requested,
+        loan_type_id: +values.loan_type_id || null,
         status: isDraft ? 0 : 1,
         application_date: new Date(),
         application_notes: JSON.stringify(remarkList),
-        application_no,
-        is_existing,
+        application_no: values.application_no,
+        is_existing: values.is_existing,
         company_id: +company_id,
-        loan_reason,
-        interest: +interest,
+        loan_reason: values.loan_reason,
+        interest: +values.interest,
       },
       address: addressList
         .filter((el) => el.address_type_id)
@@ -694,14 +709,14 @@ export const Applications = () => {
             ? {existing_staying: Number(el?.existing_staying || 0)}
             : {}),
         })),
-      file_documents,
+      file_documents: values.file_documents,
 
       cpf: {
         ...(cpfId && applicationIdEdit && singpass ? {id: cpfId} : {}),
-        amount: JSON.stringify(amount),
-        date: JSON.stringify(date),
-        employer: JSON.stringify(employer),
-        month: JSON.stringify(month),
+        amount: JSON.stringify(values.amount),
+        date: JSON.stringify(values.date),
+        employer: JSON.stringify(values.employer),
+        month: JSON.stringify(values.month),
       },
       tools: tools,
     }
@@ -924,7 +939,7 @@ export const Applications = () => {
         <div className='col-12 col-2xxl-2 m-0 h-unset h-xxl-100 mt-16px mt-2xxl-0 ps-0'>
           <div className='d-flex flex-column h-100'>
             <div className='d-none d-2xxl-block'>
-              <div style={{height: 'calc(100% -50px)'}} className='pb-30px'>
+              <div style={{height: 'calc(100% -50px)'}} className='pb-20px'>
                 <BackgroundCheck
                   borrower_id={listIdEdit.borrowerId}
                   tools={tools}

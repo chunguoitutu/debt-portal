@@ -462,12 +462,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // nothing
     if (!Component) return
 
-    // Special cases should be checked in advance
-    if (key === 'firstname') {
-      return <Component {...props} />
-    }
-    // End special cases
-
     if (key === 'identification_no') {
       return (
         <Component

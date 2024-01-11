@@ -248,3 +248,7 @@ export function isFirstGetStepApplication({
   const endpoint = config.filter((data) => !!data.dependencyApi)
   return !endpoint.some((el) => keyOptionListing.includes(el.keyOfOptionFromApi || el.key))
 }
+
+export function getFullName(info: {[key: string]: any}) {
+  return [info?.firstname, info?.middlename, info?.lastname].filter(Boolean).join(' ')
+}
