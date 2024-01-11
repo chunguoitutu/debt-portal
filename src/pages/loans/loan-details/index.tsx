@@ -8,9 +8,10 @@ import LoanHeader from './LoanHeader'
 import './style.scss'
 import NextPayment from './NextPayment'
 import HorizontalMenu from '@/components/menu'
-import {LOAN_DETAILS_MENU} from '@/app/constants/menu'
 import {LoanInfo} from '@/app/types'
 import request from '@/app/axios'
+import {getMenuHorizontalLoanDetails} from '@/app/constants/menu'
+import {useAuth} from '@/app/context/AuthContext'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -28,11 +29,23 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 const LoanDetails = () => {
+  const {loanId = 0} = useParams()
+  const {currentUser} = useAuth()
+  const isAdminOrSuperAdmin = useMemo(
+    () => ((currentUser?.priority || 0) > 2 ? false : true),
+    [currentUser]
+  )
+
   const [error, setError] = useState<boolean>(false)
   const [loanInfo, setLoanInfo] = useState<LoanInfo | null>(null)
-  const [activeMenu, setActiveMenu] = useState<string>(LOAN_DETAILS_MENU[0].value)
+  const [activeMenu, setActiveMenu] = useState<string>(
+    getMenuHorizontalLoanDetails(isAdminOrSuperAdmin)?.[0].value
+  )
 
-  const {loanId = 0} = useParams()
+  const LOAN_DETAILS_MENU = useMemo(
+    () => getMenuHorizontalLoanDetails(isAdminOrSuperAdmin),
+    [isAdminOrSuperAdmin, currentUser]
+  )
 
   useEffect(() => {
     if (!+loanId) return setError(true)
@@ -41,7 +54,8 @@ const LoanDetails = () => {
   }, [loanId])
 
   const CurrentComponent = useMemo(() => {
-    return LOAN_DETAILS_MENU.find((el) => el.value === activeMenu)?.component
+    return getMenuHorizontalLoanDetails(isAdminOrSuperAdmin).find((el) => el.value === activeMenu)
+      ?.component
   }, [activeMenu])
 
   function handleChangeActiveMenu(newValue: string) {

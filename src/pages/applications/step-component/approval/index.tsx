@@ -3,7 +3,7 @@ import {useAuth} from '@/app/context/AuthContext'
 import {useSocket} from '@/app/context/SocketContext'
 import {swalToast} from '@/app/swal-notification'
 import {ApplicationFormData, DataResponse, UserInfo} from '@/app/types'
-import {convertErrorMessageResponse} from '@/app/utils'
+import {convertErrorMessageResponse, getFullName} from '@/app/utils'
 import Button from '@/components/button/Button'
 import Modal from '@/components/modal/Modal'
 import {Select} from '@/components/select'
@@ -66,7 +66,7 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
         setUserListing(
           data.data.map((el) => ({
             ...el,
-            fullname: [el.firstname, el.lastname].filter(Boolean).join(' '),
+            fullname: getFullName(el),
           }))
         )
     } catch (error) {}

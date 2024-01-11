@@ -146,6 +146,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
           checked={values[key] === item.value}
           value={item.value}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
       ))
     }
@@ -200,6 +201,8 @@ const Employment: FC<PropsStepApplication> = (props) => {
             disabled={disabled || values.status === 3 || values.status === 2 ? true : false}
             onBlur={(e: any) => {
               if (key === 'annual_income') {
+                handleBlur(e)
+
                 setAnnualIncome({
                   monthly_income_1: +(Number(e.target.value) / 12).toFixed(2),
                   monthly_income_2: +(Number(e.target.value) / 12).toFixed(2),

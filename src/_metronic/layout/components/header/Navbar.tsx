@@ -10,6 +10,7 @@ import {useMemo, useState} from 'react'
 import {useAuth} from '../../../../app/context/AuthContext'
 import HeaderUserMenu from '@/_metronic/partials/layout/header-menus/HeaderUserMenu'
 import './style.scss'
+import {getFullName} from '@/app/utils'
 
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
@@ -22,7 +23,6 @@ const Navbar = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {currentUser, priority} = useAuth()
-  const {firstname, lastname} = currentUser || {}
   const [isMenuVisible, setMenuVisible] = useState(false)
 
   const showMenu = () => {
@@ -33,17 +33,6 @@ const Navbar = () => {
     setMenuVisible(false)
   }
 
-  const fullName = useMemo(
-    () => {
-      if (!currentUser) return 'Guest'
-
-      const arrayName = [firstname, lastname].filter(Boolean)
-
-      return arrayName.join(' ')
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [firstname, lastname]
-  )
   const location = useLocation()
 
   return (
@@ -99,7 +88,7 @@ const Navbar = () => {
                 }}
               />
               <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
-                <p className='text-full-mid-last-name'>{fullName}</p>
+                <p className='text-full-mid-last-name'>{getFullName(currentUser) || 'Guest'}</p>
                 <p className='dropdown-text-role'>{currentUser?.role_name || ''}</p>
               </div>
             </div>

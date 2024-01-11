@@ -1,16 +1,16 @@
 import RejectionType from '../../pages/settings/rejection-type/RejectionType'
 import RolePage from '../../pages/settings/role/RoleManagement'
 import UserManagement from '../../pages/settings/user/UserManagement'
-import { v4 as uuidv4 } from 'uuid'
-import { DropDownGroup, MenuSettingItem, Option } from '../types/common'
-import { CompanyManagement } from '../../pages/settings/company-management'
+import {v4 as uuidv4} from 'uuid'
+import {DropDownGroup, ID_TYPE_VALUE, MenuSettingItem, Option} from '../types/common'
+import {CompanyManagement} from '../../pages/settings/company-management'
 import CompanyListing from '../../pages/settings/company/CompanyManagement'
 import DocumentTypes from '../../pages/settings/document-types/DocumentTypes'
 import JobType from '../../pages/settings/job-type/JobType'
 import AddressType from '../../pages/settings/address-type/AddressType'
 import MarkettingType from '../../pages/settings/marketing-type/MarketingType'
 import UploadFileCasCheck from '@/pages/settings/UploadFileCasCheck'
-import LoanTypes from './../../pages/settings/loan-type/LoanType';
+import LoanTypes from './../../pages/settings/loan-type/LoanType'
 
 export const ROLE_PRIORITY: Option[] = [
   {
@@ -393,7 +393,7 @@ export const PURPOSE_OF_LOAN: Option[] = [
   },
 ]
 
-export const ID_TYPE: Option[] = [
+export const ID_TYPE: Option<ID_TYPE_VALUE>[] = [
   {
     value: 'singapore_nric_no',
     label: 'Singapore NRIC No',
@@ -596,61 +596,61 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
 ]
 
 export const HOUSING_HDB_TYPE: Option[] = [
-  { label: '1-Room Flat (HDB)', value: '111' },
-  { label: '2-Room Flat (HDB)', value: '112' },
-  { label: '3-Room Flat (HDB)', value: '113' },
-  { label: '4-Room Flat (HDB)', value: '114' },
-  { label: '5-Room Flat (HDB)', value: '115' },
-  { label: 'Executive Flat (HDB)', value: '116' },
+  {label: '1-Room Flat (HDB)', value: '111'},
+  {label: '2-Room Flat (HDB)', value: '112'},
+  {label: '3-Room Flat (HDB)', value: '113'},
+  {label: '4-Room Flat (HDB)', value: '114'},
+  {label: '5-Room Flat (HDB)', value: '115'},
+  {label: 'Executive Flat (HDB)', value: '116'},
   {
     label: 'Housing and Urban Development Company (HUDC) Flat (excluding those privatized)',
     value: '117',
   },
-  { label: 'Studio Apartment (HDB)', value: '118' },
+  {label: 'Studio Apartment (HDB)', value: '118'},
 ]
 
 export const HOUSING_PRIVATE_RESIDENTIAL: Option[] = [
-  { label: 'Bungalow', value: '121' },
-  { label: 'Semi-Detached House', value: '122' },
-  { label: 'Terrace House', value: '123' },
-  { label: 'Condominium', value: '131' },
-  { label: 'Executive Condominium', value: '132' },
-  { label: 'Other Apartments nec', value: '139' },
-  { label: 'Shophouse', value: '141' },
-  { label: 'Other Housing Units nec', value: '149' },
+  {label: 'Bungalow', value: '121'},
+  {label: 'Semi-Detached House', value: '122'},
+  {label: 'Terrace House', value: '123'},
+  {label: 'Condominium', value: '131'},
+  {label: 'Executive Condominium', value: '132'},
+  {label: 'Other Apartments nec', value: '139'},
+  {label: 'Shophouse', value: '141'},
+  {label: 'Other Housing Units nec', value: '149'},
 ]
 
 export const HOME_OWNERSHIP: Option[] = [
-  { label: 'Self-Owned', value: 'Self-Owned' },
-  { label: 'Rental', value: 'Rental' },
+  {label: 'Self-Owned', value: 'Self-Owned'},
+  {label: 'Rental', value: 'Rental'},
 ]
 
 export const STAYING_CONDITION: Option[] = [
-  { label: 'Alone', value: 'Alone' },
-  { label: 'Family Members', value: 'Family Members' },
+  {label: 'Alone', value: 'Alone'},
+  {label: 'Family Members', value: 'Family Members'},
 ]
 
 export const SALUTATION_OPTION: Option[] = [
-  { label: 'Mr', value: 'mr' },
-  { label: 'Ms', value: 'ms' },
-  { label: 'Mrs', value: 'mrs' },
-  { label: 'Mdm', value: 'mdm' },
-  { label: 'Dr', value: 'dr' },
+  {label: 'Mr', value: 'mr'},
+  {label: 'Ms', value: 'ms'},
+  {label: 'Mrs', value: 'mrs'},
+  {label: 'Mdm', value: 'mdm'},
+  {label: 'Dr', value: 'dr'},
 ]
 
 export const YES_NO_OPTION: Option[] = [
-  { label: 'Yes', value: '1' },
-  { label: 'No', value: '0' },
+  {label: 'Yes', value: '1'},
+  {label: 'No', value: '0'},
 ]
 
 export const REASON_BAD_DEBT: Option[] = [
-  { label: 'In-Prison', value: 'In-Prison' },
-  { label: 'Deceased', value: 'Deceased' },
-  { label: 'Bankrupt', value: 'Bankrupt' },
-  { label: 'MIA', value: 'MIA' },
+  {label: 'In-Prison', value: 'In-Prison'},
+  {label: 'Deceased', value: 'Deceased'},
+  {label: 'Bankrupt', value: 'Bankrupt'},
+  {label: 'MIA', value: 'MIA'},
 ]
 
-export const COUNTRY_PHONE_CODE: Option[] = [{ label: '+65', value: '+65' }]
+export const COUNTRY_PHONE_CODE: Option[] = [{label: '+65', value: '+65'}]
 
 const nth = (d) => {
   const dString = String(d)
@@ -668,7 +668,7 @@ const nth = (d) => {
   }
 }
 
-export const MONTHLY_DUE_DATE: any = Array.from({ length: 31 }).reduce((a: any, _, i) => {
+export const MONTHLY_DUE_DATE: any = Array.from({length: 31}).reduce((a: any, _, i) => {
   const value = [
     ...a,
     {

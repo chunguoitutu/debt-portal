@@ -14,7 +14,7 @@ import Pagination from '@/components/table/components/Pagination'
 import SortBy from '@/components/sort-by'
 import moment from 'moment'
 import Loading from '@/components/table/components/Loading'
-import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
+import {getFullName, handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {FilterBorrower} from './FilterBorrower'
@@ -295,8 +295,6 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
               const {firstname, lastname} = item
 
-              const fullname = [firstname, lastname].filter(Boolean).join(' ')
-
               if (isHide) {
                 return <React.Fragment key={i}></React.Fragment>
               }
@@ -339,7 +337,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
               if (key === 'fullname') {
                 return (
                   <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
-                    {fullname}
+                    {getFullName()}
                   </td>
                 )
               }

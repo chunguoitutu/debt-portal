@@ -114,7 +114,7 @@ export type ResponseLookupListing = {
   id: number
   company_id: number
   customer_no: string
-  identification_type: string
+  identification_type: ID_TYPE_VALUE
   identification_no: string
   prefix: string | null
   firstname: string | null
@@ -259,9 +259,9 @@ export type CheckboxTreeItem = {
   children?: CheckboxTreeItem[] & { [key: string]: any }
 } & { [key: string]: any }
 
-export type Option = {
+export type Option<T = any> = {
   label: string
-  value: string | number
+  value: T
 }
 
 export type DropDownGroup = {
@@ -269,9 +269,11 @@ export type DropDownGroup = {
   options: Option[]
 }
 
+export type ID_TYPE_VALUE = 'singapore_nric_no' | 'foreign_identification_number'
+
 // type money use for input advanced
 export type ApplicationConfig = {
-  key: string // key identifies the field
+  key: keyof ApplicationFormData | keyof BlockAddress // key identifies the field
   keyOfOptionFromApi?: string // key identifies the option
   data?: Option[]
   className?: string
@@ -321,7 +323,7 @@ export type ApplicationPayload = {
     id?: number
     company_id: number
     customer_no?: string
-    identification_type: string
+    identification_type: ID_TYPE_VALUE
     identification_no: string
     gender: string
     date_of_birth: any
@@ -426,12 +428,16 @@ export type ApplicationPayload = {
 }
 
 export type ApplicationFormData = {
+  bankrupted_key?: any
+  singpass?: any
+  identification_no_confirm: string
+  identification_expiry: string
   job_type_id: number
   country_id: number
   lastname: string
   is_existing: string
   firstname: string
-  identification_type: string
+  identification_type: ID_TYPE_VALUE
   identification_no: string
   residential_type: string
   marketing_type: string
@@ -549,7 +555,7 @@ export type ApplicationItem = {
   loan_amount_requested: string
   loan_terms: number
   term_unit: any
-  identification_type: string
+  identification_type: ID_TYPE_VALUE
   identification_no: string
   fullname: string
   loan_type: string
@@ -578,7 +584,7 @@ export type BorrowerItem = {
   id: number
   customer_no: null | string
   date_of_birth: string
-  identification_type: string
+  identification_type: ID_TYPE_VALUE
   identification_no: string
   application_no: string
   firstname: string

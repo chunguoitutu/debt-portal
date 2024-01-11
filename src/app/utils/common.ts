@@ -249,6 +249,6 @@ export function isFirstGetStepApplication({
   return !endpoint.some((el) => keyOptionListing.includes(el.keyOfOptionFromApi || el.key))
 }
 
-export function getFullName(info: {[key: string]: any}) {
+export function getFullName(info?: {[key: string]: any}) {
   return [info?.firstname, info?.middlename, info?.lastname].filter(Boolean).join(' ')
 }

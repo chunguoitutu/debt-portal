@@ -1,12 +1,10 @@
 import clsx from 'clsx'
-import {FC, Fragment, useEffect, useRef, useState} from 'react'
+import {FC, Fragment, useEffect, useState} from 'react'
 import Tippy from '@tippyjs/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import './style.scss'
-import Cookies from 'js-cookie'
 import {Modal, Tab, Table, Tabs} from 'react-bootstrap'
-
 import LookupCustomer from './LookupCustomer'
 import {AddressTypeItem, ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
@@ -20,6 +18,7 @@ import {KTIcon} from '@/_metronic/helpers'
 import {
   PROPERTY_TYPE,
   capitalizeFirstText,
+  convertMessageErrorRequired,
   convertResidentialTypeSingPass,
   getIdDefault,
   isFirstGetStepApplication,
@@ -50,7 +49,19 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const [showPopup, setShowPopup] = useState(false)
   const [popupSingpass, setPopupSingpass] = useState<boolean>(false)
   const {company_id} = useAuth()
-  const {values, touched, errors, handleChange, handleBlur, setFieldValue, setErrors} = formik
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    setErrors,
+    setFieldError,
+    setFieldTouched,
+    registerField,
+    unregisterField,
+  } = formik
   const {pathname} = useLocation()
 
   async function onFetchDataList() {
@@ -98,6 +109,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       config,
     })
     const isFirstGetAddressType = !keyOptionListing.includes('address_type')
+
+    if (applicationIdEdit) {
+      unregisterField('inden')
+    }
+
     if (isFirstGet) {
       onFetchDataList()
     }
@@ -114,13 +130,18 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   }, [values.is_existing])
 
   useEffect(() => {
-    const authCode = searchParams.get('code')
-    const codeVerifier = Cookies.get('codeVerifier')
-
-    if (!authCode || !codeVerifier) return
-
-    // handleGetPersonData({authCode, codeVerifier})
-  }, [])
+    if (values.identification_type === 'foreign_identification_number') {
+      registerField('identification_expiry', {
+        validate(value) {
+          return !value ? convertMessageErrorRequired('ID Expired') : ''
+        },
+      })
+    } else {
+      unregisterField('identification_expiry')
+      setFieldValue('identification_expiry', '')
+      errors.identification_expiry && setFieldError('identification_expiry', undefined)
+    }
+  }, [values.identification_type])
 
   async function GetDefaultAddressType() {
     let defaultData = {}
@@ -387,6 +408,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       setFieldValue('gender', data?.data.gender || '', true)
       setFieldValue('date_of_birth', formattedDateOfBirth || '', true)
       setFieldValue('country_id', data?.data.country_id || '', true)
+      // setFieldValue('identification_no_confirm', values['identification_no'], true)
     } catch (error) {
       setFieldValue('is_existing', 'new')
       setFieldValue('firstname', '')
@@ -448,6 +470,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       typeInput,
       typeComponent,
     } = item
+    const isRejectedOrApproved = [3, 2].includes(values.status || 0)
 
     let Component: any = item?.component
 
@@ -458,48 +481,16 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     // nothing
     if (!Component) return
 
-    if (key === 'identification_no') {
-      return (
-        <Component
-          value={values[key]}
-          onChange={handleChange}
-          onBlur={(e) => {
-            handleBlur(e)
-            handleGetApplicationById()
-          }}
-          type={typeInput}
-          name={key}
-          classShared={className}
-          touched={touched[key]}
-          error={errors[key]}
-          min='1900-01-01'
-          max={getCurrentDate()}
-          disabled={values.status === 3 || values.status === 2 ? true : false}
-          insertRight={
-            key === 'identification_no' ? (
-              <Tippy offset={[40, 0]} content='Lookup Customer'>
-                {/* Wrapper with a span tag to show tooltip */}
-                <div
-                  className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'
-                  onClick={handleShowPopup}
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </div>
-              </Tippy>
-            ) : undefined
-          }
-        />
-      )
-    }
     if (typeComponent === 'Select') {
       // handle for select
       return (
         <Component
           error={errors[key]}
           touched={touched[key]}
-          disabled={values.status === 3 || values.status === 2 ? true : false}
+          disabled={isRejectedOrApproved}
           value={values[key]}
           onChange={handleChange}
+          onBlur={handleBlur}
           name={key}
           keyValueOption={keyValueOfOptions}
           keyLabelOption={keyLabelOfOptions}
@@ -527,6 +518,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         />
       ))
     }
+
     if (typeComponent === 'Button') {
       if (values.status === 2 || values.status === 3) return <></>
       return (
@@ -546,20 +538,29 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
 
     if (typeComponent === 'Input') {
+      const isForeigner =
+        key === 'identification_expiry' &&
+        values.identification_type !== 'foreign_identification_number'
+      const isDisabledForce =
+        applicationIdEdit && ['identification_no', 'identification_no_confirm'].includes(key)
+
       return (
         <>
           <Component
             value={values[key]}
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={(e) => {
+              handleBlur(e)
+              handleGetApplicationById()
+            }}
             type={typeInput}
             name={key}
             classShared={className}
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={isRejectedOrApproved || isForeigner || isDisabledForce}
             touched={touched[key]}
             error={errors[key]}
             min='1900-01-01'
-            max={getCurrentDate()}
+            max={key === 'date_of_birth' && getCurrentDate()}
             insertRight={
               key === 'identification_no' ? (
                 <Tippy offset={[40, 0]} content='Lookup Customer'>
@@ -585,9 +586,12 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, column, isHide, className, required, typeComponent} = item
-
+        const {label, column, isHide, className, required, typeComponent, key} = item
         if (isHide) return <Fragment key={i}></Fragment>
+
+        const isForeigner =
+          key === 'identification_expiry' &&
+          values.identification_type === 'foreign_identification_number'
 
         return (
           <div
@@ -604,7 +608,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             <div
               className={clsx([
                 'input-title-application left fs-4 text-start text-lg-end',
-                required && 'required',
+                (required || isForeigner) && 'required',
                 typeComponent === 'Radio' && 'd-none d-xxl-block',
               ])}
             >

@@ -28,7 +28,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const {values, touched, errors, handleChange, setFieldValue} = formik
+  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
 
   useEffect(() => {
     if (!optionListing.loan_type) return
@@ -252,6 +252,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
             disabled={values.status === 3 || values.status === 2 ? true : false}
             value={values[key]}
             onChange={handleChange}
+            onBlur={handleBlur}
             name={key}
             touched={touched[key]}
             error={errors[key]}
@@ -266,6 +267,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
           <Component
             value={values[key]}
             onChange={handleChange}
+            onBlur={handleBlur}
             name={key}
             transparent={true}
             classShared={className}
@@ -288,6 +290,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
           <Component
             value={values[key]}
             onChange={handleChange}
+            onBlur={handleBlur}
             name={key}
             classShared={className}
             disabled={values.status === 3 || values.status === 2 ? true : false}
@@ -307,6 +310,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
             disabled={values.status === 3 || values.status === 2 ? true : false}
             value={values[key]}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleAutoSelect(key, e)}
+            onBlur={handleBlur}
             name={key}
             classShared={className}
             keyValueOption={keyValueOfOptions}

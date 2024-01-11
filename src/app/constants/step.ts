@@ -14,6 +14,8 @@ import BankInfo from '@/pages/applications/step-component/bank-info/BankInfo'
 import Completion from '@/pages/applications/step-component/completion'
 import GeneralInformation from '@/pages/applications/step-component/general-information/GeneralInformation'
 
+export const APPLICATION_STEP_CONTACT_INFO = 'Contact Information'
+
 export const STEP_APPLICATION: StepItem[] = [
   {
     label: 'Personal Information',
@@ -26,7 +28,7 @@ export const STEP_APPLICATION: StepItem[] = [
     config: LOAN_DETAILS_CONFIG,
   },
   {
-    label: 'Contact Information',
+    label: APPLICATION_STEP_CONTACT_INFO,
     component: ContactInformation,
     config: CONTACT_INFORMATION,
   },
