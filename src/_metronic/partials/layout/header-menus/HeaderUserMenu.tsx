@@ -20,9 +20,7 @@ const HeaderUserMenu: FC = () => {
           </div>
           <div className='d-flex flex-column' style={{marginTop: '-4px'}}>
             <div className='fw-bolder d-flex align-items-center fs-5'>
-              {` ${currentUser?.firstname} ${currentUser?.middlename || ''} ${
-                currentUser?.lastname || ''
-              } `}
+              {` ${currentUser?.firstname} ${currentUser?.lastname || ''} `}
             </div>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7 two-line'>
               {currentUser?.email}

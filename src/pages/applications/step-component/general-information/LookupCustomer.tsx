@@ -116,7 +116,6 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
       //step 1
       setFieldValue('is_existing', 'existing')
       setFieldValue('firstname', data?.data.firstname || '')
-      setFieldValue('middlename', data?.data.middlename || '')
       setFieldValue('lastname', data?.data.lastname || '')
       setFieldValue('identification_type', data?.data.identification_type || '')
       setFieldValue('identification_no', data?.data.identification_no || '')

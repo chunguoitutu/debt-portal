@@ -306,9 +306,9 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
 
-              const {firstname, middlename, lastname} = item
+              const {firstname, lastname} = item
 
-              const fullname = [firstname, middlename, lastname].filter(Boolean).join(' ')
+              const fullname = [firstname, lastname].filter(Boolean).join(' ')
 
               const phoneNumber = item?.borrower?.[0]?.mobilephone_1 || ''
 

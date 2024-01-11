@@ -66,7 +66,7 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
         setUserListing(
           data.data.map((el) => ({
             ...el,
-            fullname: [el.firstname, el.middlename, el.lastname].filter(Boolean).join(' '),
+            fullname: [el.firstname, el.lastname].filter(Boolean).join(' '),
           }))
         )
     } catch (error) {}

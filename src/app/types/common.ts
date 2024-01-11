@@ -50,7 +50,6 @@ export type UserInfo = {
   company_id: number
   id: number
   firstname: string
-  middlename: string | null
   lastname: string
   telephone: string
   email: string
@@ -69,7 +68,6 @@ export type updateUserInfo = {
   is_active?: number
   branch_id?: number
   firstname?: string
-  middlename?: string | null
   lastname?: string
   telephone?: string
   email?: string
@@ -120,7 +118,6 @@ export type ResponseLookupListing = {
   identification_no: string
   prefix: string | null
   firstname: string | null
-  middlename: string | null
   lastname: string | null
   telephone: string | null
   gender: string | null
@@ -332,7 +329,6 @@ export type ApplicationPayload = {
     firstname: string
     lastname: string
     prefix?: string
-    middlename?: string
     telephone?: string
     email?: string
     username?: string
@@ -432,7 +428,6 @@ export type ApplicationPayload = {
 export type ApplicationFormData = {
   job_type_id: number
   country_id: number
-  middlename: string
   lastname: string
   is_existing: string
   firstname: string
@@ -587,7 +582,6 @@ export type BorrowerItem = {
   identification_no: string
   application_no: string
   firstname: string
-  middlename: string
   lastname: string
   loan_type: string
   company_id: string

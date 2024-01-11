@@ -14,7 +14,6 @@ const FullNameUser: FC<Props> = ({formik}) => {
   const data = useMemo(
     () => [
       {name: 'firstname', label: 'First Name', type: 'text', required: true},
-      {name: 'middlename', label: 'Middle Name', type: 'text'},
       {name: 'lastname', label: 'Last Name', type: 'text', required: true},
     ],
     []

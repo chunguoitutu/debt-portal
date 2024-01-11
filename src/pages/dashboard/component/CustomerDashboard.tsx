@@ -114,10 +114,10 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
       return (
         <tr key={idx}>
           {rows.map(({key, component, classNameTableBody, isHide, infoFilter, options}, i) => {
-            const {firstname, middlename, lastname} = item
+            const {firstname, lastname} = item
             const {keyLabelOption, keyValueOption} = infoFilter || {}
 
-            const fullname = [firstname, middlename, lastname].filter(Boolean).join(' ')
+            const fullname = [firstname, lastname].filter(Boolean).join(' ')
 
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>

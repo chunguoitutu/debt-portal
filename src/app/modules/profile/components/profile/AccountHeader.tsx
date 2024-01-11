@@ -28,9 +28,7 @@ const AccountHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <a href='#' className='text-hover-primary style-image-account-header'>
-                    {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
-                      currentUser?.lastname || ''
-                    }`}
+                    {`${currentUser?.firstname} ${currentUser?.lastname || ''}`}
                   </a>
                 </div>
 

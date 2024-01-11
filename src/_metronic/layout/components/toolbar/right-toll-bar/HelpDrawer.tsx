@@ -25,8 +25,8 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
   const [showSearchPageCheck, setShowSearchPageCheck] = useState<boolean>(false)
   const {applicationIdEdit} = useParams()
   const fullname = useMemo(
-    () => [values.firstname, values.middlename, values.lastname].filter(Boolean).join(' '),
-    [values.firstname, values.middlename, values.lastname]
+    () => [values.firstname, values.lastname].filter(Boolean).join(' '),
+    [values.firstname, values.lastname]
   )
 
   const configBackgroudCheck = {
