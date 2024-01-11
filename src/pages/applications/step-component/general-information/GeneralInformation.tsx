@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import './style.scss'
 import Cookies from 'js-cookie'
-import {createPortal} from 'react-dom'
 import {Modal, Tab, Table, Tabs} from 'react-bootstrap'
 
 import LookupCustomer from './LookupCustomer'
@@ -26,8 +25,6 @@ import {
   isFirstGetStepApplication,
 } from '@/app/utils'
 import FileInput from '../employment/FileDocument'
-
-const modalsRoot = document.getElementById('root-modals') || document.body
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {

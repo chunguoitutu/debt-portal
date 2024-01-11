@@ -81,7 +81,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     {
       classNameTableHead: 'w-200px pe-3 min-w-120px',
       key: 'late_fee',
-      name: 'Monthly Late Fee $',
+      name: 'Monthly Late Fee',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',
@@ -91,7 +91,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
     {
       classNameTableHead: 'w-200px pe-3 min-w-120px',
       key: 'late_interest',
-      name: 'Late Interest per month %',
+      name: 'Late Interest per month',
       infoCreateEdit: {
         type: 'input',
         typeInput: 'number',

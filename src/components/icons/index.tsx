@@ -23,6 +23,7 @@ import MLCB from './MLCB'
 import Google from './Google'
 import Cascheck from './Cascheck'
 import UPCheck from './UPCheck'
+import FilterIconBorrower from './FilterIconBorrower'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -50,6 +51,7 @@ const icons = {
   MLCB: MLCB,
   Cascheck: Cascheck,
   UPCheck: UPCheck,
+  FilterIconBorrower: FilterIconBorrower,
 }
 
 const Icons = ({name}) => {

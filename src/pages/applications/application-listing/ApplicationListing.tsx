@@ -234,6 +234,8 @@ const ApplicationListing = () => {
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
 
+              if (item.application_no === 'A-CO-2024-00044') {
+              }
               if (isHide) {
                 return <React.Fragment key={i}></React.Fragment>
               }
@@ -272,7 +274,13 @@ const ApplicationListing = () => {
                 let unitLabel = ''
 
                 if (termUnit === 0) {
-                  unitLabel = value > 1 ? 'Days' : 'Day'
+                  if (value === 0) {
+                    unitLabel = 'Month'
+                  } else if (value > 0 && value <= 1) {
+                    unitLabel = 'Day'
+                  } else if (value > 1) {
+                    unitLabel = 'Days'
+                  }
                 } else if (termUnit === 1) {
                   unitLabel = value > 1 ? 'Months' : 'Month'
                 } else if (termUnit === 2) {

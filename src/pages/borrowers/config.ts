@@ -1,5 +1,5 @@
 import { TableConfig } from '@/app/types'
-import { GENDER, ID_TYPE, STATUS_APPLICATION_FILTER } from '@/app/utils'
+import { BLACKLIST_OPTION, EXCLUSION_OPTION, GENDER, ID_TYPE, STATUS_APPLICATION_FILTER, STATUS_CUSTOMER_LISTING } from '@/app/utils'
 import { Input } from '@/components/input'
 import { Select } from '@/components/select'
 
@@ -18,10 +18,11 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     {
       key: 'id',
       name: 'ID',
-      classNameTableHead: 'ps-5',
+      classNameTableHead: 'pt-2 pb-2 ps-5',
       classNameTableBody: 'w-50px ps-5',
     },
     {
+      classNameTableHead: 'pt-2 pb-2 mw-250px',
       key: 'customer_no',
       name: 'Customer No',
       infoFilter: {
@@ -30,29 +31,25 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
         isSort: true,
       },
     },
+
     {
+      classNameTableHead: 'pt-2 pb-2 mw-250px',
       key: 'fullname',
-      name: 'Full Name',
+      name: 'Name',
       infoFilter: {
+
         typeComponent: 'input',
         component: Input,
         isSort: true,
       },
     },
+
     {
-      key: 'identification_type',
-      name: 'Identity Card Type',
-      options: ID_TYPE,
-      infoFilter: {
-        typeComponent: 'select',
-        component: Select,
-        isSort: true,
-      },
-    },
-    {
+      classNameTableHead: 'pt-2 pb-2 ps-3 mw-250px',
       key: 'identification_no',
-      name: 'NRIC No',
+      name: 'NRIC',
       infoFilter: {
+
         typeComponent: 'input',
         component: Input,
         isSort: true,
@@ -60,10 +57,10 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     },
 
     {
-      key: 'gender',
-      name: 'Gender',
-      classNameTableHead: 'ps-3',
-      options: GENDER,
+      classNameTableHead: 'pt-2 pb-2 text-center ps-3 mw-175px',
+      key: 'blacklisted',
+      name: 'Blacklisted',
+      options: BLACKLIST_OPTION,
       infoFilter: {
         typeComponent: 'select',
         component: Select,
@@ -72,26 +69,26 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     },
 
     {
-      key: 'date_of_birth',
-      name: 'Date Of Birth',
+      key: 'exclusion',
+      name: 'Exclusion',
       classNameTableBody: 'pe-8 text-end',
-      classNameTableHead: 'pe-8 text-end',
+      classNameTableHead: 'pt-2 pb-2 pe-8 text-center mw-200px',
+      options: EXCLUSION_OPTION,
       infoFilter: {
-        isFromTo: true,
-        typeComponent: 'input',
-        component: Input,
-        typeInput: 'date',
+        typeComponent: 'select',
+        component: Select,
         isSort: true,
       },
     },
     {
-      key: 'mobilephone_1',
-      name: 'Telephone',
-      classNameTableHead: 'ps-20 ',
+      key: 'status',
+      name: 'Status',
+      classNameTableBody: 'text-center',
+      classNameTableHead: 'text-center pt-2 pb-2 w-150px',
+      options: STATUS_CUSTOMER_LISTING,
       infoFilter: {
-        typeComponent: 'input',
-        typeInput: 'phone',
-        component: Input,
+        typeComponent: 'select',
+        component: Select,
         isSort: true,
       },
     },

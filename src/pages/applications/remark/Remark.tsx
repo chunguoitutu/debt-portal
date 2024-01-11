@@ -4,13 +4,15 @@ import moment from 'moment'
 
 import Button from '@/components/button/Button'
 import ImgAvataRemark from '@/components/icons/ImgAvataRemark'
-import {BsThreeDotsVertical} from 'react-icons/bs'
 import Icons from '@/components/icons'
 import {useAuth} from '../../../app/context/AuthContext'
 import {RemarkItem} from '@/app/types'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
+import './style.scss'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   remarkList: RemarkItem[]
@@ -161,12 +163,12 @@ const Remark: FC<Props> = ({
                       className='input-remark min-h-75px'
                       value={infoEdit.message.replace(/<br\s*\/?>/g, '\n')}
                     />
-                    <div>
+                    <div className='p-2 ps-0'>
                       <Button
                         onClick={() => {
                           setInfoEdit(null)
                         }}
-                        className='btn-lg btn-secondary p-8px align-self-center me-8px fs-6'
+                        className='btn-lg btn btn-secondary p-8px align-self-center me-8px fs-6'
                       >
                         Cancel
                       </Button>
@@ -184,7 +186,7 @@ const Remark: FC<Props> = ({
                           handleUpdate(_remarkList)
                           setInfoEdit(null)
                         }}
-                        className='btn-lg btn-primary p-8px fs-6'
+                        className='btn-lg btn btn-primary p-8px fs-6'
                       >
                         Save
                       </Button>
@@ -197,7 +199,7 @@ const Remark: FC<Props> = ({
                     dangerouslySetInnerHTML={{__html: message.message}}
                   />
                 )}
-                <div>
+                <div className='ms-2'>
                   <span className='fs-12 fw-semibold text-capitalize text-B5B5C3 me-2'>
                     {moment(message.time).format('hh:mm A - MM/DD/YYYY')}
                   </span>
@@ -211,16 +213,20 @@ const Remark: FC<Props> = ({
                 onMouseEnter={() => setShowMenu(index + 1)}
                 onMouseLeave={() => setShowMenu(0)}
               >
-                <BsThreeDotsVertical className=' text-gray-600    text-hover-black cursor-pointer top-0 close-remark-icon' />
+                <FontAwesomeIcon
+                  icon={faEllipsisVertical}
+                  className='text-gray-600 remark-hover-threedots cursor-pointersssss'
+                />
+
                 {!!(showMenu === index + 1) && (
-                  <div className='dropdown-menu-remark card   position-absolute'>
+                  <div className='dropdown-menu-remark card position-absolute'>
                     <button
                       disabled={showClose}
                       onClick={(e) => {
                         setShowMenu(0)
                         setInfoEdit(message)
                       }}
-                      className='dropdown-children-remark fs-14 text-start px-4 menu-item-child mt-2'
+                      className='dropdown-children-remark fs-14 text-start px-4 menu-item-child'
                     >
                       Edit
                     </button>
@@ -230,7 +236,7 @@ const Remark: FC<Props> = ({
                         handleRemoveRemark(message)
                         setShowMenu(0)
                       }}
-                      className=' dropdown-children-remark fs-5 px-4 menu-item-child mb-3'
+                      className=' dropdown-children-remark fs-5 text-start menu-item-child'
                     >
                       Delete
                     </button>
@@ -242,7 +248,7 @@ const Remark: FC<Props> = ({
         </div>
       </div>
       <div className='mt-auto border-top border-gray-200 p-4'>
-        <div className='d-flex justify-content-center align-items-end gap-4'>
+        <div className='d-flex justify-content-center align-items-end gap-4 ps-5 pe-'>
           <textarea
             disabled={showClose}
             placeholder='Enter remark...'
@@ -253,11 +259,11 @@ const Remark: FC<Props> = ({
             id='myInput'
             className='w-100 min-h-50px  input-remark-import'
             style={{
-              border: 'none',
+              border: '1px solid ',
               outline: 'none',
             }}
           />
-          <div className=' flex justify-content-end align-items-end'>
+          <div className=' flex justify-content-end align-items-end align-self-center'>
             <Button
               style={{display: 'flex', flexShrink: '0'}}
               onClick={() => {
