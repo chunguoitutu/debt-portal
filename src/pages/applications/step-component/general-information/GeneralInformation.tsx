@@ -24,7 +24,6 @@ import {
   getIdDefault,
   isFirstGetStepApplication,
 } from '@/app/utils'
-import FileInput from '../employment/FileDocument'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {
