@@ -190,7 +190,7 @@ const CreateEditCompanies = ({
         }}
         className='modal-header'
       >
-        <h2>{titleLable} Business Unit</h2>
+        <h2 className='m-0'>{titleLable} Business Unit</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>
@@ -206,7 +206,7 @@ const CreateEditCompanies = ({
           id='kt_modal_create_app_stepper'
         >
           <div className=''>
-            <div className='card-body  px-lg-7 row gx-10'>
+            <div className='card-body  row gx-10'>
               <>
                 {rows.map((row) => (
                   <div key={row?.key} style={{flex: '0 0 50%'}}>

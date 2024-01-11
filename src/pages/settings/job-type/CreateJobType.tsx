@@ -135,7 +135,7 @@ const CreateJobType = ({
     >
       <>
         <div className='modal-header p-30px'>
-          <h2>{title} Job Type</h2>
+          <h2 className='m-0'>{title} Job Type</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>
