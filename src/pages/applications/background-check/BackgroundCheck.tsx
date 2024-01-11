@@ -8,7 +8,7 @@ import {useParams} from 'react-router-dom'
 import PopupValidationPhoneNumber from './validate-phone-number/PopupValidationPhoneNumber'
 import MLCBReport from './MLCB/MLCBReport'
 import PageCheckDeskTop from './up-page-check/PageCheck'
-import {swalConfirm} from '@/app/swal-notification'
+import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
 import CaCheckDeskTop from './ca-check/DesktopCaCheck'
 
@@ -40,7 +40,15 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         show: true,
         onclick: () => {
           if (fullname && !!values.identification_no) {
-            setShowSearchCheck(true)
+            if (!tools.googleSearchCheck) {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `Google Search Check no data available`,
+              })
+            } else {
+              setShowSearchCheck(true)
+            }
           } else {
             swalConfirm.fire({
               icon: 'error',
@@ -66,7 +74,15 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         show: true,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
-            setShowSearchPageCheck(true)
+            if (!tools.upPageCheck) {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `UN Page Check no data available`,
+              })
+            } else {
+              setShowSearchPageCheck(true)
+            }
           } else {
             swalConfirm.fire({
               icon: 'error',
@@ -92,7 +108,15 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         show: true,
         onclick: () => {
           if (fullname && !!values.identification_no) {
-            setShowCaCheck(true)
+            if (!tools.casCheck) {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `CAs Check no data available`,
+              })
+            } else {
+              setShowCaCheck(true)
+            }
           } else {
             swalConfirm.fire({
               icon: 'error',
@@ -144,7 +168,11 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         background: 'rgba(232, 255, 243, 0.85)',
         show: true,
         onclick: () => {
-          alert('Loan Cross Check')
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Loan Cross Check no data available`,
+          })
         },
       },
       {

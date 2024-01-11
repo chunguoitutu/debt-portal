@@ -319,7 +319,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
                   <>
                     <button
                       className={`py-12px px-4px
-               bg-transparent d-flex justify-content-center align-items-center`}
+               bg-transparent d-flex justify-content-center align-items-center ${
+                 index === configBackgroudCheck?.row.length - 1 && 'border-top border-gray-200'
+               }`}
                       onClick={data.onclick}
                       style={{
                         opacity: !!data?.opacity ? '1' : '0.6',

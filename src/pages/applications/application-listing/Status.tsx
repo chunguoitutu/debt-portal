@@ -7,8 +7,6 @@ type Props = {
 }
 
 const Status = ({value, onChange}: Props) => {
-  console.log(value.in, 'value.in')
-
   return (
     <div>
       <p className='fs-16 fw-semibold text-gray-900 pb-8px m-0'>Status</p>

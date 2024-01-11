@@ -38,7 +38,7 @@ const CompanyDetail = ({
       animation={true}
     >
       <div className='modal-header p-30px'>
-        <h2>Business Unit Details</h2>
+        <h2 className='m-0'>Business Unit Details</h2>
         <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
           <KTIcon className='fs-1' iconName='cross' />
         </div>

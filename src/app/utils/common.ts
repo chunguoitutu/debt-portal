@@ -101,8 +101,6 @@ export function handleFormatFilter<T = any>(config: {
        * key after format should be type date or number
        */
       if (isObject(dataFilter[key])) {
-        console.log(dataFilter[key].in)
-
         if (key === 'status') {
           if (dataFilter[key]?.in.length > 0) {
             return {...acc, status: dataFilter[key]}
