@@ -337,6 +337,28 @@ export const TERM_UNIT: Option[] = [
   },
 ]
 
+export const BLACKLIST_OPTION: Option[] = [
+  {
+    value: '0',
+    label: 'No',
+  },
+  {
+    value: '1',
+    label: 'Yes',
+  },
+]
+
+export const EXCLUSION_OPTION: Option[] = [
+  {
+    value: '0',
+    label: 'No',
+  },
+  {
+    value: '1',
+    label: 'Yes',
+  },
+]
+
 export const LOAN_TERM: Option[] = [
   {
     value: '1',
@@ -398,6 +420,29 @@ export const STATUS_APPLICATION_FILTER: Option[] = [
   {
     value: '3',
     label: 'Approved',
+  },
+]
+
+export const STATUS_CUSTOMER_LISTING: Option[] = [
+  {
+    value: '0',
+    label: 'Decreased',
+  },
+  {
+    value: '1',
+    label: 'Active',
+  },
+  {
+    value: '2',
+    label: 'In-Prison',
+  },
+  {
+    value: '3',
+    label: 'Bankrupt',
+  },
+  {
+    value: '4',
+    label: 'Missing',
   },
 ]
 

@@ -8,14 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import React, {ChangeEvent, FC, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import clsx from 'clsx'
 import RowPerPage from '@/components/row-per-page'
-import {
-  BorrowerItem,
-  LoanInfo,
-  OrderBy,
-  ResponseBorrowerListing,
-  SearchCriteria,
-  TableRow,
-} from '@/app/types'
+import {BorrowerItem, OrderBy, ResponseBorrowerListing, SearchCriteria, TableRow} from '@/app/types'
 import Pagination from '@/components/table/components/Pagination'
 
 import SortBy from '@/components/sort-by'
@@ -25,7 +18,6 @@ import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {FilterBorrower} from './FilterBorrower'
-import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import {BORROWER_CONFIG_LISTING} from './config'
 import {GLOBAL_CONSTANTS} from '@/app/constants'
 import {Checkbox} from '@/components/checkbox'
@@ -33,7 +25,9 @@ import gridImg from '@/app/images/grid.svg'
 import './style.scss'
 import {getCSSVariableValue} from '@/_metronic/assets/ts/_utils'
 import {useThemeMode} from '@/_metronic/partials'
-import {ChartsWidget1} from '@/_metronic/partials/widgets'
+
+import ChartImg from '@/app/images/ChartBorrowerListing.png'
+import Badge from '@/components/badge/Badge'
 
 type Props = {
   chartSize?: number
@@ -68,29 +62,23 @@ const showFilter = [
     valueStart: '',
   },
   {
-    key: 'identification_type',
-    value: 'Identity Card Type',
-    valueStart: '',
-  },
-  {
     key: 'identification_no',
     value: 'NRIC No',
     valueStart: '',
   },
   {
-    key: 'gender',
-    value: 'Gender',
+    key: 'blacklisted',
+    value: 'Blacklisted',
     valueStart: '',
   },
   {
-    key: 'date_of_birth',
-    value: 'Date Of Birth',
+    key: 'exclusion',
+    value: 'Exclusion',
     valueStart: '',
   },
   {
-    key: 'mobilephone_1',
-    value: 'Telephone',
-    valueStart: '+65',
+    key: 'status',
+    value: 'Status',
   },
 ]
 
@@ -100,7 +88,6 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
     : {}
 
   const {settings, rows} = BORROWER_CONFIG_LISTING || {}
-  const {showAction = true, showEditButton} = settings || {}
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
 
   const [data, setData] = React.useState<BorrowerItem[]>([])
@@ -310,8 +297,6 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
               const fullname = [firstname, lastname].filter(Boolean).join(' ')
 
-              const phoneNumber = item?.borrower?.[0]?.mobilephone_1 || ''
-
               if (isHide) {
                 return <React.Fragment key={i}></React.Fragment>
               }
@@ -359,21 +344,58 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 )
               }
 
-              if (key === 'mobilephone_1') {
+              if (key === 'blacklisted') {
                 return (
                   <td
                     key={i}
-                    className={`${classNameTableBody} fs-6 fw-medium w-250px ps-20`}
+                    className='fs-6 fw-medium w-250px text-center'
                     style={{color: '#071437'}}
                   >
-                    {!!phoneNumber && '+65'}
-                    {phoneNumber || ''}
+                    {item.blacklisted === 0 ? 'No' : 'Yes'}
                   </td>
                 )
               }
 
-              if (key === 'date_of_birth') {
-                value = moment(item[key]).format('MMM D, YYYY')
+              if (key === 'exclusion') {
+                return (
+                  <td
+                    key={i}
+                    className='fs-6 fw-medium w-250px text-center'
+                    style={{color: '#071437'}}
+                  >
+                    {value === 0 ? 'No' : 'Yes'}
+                  </td>
+                )
+              }
+
+              if (key === 'status') {
+                let title: string = ''
+                let color: string = ''
+                if (item[key] === 1) {
+                  title = 'Active'
+                  color = 'success'
+                } else if (item[key] === 2) {
+                  title = 'In-Prison'
+                  color = 'danger'
+                } else if (item[key] === 3) {
+                  title = 'Bankrupt'
+                  color = 'danger'
+                } else {
+                  title = 'Decreased'
+                  color = 'danger'
+                }
+
+                return (
+                  <td
+                    key={i}
+                    className={clsx([
+                      'fs-14 fw-semibold hover-applications-listing',
+                      classNameTableBody,
+                    ])}
+                  >
+                    <Badge color={color as any} title={title as any} key={i} />
+                  </td>
+                )
               }
 
               return (
@@ -386,13 +408,6 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 </td>
               )
             }
-          )}
-          {showAction && showEditButton && (
-            <td className='text-center'>
-              <div className='d-flex align-items-center justify-content-center gap-1'>
-                {showEditButton && <ButtonViewDetail onClick={() => {}} />}
-              </div>
-            </td>
           )}
         </tr>
       )
@@ -480,379 +495,404 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   }, [mode])
 
   return (
-    <div className='col-12 gap-4 d-flex flex-row'>
-      <div className='col-3'>
+    <div className='row gx-24px d-flex flex-row gy-lg-6 gy-xl-6'>
+      <div className='col-12 col-xxl-3 '>
         <div className='row h-100 flex-column flex-lg-row flex-xxl-column'>
-          <div className='col-12 col-lg-6 col-xxl-12'>
-            <div className='loan-header card p-30px position-relative'>
-              <div className='d-flex flex-column gap-4px pb-30px'>
-                <span className='fs-2 fw-bold' style={{color: '#071437'}}>
-                  {searchCriteria.total} Customer
-                </span>
-                <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
-                  Total number of customers in the company.
-                </span>
-              </div>
-
-              <div className='card-body pt-2 pb-4 d-flex flex-wrap align-items-center justify-content-center'>
-                <div className='d-flex flex-center me-5 pt-2'>
-                  <div
-                    id='kt_card_widget_17_chart'
-                    ref={chartRef}
-                    style={{minWidth: chartSize + 'px', minHeight: chartSize + 'px'}}
-                    data-kt-size={chartSize}
-                    data-kt-line={chartLine}
-                  ></div>
-                </div>
-              </div>
-              <div className='d-flex flex-column content-justify-center flex-row-fluid'>
-                <div className='d-flex fw-semibold align-items-center'>
-                  <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
-                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
-                  <div className=' fw-bolder text-gray-700 text-xxl-end'>50 Customer</div>
-                </div>
-                <div className='d-flex fw-semibold align-items-center my-3'>
-                  <div
-                    className='bullet w-15px h-6px rounded-2 me-3'
-                    style={{backgroundColor: '#071437'}}
-                  ></div>
-                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
-                  <div className='fw-bolder text-gray-700 text-xxl-end'>1 Customer</div>
-                </div>
-                <div className='d-flex fw-semibold align-items-center'>
-                  <div
-                    className='bullet w-15px h-6px rounded-2 me-3'
-                    style={{backgroundColor: '#C62828'}}
-                  ></div>
-                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
-                  <div className=' fw-bolder text-gray-700 text-xxl-end'>14 Customer</div>
-                </div>
-                <div className='d-flex fw-semibold align-items-center mt-3'>
-                  <div
-                    className='bullet w-15px h-6px rounded-2 me-3'
-                    style={{backgroundColor: '#E4E6EF'}}
-                  ></div>
-                  <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
-                  <div className='fw-bolder text-gray-700 text-xxl-end'>12 Customer</div>
-                </div>
-              </div>
-
-              <div className='p-16px mt-16px'></div>
-            </div>
-
-            <div className='col-12 col-lg-6 col-xxl-12 flex-grow-1 mt-20px mt-lg-0 mt-xxl-20px'>
-              <div className='loan-header card p-30px position-relative'>
-                <div className='d-flex flex-column gap-4px pb-30px'>
+          <div className='col-12 col-lg-12 col-xxl-12'>
+            <div className='row gy-lg-6 gx-0 gy-xl-6'>
+              <div className='col-12 col-lg-12 col-xxl-12 loan-header card p-30px position-relative gy-lg-6 gy-xl-6'>
+                <div className='d-flex flex-column gap-4px '>
                   <span className='fs-2 fw-bold' style={{color: '#071437'}}>
-                    32 Customer Blacklisteed
+                    {searchCriteria.total} Customer
                   </span>
                   <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
-                    Total number of customers blacklisted in the company.
+                    Total number of customers in the company.
                   </span>
                 </div>
 
                 <div className='card-body pt-2 pb-4 d-flex flex-wrap align-items-center justify-content-center'>
-                  {/* <ChartsWidget1 className='mb-5 mb-xxl-8' /> */}
+                  <div className='d-flex flex-center me-5 pt-2'>
+                    <div
+                      id='kt_card_widget_17_chart'
+                      ref={chartRef}
+                      style={{minWidth: chartSize + 'px', minHeight: chartSize + 'px'}}
+                      data-kt-size={chartSize}
+                      data-kt-line={chartLine}
+                    ></div>
+                  </div>
                 </div>
+                <div className='d-flex flex-column content-justify-center flex-row-fluid'>
+                  <div className='d-flex fw-semibold align-items-center'>
+                    <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
+                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
+                    <div className=' fw-bolder text-gray-700 text-xxl-end'>50 Customer</div>
+                  </div>
+                  <div className='d-flex fw-semibold align-items-center my-3'>
+                    <div
+                      className='bullet w-15px h-6px rounded-2 me-3'
+                      style={{backgroundColor: '#071437'}}
+                    ></div>
+                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
+                    <div className='fw-bolder text-gray-700 text-xxl-end'>1 Customer</div>
+                  </div>
+                  <div className='d-flex fw-semibold align-items-center'>
+                    <div
+                      className='bullet w-15px h-6px rounded-2 me-3'
+                      style={{backgroundColor: '#C62828'}}
+                    ></div>
+                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
+                    <div className=' fw-bolder text-gray-700 text-xxl-end'>14 Customer</div>
+                  </div>
+                  <div className='d-flex fw-semibold align-items-center mt-3'>
+                    <div
+                      className='bullet w-15px h-6px rounded-2 me-3'
+                      style={{backgroundColor: '#E4E6EF'}}
+                    ></div>
+                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
+                    <div className='fw-bolder text-gray-700 text-xxl-end'>12 Customer</div>
+                  </div>
+                </div>
+              </div>
 
-                <div className='p-16px mt-16px'></div>
+              <div className='col-12 col-lg-12 col-xxl-12 card'>
+                <div className='loan-header p-30px pt-30px pb-0 position-relative '>
+                  <div className='d-flex flex-column gap-4px'>
+                    <span className='fs-2 fw-bold' style={{color: '#071437'}}>
+                      32 Customer Blacklisteed
+                    </span>
+                    <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
+                      Total number of customers blacklisted in the company.
+                    </span>
+                  </div>
+                </div>
+                <div className='p-30px pt-16px'>
+                  <div className='mt-16px d-flex flex-row gap-2'>
+                    <div className='fs-2 fw-bold text-black'>Accounting For</div>
+                    <div className='fs-2 fw-bold text-primary'>12%</div>
+                  </div>
+
+                  <div className='d-flex flex-wrap align-items-center justify-content-center style-img-chart'>
+                    <img src={ChartImg} alt='' className='style-img-chart' style={{height: 125}} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className='card p-5 h-fit-content col-9'>
-        <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
-        {showInput && (
-          <FilterBorrower
-            onClose={showInputFilter}
-            handleResetFilter={handleResetFilter}
-            rows={rows}
-            handleLoadApi={handleFilter}
-            dataFilter={dataFilter}
-            handleChangeFilter={handleChangeFilter}
-            dataOption={dataOption}
-          />
-        )}
-        <div>
-          <div className='d-flex flex-row align-items-center'>
-            <Input
-              classShared='flex-grow-1 h-30px mb-5'
-              placeholder='Search'
-              value={searchValue}
-              transparent={true}
-              onChange={handleChangeSearch}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleReGetApi()
-                }
-              }}
-              insertLeft={
-                <FontAwesomeIcon
-                  className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                  icon={faSearch}
-                  onClick={handleReGetApi}
-                />
-              }
-              insertRight={
-                searchValue ? (
-                  <FontAwesomeIcon
-                    className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                    icon={faClose}
-                    onClick={() => {
-                      setSearchValue('')
-                      handleReGetApi()
-                    }}
-                  />
-                ) : null
-              }
+      <div className='col-12 col-xxl-9  ps-4'>
+        <div className='card'>
+          <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
+          {showInput && (
+            <FilterBorrower
+              onClose={showInputFilter}
+              handleResetFilter={handleResetFilter}
+              rows={rows}
+              handleLoadApi={handleFilter}
+              dataFilter={dataFilter}
+              handleChangeFilter={handleChangeFilter}
+              dataOption={dataOption}
             />
-            <div className='d-flex position-relative flex-end ms-4'>
-              <Button
-                style={{
-                  backgroundColor:
-                    Object.keys(checkFilter).length !== 0 &&
-                    !(
-                      Object.keys(checkFilter).length === 1 &&
-                      Object.keys(checkFilter).includes('searchBar')
-                    )
-                      ? '#c4cada'
-                      : '#f1f1f4',
+          )}
+          <div>
+            <div className='d-flex flex-row align-items-center p-12px'>
+              <Input
+                classShared='flex-grow-1 h-30px mb-5'
+                placeholder='Search'
+                value={searchValue}
+                transparent={true}
+                onChange={handleChangeSearch}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleReGetApi()
+                  }
                 }}
-                className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
-                disabled={false}
-                onClick={showInputFilter}
-              >
-                <Icons name={'filterIcon'} />
-                Filter
-              </Button>
-            </div>
-          </div>
-
-          <div className={clsx(['position-relative mt-4', showConfigColumn && 'text-gray-900'])}>
-            <div
-              className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
-              onClick={handleToggleConfigColumn}
-            >
-              <img src={gridImg} alt='grid' />
-              <span className='fs-14 d-inline-block fw-semibold'>Show Columns</span>
-            </div>
-
-            {/* config */}
-            {showConfigColumn && (
-              <div className='config-column-grid-other card justify-content-end'>
-                {/* Header */}
-                <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
-                  <span className='fw-bold'>Config Column</span>
-
+                insertLeft={
+                  <FontAwesomeIcon
+                    className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                    icon={faSearch}
+                    onClick={handleReGetApi}
+                  />
+                }
+                insertRight={
+                  searchValue ? (
+                    <FontAwesomeIcon
+                      className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                      icon={faClose}
+                      onClick={() => {
+                        setSearchValue('')
+                        handleReGetApi()
+                      }}
+                    />
+                  ) : null
+                }
+              />
+              <div className='d-flex flex-row position-relative flex-end ms-3'>
+                <div
+                  className={clsx([
+                    'position-relative p-3 pe-0',
+                    showConfigColumn && 'text-gray-900',
+                  ])}
+                >
                   <div
-                    className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
+                    className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
                     onClick={handleToggleConfigColumn}
                   >
-                    <KTIcon className='fs-1' iconName='cross' />
+                    <img src={gridImg} alt='grid' />
+                    <span
+                      className='fs-14 d-inline-block fw-semibold pe-4'
+                      style={{borderRight: '1px solid #ccc'}}
+                    >
+                      Show Columns
+                    </span>
                   </div>
-                </div>
 
-                {/* Body */}
-                <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
-                  {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
-                    if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+                  {/* config */}
+                  {showConfigColumn && (
+                    <div className='config-column-grid-other card justify-content-end'>
+                      {/* Header */}
+                      <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
+                        <span className='fw-bold'>Config Column</span>
 
-                    return (
-                      <Checkbox
-                        name={el.key}
-                        label={el.name}
-                        classNameLabel='ms-8px'
-                        key={i}
-                        checked={configColumn[el.key]}
-                        onChange={handleChangeConfigColumn}
-                      />
-                    )
-                  })}
-                </div>
-
-                {/* Footer */}
-                <div className='d-flex justify-content-end p-30px gap-8px'>
-                  <Button
-                    className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
-                    onClick={handleResetConfigColumn}
-                  >
-                    Reset
-                  </Button>
-
-                  <Button className='btn btn-lg btn-primary fs-6' onClick={handleApplyConfigColumn}>
-                    Apply
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {Object.keys(checkFilter).length !== 0 &&
-            !(
-              Object.keys(checkFilter).length === 1 &&
-              Object.keys(checkFilter).includes('searchBar')
-            ) && (
-              <div className='d-flex justify-content  px-30px pt-14px m-0 '>
-                <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
-
-                <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
-                  {showFilter.map((filter, index) => (
-                    <div key={index} className='p-0 m-0'>
-                      {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                        !['identification_type', 'date_of_birth'].includes(filter.key) && (
-                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                            <h2 className='filter-title-show'>
-                              {filter.value}: {filter.valueStart}
-                              {checkFilter[`${filter.key}`]}
-                            </h2>
-                            <div
-                              onClick={() => {
-                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                                setLoadApi(!loadApi)
-                              }}
-                              className='p-0 m-0 cursor-pointer'
-                            >
-                              <Icons name={'CloseSmall'} />
-                            </div>
-                          </div>
-                        )}
-
-                      {!!checkFilter[`${filter.key}`] &&
-                        ['identification_type'].includes(filter.key) && (
-                          <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
-                            <h2 className='filter-title-show'>
-                              {filter.value}:{' '}
-                              {checkFilter[`${filter.key}`] === 'foreign_identification_number'
-                                ? 'Foreign Identification Number'
-                                : 'Singapore NRIC No'}
-                            </h2>
-                            <div
-                              onClick={() => {
-                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                                setLoadApi(!loadApi)
-                              }}
-                              className='p-0 m-0 cursor-pointer'
-                            >
-                              <Icons name={'CloseSmall'} />
-                            </div>
-                          </div>
-                        )}
-                      {!!checkFilter?.date_of_birth && ['date_of_birth'].includes(filter.key) && (
-                        <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
-                          <h2 className='filter-title-show'>
-                            {filter.value}:{' '}
-                            {!!checkFilter?.date_of_birth?.gte
-                              ? moment(checkFilter?.date_of_birth?.gte).format('MMM D, YYYY')
-                              : '...'}{' '}
-                            -{' '}
-                            {!!checkFilter?.date_of_birth?.lte
-                              ? moment(checkFilter?.date_of_birth?.lte)
-                                  .subtract(1, 'days')
-                                  .format('MMM D, YYYY')
-                              : '...'}
-                          </h2>
-                          <div
-                            onClick={() => {
-                              setDataFilter({...dataFilter, date_of_birth: ''})
-                              setLoadApi(!loadApi)
-                            }}
-                            className='p-0 m-0 cursor-pointer'
-                          >
-                            <Icons name={'CloseSmall'} />
-                          </div>
+                        <div
+                          className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
+                          onClick={handleToggleConfigColumn}
+                        >
+                          <KTIcon className='fs-1' iconName='cross' />
                         </div>
-                      )}
+                      </div>
+
+                      {/* Body */}
+                      <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
+                        {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
+                          if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+
+                          return (
+                            <Checkbox
+                              name={el.key}
+                              label={el.name}
+                              classNameLabel='ms-8px'
+                              key={i}
+                              checked={configColumn[el.key]}
+                              onChange={handleChangeConfigColumn}
+                            />
+                          )
+                        })}
+                      </div>
+
+                      {/* Footer */}
+                      <div className='d-flex justify-content-end p-30px gap-8px'>
+                        <Button
+                          className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
+                          onClick={handleResetConfigColumn}
+                        >
+                          Reset
+                        </Button>
+
+                        <Button
+                          className='btn btn-lg btn-primary fs-6'
+                          onClick={handleApplyConfigColumn}
+                        >
+                          Apply
+                        </Button>
+                      </div>
                     </div>
-                  ))}
-                </div>
-
-                <button
-                  onClick={() => {
-                    handleResetFilter()
-                  }}
-                  className='reset-all-filter-application mt-16px ms-16px'
-                >
-                  Reset All
-                </button>
-              </div>
-            )}
-
-          <KTCardBody className='py-4'>
-            <div className='table-responsive'>
-              <table
-                id='kt_table_users'
-                className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-              >
-                <thead>
-                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                    {rowsConfigColumn
-                      .filter((item) => !item.isHide)
-                      .map((item, i) => {
-                        const {classNameTableHead, name, infoFilter, key} = item
-
-                        const {isSort} = infoFilter || {}
-
-                        return (
-                          <th
-                            className={clsx([
-                              'text-nowrap min-w-75px user-select-none',
-                              classNameTableHead,
-                            ])}
-                            data-title={item.key}
-                            key={i}
-                            onClick={() => isSort && handleChangeSortBy(item)}
-                          >
-                            <div className='cursor-pointer'>
-                              <span className='fs-14 fw-bold'>{name}</span>
-
-                              {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
-                            </div>
-                          </th>
-                        )
-                      })}
-                    {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.length ? (
-                    renderRows()
-                  ) : (
-                    <tr>
-                      <td colSpan={rows.length + 1}>
-                        <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
-                          No matching records found
-                        </div>
-                      </td>
-                    </tr>
                   )}
-                </tbody>
-              </table>
+                </div>
+                <div
+                  style={{
+                    backgroundColor:
+                      Object.keys(checkFilter).length !== 0 &&
+                      !(
+                        Object.keys(checkFilter).length === 1 &&
+                        Object.keys(checkFilter).includes('searchBar')
+                      )
+                        ? ''
+                        : '',
+                  }}
+                  className={`align-self-center fs-6 h-45px p-3 pt-4 cursor-pointer text-gray-600`}
+                  onClick={showInputFilter}
+                >
+                  <Icons name={'FilterIconBorrower'} />
+                  Filter
+                </div>
+              </div>
             </div>
-          </KTCardBody>
 
-          <div
-            style={{
-              padding: '10px 22.75px',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <RowPerPage
-              lenghtData={searchCriteria.total}
-              limit={searchCriteria.pageSize}
-              page={searchCriteria.currentPage}
-              setLimit={(e: any) => {
-                setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+            {Object.keys(checkFilter).length !== 0 &&
+              !(
+                Object.keys(checkFilter).length === 1 &&
+                Object.keys(checkFilter).includes('searchBar')
+              ) && (
+                <div className='d-flex align-self-center px-30px pb-4'>
+                  <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px '>Filter:</h1>
+
+                  <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
+                    {showFilter.map((filter, index) => (
+                      <div key={index} className='p-0 m-0'>
+                        {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
+                          !['blacklisted', 'exclusion', 'status'].includes(filter.key) && (
+                            <div className='wrapper-filter-application ms-16px py-0 '>
+                              <h2 className='filter-title-show'>
+                                {filter.value}: {filter.valueStart}
+                                {checkFilter[`${filter.key}`]}
+                              </h2>
+                              <div
+                                onClick={() => {
+                                  setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                  setLoadApi(!loadApi)
+                                }}
+                                className='p-0 m-0 cursor-pointer'
+                              >
+                                <Icons name={'CloseSmall'} />
+                              </div>
+                            </div>
+                          )}
+
+                        {!!checkFilter[`${filter.key}`] && ['exclusion'].includes(filter.key) && (
+                          <div className='wrapper-filter-application  ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}: {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                        {!!checkFilter[`${filter.key}`] && ['blacklisted'].includes(filter.key) && (
+                          <div className='wrapper-filter-application  ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}: {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+
+                        {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
+                          <div className='wrapper-filter-application ms-16px py-0 '>
+                            <h2 className='filter-title-show'>
+                              {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Decreased'}
+                              {+checkFilter[`${filter.key}`] === 1 && 'Active'}
+                              {+checkFilter[`${filter.key}`] === 2 && 'In-Prison'}
+                              {+checkFilter[`${filter.key}`] === 3 && 'Bankrupt'}
+                              {+checkFilter[`${filter.key}`] === 4 && 'Missing'}
+                            </h2>
+                            <div
+                              onClick={() => {
+                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                setLoadApi(!loadApi)
+                              }}
+                              className='p-0 m-0 cursor-pointer'
+                            >
+                              <Icons name={'CloseSmall'} />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      handleResetFilter()
+                    }}
+                    className='reset-all-filter-application ms-16px'
+                  >
+                    Reset All
+                  </button>
+                </div>
+              )}
+
+            <KTCardBody className='p-0'>
+              <div className='table-responsive'>
+                <table
+                  id='kt_table_users'
+                  className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
+                >
+                  <thead className='border-top-bottom-thead'>
+                    <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                      {rowsConfigColumn
+                        .filter((item) => !item.isHide)
+                        .map((item, i) => {
+                          const {classNameTableHead, name, infoFilter, key} = item
+
+                          const {isSort} = infoFilter || {}
+
+                          return (
+                            <th
+                              className={clsx([
+                                'text-nowrap min-w-75px user-select-none',
+                                classNameTableHead,
+                              ])}
+                              data-title={item.key}
+                              key={i}
+                              onClick={() => isSort && handleChangeSortBy(item)}
+                            >
+                              <div className='cursor-pointer'>
+                                <span className='fs-14 fw-bold'>{name}</span>
+
+                                {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
+                              </div>
+                            </th>
+                          )
+                        })}
+                      {/* {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>} */}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.length ? (
+                      renderRows()
+                    ) : (
+                      <tr>
+                        <td colSpan={rows.length + 1}>
+                          <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
+                            No matching records found
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </KTCardBody>
+
+            <div
+              style={{
+                padding: '10px 22.75px',
+                display: 'flex',
+                justifyContent: 'space-between',
               }}
-            />
+            >
+              <RowPerPage
+                lenghtData={searchCriteria.total}
+                limit={searchCriteria.pageSize}
+                page={searchCriteria.currentPage}
+                setLimit={(e: any) => {
+                  setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
+                }}
+              />
 
-            <Pagination
-              onChangePagePagination={handleChangePagination}
-              searchCriteria={searchCriteria}
-            />
+              <Pagination
+                onChangePagePagination={handleChangePagination}
+                searchCriteria={searchCriteria}
+              />
 
-            {loading && <Loading />}
+              {loading && <Loading />}
+            </div>
           </div>
         </div>
       </div>

@@ -218,6 +218,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Select,
     typeComponent: 'Select',
     options: TERM_UNIT,
+    defaultValue: TERM_UNIT[1].value,
     label: 'Term Unit',
     validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
   },
@@ -253,7 +254,8 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
-      .max(100, convertMessageErrorMaximum(100, true)),
+      .max(100, convertMessageErrorMaximum(100, true))
+      .min(1, 'Loan Terms must be greater than 0'),
   },
   {
     key: 'loan_reason',
