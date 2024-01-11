@@ -549,7 +549,6 @@ export const Applications = () => {
       date_of_birth,
       firstname,
       lastname,
-      middlename,
       gender,
       email_1,
       email_2,
@@ -629,7 +628,6 @@ export const Applications = () => {
         date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
         firstname: capitalizeFirstText(firstname),
         lastname: capitalizeFirstText(lastname),
-        middlename: capitalizeFirstText(middlename),
         gender,
       },
       borrower: {

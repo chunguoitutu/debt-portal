@@ -22,7 +22,7 @@ const Navbar = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {currentUser, priority} = useAuth()
-  const {firstname, lastname, middlename} = currentUser || {}
+  const {firstname, lastname} = currentUser || {}
   const [isMenuVisible, setMenuVisible] = useState(false)
 
   const showMenu = () => {
@@ -37,12 +37,12 @@ const Navbar = () => {
     () => {
       if (!currentUser) return 'Guest'
 
-      const arrayName = [firstname, middlename, lastname].filter(Boolean)
+      const arrayName = [firstname, lastname].filter(Boolean)
 
       return arrayName.join(' ')
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [firstname, lastname, middlename]
+    [firstname, lastname]
   )
   const location = useLocation()
 

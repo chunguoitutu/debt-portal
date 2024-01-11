@@ -25,8 +25,8 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
   const {applicationIdEdit} = useParams()
 
   const fullname = useMemo(
-    () => [values.firstname, values.middlename, values.lastname].filter(Boolean).join(' '),
-    [values.firstname, values.middlename, values.lastname]
+    () => [values.firstname, values.lastname].filter(Boolean).join(' '),
+    [values.firstname, values.lastname]
   )
 
   const configBackgroundCheck = {

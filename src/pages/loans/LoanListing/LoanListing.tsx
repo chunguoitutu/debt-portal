@@ -164,9 +164,9 @@ const LoanListing = () => {
 
               const identificationNo = item?.borrower?.customer?.identification_no
 
-              const {firstname, lastname, middlename} = item?.borrower?.customer || {}
+              const {firstname, lastname} = item?.borrower?.customer || {}
 
-              const fullname = `${firstname || ''} ${middlename || ''} ${lastname || ''}`.trim()
+              const fullname = `${firstname || ''} ${lastname || ''}`.trim()
 
               const month_due_date = moment(item.approval_date).format('DD')
 

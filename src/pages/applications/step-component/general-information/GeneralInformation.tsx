@@ -205,7 +205,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           }
 
           const fullName = event.data.name.value
-          const {firstname, middlename, lastname} = splitName(fullName)
+          const {firstname, lastname} = splitName(fullName)
 
           const annual_api = event.data['noa-basic']?.amount?.value
           const cpf_months = event.data?.cpfcontributions?.history?.map(
@@ -223,7 +223,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
 
           const values = {
             firstname: capitalizeFirstText(firstname as any) || '',
-            middlename: capitalizeFirstText(middlename as any) || '',
             lastname: capitalizeFirstText(lastname as any) || '',
             date_of_birth: event.data?.dob?.value || '',
             identification_no: event.data?.uinfin?.value || '',
@@ -266,7 +265,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           singpassValues = {
             // Create a copy of the values
             firstname: firstname || '',
-            middlename: middlename || '',
             lastname: lastname || '',
             date_of_birth: event.data?.dob?.value || '',
             identification_no: event.data?.uinfin?.value || '',
@@ -337,7 +335,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
     return {
       firstname: arr[0],
-      middlename: arr.slice(1, leng - 1).join(' '),
       lastname: arr[leng - 1],
     }
   }
@@ -387,7 +384,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       //step 1
       setFieldValue('is_existing', 'existing', true)
       setFieldValue('firstname', data?.data.firstname || '', true)
-      setFieldValue('middlename', data?.data.middlename || '', true)
       setFieldValue('lastname', data?.data.lastname || '', true)
       setFieldValue('customer_no', data?.data.customer_no || '', true)
       setFieldValue('residential_type', data?.data.borrower[0]?.residential_type || '', true)
@@ -398,7 +394,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     } catch (error) {
       setFieldValue('is_existing', 'new')
       setFieldValue('firstname', '')
-      setFieldValue('middlename', '')
       setFieldValue('lastname', '')
       setFieldValue('customer_no', '')
       setFieldValue('identification_type', '')

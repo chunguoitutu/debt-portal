@@ -24,9 +24,7 @@ export function Overview() {
 
             <div className='col-lg-8'>
               <span className='fw-bold fs-6 text-dark'>
-                {`${currentUser?.firstname} ${currentUser?.middlename || ''} ${
-                  currentUser?.lastname || ''
-                }`}
+                {`${currentUser?.firstname} ${currentUser?.lastname || ''}`}
               </span>
             </div>
           </div>

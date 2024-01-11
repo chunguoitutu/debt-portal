@@ -16,7 +16,6 @@ const profileDetailsSchema = Yup.object().shape({
 
 interface UserProfile {
   firstname: string
-  middlename: string
   lastname: string
   telephone: string
   email: string
@@ -33,7 +32,6 @@ const Settings: React.FC = () => {
   const formik = useFormik<UserProfile>({
     initialValues: {
       firstname: currentUser?.firstname || '',
-      middlename: currentUser?.middlename || '',
       lastname: currentUser?.lastname || '',
       telephone: currentUser?.telephone || '',
       email: currentUser?.email || '',
@@ -46,7 +44,6 @@ const Settings: React.FC = () => {
     if (currentUser) {
       setOriginalData({
         firstname: currentUser.firstname || '',
-        middlename: currentUser.middlename || '',
         lastname: currentUser.lastname || '',
         telephone: currentUser.telephone || '',
         email: currentUser.email || '',
@@ -60,7 +57,6 @@ const Settings: React.FC = () => {
       setLoading(true)
       const values: UserProfile = {
         firstname: formik.values.firstname,
-        middlename: formik.values.middlename,
         lastname: formik.values.lastname,
         telephone: formik.values.telephone,
         email: formik.values.email,
@@ -139,15 +135,6 @@ const Settings: React.FC = () => {
                       )}
                     </div>
 
-                    <div className='col-lg-4 fv-row '>
-                      <input
-                        type='text'
-                        className='fs-4 form-control form-control-lg form-control-solid'
-                        placeholder='Middle name'
-                        {...formik.getFieldProps('middlename')}
-                      />
-                    </div>
-
                     <div className='col-lg-4 fv-row'>
                       <input
                         type='text'
@@ -201,7 +188,6 @@ const Settings: React.FC = () => {
                   loading ||
                   (originalData?.email.trim() === formik.values.email.trim() &&
                     originalData?.lastname.trim() === formik.values.lastname.trim() &&
-                    originalData?.middlename.trim() === formik.values.middlename.trim() &&
                     originalData?.telephone.trim() === formik.values.telephone.trim() &&
                     originalData?.firstname.trim() === formik.values.firstname.trim())
                 }
@@ -218,7 +204,6 @@ const Settings: React.FC = () => {
                   loading ||
                   (originalData?.email.trim() === formik.values.email.trim() &&
                     originalData?.lastname.trim() === formik.values.lastname.trim() &&
-                    originalData?.middlename.trim() === formik.values.middlename.trim() &&
                     originalData?.telephone.trim() === formik.values.telephone.trim() &&
                     originalData?.firstname.trim() === formik.values.firstname.trim())
                 }

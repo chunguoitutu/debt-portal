@@ -39,7 +39,6 @@ export interface CreateEditUser
 
 const initialValues: CreateEditUser = {
   firstname: '',
-  middlename: '',
   lastname: '',
   username: '',
   password: '',
@@ -108,12 +107,12 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     })
 
     if (!data) return
-    const {firstname, middlename, lastname, username, role_id, email, telephone, is_active} = data
+    const {firstname, lastname, username, role_id, email, telephone, is_active} = data
 
     setValues({
       ...values,
       firstname,
-      middlename,
+
       lastname,
       username,
       role_id,

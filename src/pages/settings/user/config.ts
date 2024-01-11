@@ -13,7 +13,6 @@ const validate = {
   firstname: Yup.string()
     .required('First name is required')
     .max(255, convertMessageErrorMaximum(255)),
-  middlename: Yup.string().max(255, convertMessageErrorMaximum(255)),
   lastname: Yup.string()
     .required('Last name is required')
     .max(255, convertMessageErrorMaximum(255)),
@@ -90,11 +89,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
         component: FullNameUser, // include first name, middle name and last name
       },
     },
-    {
-      key: 'middlename',
-      name: 'Middle Name',
-      isHide: true,
-    },
+
     {
       key: 'lastname',
       name: 'Last Name',
