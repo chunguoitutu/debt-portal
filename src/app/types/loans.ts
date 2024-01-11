@@ -1,11 +1,50 @@
+import {Dispatch, SetStateAction} from 'react'
+
 export type LoanDetailsProps = {
   loanInfo: LoanInfo
+  setLoanInfo: Dispatch<SetStateAction<LoanInfo | null>>
 }
 
 export type LoanInfo = {
+  loan_info: LoanInfoDB
   loan_details: LoanDetails
   loan_instalment_schedule: LoanInstalmentSchedule[]
   loan_payment_history: LoanReceiptInfo[]
+}
+
+export type LoanInfoDB = {
+  id: number
+  loan_no: string
+  borrower_id: number
+  application_id: number
+  loan_type_id: number
+  loan_amount: number
+  loan_term: number
+  term_unit: number
+  interest: number
+  approval_date: string
+  status: number
+  company_id: number
+  loan_assignment: null | LoanAssignment
+  application: {
+    id: number
+    application_no: string
+    status: number
+    borrower_id: number
+    loan_type_id: number
+    application_date: string
+    loan_amount_requested: number
+    application_notes: string
+    company_id: number
+    interest: number
+    is_existing: string
+    loan_reason: string
+    loan_terms: number
+    mlcb_count: number
+    phone_verified: number
+    crosscheck_count: number
+    term_unit: number
+  }
 }
 
 export type LoanPaymentInfo = {
@@ -138,6 +177,13 @@ export type LoanInstalmentSchedule = {
   late_fee_charged_details: any[]
   instalment_total: number
   instalment_total_balance: number
+}
+
+export type LoanAssignment = {
+  id: number
+  loan_id: number
+  officer_id: number
+  assignment_date: string
 }
 
 export type TotalRepayment = {

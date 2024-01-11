@@ -77,11 +77,11 @@ const LoanDetails = () => {
         <div className='col-12 col-xxl-4'>
           <div className='row h-100 flex-column flex-lg-row flex-xxl-column'>
             <div className='col-12 col-lg-6 col-xxl-12'>
-              <LoanHeader loanInfo={loanInfo} />
+              <LoanHeader loanInfo={loanInfo} setLoanInfo={setLoanInfo} />
             </div>
 
             <div className='col-12 col-lg-6 col-xxl-12 flex-grow-1 mt-20px mt-lg-0 mt-xxl-20px'>
-              <NextPayment loanInfo={loanInfo} />
+              <NextPayment loanInfo={loanInfo} setLoanInfo={setLoanInfo} />
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@ const LoanDetails = () => {
               }}
             />
 
-            {CurrentComponent && <CurrentComponent loanInfo={loanInfo} />}
+            {CurrentComponent && <CurrentComponent loanInfo={loanInfo} setLoanInfo={setLoanInfo} />}
           </div>
         </div>
       </div>

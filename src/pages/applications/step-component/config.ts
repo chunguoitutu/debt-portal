@@ -95,9 +95,21 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   },
   {
     key: 'firstname',
-    component: NameOfApplication,
-    typeComponent: 'NameOfApplication',
-    label: 'Name Of Applicant',
+    component: Input,
+    typeComponent: 'Input',
+    column: 6,
+    label: 'First Name',
+    required: true,
+    validationFormik: Yup.string()
+      .max(255, convertMessageErrorMaximum(255))
+      .required(convertMessageErrorRequired('First Name')),
+  },
+  {
+    key: 'lastname',
+    component: Input,
+    typeComponent: 'Input',
+    column: 6,
+    label: 'Last Name',
     required: true,
     validationFormik: Yup.string()
       .max(255, convertMessageErrorMaximum(255))

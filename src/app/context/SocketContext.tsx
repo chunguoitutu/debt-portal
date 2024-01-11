@@ -49,7 +49,7 @@ const SocketProvider: FC<WithChildren> = ({children}) => {
       })
 
       setSocket(newSocket)
-      newSocket.connect() // Thử kết nối một cách rõ ràng
+      newSocket.connect()
     }
   }
 
