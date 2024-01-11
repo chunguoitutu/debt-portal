@@ -543,76 +543,7 @@ export const Applications = () => {
    * @param isDraft status of application
    */
   async function handleSubmitForm(isDraft: boolean = false) {
-<<<<<<< Updated upstream
-    const {
-      identification_type,
-      identification_no,
-      date_of_birth,
-      firstname,
-      lastname,
-      gender,
-      email_1,
-      email_2,
-      employment_status,
-      mobilephone_1,
-      mobilephone_2,
-      mobilephone_3,
-      homephone,
-      monthly_income,
-      spoken_language,
-      loan_amount_requested,
-      loan_type_id,
-      account_number_1,
-      account_number_2,
-      bank_code_1,
-      bank_code_2,
-      bank_name_1,
-      bank_name_2,
-      monthly_income_1,
-      monthly_income_2,
-      monthly_income_3,
-      annual_income,
-      portal_code,
-      company_name,
-      address_contact_info,
-      address,
-      loan_terms,
-      marketing_type_id,
-      company_telephone,
-      occupation,
-      position,
-      specialization,
-      six_months_income,
-      is_existing,
-      residential_type,
-      term_unit,
-      loan_reason,
-      country_id,
-      file_documents,
-      customer_no,
-      application_no,
-      job_type_id,
-      interest,
-      bankrupt_plan,
-      bankrupted,
-      amount,
-      date,
-      employer,
-      month,
-      vehicle_no,
-      vehicle_model,
-      vehicle_coe_category,
-      vehicle_coe_expiry_date,
-      vehicle_effective_date,
-      vehicle_maker,
-      vehicle_open_maket_value,
-      vehicle_type,
-    } = values
-
-    const addressList = address_contact_info
-=======
     const addressList = values.address_contact_info
->>>>>>> Stashed changes
       .filter((item) => item.address_type_id)
       .map((item) => ({
         ...item,
@@ -625,16 +556,6 @@ export const Applications = () => {
       customer: {
         ...(customerId && applicationIdEdit ? {id: customerId} : {}),
         company_id: +company_id,
-<<<<<<< Updated upstream
-        country_id: +country_id,
-        customer_no: customer_no || '',
-        identification_type,
-        identification_no,
-        date_of_birth: date_of_birth ? new Date(date_of_birth) : '',
-        firstname: capitalizeFirstText(firstname),
-        lastname: capitalizeFirstText(lastname),
-        gender,
-=======
         country_id: +values.country_id,
         customer_no: values.customer_no || '',
         identification_type: values.identification_type,
@@ -643,7 +564,6 @@ export const Applications = () => {
         firstname: capitalizeFirstText(values.firstname),
         lastname: capitalizeFirstText(values.lastname),
         gender: values.gender,
->>>>>>> Stashed changes
       },
       borrower: {
         ...(borrowerId && applicationIdEdit ? {id: borrowerId} : {}),
