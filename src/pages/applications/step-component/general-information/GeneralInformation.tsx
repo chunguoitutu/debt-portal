@@ -551,7 +551,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             onChange={handleChange}
             onBlur={(e) => {
               handleBlur(e)
-              handleGetApplicationById()
+              key === 'identification_no' && handleGetApplicationById()
             }}
             type={typeInput}
             name={key}
