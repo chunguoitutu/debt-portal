@@ -558,7 +558,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 <div className='loan-header p-30px pt-30px pb-0 position-relative '>
                   <div className='d-flex flex-column gap-4px'>
                     <span className='fs-2 fw-bold' style={{color: '#071437'}}>
-                      32 Customer Blacklisteed
+                      32 Customer Blacklisted
                     </span>
                     <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
                       Total number of customers blacklisted in the company.
@@ -649,7 +649,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
                   {/* config */}
                   {showConfigColumn && (
-                    <div className='config-column-grid-other card justify-content-end'>
+                    <div className='config-column-grid-customer card justify-content-end'>
                       {/* Header */}
                       <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
                         <span className='fw-bold'>Config Column</span>
@@ -710,7 +710,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                         ? ''
                         : '',
                   }}
-                  className={`align-self-center fs-6 h-45px p-3 pt-4 cursor-pointer text-gray-600`}
+                  className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900`}
                   onClick={showInputFilter}
                 >
                   <Icons name={'FilterIconBorrower'} />

@@ -23,7 +23,7 @@
   box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.18);
   top: 68px;
   position: absolute;
-  right: 128px;
+  right: 13px;
   background-color: white;
   animation: dropdownAnimation 0.3s ease;
 }
@@ -86,8 +86,18 @@
 .config-column-grid-other {
   content: '';
   position: absolute;
-  top: 0;
-  right: 130px;
+  top: 20px;
+  right: -2px;
+  z-index: 4;
+  animation: dropdownAnimation 0.3s ease;
+  box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.18);
+}
+
+.config-column-grid-customer {
+  content: '';
+  position: absolute;
+  top: 42px;
+  right: 8px;
   z-index: 4;
   animation: dropdownAnimation 0.3s ease;
   box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.18);
