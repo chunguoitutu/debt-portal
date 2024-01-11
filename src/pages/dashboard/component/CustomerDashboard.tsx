@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import {BorrowerItem, OrderBy, ResponseBorrowerListing, SearchCriteria} from '@/app/types'
 
 import Loading from '@/components/table/components/Loading'
-import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
+import {getFullName, handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
@@ -114,10 +114,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
       return (
         <tr key={idx}>
           {rows.map(({key, component, classNameTableBody, isHide, infoFilter, options}, i) => {
-            const {firstname, lastname} = item
             const {keyLabelOption, keyValueOption} = infoFilter || {}
-
-            const fullname = [firstname, lastname].filter(Boolean).join(' ')
 
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
@@ -147,7 +144,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
             if (key === 'fullname') {
               return (
                 <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
-                  {fullname}
+                  {getFullName(item)}
                 </td>
               )
             }

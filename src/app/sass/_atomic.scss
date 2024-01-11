@@ -110,3 +110,10 @@
   transform: translateY(-50%);
   height: fit-content;
 }
+
+.form-input-custom {
+  input:disabled {
+    background-color: var(--bs-gray-100) !important;
+    cursor: default;
+  }
+}

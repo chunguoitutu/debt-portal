@@ -1,9 +1,8 @@
 import * as Yup from 'yup'
-import NameOfApplication from '@/components/applications/NameOfApplication'
-import { Input } from '@/components/input'
+import {Input} from '@/components/input'
 import Radio from '@/components/radio/Radio'
-import { Select } from '@/components/select'
-import { TextArea } from '@/components/textarea'
+import {Select} from '@/components/select'
+import {TextArea} from '@/components/textarea'
 import GrossMonthlyIncome from '@/components/applications/GrossMonthlyIncome'
 import FullName from './completion/FullName'
 import Address from './completion/Address'
@@ -15,9 +14,9 @@ import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
 import FileDocument from './employment/FileDocument'
 import RenderFileDocument from './completion/RenderFileDocument'
-import { children_config_completion } from './completion'
-import { ApplicationConfig, TableConfig } from '@/app/types'
-import { convertMessageErrorMaximum, convertMessageErrorRequired } from '@/app/utils'
+import {children_config_completion} from './completion'
+import {ApplicationConfig, TableConfig} from '@/app/types'
+import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
 import {
   BANKRUPTCY,
   CUSTOMER_TYPE,
@@ -37,7 +36,7 @@ import {
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
-import { Checkbox } from '@/components/checkbox'
+import {Checkbox} from '@/components/checkbox'
 import Bankruptcy from '@/components/applications/Bankruptcy'
 import Button from '@/components/button/Button'
 import TermUnit from './completion/TermUnit'
@@ -66,7 +65,6 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Button',
     label: '',
   },
-
   {
     key: 'identification_no',
     component: Input,
@@ -81,6 +79,18 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
       .required(convertMessageErrorRequired('NRIC No./FIN')),
   },
   {
+    key: 'identification_no_confirm',
+    component: Input,
+    typeComponent: 'Input',
+    column: 6,
+    label: 'Confirm NRIC',
+
+    required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Confirm NRIC'))
+      .oneOf([Yup.ref('identification_no')], 'Confirm NRIC must match'),
+  },
+  {
     key: 'identification_type',
     component: Select,
     typeComponent: 'Select',
@@ -92,6 +102,15 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     validationFormik: Yup.string()
       .max(255, convertMessageErrorMaximum(255))
       .required(convertMessageErrorRequired('ID Type')),
+  },
+  {
+    key: 'identification_expiry',
+    component: Input,
+    typeComponent: 'Input',
+    typeInput: 'date',
+    column: 6,
+    label: 'ID Expired',
+    className: 'justify-content-xxl-end',
   },
   {
     key: 'firstname',

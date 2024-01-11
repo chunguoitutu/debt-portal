@@ -124,6 +124,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
       setFieldValue('gender', data?.data.gender || '')
       setFieldValue('date_of_birth', formattedDateOfBirth || '')
       setFieldValue('country_id', data?.data.country_id || '')
+      // setFieldValue('identification_no_confirm', nric, true)
 
       onClose()
     } catch (error) {

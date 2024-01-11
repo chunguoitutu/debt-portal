@@ -22,7 +22,11 @@ import {
   RemarkItem,
   StepItem,
 } from '@/app/types'
-import {STEP_APPLICATION, handleCreateBlockAddress} from '@/app/constants'
+import {
+  APPLICATION_STEP_CONTACT_INFO,
+  STEP_APPLICATION,
+  handleCreateBlockAddress,
+} from '@/app/constants'
 import {
   capitalizeFirstText,
   convertErrorMessageResponse,
@@ -133,15 +137,6 @@ export const Applications = () => {
     }
   }, [currentStep])
 
-  useEffect(() => {
-    const authCode = searchParams.get('code')
-    const codeVerifier = Cookies.get('codeVerifier')
-
-    if (!authCode || !codeVerifier) return
-
-    // handleGetPersonData({authCode, codeVerifier})
-  }, [])
-
   const schema = useMemo(() => {
     const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
 
@@ -157,7 +152,7 @@ export const Applications = () => {
         {}
       )
 
-    if (currentStepObj.label === 'Contact Information') {
+    if (currentStepObj.label === APPLICATION_STEP_CONTACT_INFO) {
       const validationBlockAddress = BLOCK_ADDRESS_CONFIG.filter((item) => item.required).reduce(
         (result, current) => ({
           ...result,
@@ -314,6 +309,7 @@ export const Applications = () => {
         ...bank_account,
         ...employment,
         ...cpf,
+        identification_no_confirm: customer.identification_no,
         address_contact_info:
           Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
         date_of_birth: formattedDateOfBirth,
@@ -557,9 +553,9 @@ export const Applications = () => {
         ...(customerId && applicationIdEdit ? {id: customerId} : {}),
         company_id: +company_id,
         country_id: +values.country_id,
-        customer_no: values.customer_no || '',
+        // customer_no: values.customer_no || '',
         identification_type: values.identification_type,
-        identification_no: values.identification_no,
+        identification_no: values.identification_no?.trim(),
         date_of_birth: values.date_of_birth ? new Date(values.date_of_birth) : '',
         firstname: capitalizeFirstText(values.firstname),
         lastname: capitalizeFirstText(values.lastname),
@@ -567,13 +563,13 @@ export const Applications = () => {
       },
       borrower: {
         ...(borrowerId && applicationIdEdit ? {id: borrowerId} : {}),
-        email_1: values.email_1,
-        email_2: values.email_2,
+        email_1: values.email_1?.trim(),
+        email_2: values.email_2?.trim(),
         employment_status: values.employment_status,
-        mobilephone_1: String(values.mobilephone_1),
-        mobilephone_2: String(values.mobilephone_2),
-        mobilephone_3: String(values.mobilephone_3),
-        homephone: String(values.homephone),
+        mobilephone_1: String(values.mobilephone_1)?.trim() || '',
+        mobilephone_2: String(values.mobilephone_2)?.trim() || '',
+        mobilephone_3: String(values.mobilephone_3)?.trim() || '',
+        homephone: String(values.homephone)?.trim() || '',
         monthly_income: +values.monthly_income || 0,
         job_type_id: +values.job_type_id || null,
         spoken_language: values.spoken_language,
@@ -582,26 +578,26 @@ export const Applications = () => {
       },
       bank_account: {
         ...(bankInfoId && applicationIdEdit ? {id: bankInfoId} : {}),
-        account_number_1: values.account_number_1,
-        account_number_2: values.account_number_2,
-        bank_code_1: values.bank_code_1,
-        bank_code_2: values.bank_code_2,
-        bank_name_1: values.bank_name_1,
-        bank_name_2: values.bank_name_2,
+        account_number_1: values.account_number_1?.trim(),
+        account_number_2: values.account_number_2?.trim(),
+        bank_code_1: values.bank_code_1?.trim(),
+        bank_code_2: values.bank_code_2?.trim(),
+        bank_name_1: values.bank_name_1?.trim(),
+        bank_name_2: values.bank_name_2?.trim(),
       },
       employment: {
         ...(employmentId && applicationIdEdit ? {id: employmentId} : {}),
-        portal_code: values.portal_code,
+        portal_code: values.portal_code?.trim(),
         annual_income: +values.annual_income,
         address: values.address,
-        company_telephone: String(values.company_telephone),
-        company_name: values.company_name,
+        company_telephone: String(values.company_telephone?.trim()),
+        company_name: values.company_name?.trim(),
         monthly_income_1: +values.monthly_income_1,
         monthly_income_2: +values.monthly_income_2,
         monthly_income_3: +values.monthly_income_3,
-        occupation: values.occupation,
-        position: values.position,
-        specialization: values.specialization,
+        occupation: values.occupation?.trim(),
+        position: values.position?.trim(),
+        specialization: values.specialization?.trim(),
         six_months_income: +values.six_months_income,
         bankrupt_plan: values.bankrupt_plan ? 1 : 0,
         bankrupted: values.bankrupted ? 1 : 0,
@@ -615,7 +611,7 @@ export const Applications = () => {
         status: isDraft ? 0 : 1,
         application_date: new Date(),
         application_notes: JSON.stringify(remarkList),
-        application_no: values.application_no,
+        // application_no: values.application_no,
         is_existing: values.is_existing,
         company_id: +company_id,
         loan_reason: values.loan_reason,

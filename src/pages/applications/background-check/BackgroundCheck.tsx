@@ -11,6 +11,8 @@ import PageCheckDeskTop from './up-page-check/PageCheck'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
 import CaCheckDeskTop from './ca-check/DesktopCaCheck'
+import {getFullName} from '@/app/utils'
+import {values} from 'pdf-lib'
 
 const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, borrower_id}) => {
   const [show, setShow] = useState<boolean>(false)
@@ -24,11 +26,6 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
   const {values} = formik
   const {applicationIdEdit} = useParams()
 
-  const fullname = useMemo(
-    () => [values.firstname, values.lastname].filter(Boolean).join(' '),
-    [values.firstname, values.lastname]
-  )
-
   const configBackgroundCheck = {
     title: 'Tools',
     row: [
@@ -39,7 +36,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         opacity: !!tools?.googleSearchCheck,
         show: true,
         onclick: () => {
-          if (fullname && !!values.identification_no) {
+          if (getFullName(values) && !!values.identification_no) {
             if (!tools.googleSearchCheck) {
               swalToast.fire({
                 timer: 1500,
@@ -107,7 +104,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         background: '#E2E5E7',
         show: true,
         onclick: () => {
-          if (fullname && !!values.identification_no) {
+          if (getFullName(values) && !!values.identification_no) {
             if (!tools.casCheck) {
               swalToast.fire({
                 timer: 1500,
@@ -234,7 +231,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
           tools={tools}
           setTools={setTools}
           status={[2, 3].includes(values.status || 0)}
-          payload={fullname}
+          payload={getFullName(values)}
           Nric_no={values.identification_no}
           show={showSearchCheck}
           handleClose={() => setShowSearchCheck(false)}
@@ -260,7 +257,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
           setTools={setTools}
           Nric_no={values.identification_no}
           status={[2, 3].includes(values.status || 0)}
-          payload={fullname}
+          payload={getFullName(values)}
           show={showCaCheck}
           handleClose={() => setShowCaCheck(false)}
         />
