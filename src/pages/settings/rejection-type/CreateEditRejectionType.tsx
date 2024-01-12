@@ -263,7 +263,7 @@ const CreateEditRejectionType = ({
           </div>
         </div>
       </div>
-      <div className='d-flex flex-end py-30px ps-30px pe-30pxs border-top border-gray-200'>
+      <div className='d-flex flex-end py-30px ps-30px pe-30px border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => handleClose()}
