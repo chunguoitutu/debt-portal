@@ -115,7 +115,7 @@ const Remark: FC<Props> = ({
     >
       <div
         style={{
-          padding: !showClose ? '30px' : '42px',
+          padding: !showClose ? '30px 25px 30px 30px' : '42px',
         }}
         className='modal-header  border-bottom border-gray-200'
       >
@@ -127,9 +127,10 @@ const Remark: FC<Props> = ({
         )}
       </div>
       <div
-        className={`ps-30px pt-30px  pe-6  overflow-y-auto ${
-          small ? 'h-100 min-h-200px' : 'h-100 '
-        }`}
+        style={{
+          padding: '30px 14px 0px 30px',
+        }}
+        className={` overflow-y-auto ${small ? 'h-100 min-h-200px' : 'h-100 '}`}
         ref={contentRef}
       >
         <div className='pb-30px'>
@@ -143,9 +144,9 @@ const Remark: FC<Props> = ({
               <div className='w-36px h-36px rounded-pill me-4 d-flex align-items-center justify-content-center flex-shrink-0 bg-gray-200'>
                 <ImgAvataRemark />
               </div>
-              <div className='w-100'>
+              <div className='w-100 p-0 m-0'>
                 {infoEdit?.id === message.id ? (
-                  <div className='p-5px w-100'>
+                  <div className='p-0 w-100'>
                     <textarea
                       id='myTextarea'
                       onChange={(e) => {
@@ -159,7 +160,7 @@ const Remark: FC<Props> = ({
                       className='input-remark min-h-75px'
                       value={infoEdit.message.replace(/<br\s*\/?>/g, '\n')}
                     />
-                    <div className='p-2 ps-0'>
+                    <div className='pt-12px ps-0'>
                       <Button
                         onClick={() => {
                           setInfoEdit(null)

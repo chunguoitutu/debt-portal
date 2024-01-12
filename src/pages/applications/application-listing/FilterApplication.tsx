@@ -23,12 +23,7 @@ export function FilterApplication({
   return (
     <div className='menu-filter-application card  w-xxl-400px w-300px' data-kt-menu='true'>
       <div className='position-relative p-0'>
-        <div
-          style={{
-            padding: '30px 25px 30px 30px',
-          }}
-          className=' d-flex w-full align-items-center justify-content-between'
-        >
+        <div className=' padding-model-header d-flex w-full align-items-center justify-content-between'>
           <div className='fs-20 fw-bold text-dark text-gray-900'>Filter Options</div>
 
           <div className='cursor-pointer p-0 m-0' onClick={onClose}>
