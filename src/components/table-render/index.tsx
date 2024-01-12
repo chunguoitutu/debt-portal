@@ -95,7 +95,9 @@ function TableRender({title, config = [], data}: Props) {
                                 ? 'Yes'
                                 : ''
                               : element_config.date
-                              ? moment(data[element_config.key]).format('MMM DD, YYYY')
+                              ? moment(data[element_config.key]).isValid()
+                                ? moment(data[element_config.key]).format('MMM DD, YYYY')
+                                : ''
                               : !!element_config?.number
                               ? numeral(+data[element_config.key]).format('0,0.00')
                               : data[element_config.key]}{' '}

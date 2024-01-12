@@ -10,7 +10,9 @@ import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import Modal from '@/components/modal/Modal'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import Button from '@/components/button/Button'
-import {convertErrorMessageResponse} from '@/app/utils'
+import {COUNTRY_PHONE_CODE, convertErrorMessageResponse} from '@/app/utils'
+import Tippy from '@tippyjs/react'
+import {Select} from '@/components/select'
 
 type Props = {
   config?: TableConfig
@@ -282,10 +284,10 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
           <div className='row gx-5'>
             {dataInformation.map((item, i) => {
               const {infoCreateEdit, key, name} = item
-              const {component, typeComponent, column} = infoCreateEdit || {}
+              const {component, typeComponent, column, typeInput} = infoCreateEdit || {}
 
               if (component) {
-                const Component = component as FC
+                const Component = component as FC<any>
                 const props = generatePropsComponent(item)
 
                 if (key === 'is_active') {
@@ -304,7 +306,32 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
 
                 return (
                   <div className={clsx(['mb-16px', column ? 'col-6' : 'col-12'])} key={i}>
-                    <Component {...props} />
+                    <Component
+                      {...props}
+                      transparent={false}
+                      insertLeft={
+                        typeInput === 'phone' ? (
+                          <Tippy
+                            offset={[120, 0]}
+                            content='Please choose the phone number you prefer.'
+                          >
+                            {/* Wrapper with a span tag to show tooltip */}
+                            <span>
+                              <Select
+                                disabled
+                                onChange={handleChange}
+                                value={values[key]}
+                                isOptionDefault={false}
+                                classShared='m-0'
+                                className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                                name='country_phone_code'
+                                options={COUNTRY_PHONE_CODE}
+                              />
+                            </span>
+                          </Tippy>
+                        ) : undefined
+                      }
+                    />
 
                     {/* special cases not show error here */}
                     {typeComponent && errors[key] && touched[key] && (
