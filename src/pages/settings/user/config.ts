@@ -1,6 +1,5 @@
 import * as Yup from 'yup'
 import {TableConfig} from '@/app/types'
-import FullNameUser from './FullNameUser'
 import {Select} from '@/components/select'
 import {convertMessageErrorMaximum, convertMessageErrorPassword} from '@/app/utils'
 import Badge from '@/components/badge/Badge'
@@ -85,14 +84,22 @@ export const USER_TABLE_CONFIG: TableConfig = {
       infoCreateEdit: {
         type: 'input',
         typeInput: 'text',
-        isRequired: true,
-        component: FullNameUser, // include first name, middle name and last name
+        typeComponent: 'input',
+        component: Input,
+        column: 6,
       },
     },
 
     {
       key: 'lastname',
       name: 'Last Name',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        typeComponent: 'input',
+        component: Input,
+        column: 6,
+      },
     },
     {
       key: 'telephone',
