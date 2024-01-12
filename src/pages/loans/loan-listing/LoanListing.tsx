@@ -521,11 +521,11 @@ const LoanListing = () => {
                   ref={selectRef}
                 >
                   {/* Header */}
-                  <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
+                  <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px border-bottom border-gray-300'>
                     <span className='fw-bold'>Config Columns</span>
 
                     <div
-                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
+                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-5'
                       onClick={handleToggleConfigColumn}
                     >
                       <KTIcon className='fs-1' iconName='cross' />
@@ -533,7 +533,7 @@ const LoanListing = () => {
                   </div>
 
                   {/* Body */}
-                  <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold'>
+                  <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'>
                     {LOAN_LISTING_CONFIG.rows.map((el, i) => {
                       if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
 

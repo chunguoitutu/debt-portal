@@ -5,7 +5,7 @@ import {
   PaginationType,
   TotalRepayment,
 } from '@/app/types'
-import {ChangeEvent, FC, Fragment, useEffect, useMemo, useState} from 'react'
+import {ChangeEvent, FC, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import {CONFIG_REPAYMENT_SCHEDULE} from './config'
 import {TableSecondary} from '@/components/table'
 import RowPerPage from '@/components/row-per-page'
@@ -23,6 +23,7 @@ import clsx from 'clsx'
 import {KTIcon} from '@/_metronic/helpers'
 import Button from '@/components/button/Button'
 import {GLOBAL_CONSTANTS} from '@/app/constants'
+import useClickOutside from '@/app/hooks/useClickOutside'
 
 const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
   const {loan_instalment_schedule = []} = loanInfo || {}
@@ -44,6 +45,12 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
     handleInitialConfigColumn()
   )
   const {pageSize, currentPage} = pagination
+
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useClickOutside(selectRef, () => {
+    setShowConfigColumn(false)
+  })
 
   const filterHasValue = useMemo(() => {
     const newFilter = filterObjectKeyNotEmpty(dataFilter)
@@ -328,9 +335,9 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
           {/* config */}
           {showConfigColumn && (
-            <div className='config-column-grid card'>
+            <div className='config-column-grid card' ref={selectRef}>
               {/* Header */}
-              <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
+              <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px border-bottom border-gray-300'>
                 <span className='fw-bold'>Config Columns</span>
 
                 <div
@@ -342,7 +349,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
               </div>
 
               {/* Body */}
-              <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
+              <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'>
                 {CONFIG_REPAYMENT_SCHEDULE.rows.map((el, i) => {
                   if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
 
