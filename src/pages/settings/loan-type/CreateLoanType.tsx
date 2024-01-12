@@ -173,7 +173,7 @@ const CreateLoanType = ({
       <>
         <div
           style={{
-            padding: '30px',
+            padding: '30px 28.1px 30px 30px',
           }}
           className='modal-header'
         >
@@ -184,7 +184,7 @@ const CreateLoanType = ({
         </div>
         <div
           style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
-          className='modal-body  py-30px ps-30px pe-10 '
+          className='modal-body  py-30px ps-30px pe-30px '
         >
           <div
             ref={stepperRef}
@@ -273,7 +273,7 @@ const CreateLoanType = ({
         </div>
 
         <div className='border-top border-gray-200'>
-          <div className='d-flex justify-content-end py-30px ps-30px pe-10'>
+          <div className='d-flex justify-content-end py-30px ps-30px pe-30px'>
             <Button
               type='reset'
               onClick={() => handleClose()}

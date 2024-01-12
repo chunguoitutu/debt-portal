@@ -133,13 +133,21 @@ const CreateDocumentType = ({
       backdrop={true}
     >
       <>
-        <div className='modal-header p-30px'>
+        <div
+          style={{
+            padding: '30px 28.1px 30px 30px',
+          }}
+          className='modal-header '
+        >
           <h2 className='m-0'>{title} Document Type</h2>
           <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
             <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
           </div>
         </div>
-        <div className='flex-row-fluid py-30px ps-30px pe-10'>
+        <div
+          style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
+          className='flex-row-fluid py-30px ps-30px pe-30px'
+        >
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
             {rows.map((row, i) => {
               const {infoCreateEdit, name, key} = row
@@ -214,7 +222,7 @@ const CreateDocumentType = ({
           </form>
         </div>
         <div className='border-top border-gray-200'>
-          <div className='d-flex justify-content-end py-30px ps-30px pe-10'>
+          <div className='d-flex justify-content-end py-30px ps-30px pe-30px'>
             <Button
               type='reset'
               onClick={() => handleClose()}

@@ -379,17 +379,28 @@
 .input-remark {
   outline: none;
   border: none;
-  color: var(--gray-bs-gray-700, #4b5675);
-  font-family: Inter;
+  display: flex;
+  padding: var(--Form-Control-input-padding-x, 10px) 12px;
+  align-items: center;
+  gap: 16px;
   font-size: 14px;
   width: calc(100% - 1px);
   font-style: normal;
-  background-color: inherit;
+  background: #fff;
   border: 1px solid #dbdfe9;
   border-radius: 8px;
   padding: 10px 12px;
   font-weight: 500;
   line-height: 20px; /* 142.857% */
+}
+.input-remark:focus {
+  border: 1px solid
+    var(
+      --preview_keenthemes_com_metronic8_react_demo1_crafted_widgets_tables_1920x956-Japanese-Laurel,
+      #2682ff
+    );
+  background: var(--Gray---bs-gray-100, #fff);
+  box-shadow: 0px 0px 0px 3px rgba(62, 151, 255, 0.32);
 }
 
 .input-remark-import {
@@ -401,7 +412,7 @@
   line-height: 1.5;
   color: var(--gray-bs-gray-700);
   background-clip: padding-box;
-  border: 1px solid #dbdfe9 !important;
+  border: 1px solid #fff !important;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

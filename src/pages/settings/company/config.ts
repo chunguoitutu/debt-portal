@@ -33,7 +33,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig = {
     {
       key: 'business_uen',
       name: 'Business Unit UEN',
-      classNameTableHead: 'pe-10',
+      classNameTableHead: 'pe-30px',
     },
     {
       key: 'contact_person',

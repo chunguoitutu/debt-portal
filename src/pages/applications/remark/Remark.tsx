@@ -121,19 +121,15 @@ const Remark: FC<Props> = ({
       >
         <h2 className='mb-0 text-capitalize text-gray-900 fw-bold fs-20'>remark</h2>
         {!showClose && (
-          <div
-            style={{
-              padding: '6px',
-            }}
-            className='btn btn-sm btn-icon btn-active-color-primary d-none d-2xxl-block'
-            onClick={handleOnClose}
-          >
-            <KTIcon className='fs-1' iconName='cross' />
+          <div className='cursor-pointer p-0 m-0' onClick={handleOnClose}>
+            <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
           </div>
         )}
       </div>
       <div
-        className={`px-30px pt-30px   overflow-y-auto ${small ? 'h-100 min-h-200px' : 'h-100 '}`}
+        className={`ps-30px pt-30px  pe-6  overflow-y-auto ${
+          small ? 'h-100 min-h-200px' : 'h-100 '
+        }`}
         ref={contentRef}
       >
         <div className='pb-30px'>
@@ -199,7 +195,7 @@ const Remark: FC<Props> = ({
                     dangerouslySetInnerHTML={{__html: message.message}}
                   />
                 )}
-                <div className='ms-2'>
+                <div className='m-0 p-0'>
                   <span className='fs-12 fw-semibold text-capitalize text-B5B5C3 me-2'>
                     {moment(message.time).format('hh:mm A - MM/DD/YYYY')}
                   </span>
@@ -247,7 +243,7 @@ const Remark: FC<Props> = ({
           ))}
         </div>
       </div>
-      <div className='mt-auto border-top border-gray-200 p-4'>
+      <div className='mt-auto border-top border-gray-200 py-12px ps-0 pe-30px'>
         <div className='d-flex justify-content-center align-items-end gap-4 ps-5 pe-'>
           <textarea
             disabled={showClose}

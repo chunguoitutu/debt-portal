@@ -161,7 +161,7 @@ const FeedsWidget3: React.FC<Props> = ({className}) => {
         {/* begin::Reply input */}
         <form className='position-relative mb-6'>
           <textarea
-            className='form-control border-0 p-0 pe-10 resize-none min-h-25px'
+            className='form-control border-0 p-0 pe-30px resize-none min-h-25px'
             data-kt-autosize='true'
             rows={1}
             placeholder='Reply..'

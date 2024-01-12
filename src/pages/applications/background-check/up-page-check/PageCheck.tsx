@@ -124,9 +124,9 @@ const PageCheckDeskTop = ({
       <div className='card'>
         <div
           style={{
-            padding: '30px',
+            padding: '30px 28px 30px 30px',
           }}
-          className='modal-header p-30px d-flex align-items-center justify-content-between'
+          className='modal-header d-flex align-items-center justify-content-between'
         >
           <h2
             style={{

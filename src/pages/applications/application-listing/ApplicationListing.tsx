@@ -506,6 +506,7 @@ const ApplicationListing = () => {
 
   function handleToggleConfigColumn() {
     setShowConfigColumn(!showConfigColumn)
+    setShowInput(false)
   }
 
   function handleChangeConfigColumn(e: ChangeEvent<HTMLInputElement>) {
@@ -634,7 +635,10 @@ const ApplicationListing = () => {
                   </div>
 
                   {/* Body */}
-                  <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold'>
+                  <div
+                    style={{maxHeight: 'calc(100vh - 450px)'}}
+                    className='grid-2-column gap-16px  overflow-y-auto px-30px fw-semibold'
+                  >
                     {APPLICATION_LISTING_CONFIG.rows.map((el, i) => {
                       if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
 
@@ -921,7 +925,7 @@ const ApplicationListing = () => {
               <thead
                 style={{
                   top: '-2px',
-                  zIndex: '100',
+                  zIndex: '1',
                 }}
                 className='border-top-bottom-thead position-sticky  bg-white'
               >
