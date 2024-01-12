@@ -130,7 +130,9 @@ const ContactInformation: FC<PropsStepApplication> = ({
     let itemDefault = dataClone[0]
     let isHomeAddress = indexHomeAddress === -1 ? false : true
 
-    itemDefault = dataClone.splice(indexHomeAddress === -1 ? 0 : indexHomeAddress, 1)?.[0] || {}
+    itemDefault =
+      dataClone.splice(indexHomeAddress === -1 ? 0 : indexHomeAddress, 1)?.[0] ||
+      ({} as AddressTypeItem)
     newData = [itemDefault, ...dataClone]
 
     return {
