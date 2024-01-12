@@ -1,8 +1,10 @@
 import {KTIcon} from '@/_metronic/helpers'
+import useClickOutside from '@/app/hooks/useClickOutside'
 import {COUNTRY_PHONE_CODE} from '@/app/utils'
 import {Select} from '@/components/select'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
+import {useRef} from 'react'
 
 interface Props {
   rows: any
@@ -23,8 +25,17 @@ export function FilterBorrower({
   dataOption,
   onClose,
 }: Props) {
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useClickOutside(selectRef, () => {
+    onClose()
+  })
   return (
-    <div className='menu-filter-application card  w-xxl-400px w-300px' data-kt-menu='true'>
+    <div
+      className='menu-filter-application card  w-xxl-400px w-300px'
+      data-kt-menu='true'
+      ref={selectRef}
+    >
       <div className='position-relative p-0'>
         <div className='p-30px d-flex w-full align-items-center justify-content-between'>
           <div className='fs-20 fw-bold text-dark text-gray-900'>Filter Options</div>

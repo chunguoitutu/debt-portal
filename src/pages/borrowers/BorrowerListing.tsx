@@ -29,6 +29,7 @@ import {useThemeMode} from '@/_metronic/partials'
 import ChartImg from '@/app/images/ChartBorrowerListing.png'
 import Badge from '@/components/badge/Badge'
 import useClickOutside from '@/app/hooks/useClickOutside'
+import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 
 type Props = {
   chartSize?: number
@@ -89,6 +90,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
     : {}
 
   const {settings, rows} = BORROWER_CONFIG_LISTING || {}
+  const {showAction = true, showViewButton} = settings || {}
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
 
   const [data, setData] = React.useState<BorrowerItem[]>([])
@@ -295,12 +297,10 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
-        <tr key={idx}>
+        <tr key={idx} className='hover-tr-listing cursor-pointer'>
           {rowsConfigColumn.map(
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
-
-              const {firstname, lastname} = item
 
               if (isHide) {
                 return <React.Fragment key={i}></React.Fragment>
@@ -343,8 +343,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
               if (key === 'fullname') {
                 return (
-                  <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
-                    {getFullName()}
+                  <td key={i} className='fs-6 fw-medium w-250px ps-9' style={{color: '#071437'}}>
+                    {item.firstname} {''} {item.lastname}
                   </td>
                 )
               }
@@ -413,6 +413,13 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 </td>
               )
             }
+          )}
+          {showAction && showViewButton && (
+            <td className='text-center'>
+              <div className='d-flex align-items-center justify-content-center gap-1'>
+                {showViewButton && <ButtonViewDetail onClick={() => {}} />}
+              </div>
+            </td>
           )}
         </tr>
       )
@@ -503,81 +510,92 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
     <div className='row gx-24px d-flex flex-row gy-lg-6 gy-xl-6'>
       <div className='col-12 col-xxl-3 '>
         <div className='row h-100 flex-column flex-lg-row flex-xxl-column'>
-          <div className='col-12 col-lg-12 col-xxl-12'>
-            <div className='row gy-lg-6 gx-0 gy-xl-6'>
-              <div className='col-12 col-lg-12 col-xxl-12 loan-header card p-30px position-relative gy-lg-6 gy-xl-6'>
-                <div className='d-flex flex-column gap-4px '>
-                  <span className='fs-2 fw-bold' style={{color: '#071437'}}>
-                    {searchCriteria.total} Customer
-                  </span>
-                  <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
-                    Total number of customers in the company.
-                  </span>
-                </div>
+          <div className='col-12 col-lg-12 col-xxl-12 pe-2'>
+            <div className='row gy-lg-6 gx-3 gy-xl-6 me-1'>
+              <div className='col-12 col-lg-6 col-xxl-12 loan-header'>
+                <div className='card p-30px'>
+                  <div className='d-flex flex-column '>
+                    <span className='fs-2 fw-bold' style={{color: '#071437'}}>
+                      {searchCriteria.total} Customers
+                    </span>
+                    <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
+                      Total number of customers in the company.
+                    </span>
+                  </div>
 
-                <div className='card-body pt-2 pb-4 d-flex flex-wrap align-items-center justify-content-center'>
-                  <div className='d-flex flex-center me-5 pt-2'>
-                    <div
-                      id='kt_card_widget_17_chart'
-                      ref={chartRef}
-                      style={{minWidth: chartSize + 'px', minHeight: chartSize + 'px'}}
-                      data-kt-size={chartSize}
-                      data-kt-line={chartLine}
-                    ></div>
-                  </div>
-                </div>
-                <div className='d-flex flex-column content-justify-center flex-row-fluid'>
-                  <div className='d-flex fw-semibold align-items-center'>
-                    <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
-                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
-                    <div className=' fw-bolder text-gray-700 text-xxl-end'>50 Customer</div>
-                  </div>
-                  <div className='d-flex fw-semibold align-items-center my-3'>
-                    <div
-                      className='bullet w-15px h-6px rounded-2 me-3'
-                      style={{backgroundColor: '#071437'}}
-                    ></div>
-                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
-                    <div className='fw-bolder text-gray-700 text-xxl-end'>1 Customer</div>
-                  </div>
-                  <div className='d-flex fw-semibold align-items-center'>
-                    <div
-                      className='bullet w-15px h-6px rounded-2 me-3'
-                      style={{backgroundColor: '#C62828'}}
-                    ></div>
-                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
-                    <div className=' fw-bolder text-gray-700 text-xxl-end'>14 Customer</div>
-                  </div>
-                  <div className='d-flex fw-semibold align-items-center mt-3'>
-                    <div
-                      className='bullet w-15px h-6px rounded-2 me-3'
-                      style={{backgroundColor: '#E4E6EF'}}
-                    ></div>
-                    <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
-                    <div className='fw-bolder text-gray-700 text-xxl-end'>12 Customer</div>
+                  <div className='p-30px pt-24px'>
+                    <div className='card-body pt-0 pb-32px d-flex flex-wrap align-items-center justify-content-center'>
+                      <div className='d-flex flex-center me-5 pt-2'>
+                        <div
+                          id='kt_card_widget_17_chart'
+                          ref={chartRef}
+                          style={{minWidth: chartSize + 'px', minHeight: chartSize + 'px'}}
+                          data-kt-size={chartSize}
+                          data-kt-line={chartLine}
+                        ></div>
+                      </div>
+                    </div>
+                    <div className='d-flex flex-column content-justify-center flex-row-fluid'>
+                      <div className='d-flex fw-semibold align-items-center'>
+                        <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
+                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
+                        <div className=' fw-bold text-gray-900 text-xxl-end'>50 Customers</div>
+                      </div>
+                      <div className='d-flex fw-semibold align-items-center my-3'>
+                        <div
+                          className='bullet w-15px h-6px rounded-2 me-3'
+                          style={{backgroundColor: '#071437'}}
+                        ></div>
+                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
+                        <div className='fw-bold text-gray-900 text-xxl-end'>1 Customer</div>
+                      </div>
+                      <div className='d-flex fw-semibold align-items-center'>
+                        <div
+                          className='bullet w-15px h-6px rounded-2 me-3'
+                          style={{backgroundColor: '#C62828'}}
+                        ></div>
+                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
+                        <div className=' fw-bold text-gray-900 text-xxl-end'>14 Customers</div>
+                      </div>
+                      <div className='d-flex fw-semibold align-items-center mt-3'>
+                        <div
+                          className='bullet w-15px h-6px rounded-2 me-3'
+                          style={{backgroundColor: '#E4E6EF'}}
+                        ></div>
+                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
+                        <div className='fw-bold text-gray-900 text-xxl-end'>12 Customers</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className='col-12 col-lg-12 col-xxl-12 card'>
-                <div className='loan-header p-30px pt-30px pb-0 position-relative '>
-                  <div className='d-flex flex-column gap-4px'>
-                    <span className='fs-2 fw-bold' style={{color: '#071437'}}>
-                      32 Customer Blacklisted
-                    </span>
-                    <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
-                      Total number of customers blacklisted in the company.
-                    </span>
+              <div className='col-12 col-lg-6 col-xxl-12'>
+                <div className='card h-100'>
+                  <div className='loan-header p-30px pt-30px pb-0 position-relative '>
+                    <div className='d-flex flex-column'>
+                      <span className='fs-2 fw-bold' style={{color: '#071437'}}>
+                        32 Customers Blacklisted
+                      </span>
+                      <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
+                        Total number of customers blacklisted in the company.
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className='p-30px pt-16px'>
-                  <div className='mt-16px d-flex flex-row gap-2'>
-                    <div className='fs-2 fw-bold text-black'>Accounting For</div>
-                    <div className='fs-2 fw-bold text-primary'>12%</div>
-                  </div>
+                  <div className='p-30px pt-16px'>
+                    <div className='mt-16px d-flex flex-row gap-2'>
+                      <div className='fs-2 fw-bold text-gray-900'>Accounting For</div>
+                      <div className='fs-2 fw-bold text-primary'>12%</div>
+                    </div>
 
-                  <div className='d-flex flex-wrap align-items-center justify-content-center style-img-chart'>
-                    <img src={ChartImg} alt='' className='style-img-chart' style={{height: 125}} />
+                    <div className='d-flex flex-wrap align-items-center justify-content-center style-img-chart'>
+                      <img
+                        src={ChartImg}
+                        alt=''
+                        className='style-img-chart'
+                        style={{height: 125}}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -585,8 +603,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
           </div>
         </div>
       </div>
-      <div className='col-12 col-xxl-9  ps-4  '>
-        <div className='card h-100'>
+      <div className='col-12 col-xxl-9'>
+        <div className='card ps-3 w-100'>
           <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
           {showInput && (
             <FilterBorrower
@@ -600,10 +618,10 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
             />
           )}
           <div>
-            <div className='d-flex flex-row align-items-center p-12px'>
+            <div className='d-flex flex-row align-items-center p-16px'>
               <Input
-                classShared='flex-grow-1 h-30px mb-5'
-                placeholder='Search'
+                classShared='flex-grow-1 h-30px mb-5 '
+                placeholder='Search customer (Enter ID or Name or NRIC to search)'
                 value={searchValue}
                 transparent={true}
                 onChange={handleChangeSearch}
@@ -612,6 +630,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     handleReGetApi()
                   }
                 }}
+                className='fs-5'
                 insertLeft={
                   <FontAwesomeIcon
                     className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
@@ -632,7 +651,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                   ) : null
                 }
               />
-              <div className='d-flex flex-row position-relative flex-end ms-3'>
+              <div className='d-flex flex-row position-relative flex-end ms-2'>
                 <div
                   className={clsx([
                     'position-relative p-3 pe-0',
@@ -645,7 +664,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                   >
                     <img src={gridImg} alt='grid' />
                     <span
-                      className='fs-14 d-inline-block fw-semibold pe-4'
+                      className='fs-14 d-inline-block fw-semibold pe-5'
                       style={{borderRight: '1px solid #ccc'}}
                     >
                       Show Columns
@@ -720,7 +739,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                         ? ''
                         : '',
                   }}
-                  className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900`}
+                  className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900 ms-2`}
                   onClick={showInputFilter}
                 >
                   <Icons name={'FilterIconBorrower'} />
@@ -734,7 +753,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 Object.keys(checkFilter).length === 1 &&
                 Object.keys(checkFilter).includes('searchBar')
               ) && (
-                <div className='d-flex align-self-center px-30px pb-4'>
+                <div className='d-flex align-self-center px-30px pb-5 ps-5'>
                   <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px '>Filter:</h1>
 
                   <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
@@ -860,7 +879,9 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                             </th>
                           )
                         })}
-                      {/* {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>} */}
+                      {showAction && (
+                        <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -882,7 +903,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
             <div
               style={{
-                padding: '10px 22.75px',
+                padding: '16px',
                 display: 'flex',
                 justifyContent: 'space-between',
               }}

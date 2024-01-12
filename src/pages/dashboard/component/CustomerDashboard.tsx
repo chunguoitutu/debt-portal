@@ -184,7 +184,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-start flex-column'>
-          <span className='card-label fw-bold fs-3 mb-1'>Latest Borrowers</span>
+          <span className='card-label fw-bold fs-3 mb-1'>Latest Customers</span>
           <span className='text-muted mt-1 fw-semibold fs-7'>{`Over ${searchCriteria.total} members`}</span>
         </h3>
       </div>
@@ -252,7 +252,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
             <div></div>
             <div className='fs-14 text-hover-primary hover-underline-link'>
               <Link to={'/customers'} className='text-primary text-hover-primary fw-medium'>
-                Go To Borrower Listing
+                Go To Customer Listing
               </Link>
               <FontAwesomeIcon icon={faArrowRight} className='text-primary ms-2 mt-1' />
             </div>
