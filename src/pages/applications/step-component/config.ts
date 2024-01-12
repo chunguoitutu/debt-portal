@@ -718,12 +718,14 @@ const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     {
       key: 'customer_no',
       name: 'Customer No',
+      classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         isSort: true,
       },
     },
     {
       key: 'identification_no',
+      classNameTableHead: 'pt-2 pb-2',
       name: 'NRIC',
       infoFilter: {
         isSort: true,
@@ -731,6 +733,7 @@ const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     },
     {
       key: 'firstname',
+      classNameTableHead: 'pt-2 pb-2',
       name: 'First Name',
       infoFilter: {
         isSort: true,
@@ -738,6 +741,7 @@ const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     },
     {
       key: 'lastname',
+      classNameTableHead: 'pt-2 pb-2',
       name: 'Last Name',
       infoFilter: {
         isSort: true,

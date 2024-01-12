@@ -18,13 +18,13 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'id',
       name: 'ID',
-      classNameTableHead: 'ps-5 min-w-30px',
+      classNameTableHead: 'pt-2 pb-2 ps-5 min-w-30px',
       classNameTableBody: 'w-50px ps-5',
     },
     {
       key: 'loan_no',
       name: 'Loan No',
-      classNameTableHead: 'min-w-175px',
+      classNameTableHead: 'pt-2 pb-2 min-w-175px',
       classNameTableBody: 'min-w-175px',
       infoFilter: {
         typeComponent: 'input',
@@ -36,6 +36,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       key: 'fullname',
       name: 'Name of Borrower',
       classNameTableBody: 'pe-0',
+      classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -46,6 +47,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       key: 'identification_no',
       name: 'NRIC No',
       classNameTableBody: 'pe-0',
+      classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -56,7 +58,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       key: 'loan_amount',
       name: 'Loan Amount',
       classNameTableBody: 'text-end pe-0',
-      classNameTableHead: 'text-end',
+      classNameTableHead: 'pt-2 pb-2 text-end',
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',
@@ -68,7 +70,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'approval_date',
       name: 'Monthly Due Date',
-      classNameTableHead: 'ps-8 pe-8 text-end',
+      classNameTableHead: 'pt-2 pb-2 ps-8 pe-8 text-end',
       classNameTableBody: 'pe-8 text-end',
       infoFilter: {
         typeComponent: 'input',
@@ -80,7 +82,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
     {
       key: 'loan_term',
       name: 'Loan Terms',
-      classNameTableHead: 'ps-8 pe-8 text-end',
+      classNameTableHead: 'pt-2 pb-2 ps-8 pe-8 text-end',
       classNameTableBody: 'pe-8 text-end',
       infoFilter: {
         typeComponent: 'input',
@@ -93,7 +95,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       key: 'status',
       name: 'Status',
       classNameTableBody: 'text-center',
-      classNameTableHead: 'text-center pe-3',
+      classNameTableHead: 'pt-2 pb-2 text-center pe-3',
       options: STATUS_OF_LOAN,
       infoFilter: {
         typeComponent: 'select',
