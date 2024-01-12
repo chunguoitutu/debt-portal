@@ -145,7 +145,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           }
 
           if (monthsDiff <= 0) {
-            return 'The expiration date must be at greater 2 months from the current date, according to our policy.'
+            return 'The expiration date must be at greater 2 months from the current date, according to our policy'
           }
 
           return ''
