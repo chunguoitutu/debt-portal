@@ -169,13 +169,13 @@ const CreateEditAddress = ({
     >
       <div className='modal-header p-30px'>
         <h2 className='m-0'>{titleLable} Address Type</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
-          <KTIcon className='fs-1' iconName='cross' />
+        <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
+          <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
         </div>
       </div>
       <div
         style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
-        className='modal-body p-30px  '
+        className='modal-body py-30px ps-30px pe-10  '
       >
         <div
           ref={stepperRef}
@@ -262,7 +262,7 @@ const CreateEditAddress = ({
           </div>
         </div>
       </div>
-      <div className='d-flex flex-end  p-30px border-top border-gray-200'>
+      <div className='d-flex flex-end  py-30px ps-30px pe-10 border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => handleClose()}

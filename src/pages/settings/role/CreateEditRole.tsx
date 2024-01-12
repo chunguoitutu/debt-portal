@@ -273,7 +273,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       show={show}
       onClose={onClose}
     >
-      <form className='p-30px'>
+      <form className='py-30px ps-30px pe-10'>
         {(rows || [])
           .filter((item) => item.infoCreateEdit)
           .map((item, index) => {
@@ -371,7 +371,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
             }
           })}
       </form>
-      <div className='d-flex flex-end p-30px border-top border-gray-200'>
+      <div className='d-flex flex-end py-30px ps-30px pe-10 border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => onClose()}

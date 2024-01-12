@@ -724,7 +724,7 @@ const LoanListing = () => {
               id='kt_table_users'
               className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
             >
-              <thead className='border-top-bottom-thead'>
+              <thead className='border-top-bottom-thead '>
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                   {rowsConfigColumn
                     .filter((item) => !item.isHide)

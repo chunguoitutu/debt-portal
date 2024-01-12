@@ -3,9 +3,15 @@ import MLCB from './MLCB'
 
 type Props = {
   handleShow: () => void
+  toolsCheckCount: {
+    MLCB: number
+    Cross: number
+    validatePhone: number
+  }
+  setToolsCheckCount: any
 }
 
-const MobileMLCB = ({handleShow}: Props) => {
+const MobileMLCB = ({handleShow, setToolsCheckCount, toolsCheckCount}: Props) => {
   return (
     <div className='w-100'>
       <div
@@ -25,7 +31,11 @@ const MobileMLCB = ({handleShow}: Props) => {
         </button>
       </div>
       <div style={{maxHeight: 'calc(100vh - 100px)', overflowY: 'auto'}}>
-        <MLCB onClose={handleShow} />
+        <MLCB
+          toolsCheckCount={toolsCheckCount}
+          setToolsCheckCount={setToolsCheckCount}
+          onClose={handleShow}
+        />
       </div>
     </div>
   )

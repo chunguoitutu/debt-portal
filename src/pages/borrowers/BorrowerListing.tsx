@@ -585,8 +585,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
           </div>
         </div>
       </div>
-      <div className='col-12 col-xxl-9  ps-4'>
-        <div className='card'>
+      <div className='col-12 col-xxl-9  ps-4  '>
+        <div className='card h-100'>
           <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
           {showInput && (
             <FilterBorrower

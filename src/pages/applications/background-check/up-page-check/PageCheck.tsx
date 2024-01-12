@@ -141,12 +141,8 @@ const PageCheckDeskTop = ({
           >
             UN Page Check
           </h2>
-          <div
-            style={{width: '24px', height: '24px'}}
-            className='btn btn-sm  btn-icon  btn-active-color-primary'
-            onClick={handleClose}
-          >
-            <KTIcon className='fs-1' iconName='cross' />
+          <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
+            <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
           </div>
         </div>
         <GoogleSearchPageCheck

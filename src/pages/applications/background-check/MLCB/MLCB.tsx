@@ -7,9 +7,15 @@ import {useParams} from 'react-router-dom'
 
 type Props = {
   onClose: () => void
+  toolsCheckCount: {
+    MLCB: number
+    Cross: number
+    validatePhone: number
+  }
+  setToolsCheckCount: any
 }
 
-const MLCB: FC<Props> = ({onClose}) => {
+const MLCB: FC<Props> = ({onClose, setToolsCheckCount, toolsCheckCount}) => {
   const [loading, setLoading] = useState<'BM' | 'ME' | null>(null)
   const {applicationIdEdit} = useParams()
 
@@ -21,6 +27,11 @@ const MLCB: FC<Props> = ({onClose}) => {
         title: 'You can get MLCB report only when the loan application is in Awaiting Approval',
       })
     }
+
+    setToolsCheckCount({
+      ...toolsCheckCount,
+      validatePhone: Number(toolsCheckCount || 0),
+    })
     setLoading(type)
     try {
       const {data} = await request.post(`/site/mlcb-check`, {

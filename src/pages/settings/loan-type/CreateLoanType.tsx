@@ -178,13 +178,13 @@ const CreateLoanType = ({
           className='modal-header'
         >
           <h2 className='m-0'>{title} Loan Type</h2>
-          <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
-            <KTIcon className='fs-1' iconName='cross' />
+          <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
+            <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
           </div>
         </div>
         <div
           style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
-          className='modal-body  p-30px '
+          className='modal-body  py-30px ps-30px pe-10 '
         >
           <div
             ref={stepperRef}
@@ -273,7 +273,7 @@ const CreateLoanType = ({
         </div>
 
         <div className='border-top border-gray-200'>
-          <div className='d-flex justify-content-end p-30px'>
+          <div className='d-flex justify-content-end py-30px ps-30px pe-10'>
             <Button
               type='reset'
               onClick={() => handleClose()}
