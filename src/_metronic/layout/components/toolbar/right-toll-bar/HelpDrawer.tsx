@@ -173,7 +173,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
         show: [ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0),
-        opacity: Number(toolsCheckCount?.Cross) !== 0,
+        opacity: Number(toolsCheckCount?.MLCB) !== 0,
 
         onclick: () => {
           if (!!applicationIdEdit) {
@@ -205,9 +205,8 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         value: 'Loan Cross Check',
         icon: <Icons name={'ImgLoanCrossCheck'} />,
         background: 'rgba(232, 255, 243, 0.85)',
-        opacity: true,
-
-        show: Number(toolsCheckCount?.validatePhone) !== 0,
+        opacity: Number(toolsCheckCount?.Cross) === 0,
+        show: true,
         onclick: () => {
           alert('Loan Cross Check')
         },
@@ -215,7 +214,10 @@ const HelpDrawer: FC<PropsStepApplication> = ({
       {
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
-        show: true,
+        show: ![ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
+          values.status || 0
+        ),
+        opacity: Number(toolsCheckCount?.validatePhone) === 0,
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
           if (!!values.mobilephone_1) {
@@ -247,8 +249,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
         opacity: true,
-
-        show: true,
+        show: ![ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
+          values.status || 0
+        ),
         onclick: () => {
           setShow(true)
           setShowValidationPhone(false)

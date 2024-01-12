@@ -191,7 +191,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
       {
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
-        show: ![ApplicationStatus.REJECTED, ApplicationStatus.AWAITING_APPROVAL].includes(
+        show: ![ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
           values.status || 0
         ),
         opacity: Number(toolsCheckCount?.validatePhone) !== 0,
@@ -222,7 +222,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
         opacity: true,
-        show: ![ApplicationStatus.REJECTED, ApplicationStatus.AWAITING_APPROVAL].includes(
+        show: ![ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
           values.status || 0
         ),
         onclick: () => {
