@@ -201,7 +201,6 @@ export const Applications = () => {
     setSubmitting,
     resetForm,
   } = formik
-
   const {company_id} = useAuth()
 
   const _STEP_APPLICATION: StepItem[] = useMemo(() => {
@@ -306,7 +305,9 @@ export const Applications = () => {
 
       delete customer.status
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
-      const formattedIDExpiry = moment(customer?.identification_expiry).format('YYYY-MM-DD')
+      const formattedIDExpiry = moment(customer?.identification_expiry).isValid()
+        ? moment(customer?.identification_expiry).format('YYYY-MM-DD')
+        : ''
 
       setToolsCheckCount({
         MLCB: Number(application.mlcb_count || 0),
