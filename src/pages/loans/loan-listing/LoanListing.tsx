@@ -14,7 +14,7 @@ import Loading from '@/components/table/components/Loading'
 import React, {ChangeEvent, Fragment, useEffect, useMemo, useState} from 'react'
 import {LoanItem, OrderBy, ResponseLoanListing, SearchCriteria, TableRow} from '@/app/types'
 import {FilterLoan} from './FilterLoan'
-import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
+import {getFullName, handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
 import request from '@/app/axios'
@@ -164,10 +164,6 @@ const LoanListing = () => {
 
               const identificationNo = item?.borrower?.customer?.identification_no
 
-              const {firstname, lastname} = item?.borrower?.customer || {}
-
-              const fullname = `${firstname || ''} ${lastname || ''}`.trim()
-
               const month_due_date = moment(item.approval_date).format('DD')
 
               const dayWithSuffix = getDayWithSuffix(parseInt(month_due_date, 10))
@@ -206,7 +202,7 @@ const LoanListing = () => {
               if (key === 'fullname') {
                 return (
                   <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
-                    {fullname}
+                    {getFullName(item?.borrower?.customer)}
                   </td>
                 )
               }

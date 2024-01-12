@@ -232,13 +232,6 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       onBlur: handleBlur,
     }
 
-    // Declare props for special cases
-    if (key === 'firstname') {
-      props = {
-        formik: formik,
-      }
-    }
-
     if (typeComponent === 'input') {
       props = {
         ...props,
@@ -246,6 +239,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         required: key === 'password' && data ? false : isRequired,
         type: typeInput,
         label: name,
+        autoComplete: 'off',
       }
     }
 
