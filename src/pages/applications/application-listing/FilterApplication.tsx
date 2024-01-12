@@ -34,18 +34,27 @@ export function FilterApplication({
       ref={selectRef}
     >
       <div className='position-relative p-0'>
-        <div className='p-30px d-flex w-full align-items-center justify-content-between'>
+        <div
+          style={{
+            padding: '30px 25px 30px 30px',
+          }}
+          className=' d-flex w-full align-items-center justify-content-between'
+        >
           <div className='fs-20 fw-bold text-dark text-gray-900'>Filter Options</div>
-          <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={onClose}>
-            <KTIcon className='fs-1' iconName='cross' />
+
+          <div className='cursor-pointer p-0 m-0' onClick={onClose}>
+            <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
           </div>
         </div>
 
         <div className='separator p-0 border-gray-200'></div>
 
         <div
-          style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}}
-          className='p-30px pt-8px pb-30px'
+          style={{
+            maxHeight: 'calc(100vh - 450px)',
+            overflowY: 'auto',
+            padding: '8px 25px 30px 30px ',
+          }}
         >
           {rows.map((row, i) => {
             if (!row.infoFilter) return <div key={i}></div>
