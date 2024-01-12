@@ -132,7 +132,7 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
 
         <TextArea
           id='approved_note'
-          label={'Description'}
+          label={'Note'}
           name={'approved_note'}
           value={values['approved_note'] || ''}
           onChange={handleChange}

@@ -27,7 +27,7 @@ import ApplicationListing from '../pages/applications/application-listing/Applic
 import {Logout} from '../pages/auth/logout/Logout'
 import {useAuth} from '../app/context/AuthContext'
 import Guest from '@/pages/guest'
-import LoanListing from '@/pages/loans/LoanListing/LoanListing'
+import LoanListing from '@/pages/loans/loan-listing/LoanListing'
 import BorrowersListing from '@/pages/borrowers/BorrowerListing'
 import LoanDetails from '@/pages/loans/loan-details'
 import CaCheck from '@/pages/applications/background-check/ca-check'

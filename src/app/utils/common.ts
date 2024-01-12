@@ -250,5 +250,25 @@ export function isFirstGetStepApplication({
 }
 
 export function getFullName(info?: {[key: string]: any}) {
-  return [info?.firstname, info?.middlename, info?.lastname].filter(Boolean).join(' ')
+  return [info?.lastname, info?.firstname].filter(Boolean).join(' ')
+}
+
+export function splitFullName(fullname: string) {
+  let defaultResult = {
+    firstname: '',
+    lastname: '',
+  }
+
+  const arrayName = fullname?.trim()?.split(' ')?.filter(Boolean) || []
+  const isHasFullName = typeof fullname === 'string' && arrayName?.length
+
+  if (!isHasFullName) return defaultResult
+
+  const [lastname, ...firstname] = arrayName
+
+  return {
+    ...defaultResult,
+    firstname: capitalizeFirstText(firstname?.join(' ') || ''),
+    lastname: capitalizeFirstText(lastname || ''),
+  }
 }

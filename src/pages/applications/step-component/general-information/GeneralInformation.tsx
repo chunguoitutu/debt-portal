@@ -22,6 +22,7 @@ import {
   convertResidentialTypeSingPass,
   getIdDefault,
   isFirstGetStepApplication,
+  splitFullName,
 } from '@/app/utils'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
@@ -34,7 +35,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     setStepCompleted,
     setSingpass,
   } = props
-  const [searchParams, setSearchParams] = useSearchParams()
   let [singpassValues, setSingpassValues] = useState<any>()
   const [activeTab, setActiveTab] = useState('cpf')
 
@@ -46,6 +46,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   } | null>(null)
 
   const {applicationIdEdit} = useParams()
+
+  const [showMoreInformation, setShowMoreInformation] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
   const [popupSingpass, setPopupSingpass] = useState<boolean>(false)
   const {company_id} = useAuth()
@@ -58,7 +60,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     setFieldValue,
     setErrors,
     setFieldError,
-    setFieldTouched,
     registerField,
     unregisterField,
   } = formik
@@ -222,7 +223,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           }
 
           const fullName = event.data.name.value
-          const {firstname, lastname} = splitName(fullName)
+          const {firstname, lastname} = splitFullName(fullName)
 
           const annual_api = event.data['noa-basic']?.amount?.value
           const cpf_months = event.data?.cpfcontributions?.history?.map(
@@ -330,32 +331,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     })
   }, [company_id, pathname])
 
-  function splitName(fullName: string) {
-    const arr = fullName?.trim()?.split(' ')
-
-    if (!Array.isArray(arr) || arr.length === 0) {
-      return {}
-    }
-
-    const leng = arr.length
-
-    if (leng === 1) {
-      return {
-        firstname: arr[0],
-      }
-    }
-    if (leng === 2) {
-      return {
-        firstname: arr[0],
-        lastname: arr[1],
-      }
-    }
-    return {
-      firstname: arr[0],
-      lastname: arr[leng - 1],
-    }
-  }
-
   function handleShowPopup() {
     setShowPopup(!showPopup)
   }
@@ -449,8 +424,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     )
     dataPopup?.postMessage({message: 'Singpass'}, 'http://localhost:3001')
   }
-
-  const [showMoreInformation, setShowMoreInformation] = useState(false)
 
   function handleShowMoreInformation() {
     setShowMoreInformation(true)
@@ -560,14 +533,17 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             touched={touched[key]}
             error={errors[key]}
             min='1900-01-01'
-            max={key === 'date_of_birth' && getCurrentDate()}
+            max={key === 'date_of_birth' ? getCurrentDate() : undefined}
             insertRight={
               key === 'identification_no' ? (
-                <Tippy offset={[40, 0]} content='Lookup Customer'>
+                <Tippy offset={[40, 0]} content='Lookup Customer' disabled={!!applicationIdEdit}>
                   {/* Wrapper with a span tag to show tooltip */}
                   <div
-                    className='supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 cursor-pointer text-gray-600'
-                    onClick={handleShowPopup}
+                    className={clsx([
+                      'supplement-input-advance search-icon d-flex align-items-center justify-content-center align-self-stretch border-0 border-left-1 rounded-left-0 bg-none px-4 text-gray-600',
+                      !applicationIdEdit ? 'cursor-pointer' : 'disabled',
+                    ])}
+                    onClick={!applicationIdEdit ? handleShowPopup : undefined}
                   >
                     <FontAwesomeIcon icon={faSearch} />
                   </div>

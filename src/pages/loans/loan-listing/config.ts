@@ -1,7 +1,7 @@
-import { TableConfig } from '@/app/types'
-import { LOAN_U_F_0, STATUS_OF_LOAN } from '@/app/utils'
-import { Input } from '@/components/input'
-import { Select } from '@/components/select'
+import {TableConfig} from '@/app/types'
+import {LOAN_U_F_0, STATUS_OF_LOAN} from '@/app/utils'
+import {Input} from '@/components/input'
+import {Select} from '@/components/select'
 
 export const LOAN_LISTING_CONFIG: TableConfig = {
   endpoint: '',
