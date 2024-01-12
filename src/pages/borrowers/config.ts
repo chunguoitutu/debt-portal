@@ -24,7 +24,7 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     {
       classNameTableHead: 'pt-2 pb-2 mw-250px',
       key: 'customer_no',
-      name: 'Customer No',
+      name: 'Customer ID',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -33,11 +33,10 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     },
 
     {
-      classNameTableHead: 'pt-2 pb-2 mw-250px',
+      classNameTableHead: 'pt-2 pb-2 mw-250px ps-10',
       key: 'fullname',
       name: 'Name',
       infoFilter: {
-
         typeComponent: 'input',
         component: Input,
         isSort: true,
@@ -47,7 +46,7 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
     {
       classNameTableHead: 'pt-2 pb-2 ps-3 mw-250px',
       key: 'identification_no',
-      name: 'NRIC',
+      name: 'NRIC No',
       infoFilter: {
 
         typeComponent: 'input',

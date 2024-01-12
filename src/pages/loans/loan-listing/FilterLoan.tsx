@@ -1,14 +1,16 @@
 import {KTIcon} from '@/_metronic/helpers'
+import useClickOutside from '@/app/hooks/useClickOutside'
 import clsx from 'clsx'
+import {useRef} from 'react'
 
 interface Props {
-  rows?: any
-  dataFilter?: any
-  handleChangeFilter?: any
+  rows: any
+  dataFilter: any
+  handleChangeFilter: any
   dataOption: any
   handleResetFilter: () => void
   handleLoadApi: () => void
-  onClose?: () => void
+  onClose: () => void
 }
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export function FilterLoan({
@@ -20,8 +22,17 @@ export function FilterLoan({
   dataOption,
   onClose,
 }: Props) {
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useClickOutside(selectRef, () => {
+    onClose()
+  })
   return (
-    <div className='menu-filter-application card  w-xxl-400px w-300px' data-kt-menu='true'>
+    <div
+      className='menu-filter-application card  w-xxl-400px w-300px'
+      data-kt-menu='true'
+      ref={selectRef}
+    >
       <div className='position-relative p-0'>
         <div className='p-30px d-flex w-full align-items-center justify-content-between'>
           <div className='fs-20 fw-bold text-dark text-gray-900'>Filter Options</div>

@@ -38,7 +38,7 @@
 }
 
 .wrapper-records-applications {
-  margin-top: 30px;
+  margin-bottom: 14px;
   display: flex;
   justify-content: space-between;
   padding: 16px 20px;
@@ -96,7 +96,7 @@
 .config-column-grid-customer {
   content: '';
   position: absolute;
-  top: 42px;
+  top: 46px;
   right: 8px;
   z-index: 4;
   animation: dropdownAnimation 0.3s ease;

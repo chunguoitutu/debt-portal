@@ -699,7 +699,7 @@ const ApplicationListing = () => {
         </div>
 
         {!!newDataSocket && (
-          <div className='wrapper-records-applications'>
+          <div className='wrapper-records-applications '>
             <div className='p-0 m-0'>
               <p className='records-applications'>
                 Detected {newDataSocket} new {Number(newDataSocket) === 1 ? 'record' : 'records'}.
