@@ -69,16 +69,12 @@ interface ListIdEdit {
 export const Applications = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [stepCompleted, setStepCompleted] = useState<number>(0)
-  const [optionListing, setOptionListing] = useState<{[key: string]: any[]}>({})
+  const [optionListing, setOptionListing] = useState<{[key: string]: any[]}>({}) // option get from API
   const [isDraft, setIsDraft] = useState<boolean>(false)
   const [remarkList, setRemarkList] = useState<RemarkItem[]>([])
-  const [show, setShow] = useState<boolean>(false)
   const [loadApiEdit, SetLoadApiEdit] = useState<boolean>(false)
   const [showRemark, setShowRemark] = useState<boolean>(false)
   const [dataEdit, setdataEdit] = useState({})
-  // const [checkAmount, SetCheckAmount] = useState<number>(0)
-  // const [popupSingpass, setPopupSingpass] = useState(false)
-  const [searchParams] = useSearchParams()
   const [singpass, setSingpass] = useState<boolean>(false)
   const [errorLoading, setErrorLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -830,25 +826,11 @@ export const Applications = () => {
                     setOptionListing={setOptionListing}
                   />
                 )}
-                {show && (
-                  <Reject
-                    setCurrentStep={setCurrentStep}
-                    handleloadApi={() => SetLoadApiEdit(!loadApiEdit)}
-                    handleClose={() => setShow(!show)}
-                    setStepCompleted={setStepCompleted}
-                    config={STEP_APPLICATION[currentStep - 1].config || []}
-                    formik={formik}
-                    setSingpass={setSingpass}
-                    singpass={singpass}
-                    optionListing={optionListing}
-                    setOptionListing={setOptionListing}
-                  />
-                )}
+
                 <GeneralButton
                   setCurrentStep={setCurrentStep}
                   dataEdit={dataEdit}
                   setStepCompleted={setStepCompleted}
-                  handleClose={() => setShow(!show)}
                   handleSaveDraft={handleSaveDraft}
                   handleSubmit={handleBeforeSubmit}
                   handleReloadApi={() => SetLoadApiEdit(!loadApiEdit)}
