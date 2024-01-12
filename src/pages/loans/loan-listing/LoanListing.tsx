@@ -11,7 +11,7 @@ import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import Pagination from '@/components/table/components/Pagination'
 import RowPerPage from '@/components/row-per-page'
 import Loading from '@/components/table/components/Loading'
-import React, {ChangeEvent, Fragment, useEffect, useMemo, useState} from 'react'
+import React, {ChangeEvent, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import {LoanItem, OrderBy, ResponseLoanListing, SearchCriteria, TableRow} from '@/app/types'
 import {FilterLoan} from './FilterLoan'
 import {getFullName, handleFormatFilter, isObject, parseJson} from '@/app/utils'
@@ -25,6 +25,7 @@ import Badge from '@/components/badge/Badge'
 import {GLOBAL_CONSTANTS} from '@/app/constants'
 import {Checkbox} from '@/components/checkbox'
 import gridImg from '@/app/images/grid.svg'
+import useClickOutside from '@/app/hooks/useClickOutside'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -116,6 +117,12 @@ const LoanListing = () => {
     )
     return rows.filter((el) => !keyIgnored.includes(el.key))
   }, [configColumnSubmitted])
+
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useClickOutside(selectRef, () => {
+    setShowConfigColumn(false)
+  })
 
   useEffect(() => {
     if (!+company_id) return
@@ -509,7 +516,10 @@ const LoanListing = () => {
 
               {/* config */}
               {showConfigColumn && (
-                <div className='config-column-grid-customer card justify-content-end'>
+                <div
+                  className='config-column-grid-customer card justify-content-end'
+                  ref={selectRef}
+                >
                   {/* Header */}
                   <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
                     <span className='fw-bold'>Config Columns</span>

@@ -28,6 +28,7 @@ import {useThemeMode} from '@/_metronic/partials'
 
 import ChartImg from '@/app/images/ChartBorrowerListing.png'
 import Badge from '@/components/badge/Badge'
+import useClickOutside from '@/app/hooks/useClickOutside'
 
 type Props = {
   chartSize?: number
@@ -118,6 +119,12 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   const [configColumnSubmitted, setConfigColumnSubmitted] = useState<any>(
     handleInitialConfigColumn()
   )
+
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useClickOutside(selectRef, () => {
+    setShowConfigColumn(false)
+  })
 
   const rowsConfigColumn = useMemo(() => {
     const keyIgnored = Object.keys(configColumnSubmitted).filter(
@@ -647,7 +654,10 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
                   {/* config */}
                   {showConfigColumn && (
-                    <div className='config-column-grid-customer card justify-content-end'>
+                    <div
+                      className='config-column-grid-customer card justify-content-end'
+                      ref={selectRef}
+                    >
                       {/* Header */}
                       <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
                         <span className='fw-bold'>Config Columns</span>
