@@ -109,7 +109,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     typeInput: 'date',
     column: 6,
-    label: 'ID Expiry',
+    label: 'Expiry Date',
     className: 'justify-content-xxl-end',
   },
   {
