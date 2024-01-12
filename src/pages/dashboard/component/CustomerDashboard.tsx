@@ -251,7 +251,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
           >
             <div></div>
             <div className='fs-14 text-hover-primary hover-underline-link'>
-              <Link to={'/borrowers'} className='text-primary text-hover-primary fw-medium'>
+              <Link to={'/customers'} className='text-primary text-hover-primary fw-medium'>
                 Go To Borrower Listing
               </Link>
               <FontAwesomeIcon icon={faArrowRight} className='text-primary ms-2 mt-1' />

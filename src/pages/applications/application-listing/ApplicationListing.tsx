@@ -1,6 +1,6 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link, useNavigate} from 'react-router-dom'
-import React, {ChangeEvent, Fragment, useEffect, useMemo, useState} from 'react'
+import React, {ChangeEvent, Fragment, RefObject, useEffect, useMemo, useRef, useState} from 'react'
 import numeral from 'numeral'
 import moment from 'moment'
 import clsx from 'clsx'
@@ -558,7 +558,7 @@ const ApplicationListing = () => {
         />
       )}
       <div>
-        <div className='d-flex flex-row align-items-center'>
+        <div className='d-flex flex-row align-items-center pb-12px'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
             placeholder='Search'
@@ -590,85 +590,95 @@ const ApplicationListing = () => {
               ) : null
             }
           />
-          <div className='d-flex position-relative flex-end ms-4'>
-            <Button
+          <div className='d-flex flex-row position-relative flex-end ms-3'>
+            <div
+              className={clsx(['position-relative p-3 pe-0', showConfigColumn && 'text-gray-900'])}
+            >
+              <div
+                className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
+                onClick={handleToggleConfigColumn}
+              >
+                <img src={gridImg} alt='grid' />
+                <span
+                  className='fs-14 d-inline-block fw-semibold pe-4'
+                  style={{borderRight: '1px solid #ccc'}}
+                >
+                  Show Columns
+                </span>
+              </div>
+
+              {/* config */}
+              {showConfigColumn && (
+                <div className='config-column-grid-customer card justify-content-end'>
+                  {/* Header */}
+                  <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
+                    <span className='fw-bold'>Config Columns</span>
+
+                    <div
+                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
+                      onClick={handleToggleConfigColumn}
+                    >
+                      <KTIcon className='fs-1' iconName='cross' />
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold'>
+                    {APPLICATION_LISTING_CONFIG.rows.map((el, i) => {
+                      if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+
+                      const isChecked = configColumn[el.key]
+
+                      return (
+                        <Checkbox
+                          name={el.key}
+                          label={el.name}
+                          classNameLabel={`ms-8px ${isChecked ? '' : 'text-gray-600'}`}
+                          key={i}
+                          checked={isChecked}
+                          onChange={handleChangeConfigColumn}
+                        />
+                      )
+                    })}
+                  </div>
+
+                  {/* Footer */}
+                  <div className='d-flex justify-content-end p-30px gap-8px'>
+                    <Button
+                      className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
+                      onClick={handleResetConfigColumn}
+                    >
+                      Reset
+                    </Button>
+
+                    <Button
+                      className='btn btn-lg btn-primary fs-6'
+                      onClick={handleApplyConfigColumn}
+                    >
+                      Apply
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div
               style={{
                 backgroundColor:
                   Object.keys(checkFilter).length !== 0 &&
                   !(
                     Object.keys(checkFilter).length === 1 &&
                     Object.keys(checkFilter).includes('searchBar')
-                  ) &&
-                  (checkFilter[`status`]?.in || []).length > 0
-                    ? '#c4cada'
-                    : '#f1f1f4',
-              }}
-              onClick={showInputFilter}
-              className={` align-self-center fs-6 text-primary  btn btn-secondary h-45px`}
-              disabled={false}
-            >
-              <Icons name={'filterIcon'} />
-              Filter
-            </Button>
-          </div>
-        </div>
-        <div className={clsx(['position-relative mt-4', showConfigColumn && 'text-gray-900'])}>
-          <div
-            className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
-            onClick={handleToggleConfigColumn}
-          >
-            <img src={gridImg} alt='grid' />
-            <span className='fs-14 d-inline-block fw-semibold'>Show Columns</span>
-          </div>
-
-          {/* config */}
-          {showConfigColumn && (
-            <div className='config-column-grid-other card justify-content-end'>
-              {/* Header */}
-              <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
-                <span className='fw-bold'>Config Column</span>
-
-                <div
-                  className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
-                  onClick={handleToggleConfigColumn}
-                >
-                  <KTIcon className='fs-1' iconName='cross' />
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
-                {APPLICATION_LISTING_CONFIG.rows.map((el, i) => {
-                  if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
-
-                  return (
-                    <Checkbox
-                      name={el.key}
-                      label={el.name}
-                      classNameLabel='ms-8px'
-                      key={i}
-                      checked={configColumn[el.key]}
-                      onChange={handleChangeConfigColumn}
-                    />
                   )
-                })}
-              </div>
-
-              {/* Footer */}
-              <div className='d-flex justify-content-end p-30px gap-8px'>
-                <Button
-                  className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
-                  onClick={handleResetConfigColumn}
-                >
-                  Reset
-                </Button>
-
-                <Button className='btn btn-lg btn-primary fs-6' onClick={handleApplyConfigColumn}>
-                  Apply
-                </Button>
-              </div>
+                    ? ''
+                    : '',
+              }}
+              className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900`}
+              onClick={showInputFilter}
+            >
+              <Icons name={'FilterIconBorrower'} />
+              Filter
             </div>
-          )}
+          </div>
         </div>
 
         {!!newDataSocket && (
@@ -691,10 +701,12 @@ const ApplicationListing = () => {
             Object.keys(checkFilter).length === 1 && Object.keys(checkFilter).includes('searchBar')
           ) &&
           (checkFilter[`status`]?.in || []).length > 0 && (
-            <div className='d-flex justify-content  px-30px pt-14px m-0 '>
-              <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px  mt-16px '>Filter:</h1>
+            <div className='d-flex align-self-center px-30px pb-4 ps-1'>
+              <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px align-self-center'>
+                Filter:
+              </h1>
 
-              <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
+              <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap'>
                 {showFilter.map((filter, index) => {
                   return (
                     <div key={index} className='p-0 m-0'>
@@ -707,7 +719,7 @@ const ApplicationListing = () => {
                           'loan_terms',
                           'identification_type',
                         ].includes(filter.key) && (
-                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}: {checkFilter[`${filter.key}`]}
                             </h2>
@@ -725,7 +737,7 @@ const ApplicationListing = () => {
                       {!!checkFilter[`${filter.key}`] &&
                         ['status'].includes(filter.key) &&
                         (checkFilter[`${filter.key}`]?.in || []).length > 0 && (
-                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show d-flex justify-content-center align-items-center gap-4px'>
                               {filter.value}:
                               {(checkFilter[`${filter.key}`]?.in || []).map((status, i) => (
@@ -754,7 +766,7 @@ const ApplicationListing = () => {
                       {(!!checkFilter[`${filter.key}`] ||
                         Number(checkFilter[`${filter.key}`]) == 0) &&
                         ['loan_terms'].includes(filter.key) && (
-                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}:{' '}
                               {[1, 0].includes(Number(checkFilter[`${filter.key}`]) || 0)
@@ -774,7 +786,7 @@ const ApplicationListing = () => {
                         )}
                       {!!checkFilter[`${filter.key}`] &&
                         ['identification_type'].includes(filter.key) && (
-                          <div className='wrapper-filter-application mt-16px  ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}:{' '}
                               {checkFilter[`${filter.key}`] === 'foreign_identification_number'
@@ -794,7 +806,7 @@ const ApplicationListing = () => {
                         )}
                       {!!checkFilter?.application_date &&
                         ['application_date'].includes(filter.key) && (
-                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}:{' '}
                               {!!checkFilter?.application_date?.gte
@@ -820,7 +832,7 @@ const ApplicationListing = () => {
                         )}
                       {!!checkFilter?.loan_amount_requested &&
                         ['loan_amount_requested'].includes(filter.key) && (
-                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}:{' '}
                               {!!checkFilter?.loan_amount_requested?.gte ||
@@ -847,7 +859,7 @@ const ApplicationListing = () => {
                       {!!checkFilter?.loan_type_id &&
                         ['loan_type_id'].includes(filter.key) &&
                         dataOption?.loan_type_id.length !== 0 && (
-                          <div className='wrapper-filter-application mt-16px ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}:{' '}
                               {
@@ -876,19 +888,20 @@ const ApplicationListing = () => {
                 onClick={() => {
                   handleResetFilter()
                 }}
-                className='reset-all-filter-application mt-16px ms-16px'
+                className='reset-all-filter-application ms-16px mt-2'
               >
                 Reset All
               </button>
             </div>
           )}
-        <KTCardBody className='py-4'>
+
+        <KTCardBody className='p-0'>
           <div className='table-responsive'>
             <table
               id='kt_table_users'
               className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
             >
-              <thead>
+              <thead className='border-top-bottom-thead'>
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                   {rowsConfigColumn
                     .filter((item) => !item.isHide)
@@ -915,7 +928,9 @@ const ApplicationListing = () => {
                         </th>
                       )
                     })}
-                  {showAction && <th className='text-center w-125px fs-6 fw-bold'>Actions</th>}
+                  {showAction && (
+                    <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -941,6 +956,7 @@ const ApplicationListing = () => {
             display: 'flex',
             justifyContent: 'space-between',
           }}
+          className='ps-2'
         >
           <RowPerPage
             lenghtData={searchCriteria.total}

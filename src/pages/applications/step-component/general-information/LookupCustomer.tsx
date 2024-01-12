@@ -20,11 +20,9 @@ import {
   ApplicationFormData,
 } from '@/app/types'
 import SortBy from '@/components/sort-by'
-import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import Pagination from '@/components/table/components/Pagination'
-import {convertResidentialTypeSingPass, handleFormatFilter} from '@/app/utils'
+import {handleFormatFilter} from '@/app/utils'
 import Loading from '@/components/table/components/Loading'
-import {Checkbox} from '@/components/checkbox'
 import {useAuth} from '@/app/context/AuthContext'
 import {FormikProps} from 'formik'
 import moment from 'moment'
@@ -59,10 +57,6 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
 
   function showInputFilter() {
     setShowInput(!showInput)
-  }
-
-  function isUseFilterButton() {
-    setFilterButtonClicked(!filterButtonClicked)
   }
 
   const showFilter = [
@@ -259,13 +253,13 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             </div>
           </div>
         </Modal.Header>
-        <Modal.Body style={{maxHeight: 450}}>
+        <Modal.Body style={{maxHeight: 450}} className='p-12px'>
           <div className='d-flex flex-row align-items-center'>
             <Input
-              transparent={true}
               classShared='flex-grow-1 h-30px mb-5'
               placeholder='Search'
               value={searchValue}
+              transparent={true}
               onChange={handleChangeSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -292,8 +286,24 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                 ) : null
               }
             />
-            <div className='d-flex flex-end ms-4 fs-6'>
-              <Button
+            <div className='d-flex flex-row position-relative flex-end'>
+              <div className='d-flex flex-end ms-2 mt-1'>
+                <Button
+                  onClick={() => {
+                    handleReGetApi()
+                  }}
+                  className='align-self-center fs-5 h-45px fs-6 bg-white text-gray-600 text-hover-gray-900 '
+                  style={{padding: 10}}
+                  disabled={filterButtonClicked}
+                >
+                  <FontAwesomeIcon
+                    className='cursor-pointer text-gray-600 mt-1 me-2'
+                    icon={faSearch}
+                  />
+                  Search
+                </Button>
+              </div>
+              <div
                 style={{
                   backgroundColor:
                     Object.keys(checkFilter).length !== 0 &&
@@ -301,30 +311,16 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                       Object.keys(checkFilter).length === 1 &&
                       Object.keys(checkFilter).includes('searchBar')
                     )
-                      ? '#c4cada'
-                      : '#f1f1f4',
+                      ? ''
+                      : '',
+                  borderLeft: '1px solid #f1f1f2',
                 }}
-                onClick={() => {
-                  showInputFilter(), isUseFilterButton()
-                }}
-                className='btn-secondary align-self-center my-2 fs-6 text-primary h-45px'
-                disabled={false}
+                className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900`}
+                onClick={showInputFilter}
               >
-                <Icons name={'filterIcon'} />
+                <Icons name={'FilterIconBorrower'} />
                 Filter
-              </Button>
-            </div>
-
-            <div className='d-flex flex-end ms-2'>
-              <Button
-                onClick={() => {
-                  handleReGetApi()
-                }}
-                className='btn btn-primary align-self-center my-2 fs-5 h-45px fs-6'
-                disabled={filterButtonClicked}
-              >
-                Search
-              </Button>
+              </div>
             </div>
           </div>
           <div>
@@ -378,12 +374,13 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                 id='kt_table_users'
                 className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
               >
-                <thead>
-                  <tr className='text-start text-muted fw-bold fs-6 text-uppercase gs-0'>
+                <thead className='border-top-bottom-thead'>
+                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                     {rows
                       .filter((item) => !item.isHide)
                       .map((item, i) => {
                         const {classNameTableHead, name, infoFilter, key} = item
+
                         const {isSort} = infoFilter || {}
 
                         return (
@@ -404,7 +401,9 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                           </th>
                         )
                       })}
-                    {<th className='text-center w-150px'>Action</th>}
+                    {showAction && (
+                      <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -480,7 +479,10 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             </div>
           </KTCardBody>
         </Modal.Body>
-        <div style={{padding: '10px 22.75px', display: 'flex', justifyContent: 'space-between'}}>
+        <div
+          className='ps-4'
+          style={{padding: '10px 22.75px', display: 'flex', justifyContent: 'space-between'}}
+        >
           <RowPerPage
             lenghtData={searchCriteria.total}
             limit={searchCriteria.pageSize}

@@ -1,7 +1,7 @@
-import {TableConfig} from '@/app/types'
-import {ID_TYPE, STATUS_APPLICATION_FILTER} from '@/app/utils'
-import {Input} from '@/components/input'
-import {Select} from '@/components/select'
+import { TableConfig } from '@/app/types'
+import { ID_TYPE, STATUS_APPLICATION_FILTER } from '@/app/utils'
+import { Input } from '@/components/input'
+import { Select } from '@/components/select'
 import Status from './Status'
 
 export const APPLICATION_LISTING_CONFIG: TableConfig = {
@@ -19,12 +19,13 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'id',
       name: 'ID',
-      classNameTableHead: 'ps-5',
+      classNameTableHead: 'pt-2 pb-2 ps-5',
       classNameTableBody: 'w-50px ps-3',
     },
     {
       key: 'application_no',
       name: 'Application No',
+      classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -34,6 +35,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'fullname',
       name: 'Name of Borrower',
+      classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -44,6 +46,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'identification_type',
       name: 'Identity Card Type',
 
+      classNameTableHead: 'pt-2 pb-2',
       options: ID_TYPE,
       infoFilter: {
         typeComponent: 'select',
@@ -54,6 +57,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'identification_no',
       name: 'NRIC No',
+      classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
@@ -63,6 +67,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'loan_type_id',
       name: 'Loan Type',
+      classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         typeComponent: 'select',
         component: Select,
@@ -76,7 +81,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'loan_amount_requested',
       name: 'Loan Amount',
       classNameTableBody: 'text-end pe-0',
-      classNameTableHead: 'text-end',
+      classNameTableHead: 'pt-2 pb-2 text-end',
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',
@@ -89,7 +94,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'loan_terms',
       name: 'Loan Terms',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'text-end pe-3',
+      classNameTableHead: 'pt-2 pb-2 text-end pe-3',
       infoFilter: {
         typeComponent: 'input',
         typeInput: 'number',
@@ -101,7 +106,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'application_date',
       name: 'Application Date',
       classNameTableBody: 'text-end pe-0',
-      classNameTableHead: 'text-end pe-0',
+      classNameTableHead: 'pt-2 pb-2 text-end pe-0',
       infoFilter: {
         isFromTo: true,
         typeComponent: 'input',
@@ -114,7 +119,7 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
       key: 'status',
       name: 'Status',
       classNameTableBody: 'text-center',
-      classNameTableHead: 'text-center pe-3',
+      classNameTableHead: 'pt-2 pb-2 text-center pe-3',
       options: STATUS_APPLICATION_FILTER,
       infoFilter: {
         typeComponent: 'select',
