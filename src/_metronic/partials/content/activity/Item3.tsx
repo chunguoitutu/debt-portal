@@ -36,7 +36,7 @@ const Item3: FC = () => {
 
         <div className='overflow-auto pb-5'>
           <div className='d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-5'>
-            <div className='d-flex flex-aligns-center pe-10 pe-lg-20'>
+            <div className='d-flex flex-aligns-center pe-30px pe-lg-20'>
               <img alt='' className='w-30px me-3' src={toAbsoluteUrl('/media/svg/files/pdf.svg')} />
 
               <div className='ms-1 fw-bold'>
@@ -48,7 +48,7 @@ const Item3: FC = () => {
               </div>
             </div>
 
-            <div className='d-flex flex-aligns-center pe-10 pe-lg-20'>
+            <div className='d-flex flex-aligns-center pe-30px pe-lg-20'>
               <img alt='' className='w-30px me-3' src={toAbsoluteUrl('/media/svg/files/doc.svg')} />
 
               <div className='ms-1 fw-bold'>

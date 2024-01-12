@@ -175,7 +175,7 @@ const CreateEditAddress = ({
       </div>
       <div
         style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
-        className='modal-body py-30px ps-30px pe-10  '
+        className='modal-body py-30px ps-30px pe-30px  '
       >
         <div
           ref={stepperRef}
@@ -262,7 +262,7 @@ const CreateEditAddress = ({
           </div>
         </div>
       </div>
-      <div className='d-flex flex-end  py-30px ps-30px pe-10 border-top border-gray-200'>
+      <div className='d-flex flex-end  py-30px ps-30px pe-30px border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => handleClose()}

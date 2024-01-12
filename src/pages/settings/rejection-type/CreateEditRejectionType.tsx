@@ -164,7 +164,7 @@ const CreateEditRejectionType = ({
     >
       <div
         style={{
-          padding: '30px',
+          padding: '30px 28.1px 30px 30px',
         }}
         className='modal-header'
       >
@@ -175,7 +175,7 @@ const CreateEditRejectionType = ({
       </div>
       <div
         style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
-        className='modal-body py-30px ps-30px pe-10 '
+        className='modal-body py-30px ps-30px pe-30px '
       >
         <div
           ref={stepperRef}
@@ -263,7 +263,7 @@ const CreateEditRejectionType = ({
           </div>
         </div>
       </div>
-      <div className='d-flex flex-end py-30px ps-30px pe-10s border-top border-gray-200'>
+      <div className='d-flex flex-end py-30px ps-30px pe-30pxs border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => handleClose()}

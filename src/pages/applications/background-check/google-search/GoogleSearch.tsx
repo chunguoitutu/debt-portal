@@ -16,7 +16,7 @@ const GoogleSearch = ({handleClose, dataSearch, mobile = false, status}: Props) 
   }
   return (
     <div className='h'>
-      <div className='py-30px ps-30px pe-10 h-100'>
+      <div className='py-30px ps-30px pe-30px h-100'>
         {status ? (
           <div className='text-center h-100'>
             <div className='spinner-grow text-primary' role='status'>
@@ -89,7 +89,7 @@ const GoogleSearch = ({handleClose, dataSearch, mobile = false, status}: Props) 
         style={{
           borderTop: '1px solid #F1F1F2',
         }}
-        className='d-flex flex-end btn-repayment-schedule-calculator py-30px ps-30px pe-10'
+        className='d-flex flex-end btn-repayment-schedule-calculator py-30px ps-30px pe-30px'
       >
         <Button onClick={handleClose} type='reset' className='btn-lg fs-14 btn-secondary me-8px'>
           Cancel

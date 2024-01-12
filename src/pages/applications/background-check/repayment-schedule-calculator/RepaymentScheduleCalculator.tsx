@@ -26,7 +26,7 @@ const RepaymentScheduleCalculator = ({show, handleClose}: Props) => {
         style={{
           padding: '30px',
         }}
-        className='modal-header p-30px d-flex align-items-center justify-content-between'
+        className='modal-header  d-flex align-items-center justify-content-between'
       >
         <h2
           style={{

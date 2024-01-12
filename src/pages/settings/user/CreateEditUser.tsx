@@ -278,7 +278,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
       onClose={onClose}
       dialogClassName='mw-modal-1200px'
     >
-      <div className='py-30px ps-30px pe-10 d-flex'>
+      <div className='py-30px ps-30px pe-30px d-flex'>
         <div className='flex-grow-1 pe-6 border-end border-gray-200'>
           <h3 className='mb-24px fw-bold'>Information</h3>
           <div className='row gx-5'>
@@ -382,7 +382,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         </div>
       </div>
 
-      <div className='d-flex flex-end py-30px ps-30px pe-10 border-top border-gray-200'>
+      <div className='d-flex flex-end py-30px ps-30px pe-30px border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => onClose()}

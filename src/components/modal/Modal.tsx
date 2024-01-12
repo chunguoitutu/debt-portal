@@ -26,7 +26,12 @@ const Modal: FC<Props> = ({show, title, className = '', children, dialogClassNam
       onHide={onClose}
       animation
     >
-      <div className='modal-header d-flex align-items-center gap-3 p-30px'>
+      <div
+        style={{
+          padding: '30px 28.1px 30px 30px',
+        }}
+        className='modal-header d-flex align-items-center gap-3'
+      >
         <h2 className='text-truncate m-0'>{title}</h2>
 
         <div className='cursor-pointer p-0 m-0' onClick={onClose}>
