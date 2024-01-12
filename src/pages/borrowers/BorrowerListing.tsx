@@ -710,7 +710,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       </div>
 
                       {/* Footer */}
-                      <div className='d-flex justify-content-end gap-8px p-30px'>
+                      <div className='d-flex justify-content-end p-30px pt-0 gap-8px'>
                         <Button
                           className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
                           onClick={handleResetConfigColumn}
