@@ -5,7 +5,7 @@ const Avatar = ({firstname, lastname, style}) => {
   let avatarInitials = ''
 
   if (currentUser?.firstname && currentUser?.lastname) {
-    avatarInitials = `${currentUser?.firstname[0].toUpperCase()}${currentUser?.lastname[0].toUpperCase()}`
+    avatarInitials = `${currentUser?.lastname[0].toUpperCase()}${currentUser?.firstname[0].toUpperCase()}`
   }
 
   return (

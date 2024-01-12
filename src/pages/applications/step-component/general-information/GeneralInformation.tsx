@@ -134,7 +134,21 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     if (values.identification_type === 'foreign_identification_number') {
       registerField('identification_expiry', {
         validate(value) {
-          return !value ? convertMessageErrorRequired('ID Expired') : ''
+          // const dateNext2Months = moment(new Date(2024, 11, 31)).add(2, 'month')
+          const dateNext2Months = moment(new Date()).add(2, 'month')
+          const dateSelected = moment(value)
+
+          const monthsDiff = dateSelected.diff(dateNext2Months, 'months', true)
+
+          if (!value) {
+            return convertMessageErrorRequired('ID Expired')
+          }
+
+          if (monthsDiff <= 0) {
+            return 'The expiration date must be at greater 2 months from the current date, according to our policy.'
+          }
+
+          return ''
         },
       })
     } else {
@@ -522,7 +536,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           <Component
             value={values[key]}
             onChange={handleChange}
-            onBlur={(e) => {
+            onBlur={(e: FocusEvent) => {
               handleBlur(e)
               key === 'identification_no' && handleGetApplicationById()
             }}

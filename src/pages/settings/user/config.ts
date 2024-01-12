@@ -106,7 +106,7 @@ export const USER_TABLE_CONFIG: TableConfig = {
       name: 'Telephone',
       infoCreateEdit: {
         type: 'input',
-        typeInput: 'number',
+        typeInput: 'phone',
         typeComponent: 'input',
         component: Input,
         column: 6,

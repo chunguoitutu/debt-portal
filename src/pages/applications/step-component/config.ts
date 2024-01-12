@@ -109,7 +109,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     typeInput: 'date',
     column: 6,
-    label: 'ID Expired',
+    label: 'ID Expiry',
     className: 'justify-content-xxl-end',
   },
   {
@@ -771,6 +771,11 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           keyFilter: 'value',
         },
         {
+          key: 'identification_expiry',
+          value: 'ID Expiry',
+          date: true,
+        },
+        {
           key: 'gender',
           value: 'Gender',
           options: GENDER,
@@ -809,7 +814,9 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           options: LANGUAGES,
           Component: LableOptions,
           keyFilter: 'value',
-        }, // {
+        },
+        {},
+        // {
         //   key: 'residential_type',
         //   value: 'Residential Type',
         //   options: RESIDENTIAL_TYPE,

@@ -28,6 +28,8 @@ export type DataResponse<T> = {
   message: string
   searchCriteria?: {[key: string]: string}
   data: T
+} & {
+  [key: string]: any
 }
 
 export type LoginResponse = {
@@ -330,6 +332,7 @@ export type ApplicationPayload = {
     company_id: number
     customer_no?: string
     identification_type: ID_TYPE_VALUE
+    identification_expiry: string | Date
     identification_no: string
     gender: string
     date_of_birth: any
@@ -341,6 +344,7 @@ export type ApplicationPayload = {
     email?: string
     username?: string
     password?: string
+    status?: number
   }
   borrower: {
     id?: number
@@ -364,7 +368,7 @@ export type ApplicationPayload = {
     application_no?: string
     status?: number
     borrower_id?: string
-    loan_type_id?: number | null
+    loan_type_id: number | null
     application_date?: any
     loan_amount_requested: number
     application_notes?: string
@@ -441,7 +445,7 @@ export type ApplicationFormData = {
   singpass?: any
   identification_no_confirm: string
   identification_expiry: string
-  job_type_id: number
+  job_type_id: number | null
   country_id: number
   lastname: string
   is_existing: string
@@ -454,7 +458,7 @@ export type ApplicationFormData = {
   date_of_birth: string
   nationality: string
   mlcb_check: string[]
-  loan_type_id: string
+  loan_type_id: number | null
   loan_amount_requested: string | any
   loan_reason: string
   address_full: string
@@ -502,7 +506,7 @@ export type ApplicationFormData = {
   address_contact_info: BlockAddress[]
   loan_terms: number
   term_unit: any
-  marketing_type_id: number
+  marketing_type_id: number | null
   company_telephone: string
   position: string
   occupation: string

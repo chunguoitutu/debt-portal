@@ -18,6 +18,7 @@ import {
   ApplicationFormData,
   ApplicationPayload,
   CreateSuccessResponse,
+  DataResponse,
   PropsStepApplication,
   RemarkItem,
   StepItem,
@@ -31,6 +32,7 @@ import {
   capitalizeFirstText,
   convertErrorMessageResponse,
   filterObjectKeyNotEmpty,
+  parseJson,
 } from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
@@ -282,7 +284,9 @@ export const Applications = () => {
 
   async function handleGetApplicationById() {
     try {
-      const {data} = await request.get(`/application/detail/${applicationIdEdit}`)
+      const {data} = await request.get<DataResponse<ApplicationPayload & {[key: string]: any}>>(
+        `/application/detail/${applicationIdEdit}`
+      )
       const {
         borrower,
         application,
@@ -295,6 +299,7 @@ export const Applications = () => {
         rejection, // only rejected (status = 2)
         cpf,
       } = data.data || {}
+
       setTools(
         data?.tools || {
           googleSearchCheck: '',
@@ -304,8 +309,9 @@ export const Applications = () => {
       )
 
       delete customer.status
-
       const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
+      const formattedIDExpiry = moment(customer?.identification_expiry).format('YYYY-MM-DD')
+
       setToolsCheckCount({
         MLCB: Number(application.mlcb_count || 0),
         Cross: Number(application.crosscheck_count || 0),
@@ -321,6 +327,7 @@ export const Applications = () => {
         ...employment,
         ...cpf,
         identification_no_confirm: customer.identification_no,
+        identification_expiry: formattedIDExpiry,
         address_contact_info:
           Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
         date_of_birth: formattedDateOfBirth,
@@ -331,6 +338,7 @@ export const Applications = () => {
         ...(approval ? {approval} : {}),
         ...(rejection ? {rejection} : {}),
       }
+
       setValues(dataChange)
       setdataEdit(dataChange)
 
@@ -346,7 +354,7 @@ export const Applications = () => {
         bankInfoId: bank_account?.id || 0,
       })
       cpf && setSingpass(true)
-      const applicationNotes = JSON.parse(application?.application_notes) || []
+      const applicationNotes = parseJson(application?.application_notes || '') || []
       setRemarkList(applicationNotes)
     } catch (error) {
       setErrorLoading(true)
@@ -548,6 +556,9 @@ export const Applications = () => {
         ...(customerId && applicationIdEdit ? {id: customerId} : {}),
         company_id: +company_id,
         country_id: +values.country_id,
+        identification_expiry: values.identification_expiry
+          ? new Date(values.identification_expiry)
+          : '',
         // customer_no: values.customer_no || '',
         identification_type: values.identification_type,
         identification_no: values.identification_no?.trim(),
@@ -566,9 +577,9 @@ export const Applications = () => {
         mobilephone_3: String(values.mobilephone_3)?.trim() || '',
         homephone: String(values.homephone)?.trim() || '',
         monthly_income: +values.monthly_income || 0,
-        job_type_id: +values.job_type_id || null,
+        job_type_id: Number(values.job_type_id) || null,
         spoken_language: values.spoken_language,
-        marketing_type_id: +values.marketing_type_id || null,
+        marketing_type_id: Number(values.marketing_type_id) || null,
         residential_type: values.residential_type,
       },
       bank_account: {
@@ -602,7 +613,7 @@ export const Applications = () => {
         loan_terms: +values.loan_terms,
         term_unit: +values.term_unit,
         loan_amount_requested: +values.loan_amount_requested,
-        loan_type_id: +values.loan_type_id || null,
+        loan_type_id: Number(values?.loan_type_id) || null,
         status: isDraft ? 0 : 1,
         application_date: new Date(),
         application_notes: JSON.stringify(remarkList),
