@@ -558,7 +558,7 @@ export const Applications = () => {
         country_id: +values.country_id,
         identification_expiry: values.identification_expiry
           ? new Date(values.identification_expiry)
-          : '',
+          : null,
         // customer_no: values.customer_no || '',
         identification_type: values.identification_type,
         identification_no: values.identification_no?.trim(),
