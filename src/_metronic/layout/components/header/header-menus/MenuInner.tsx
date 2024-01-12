@@ -5,7 +5,7 @@ export function MenuInner() {
     <>
       <MenuItem hasDropdown={true} title='Applications' to='/application' />
       <MenuItem title='Loans' to='/loans' />
-      <MenuItem title='Customer' to='/customers' />
+      <MenuItem title='Customers' to='/customers' />
       <MenuItem title='My Tasks' to='/my-tasks' />
       <MenuItem title='Transactions' to='/transactions' />
     </>

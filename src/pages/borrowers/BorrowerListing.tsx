@@ -344,7 +344,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
               if (key === 'fullname') {
                 return (
                   <td key={i} className='fs-6 fw-medium w-250px ps-9' style={{color: '#071437'}}>
-                    {item.firstname} {''} {item.lastname}
+                    {item.lastname} {''} {item.firstname}
                   </td>
                 )
               }
@@ -678,11 +678,11 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       ref={selectRef}
                     >
                       {/* Header */}
-                      <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
+                      <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px border-bottom border-gray-300'>
                         <span className='fw-bold'>Config Columns</span>
 
                         <div
-                          className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
+                          className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-6'
                           onClick={handleToggleConfigColumn}
                         >
                           <KTIcon className='fs-1' iconName='cross' />
@@ -690,7 +690,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       </div>
 
                       {/* Body */}
-                      <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold'>
+                      <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'>
                         {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
                           if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
 
@@ -710,7 +710,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       </div>
 
                       {/* Footer */}
-                      <div className='d-flex justify-content-end p-30px gap-8px'>
+                      <div className='d-flex justify-content-end gap-8px p-30px'>
                         <Button
                           className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
                           onClick={handleResetConfigColumn}

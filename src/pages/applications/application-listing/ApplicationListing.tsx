@@ -623,23 +623,22 @@ const ApplicationListing = () => {
                   ref={selectRef}
                 >
                   {/* Header */}
-                  <div
-                    style={{
-                      padding: '16px 25px 16px 30px',
-                    }}
-                    className='d-flex align-items-center justify-content-between gap-16px fs-16 mb-16px border-bottom border-gray-300'
-                  >
+
+                  <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px border-bottom border-gray-300'>
                     <span className='fw-bold'>Config Columns</span>
 
-                    <div className='cursor-pointer p-0 m-0' onClick={handleToggleConfigColumn}>
-                      <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
+                    <div
+                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-5'
+                      onClick={handleToggleConfigColumn}
+                    >
+                      <KTIcon className='fs-1' iconName='cross' />
                     </div>
                   </div>
 
                   {/* Body */}
                   <div
                     style={{maxHeight: 'calc(100vh - 450px)'}}
-                    className='grid-2-column gap-16px  overflow-y-auto px-30px fw-semibold'
+                    className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'
                   >
                     {APPLICATION_LISTING_CONFIG.rows.map((el, i) => {
                       if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
