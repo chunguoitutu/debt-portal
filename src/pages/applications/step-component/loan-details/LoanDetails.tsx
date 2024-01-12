@@ -7,6 +7,7 @@ import request from '../../../../app/axios'
 import {useParams} from 'react-router-dom'
 import {formatNumber, getIdDefault, isFirstGetStepApplication} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
+import {ApplicationStatus} from '@/app/types/enum'
 
 const LoanDetails: FC<PropsStepApplication> = ({
   config = [],
@@ -249,7 +250,12 @@ const LoanDetails: FC<PropsStepApplication> = ({
         <div className='d-flex flex-column w-100'>
           <Component
             classShared='flex-grow-1'
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             value={values[key]}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -271,7 +277,12 @@ const LoanDetails: FC<PropsStepApplication> = ({
             name={key}
             transparent={true}
             classShared={className}
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             type={typeInput}
             noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
           />
@@ -293,7 +304,12 @@ const LoanDetails: FC<PropsStepApplication> = ({
             onBlur={handleBlur}
             name={key}
             classShared={className}
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             type={typeInput}
             noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
           />
@@ -307,7 +323,12 @@ const LoanDetails: FC<PropsStepApplication> = ({
       return (
         <div className='d-flex flex-column w-100'>
           <Component
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             value={values[key]}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleAutoSelect(key, e)}
             onBlur={handleBlur}

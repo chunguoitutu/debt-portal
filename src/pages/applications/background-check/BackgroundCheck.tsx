@@ -12,6 +12,7 @@ import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
 import CaCheckDeskTop from './ca-check/DesktopCaCheck'
 import {getFullName} from '@/app/utils'
+import {ApplicationStatus} from '@/app/types/enum'
 
 const BackgroundCheck: FC<PropsStepApplication> = ({
   formik,
@@ -43,7 +44,10 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         show: true,
         onclick: () => {
           if (getFullName(values) && !!values.identification_no) {
-            if (!tools.googleSearchCheck && [2, 3].includes(values.status || 0)) {
+            if (
+              !tools.googleSearchCheck &&
+              [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
+            ) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -77,7 +81,10 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         show: true,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
-            if (!tools.upPageCheck && [2, 3].includes(values.status || 0)) {
+            if (
+              !tools.upPageCheck &&
+              [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
+            ) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -111,7 +118,10 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         show: true,
         onclick: () => {
           if (getFullName(values) && !!values.identification_no) {
-            if (!tools.casCheck && [2, 3].includes(values.status || 0)) {
+            if (
+              !tools.casCheck &&
+              [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
+            ) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -143,7 +153,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
         opacity: Number(toolsCheckCount?.MLCB) !== 0,
-        show: [1].includes(values.status || 0),
+        show: [ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0),
         onclick: () => {
           if (!!applicationIdEdit) {
             setShowMLCBReport(true)
@@ -181,7 +191,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
       {
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
-        show: ![2, 3].includes(values.status || 0),
+        show: ![ApplicationStatus.REJECTED, ApplicationStatus.AWAITING_APPROVAL].includes(
+          values.status || 0
+        ),
         opacity: Number(toolsCheckCount?.validatePhone) !== 0,
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
@@ -210,7 +222,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         icon: <Icons name={'ImgCalendar'} />,
         background: '#F8F5FF',
         opacity: true,
-        show: ![2, 3].includes(values.status || 0),
+        show: ![ApplicationStatus.REJECTED, ApplicationStatus.AWAITING_APPROVAL].includes(
+          values.status || 0
+        ),
         onclick: () => {
           setShow(true)
         },
@@ -230,7 +244,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
           onClose={() => setShowValidationPhone(false)}
         />
       )}
-      {showMLCBReport && [1].includes(values.status || 0) && (
+      {showMLCBReport && [ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0) && (
         <MLCBReport
           setToolsCheckCount={setToolsCheckCount}
           toolsCheckCount={
@@ -248,7 +262,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
           borrower_id={borrower_id || 0}
           tools={tools}
           setTools={setTools}
-          status={[2, 3].includes(values.status || 0)}
+          status={[ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+            values.status || 0
+          )}
           payload={getFullName(values)}
           Nric_no={values.identification_no}
           show={showSearchCheck}
@@ -262,7 +278,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
           borrower_id={borrower_id || 0}
           setTools={setTools}
           Nric_no={values.identification_no}
-          status={[2, 3].includes(values.status || 0)}
+          status={[ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
+            values.status || 0
+          )}
           payload={values.lastname}
           show={showSearchPageCheck}
           handleClose={() => setShowSearchPageCheck(false)}
@@ -274,7 +292,9 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
           borrower_id={borrower_id || 0}
           setTools={setTools}
           Nric_no={values.identification_no}
-          status={[2, 3].includes(values.status || 0)}
+          status={[ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
+            values.status || 0
+          )}
           payload={getFullName(values)}
           show={showCaCheck}
           handleClose={() => setShowCaCheck(false)}

@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {Input} from '../input'
 import ErrorMessage from '../error/ErrorMessage'
 import {PropsStepApplication} from '@/app/types'
+import {ApplicationStatus} from '@/app/types/enum'
 
 interface Props extends PropsStepApplication {
   annualIncome: any
@@ -36,7 +37,12 @@ const GrossMonthlyIncome: FC<Props> = ({formik, setAnnualIncome, annualIncome}) 
           <Input
             name={key}
             value={values?.[key]}
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             placeholder={placeholder}
             onBlur={(e) => {
               if (+Number(e.target.value).toFixed(2) !== +Number(annualIncome[key]).toFixed(2)) {

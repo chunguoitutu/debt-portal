@@ -21,6 +21,7 @@ import {faClose, faWarning} from '@fortawesome/free-solid-svg-icons'
 import request from '@/app/axios'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {useParams} from 'react-router-dom'
+import {ApplicationStatus} from '@/app/types/enum'
 
 type Props = {
   data: AddressTypeItem
@@ -72,7 +73,11 @@ const AddressGroup: FC<Props> = ({
   }
 
   function handleAddBlock() {
-    if (!!applicationIdEdit && [2, 3].includes(values.status || 0)) return
+    if (
+      !!applicationIdEdit &&
+      [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
+    )
+      return
 
     const isHomeAddress = address_type_name?.toLowerCase()?.includes('home')
 
@@ -95,7 +100,10 @@ const AddressGroup: FC<Props> = ({
         <Button
           className='btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary w-fit-content'
           onClick={handleAddBlock}
-          disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+          disabled={
+            !!applicationIdEdit &&
+            [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(values.status || 0)
+          }
         >
           + Add New Block
         </Button>
@@ -104,7 +112,11 @@ const AddressGroup: FC<Props> = ({
   }
 
   function handleShowConfirmDelete(item: BlockAddress, index: number) {
-    if (!!applicationIdEdit && [2, 3].includes(values.status || 0)) return
+    if (
+      !!applicationIdEdit &&
+      [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
+    )
+      return
 
     if (!item.id) return handleRemoveBlockAddress(item, index)
 
@@ -232,7 +244,12 @@ const AddressGroup: FC<Props> = ({
                     {!isHomeAddress && (
                       <div className='col-12'>
                         <CheckboxRounded
-                          disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                          disabled={
+                            !!applicationIdEdit &&
+                            [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                              values.status || 0
+                            )
+                          }
                           name={isHomeAddress ? 'existing_staying' : 'is_default'}
                           label={
                             isHomeAddress ? 'Existing Staying' : `Default ${address_type_name}`
@@ -247,7 +264,12 @@ const AddressGroup: FC<Props> = ({
                       <>
                         <div className='col-6'>
                           <Select
-                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            disabled={
+                              !!applicationIdEdit &&
+                              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                                values.status || 0
+                              )
+                            }
                             label='Property Type'
                             classShared='m-0 flex-grow-1'
                             name={'property_type'}
@@ -262,7 +284,12 @@ const AddressGroup: FC<Props> = ({
 
                         <div className='col-6'>
                           <Select
-                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            disabled={
+                              !!applicationIdEdit &&
+                              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                                values.status || 0
+                              )
+                            }
                             label='Housing Type'
                             classShared='m-0 flex-grow-1'
                             name={'housing_type'}
@@ -281,7 +308,12 @@ const AddressGroup: FC<Props> = ({
 
                         <div className='col-4'>
                           <Select
-                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            disabled={
+                              !!applicationIdEdit &&
+                              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                                values.status || 0
+                              )
+                            }
                             label='Existing Staying'
                             classShared='m-0 flex-grow-1'
                             name={'existing_staying'}
@@ -294,7 +326,12 @@ const AddressGroup: FC<Props> = ({
 
                         <div className='col-4'>
                           <Select
-                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            disabled={
+                              !!applicationIdEdit &&
+                              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                                values.status || 0
+                              )
+                            }
                             value={home_ownership || ''}
                             onChange={(e: any) => handleChangeCustom(e, index)}
                             required={true}
@@ -311,7 +348,12 @@ const AddressGroup: FC<Props> = ({
 
                         <div className='col-4'>
                           <Select
-                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            disabled={
+                              !!applicationIdEdit &&
+                              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                                values.status || 0
+                              )
+                            }
                             value={staying_condition || ''}
                             onChange={(e: any) => handleChangeCustom(e, index)}
                             required={true}
@@ -369,7 +411,12 @@ const AddressGroup: FC<Props> = ({
                       return (
                         <div className={`col-${column}`} key={key}>
                           <Comp
-                            disabled={!!applicationIdEdit && [2, 3].includes(values.status || 0)}
+                            disabled={
+                              !!applicationIdEdit &&
+                              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                                values.status || 0
+                              )
+                            }
                             required={required}
                             label={label}
                             classShared='m-0 flex-grow-1'

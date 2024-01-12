@@ -10,6 +10,7 @@ import {COUNTRY_PHONE_CODE, PROPERTY_TYPE, isFirstGetStepApplication} from '@/ap
 import {useParams} from 'react-router-dom'
 import AddressGroup from './AddressGroup'
 import {handleCreateBlockAddress} from '@/app/constants'
+import {ApplicationStatus} from '@/app/types/enum'
 
 type BlockAddressCustom = {
   home: BlockAddress[]
@@ -198,7 +199,12 @@ const ContactInformation: FC<PropsStepApplication> = ({
           <Component
             value={values[key]}
             onChange={handleChange}
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             name={key}
             classShared={className}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
@@ -282,7 +288,13 @@ const ContactInformation: FC<PropsStepApplication> = ({
 
               const isShow = dataAddressType.address_type_name === active ? false : true
 
-              if (!item && ![2, 3].includes(values.status || 0) && isShow) {
+              if (
+                !item &&
+                ![ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+                  values.status || 0
+                ) &&
+                isShow
+              ) {
                 const isHomeAddress = dataAddressType.address_type_name
                   ?.toLowerCase()
                   ?.includes('home')
