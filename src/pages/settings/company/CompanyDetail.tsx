@@ -37,12 +37,7 @@ const CompanyDetail = ({
       onHide={handleClose}
       animation={true}
     >
-      <div
-        style={{
-          padding: '30px 25px 30px 30px',
-        }}
-        className='modal-header '
-      >
+      <div className='modal-header padding-model-header'>
         <h2 className='m-0'>Business Unit Details</h2>
         <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
           <KTIcon className='fs-1 btn-hover-close' iconName='cross' />

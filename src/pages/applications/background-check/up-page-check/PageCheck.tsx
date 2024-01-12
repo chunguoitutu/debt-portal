@@ -122,12 +122,7 @@ const PageCheckDeskTop = ({
       backdrop={true}
     >
       <div className='card'>
-        <div
-          style={{
-            padding: '30px 25px 30px 30px',
-          }}
-          className='modal-header d-flex align-items-center justify-content-between'
-        >
+        <div className='modal-header padding-model-header d-flex align-items-center justify-content-between'>
           <h2
             style={{
               fontSize: '20px',
