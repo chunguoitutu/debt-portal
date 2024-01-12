@@ -331,7 +331,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
             <div className='config-column-grid card'>
               {/* Header */}
               <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
-                <span className='fw-bold'>Config Column</span>
+                <span className='fw-bold'>Config Columns</span>
 
                 <div
                   className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'

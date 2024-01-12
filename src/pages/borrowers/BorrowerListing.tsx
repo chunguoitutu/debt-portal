@@ -37,8 +37,8 @@ type Props = {
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Borrowers',
-    path: '/borrower/listing',
+    title: 'Customers',
+    path: '/customer/listing',
     isSeparator: false,
     isActive: false,
   },
@@ -580,7 +580,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
       </div>
       <div className='col-12 col-xxl-9  ps-4'>
         <div className='card'>
-          <PageTitle breadcrumbs={profileBreadCrumbs}>{'Borrower Listing'}</PageTitle>
+          <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
           {showInput && (
             <FilterBorrower
               onClose={showInputFilter}
@@ -650,7 +650,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     <div className='config-column-grid-customer card justify-content-end'>
                       {/* Header */}
                       <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
-                        <span className='fw-bold'>Config Column</span>
+                        <span className='fw-bold'>Config Columns</span>
 
                         <div
                           className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary'
@@ -661,17 +661,19 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       </div>
 
                       {/* Body */}
-                      <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px'>
+                      <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold'>
                         {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
                           if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+
+                          const isChecked = configColumn[el.key]
 
                           return (
                             <Checkbox
                               name={el.key}
                               label={el.name}
-                              classNameLabel='ms-8px'
+                              classNameLabel={`ms-8px ${isChecked ? '' : 'text-gray-600'}`}
                               key={i}
-                              checked={configColumn[el.key]}
+                              checked={isChecked}
                               onChange={handleChangeConfigColumn}
                             />
                           )
