@@ -173,7 +173,7 @@ const CreateLoanType = ({
       <>
         <div
           style={{
-            padding: '30px 28.1px 30px 30px',
+            padding: '30px 25px 30px 30px',
           }}
           className='modal-header'
         >
