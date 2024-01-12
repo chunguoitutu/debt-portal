@@ -1,4 +1,4 @@
-import {FC, useMemo, useState} from 'react'
+import {Dispatch, FC, useMemo, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 
 import Button from '@/components/button/Button'
@@ -13,6 +13,7 @@ interface Props extends PropsStepApplication {
   handleSaveDraft: () => void
   handleClose: () => void
   handleReloadApi: () => void
+  setCurrentStep: Dispatch<any>
   isDraft: boolean
   dataEdit: any
   currentStep: number
@@ -25,6 +26,7 @@ const GeneralButton: FC<Props> = ({
   handleClose,
   handleReloadApi,
   formik,
+  setCurrentStep,
   isDraft,
   currentStep,
 }) => {
@@ -167,6 +169,7 @@ const GeneralButton: FC<Props> = ({
     <>
       {showPopupApproval && (
         <ApprovalApplicationModal
+          setCurrentStep={setCurrentStep}
           handleReloadApi={handleReloadApi}
           formik={formik}
           data={{...values.approval}}

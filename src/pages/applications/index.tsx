@@ -832,6 +832,7 @@ export const Applications = () => {
                 )}
                 {show && (
                   <Reject
+                    setCurrentStep={setCurrentStep}
                     handleloadApi={() => SetLoadApiEdit(!loadApiEdit)}
                     handleClose={() => setShow(!show)}
                     setStepCompleted={setStepCompleted}
@@ -844,6 +845,7 @@ export const Applications = () => {
                   />
                 )}
                 <GeneralButton
+                  setCurrentStep={setCurrentStep}
                   dataEdit={dataEdit}
                   setStepCompleted={setStepCompleted}
                   handleClose={() => setShow(!show)}
