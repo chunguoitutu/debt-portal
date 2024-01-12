@@ -20,6 +20,7 @@ import {useParams} from 'react-router-dom'
 type Props = {
   handleClose: () => void
   handleloadApi: () => void
+  setCurrentStep: any
 }
 
 export const CreateLoanTypeSchema = Yup.object().shape({
@@ -35,6 +36,7 @@ const Reject = ({
   formik,
   setOptionListing,
   optionListing = {},
+  setCurrentStep,
 }: Props & PropsStepApplication) => {
   const {rejection} = formik.values
 
@@ -54,6 +56,7 @@ const Reject = ({
         currentPage: 1,
       })
       .then(({data}) => {
+        setCurrentStep(1)
         if (!Array.isArray(data.data) || !data.data.length) return
 
         setOptionListing((prev) => ({...prev, [tableName]: data.data}))

@@ -9,7 +9,7 @@ import Modal from '@/components/modal/Modal'
 import {Select} from '@/components/select'
 import {TextArea} from '@/components/textarea'
 import {FormikProps, useFormik} from 'formik'
-import {FC, useEffect, useState} from 'react'
+import {Dispatch, FC, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
 type Props = {
@@ -17,9 +17,16 @@ type Props = {
   data: {[key: string]: any}
   formik: FormikProps<ApplicationFormData>
   handleReloadApi: () => void
+  setCurrentStep: Dispatch<any>
 }
 
-const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloadApi}) => {
+const ApprovalApplicationModal: FC<Props> = ({
+  data,
+  formik,
+  onClose,
+  handleReloadApi,
+  setCurrentStep,
+}) => {
   const {id, approved_note} = data || {}
 
   const [userListing, setUserListing] = useState<(UserInfo & {fullname: string})[]>([])
@@ -92,7 +99,7 @@ const ApprovalApplicationModal: FC<Props> = ({data, formik, onClose, handleReloa
         // Only emit when create approval
         socket?.emit('approvalApplicationSuccess', data.loan_id)
       }
-
+      setCurrentStep(1)
       handleReloadApi()
       onClose()
       swalToast.fire({
