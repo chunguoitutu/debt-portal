@@ -15,7 +15,14 @@ import MobileValidationPhoneNumber from '@/pages/applications/background-check/v
 import {FC, useMemo, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
-const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower_id}) => {
+const HelpDrawer: FC<PropsStepApplication> = ({
+  formik,
+  tools,
+  setTools,
+  borrower_id,
+  toolsCheckCount,
+  setToolsCheckCount,
+}) => {
   const {values} = formik
   const [show, setShow] = useState<boolean>(false)
   const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
@@ -40,12 +47,20 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
         opacity: !!tools?.googleSearchCheck,
         onclick: () => {
           if (fullname && !!values.identification_no) {
-            setShow(false)
-            setShowValidationPhone(false)
-            setShowMLCBReport(false)
-            setShowSearchCheck(true)
-            setShowCaCheck(false)
-            setShowSearchPageCheck(false)
+            if (!tools.googleSearchCheck && [2, 3].includes(values.status || 0)) {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `Google Search Check no data available`,
+              })
+            } else {
+              setShow(false)
+              setShowValidationPhone(false)
+              setShowMLCBReport(false)
+              setShowSearchCheck(true)
+              setShowCaCheck(false)
+              setShowSearchPageCheck(false)
+            }
           } else {
             swalConfirm.fire({
               icon: 'error',
@@ -71,13 +86,21 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
         opacity: !!tools?.upPageCheck,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
-            setShowSearchPageCheck(true)
-            setShow(false)
-            setShowValidationPhone(false)
-            setShowCaCheck(false)
+            if (!tools.upPageCheck && [2, 3].includes(values.status || 0)) {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `UN Page Check no data available`,
+              })
+            } else {
+              setShowSearchPageCheck(true)
+              setShow(false)
+              setShowValidationPhone(false)
+              setShowCaCheck(false)
 
-            setShowMLCBReport(false)
-            setShowSearchCheck(false)
+              setShowMLCBReport(false)
+              setShowSearchCheck(false)
+            }
           } else {
             swalConfirm.fire({
               icon: 'error',
@@ -99,17 +122,25 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
         value: 'CAs Check',
         icon: <Icons name={'Cascheck'} />,
         background: '#E2E5E7',
-        show: true,
+        show: Number(toolsCheckCount?.MLCB) !== 0,
         opacity: !!tools?.casCheck,
 
         onclick: () => {
           if (fullname && !!values.identification_no) {
-            setShow(false)
-            setShowValidationPhone(false)
-            setShowMLCBReport(false)
-            setShowSearchCheck(false)
-            setShowCaCheck(true)
-            setShowSearchPageCheck(false)
+            if (!tools.casCheck && [2, 3].includes(values.status || 0)) {
+              swalToast.fire({
+                timer: 1500,
+                icon: 'error',
+                title: `CAs Check no data available`,
+              })
+            } else {
+              setShow(false)
+              setShowValidationPhone(false)
+              setShowMLCBReport(false)
+              setShowSearchCheck(false)
+              setShowCaCheck(true)
+              setShowSearchPageCheck(false)
+            }
           } else {
             swalConfirm.fire({
               icon: 'error',
@@ -132,7 +163,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
         show: [1].includes(values.status || 0),
-        opacity: true,
+        opacity: Number(toolsCheckCount?.Cross) !== 0,
 
         onclick: () => {
           if (!!applicationIdEdit) {
@@ -166,7 +197,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
         background: 'rgba(232, 255, 243, 0.85)',
         opacity: true,
 
-        show: true,
+        show: Number(toolsCheckCount?.validatePhone) !== 0,
         onclick: () => {
           alert('Loan Cross Check')
         },
@@ -256,12 +287,24 @@ const HelpDrawer: FC<PropsStepApplication> = ({formik, tools, setTools, borrower
         )}
         {showValidationPhone && true && (
           <MobileValidationPhoneNumber
+            setToolsCheckCount={setToolsCheckCount}
+            toolsCheckCount={toolsCheckCount}
             payload={+values.mobilephone_1}
             handleShow={() => setShowValidationPhone(false)}
           />
         )}
         {showMLCBReport && [1].includes(values.status || 0) && (
-          <MobileMLCB handleShow={() => setShowMLCBReport(false)} />
+          <MobileMLCB
+            setToolsCheckCount={setToolsCheckCount}
+            toolsCheckCount={
+              toolsCheckCount || {
+                MLCB: 0,
+                Cross: 0,
+                validatePhone: 0,
+              }
+            }
+            handleShow={() => setShowMLCBReport(false)}
+          />
         )}
         {showSearchPageCheck && true && (
           <MobilePageCheck

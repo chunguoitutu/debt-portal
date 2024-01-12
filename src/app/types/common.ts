@@ -1,7 +1,7 @@
-import { Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction } from 'react'
-import { FormikProps } from 'formik'
-import { ObjectSchema, Schema } from 'yup'
-import { ApprovalInfo, RejectedInfo } from './response'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
+import {FormikProps} from 'formik'
+import {ObjectSchema, Schema} from 'yup'
+import {ApprovalInfo, RejectedInfo} from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -26,7 +26,7 @@ export type ErrorResponse = {
 export type DataResponse<T> = {
   error: boolean
   message: string
-  searchCriteria?: { [key: string]: string }
+  searchCriteria?: {[key: string]: string}
   data: T
 }
 
@@ -209,7 +209,7 @@ export type TableConfig = {
     messageEditSuccess?: string
     messageCreateError?: string
     messageCreateSuccess?: string
-    dependencies?: { [key: string]: string }
+    dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
     showMessageTitle?: string
@@ -256,8 +256,8 @@ export type CheckboxTreeItem = {
   value: string
   label: string
   active?: boolean
-  children?: CheckboxTreeItem[] & { [key: string]: any }
-} & { [key: string]: any }
+  children?: CheckboxTreeItem[] & {[key: string]: any}
+} & {[key: string]: any}
 
 export type Option<T = any> = {
   label: string
@@ -287,7 +287,7 @@ export type ApplicationConfig = {
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: { [key: string]: string | number }[] | DropDownGroup[]
+  options?: {[key: string]: string | number}[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
@@ -314,7 +314,13 @@ export type PropsStepApplication = {
   // setIsMountedAddress: Dispatch<SetStateAction<boolean>>
   // isMountedAddress: boolean
   setTools?: Dispatch<SetStateAction<any>>
+  setToolsCheckCount?: Dispatch<SetStateAction<any>>
   tools?: any
+  toolsCheckCount?: {
+    MLCB: number
+    Cross: number
+    validatePhone: number
+  }
   borrower_id?: number
 }
 
@@ -367,6 +373,9 @@ export type ApplicationPayload = {
     is_existing: string
     company_id: number
     loan_reason?: string
+    phone_verified?: number
+    mlcb_count?: number
+    crosscheck_count?: number
     interest: string | number
   }
   bank_account: {

@@ -136,11 +136,11 @@ const CreateJobType = ({
       <>
         <div className='modal-header p-30px'>
           <h2 className='m-0'>{title} Job Type</h2>
-          <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
-            <KTIcon className='fs-1' iconName='cross' />
+          <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
+            <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
           </div>
         </div>
-        <div className='flex-row-fluid p-30px'>
+        <div className='flex-row-fluid py-30px ps-30px pe-10'>
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
             {rows.map((row, i) => {
               const {infoCreateEdit, name, key} = row
@@ -215,7 +215,7 @@ const CreateJobType = ({
           </form>
         </div>
         <div className='border-top border-gray-200'>
-          <div className='d-flex justify-content-end p-30px'>
+          <div className='d-flex justify-content-end py-30px ps-30px pe-10'>
             <Button
               type='reset'
               onClick={() => handleClose()}

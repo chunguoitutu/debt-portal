@@ -39,12 +39,15 @@ const CompanyDetail = ({
     >
       <div className='modal-header p-30px'>
         <h2 className='m-0'>Business Unit Details</h2>
-        <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
-          <KTIcon className='fs-1' iconName='cross' />
+        <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
+          <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
         </div>
       </div>
-      <div className='d-flex align-items-center justify-content-center   '>
-        <div style={{maxHeight: 'calc(100vh - 250px)', overflow: 'auto'}} className=' p-30px w-100'>
+      <div className='d-flex align-items-center justify-content-center'>
+        <div
+          style={{maxHeight: 'calc(100vh - 250px)', overflow: 'auto'}}
+          className=' py-30px ps-30px pe-10 w-100'
+        >
           <div className='d-flex justify-content-start p-0 m-0 mb-30px '>
             <div className='icons-company-detail p-12px m-0 gap-8 d-flex justify-content-center align-items-center flex-column bg-gray-100'>
               <Icons name={'Home'} />
@@ -224,7 +227,7 @@ const CompanyDetail = ({
           </div>
         </div>
       </div>
-      <div className='d-flex flex-end p-30px border-top border-gray-200'>
+      <div className='d-flex flex-end py-30px ps-30px pe-10 border-top border-gray-200'>
         <Button
           type='reset'
           onClick={() => handleClose()}

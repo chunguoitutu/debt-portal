@@ -1,12 +1,24 @@
 import {KTIcon} from '@/_metronic/helpers'
 import ValidationPhoneNumber from './ValidationPhoneNumber'
+import {Dispatch, SetStateAction} from 'react'
 
 type Props = {
   payload: string | number
   handleShow: () => void
+  toolsCheckCount?: {
+    MLCB: number
+    Cross: number
+    validatePhone: number
+  }
+  setToolsCheckCount?: Dispatch<SetStateAction<any>>
 }
 
-const MobileValidationPhoneNumber = ({handleShow, payload}: Props) => {
+const MobileValidationPhoneNumber = ({
+  handleShow,
+  payload,
+  setToolsCheckCount,
+  toolsCheckCount,
+}: Props) => {
   return (
     <div className='w-100'>
       <div
@@ -26,7 +38,18 @@ const MobileValidationPhoneNumber = ({handleShow, payload}: Props) => {
         </button>
       </div>
       <div style={{maxHeight: 'calc(100vh - 100px)', overflowY: 'auto'}}>
-        <ValidationPhoneNumber payload={payload} onClose={handleShow} />
+        <ValidationPhoneNumber
+          toolsCheckCount={
+            toolsCheckCount || {
+              MLCB: 0,
+              Cross: 0,
+              validatePhone: 0,
+            }
+          }
+          setToolsCheckCount={setToolsCheckCount}
+          payload={payload}
+          onClose={handleShow}
+        />
       </div>
     </div>
   )

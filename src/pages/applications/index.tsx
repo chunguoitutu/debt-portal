@@ -94,7 +94,11 @@ export const Applications = () => {
     upPageCheck: '',
     casCheck: '',
   })
-
+  const [toolsCheckCount, setToolsCheckCount] = useState({
+    MLCB: 0,
+    Cross: 0,
+    validatePhone: 0,
+  })
   const {pathname} = useLocation()
   const initialValues: ApplicationFormData = useMemo(() => {
     return STEP_APPLICATION.flatMap((item) => item.config).reduce(
@@ -299,9 +303,16 @@ export const Applications = () => {
         }
       )
 
-      const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
+      delete customer.status
 
-      setValues({
+      const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
+      setToolsCheckCount({
+        MLCB: Number(application.mlcb_count || 0),
+        Cross: Number(application.crosscheck_count || 0),
+        validatePhone: Number(application.phone_verified || 0),
+      })
+
+      const dataChange = {
         ...values,
         ...borrower,
         ...application,
@@ -319,25 +330,9 @@ export const Applications = () => {
           }) || [],
         ...(approval ? {approval} : {}),
         ...(rejection ? {rejection} : {}),
-      })
-
-      setdataEdit({
-        ...values,
-        ...borrower,
-        ...application,
-        ...customer,
-        ...bank_account,
-        ...employment,
-        ...cpf,
-        address_contact_info:
-          Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
-        date_of_birth: formattedDateOfBirth,
-        file_documents:
-          file_documents.map((data) => {
-            return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
-          }) || [],
-        ...(approval ? {approval} : {}),
-      })
+      }
+      setValues(dataChange)
+      setdataEdit(dataChange)
 
       if (application?.status !== 0) {
         setStepCompleted(STEP_APPLICATION.length - 1)
@@ -615,6 +610,9 @@ export const Applications = () => {
         is_existing: values.is_existing,
         company_id: +company_id,
         loan_reason: values.loan_reason,
+        phone_verified: +toolsCheckCount.validatePhone,
+        crosscheck_count: +toolsCheckCount.Cross,
+        mlcb_count: +toolsCheckCount.MLCB,
         interest: +values.interest,
       },
       address: addressList
@@ -694,6 +692,8 @@ export const Applications = () => {
     <>
       <div className='d-2xxl-none'>
         <RightToolbar
+          setToolsCheckCount={setToolsCheckCount}
+          toolsCheckCount={toolsCheckCount}
           borrower_id={listIdEdit.borrowerId}
           tools={tools}
           setTools={setTools}
@@ -857,6 +857,8 @@ export const Applications = () => {
             <div className='d-none d-2xxl-block'>
               <div style={{height: 'calc(100% -50px)'}} className='pb-20px'>
                 <BackgroundCheck
+                  setToolsCheckCount={setToolsCheckCount}
+                  toolsCheckCount={toolsCheckCount}
                   borrower_id={listIdEdit.borrowerId}
                   tools={tools}
                   setTools={setTools}

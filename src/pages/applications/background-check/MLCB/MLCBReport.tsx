@@ -8,12 +8,22 @@ import MLCB from './MLCB'
 
 type Props = {
   onClose: () => void
+  toolsCheckCount: {
+    MLCB: number
+    Cross: number
+    validatePhone: number
+  }
+  setToolsCheckCount: any
 }
 
-const MLCBReport: FC<Props> = ({onClose}) => {
+const MLCBReport: FC<Props> = ({onClose, setToolsCheckCount, toolsCheckCount}) => {
   return (
     <Modal dialogClassName='mw-800px' show={true} onClose={onClose} title='Validation MLCB'>
-      <MLCB onClose={onClose} />
+      <MLCB
+        toolsCheckCount={toolsCheckCount}
+        setToolsCheckCount={setToolsCheckCount}
+        onClose={onClose}
+      />
     </Modal>
   )
 }

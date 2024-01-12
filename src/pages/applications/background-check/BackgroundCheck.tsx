@@ -12,9 +12,15 @@ import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
 import CaCheckDeskTop from './ca-check/DesktopCaCheck'
 import {getFullName} from '@/app/utils'
-import {values} from 'pdf-lib'
 
-const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, borrower_id}) => {
+const BackgroundCheck: FC<PropsStepApplication> = ({
+  formik,
+  tools,
+  setTools,
+  borrower_id,
+  toolsCheckCount,
+  setToolsCheckCount,
+}) => {
   const [show, setShow] = useState<boolean>(false)
   const [showValidationPhone, setShowValidationPhone] = useState<boolean>(false)
   const [showMLCBReport, setShowMLCBReport] = useState<boolean>(false)
@@ -37,7 +43,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         show: true,
         onclick: () => {
           if (getFullName(values) && !!values.identification_no) {
-            if (!tools.googleSearchCheck) {
+            if (!tools.googleSearchCheck && [2, 3].includes(values.status || 0)) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -71,7 +77,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         show: true,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
-            if (!tools.upPageCheck) {
+            if (!tools.upPageCheck && [2, 3].includes(values.status || 0)) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -105,7 +111,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         show: true,
         onclick: () => {
           if (getFullName(values) && !!values.identification_no) {
-            if (!tools.casCheck) {
+            if (!tools.casCheck && [2, 3].includes(values.status || 0)) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -136,7 +142,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         value: 'Get MLCB Report',
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
-        opacity: true,
+        opacity: Number(toolsCheckCount?.MLCB) !== 0,
         show: [1].includes(values.status || 0),
         onclick: () => {
           if (!!applicationIdEdit) {
@@ -161,7 +167,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
       {
         value: 'Loan Cross Check',
         icon: <Icons name={'ImgLoanCrossCheck'} />,
-        opacity: true,
+        opacity: Number(toolsCheckCount?.Cross) !== 0,
         background: 'rgba(232, 255, 243, 0.85)',
         show: true,
         onclick: () => {
@@ -176,7 +182,7 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
         value: 'Validation Phone Number',
         icon: <Icons name={'Telephone'} />,
         show: ![2, 3].includes(values.status || 0),
-        opacity: true,
+        opacity: Number(toolsCheckCount?.validatePhone) !== 0,
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
           if (!!values.mobilephone_1) {
@@ -218,12 +224,24 @@ const BackgroundCheck: FC<PropsStepApplication> = ({formik, tools, setTools, bor
       {show && <RepaymentScheduleCalculator show={show} handleClose={() => setShow(false)} />}
       {showValidationPhone && true && (
         <PopupValidationPhoneNumber
+          setToolsCheckCount={setToolsCheckCount}
+          toolsCheckCount={toolsCheckCount}
           payload={Number(values.mobilephone_1)}
           onClose={() => setShowValidationPhone(false)}
         />
       )}
       {showMLCBReport && [1].includes(values.status || 0) && (
-        <MLCBReport onClose={() => setShowMLCBReport(false)} />
+        <MLCBReport
+          setToolsCheckCount={setToolsCheckCount}
+          toolsCheckCount={
+            toolsCheckCount || {
+              MLCB: 0,
+              Cross: 0,
+              validatePhone: 0,
+            }
+          }
+          onClose={() => setShowMLCBReport(false)}
+        />
       )}
       {showSearchCheck && true && (
         <WrapperGoogleSearch

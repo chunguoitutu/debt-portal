@@ -1,34 +1,41 @@
 import request from '@/app/axios'
 import Button from '@/components/button/Button'
 import {Input} from '@/components/input'
-import {ChangeEvent, FC, useEffect, useRef, useState} from 'react'
+import {ChangeEvent, Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
 import phoneImg from '@/app/images/phone.svg'
 import ErrorMessage from '@/components/error/ErrorMessage'
-import {swalConfirm} from '@/app/swal-notification'
+import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import {
-  COUNTRY_PHONE_CODE,
-  convertErrorMessageResponse,
-  convertMessageErrorRequired,
-} from '@/app/utils'
-import {Select} from '@/components/select'
-import Tippy from '@tippyjs/react'
+import {convertErrorMessageResponse, convertMessageErrorRequired} from '@/app/utils'
+import {useParams} from 'react-router-dom'
 
 type Props = {
   payload: any
   onClose: () => void
+  toolsCheckCount: {
+    MLCB: number
+    Cross: number
+    validatePhone: number
+  }
+  setToolsCheckCount: any
 }
 
 const validationSchema = Yup.object().shape({
   phone_number: Yup.string().required(convertMessageErrorRequired('Phone Number')),
 })
 
-const ValidationPhoneNumber: FC<Props> = ({onClose, payload}) => {
+const ValidationPhoneNumber: FC<Props> = ({
+  onClose,
+  payload,
+  setToolsCheckCount,
+  toolsCheckCount,
+}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [otp, setOtp] = useState<string | null>(null)
   const [otpExpire, setOtpExpire] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const {applicationIdEdit} = useParams()
 
   const inputs: React.RefObject<HTMLInputElement>[] = Array.from({length: 6}, () => useRef(null))
 
@@ -122,29 +129,52 @@ const ValidationPhoneNumber: FC<Props> = ({onClose, payload}) => {
     }, '')
 
     if (!otpExpire || otpVerify.length > 6 || otpVerify !== otp) {
-      setError('The phone OTP is not match, please try again, or sesend again.')
+      setError('The phone OTP is not match, please try again, or resend again.')
       return
     }
-
-    onClose()
-    swalConfirm.fire({
-      icon: 'success',
-      html: `
-      <div class="d-flex flex-column gap-8px">
-        <span class="fs-20 fw-bold">Phone number verification was successful!</span>
-        <span class="fs-3 text-gray-800">Continue completing the loan documents.</span>
-      </div>
-      `,
-      width: 'unset',
-      showCancelButton: false,
-      confirmButtonText: 'Confirm',
-      customClass: {
-        htmlContainer: 'fs-3',
-        cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
-        confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
-        actions: 'd-flex justify-content-center w-100 ',
-      },
-    })
+    !applicationIdEdit &&
+      setToolsCheckCount({
+        ...toolsCheckCount,
+        validatePhone: Number(toolsCheckCount.validatePhone || 0) + 1,
+      })
+    !!applicationIdEdit &&
+      request
+        .post('/site/update_count_sendOpt', {
+          application_id: +applicationIdEdit,
+          phone_count: Number(toolsCheckCount.validatePhone || 0),
+        })
+        .then((data) => {
+          setToolsCheckCount({
+            ...toolsCheckCount,
+            validatePhone: Number(data?.data?.data.phone_verified || 0),
+          })
+          onClose()
+          swalConfirm.fire({
+            icon: 'success',
+            html: `
+          <div class="d-flex flex-column gap-8px">
+            <span class="fs-20 fw-bold">Phone number verification was successful!</span>
+            <span class="fs-3 text-gray-800">Continue completing the loan documents.</span>
+          </div>
+          `,
+            width: 'unset',
+            showCancelButton: false,
+            confirmButtonText: 'Confirm',
+            customClass: {
+              htmlContainer: 'fs-3',
+              cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+              confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+              actions: 'd-flex justify-content-center w-100 ',
+            },
+          })
+        })
+        .catch(() => {
+          swalToast.fire({
+            timer: 1500,
+            icon: 'error',
+            title: `Validation Phone Number no data available`,
+          })
+        })
   }
 
   return (

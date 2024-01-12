@@ -679,7 +679,9 @@ const ApplicationListing = () => {
                   !(
                     Object.keys(checkFilter).length === 1 &&
                     Object.keys(checkFilter).includes('searchBar')
-                  )
+                  ) &&
+                  ((checkFilter[`status`]?.in || []).length > 0 ||
+                    !Object.keys(checkFilter).includes('searchBar'))
                     ? ''
                     : '',
               }}
@@ -711,7 +713,8 @@ const ApplicationListing = () => {
           !(
             Object.keys(checkFilter).length === 1 && Object.keys(checkFilter).includes('searchBar')
           ) &&
-          (checkFilter[`status`]?.in || []).length > 0 && (
+          ((checkFilter[`status`]?.in || []).length > 0 ||
+            !Object.keys(checkFilter).includes('searchBar')) && (
             <div className='d-flex align-self-center px-30px pb-4 ps-1'>
               <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px align-self-center'>
                 Filter:
@@ -907,12 +910,21 @@ const ApplicationListing = () => {
           )}
 
         <KTCardBody className='p-0'>
-          <div className='table-responsive'>
+          <div
+            style={{maxHeight: 'calc(100vh - 370px)', overflowY: 'auto'}}
+            className='table-responsive'
+          >
             <table
               id='kt_table_users'
               className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
             >
-              <thead className='border-top-bottom-thead'>
+              <thead
+                style={{
+                  top: '-2px',
+                  zIndex: '100',
+                }}
+                className='border-top-bottom-thead position-sticky  bg-white'
+              >
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                   {rowsConfigColumn
                     .filter((item) => !item.isHide)
@@ -989,5 +1001,4 @@ const ApplicationListing = () => {
     </div>
   )
 }
-
 export default ApplicationListing
