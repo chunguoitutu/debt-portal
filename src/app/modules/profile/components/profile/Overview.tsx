@@ -2,6 +2,7 @@
 import {Link} from 'react-router-dom'
 
 import {useAuth} from '../../../../context/AuthContext'
+import {getFullName} from '@/app/utils'
 
 export function Overview() {
   const {currentUser} = useAuth()
@@ -23,9 +24,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bold fs-6 text-dark'>
-                {`${currentUser?.firstname} ${currentUser?.lastname || ''}`}
-              </span>
+              <span className='fw-bold fs-6 text-dark'>{getFullName(currentUser)}</span>
             </div>
           </div>
 

@@ -159,7 +159,7 @@
   .search-icon {
     transition: all 0.2s linear;
 
-    &:hover {
+    &:not(.disabled):hover {
       color: var(--bs-black) !important;
     }
   }

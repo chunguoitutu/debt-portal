@@ -121,7 +121,7 @@ const Settings: React.FC = () => {
 
                 <div className='col-lg-8'>
                   <div className='row'>
-                    <div className='col-lg-4 fv-row'>
+                    <div className='col-lg-6 fv-row'>
                       <input
                         type='text'
                         className='fs-4 form-control form-control-lg form-control-solid mb-3 mb-lg-0'
@@ -135,7 +135,7 @@ const Settings: React.FC = () => {
                       )}
                     </div>
 
-                    <div className='col-lg-4 fv-row'>
+                    <div className='col-lg-6 fv-row'>
                       <input
                         type='text'
                         className='fs-4 form-control form-control-lg form-control-solid'

@@ -1,4 +1,3 @@
-import {useEffect} from 'react'
 import {Modal} from 'react-bootstrap'
 import './style.scss'
 
@@ -8,13 +7,13 @@ type Props = {
 }
 
 const Singpass = ({show, onClose}: Props) => {
-  function hehe() {
+  function modalSingpass() {
     window.open(
       'http://localhost:3001/singPass.html',
       'sharer',
       'toolbar=0,status=0,width=900,height=600,align=center,menubar=no,location=no'
     )
-    return <div>{hehe()}</div>
+    return <div>{modalSingpass()}</div>
   }
   return (
     <Modal
@@ -27,7 +26,7 @@ const Singpass = ({show, onClose}: Props) => {
       backdrop={true}
       scrollable={true}
     >
-      {hehe()}
+      {modalSingpass()}
     </Modal>
   )
 }

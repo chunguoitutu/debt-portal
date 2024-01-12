@@ -7,6 +7,7 @@ import './style.scss'
 import {KTIcon} from '../../../../../_metronic/helpers'
 import AvatarHeader from './AvatarHeader'
 import {useAuth} from '../../../../context/AuthContext'
+import {getFullName} from '@/app/utils'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()
@@ -28,7 +29,7 @@ const AccountHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <a href='#' className='text-hover-primary style-image-account-header'>
-                    {`${currentUser?.firstname} ${currentUser?.lastname || ''}`}
+                    {getFullName(currentUser)}
                   </a>
                 </div>
 
