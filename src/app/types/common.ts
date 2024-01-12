@@ -332,7 +332,7 @@ export type ApplicationPayload = {
     company_id: number
     customer_no?: string
     identification_type: ID_TYPE_VALUE
-    identification_expiry: string | Date
+    identification_expiry: string | Date | null
     identification_no: string
     gender: string
     date_of_birth: any
