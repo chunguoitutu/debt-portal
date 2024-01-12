@@ -33,7 +33,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   useEffect(() => {
     if (!optionListing.loan_type) return
     const currentItem = optionListing.loan_type.find(
-      (el: any) => el.id === +formik.values.loan_type_id
+      (el: any) => el.id === Number(formik.values?.loan_type_id)
     )
 
     const interestByDay = formatNumber(currentItem?.interest / 31)
@@ -100,7 +100,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
     if (!optionListing.loan_type) return
 
     const currentItem = optionListing.loan_type.find(
-      (el: any) => el.id === +formik.values.loan_type_id
+      (el: any) => el.id === Number(formik.values?.loan_type_id)
     )
 
     const loanAmountRequested = +formik.values.loan_amount_requested
