@@ -7,11 +7,12 @@ import {useAuth} from '@/app/context/AuthContext'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import ApprovalApplicationModal from './approval'
 import clsx from 'clsx'
+import Reject from './reject/Reject'
+import {ApplicationStatus} from '@/app/types/enum'
 
 interface Props extends PropsStepApplication {
   handleSubmit: () => void
   handleSaveDraft: () => void
-  handleClose: () => void
   handleReloadApi: () => void
   setCurrentStep: Dispatch<any>
   isDraft: boolean
@@ -19,21 +20,23 @@ interface Props extends PropsStepApplication {
   currentStep: number
 }
 
-const GeneralButton: FC<Props> = ({
-  dataEdit,
-  handleSubmit,
-  handleSaveDraft,
-  handleClose,
-  handleReloadApi,
-  formik,
-  setCurrentStep,
-  isDraft,
-  currentStep,
-}) => {
+const GeneralButton: FC<Props> = (props) => {
+  const {
+    dataEdit,
+    handleSubmit,
+    handleSaveDraft,
+    handleReloadApi,
+    formik,
+    setCurrentStep,
+    isDraft,
+    currentStep,
+  } = props
+  const {isSubmitting, values} = formik
+
   const [number, setNumber] = useState(0)
   const [showPopupApproval, setShowPopupApproval] = useState<boolean>(false)
+  const [showPopupRejection, setShowPopupRejection] = useState<boolean>(false)
   const {priority} = useAuth()
-  const {isSubmitting, values} = formik
 
   const navigate = useNavigate()
 
@@ -165,6 +168,12 @@ const GeneralButton: FC<Props> = ({
     navigate(`/loans/details/${values.approval?.loan_id}`)
   }
 
+  function handleTogglePopupRejection() {
+    console.log('run')
+
+    setShowPopupRejection(!showPopupRejection)
+  }
+
   return (
     <>
       {showPopupApproval && (
@@ -176,6 +185,15 @@ const GeneralButton: FC<Props> = ({
           onClose={() => setShowPopupApproval(!showPopupApproval)}
         />
       )}
+      {showPopupRejection && (
+        <Reject
+          {...props}
+          setCurrentStep={setCurrentStep}
+          handleloadApi={handleReloadApi}
+          handleClose={handleTogglePopupRejection}
+        />
+      )}
+
       <div
         className={clsx([
           'd-flex justify-content-between align-items-center mt-10 full gap-5',
@@ -183,8 +201,12 @@ const GeneralButton: FC<Props> = ({
         ])}
       >
         <div>
-          {!!applicationIdEdit && values.status === 1 && (
-            <Button type='submit' onClick={handleClose} className={`fs-6 btn btn-danger`}>
+          {!!applicationIdEdit && values.status === ApplicationStatus.AWAITING_APPROVAL && (
+            <Button
+              type='submit'
+              onClick={handleTogglePopupRejection}
+              className={`fs-6 btn btn-danger`}
+            >
               Reject
             </Button>
           )}
@@ -200,7 +222,9 @@ const GeneralButton: FC<Props> = ({
               Save Draft
             </Button>
           )}
-          {![2, 3].includes(values.status || 0) && (
+          {![ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
+            values.status || 0
+          ) && (
             <Button
               type='submit'
               loading={isSubmitting && !isDraft}
@@ -211,18 +235,20 @@ const GeneralButton: FC<Props> = ({
               {currentStep === 6 ? (applicationIdEdit ? 'Update' : 'Save') : 'Continue'}
             </Button>
           )}
-          {!!applicationIdEdit && values.status === 1 && currentStep === 6 && (
-            <Button
-              className='fs-6 btn btn-primary'
-              type='submit'
-              disabled={isSubmitting || (checks && !!applicationIdEdit && currentStep === 6)}
-              onClick={handleApproval}
-            >
-              Approve
-            </Button>
-          )}
+          {!!applicationIdEdit &&
+            values.status === ApplicationStatus.AWAITING_APPROVAL &&
+            currentStep === 6 && (
+              <Button
+                className='fs-6 btn btn-primary'
+                type='submit'
+                disabled={isSubmitting || (checks && !!applicationIdEdit && currentStep === 6)}
+                onClick={handleApproval}
+              >
+                Approve
+              </Button>
+            )}
 
-          {!!applicationIdEdit && values.status === 3 && (
+          {!!applicationIdEdit && values.status === ApplicationStatus.APPROVED && (
             <Button className='fs-6 btn btn-success' type='submit' onClick={handleNavigateLoan}>
               Go To Loan
             </Button>

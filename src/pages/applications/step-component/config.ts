@@ -772,7 +772,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         },
         {
           key: 'identification_expiry',
-          value: 'ID Expiry',
+          value: 'Expiry Date',
           date: true,
         },
         {
