@@ -144,7 +144,7 @@ export const Applications = () => {
   }, [currentStep])
 
   const schema = useMemo(() => {
-    const currentStepObj = STEP_APPLICATION[currentStep - 1] || {}
+    const currentStepObj = STEP_APPLICATION[currentStep - 1] || ({} as StepItem)
 
     if (!currentStepObj.config) return
 
@@ -298,7 +298,7 @@ export const Applications = () => {
         approval, // only approval (status = 3)
         rejection, // only rejected (status = 2)
         cpf,
-      } = data.data || {}
+      } = data.data || ({} as ApplicationPayload & {[key: string]: any})
 
       setTools(
         data?.tools || {
@@ -577,7 +577,7 @@ export const Applications = () => {
         mobilephone_3: String(values.mobilephone_3)?.trim() || '',
         homephone: String(values.homephone)?.trim() || '',
         monthly_income: +values.monthly_income || 0,
-        job_type_id: Number(values.job_type_id) || null,
+        job_type_id: +values.job_type_id || null,
         spoken_language: values.spoken_language,
         marketing_type_id: Number(values.marketing_type_id) || null,
         residential_type: values.residential_type,
