@@ -105,7 +105,7 @@ const GoogleSearchPageCheck = ({
                   onClick={() => {
                     handleReGetApi()
                   }}
-                  className='btn-primary align-self-center m-2 fs-6 text-white h-45px'
+                  className='btn-primary align-self-center fs-6 text-white h-45px'
                   disabled={!dataSearch?.url}
                 >
                   Search
