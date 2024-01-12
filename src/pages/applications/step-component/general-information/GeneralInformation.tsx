@@ -24,6 +24,7 @@ import {
   isFirstGetStepApplication,
   splitFullName,
 } from '@/app/utils'
+import {ApplicationStatus} from '@/app/types/enum'
 
 const GeneralInformation: FC<PropsStepApplication> = (props) => {
   const {
@@ -145,7 +146,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           }
 
           if (monthsDiff <= 0) {
-            return 'The expiration date must be at greater 2 months from the current date, according to our policy'
+            return 'The expiration date must be greater than 2 months from the current date '
           }
 
           return ''
@@ -457,7 +458,9 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       typeInput,
       typeComponent,
     } = item
-    const isRejectedOrApproved = [3, 2].includes(values.status || 0)
+    const isRejectedOrApproved = [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+      values.status || 0
+    )
 
     let Component: any = item?.component
 
@@ -507,7 +510,11 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
 
     if (typeComponent === 'Button') {
-      if (values.status === 2 || values.status === 3) return <></>
+      if (
+        values.status === ApplicationStatus.APPROVED ||
+        values.status === ApplicationStatus.REJECTED
+      )
+        return <></>
       return (
         <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px fill-singpass'>
           <div>
@@ -627,15 +634,17 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           </div>
         ))}
 
-      {showPopup && values.status !== 2 && values.status !== 3 && (
-        <LookupCustomer
-          show={showPopup}
-          onClose={() => {
-            setShowPopup(false)
-          }}
-          formik={formik}
-        />
-      )}
+      {showPopup &&
+        values.status !== ApplicationStatus.APPROVED &&
+        values.status !== ApplicationStatus.REJECTED && (
+          <LookupCustomer
+            show={showPopup}
+            onClose={() => {
+              setShowPopup(false)
+            }}
+            formik={formik}
+          />
+        )}
 
       {popupSingpass && <Singpass show={popupSingpass} onClose={() => setPopupSingpass(false)} />}
 

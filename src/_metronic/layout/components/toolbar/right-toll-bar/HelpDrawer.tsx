@@ -5,6 +5,7 @@ import request from '@/app/axios'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
+import {ApplicationStatus} from '@/app/types/enum'
 import Icons from '@/components/icons'
 import MobileMLCB from '@/pages/applications/background-check/MLCB/MobileMLCB'
 import MobileCaCheck from '@/pages/applications/background-check/ca-check/MobileCaCheck'
@@ -47,7 +48,10 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         opacity: !!tools?.googleSearchCheck,
         onclick: () => {
           if (fullname && !!values.identification_no) {
-            if (!tools.googleSearchCheck && [2, 3].includes(values.status || 0)) {
+            if (
+              !tools.googleSearchCheck &&
+              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(values.status || 0)
+            ) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -86,7 +90,10 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         opacity: !!tools?.upPageCheck,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
-            if (!tools.upPageCheck && [2, 3].includes(values.status || 0)) {
+            if (
+              !tools.upPageCheck &&
+              [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
+            ) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -127,7 +134,10 @@ const HelpDrawer: FC<PropsStepApplication> = ({
 
         onclick: () => {
           if (fullname && !!values.identification_no) {
-            if (!tools.casCheck && [2, 3].includes(values.status || 0)) {
+            if (
+              !tools.casCheck &&
+              [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(values.status || 0)
+            ) {
               swalToast.fire({
                 timer: 1500,
                 icon: 'error',
@@ -162,7 +172,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         value: 'Get MLCB Report',
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
-        show: [1].includes(values.status || 0),
+        show: [ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0),
         opacity: Number(toolsCheckCount?.Cross) !== 0,
 
         onclick: () => {
@@ -279,7 +289,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({
             tools={tools}
             borrower_id={borrower_id || 0}
             setTools={setTools}
-            status={[2, 3].includes(values.status || 0)}
+            status={[ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+              values.status || 0
+            )}
             Nric_no={values.identification_no}
             payload={fullname}
             handleShow={() => setShowSearchCheck(false)}
@@ -293,7 +305,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({
             handleShow={() => setShowValidationPhone(false)}
           />
         )}
-        {showMLCBReport && [1].includes(values.status || 0) && (
+        {showMLCBReport && [ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0) && (
           <MobileMLCB
             setToolsCheckCount={setToolsCheckCount}
             toolsCheckCount={
@@ -311,7 +323,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({
             tools={tools}
             borrower_id={borrower_id || 0}
             setTools={setTools}
-            status={[2, 3].includes(values.status || 0)}
+            status={[ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
+              values.status || 0
+            )}
             Nric_no={values.identification_no}
             payload={values.lastname}
             handleShow={() => setShowSearchPageCheck(false)}
@@ -322,7 +336,9 @@ const HelpDrawer: FC<PropsStepApplication> = ({
             tools={tools}
             borrower_id={borrower_id || 0}
             setTools={setTools}
-            status={[2, 3].includes(values.status || 0)}
+            status={[ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
+              values.status || 0
+            )}
             Nric_no={values.identification_no}
             payload={fullname}
             handleShow={() => setShowCaCheck(false)}

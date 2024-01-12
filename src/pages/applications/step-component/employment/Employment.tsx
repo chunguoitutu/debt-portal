@@ -8,6 +8,7 @@ import {Select} from '@/components/select'
 import {COUNTRY_PHONE_CODE, getIdDefault, isFirstGetStepApplication} from '@/app/utils'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
+import {ApplicationStatus} from '@/app/types/enum'
 
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik, optionListing, setOptionListing} = props
@@ -114,7 +115,12 @@ const Employment: FC<PropsStepApplication> = (props) => {
       return (
         <div className={clsx(['d-flex flex-column w-100', column && 'w-xxl-unset'])}>
           <Component
-            disabled={values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             value={values[key] || ''}
             onChange={handleChange}
             name={key}
@@ -142,7 +148,12 @@ const Employment: FC<PropsStepApplication> = (props) => {
           ])}
           name={key}
           label={item.label}
-          disabled={values.status === 3 || values.status === 2 ? true : false}
+          disabled={
+            values.status === ApplicationStatus.APPROVED ||
+            values.status === ApplicationStatus.REJECTED
+              ? true
+              : false
+          }
           checked={values[key] === item.value}
           value={item.value}
           onChange={handleChange}
@@ -164,7 +175,12 @@ const Employment: FC<PropsStepApplication> = (props) => {
           name={key}
           label={item.label}
           value={item.value}
-          disabled={values.status === 3 || values.status === 2 ? true : false}
+          disabled={
+            values.status === ApplicationStatus.APPROVED ||
+            values.status === ApplicationStatus.REJECTED
+              ? true
+              : false
+          }
           onChange={(e: any) => {
             if (typeCheckbox === 'array' && Array.isArray(values[key])) {
               const {value, checked} = e.target
@@ -198,7 +214,13 @@ const Employment: FC<PropsStepApplication> = (props) => {
             transparent={key === 'company_telephone' ? false : true}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
             classShared={className}
-            disabled={disabled || values.status === 3 || values.status === 2 ? true : false}
+            disabled={
+              disabled ||
+              values.status === ApplicationStatus.APPROVED ||
+              values.status === ApplicationStatus.REJECTED
+                ? true
+                : false
+            }
             onBlur={(e: any) => {
               if (key === 'annual_income') {
                 handleBlur(e)
