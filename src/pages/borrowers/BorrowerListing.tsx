@@ -510,10 +510,10 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
     <div className='row gx-24px d-flex flex-row gy-lg-6 gy-xl-6'>
       <div className='col-12 col-xxl-3 '>
         <div className='row h-100 flex-column flex-lg-row flex-xxl-column'>
-          <div className='col-12 col-lg-12 col-xxl-12 pe-2'>
-            <div className='row gy-lg-6 gx-3 gy-xl-6 me-1'>
+          <div className='col-12 col-lg-12 col-xxl-12 pe-2 h-100'>
+            <div className='row gy-lg-6 gx-3 gy-xl-6 me-1' style={{height: '102%'}}>
               <div className='col-12 col-lg-6 col-xxl-12 loan-header'>
-                <div className='card p-30px'>
+                <div className='card p-30px h-100'>
                   <div className='d-flex flex-column '>
                     <span className='fs-2 fw-bold' style={{color: '#071437'}}>
                       {searchCriteria.total} Customers
@@ -535,7 +535,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                         ></div>
                       </div>
                     </div>
-                    <div className='d-flex flex-column content-justify-center flex-row-fluid'>
+                    <div className='d-flex flex-column content-justify-center flex-row-fluid mt-5'>
                       <div className='d-flex fw-semibold align-items-center'>
                         <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
                         <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
@@ -571,7 +571,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
               </div>
 
               <div className='col-12 col-lg-6 col-xxl-12'>
-                <div className='card h-100'>
+                <div className='card h-100 '>
                   <div className='loan-header p-30px pt-30px pb-0 position-relative '>
                     <div className='d-flex flex-column'>
                       <span className='fs-2 fw-bold' style={{color: '#071437'}}>
