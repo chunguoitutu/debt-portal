@@ -34,6 +34,7 @@ import {useSocket} from '@/app/context/SocketContext'
 import {Checkbox} from '@/components/checkbox'
 import {GLOBAL_CONSTANTS} from '@/app/constants'
 import gridImg from '@/app/images/grid.svg'
+import useClickOutside from './../../../app/hooks/useClickOutside'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -120,6 +121,7 @@ const ApplicationListing = () => {
   const [configColumnSubmitted, setConfigColumnSubmitted] = useState<any>(
     handleInitialConfigColumn()
   )
+
   const rowsConfigColumn = useMemo(() => {
     const keyIgnored = Object.keys(configColumnSubmitted).filter(
       (key) => configColumnSubmitted[key] === false
@@ -136,6 +138,12 @@ const ApplicationListing = () => {
   const {pageSize, currentPage} = searchCriteria
 
   const [typeTermUnit, setTypeTermUnit] = useState(null)
+
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useClickOutside(selectRef, () => {
+    setShowConfigColumn(false)
+  })
 
   useEffect(() => {
     const handleDetectNewApplication = () => {
@@ -609,7 +617,10 @@ const ApplicationListing = () => {
 
               {/* config */}
               {showConfigColumn && (
-                <div className='config-column-grid-customer card justify-content-end'>
+                <div
+                  className='config-column-grid-customer card justify-content-end'
+                  ref={selectRef}
+                >
                   {/* Header */}
                   <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px mb-16px border-bottom border-gray-300'>
                     <span className='fw-bold'>Config Columns</span>
