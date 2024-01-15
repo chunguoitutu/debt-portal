@@ -14,7 +14,8 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
     {
       key: 'instalment_due_date',
       name: 'Date',
-      classNameTableBody: 'text-nowrap',
+      classNameTableBody: 'text-end text-nowrap',
+      classNameTableHead: 'text-end',
       infoFilter: {
         // isSort: true,
         isFromTo: true,

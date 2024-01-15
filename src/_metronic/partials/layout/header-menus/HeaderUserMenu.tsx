@@ -3,6 +3,7 @@ import Avatar from '@/app/modules/profile/components/profile/Avatar'
 import {FC} from 'react'
 import {Link} from 'react-router-dom'
 import './style.scss'
+import {getFullName} from '@/app/utils'
 
 const HeaderUserMenu: FC = () => {
   const {currentUser, logout, company_name} = useAuth()
@@ -20,7 +21,7 @@ const HeaderUserMenu: FC = () => {
           </div>
           <div className='d-flex flex-column' style={{marginTop: '-4px'}}>
             <div className='fw-bolder d-flex align-items-center fs-5'>
-              {` ${currentUser?.firstname} ${currentUser?.lastname || ''} `}
+              {getFullName(currentUser)}
             </div>
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7 two-line'>
               {currentUser?.email}
