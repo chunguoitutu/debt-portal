@@ -1,8 +1,8 @@
 import * as Yup from 'yup'
-import {Input} from '@/components/input'
+import { Input } from '@/components/input'
 import Radio from '@/components/radio/Radio'
-import {Select} from '@/components/select'
-import {TextArea} from '@/components/textarea'
+import { Select } from '@/components/select'
+import { TextArea } from '@/components/textarea'
 import GrossMonthlyIncome from '@/components/applications/GrossMonthlyIncome'
 import FullName from './completion/FullName'
 import Address from './completion/Address'
@@ -14,9 +14,9 @@ import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
 import FileDocument from './employment/FileDocument'
 import RenderFileDocument from './completion/RenderFileDocument'
-import {children_config_completion} from './completion'
-import {ApplicationConfig, TableConfig} from '@/app/types'
-import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
+import { children_config_completion } from './completion'
+import { ApplicationConfig, TableConfig } from '@/app/types'
+import { convertMessageErrorMaximum, convertMessageErrorRequired } from '@/app/utils'
 import {
   BANKRUPTCY,
   CUSTOMER_TYPE,
@@ -36,7 +36,7 @@ import {
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
-import {Checkbox} from '@/components/checkbox'
+import { Checkbox } from '@/components/checkbox'
 import Bankruptcy from '@/components/applications/Bankruptcy'
 import Button from '@/components/button/Button'
 import TermUnit from './completion/TermUnit'
@@ -717,7 +717,7 @@ const TABLE_LOOKUP_CUSTOMER: TableConfig = {
   rows: [
     {
       key: 'customer_no',
-      name: 'Customer No',
+      name: 'Customer ID',
       classNameTableHead: 'pt-2 pb-2',
       infoFilter: {
         isSort: true,
@@ -726,7 +726,7 @@ const TABLE_LOOKUP_CUSTOMER: TableConfig = {
     {
       key: 'identification_no',
       classNameTableHead: 'pt-2 pb-2',
-      name: 'NRIC',
+      name: 'NRIC No',
       infoFilter: {
         isSort: true,
       },

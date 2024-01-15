@@ -163,8 +163,10 @@ const LoanListing = () => {
 
   const renderRows = () => {
     return data.map((item, idx) => {
+      const termUnit = item?.term_unit
+
       return (
-        <tr key={idx}>
+        <tr key={idx} className='hover-tr-listing cursor-pointer'>
           {rowsConfigColumn.map(
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
@@ -242,9 +244,25 @@ const LoanListing = () => {
               }
 
               if (key === 'loan_term') {
+                let unitLabel = ''
+
+                if (termUnit === 0) {
+                  if (value === 0) {
+                    unitLabel = 'Month'
+                  } else if (value > 0 && value <= 1) {
+                    unitLabel = 'Day'
+                  } else if (value > 1) {
+                    unitLabel = 'Days'
+                  }
+                } else if (termUnit === 1) {
+                  unitLabel = value > 1 ? 'Months' : 'Month'
+                } else if (termUnit === 2) {
+                  unitLabel = value > 1 ? 'Years' : 'Year'
+                }
+
                 return (
-                  <td key={i} className='ps-8 pe-8 text-end fs-6 fw-medium text-gray-900'>
-                    {value < 2 ? `${value} Month` : `${value} Months`}
+                  <td key={i} className='ps-8 text-end fs-6 fw-medium' style={{color: '#071437'}}>
+                    {`${value} ${unitLabel}`}
                   </td>
                 )
               }
@@ -451,7 +469,7 @@ const LoanListing = () => {
   }
 
   return (
-    <div className='card p-5 h-fit-content'>
+    <div className='card h-fit-content'>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Loan Listing'}</PageTitle>
       {showInput && (
         <FilterLoan
@@ -465,13 +483,14 @@ const LoanListing = () => {
         />
       )}
       <div>
-        <div className='d-flex flex-row align-items-center pb-12px'>
+        <div className='d-flex flex-row align-items-center p-12px'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search'
+            placeholder='Search loan (Enter Loan No or Name or NRIC No to search'
             value={searchValue}
             transparent={true}
             onChange={handleChangeSearch}
+            className='fs-5'
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 handleReGetApi()
@@ -497,7 +516,7 @@ const LoanListing = () => {
               ) : null
             }
           />
-          <div className='d-flex flex-row position-relative flex-end ms-3'>
+          <div className='d-flex flex-row position-relative flex-end ms-2'>
             <div
               className={clsx(['position-relative p-3 pe-0', showConfigColumn && 'text-gray-900'])}
             >
@@ -507,7 +526,7 @@ const LoanListing = () => {
               >
                 <img src={gridImg} alt='grid' />
                 <span
-                  className='fs-14 d-inline-block fw-semibold pe-4'
+                  className='fs-14 d-inline-block fw-semibold pe-5'
                   style={{borderRight: '1px solid #ccc'}}
                 >
                   Show Columns
@@ -525,7 +544,7 @@ const LoanListing = () => {
                     <span className='fw-bold'>Config Columns</span>
 
                     <div
-                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-5'
+                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-6'
                       onClick={handleToggleConfigColumn}
                     >
                       <KTIcon className='fs-1' iconName='cross' />
@@ -582,7 +601,7 @@ const LoanListing = () => {
                     ? ''
                     : '',
               }}
-              className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900`}
+              className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900 ms-2`}
               onClick={showInputFilter}
             >
               <Icons name={'FilterIconBorrower'} />
@@ -595,8 +614,8 @@ const LoanListing = () => {
           !(
             Object.keys(checkFilter).length === 1 && Object.keys(checkFilter).includes('searchBar')
           ) && (
-            <div className='d-flex align-self-center px-30px pb-4 ps-1'>
-              <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px '>Filter:</h1>
+            <div className='d-flex align-self-center px-30px pb-5 ps-5'>
+              <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px mt-2'>Filter:</h1>
 
               <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
                 {showFilter.map((filter, index) => (
@@ -605,7 +624,7 @@ const LoanListing = () => {
                       !['approval_date', 'status', 'loan_amount', 'loan_term'].includes(
                         filter.key
                       ) && (
-                        <div className='wrapper-filter-application ms-16px py-0 '>
+                        <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                           <h2 className='filter-title-show'>
                             {filter.value}: {checkFilter[`${filter.key}`]}
                           </h2>
@@ -622,7 +641,7 @@ const LoanListing = () => {
                       )}
 
                     {!!checkFilter?.approval_date && ['approval_date'].includes(filter.key) && (
-                      <div className='wrapper-filter-application ms-16px py-0 '>
+                      <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
                           {getDayWithSuffix(parseInt(checkFilter[`${filter.key}`], 10))}
@@ -640,7 +659,7 @@ const LoanListing = () => {
                     )}
 
                     {!!checkFilter?.loan_term && ['loan_term'].includes(filter.key) && (
-                      <div className='wrapper-filter-application ms-16px py-0 '>
+                      <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
                           {checkFilter[`${filter.key}`] < 2
@@ -660,7 +679,7 @@ const LoanListing = () => {
                     )}
 
                     {!!checkFilter?.loan_amount && ['loan_amount'].includes(filter.key) && (
-                      <div className='wrapper-filter-application ms-16px py-0 '>
+                      <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
                           {!!checkFilter?.loan_amount?.gte || checkFilter?.loan_amount?.gte === 0
@@ -684,7 +703,7 @@ const LoanListing = () => {
                     )}
 
                     {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
-                      <div className='wrapper-filter-application ms-16px py-0 '>
+                      <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                         <h2 className='filter-title-show'>
                           {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Peding'}
                           {+checkFilter[`${filter.key}`] === 1 && 'Active'}
@@ -704,16 +723,15 @@ const LoanListing = () => {
                     )}
                   </div>
                 ))}
+                <button
+                  onClick={() => {
+                    handleResetFilter()
+                  }}
+                  className='reset-all-filter-application ms-16px mt-1'
+                >
+                  Reset All
+                </button>
               </div>
-
-              <button
-                onClick={() => {
-                  handleResetFilter()
-                }}
-                className='reset-all-filter-application ms-16px'
-              >
-                Reset All
-              </button>
             </div>
           )}
 
@@ -775,11 +793,10 @@ const LoanListing = () => {
 
         <div
           style={{
-            padding: '10px 22.75px',
+            padding: '16px',
             display: 'flex',
             justifyContent: 'space-between',
           }}
-          className='ps-2'
         >
           <RowPerPage
             lenghtData={searchCriteria.total}

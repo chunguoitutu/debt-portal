@@ -16,12 +16,12 @@
 }
 
 .calc-responsive {
-  max-height: calc(100vh - 350px);
+  max-height: calc(100vh - 360px);
   overflow-y: auto;
 }
 
-@media screen and (min-width: 1440px) and (max-width: 1740px) {
+@media screen and (min-width: 1400px) and (max-width: 1740px) {
   .calc-responsive {
-    max-height: calc(100vh - 358px);
+    max-height: calc(100vh - 352px);
   }
 }

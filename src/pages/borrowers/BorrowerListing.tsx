@@ -511,7 +511,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
       <div className='col-12 col-xxl-3 '>
         <div className='row h-100'>
           <div className='col-12 col-lg-12 col-xxl-12 h-100'>
-            <div className='row gy-lg-6 gx-3 gy-xl-6'>
+            <div className='row gy-lg-6 gx-5 gy-xl-6'>
               <div className='col-12 col-lg-6 col-xxl-12'>
                 <div className='card p-30px h-100 me-1'>
                   <div className='d-flex flex-column '>
