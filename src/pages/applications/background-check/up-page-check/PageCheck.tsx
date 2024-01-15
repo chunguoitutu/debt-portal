@@ -7,6 +7,7 @@ import {swalToast} from '@/app/swal-notification'
 import GoogleSearchPageCheck from '.'
 import {useAuth} from '@/app/context/AuthContext'
 import {useParams} from 'react-router-dom'
+import {ToolApplication} from '@/app/types'
 
 type Props = {
   show: boolean
@@ -14,11 +15,7 @@ type Props = {
   payload: string
   status: boolean
   Nric_no: string
-  tools: {
-    googleSearchCheck: string
-    upPageCheck: string
-    casCheck: string
-  }
+  tools: ToolApplication
   setTools: any
   borrower_id: number
 }
@@ -60,7 +57,7 @@ const PageCheckDeskTop = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, upPageCheck: data?.data?.screenshot || ''})
+            setTools({...tools, UN: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleClose()
@@ -79,7 +76,7 @@ const PageCheckDeskTop = ({
         request
           .post('/google-search/edit-check', {
             searchTerm: search,
-            name_check: 'upPageCheck',
+            name_check: 'UN',
             company_id,
             borrower_id,
           })
@@ -88,7 +85,7 @@ const PageCheckDeskTop = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, upPageCheck: data?.data?.screenshot || ''})
+            setTools({...tools, UN: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleClose()
@@ -104,7 +101,7 @@ const PageCheckDeskTop = ({
           })
     } else {
       setDataSeacrch({
-        screenshot: tools?.upPageCheck || '',
+        screenshot: tools?.UN || '',
         url: '',
       })
       setLoadApiCheck(false)

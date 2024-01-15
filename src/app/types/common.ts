@@ -433,11 +433,13 @@ export type ApplicationPayload = {
   customerId?: number
   borrowerId?: number
   file_documents?: any
-  tools?: {
-    googleSearchCheck: string
-    upPageCheck: string
-    casCheck: string
-  }
+  tools?: ToolApplication
+}
+
+export type ToolApplication = {
+  Google: string
+  UN: string
+  CAS: string
 }
 
 export type ApplicationFormData = {
