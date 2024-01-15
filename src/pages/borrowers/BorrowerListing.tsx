@@ -507,15 +507,15 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   }, [mode])
 
   return (
-    <div className='row gx-24px d-flex flex-row gy-lg-6 gy-xl-6'>
+    <div className='row gy-lg-6 gy-xl-6'>
       <div className='col-12 col-xxl-3 '>
-        <div className='row h-100 flex-column flex-lg-row flex-xxl-column'>
-          <div className='col-12 col-lg-12 col-xxl-12 pe-2 h-100'>
-            <div className='row gy-lg-6 gx-3 gy-xl-6 me-1' style={{height: '102%'}}>
-              <div className='col-12 col-lg-6 col-xxl-12 loan-header'>
-                <div className='card p-30px h-100'>
+        <div className='row h-100'>
+          <div className='col-12 col-lg-12 col-xxl-12 h-100'>
+            <div className='row gy-lg-6 gx-3 gy-xl-6'>
+              <div className='col-12 col-lg-6 col-xxl-12'>
+                <div className='card p-30px h-100 me-1'>
                   <div className='d-flex flex-column '>
-                    <span className='fs-2 fw-bold' style={{color: '#071437'}}>
+                    <span className='fs-2 fw-bold text-gray-900'>
                       {searchCriteria.total} Customers
                     </span>
                     <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
@@ -523,8 +523,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     </span>
                   </div>
 
-                  <div className='p-30px pt-24px'>
-                    <div className='card-body pt-0 pb-32px d-flex flex-wrap align-items-center justify-content-center'>
+                  <div className='pt-24px'>
+                    <div className='d-flex flex-wrap align-items-center justify-content-center'>
                       <div className='d-flex flex-center me-5 pt-2'>
                         <div
                           id='kt_card_widget_17_chart'
@@ -539,7 +539,9 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       <div className='d-flex fw-semibold align-items-center'>
                         <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
                         <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
-                        <div className=' fw-bold text-gray-900 text-xxl-end'>50 Customers</div>
+                        <div className=' fw-bold text-gray-900 text-xxl-end fs-14'>
+                          50 Customers
+                        </div>
                       </div>
                       <div className='d-flex fw-semibold align-items-center my-3'>
                         <div
@@ -547,7 +549,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                           style={{backgroundColor: '#071437'}}
                         ></div>
                         <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
-                        <div className='fw-bold text-gray-900 text-xxl-end'>1 Customer</div>
+                        <div className='fw-bold text-gray-900 text-xxl-end fs-14'>1 Customer</div>
                       </div>
                       <div className='d-flex fw-semibold align-items-center'>
                         <div
@@ -555,7 +557,9 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                           style={{backgroundColor: '#C62828'}}
                         ></div>
                         <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
-                        <div className=' fw-bold text-gray-900 text-xxl-end'>14 Customers</div>
+                        <div className=' fw-bold text-gray-900 text-xxl-end fs-14'>
+                          14 Customers
+                        </div>
                       </div>
                       <div className='d-flex fw-semibold align-items-center mt-3'>
                         <div
@@ -563,7 +567,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                           style={{backgroundColor: '#E4E6EF'}}
                         ></div>
                         <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
-                        <div className='fw-bold text-gray-900 text-xxl-end'>12 Customers</div>
+                        <div className='fw-bold text-gray-900 text-xxl-end fs-14'>12 Customers</div>
                       </div>
                     </div>
                   </div>
@@ -571,7 +575,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
               </div>
 
               <div className='col-12 col-lg-6 col-xxl-12'>
-                <div className='card h-100 '>
+                <div className='card h-100 me-1'>
                   <div className='loan-header p-30px pt-30px pb-0 position-relative '>
                     <div className='d-flex flex-column'>
                       <span className='fs-2 fw-bold' style={{color: '#071437'}}>
@@ -583,12 +587,12 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     </div>
                   </div>
                   <div className='p-30px pt-16px'>
-                    <div className='mt-16px d-flex flex-row gap-2'>
+                    <div className='d-flex flex-row gap-2'>
                       <div className='fs-2 fw-bold text-gray-900'>Accounting For</div>
                       <div className='fs-2 fw-bold text-primary'>12%</div>
                     </div>
 
-                    <div className='d-flex flex-wrap align-items-center justify-content-center style-img-chart'>
+                    <div className='d-flex flex-wrap align-items-center justify-content-center'>
                       <img
                         src={ChartImg}
                         alt=''
@@ -603,7 +607,9 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
           </div>
         </div>
       </div>
-      <div className='col-12 col-xxl-9'>
+
+      {/* table in here */}
+      <div className='col-12 col-xxl-9 ps-0'>
         <div className='card ps-3 w-100'>
           <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
           {showInput && (
@@ -621,7 +627,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
             <div className='d-flex flex-row align-items-center p-16px'>
               <Input
                 classShared='flex-grow-1 h-30px mb-5 '
-                placeholder='Search customer (Enter ID or Name or NRIC to search)'
+                placeholder='Search customer (Enter Customer ID or Name or NRIC No to search)'
                 value={searchValue}
                 transparent={true}
                 onChange={handleChangeSearch}
@@ -754,14 +760,14 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 Object.keys(checkFilter).includes('searchBar')
               ) && (
                 <div className='d-flex align-self-center px-30px pb-5 ps-5'>
-                  <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px '>Filter:</h1>
+                  <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px mt-2'>Filter:</h1>
 
                   <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
                     {showFilter.map((filter, index) => (
                       <div key={index} className='p-0 m-0'>
                         {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
                           !['blacklisted', 'exclusion', 'status'].includes(filter.key) && (
-                            <div className='wrapper-filter-application ms-16px py-0 '>
+                            <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                               <h2 className='filter-title-show'>
                                 {filter.value}: {filter.valueStart}
                                 {checkFilter[`${filter.key}`]}
@@ -779,7 +785,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                           )}
 
                         {!!checkFilter[`${filter.key}`] && ['exclusion'].includes(filter.key) && (
-                          <div className='wrapper-filter-application  ms-16px py-0 '>
+                          <div className='wrapper-filter-application  ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}: {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
                             </h2>
@@ -795,7 +801,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                           </div>
                         )}
                         {!!checkFilter[`${filter.key}`] && ['blacklisted'].includes(filter.key) && (
-                          <div className='wrapper-filter-application  ms-16px py-0 '>
+                          <div className='wrapper-filter-application  ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}: {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
                             </h2>
@@ -812,7 +818,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                         )}
 
                         {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
-                          <div className='wrapper-filter-application ms-16px py-0 '>
+                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
                             <h2 className='filter-title-show'>
                               {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Decreased'}
                               {+checkFilter[`${filter.key}`] === 1 && 'Active'}
@@ -833,21 +839,20 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                         )}
                       </div>
                     ))}
+                    <button
+                      onClick={() => {
+                        handleResetFilter()
+                      }}
+                      className='reset-all-filter-application ms-16px mt-2'
+                    >
+                      Reset All
+                    </button>
                   </div>
-
-                  <button
-                    onClick={() => {
-                      handleResetFilter()
-                    }}
-                    className='reset-all-filter-application ms-16px'
-                  >
-                    Reset All
-                  </button>
                 </div>
               )}
 
             <KTCardBody className='p-0'>
-              <div className='table-responsive'>
+              <div className='table-responsive calc-responsive'>
                 <table
                   id='kt_table_users'
                   className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
