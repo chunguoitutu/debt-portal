@@ -51,7 +51,6 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
   const {pageSize, currentPage} = searchCriteria
   const [dataFilters, setDataFilter] = React.useState<Partial<ResponseLookupListing>>({})
   const [loading, setLoading] = React.useState<boolean>(false)
-  const [filterButtonClicked, setFilterButtonClicked] = React.useState(false)
 
   const {company_id} = useAuth()
 
@@ -98,7 +97,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
     }
   }
 
-  const {setFieldValue, setFieldError} = formik
+  const {setFieldValue} = formik
 
   async function handleGetApplicationById(nric: any) {
     try {
@@ -144,7 +143,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
-        <tr key={idx}>
+        <tr key={idx} className='hover-tr-listing cursor-pointer'>
           {rows.map(({key, component, classNameTableBody, isHide}, i) => {
             if (isHide) {
               return <React.Fragment key={i}></React.Fragment>
@@ -156,24 +155,20 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             }
             if (key === 'identification_no') {
               return (
-                <td
-                  key={i}
-                  className='fs-6 fw-medium value-hover-render-row'
-                  style={{color: '#071437'}}
-                >
+                <td key={i} className='fs-6 fw-medium value-hover-render-row text-gray-900'>
                   {value}
                 </td>
               )
             }
             return (
-              <td key={i} className='fs-6 fw-medium ' style={{color: '#78829D'}}>
+              <td key={i} className='fs-6 fw-medium text-gray-900'>
                 {component ? <Component /> : <span className={classNameTableBody}>{value}</span>}
               </td>
             )
           })}
           {showAction && showViewButton && (
             <td className='text-center'>
-              <div className='d-flex align-items-center justify-content-center gap-1'>
+              <div className='d-flex align-items-end justify-content-end gap-1'>
                 {showViewButton && (
                   <Button
                     className='btn btn-secondary text-hover-primary text-gray-600'
@@ -245,7 +240,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             <div className='d-flex justify-content-between'>
               <h2 className='mt-2'>Lookup Customer</h2>
               <div
-                className='btn btn-sm btn-icon btn-active-color-primary'
+                className='btn btn-sm btn-icon btn-active-color-primary ps-4'
                 onClick={() => onClose()}
               >
                 <KTIcon className='fs-1' iconName='cross' />
@@ -253,76 +248,59 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             </div>
           </div>
         </Modal.Header>
-        <Modal.Body style={{maxHeight: 450}} className='p-12px'>
-          <div className='d-flex flex-row align-items-center'>
-            <Input
-              classShared='flex-grow-1 h-30px mb-5'
-              placeholder='Search'
-              value={searchValue}
-              transparent={true}
-              onChange={handleChangeSearch}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleReGetApi()
-                }
-              }}
-              insertLeft={
+        <div className='d-flex flex-row align-items-center p-12px'>
+          <Input
+            classShared='flex-grow-1 h-30px mb-5'
+            placeholder='Search customer (Enter Customer ID or First Name or Last Name or NRIC No to search)'
+            value={searchValue}
+            transparent={true}
+            onChange={handleChangeSearch}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleReGetApi()
+              }
+            }}
+            insertLeft={
+              <FontAwesomeIcon
+                className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                icon={faSearch}
+                onClick={handleReGetApi}
+              />
+            }
+            insertRight={
+              searchValue ? (
                 <FontAwesomeIcon
-                  className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                  icon={faSearch}
-                  onClick={handleReGetApi}
-                />
-              }
-              insertRight={
-                searchValue ? (
-                  <FontAwesomeIcon
-                    className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                    icon={faClose}
-                    onClick={() => {
-                      setSearchValue('')
-                      handleReGetApi()
-                    }}
-                  />
-                ) : null
-              }
-            />
-            <div className='d-flex flex-row position-relative flex-end'>
-              <div className='d-flex flex-end ms-2 mt-1'>
-                <Button
+                  className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                  icon={faClose}
                   onClick={() => {
+                    setSearchValue('')
                     handleReGetApi()
                   }}
-                  className='align-self-center fs-5 h-45px fs-6 bg-white text-gray-600 text-hover-gray-900 '
-                  style={{padding: 10}}
-                  disabled={filterButtonClicked}
-                >
-                  <FontAwesomeIcon
-                    className='cursor-pointer text-gray-600 mt-1 me-2'
-                    icon={faSearch}
-                  />
-                  Search
-                </Button>
-              </div>
-              <div
-                style={{
-                  backgroundColor:
-                    Object.keys(checkFilter).length !== 0 &&
-                    !(
-                      Object.keys(checkFilter).length === 1 &&
-                      Object.keys(checkFilter).includes('searchBar')
-                    )
-                      ? ''
-                      : '',
-                  borderLeft: '1px solid #f1f1f2',
-                }}
-                className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900`}
-                onClick={showInputFilter}
-              >
-                <Icons name={'FilterIconBorrower'} />
-                Filter
-              </div>
+                />
+              ) : null
+            }
+          />
+          <div className='d-flex flex-row position-relative flex-end'>
+            <div
+              style={{
+                backgroundColor:
+                  Object.keys(checkFilter).length !== 0 &&
+                  !(
+                    Object.keys(checkFilter).length === 1 &&
+                    Object.keys(checkFilter).includes('searchBar')
+                  )
+                    ? ''
+                    : '',
+              }}
+              className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900 ms-2`}
+              onClick={showInputFilter}
+            >
+              <Icons name={'FilterIconBorrower'} />
+              Filter
             </div>
           </div>
+        </div>
+        <Modal.Body style={{maxHeight: 450}} className='pt-0'>
           <div>
             {/*  */}
             {Object.keys(checkFilter).length !== 0 &&
@@ -368,7 +346,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
               )}
             {/*  */}
           </div>
-          <KTCardBody className='py-4'>
+          <KTCardBody className='pt-0'>
             <div className='table-responsive'>
               <table
                 id='kt_table_users'
@@ -402,7 +380,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                         )
                       })}
                     {showAction && (
-                      <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
+                      <th className='text-end w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
                     )}
                   </tr>
                 </thead>
@@ -480,8 +458,11 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
           </KTCardBody>
         </Modal.Body>
         <div
-          className='ps-4'
-          style={{padding: '10px 22.75px', display: 'flex', justifyContent: 'space-between'}}
+          style={{
+            padding: '16px',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
         >
           <RowPerPage
             lenghtData={searchCriteria.total}
@@ -498,11 +479,11 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
           />
           {loading && <Loading />}
         </div>
-        <Modal.Footer style={{padding: 24}}>
+        <Modal.Footer className='p-30px'>
           <div className='d-flex flex-end full'>
             <Button
               onClick={onClose}
-              className='btn-secondary align-self-center me-3 fs-6'
+              className='btn-secondary align-self-center fs-6'
               disabled={false}
             >
               Cancel

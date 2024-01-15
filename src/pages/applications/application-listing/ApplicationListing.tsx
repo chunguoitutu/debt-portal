@@ -237,7 +237,7 @@ const ApplicationListing = () => {
     return data.map((item, idx) => {
       const termUnit = item?.term_unit
       return (
-        <tr key={idx}>
+        <tr key={idx} className='hover-tr-listing cursor-pointer'>
           {rowsConfigColumn.map(
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
@@ -553,7 +553,7 @@ const ApplicationListing = () => {
   }
 
   return (
-    <div className='card p-5 h-fit-content'>
+    <div className='card '>
       <PageTitle breadcrumbs={profileBreadCrumbs}>{'Application Listing'}</PageTitle>
       {showInput && (
         <FilterApplication
@@ -567,12 +567,13 @@ const ApplicationListing = () => {
         />
       )}
       <div>
-        <div className='d-flex flex-row align-items-center pb-12px'>
+        <div className='d-flex flex-row align-items-center p-12px'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search'
+            placeholder='Search application (Enter Application ID or Name or NRIC No to search'
             value={searchValue}
             transparent={true}
+            className='fs-5'
             onChange={handleChangeSearch}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -599,7 +600,7 @@ const ApplicationListing = () => {
               ) : null
             }
           />
-          <div className='d-flex flex-row position-relative flex-end ms-3'>
+          <div className='d-flex flex-row position-relative flex-end ms-2'>
             <div
               className={clsx(['position-relative p-3 pe-0', showConfigColumn && 'text-gray-900'])}
             >
@@ -609,7 +610,7 @@ const ApplicationListing = () => {
               >
                 <img src={gridImg} alt='grid' />
                 <span
-                  className='fs-14 d-inline-block fw-semibold pe-4'
+                  className='fs-14 d-inline-block fw-semibold pe-5'
                   style={{borderRight: '1px solid #ccc'}}
                 >
                   Show Columns
@@ -623,12 +624,11 @@ const ApplicationListing = () => {
                   ref={selectRef}
                 >
                   {/* Header */}
-
                   <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px border-bottom border-gray-300'>
                     <span className='fw-bold'>Config Columns</span>
 
                     <div
-                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-5'
+                      className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-6'
                       onClick={handleToggleConfigColumn}
                     >
                       <KTIcon className='fs-1' iconName='cross' />
@@ -636,10 +636,7 @@ const ApplicationListing = () => {
                   </div>
 
                   {/* Body */}
-                  <div
-                    style={{maxHeight: 'calc(100vh - 450px)'}}
-                    className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'
-                  >
+                  <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'>
                     {APPLICATION_LISTING_CONFIG.rows.map((el, i) => {
                       if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
 
@@ -684,13 +681,11 @@ const ApplicationListing = () => {
                   !(
                     Object.keys(checkFilter).length === 1 &&
                     Object.keys(checkFilter).includes('searchBar')
-                  ) &&
-                  ((checkFilter[`status`]?.in || []).length > 0 ||
-                    !Object.keys(checkFilter).includes('searchBar'))
+                  )
                     ? ''
                     : '',
               }}
-              className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900`}
+              className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900 ms-2`}
               onClick={showInputFilter}
             >
               <Icons name={'FilterIconBorrower'} />
@@ -720,7 +715,7 @@ const ApplicationListing = () => {
           ) &&
           ((checkFilter[`status`]?.in || []).length > 0 ||
             !Object.keys(checkFilter).includes('searchBar')) && (
-            <div className='d-flex align-self-center px-30px pb-4 ps-1'>
+            <div className='d-flex align-self-center px-30px pb-5 ps-5'>
               <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px align-self-center'>
                 Filter:
               </h1>
@@ -764,7 +759,7 @@ const ApplicationListing = () => {
                                   {+status === 0 && 'Draft'}
                                   {+status === 1 && 'Awaiting Approval'}
                                   {+status === 2 && 'Rejected'}
-                                  {+status === 3 && 'Approved'}{' '}
+                                  {+status === 3 && 'Approved'}
                                   {(checkFilter[`${filter.key}`]?.in || []).length > 1 &&
                                     i < (checkFilter[`${filter.key}`]?.in || []).length - 1 &&
                                     ','}
@@ -901,16 +896,15 @@ const ApplicationListing = () => {
                     </div>
                   )
                 })}
+                <button
+                  onClick={() => {
+                    handleResetFilter()
+                  }}
+                  className='reset-all-filter-application ms-16px mt-2'
+                >
+                  Reset All
+                </button>
               </div>
-
-              <button
-                onClick={() => {
-                  handleResetFilter()
-                }}
-                className='reset-all-filter-application ms-16px mt-2'
-              >
-                Reset All
-              </button>
             </div>
           )}
 
@@ -980,11 +974,10 @@ const ApplicationListing = () => {
 
         <div
           style={{
-            padding: '10px 22.75px',
+            padding: '16px',
             display: 'flex',
             justifyContent: 'space-between',
           }}
-          className='ps-2'
         >
           <RowPerPage
             lenghtData={searchCriteria.total}
