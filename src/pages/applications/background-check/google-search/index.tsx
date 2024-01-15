@@ -14,7 +14,7 @@ type Props = {
   payload: string
   status: boolean
   Nric_no: string
-  tools: {googleSearchCheck: string; upPageCheck: string; casCheck: string}
+  tools: {Google: string; UN: string; CAS: string}
   setTools: any
   borrower_id: number
 }
@@ -49,7 +49,7 @@ const WrapperGoogleSearch = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, googleSearchCheck: data?.data?.screenshot || ''})
+            setTools({...tools, Google: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleClose()
@@ -64,7 +64,7 @@ const WrapperGoogleSearch = ({
         request
           .post('/google-search/edit-check', {
             searchTerm: payload,
-            name_check: 'googleSearchCheck',
+            name_check: 'Google',
             company_id,
             borrower_id,
           })
@@ -73,7 +73,7 @@ const WrapperGoogleSearch = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, googleSearchCheck: data?.data?.screenshot || ''})
+            setTools({...tools, Google: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleClose()
@@ -86,7 +86,7 @@ const WrapperGoogleSearch = ({
           .finally(() => setLoading(false))
     } else {
       setDataSeacrch({
-        screenshot: tools?.googleSearchCheck || '',
+        screenshot: tools?.Google || '',
         url: '',
       })
       setLoading(false)

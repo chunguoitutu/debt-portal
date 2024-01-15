@@ -22,6 +22,7 @@ import {
   PropsStepApplication,
   RemarkItem,
   StepItem,
+  ToolApplication,
 } from '@/app/types'
 import {
   APPLICATION_STEP_CONTACT_INFO,
@@ -87,10 +88,10 @@ export const Applications = () => {
     bankInfoId: 0,
     cpfId: 0,
   })
-  const [tools, setTools] = useState({
-    googleSearchCheck: '',
-    upPageCheck: '',
-    casCheck: '',
+  const [tools, setTools] = useState<ToolApplication>({
+    Google: '',
+    UN: '',
+    CAS: '',
   })
   const [toolsCheckCount, setToolsCheckCount] = useState({
     MLCB: 0,
@@ -125,7 +126,7 @@ export const Applications = () => {
     setStepCompleted(0)
     if (pathname === '/application/create') {
       setCurrentStep(1)
-      setTools({googleSearchCheck: '', upPageCheck: '', casCheck: ''})
+      setTools({Google: '', UN: '', CAS: ''})
     }
     setSingpass(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -297,9 +298,9 @@ export const Applications = () => {
 
       setTools(
         data?.tools || {
-          googleSearchCheck: '',
-          upPageCheck: '',
-          casCheck: '',
+          Google: '',
+          UN: '',
+          CAS: '',
         }
       )
 

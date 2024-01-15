@@ -12,7 +12,7 @@ type Props = {
   payload: string
   status: boolean
   Nric_no: string
-  tools: {googleSearchCheck: string; upPageCheck: string; casCheck: string}
+  tools: {Google: string; UN: string; CAS: string}
   setTools: any
   borrower_id: number
 }
@@ -53,7 +53,7 @@ const MobileCaCheck = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, casCheck: data?.data?.screenshot || ''})
+            setTools({...tools, CAS: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleShow()
@@ -71,7 +71,7 @@ const MobileCaCheck = ({
         request
           .post('/google-search/edit-check', {
             searchTerm: search,
-            name_check: 'casCheck',
+            name_check: 'CAS',
             company_id,
             borrower_id,
           })
@@ -80,7 +80,7 @@ const MobileCaCheck = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, casCheck: data?.data?.screenshot || ''})
+            setTools({...tools, CAS: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleShow()
@@ -96,7 +96,7 @@ const MobileCaCheck = ({
           })
     } else {
       setDataSeacrch({
-        screenshot: tools?.casCheck || '',
+        screenshot: tools?.CAS || '',
         url: '',
       })
       setLoading(false)

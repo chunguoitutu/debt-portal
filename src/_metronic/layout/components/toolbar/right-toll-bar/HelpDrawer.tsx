@@ -45,11 +45,11 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
         show: true,
-        opacity: !!tools?.googleSearchCheck,
+        opacity: !!tools?.Google,
         onclick: () => {
           if (fullname && !!values.identification_no) {
             if (
-              !tools.googleSearchCheck &&
+              !tools.Google &&
               [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(values.status || 0)
             ) {
               swalToast.fire({
@@ -87,11 +87,11 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
         show: true,
-        opacity: !!tools?.upPageCheck,
+        opacity: !!tools?.UN,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
             if (
-              !tools.upPageCheck &&
+              !tools.UN &&
               [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
             ) {
               swalToast.fire({

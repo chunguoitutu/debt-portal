@@ -18,7 +18,7 @@ type Props = {
   }
 }
 
-const CasCheckSearch = ({
+const CASSearch = ({
   handleClose,
   search,
   loadApiCheck,
@@ -175,4 +175,4 @@ const CasCheckSearch = ({
   )
 }
 
-export default CasCheckSearch
+export default CASSearch

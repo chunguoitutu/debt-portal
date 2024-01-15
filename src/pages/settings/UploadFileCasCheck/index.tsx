@@ -7,7 +7,7 @@ import Icons from '@/components/icons'
 import Tippy from '@tippyjs/react'
 import {useEffect, useState} from 'react'
 
-const UploadFileCasCheck = () => {
+const UploadFileCAS = () => {
   const [selectedFiles, setSelectedFiles] = useState<any>([])
   const [files, setFiles] = useState<any>({})
   const [loading, setLoading] = useState(false)
@@ -228,4 +228,4 @@ const UploadFileCasCheck = () => {
   )
 }
 
-export default UploadFileCasCheck
+export default UploadFileCAS

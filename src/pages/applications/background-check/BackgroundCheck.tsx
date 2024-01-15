@@ -40,12 +40,12 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         value: 'Google Search Check',
         icon: <Icons name={'Google'} />,
         background: '#E2E5E7',
-        opacity: !!tools?.googleSearchCheck,
+        opacity: !!tools?.Google,
         show: true,
         onclick: () => {
           if (getFullName(values) && !!values.identification_no) {
             if (
-              !tools.googleSearchCheck &&
+              !tools.Google &&
               [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
             ) {
               swalToast.fire({
@@ -77,12 +77,12 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         value: 'UN Page Check',
         icon: <Icons name={'UPCheck'} />,
         background: '#E2E5E7',
-        opacity: !!tools?.upPageCheck,
+        opacity: !!tools?.UN,
         show: true,
         onclick: () => {
           if (formik.values.lastname && !!values.identification_no) {
             if (
-              !tools.upPageCheck &&
+              !tools.UN &&
               [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
             ) {
               swalToast.fire({
@@ -113,13 +113,13 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
       {
         value: 'CAs Check',
         icon: <Icons name={'Cascheck'} />,
-        opacity: !!tools?.casCheck,
+        opacity: !!tools?.CAS,
         background: '#E2E5E7',
         show: true,
         onclick: () => {
           if (getFullName(values) && !!values.identification_no) {
             if (
-              !tools.casCheck &&
+              !tools.CAS &&
               [ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(values.status || 0)
             ) {
               swalToast.fire({

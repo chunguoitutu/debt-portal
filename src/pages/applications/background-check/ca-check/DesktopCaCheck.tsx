@@ -7,6 +7,7 @@ import {swalToast} from '@/app/swal-notification'
 import {useAuth} from '@/app/context/AuthContext'
 import CasCheckSearch from './CaCheck'
 import {useParams} from 'react-router-dom'
+import {ToolApplication} from '@/app/types'
 
 type Props = {
   show: boolean
@@ -14,7 +15,7 @@ type Props = {
   payload: string
   status: boolean
   Nric_no: string
-  tools: {googleSearchCheck: string; upPageCheck: string; casCheck: string}
+  tools: ToolApplication
   setTools: any
   borrower_id: number
 }
@@ -55,7 +56,7 @@ const CaCheckDeskTop = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, casCheck: data?.data?.screenshot || ''})
+            setTools({...tools, CAS: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleClose()
@@ -73,7 +74,7 @@ const CaCheckDeskTop = ({
         request
           .post('/google-search/edit-check', {
             searchTerm: search,
-            name_check: 'casCheck',
+            name_check: 'CAS',
             company_id,
             borrower_id,
           })
@@ -82,7 +83,7 @@ const CaCheckDeskTop = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, casCheck: data?.data?.screenshot || ''})
+            setTools({...tools, CAS: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleClose()
@@ -98,7 +99,7 @@ const CaCheckDeskTop = ({
           })
     } else {
       setDataSeacrch({
-        screenshot: tools?.casCheck || '',
+        screenshot: tools?.CAS || '',
         url: '',
       })
       setLoading(false)

@@ -169,8 +169,6 @@ const GeneralButton: FC<Props> = (props) => {
   }
 
   function handleTogglePopupRejection() {
-    console.log('run')
-
     setShowPopupRejection(!showPopupRejection)
   }
 

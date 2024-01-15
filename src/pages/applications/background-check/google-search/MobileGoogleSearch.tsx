@@ -5,13 +5,14 @@ import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {useAuth} from '@/app/context/AuthContext'
 import {useParams} from 'react-router-dom'
+import {ToolApplication} from '@/app/types'
 
 type Props = {
   handleShow: () => void
   payload: string
   status: boolean
   Nric_no: string
-  tools: {googleSearchCheck: string; upPageCheck: string; casCheck: string}
+  tools: ToolApplication
   setTools: any
   borrower_id: number
 }
@@ -44,7 +45,7 @@ const MobileGoogleSearch = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, googleSearchCheck: data?.data?.screenshot || ''})
+            setTools({...tools, Google: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleShow()
@@ -59,7 +60,7 @@ const MobileGoogleSearch = ({
         request
           .post('/google-search/edit-check', {
             searchTerm: payload,
-            name_check: 'googleSearchCheck',
+            name_check: 'Google',
             company_id,
             borrower_id,
           })
@@ -68,7 +69,7 @@ const MobileGoogleSearch = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, googleSearchCheck: data?.data?.screenshot || ''})
+            setTools({...tools, Google: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleShow()
@@ -81,7 +82,7 @@ const MobileGoogleSearch = ({
           .finally(() => setLoading(false))
     } else {
       setDataSeacrch({
-        screenshot: tools?.googleSearchCheck || '',
+        screenshot: tools?.Google || '',
         url: '',
       })
       setLoading(false)

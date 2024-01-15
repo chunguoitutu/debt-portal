@@ -1,21 +1,18 @@
 import {KTIcon} from '@/_metronic/helpers'
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import GoogleSearchPageCheck from '.'
 import {useAuth} from '@/app/context/AuthContext'
 import {useParams} from 'react-router-dom'
+import {ToolApplication} from '@/app/types'
 
 type Props = {
   handleShow: () => void
   payload: string
   status: boolean
   Nric_no: string
-  tools: {
-    googleSearchCheck: string
-    upPageCheck: string
-    casCheck: string
-  }
+  tools: ToolApplication
   setTools: any
   borrower_id: number
 }
@@ -57,7 +54,7 @@ const MobilePageCheck = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, upPageCheck: data?.data?.screenshot || ''})
+            setTools({...tools, UN: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleShow()
@@ -76,7 +73,7 @@ const MobilePageCheck = ({
         request
           .post('/google-search/edit-check', {
             searchTerm: search,
-            name_check: 'upPageCheck',
+            name_check: 'UN',
             company_id,
             borrower_id,
           })
@@ -85,7 +82,7 @@ const MobilePageCheck = ({
               screenshot: data?.data?.screenshot || '',
               url: data?.data?.url || '',
             })
-            setTools({...tools, upPageCheck: data?.data?.screenshot || ''})
+            setTools({...tools, UN: data?.data?.screenshot || ''})
           })
           .catch((e) => {
             handleShow()
@@ -101,7 +98,7 @@ const MobilePageCheck = ({
           })
     } else {
       setDataSeacrch({
-        screenshot: tools?.upPageCheck || '',
+        screenshot: tools?.UN || '',
         url: '',
       })
       setLoadApiCheck(false)
