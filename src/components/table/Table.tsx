@@ -319,6 +319,14 @@ const Table: FC<Props> = ({
                           )
                         }
 
+                        if (key === 'telephone') {
+                          return (
+                            <td className='fs-14 fw-semibold' style={{color: 'rgb(120, 130, 157)'}}>
+                              {value ? `+65${value}` : ''}
+                            </td>
+                          )
+                        }
+
                         if (component) {
                           if (
                             [

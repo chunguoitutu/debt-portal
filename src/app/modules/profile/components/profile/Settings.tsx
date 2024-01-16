@@ -8,6 +8,10 @@ import {updateInfoUser} from '@/app/axios/request'
 import {swalToast} from '@/app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import ChangePassword from '../change-password/ChangePassword'
+import {Input} from '@/components/input'
+import Tippy from '@tippyjs/react'
+import {Select} from '@/components/select'
+import {COUNTRY_PHONE_CODE} from '@/app/utils'
 
 const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),
@@ -29,7 +33,16 @@ const Settings: React.FC = () => {
 
   const {currentUser, refreshToken} = useAuth()
 
-  const formik = useFormik<UserProfile>({
+  const {
+    values,
+    handleChange,
+    setValues,
+    handleSubmit,
+    getFieldProps,
+    touched,
+    errors,
+    handleBlur,
+  } = useFormik<UserProfile>({
     initialValues: {
       firstname: currentUser?.firstname || '',
       lastname: currentUser?.lastname || '',
@@ -55,11 +68,11 @@ const Settings: React.FC = () => {
     if (!currentUser) return
     try {
       setLoading(true)
-      const values: UserProfile = {
-        firstname: formik.values.firstname,
-        lastname: formik.values.lastname,
-        telephone: formik.values.telephone,
-        email: formik.values.email,
+      const valuesFormik: UserProfile = {
+        firstname: values.firstname,
+        lastname: values.lastname,
+        telephone: values.telephone,
+        email: values.email,
       }
 
       const {data} = await updateInfoUser(currentUser.id, values)
@@ -84,7 +97,7 @@ const Settings: React.FC = () => {
 
   function handleDiscardChanges() {
     if (originalData) {
-      formik.setValues(originalData)
+      setValues(originalData)
     }
   }
 
@@ -114,7 +127,7 @@ const Settings: React.FC = () => {
         </div>
 
         <div id='kt_account_profile_details' className='collapse show'>
-          <form onSubmit={formik.handleSubmit} noValidate className='form'>
+          <form onSubmit={handleSubmit} noValidate className='form'>
             <div className='card-body p-9'>
               <div className='row mb-6 p-1'>
                 <label className='col-lg-4 col-form-label required fw-bold fs-5'>Full Name</label>
@@ -126,11 +139,11 @@ const Settings: React.FC = () => {
                         type='text'
                         className='fs-4 form-control form-control-lg form-control-solid mb-3 mb-lg-0'
                         placeholder='First name'
-                        {...formik.getFieldProps('firstname')}
+                        {...getFieldProps('firstname')}
                       />
-                      {formik.touched.firstname && formik.errors.firstname && (
+                      {touched.firstname && errors.firstname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block fs-13'>{formik.errors.firstname}</div>
+                          <div className='fv-help-block fs-13'>{errors.firstname}</div>
                         </div>
                       )}
                     </div>
@@ -140,11 +153,11 @@ const Settings: React.FC = () => {
                         type='text'
                         className='fs-4 form-control form-control-lg form-control-solid'
                         placeholder='Last name'
-                        {...formik.getFieldProps('lastname')}
+                        {...getFieldProps('lastname')}
                       />
-                      {formik.touched.lastname && formik.errors.lastname && (
+                      {touched.lastname && errors.lastname && (
                         <div className='fv-plugins-message-container'>
-                          <div className='fv-help-block fs-13'>{formik.errors.lastname}</div>
+                          <div className='fv-help-block fs-13'>{errors.lastname}</div>
                         </div>
                       )}
                     </div>
@@ -158,11 +171,29 @@ const Settings: React.FC = () => {
                 </label>
 
                 <div className='col-lg-8 fv-row'>
-                  <input
-                    type='tel'
-                    className='fs-4 form-control form-control-lg form-control-solid'
-                    placeholder='Contact Phone'
-                    {...formik.getFieldProps('telephone')}
+                  <Input
+                    onBlur={handleBlur}
+                    name={'telephone'}
+                    type={'number'}
+                    value={values['telephone'] || ''}
+                    onChange={handleChange}
+                    touched={!!touched['telephone']}
+                    insertLeft={
+                      <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                        {/* Wrapper with a span tag to show tooltip */}
+                        <span>
+                          <Select
+                            onChange={handleChange}
+                            value={values['telephone']}
+                            isOptionDefault={false}
+                            classShared='m-0'
+                            className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                            name='country_phone_code'
+                            options={COUNTRY_PHONE_CODE}
+                          />
+                        </span>
+                      </Tippy>
+                    }
                   />
                 </div>
               </div>
@@ -175,7 +206,7 @@ const Settings: React.FC = () => {
                     type='email'
                     className='fs-4 form-control form-control-lg form-control-solid'
                     placeholder='Contact Email'
-                    {...formik.getFieldProps('email')}
+                    {...getFieldProps('email')}
                     pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
                   />
                 </div>
@@ -186,10 +217,10 @@ const Settings: React.FC = () => {
               <button
                 disabled={
                   loading ||
-                  (originalData?.email.trim() === formik.values.email.trim() &&
-                    originalData?.lastname.trim() === formik.values.lastname.trim() &&
-                    originalData?.telephone.trim() === formik.values.telephone.trim() &&
-                    originalData?.firstname.trim() === formik.values.firstname.trim())
+                  (originalData?.email.trim() === values.email.trim() &&
+                    originalData?.lastname.trim() === values.lastname.trim() &&
+                    originalData?.telephone.trim() === values.telephone.trim() &&
+                    originalData?.firstname.trim() === values.firstname.trim())
                 }
                 type='button'
                 className='btn btn-secondary align-self-center me-8px'
@@ -202,12 +233,12 @@ const Settings: React.FC = () => {
                 className='btn btn-primary align-self-center fs-14'
                 disabled={
                   loading ||
-                  (originalData?.email.trim() === formik.values.email.trim() &&
-                    originalData?.lastname.trim() === formik.values.lastname.trim() &&
-                    originalData?.telephone.trim() === formik.values.telephone.trim() &&
-                    originalData?.firstname.trim() === formik.values.firstname.trim())
+                  (originalData?.email.trim() === values.email.trim() &&
+                    originalData?.lastname.trim() === values.lastname.trim() &&
+                    originalData?.telephone.trim() === values.telephone.trim() &&
+                    originalData?.firstname.trim() === values.firstname.trim())
                 }
-                onClick={() => formik.handleSubmit}
+                onClick={() => handleSubmit}
               >
                 {!loading && 'Save Changes'}
                 {loading && (
