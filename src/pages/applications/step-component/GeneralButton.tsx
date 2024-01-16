@@ -9,6 +9,7 @@ import ApprovalApplicationModal from './approval'
 import clsx from 'clsx'
 import Reject from './reject/Reject'
 import {ApplicationStatus} from '@/app/types/enum'
+import request from '@/app/axios'
 
 interface Props extends PropsStepApplication {
   handleSubmit: () => void
@@ -172,6 +173,44 @@ const GeneralButton: FC<Props> = (props) => {
     setShowPopupRejection(!showPopupRejection)
   }
 
+  async function handleCancelApplication(applicationIdEdit: any) {
+    try {
+      const result = await swalConfirm.fire({
+        title: 'Are You Sure?',
+        text: `You Won't Be Able To Revert This.`,
+      })
+
+      if (result.isConfirmed) {
+        if (!applicationIdEdit) {
+          navigate('/application/create')
+          setCurrentStep(1)
+
+          swalToast.fire({
+            timer: 1500,
+            icon: 'success',
+            title: 'This application is cancelled',
+          })
+        } else {
+          await request.put(`/application/cancel-application/${applicationIdEdit}`, {
+            application_id: applicationIdEdit,
+          })
+          navigate('/application/create')
+          setCurrentStep(1)
+          swalToast.fire({
+            timer: 1500,
+            icon: 'success',
+            title: 'This application is cancelled',
+          })
+        }
+      }
+    } catch (error) {
+      swalToast.fire({
+        timer: 1500,
+        icon: 'error',
+        title: 'The system is having an error, please try again in a few minutes',
+      })
+    }
+  }
   return (
     <>
       {showPopupApproval && (
@@ -198,6 +237,18 @@ const GeneralButton: FC<Props> = (props) => {
           currentStep === 6 ? 'pb-30px' : 'pb-0',
         ])}
       >
+        <div>
+          {((!applicationIdEdit && currentStep !== 6) ||
+            (values.status === ApplicationStatus.DRAFT && currentStep !== 6)) && (
+            <Button
+              type='submit'
+              onClick={() => handleCancelApplication(applicationIdEdit)}
+              className={`fs-6 btn btn-danger`}
+            >
+              Cancel Application
+            </Button>
+          )}
+        </div>
         <div>
           {!!applicationIdEdit && values.status === ApplicationStatus.AWAITING_APPROVAL && (
             <Button

@@ -163,7 +163,7 @@ const LoanListing = () => {
 
   const renderRows = () => {
     return data.map((item, idx) => {
-      const termUnit = item?.term_unit
+      const termUnit = item?.application?.term_unit
 
       return (
         <tr key={idx} className='hover-tr-listing cursor-pointer'>
@@ -185,7 +185,7 @@ const LoanListing = () => {
 
               if (key === 'id') {
                 return (
-                  <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-6'>
+                  <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
                     {Number(idx) +
                       1 +
                       (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
@@ -233,11 +233,7 @@ const LoanListing = () => {
 
               if (key === 'identification_no') {
                 return (
-                  <td
-                    key={i}
-                    className='fs-6 fw-medium text-hover-primary cursor-pointer'
-                    style={{color: '#071437'}}
-                  >
+                  <td key={i} className='fs-6 fw-medium cursor-pointer' style={{color: '#071437'}}>
                     {identificationNo}
                   </td>
                 )
@@ -261,7 +257,11 @@ const LoanListing = () => {
                 }
 
                 return (
-                  <td key={i} className='ps-8 text-end fs-6 fw-medium' style={{color: '#071437'}}>
+                  <td
+                    key={i}
+                    className='ps-8 text-end pe-8 fs-6 fw-medium'
+                    style={{color: '#071437'}}
+                  >
                     {`${value} ${unitLabel}`}
                   </td>
                 )
@@ -483,10 +483,10 @@ const LoanListing = () => {
         />
       )}
       <div>
-        <div className='d-flex flex-row align-items-center p-12px'>
+        <div className='d-flex flex-row align-items-center p-16px'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search loan (Enter Loan No or Name or NRIC No to search'
+            placeholder='Search loan (Enter Loan No or Name or NRIC No to search)'
             value={searchValue}
             transparent={true}
             onChange={handleChangeSearch}

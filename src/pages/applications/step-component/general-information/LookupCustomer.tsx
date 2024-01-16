@@ -155,7 +155,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             }
             if (key === 'identification_no') {
               return (
-                <td key={i} className='fs-6 fw-medium value-hover-render-row text-gray-900'>
+                <td key={i} className='fs-6 fw-medium text-gray-900'>
                   {value}
                 </td>
               )
@@ -248,10 +248,10 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             </div>
           </div>
         </Modal.Header>
-        <div className='d-flex flex-row align-items-center p-12px'>
+        <div className='d-flex flex-row align-items-center p-16px'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search customer (Enter Customer ID or First Name or Last Name or NRIC No to search)'
+            placeholder='Search customer (Enter Customer ID or NRIC No or First Name or Last Name  to search)'
             value={searchValue}
             transparent={true}
             onChange={handleChangeSearch}
@@ -300,7 +300,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             </div>
           </div>
         </div>
-        <Modal.Body style={{maxHeight: 450}} className='pt-0'>
+        <Modal.Body style={{maxHeight: 450}} className='p-2 pt-0'>
           <div>
             {/*  */}
             {Object.keys(checkFilter).length !== 0 &&

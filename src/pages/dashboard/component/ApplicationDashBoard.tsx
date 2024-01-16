@@ -34,8 +34,8 @@ const ApplicationDemoDashBoard = () => {
   const {socket} = useSocket()
 
   // Get search criteria from session
-  const sessionData = isObject(parseJson(sessionStorage.getItem('application') || ''))
-    ? parseJson(sessionStorage.getItem('application') || '')
+  const sessionData = isObject(parseJson(sessionStorage.getItem('application-dashboard') || ''))
+    ? parseJson(sessionStorage.getItem('application-dashboard') || '')
     : {}
 
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
@@ -49,7 +49,7 @@ const ApplicationDemoDashBoard = () => {
   const [searchValue, setSearchValue] = useState<string>(sessionData?.searchValue || '')
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
-    pageSize: 5,
+    pageSize: sessionData?.pageSize || 5,
     currentPage: sessionData?.currentPage || 1,
     total: 0,
   })
