@@ -31,7 +31,6 @@ const MasterLayout = () => {
     refreshToken(token || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
-  const checkBackgroundMobile = ['create', 'edit'].includes(pathname.split('/').filter(Boolean)[1])
   const isViewHeight = useMemo(() => {
     const arrCheck = ['application/create', 'application/edit']
     return arrCheck.some((el) => pathname.includes(el))

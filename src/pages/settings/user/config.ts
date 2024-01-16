@@ -19,7 +19,10 @@ const validate = {
   email: Yup.string()
     .email('Email is not in valid format')
     .max(255, convertMessageErrorMaximum(255)),
-  username: Yup.string().required('Username is required').max(64, convertMessageErrorMaximum(64)),
+  username: Yup.string()
+    .min(3, 'Minimum 3 symbols')
+    .required('Username is required')
+    .max(64, convertMessageErrorMaximum(64)),
   password: Yup.string().matches(regexPassword, convertMessageErrorPassword('Password')),
   role_id: Yup.string().required('Role is required'),
 }

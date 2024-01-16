@@ -178,8 +178,12 @@ const CreateLoanType = ({
           </div>
         </div>
         <div
-          style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
-          className='modal-body  py-30px ps-30px pe-30px '
+          style={{
+            maxHeight: 'calc(100vh - 400px)',
+            overflowY: 'auto',
+            padding: '30px 27px 30px 30px',
+          }}
+          className='modal-body  '
         >
           <div
             ref={stepperRef}

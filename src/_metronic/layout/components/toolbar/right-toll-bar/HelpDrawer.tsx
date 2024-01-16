@@ -172,18 +172,34 @@ const HelpDrawer: FC<PropsStepApplication> = ({
         value: 'Get MLCB Report',
         icon: <Icons name={'MLCB'} />,
         background: 'rgba(232, 255, 243, 0.85)',
-        show: [ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0),
-        opacity: Number(toolsCheckCount?.MLCB) !== 0,
-
+        show: ![ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+          values.status || 0
+        ),
+        opacity: Number(toolsCheckCount?.MLCB) === 0,
         onclick: () => {
           if (!!applicationIdEdit) {
-            setShowCaCheck(false)
-
-            setShow(false)
-            setShowValidationPhone(false)
-            setShowMLCBReport(true)
-            setShowSearchCheck(false)
-            setShowSearchPageCheck(false)
+            if (![ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0)) {
+              swalConfirm.fire({
+                icon: 'error',
+                title: 'You must save all data first',
+                showCancelButton: false,
+                confirmButtonText: 'OK',
+                customClass: {
+                  popup: 'm-w-300px',
+                  htmlContainer: 'fs-3',
+                  cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+                  confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+                  actions: 'd-flex justify-content-center w-100 ',
+                },
+              })
+            } else {
+              setShowCaCheck(false)
+              setShow(false)
+              setShowValidationPhone(false)
+              setShowMLCBReport(true)
+              setShowSearchCheck(false)
+              setShowSearchPageCheck(false)
+            }
           } else {
             swalConfirm.fire({
               icon: 'error',

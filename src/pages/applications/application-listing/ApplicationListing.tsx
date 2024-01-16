@@ -909,21 +909,12 @@ const ApplicationListing = () => {
           )}
 
         <KTCardBody className='p-0'>
-          <div
-            style={{maxHeight: 'calc(100vh - 370px)', overflowY: 'auto'}}
-            className='table-responsive'
-          >
+          <div className='table-responsive'>
             <table
               id='kt_table_users'
               className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
             >
-              <thead
-                style={{
-                  top: '-2px',
-                  zIndex: '1',
-                }}
-                className='border-top-bottom-thead position-sticky  bg-white'
-              >
+              <thead className='border-top-bottom-thead position-sticky  bg-white'>
                 <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                   {rowsConfigColumn
                     .filter((item) => !item.isHide)

@@ -122,6 +122,10 @@ export const Applications = () => {
   }, [applicationIdEdit, loadApiEdit])
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [currentStep])
+
+  useEffect(() => {
     resetForm()
     setStepCompleted(0)
     if (pathname === '/application/create') {
@@ -764,11 +768,11 @@ export const Applications = () => {
                 application_date: values.application_date || '',
               }}
               percentCompleted={percentCompleted}
-              className='p-10'
+              className='py-30px ps-30px pe-11'
             />
 
             {values.rejection?.id && (
-              <div className='px-30px pt-30px'>
+              <div className='pt-30px ps-30px pe-10 me-1'>
                 <div className='p-16px wrapper-reject-title-application'>
                   <h1 className='h1-reject-title-application'>
                     Reject Reason: {values.rejection.rejected_reason}
@@ -786,7 +790,7 @@ export const Applications = () => {
             )}
 
             {values.approval && (
-              <div className='p-30px pb-0 me-1'>
+              <div className='pt-30px pb-0 ps-30px pe-10 me-1'>
                 <div className='p-16px bg-light-success rounded-8'>
                   <h1 className='text-success fs-16 fw-bold m-0'>
                     Approved By: {values.approval.approved_by}
