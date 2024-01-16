@@ -31,6 +31,7 @@ import LoanListing from '@/pages/loans/loan-listing/LoanListing'
 import BorrowersListing from '@/pages/borrowers/BorrowerListing'
 import LoanDetails from '@/pages/loans/loan-details'
 import CaCheck from '@/pages/applications/background-check/ca-check'
+import BorrowerDetail from '@/pages/borrowers/borrowers-details'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -77,6 +78,7 @@ const AppRoutes: FC = () => {
             <Route path='/customers'>
               <Route index element={<BorrowersListing />} />
               <Route path='listing' element={<BorrowersListing />} />
+              <Route path='details/:customerId' element={<BorrowerDetail />} />
             </Route>
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/my-tasks' element={<MyTasks />} />

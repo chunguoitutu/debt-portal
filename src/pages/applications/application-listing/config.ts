@@ -1,7 +1,7 @@
-import { TableConfig } from '@/app/types'
-import { ID_TYPE, STATUS_APPLICATION_FILTER } from '@/app/utils'
-import { Input } from '@/components/input'
-import { Select } from '@/components/select'
+import {TableConfig} from '@/app/types'
+import {ID_TYPE, STATUS_APPLICATION_FILTER} from '@/app/utils'
+import {Input} from '@/components/input'
+import {Select} from '@/components/select'
 import Status from './Status'
 
 export const APPLICATION_LISTING_CONFIG: TableConfig = {
@@ -45,7 +45,6 @@ export const APPLICATION_LISTING_CONFIG: TableConfig = {
     {
       key: 'identification_type',
       name: 'Identity Card Type',
-
       classNameTableHead: 'pt-2 pb-2',
       options: ID_TYPE,
       infoFilter: {

@@ -160,7 +160,7 @@ const Remark: FC<Props> = ({
                       className='input-remark min-h-75px'
                       value={infoEdit.message.replace(/<br\s*\/?>/g, '\n')}
                     />
-                    <div className='pt-12px ps-0'>
+                    <div className='pt-12px ps-0 pb-12px'>
                       <Button
                         onClick={() => {
                           setInfoEdit(null)
@@ -252,7 +252,7 @@ const Remark: FC<Props> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            ref={textareaRef}
+            // ref={textareaRef}
             id='myInput'
             className='w-100 min-h-50px  input-remark-import'
             style={{

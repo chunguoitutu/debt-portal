@@ -107,7 +107,7 @@ const ApprovalApplicationModal: FC<Props> = ({
         icon: 'success',
         title: id
           ? `Description of approval successfully updated`
-          : `Application successfully approval`,
+          : `Application successfully approved`,
       })
     } catch (error) {
       const message = convertErrorMessageResponse(error)

@@ -30,6 +30,7 @@ import ChartImg from '@/app/images/ChartBorrowerListing.png'
 import Badge from '@/components/badge/Badge'
 import useClickOutside from '@/app/hooks/useClickOutside'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
+import {useNavigate} from 'react-router-dom'
 
 type Props = {
   chartSize?: number
@@ -121,6 +122,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   const [configColumnSubmitted, setConfigColumnSubmitted] = useState<any>(
     handleInitialConfigColumn()
   )
+
+  const navigate = useNavigate()
 
   const selectRef = useRef<HTMLDivElement>(null)
 
@@ -417,7 +420,13 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
           {showAction && showViewButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>
-                {showViewButton && <ButtonViewDetail onClick={() => {}} />}
+                {showViewButton && (
+                  <ButtonViewDetail
+                    onClick={() => {
+                      navigate(`/customers/details/${item?.id}`)
+                    }}
+                  />
+                )}
               </div>
             </td>
           )}
