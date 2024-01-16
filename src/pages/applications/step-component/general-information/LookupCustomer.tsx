@@ -251,7 +251,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
         <div className='d-flex flex-row align-items-center p-16px'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search customer (Enter Customer ID or NRIC No or First Name or Last Name  to search)'
+            placeholder='Search customer (Enter Customer ID or NRIC No or First Name or Last Name to search)'
             value={searchValue}
             transparent={true}
             onChange={handleChangeSearch}
@@ -300,7 +300,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             </div>
           </div>
         </div>
-        <Modal.Body style={{maxHeight: 450}} className='p-2 pt-0'>
+        <Modal.Body style={{maxHeight: 450}} className='p-16px pt-0'>
           <div>
             {/*  */}
             {Object.keys(checkFilter).length !== 0 &&

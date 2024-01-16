@@ -48,7 +48,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Contact Phone</label>
 
             <div className='col-lg-8 d-flex align-items-center'>
-              <span className='fw-bold fs-6 me-2'>{currentUser?.telephone}</span>
+              <span className='fw-bold fs-6 me-2'>+65{currentUser?.telephone}</span>
             </div>
           </div>
 

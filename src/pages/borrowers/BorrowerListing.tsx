@@ -619,7 +619,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
       {/* table in here */}
       <div className='col-12 col-xxl-9 ps-0'>
-        <div className='card ps-3 w-100'>
+        <div className='card w-100'>
           <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
           {showInput && (
             <FilterBorrower
