@@ -238,28 +238,29 @@ const GeneralButton: FC<Props> = (props) => {
         ])}
       >
         <div>
-          {((!applicationIdEdit && currentStep !== 6) ||
-            (values.status === ApplicationStatus.DRAFT && currentStep !== 6)) && (
+          {(!applicationIdEdit && currentStep !== 6) ||
+          (values.status === ApplicationStatus.DRAFT && currentStep !== 6) ? (
             <Button
               type='submit'
               onClick={() => handleCancelApplication(applicationIdEdit)}
               className={`fs-6 btn btn-danger`}
             >
-              Cancel Application
+              Cancel
             </Button>
+          ) : (
+            !!applicationIdEdit &&
+            values.status === ApplicationStatus.AWAITING_APPROVAL && (
+              <Button
+                type='submit'
+                onClick={handleTogglePopupRejection}
+                className={`fs-6 btn btn-danger`}
+              >
+                Reject
+              </Button>
+            )
           )}
         </div>
-        <div>
-          {!!applicationIdEdit && values.status === ApplicationStatus.AWAITING_APPROVAL && (
-            <Button
-              type='submit'
-              onClick={handleTogglePopupRejection}
-              className={`fs-6 btn btn-danger`}
-            >
-              Reject
-            </Button>
-          )}
-        </div>
+
         <div className='d-flex gap-5'>
           {!applicationIdEdit && currentStep !== 6 && (
             <Button
