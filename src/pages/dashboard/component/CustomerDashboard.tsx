@@ -19,8 +19,8 @@ type Props = {
 }
 
 const CustomerListingDashboard: React.FC<Props> = ({className}) => {
-  const sessionData = isObject(parseJson(sessionStorage.getItem('borrower') || ''))
-    ? parseJson(sessionStorage.getItem('borrower') || '')
+  const sessionData = isObject(parseJson(sessionStorage.getItem('borrower-dashboard') || ''))
+    ? parseJson(sessionStorage.getItem('borrower-dashboard') || '')
     : {}
 
   const {settings, rows} = BORROWER_CONFIG_LISTING || {}
@@ -39,7 +39,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
   const [searchValue, setSearchValue] = useState<string>(sessionData?.searchValue || '')
 
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
-    pageSize: 5,
+    pageSize: sessionData?.pageSize || 5,
     currentPage: sessionData?.currentPage || 1,
     total: 0,
   })

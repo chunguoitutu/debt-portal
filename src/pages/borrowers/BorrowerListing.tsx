@@ -31,6 +31,7 @@ import Badge from '@/components/badge/Badge'
 import useClickOutside from '@/app/hooks/useClickOutside'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
+import chartResponsive from '@/app/images/Chart.png'
 
 type Props = {
   chartSize?: number
@@ -108,7 +109,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   const [searchValue, setSearchValue] = useState<string>(sessionData?.searchValue || '')
 
   const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
-    pageSize: sessionData?.pageSize || 10,
+    pageSize: 10,
     currentPage: sessionData?.currentPage || 1,
     total: 0,
   })
@@ -346,7 +347,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
               if (key === 'fullname') {
                 return (
-                  <td key={i} className='fs-6 fw-medium w-250px ps-9' style={{color: '#071437'}}>
+                  <td key={i} className='fs-6 fw-medium w-250px ps-10' style={{color: '#071437'}}>
                     {item.lastname} {''} {item.firstname}
                   </td>
                 )
@@ -519,8 +520,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
     <div className='row gy-lg-6 gy-xl-6'>
       <div className='col-12 col-xxl-3 '>
         <div className='row h-100'>
-          <div className='col-12 col-lg-12 col-xxl-12 h-100'>
-            <div className='row gy-lg-6 gx-5 gy-xl-6'>
+          <div className='col-12 col-lg-12 col-xxl-12 h-100 ps-0'>
+            <div className='row gy-lg-6 gx-5 gy-xl-4'>
               <div className='col-12 col-lg-6 col-xxl-12'>
                 <div className='card p-30px h-100 me-1'>
                   <div className='d-flex flex-column '>
@@ -601,13 +602,12 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       <div className='fs-2 fw-bold text-primary'>12%</div>
                     </div>
 
-                    <div className='d-flex flex-wrap align-items-center justify-content-center'>
-                      <img
-                        src={ChartImg}
-                        alt=''
-                        className='style-img-chart'
-                        style={{height: 125}}
-                      />
+                    <div className='d-flex flex-wrap align-items-center justify-content-center h-100'>
+                      {window.innerWidth >= 1024 && window.innerWidth <= 1399 ? (
+                        <img src={chartResponsive} alt='' className='style-img-chart' />
+                      ) : (
+                        <img src={ChartImg} alt='' className='style-img-chart' />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -705,7 +705,10 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       </div>
 
                       {/* Body */}
-                      <div className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'>
+                      <div
+                        className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'
+                        style={{maxHeight: 'calc(100vh - 450px)'}}
+                      >
                         {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
                           if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
 
@@ -866,7 +869,13 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                   id='kt_table_users'
                   className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
                 >
-                  <thead className='border-top-bottom-thead'>
+                  <thead
+                    className='border-top-bottom-thead'
+                    style={{
+                      top: '-2px',
+                      zIndex: '1',
+                    }}
+                  >
                     <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                       {rowsConfigColumn
                         .filter((item) => !item.isHide)
@@ -898,7 +907,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       )}
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className='calc-responsive'>
                     {data.length ? (
                       renderRows()
                     ) : (

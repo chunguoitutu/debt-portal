@@ -333,11 +333,7 @@ const ApplicationListing = () => {
               }
               if (key === 'identification_no') {
                 return (
-                  <td
-                    key={i}
-                    className='fs-6 fw-medium value-hover-render-row'
-                    style={{color: '#071437'}}
-                  >
+                  <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
                     {value}
                   </td>
                 )
@@ -567,10 +563,10 @@ const ApplicationListing = () => {
         />
       )}
       <div>
-        <div className='d-flex flex-row align-items-center p-12px'>
+        <div className='d-flex flex-row align-items-center p-16px'>
           <Input
             classShared='flex-grow-1 h-30px mb-5'
-            placeholder='Search application (Enter Application ID or Name or NRIC No to search'
+            placeholder='Search application (Enter Application No or Name or NRIC No to search)'
             value={searchValue}
             transparent={true}
             className='fs-5'

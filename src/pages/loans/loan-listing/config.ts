@@ -19,7 +19,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       key: 'id',
       name: 'ID',
       classNameTableHead: 'pt-2 pb-2 ps-5 min-w-30px',
-      classNameTableBody: 'w-50px ps-5',
+      classNameTableBody: 'w-50px ps-4',
     },
     {
       key: 'loan_no',
@@ -83,7 +83,7 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
       key: 'loan_term',
       name: 'Loan Terms',
       classNameTableHead: 'pt-2 pb-2 ps-8 pe-8 text-end',
-      classNameTableBody: 'pe-8 text-end',
+      classNameTableBody: 'pe-10 text-end',
       infoFilter: {
         typeComponent: 'input',
         component: Input,
