@@ -31,7 +31,7 @@ import Badge from '@/components/badge/Badge'
 import useClickOutside from '@/app/hooks/useClickOutside'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
-import chartResponsive from '@/app/images/Chart.png'
+import chartResponsive from '@/app/images/ChartListing.png'
 
 type Props = {
   chartSize?: number
@@ -602,7 +602,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       <div className='fs-2 fw-bold text-primary'>12%</div>
                     </div>
 
-                    <div className='d-flex flex-wrap align-items-center justify-content-center h-100'>
+                    <div className='d-flex flex-wrap align-items-center justify-content-center h-100 pb-30px'>
                       {window.innerWidth >= 1024 && window.innerWidth <= 1399 ? (
                         <img src={chartResponsive} alt='' className='style-img-chart' />
                       ) : (
