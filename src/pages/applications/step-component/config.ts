@@ -890,7 +890,6 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: LableOptions,
           keyFilter: 'value',
         },
-        {},
         // {
         //   key: 'residential_type',
         //   value: 'Residential Type',

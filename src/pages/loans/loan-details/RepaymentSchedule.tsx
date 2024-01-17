@@ -290,18 +290,10 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
                 colSpan={el.key === 'id' && configColumnSubmitted?.['instalment_due_date'] ? 2 : 1}
                 key={i}
               >
-                {formatMoney(+value) || 0}
+                {+value || +value === 0 ? formatMoney(+value) : value}
               </td>
             )
           })}
-          {/* <td className='fs-16 fw-bold p-16px' colSpan={2}>
-            Total
-          </td>
-          <td className='px-10px text-end fs-16 fw-bold'>{formatMoney(total_principal)}</td>
-          <td className='px-10px text-end fs-16 fw-bold'>{formatMoney(total_principal_balance)}</td>
-          <td className='px-10px text-end fs-16 fw-bold'>{formatMoney(total_interest)}</td>
-          <td className='px-10px text-end fs-16 fw-bold'>{formatMoney(total_interest_balance)}</td>
-          <td className='px-10px text-end fs-16 fw-bold'>{formatMoney(total_late_interest)}</td> */}
         </tr>
       </tfoot>
     )
