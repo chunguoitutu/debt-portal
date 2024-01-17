@@ -112,6 +112,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
             transparent ? 'input-advance_transparent' : 'input-advance'
           } form-input-custom form-control form-control-lg  p-0 d-flex align-items-center overflow-hidden`,
           classInputWrap,
+          rest.disabled && 'disabled',
         ])}
       >
         {type === 'money' ? (

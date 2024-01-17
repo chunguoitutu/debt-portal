@@ -135,6 +135,11 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0 w-100 w-xxl-250px'
 
+    const isDisableApproveOrReject = [
+      ApplicationStatus.APPROVED,
+      ApplicationStatus.REJECTED,
+    ].includes(values.status)
+
     useEffect(() => {
       if (errors[key] && touched[key]) {
         errorContainerRef.current?.scrollIntoView({
@@ -161,12 +166,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
       return (
         <div className={clsx(['d-flex flex-column w-100', column && 'w-xxl-unset'])}>
           <Component
-            disabled={
-              values.status === ApplicationStatus.APPROVED ||
-              values.status === ApplicationStatus.REJECTED
-                ? true
-                : false
-            }
+            disabled={isDisableApproveOrReject}
             value={values[key] || ''}
             onChange={handleChange}
             name={key}
@@ -260,13 +260,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
             transparent={key === 'company_telephone' ? false : true}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
             classShared={className}
-            disabled={
-              disabled ||
-              values.status === ApplicationStatus.APPROVED ||
-              values.status === ApplicationStatus.REJECTED
-                ? true
-                : false
-            }
+            disabled={disabled || isDisableApproveOrReject}
             onBlur={(e: any) => {
               handleBlur(e)
 
@@ -286,7 +280,11 @@ const Employment: FC<PropsStepApplication> = (props) => {
             }}
             insertLeft={
               typeInput === 'phone' ? (
-                <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                <Tippy
+                  offset={[120, 0]}
+                  content='Please choose the phone number you prefer.'
+                  disabled={isDisableApproveOrReject}
+                >
                   {/* Wrapper with a span tag to show tooltip */}
                   <span>
                     <Select
@@ -297,6 +295,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
                       className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
                       name='country_phone_code'
                       options={COUNTRY_PHONE_CODE}
+                      disabled
                     />
                   </span>
                 </Tippy>
