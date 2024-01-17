@@ -16,7 +16,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   setOptionListing,
 }) => {
   const {applicationIdEdit} = useParams()
-  const {company_id} = useAuth()
+  const {company_id, priority} = useAuth()
 
   const [errorMessages, setErrorMessages] = useState<any>({})
 
@@ -81,6 +81,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
         !applicationIdEdit && setFieldValue(config.key, getIdDefault(data))
 
         let itemDefault = data?.find((el: any) => +el.is_default === 1) || data?.[0]
+        console.log(itemDefault)
 
         const isDraftOrCreate = [0, undefined].includes(values.status || 0)
 
@@ -88,6 +89,8 @@ const LoanDetails: FC<PropsStepApplication> = ({
           setFieldValue(`${config.key}`, itemDefault.id)
           setFieldValue(`interest`, itemDefault.interest || '')
           setFieldValue('term_unit', 1)
+          setFieldValue('monthly_late_fee', itemDefault.late_fee || '')
+          setFieldValue('late_interest_per_month_percent', itemDefault.late_interest || '')
         }
       })
 
@@ -206,6 +209,16 @@ const LoanDetails: FC<PropsStepApplication> = ({
     } = item
     let Component: any = item?.component
 
+    const isDisableForce =
+      priority > 2 &&
+      [
+        'interest',
+        'amount_of_acceptance',
+        'monthly_late_fee',
+        'late_interest_per_month_percent',
+      ].includes(key)
+    console.log(key, ' - ', isDisableForce)
+
     // nothing
     if (!Component) return
     const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0'
@@ -251,10 +264,11 @@ const LoanDetails: FC<PropsStepApplication> = ({
           <Component
             classShared='flex-grow-1'
             disabled={
-              values.status === ApplicationStatus.APPROVED ||
+              isDisableForce ||
+              (values.status === ApplicationStatus.APPROVED ||
               values.status === ApplicationStatus.REJECTED
                 ? true
-                : false
+                : false)
             }
             value={values[key]}
             onChange={handleChange}
@@ -267,48 +281,26 @@ const LoanDetails: FC<PropsStepApplication> = ({
       )
     }
 
-    if (key === 'loan_amount_requested' && typeComponent === 'Input') {
-      return (
-        <div className='d-flex flex-column w-100'>
-          <Component
-            value={values[key]}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            name={key}
-            transparent={true}
-            classShared={className}
-            disabled={
-              values.status === ApplicationStatus.APPROVED ||
-              values.status === ApplicationStatus.REJECTED
-                ? true
-                : false
-            }
-            type={typeInput}
-            noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
-          />
-
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
-          {errorMessages.loan_amount_requested && (
-            <ErrorMessage message={errorMessages.loan_amount_requested} />
-          )}
-        </div>
-      )
-    }
-
     if (typeComponent === 'Input') {
       return (
         <div className='d-flex flex-column w-100'>
           <Component
             value={values[key]}
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={(e) => {
+              key === 'loan_amount_requested' &&
+                setFieldValue('amount_of_acceptance', +(+e.target.value / 10).toFixed(2) || '')
+              handleBlur(e)
+            }}
+            transparent={key === 'loan_amount_requested' ? true : false}
             name={key}
             classShared={className}
             disabled={
-              values.status === ApplicationStatus.APPROVED ||
+              isDisableForce ||
+              (values.status === ApplicationStatus.APPROVED ||
               values.status === ApplicationStatus.REJECTED
                 ? true
-                : false
+                : false)
             }
             type={typeInput}
             noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
@@ -324,7 +316,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
         <div className='d-flex flex-column w-100'>
           <Component
             disabled={
-              values.status === ApplicationStatus.APPROVED ||
+              (isDisableForce && values.status === ApplicationStatus.APPROVED) ||
               values.status === ApplicationStatus.REJECTED
                 ? true
                 : false

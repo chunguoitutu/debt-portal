@@ -1,3 +1,5 @@
+import {getCurrentDate} from '@/app/utils'
+
 export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
   endpoint: 'config/company/1',
   rows: [

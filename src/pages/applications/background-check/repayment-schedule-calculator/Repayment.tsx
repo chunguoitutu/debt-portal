@@ -12,7 +12,7 @@ import {swalToast} from '@/app/swal-notification'
 import {Input} from '@/components/input'
 import {Select} from '@/components/select'
 import Step from '@/components/step/Step'
-import {MONTHLY_DUE_DATE} from '@/app/utils'
+import {MONTHLY_DUE_DATE, getCurrentDate} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
 import Button from '@/components/button/Button'
 
@@ -54,8 +54,8 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
         totalsAmount: '',
         per_month_percent: '4.0',
         totalsMonthPayment: '1',
-        first_repayment_date: moment(Date()).format('YYYY-MM-DD'),
-        monthly_due_date: '1',
+        first_repayment_date: moment(new Date()).format('YYYY-MM-DD'),
+        monthly_due_date: getCurrentDate(),
       },
       validationSchema: RepaymentScheduleCalculatorSchema,
       onSubmit: async (values: any, actions: any) => {

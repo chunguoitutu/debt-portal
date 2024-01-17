@@ -381,6 +381,11 @@ export type ApplicationPayload = {
     mlcb_count?: number
     crosscheck_count?: number
     interest: string | number
+    first_repayment_date: Date | string
+    monthly_due_date: number
+    amount_of_acceptance: number
+    monthly_late_fee: number
+    late_interest_per_month_percent: number
   }
   bank_account: {
     id?: number
@@ -443,6 +448,11 @@ export type ToolApplication = {
 }
 
 export type ApplicationFormData = {
+  first_repayment_date: string | Date
+  monthly_due_date: number
+  amount_of_acceptance: number
+  monthly_late_fee: number
+  late_interest_per_month_percent: number
   bankrupted_key?: any
   singpass?: any
   identification_no_confirm: string
