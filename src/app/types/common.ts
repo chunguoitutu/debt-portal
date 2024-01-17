@@ -326,6 +326,8 @@ export type PropsStepApplication = {
   borrower_id?: number
 }
 
+export type EmploymentStatus = 'EMP' | 'UNEMPINC' | 'UNEMP'
+
 export type ApplicationPayload = {
   customer: {
     id?: number
@@ -356,7 +358,7 @@ export type ApplicationPayload = {
     email_1?: string
     email_2?: string
     job_type_id?: number | null
-    employment_status?: string
+    employment_status: EmploymentStatus
     monthly_income?: number
     credit_score?: string
     residential_type?: string
@@ -487,7 +489,7 @@ export type ApplicationFormData = {
   email_2: string
   monthly_income_2: string | number
   monthly_income_3: string | number
-  employment_status: string
+  employment_status: EmploymentStatus
   company_name: string
   address: string
   office_no: string

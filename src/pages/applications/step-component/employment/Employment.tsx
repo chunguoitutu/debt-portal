@@ -1,19 +1,64 @@
-import {FC, Fragment, useEffect, useRef, useState} from 'react'
+import {FC, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import clsx from 'clsx'
 import Tippy from '@tippyjs/react'
 import {useParams} from 'react-router-dom'
 
 import request from '@/app/axios'
 import {Select} from '@/components/select'
-import {COUNTRY_PHONE_CODE, getIdDefault, isFirstGetStepApplication} from '@/app/utils'
+import {
+  COUNTRY_PHONE_CODE,
+  convertMessageErrorRequired,
+  getIdDefault,
+  isFirstGetStepApplication,
+} from '@/app/utils'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import {ApplicationStatus} from '@/app/types/enum'
 
 const Employment: FC<PropsStepApplication> = (props) => {
   const {config = [], formik, optionListing, setOptionListing} = props
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    setFieldError,
+    setFieldTouched,
+    registerField,
+    unregisterField,
+  } = formik
+
   const {applicationIdEdit} = useParams()
   const errorContainerRef = useRef<HTMLDivElement | null>(null)
+
+  const keyRequire: string[] = useMemo(() => {
+    return ['company_name', 'address', 'company_telephone', 'portal_code', 'position', 'occupation']
+  }, [])
+  const isRequireCompanyInfo = useMemo(() => {
+    return values.employment_status === 'EMP' ? true : false
+  }, [values.employment_status])
+
+  useEffect(() => {
+    const configMatch = config.filter((config) => keyRequire.includes(config.key))
+
+    if (values.employment_status === 'EMP') {
+      configMatch.forEach((config) => {
+        registerField(config.key, {
+          validate(value) {
+            return !value?.trim() ? convertMessageErrorRequired(config.label) : ''
+          },
+        })
+      })
+    } else {
+      configMatch.forEach((config) => {
+        unregisterField(config.key)
+        errors[config.key] && setFieldError(config.key, undefined)
+        touched[config.key] && setFieldTouched(config.key, false)
+      })
+    }
+  }, [isRequireCompanyInfo])
 
   const [annualIncome, setAnnualIncome] = useState({
     monthly_income_1: 0,
@@ -30,6 +75,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
     isFirstGet && onFetchDataList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {}, [])
+
   async function onFetchDataList() {
     try {
       const newOption: {[key: string]: any[]} = {}
@@ -65,8 +113,6 @@ const Employment: FC<PropsStepApplication> = (props) => {
     } finally {
     }
   }
-
-  const {values, touched, setFieldValue, errors, handleChange, handleBlur} = formik
 
   function renderComponent(item: ApplicationConfig) {
     const {
@@ -222,9 +268,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
                 : false
             }
             onBlur={(e: any) => {
-              if (key === 'annual_income') {
-                handleBlur(e)
+              handleBlur(e)
 
+              if (key === 'annual_income') {
                 setAnnualIncome({
                   monthly_income_1: +(Number(e.target.value) / 12).toFixed(2),
                   monthly_income_2: +(Number(e.target.value) / 12).toFixed(2),
@@ -273,7 +319,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
   return (
     <>
       {config.map((item, i) => {
-        const {label, column, isHide, className, required, typeComponent} = item
+        const {label, column, isHide, className, required, typeComponent, key} = item
 
         if (isHide) return <Fragment key={i}></Fragment>
 
@@ -292,7 +338,8 @@ const Employment: FC<PropsStepApplication> = (props) => {
             <div
               className={clsx([
                 'input-title-application left fs-4 text-start text-lg-end ',
-                required && 'required',
+                (required || (isRequireCompanyInfo && keyRequire.includes(key))) && 'required',
+                ,
                 typeComponent === 'Radio' && 'd-none d-xxl-block',
               ])}
             >

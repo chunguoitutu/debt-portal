@@ -195,6 +195,8 @@ export const Applications = () => {
     initialValues,
     validationSchema: schema,
     validateOnMount: false,
+    validateOnBlur: true,
+    validateOnChange: false,
     onSubmit: () => {},
   })
   const {

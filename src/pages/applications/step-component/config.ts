@@ -331,7 +331,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Input,
     typeComponent: 'Input',
     label: 'First Repayment Date',
-    defaultValue: moment().add(1, 'month').subtract(1, 'day').format('YYYY-MM-DD'),
+    defaultValue: moment().add(1, 'month').format('YYYY-MM-DD'),
     column: 6,
     typeInput: 'date',
     required: true,

@@ -112,10 +112,6 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     })
     const isFirstGetAddressType = !keyOptionListing.includes('address_type')
 
-    if (applicationIdEdit) {
-      unregisterField('inden')
-    }
-
     if (isFirstGet) {
       onFetchDataList()
     }
@@ -153,8 +149,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
         },
       })
     } else {
-      unregisterField('identification_expiry')
       setFieldValue('identification_expiry', '')
+      unregisterField('identification_expiry')
       errors.identification_expiry && setFieldError('identification_expiry', undefined)
     }
   }, [values.identification_type])

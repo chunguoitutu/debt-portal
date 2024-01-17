@@ -25,7 +25,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
   setOptionListing,
 }) => {
   const errorContainerRef = useRef<HTMLDivElement | null>(null)
-  const {values, touched, errors, handleChange, setValues, setFieldValue} = formik
+  const {values, touched, errors, handleChange, handleBlur, setValues, setFieldValue} = formik
   const [active, setActive] = useState<string | null>(null)
 
   useEffect(() => {
@@ -182,6 +182,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
         <Component
           value={values[key]}
           onChange={handleChange}
+          onBlur={handleBlur}
           name={key}
           classShared={className}
           options={!!dependencyApi ? optionListing[keyOfOptionFromApi || key] || [] : options}
@@ -205,6 +206,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
                 ? true
                 : false
             }
+            onBlur={handleBlur}
             name={key}
             classShared={className}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
