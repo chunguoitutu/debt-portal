@@ -1,15 +1,17 @@
-import {Dispatch, FC, useMemo, useState} from 'react'
+import {Dispatch, FC, useEffect, useMemo, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 
 import Button from '@/components/button/Button'
 import {PropsStepApplication} from '@/app/types'
 import {useAuth} from '@/app/context/AuthContext'
-import {swalConfirm, swalToast} from '@/app/swal-notification'
+import {swalConfirm, swalConfirmCancel, swalToast} from '@/app/swal-notification'
 import ApprovalApplicationModal from './approval'
 import clsx from 'clsx'
 import Reject from './reject/Reject'
 import {ApplicationStatus} from '@/app/types/enum'
 import request from '@/app/axios'
+import {GENERAL_INFORMATION_CONFIG} from './config'
+import {getIdDefault} from '@/app/utils'
 
 interface Props extends PropsStepApplication {
   handleSubmit: () => void
@@ -31,8 +33,10 @@ const GeneralButton: FC<Props> = (props) => {
     setCurrentStep,
     isDraft,
     currentStep,
+    setStepCompleted,
+    optionListing,
   } = props
-  const {isSubmitting, values} = formik
+  const {isSubmitting, values, setFieldValue} = formik
 
   const [number, setNumber] = useState(0)
   const [showPopupApproval, setShowPopupApproval] = useState<boolean>(false)
@@ -175,7 +179,7 @@ const GeneralButton: FC<Props> = (props) => {
 
   async function handleCancelApplication(applicationIdEdit: any) {
     try {
-      const result = await swalConfirm.fire({
+      const result = await swalConfirmCancel.fire({
         title: 'Are You Sure?',
         text: `You Won't Be Able To Revert This.`,
       })
@@ -184,11 +188,24 @@ const GeneralButton: FC<Props> = (props) => {
         if (!applicationIdEdit) {
           navigate('/application/create')
           setCurrentStep(1)
+          setStepCompleted(0)
+          formik.resetForm()
+
+          const listConfig = GENERAL_INFORMATION_CONFIG.filter((item) => item.dependencyApi)
+
+          listConfig.forEach((item) => {
+            if (item.key === 'country_id') return
+            console.log(getIdDefault(optionListing[item.keyOfOptionFromApi || item.key]), '124')
+            setFieldValue(
+              item.key,
+              getIdDefault(optionListing[item.keyOfOptionFromApi || item.key])
+            )
+          })
 
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: 'This application is cancelled',
+            title: 'Application successfully canceled',
           })
         } else {
           await request.put(`/application/cancel-application/${applicationIdEdit}`, {
@@ -196,10 +213,11 @@ const GeneralButton: FC<Props> = (props) => {
           })
           navigate('/application/create')
           setCurrentStep(1)
+          setStepCompleted(1)
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: 'This application is cancelled',
+            title: 'Application successfully canceled',
           })
         }
       }

@@ -32,13 +32,9 @@ const MasterLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
   const isViewHeight = useMemo(() => {
-    const arrCheck = ['application/create', 'application/edit']
+    const arrCheck = ['application/create', 'application/edit', 'customers']
     return arrCheck.some((el) => pathname.includes(el))
   }, [pathname])
-
-  if (!token) {
-    return <Navigate to='/login' />
-  }
 
   return (
     <PageDataProvider>
