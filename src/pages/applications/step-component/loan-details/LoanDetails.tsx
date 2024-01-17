@@ -25,7 +25,15 @@ const LoanDetails: FC<PropsStepApplication> = ({
       optionListing,
       config,
     })
-    isFirstGet && onFetchDataList()
+    if (isFirstGet) {
+      onFetchDataList()
+    } else {
+      const listConfig = config.filter((item) => item.dependencyApi)
+
+      listConfig.forEach((item) => {
+        setFieldValue(item.key, getIdDefault(optionListing[item.keyOfOptionFromApi || item.key]))
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -216,7 +224,6 @@ const LoanDetails: FC<PropsStepApplication> = ({
         'monthly_late_fee',
         'late_interest_per_month_percent',
       ].includes(key)
-    console.log(key, ' - ', isDisableForce)
 
     // nothing
     if (!Component) return

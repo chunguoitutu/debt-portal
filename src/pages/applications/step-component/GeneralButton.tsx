@@ -10,7 +10,15 @@ import clsx from 'clsx'
 import Reject from './reject/Reject'
 import {ApplicationStatus} from '@/app/types/enum'
 import request from '@/app/axios'
-import {GENERAL_INFORMATION_CONFIG} from './config'
+import {
+  BANK_INFO_CONFIG,
+  BLOCK_ADDRESS_CONFIG,
+  COMPLETION_CONFIG,
+  CONTACT_INFORMATION,
+  EMPLOYMENT_CONFIG,
+  GENERAL_INFORMATION_CONFIG,
+  LOAN_DETAILS_CONFIG,
+} from './config'
 import {getIdDefault} from '@/app/utils'
 
 interface Props extends PropsStepApplication {
@@ -195,7 +203,6 @@ const GeneralButton: FC<Props> = (props) => {
 
           listConfig.forEach((item) => {
             if (item.key === 'country_id') return
-            console.log(getIdDefault(optionListing[item.keyOfOptionFromApi || item.key]), '124')
             setFieldValue(
               item.key,
               getIdDefault(optionListing[item.keyOfOptionFromApi || item.key])

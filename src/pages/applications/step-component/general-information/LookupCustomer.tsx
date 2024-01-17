@@ -346,13 +346,16 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
               )}
             {/*  */}
           </div>
-          <KTCardBody className='pt-0'>
-            <div className='table-responsive'>
+          <KTCardBody className='pt-0 d-flex flex-column overflow-hidden'>
+            <div className='table-responsive flex-grow-1 overflow-auto h-100'>
               <table
                 id='kt_table_users'
                 className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
               >
-                <thead className='border-top-bottom-thead'>
+                <thead
+                  className='border-top-bottom-thead position-sticky top-0 bg-white'
+                  style={{zIndex: 1}}
+                >
                   <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                     {rows
                       .filter((item) => !item.isHide)

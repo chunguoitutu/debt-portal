@@ -189,6 +189,10 @@ const CreatEditMarkettingType = ({
 
                       const Component = component as any
 
+                      if (['status', 'is_default'].includes(row.key)) {
+                        return null
+                      }
+
                       if (typeComponent === 'checkbox-rounded') {
                         return (
                           <div className='mt-16px' key={i}>
@@ -225,7 +229,15 @@ const CreatEditMarkettingType = ({
                 </>
               ) : null}
 
-              <div className='mt-16px'>
+              <div className='mt-16px d-flex flex-row gap-5'>
+                <CheckboxRounded
+                  label='Default'
+                  checked={values.is_default}
+                  onChange={handleChange}
+                  request_info={true}
+                  showLabelCheck={true}
+                  id='is_default'
+                />
                 <CheckboxRounded
                   label='Status'
                   checked={status}

@@ -526,9 +526,9 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
         <div className='col-12 col-xxl-3 h-xxl-100'>
           {/* chart circle */}
           <div className='row h-xxl-100'>
-            <div className='col-12 col-lg-6 col-xxl-12 h-fit-content'>
-              <div className='card p-30px'>
-                <div className='d-flex flex-column '>
+            <div className='col-12 col-lg-6 col-xxl-12 flex-grow-1'>
+              <div className='card p-30px flex-grow-1 h-100'>
+                <div className='d-flex flex-column'>
                   <span className='fs-2 fw-bold text-gray-900'>
                     {searchCriteria.total} Customers
                   </span>
@@ -867,9 +867,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
                     >
                       <thead
-                        className='border-top-bottom-thead'
+                        className='border-top-bottom-thead position-sticky top-0 bg-white'
                         style={{
-                          top: '-2px',
                           zIndex: '1',
                         }}
                       >
