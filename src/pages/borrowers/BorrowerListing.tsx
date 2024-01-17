@@ -517,435 +517,439 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   }, [mode])
 
   return (
-    <div className='row gy-lg-6 gy-xl-6'>
-      <div className='col-12 col-xxl-3 '>
-        <div className='row h-100'>
-          <div className='col-12 col-lg-12 col-xxl-12 h-100 ps-0'>
-            <div className='row gy-lg-6 gx-5 gy-xl-4'>
-              <div className='col-12 col-lg-6 col-xxl-12'>
-                <div className='card p-30px h-100 me-1'>
-                  <div className='d-flex flex-column '>
-                    <span className='fs-2 fw-bold text-gray-900'>
-                      {searchCriteria.total} Customers
-                    </span>
-                    <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
-                      Total number of customers in the company.
-                    </span>
-                  </div>
+    <div
+      className=' d-flex flex-column flex-grow-1 h-fit-content overflow-hidden'
+      style={{maxHeight: '100%'}}
+    >
+      <div className='row' style={{height: 'fit-content', overflow: 'hidden'}}>
+        {/* left */}
+        <div className='col-12 col-xxl-3 h-xxl-100 d-flex flex-column'>
+          {/* chart circle */}
+          <div className='row h-xxl-100 d-flex flex-xxl-column flex-grow-1 flex-xl-row'>
+            <div className='col-12 col-lg-6 col-xxl-12 h-fit-content'>
+              <div className='card p-30px'>
+                <div className='d-flex flex-column '>
+                  <span className='fs-2 fw-bold text-gray-900'>
+                    {searchCriteria.total} Customers
+                  </span>
+                  <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
+                    Total number of customers in the company.
+                  </span>
+                </div>
 
-                  <div className='pt-24px'>
-                    <div className='d-flex flex-wrap align-items-center justify-content-center'>
-                      <div className='d-flex flex-center me-5 pt-2'>
-                        <div
-                          id='kt_card_widget_17_chart'
-                          ref={chartRef}
-                          style={{minWidth: chartSize + 'px', minHeight: chartSize + 'px'}}
-                          data-kt-size={chartSize}
-                          data-kt-line={chartLine}
-                        ></div>
-                      </div>
+                <div className='pt-24px'>
+                  <div className='d-flex flex-wrap align-items-center justify-content-center'>
+                    <div className='d-flex flex-center me-5 pt-2'>
+                      <div
+                        id='kt_card_widget_17_chart'
+                        ref={chartRef}
+                        style={{minWidth: chartSize + 'px', minHeight: chartSize + 'px'}}
+                        data-kt-size={chartSize}
+                        data-kt-line={chartLine}
+                      ></div>
                     </div>
-                    <div className='d-flex flex-column content-justify-center flex-row-fluid mt-5'>
-                      <div className='d-flex fw-semibold align-items-center'>
-                        <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
-                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
-                        <div className=' fw-bold text-gray-900 text-xxl-end fs-14'>
-                          50 Customers
-                        </div>
-                      </div>
-                      <div className='d-flex fw-semibold align-items-center my-3'>
-                        <div
-                          className='bullet w-15px h-6px rounded-2 me-3'
-                          style={{backgroundColor: '#071437'}}
-                        ></div>
-                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
-                        <div className='fw-bold text-gray-900 text-xxl-end fs-14'>1 Customer</div>
-                      </div>
-                      <div className='d-flex fw-semibold align-items-center'>
-                        <div
-                          className='bullet w-15px h-6px rounded-2 me-3'
-                          style={{backgroundColor: '#C62828'}}
-                        ></div>
-                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
-                        <div className=' fw-bold text-gray-900 text-xxl-end fs-14'>
-                          14 Customers
-                        </div>
-                      </div>
-                      <div className='d-flex fw-semibold align-items-center mt-3'>
-                        <div
-                          className='bullet w-15px h-6px rounded-2 me-3'
-                          style={{backgroundColor: '#E4E6EF'}}
-                        ></div>
-                        <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
-                        <div className='fw-bold text-gray-900 text-xxl-end fs-14'>12 Customers</div>
-                      </div>
+                  </div>
+                  <div className='d-flex flex-column content-justify-center flex-row-fluid mt-5'>
+                    <div className='d-flex fw-semibold align-items-center'>
+                      <div className='bullet w-15px h-6px rounded-2 bg-primary me-3'></div>
+                      <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Active</div>
+                      <div className=' fw-bold text-gray-900 text-xxl-end fs-14'>50 Customers</div>
+                    </div>
+                    <div className='d-flex fw-semibold align-items-center my-3'>
+                      <div
+                        className='bullet w-15px h-6px rounded-2 me-3'
+                        style={{backgroundColor: '#071437'}}
+                      ></div>
+                      <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Deceased</div>
+                      <div className='fw-bold text-gray-900 text-xxl-end fs-14'>1 Customer</div>
+                    </div>
+                    <div className='d-flex fw-semibold align-items-center'>
+                      <div
+                        className='bullet w-15px h-6px rounded-2 me-3'
+                        style={{backgroundColor: '#C62828'}}
+                      ></div>
+                      <div className='text-gray-700 flex-grow-1 me-4 fs-14'>Bankrupt</div>
+                      <div className=' fw-bold text-gray-900 text-xxl-end fs-14'>14 Customers</div>
+                    </div>
+                    <div className='d-flex fw-semibold align-items-center mt-3'>
+                      <div
+                        className='bullet w-15px h-6px rounded-2 me-3'
+                        style={{backgroundColor: '#E4E6EF'}}
+                      ></div>
+                      <div className='text-gray-700 flex-grow-1 me-4 fs-14'>In-Prison</div>
+                      <div className='fw-bold text-gray-900 text-xxl-end fs-14'>12 Customers</div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div className='col-12 col-lg-6 col-xxl-12'>
-                <div className='card h-100 me-1'>
-                  <div className='loan-header p-30px pt-30px pb-0 position-relative '>
-                    <div className='d-flex flex-column'>
-                      <span className='fs-2 fw-bold' style={{color: '#071437'}}>
-                        32 Customers Blacklisted
-                      </span>
-                      <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
-                        Total number of customers blacklisted in the company.
-                      </span>
-                    </div>
+            </div>
+            {/* chart line */}
+            <div className='col-12 col-lg-6 col-xxl-12 my-24px my-lg-0 flex-grow-1 mt-xxl-20px overflow-hidden'>
+              <div className='card h-100'>
+                <div className='loan-header p-30px pt-30px pb-0 position-relative '>
+                  <div className='d-flex flex-column'>
+                    <span className='fs-2 fw-bold text-gray-900'>32 Customers Blacklisted</span>
+                    <span className='fs-13 fw-semibold' style={{color: '#99A1B7'}}>
+                      Total number of customers blacklisted in the company.
+                    </span>
                   </div>
-                  <div className='p-30px pt-16px'>
-                    <div className='d-flex flex-row gap-2'>
-                      <div className='fs-2 fw-bold text-gray-900'>Accounting For</div>
-                      <div className='fs-2 fw-bold text-primary'>12%</div>
-                    </div>
-
-                    <div className='d-flex flex-wrap align-items-center justify-content-center h-100 pb-30px'>
-                      {window.innerWidth >= 1024 && window.innerWidth <= 1399 ? (
-                        <img src={chartResponsive} alt='' className='style-img-chart' />
-                      ) : (
-                        <img src={ChartImg} alt='' className='style-img-chart' />
-                      )}
-                    </div>
+                </div>
+                <div className='p-30px pt-16px'>
+                  <div className='d-flex flex-row gap-2'>
+                    <div className='fs-2 fw-bold text-gray-900'>Accounting For</div>
+                    <div className='fs-2 fw-bold text-primary'>12%</div>
+                  </div>
+                  <div className='d-flex flex-wrap align-items-center justify-content-center h-100 pb-30px'>
+                    <img src={ChartImg} alt='' className='style-img-chart' />
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* table in here */}
-      <div className='col-12 col-xxl-9 ps-0'>
-        <div className='card w-100'>
-          <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
-          {showInput && (
-            <FilterBorrower
-              onClose={showInputFilter}
-              handleResetFilter={handleResetFilter}
-              rows={rows}
-              handleLoadApi={handleFilter}
-              dataFilter={dataFilter}
-              handleChangeFilter={handleChangeFilter}
-              dataOption={dataOption}
-            />
-          )}
-          <div>
-            <div className='d-flex flex-row align-items-center p-16px'>
-              <Input
-                classShared='flex-grow-1 h-30px mb-5 '
-                placeholder='Search customer (Enter Customer ID or Name or NRIC No to search)'
-                value={searchValue}
-                transparent={true}
-                onChange={handleChangeSearch}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleReGetApi()
-                  }
-                }}
-                className='fs-5'
-                insertLeft={
-                  <FontAwesomeIcon
-                    className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                    icon={faSearch}
-                    onClick={handleReGetApi}
-                  />
-                }
-                insertRight={
-                  searchValue ? (
-                    <FontAwesomeIcon
-                      className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
-                      icon={faClose}
-                      onClick={() => {
-                        setSearchValue('')
+        {/* right */}
+        <div className='col-12 col-xxl-9 d-flex flex-column' style={{height: '100%'}}>
+          <div className='card w-100 d-flex flex-column overflow-auto mt-lg-6 mt-xxl-0'>
+            <div className='h-100 overflow-hidden flex-grow-1'>
+              <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
+              {showInput && (
+                <FilterBorrower
+                  onClose={showInputFilter}
+                  handleResetFilter={handleResetFilter}
+                  rows={rows}
+                  handleLoadApi={handleFilter}
+                  dataFilter={dataFilter}
+                  handleChangeFilter={handleChangeFilter}
+                  dataOption={dataOption}
+                />
+              )}
+              <div className='d-flex flex-column h-100 overflow-hidden'>
+                <div className='d-flex flex-row align-items-center p-16px'>
+                  <Input
+                    classShared='flex-grow-1 h-30px mb-5 '
+                    placeholder='Search customer (Enter Customer ID or Name or NRIC No to search)'
+                    value={searchValue}
+                    transparent={true}
+                    onChange={handleChangeSearch}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
                         handleReGetApi()
-                      }}
-                    />
-                  ) : null
-                }
-              />
-              <div className='d-flex flex-row position-relative flex-end ms-2'>
-                <div
-                  className={clsx([
-                    'position-relative p-3 pe-0',
-                    showConfigColumn && 'text-gray-900',
-                  ])}
-                >
-                  <div
-                    className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
-                    onClick={handleToggleConfigColumn}
-                  >
-                    <img src={gridImg} alt='grid' />
-                    <span
-                      className='fs-14 d-inline-block fw-semibold pe-5'
-                      style={{borderRight: '1px solid #ccc'}}
-                    >
-                      Show Columns
-                    </span>
-                  </div>
-
-                  {/* config */}
-                  {showConfigColumn && (
+                      }
+                    }}
+                    className='fs-5'
+                    insertLeft={
+                      <FontAwesomeIcon
+                        className='ps-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                        icon={faSearch}
+                        onClick={handleReGetApi}
+                      />
+                    }
+                    insertRight={
+                      searchValue ? (
+                        <FontAwesomeIcon
+                          className='pe-12px cursor-pointer text-gray-600 text-hover-gray-900'
+                          icon={faClose}
+                          onClick={() => {
+                            setSearchValue('')
+                            handleReGetApi()
+                          }}
+                        />
+                      ) : null
+                    }
+                  />
+                  <div className='d-flex flex-row position-relative flex-end ms-2'>
                     <div
-                      className='config-column-grid-customer card justify-content-end'
-                      ref={selectRef}
+                      className={clsx([
+                        'position-relative p-3 pe-0',
+                        showConfigColumn && 'text-gray-900',
+                      ])}
                     >
-                      {/* Header */}
-                      <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px border-bottom border-gray-300'>
-                        <span className='fw-bold'>Config Columns</span>
-
-                        <div
-                          className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-6'
-                          onClick={handleToggleConfigColumn}
-                        >
-                          <KTIcon className='fs-1' iconName='cross' />
-                        </div>
-                      </div>
-
-                      {/* Body */}
                       <div
-                        className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'
-                        style={{maxHeight: 'calc(100vh - 450px)'}}
+                        className='show-column-repayment d-flex align-items-center gap-8px cursor-pointer text-gray-600 text-hover-gray-900 justify-content-end me-1'
+                        onClick={handleToggleConfigColumn}
                       >
-                        {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
-                          if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
-
-                          const isChecked = configColumn[el.key]
-
-                          return (
-                            <Checkbox
-                              name={el.key}
-                              label={el.name}
-                              classNameLabel={`ms-8px ${isChecked ? '' : 'text-gray-600'}`}
-                              key={i}
-                              checked={isChecked}
-                              onChange={handleChangeConfigColumn}
-                            />
-                          )
-                        })}
+                        <img src={gridImg} alt='grid' />
+                        <span
+                          className='fs-14 d-inline-block fw-semibold pe-5'
+                          style={{borderRight: '1px solid #ccc'}}
+                        >
+                          Show Columns
+                        </span>
                       </div>
 
-                      {/* Footer */}
-                      <div className='d-flex justify-content-end p-30px pt-0 gap-8px'>
-                        <Button
-                          className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
-                          onClick={handleResetConfigColumn}
+                      {/* config */}
+                      {showConfigColumn && (
+                        <div
+                          className='config-column-grid-customer card justify-content-end'
+                          ref={selectRef}
                         >
-                          Reset
-                        </Button>
+                          {/* Header */}
+                          <div className='d-flex align-items-center justify-content-between gap-16px fs-16 px-30px py-16px border-bottom border-gray-300'>
+                            <span className='fw-bold'>Config Columns</span>
 
-                        <Button
-                          className='btn btn-lg btn-primary fs-6'
-                          onClick={handleApplyConfigColumn}
+                            <div
+                              className='btn btn-sm btn-icon btn-active-color-primary btn-hover-color-primary ps-6'
+                              onClick={handleToggleConfigColumn}
+                            >
+                              <KTIcon className='fs-1' iconName='cross' />
+                            </div>
+                          </div>
+
+                          {/* Body */}
+                          <div
+                            className='grid-2-column gap-16px mh-300px overflow-y-auto px-30px fw-semibold py-24px'
+                            style={{maxHeight: 'calc(100vh - 450px)'}}
+                          >
+                            {BORROWER_CONFIG_LISTING.rows.map((el, i) => {
+                              if (el.key === 'id' || el.isHide) return <Fragment key={i}></Fragment>
+
+                              const isChecked = configColumn[el.key]
+
+                              return (
+                                <Checkbox
+                                  name={el.key}
+                                  label={el.name}
+                                  classNameLabel={`ms-8px ${isChecked ? '' : 'text-gray-600'}`}
+                                  key={i}
+                                  checked={isChecked}
+                                  onChange={handleChangeConfigColumn}
+                                />
+                              )
+                            })}
+                          </div>
+
+                          {/* Footer */}
+                          <div className='d-flex justify-content-end p-30px pt-0 gap-8px'>
+                            <Button
+                              className='btn btn-lg btn-light btn-active-light-primary me-2 fs-6'
+                              onClick={handleResetConfigColumn}
+                            >
+                              Reset
+                            </Button>
+
+                            <Button
+                              className='btn btn-lg btn-primary fs-6'
+                              onClick={handleApplyConfigColumn}
+                            >
+                              Apply
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        backgroundColor:
+                          Object.keys(checkFilter).length !== 0 &&
+                          !(
+                            Object.keys(checkFilter).length === 1 &&
+                            Object.keys(checkFilter).includes('searchBar')
+                          )
+                            ? ''
+                            : '',
+                      }}
+                      className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900 ms-2`}
+                      onClick={showInputFilter}
+                    >
+                      <Icons name={'FilterIconBorrower'} />
+                      Filter
+                    </div>
+                  </div>
+                </div>
+
+                {Object.keys(checkFilter).length !== 0 &&
+                  !(
+                    Object.keys(checkFilter).length === 1 &&
+                    Object.keys(checkFilter).includes('searchBar')
+                  ) && (
+                    <div className='d-flex align-self-center px-30px pb-5 ps-5'>
+                      <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px mt-2'>Filter:</h1>
+
+                      <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
+                        {showFilter.map((filter, index) => (
+                          <div key={index} className='p-0 m-0'>
+                            {(!!checkFilter[`${filter.key}`] ||
+                              checkFilter[`${filter.key}`] === 0) &&
+                              !['blacklisted', 'exclusion', 'status'].includes(filter.key) && (
+                                <div className='wrapper-filter-application ms-16px py-0 mt-2'>
+                                  <h2 className='filter-title-show'>
+                                    {filter.value}: {filter.valueStart}
+                                    {checkFilter[`${filter.key}`]}
+                                  </h2>
+                                  <div
+                                    onClick={() => {
+                                      setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                      setLoadApi(!loadApi)
+                                    }}
+                                    className='p-0 m-0 cursor-pointer'
+                                  >
+                                    <Icons name={'CloseSmall'} />
+                                  </div>
+                                </div>
+                              )}
+
+                            {!!checkFilter[`${filter.key}`] && ['exclusion'].includes(filter.key) && (
+                              <div className='wrapper-filter-application  ms-16px py-0 mt-2'>
+                                <h2 className='filter-title-show'>
+                                  {filter.value}:{' '}
+                                  {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
+                                </h2>
+                                <div
+                                  onClick={() => {
+                                    setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                    setLoadApi(!loadApi)
+                                  }}
+                                  className='p-0 m-0 cursor-pointer'
+                                >
+                                  <Icons name={'CloseSmall'} />
+                                </div>
+                              </div>
+                            )}
+                            {!!checkFilter[`${filter.key}`] &&
+                              ['blacklisted'].includes(filter.key) && (
+                                <div className='wrapper-filter-application  ms-16px py-0 mt-2'>
+                                  <h2 className='filter-title-show'>
+                                    {filter.value}:{' '}
+                                    {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
+                                  </h2>
+                                  <div
+                                    onClick={() => {
+                                      setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                      setLoadApi(!loadApi)
+                                    }}
+                                    className='p-0 m-0 cursor-pointer'
+                                  >
+                                    <Icons name={'CloseSmall'} />
+                                  </div>
+                                </div>
+                              )}
+
+                            {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
+                              <div className='wrapper-filter-application ms-16px py-0 mt-2'>
+                                <h2 className='filter-title-show'>
+                                  {filter.value}:{' '}
+                                  {+checkFilter[`${filter.key}`] === 0 && 'Decreased'}
+                                  {+checkFilter[`${filter.key}`] === 1 && 'Active'}
+                                  {+checkFilter[`${filter.key}`] === 2 && 'In-Prison'}
+                                  {+checkFilter[`${filter.key}`] === 3 && 'Bankrupt'}
+                                  {+checkFilter[`${filter.key}`] === 4 && 'Missing'}
+                                </h2>
+                                <div
+                                  onClick={() => {
+                                    setDataFilter({...dataFilter, [`${filter.key}`]: ''})
+                                    setLoadApi(!loadApi)
+                                  }}
+                                  className='p-0 m-0 cursor-pointer'
+                                >
+                                  <Icons name={'CloseSmall'} />
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                        <button
+                          onClick={() => {
+                            handleResetFilter()
+                          }}
+                          className='reset-all-filter-application ms-16px mt-2'
                         >
-                          Apply
-                        </Button>
+                          Reset All
+                        </button>
                       </div>
                     </div>
                   )}
-                </div>
-                <div
-                  style={{
-                    backgroundColor:
-                      Object.keys(checkFilter).length !== 0 &&
-                      !(
-                        Object.keys(checkFilter).length === 1 &&
-                        Object.keys(checkFilter).includes('searchBar')
-                      )
-                        ? ''
-                        : '',
-                  }}
-                  className={`align-self-center fs-6 h-45px p-3 pt-4 fw-semibold cursor-pointer text-gray-600 text-hover-gray-900 ms-2`}
-                  onClick={showInputFilter}
-                >
-                  <Icons name={'FilterIconBorrower'} />
-                  Filter
-                </div>
-              </div>
-            </div>
 
-            {Object.keys(checkFilter).length !== 0 &&
-              !(
-                Object.keys(checkFilter).length === 1 &&
-                Object.keys(checkFilter).includes('searchBar')
-              ) && (
-                <div className='d-flex align-self-center px-30px pb-5 ps-5'>
-                  <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px mt-2'>Filter:</h1>
-
-                  <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
-                    {showFilter.map((filter, index) => (
-                      <div key={index} className='p-0 m-0'>
-                        {(!!checkFilter[`${filter.key}`] || checkFilter[`${filter.key}`] === 0) &&
-                          !['blacklisted', 'exclusion', 'status'].includes(filter.key) && (
-                            <div className='wrapper-filter-application ms-16px py-0 mt-2'>
-                              <h2 className='filter-title-show'>
-                                {filter.value}: {filter.valueStart}
-                                {checkFilter[`${filter.key}`]}
-                              </h2>
-                              <div
-                                onClick={() => {
-                                  setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                                  setLoadApi(!loadApi)
-                                }}
-                                className='p-0 m-0 cursor-pointer'
-                              >
-                                <Icons name={'CloseSmall'} />
-                              </div>
-                            </div>
-                          )}
-
-                        {!!checkFilter[`${filter.key}`] && ['exclusion'].includes(filter.key) && (
-                          <div className='wrapper-filter-application  ms-16px py-0 mt-2'>
-                            <h2 className='filter-title-show'>
-                              {filter.value}: {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
-                            </h2>
-                            <div
-                              onClick={() => {
-                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                                setLoadApi(!loadApi)
-                              }}
-                              className='p-0 m-0 cursor-pointer'
-                            >
-                              <Icons name={'CloseSmall'} />
-                            </div>
-                          </div>
-                        )}
-                        {!!checkFilter[`${filter.key}`] && ['blacklisted'].includes(filter.key) && (
-                          <div className='wrapper-filter-application  ms-16px py-0 mt-2'>
-                            <h2 className='filter-title-show'>
-                              {filter.value}: {checkFilter[`${filter.key}`] === '1' ? 'Yes' : 'No'}
-                            </h2>
-                            <div
-                              onClick={() => {
-                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                                setLoadApi(!loadApi)
-                              }}
-                              className='p-0 m-0 cursor-pointer'
-                            >
-                              <Icons name={'CloseSmall'} />
-                            </div>
-                          </div>
-                        )}
-
-                        {!!checkFilter[`${filter.key}`] && ['status'].includes(filter.key) && (
-                          <div className='wrapper-filter-application ms-16px py-0 mt-2'>
-                            <h2 className='filter-title-show'>
-                              {filter.value}: {+checkFilter[`${filter.key}`] === 0 && 'Decreased'}
-                              {+checkFilter[`${filter.key}`] === 1 && 'Active'}
-                              {+checkFilter[`${filter.key}`] === 2 && 'In-Prison'}
-                              {+checkFilter[`${filter.key}`] === 3 && 'Bankrupt'}
-                              {+checkFilter[`${filter.key}`] === 4 && 'Missing'}
-                            </h2>
-                            <div
-                              onClick={() => {
-                                setDataFilter({...dataFilter, [`${filter.key}`]: ''})
-                                setLoadApi(!loadApi)
-                              }}
-                              className='p-0 m-0 cursor-pointer'
-                            >
-                              <Icons name={'CloseSmall'} />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                    <button
-                      onClick={() => {
-                        handleResetFilter()
-                      }}
-                      className='reset-all-filter-application ms-16px mt-2'
+                <KTCardBody className='p-0 d-flex flex-column overflow-hidden'>
+                  <div className='table-responsive flex-grow-1 overflow-auto h-100'>
+                    <table
+                      id='kt_table_users'
+                      className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
                     >
-                      Reset All
-                    </button>
-                  </div>
-                </div>
-              )}
+                      <thead
+                        className='border-top-bottom-thead'
+                        style={{
+                          top: '-2px',
+                          zIndex: '1',
+                        }}
+                      >
+                        <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+                          {rowsConfigColumn
+                            .filter((item) => !item.isHide)
+                            .map((item, i) => {
+                              const {classNameTableHead, name, infoFilter, key} = item
 
-            <KTCardBody className='p-0'>
-              <div className='table-responsive calc-responsive'>
-                <table
-                  id='kt_table_users'
-                  className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-                >
-                  <thead
-                    className='border-top-bottom-thead'
+                              const {isSort} = infoFilter || {}
+
+                              return (
+                                <th
+                                  className={clsx([
+                                    'text-nowrap min-w-75px user-select-none',
+                                    classNameTableHead,
+                                  ])}
+                                  data-title={item.key}
+                                  key={i}
+                                  onClick={() => isSort && handleChangeSortBy(item)}
+                                >
+                                  <div className='cursor-pointer'>
+                                    <span className='fs-14 fw-bold'>{name}</span>
+
+                                    {isSort && (
+                                      <SortBy isActive={keySort === key} orderBy={orderBy} />
+                                    )}
+                                  </div>
+                                </th>
+                              )
+                            })}
+                          {showAction && (
+                            <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
+                          )}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.length ? (
+                          renderRows()
+                        ) : (
+                          <tr>
+                            <td colSpan={rows.length + 1}>
+                              <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
+                                No matching records found
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
                     style={{
-                      top: '-2px',
-                      zIndex: '1',
+                      padding: '16px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
                     }}
                   >
-                    <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                      {rowsConfigColumn
-                        .filter((item) => !item.isHide)
-                        .map((item, i) => {
-                          const {classNameTableHead, name, infoFilter, key} = item
+                    <RowPerPage
+                      lenghtData={searchCriteria.total}
+                      limit={searchCriteria.pageSize}
+                      page={searchCriteria.currentPage}
+                      setLimit={(e: any) => {
+                        setSearchCriteria({
+                          ...searchCriteria,
+                          pageSize: +e.target.value,
+                          currentPage: 1,
+                        })
+                      }}
+                    />
 
-                          const {isSort} = infoFilter || {}
+                    <Pagination
+                      onChangePagePagination={handleChangePagination}
+                      searchCriteria={searchCriteria}
+                    />
 
-                          return (
-                            <th
-                              className={clsx([
-                                'text-nowrap min-w-75px user-select-none',
-                                classNameTableHead,
-                              ])}
-                              data-title={item.key}
-                              key={i}
-                              onClick={() => isSort && handleChangeSortBy(item)}
-                            >
-                              <div className='cursor-pointer'>
-                                <span className='fs-14 fw-bold'>{name}</span>
-
-                                {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
-                              </div>
-                            </th>
-                          )
-                        })}
-                      {showAction && (
-                        <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody className='calc-responsive'>
-                    {data.length ? (
-                      renderRows()
-                    ) : (
-                      <tr>
-                        <td colSpan={rows.length + 1}>
-                          <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-medium text-gray-600'>
-                            No matching records found
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+                    {loading && <Loading />}
+                  </div>
+                </KTCardBody>
               </div>
-            </KTCardBody>
-
-            <div
-              style={{
-                padding: '16px',
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <RowPerPage
-                lenghtData={searchCriteria.total}
-                limit={searchCriteria.pageSize}
-                page={searchCriteria.currentPage}
-                setLimit={(e: any) => {
-                  setSearchCriteria({...searchCriteria, pageSize: +e.target.value, currentPage: 1})
-                }}
-              />
-
-              <Pagination
-                onChangePagePagination={handleChangePagination}
-                searchCriteria={searchCriteria}
-              />
-
-              {loading && <Loading />}
             </div>
           </div>
         </div>

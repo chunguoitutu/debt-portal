@@ -468,6 +468,8 @@ $gutters: (
   30px: 30px,
   24px: 24px,
   32px: 32px,
+  45px: 45px,
+  56px: 56px,
 ) !default;
 
 // Typography
@@ -592,7 +594,7 @@ $font-sizes: (
   // 88.25px
   7hx: $font-size-base * 7.5,
   // 91.5px
-  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ) !default;
 
 $headings-font-weight: 600 !default;

@@ -428,7 +428,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
                           </div>
 
                           <Button
-                            className='btn text-primary btn-secondary fw-medium fs-14 btn-sm me-1 fw-medium text-primary reload-apply-filter'
+                            className='btn text-primary btn-secondary fw-medium fs-14 btn-sm fw-medium text-primary reload-apply-filter'
                             style={{
                               backgroundColor: '#f9f9f9',
                               width: 55,

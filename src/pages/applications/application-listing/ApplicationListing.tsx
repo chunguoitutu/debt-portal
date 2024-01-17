@@ -780,8 +780,8 @@ const ApplicationListing = () => {
                             <h2 className='filter-title-show'>
                               {filter.value}:{' '}
                               {[1, 0].includes(Number(checkFilter[`${filter.key}`]) || 0)
-                                ? `${checkFilter[`${filter.key}`]} Month`
-                                : `${checkFilter[`${filter.key}`]} Months`}
+                                ? `${checkFilter[`${filter.key}`]}`
+                                : `${checkFilter[`${filter.key}`]}`}
                             </h2>
                             <div
                               onClick={() => {

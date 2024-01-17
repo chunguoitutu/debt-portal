@@ -663,8 +663,8 @@ const LoanListing = () => {
                         <h2 className='filter-title-show'>
                           {filter.value}:{' '}
                           {checkFilter[`${filter.key}`] < 2
-                            ? `${checkFilter[`${filter.key}`]} Month`
-                            : `${checkFilter[`${filter.key}`]} Months`}
+                            ? `${checkFilter[`${filter.key}`]}`
+                            : `${checkFilter[`${filter.key}`]}`}
                         </h2>
                         <div
                           onClick={() => {
