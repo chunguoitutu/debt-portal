@@ -326,6 +326,8 @@ export type PropsStepApplication = {
   borrower_id?: number
 }
 
+export type EmploymentStatus = 'EMP' | 'UNEMPINC' | 'UNEMP'
+
 export type ApplicationPayload = {
   customer: {
     id?: number
@@ -356,7 +358,7 @@ export type ApplicationPayload = {
     email_1?: string
     email_2?: string
     job_type_id?: number | null
-    employment_status?: string
+    employment_status: EmploymentStatus
     monthly_income?: number
     credit_score?: string
     residential_type?: string
@@ -381,6 +383,11 @@ export type ApplicationPayload = {
     mlcb_count?: number
     crosscheck_count?: number
     interest: string | number
+    first_repayment_date: Date | string
+    monthly_due_date: number
+    amount_of_acceptance: number
+    monthly_late_fee: number
+    late_interest_per_month_percent: number
   }
   bank_account: {
     id?: number
@@ -443,6 +450,11 @@ export type ToolApplication = {
 }
 
 export type ApplicationFormData = {
+  first_repayment_date: string | Date
+  monthly_due_date: number
+  amount_of_acceptance: number
+  monthly_late_fee: number
+  late_interest_per_month_percent: number
   bankrupted_key?: any
   singpass?: any
   identification_no_confirm: string
@@ -477,7 +489,7 @@ export type ApplicationFormData = {
   email_2: string
   monthly_income_2: string | number
   monthly_income_3: string | number
-  employment_status: string
+  employment_status: EmploymentStatus
   company_name: string
   address: string
   office_no: string

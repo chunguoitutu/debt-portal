@@ -33,6 +33,7 @@ import {
   capitalizeFirstText,
   convertErrorMessageResponse,
   filterObjectKeyNotEmpty,
+  formatDate,
   parseJson,
 } from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
@@ -194,6 +195,8 @@ export const Applications = () => {
     initialValues,
     validationSchema: schema,
     validateOnMount: false,
+    validateOnBlur: true,
+    validateOnChange: false,
     onSubmit: () => {},
   })
   const {
@@ -309,10 +312,6 @@ export const Applications = () => {
       )
 
       delete customer.status
-      const formattedDateOfBirth = moment(customer?.date_of_birth).format('YYYY-MM-DD')
-      const formattedIDExpiry = moment(customer?.identification_expiry).isValid()
-        ? moment(customer?.identification_expiry).format('YYYY-MM-DD')
-        : ''
 
       setToolsCheckCount({
         MLCB: Number(application.mlcb_count || 0),
@@ -329,10 +328,12 @@ export const Applications = () => {
         ...employment,
         ...cpf,
         identification_no_confirm: customer.identification_no,
-        identification_expiry: formattedIDExpiry,
         address_contact_info:
           Array.isArray(address) && address.length ? [...address] : values.address_contact_info,
-        date_of_birth: formattedDateOfBirth,
+        identification_expiry: formatDate(customer?.identification_expiry),
+        date_of_birth: formatDate(customer?.date_of_birth),
+        first_repayment_date: formatDate(application?.first_repayment_date),
+        application_date: formatDate(application?.application_date),
         file_documents:
           file_documents.map((data) => {
             return {...data, base64: 'data:application/pdf;base64,' + data?.base64}
@@ -617,7 +618,12 @@ export const Applications = () => {
         loan_amount_requested: +values.loan_amount_requested,
         loan_type_id: Number(values?.loan_type_id) || null,
         status: isDraft ? 0 : 1,
-        application_date: new Date(),
+        application_date: new Date(values.application_date),
+        amount_of_acceptance: +values.amount_of_acceptance || 0,
+        first_repayment_date: new Date(values.first_repayment_date),
+        late_interest_per_month_percent: +values.late_interest_per_month_percent || 0,
+        monthly_late_fee: +values.monthly_late_fee || 0,
+        monthly_due_date: +values.monthly_due_date || +new Date().getDate(),
         application_notes: JSON.stringify(remarkList),
         // application_no: values.application_no,
         is_existing: values.is_existing,

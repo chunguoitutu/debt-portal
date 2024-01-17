@@ -1,8 +1,8 @@
 import * as Yup from 'yup'
-import { Input } from '@/components/input'
+import {Input} from '@/components/input'
 import Radio from '@/components/radio/Radio'
-import { Select } from '@/components/select'
-import { TextArea } from '@/components/textarea'
+import {Select} from '@/components/select'
+import {TextArea} from '@/components/textarea'
 import GrossMonthlyIncome from '@/components/applications/GrossMonthlyIncome'
 import FullName from './completion/FullName'
 import Address from './completion/Address'
@@ -14,9 +14,9 @@ import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
 import FileDocument from './employment/FileDocument'
 import RenderFileDocument from './completion/RenderFileDocument'
-import { children_config_completion } from './completion'
-import { ApplicationConfig, TableConfig } from '@/app/types'
-import { convertMessageErrorMaximum, convertMessageErrorRequired } from '@/app/utils'
+import {children_config_completion} from './completion'
+import {ApplicationConfig, TableConfig} from '@/app/types'
+import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
 import {
   BANKRUPTCY,
   CUSTOMER_TYPE,
@@ -28,6 +28,7 @@ import {
   LANGUAGES,
   LOAN_TYPE,
   MLCB_CHECK,
+  MONTHLY_DUE_DATE,
   POSITION,
   RESIDENTIAL_TYPE,
   SPECIALIZATION,
@@ -36,10 +37,11 @@ import {
   YES_NO_OPTION,
 } from '@/app/utils/global-config'
 import PositionName from './completion/PositionName'
-import { Checkbox } from '@/components/checkbox'
+import {Checkbox} from '@/components/checkbox'
 import Bankruptcy from '@/components/applications/Bankruptcy'
 import Button from '@/components/button/Button'
 import TermUnit from './completion/TermUnit'
+import moment from 'moment'
 
 const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   {
@@ -147,20 +149,19 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   //   dropDownGroup: true,
   //   validationFormik: Yup.string().required(convertMessageErrorRequired('Residential Type')),
   // },
-  // {
-  //   key: 'marketing_type_id',
-  //   component: Select,
-  //   typeComponent: 'Select',
-  //   column: 6,
-  //   label: 'Marketing Type',
-  //   className: 'justify-content-xxl-end',
-  //   required: true,
-  //   keyLabelOfOptions: 'marketing_type_name',
-  //   keyValueOfOptions: 'id',
-  //   dependencyApi: 'config/marketing_type/listing',
-  //   validationFormik: Yup.number().required(convertMessageErrorRequired('Marketing Type')),
-  // },
-
+  {
+    key: 'marketing_type_id',
+    component: Select,
+    typeComponent: 'Select',
+    column: 6,
+    label: 'Marketing Type',
+    className: 'justify-content-xxl-end',
+    required: true,
+    keyLabelOfOptions: 'marketing_type_name',
+    keyValueOfOptions: 'id',
+    dependencyApi: 'config/marketing_type/listing',
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Marketing Type')),
+  },
   {
     key: 'gender',
     component: Select,
@@ -236,6 +237,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     key: 'term_unit',
     component: Select,
     typeComponent: 'Select',
+    column: 6,
     options: TERM_UNIT,
     defaultValue: TERM_UNIT[1].value,
     label: 'Term Unit',
@@ -246,6 +248,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Input,
     typeComponent: 'Input',
     label: 'Interest (%)',
+    column: 6,
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
@@ -256,6 +259,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     component: Input,
     typeComponent: 'Input',
     label: 'Loan Amount Required',
+    column: 6,
     required: true,
     typeInput: 'money',
     noThereAreCommas: false,
@@ -265,16 +269,87 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
       .max(999999999999, 'Loan Amount must be less than or equal to 999999999999$'),
   },
   {
+    key: 'amount_of_acceptance',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Amount of Acceptance',
+    column: 6,
+    typeInput: 'number',
+    required: true,
+    noThereAreCommas: false,
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
+  },
+  {
     key: 'loan_terms',
     component: Input,
     typeComponent: 'Input',
-    label: 'Loan Terms ',
+    label: 'Loan Terms',
+    column: 6,
     required: true,
     typeInput: 'number',
     validationFormik: Yup.number()
       .required(convertMessageErrorRequired('Loan Terms'))
       .max(100, convertMessageErrorMaximum(100, true))
       .min(1, 'Loan Terms must be greater than 0'),
+  },
+  {
+    key: 'late_interest_per_month_percent',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Late Interest (%)',
+    column: 6,
+    typeInput: 'number',
+    required: true,
+    noThereAreCommas: false,
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Late Interest (%)')),
+  },
+  {
+    key: 'monthly_late_fee',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Late Fee',
+    column: 6,
+    typeInput: 'number',
+    required: true,
+    noThereAreCommas: false,
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
+  },
+  {
+    key: 'application_date',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Date of Application',
+    defaultValue: moment().format('YYYY-MM-DD'),
+    column: 6,
+    typeInput: 'date',
+    required: true,
+    noThereAreCommas: false,
+    validationFormik: Yup.date().required(convertMessageErrorRequired('Interest')),
+  },
+  {
+    key: 'first_repayment_date',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'First Repayment Date',
+    defaultValue: moment().add(1, 'month').format('YYYY-MM-DD'),
+    column: 6,
+    typeInput: 'date',
+    required: true,
+    noThereAreCommas: false,
+    validationFormik: Yup.date().required(convertMessageErrorRequired('Interest')),
+  },
+  {
+    key: 'monthly_due_date',
+    component: Select,
+    typeComponent: 'Select',
+    label: 'Monthly Due Date',
+    options: MONTHLY_DUE_DATE,
+    defaultValue: new Date().getDate(),
+    column: 6,
+    typeInput: 'number',
+    required: true,
+    noThereAreCommas: false,
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
   },
   {
     key: 'loan_reason',
@@ -823,14 +898,14 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         //   Component: SpecialZation,
         //   keyFilter: 'value',
         // },
-        // {
-        //   key: 'marketing_type_id',
-        //   value: 'Marketing type',
-        //   dependencyApi: '/config/marketing_type/listing',
-        //   Component: RenderOptionsApi,
-        //   keyFilter: 'id',
-        //   lable: 'marketing_type_name',
-        // },
+        {
+          key: 'marketing_type_id',
+          value: 'Marketing type',
+          dependencyApi: '/config/marketing_type/listing',
+          Component: RenderOptionsApi,
+          keyFilter: 'id',
+          lable: 'marketing_type_name',
+        },
       ],
     ],
   },

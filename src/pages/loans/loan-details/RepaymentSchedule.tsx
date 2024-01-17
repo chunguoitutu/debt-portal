@@ -290,7 +290,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
                 colSpan={el.key === 'id' && configColumnSubmitted?.['instalment_due_date'] ? 2 : 1}
                 key={i}
               >
-                {+value ? formatMoney(+value) : value}
+                {formatMoney(+value) || 0}
               </td>
             )
           })}

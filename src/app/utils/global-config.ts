@@ -2,7 +2,13 @@ import RejectionType from '../../pages/settings/rejection-type/RejectionType'
 import RolePage from '../../pages/settings/role/RoleManagement'
 import UserManagement from '../../pages/settings/user/UserManagement'
 import {v4 as uuidv4} from 'uuid'
-import {DropDownGroup, ID_TYPE_VALUE, MenuSettingItem, Option} from '../types/common'
+import {
+  DropDownGroup,
+  EmploymentStatus,
+  ID_TYPE_VALUE,
+  MenuSettingItem,
+  Option,
+} from '../types/common'
 import {CompanyManagement} from '../../pages/settings/company-management'
 import CompanyListing from '../../pages/settings/company/CompanyManagement'
 import DocumentTypes from '../../pages/settings/document-types/DocumentTypes'
@@ -242,18 +248,18 @@ export const SPECIALIZATION: Option[] = [
   },
 ]
 
-export const EMPLOYMENT_STATUS: Option[] = [
+export const EMPLOYMENT_STATUS: Option<EmploymentStatus>[] = [
   {
     value: 'EMP',
     label: 'Employed',
   },
   {
     value: 'UNEMPINC',
-    label: 'Unemployed with income',
+    label: 'Self Employed',
   },
   {
     value: 'UNEMP',
-    label: 'Unemployed without income',
+    label: 'Unemployed',
   },
 ]
 
