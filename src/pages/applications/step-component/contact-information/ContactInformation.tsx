@@ -161,6 +161,11 @@ const ContactInformation: FC<PropsStepApplication> = ({
     } = item
     let Component: any = item?.component
 
+    const isDisableApproveOrReject = [
+      ApplicationStatus.APPROVED,
+      ApplicationStatus.REJECTED,
+    ].includes(values.status)
+
     // nothing
     if (!Component) return
 
@@ -200,19 +205,18 @@ const ContactInformation: FC<PropsStepApplication> = ({
           <Component
             value={values[key]}
             onChange={handleChange}
-            disabled={
-              values.status === ApplicationStatus.APPROVED ||
-              values.status === ApplicationStatus.REJECTED
-                ? true
-                : false
-            }
+            disabled={isDisableApproveOrReject}
             onBlur={handleBlur}
             name={key}
             classShared={className}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
             insertLeft={
               typeInput === 'phone' ? (
-                <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                <Tippy
+                  offset={[120, 0]}
+                  content='Please choose the phone number you prefer.'
+                  disabled={isDisableApproveOrReject}
+                >
                   {/* Wrapper with a span tag to show tooltip */}
                   <span>
                     <Select
@@ -223,6 +227,7 @@ const ContactInformation: FC<PropsStepApplication> = ({
                       className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
                       name='country_phone_code'
                       options={COUNTRY_PHONE_CODE}
+                      disabled
                     />
                   </span>
                 </Tippy>

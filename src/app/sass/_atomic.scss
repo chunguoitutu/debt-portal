@@ -112,8 +112,40 @@
 }
 
 .form-input-custom {
-  input:disabled {
-    background-color: #fff !important;
+  &.disabled.form-control-solid {
+    &:active {
+      background-color: var(--bs-gray-100) !important;
+    }
+    border-color: var(--bs-gray-300) !important;
+    background-color: var(--bs-gray-100) !important;
+  }
+
+  input:disabled,
+  .form-control.form-control-solid:has(:disabled) {
+    background-color: var(--bs-gray-100) !important;
     cursor: default;
   }
+}
+
+.form-select-custom.form-select.form-select-solid {
+  &:disabled,
+  &:disabled:active {
+    background-color: var(--bs-gray-100) !important;
+    border-color: var(--bs-gray-300) !important;
+    box-shadow: none !important;
+  }
+}
+
+.form-textarea-custom:disabled {
+  border-color: var(--bs-gray-300) !important;
+  background-color: var(--bs-gray-100) !important;
+  box-shadow: none !important;
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--bs-white) inset !important;
 }

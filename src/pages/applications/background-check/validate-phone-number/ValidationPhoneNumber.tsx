@@ -7,8 +7,14 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import {convertErrorMessageResponse, convertMessageErrorRequired} from '@/app/utils'
+import {
+  COUNTRY_PHONE_CODE,
+  convertErrorMessageResponse,
+  convertMessageErrorRequired,
+} from '@/app/utils'
 import {useParams} from 'react-router-dom'
+import Tippy from '@tippyjs/react'
+import {Select} from '@/components/select'
 
 type Props = {
   payload: any
@@ -53,13 +59,15 @@ const ValidationPhoneNumber: FC<Props> = ({
 
   const formik = useFormik({
     initialValues: {
-      phone_number: '',
+      phone_number: payload || '',
     },
     validationSchema: validationSchema,
     onSubmit: handleSendOTP,
   })
 
-  const callApi = async () => {
+  async function handleSendOptToPhone() {
+    setLoading(true)
+
     try {
       const {data} = await request.post('/site/send-otp', {payload: `+${payload}`})
       const {otp} = data || {}
@@ -70,22 +78,21 @@ const ValidationPhoneNumber: FC<Props> = ({
 
       setOtp(otp)
       setOtpExpire(60)
-      {
-        error && setError(null)
-      }
+      error && setError(null)
     } catch (error) {
       setError(convertErrorMessageResponse(error))
     } finally {
       setLoading(false)
     }
   }
-  useEffect(() => {
-    setLoading(true)
-    callApi()
-  }, [])
+
+  // useEffect(() => {
+  //   setLoading(true)
+  //   callApi()
+  // }, [])
   async function handleSendOTP() {
     setLoading(true)
-    callApi()
+    handleSendOptToPhone()
   }
 
   const handleInputChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
@@ -159,7 +166,7 @@ const ValidationPhoneNumber: FC<Props> = ({
           `,
             width: 'unset',
             showCancelButton: false,
-            confirmButtonText: 'Confirm',
+            confirmButtonText: 'OK',
             customClass: {
               htmlContainer: 'fs-3',
               cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
@@ -179,7 +186,7 @@ const ValidationPhoneNumber: FC<Props> = ({
 
   return (
     <div className=' p-0 m-0'>
-      <div className='d-flex flex-column align-items-center p-30px w-100'>
+      <div className='d-flex flex-column align-items-center p-30px w-100 1'>
         {otp ? (
           <div className='d-flex flex-column align-items-center w-fit-content'>
             <img src={phoneImg} alt='phone' className='w-160px object-fit-cover d-block' />
@@ -226,41 +233,48 @@ const ValidationPhoneNumber: FC<Props> = ({
           </div>
         ) : (
           <>
-            <div className='text-center h-100'>
-              <div className='spinner-grow text-primary' role='status'>
-                <span className='sr-only'>Loading...</span>
+            {error && (
+              <div className='bg-light-danger w-100 text-center p-12px mb-16px rounded-5'>
+                <ErrorMessage className='m-0' message={error as string} />
               </div>
-              <div className='spinner-grow text-secondary' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
-              <div className='spinner-grow text-success' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
-              <div className='spinner-grow text-danger' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
-              <div className='spinner-grow text-warning' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
-              <div className='spinner-grow text-info' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
-              <div className='spinner-grow text-light' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
-              <div className='spinner-grow text-dark' role='status'>
-                <span className='sr-only'>Loading...</span>
-              </div>
-            </div>
+            )}
+            <Input
+              classShared='w-100'
+              type='number'
+              {...formik.getFieldProps('phone_number')}
+              label='Phone Number'
+              error={formik.errors['phone_number'] as string}
+              touched={formik.touched['phone_number'] as boolean}
+              insertLeft={
+                <Tippy offset={[120, 0]} content='Please choose the phone number you prefer.'>
+                  {/* Wrapper with a span tag to show tooltip */}
+                  <span>
+                    <Select
+                      isOptionDefault={false}
+                      classShared='m-0'
+                      className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                      name='country_phone_code'
+                      options={COUNTRY_PHONE_CODE}
+                      disabled
+                    />
+                  </span>
+                </Tippy>
+              }
+            />
           </>
         )}
       </div>
       <div className='border-top border-gray-200 p-30px'>
         <div className='d-flex align-items-center justify-content-center gap-8px'>
-          <Button className='btn-secondary fs-6' onClick={onClose}>
+          <Button className='btn-secondary fs-6' onClick={onClose} disabled={loading}>
             Cancel
           </Button>
-          <Button className='fs-6 btn-primary' onClick={handleVerifyOTP}>
+          <Button
+            disabled={loading}
+            loading={loading}
+            className='fs-6 btn-primary'
+            onClick={!otp ? handleSendOptToPhone : handleVerifyOTP}
+          >
             Confirm
           </Button>
         </div>

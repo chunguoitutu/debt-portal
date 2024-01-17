@@ -224,6 +224,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
         'monthly_late_fee',
         'late_interest_per_month_percent',
       ].includes(key)
+    const isApprovedOrRejected = [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+      values.status
+    )
 
     // nothing
     if (!Component) return
@@ -269,13 +272,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
         <div className='d-flex flex-column w-100'>
           <Component
             classShared='flex-grow-1'
-            disabled={
-              isDisableForce ||
-              (values.status === ApplicationStatus.APPROVED ||
-              values.status === ApplicationStatus.REJECTED
-                ? true
-                : false)
-            }
+            disabled={isDisableForce || isApprovedOrRejected}
             value={values[key]}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -301,13 +298,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
             transparent={key === 'loan_amount_requested' ? true : false}
             name={key}
             classShared={className}
-            disabled={
-              isDisableForce ||
-              (values.status === ApplicationStatus.APPROVED ||
-              values.status === ApplicationStatus.REJECTED
-                ? true
-                : false)
-            }
+            disabled={isDisableForce || isApprovedOrRejected}
             type={typeInput}
             noThereAreCommas={typeof noThereAreCommas === 'boolean' ? noThereAreCommas : true}
           />
@@ -321,12 +312,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
       return (
         <div className='d-flex flex-column w-100'>
           <Component
-            disabled={
-              (isDisableForce && values.status === ApplicationStatus.APPROVED) ||
-              values.status === ApplicationStatus.REJECTED
-                ? true
-                : false
-            }
+            disabled={isDisableForce || isApprovedOrRejected}
             value={values[key]}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleAutoSelect(key, e)}
             onBlur={handleBlur}
@@ -335,10 +321,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
             keyValueOption={keyValueOfOptions}
             keyLabelOption={keyLabelOfOptions}
             options={!!dependencyApi ? optionListing[keyOfOptionFromApi || key] || [] : options}
-            touched={touched}
-            errors={errors}
+            touched={touched[key]}
+            errors={errors[key]}
           />
-          {errors[key] && touched[key] && <ErrorMessage message={errors[key] as string} />}
         </div>
       )
     }

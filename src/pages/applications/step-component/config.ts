@@ -272,7 +272,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     key: 'amount_of_acceptance',
     component: Input,
     typeComponent: 'Input',
-    label: 'Amount of Acceptance',
+    label: 'Acceptance Fee',
     column: 6,
     typeInput: 'number',
     required: true,
