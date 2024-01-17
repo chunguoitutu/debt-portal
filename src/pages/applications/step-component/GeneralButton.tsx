@@ -212,7 +212,7 @@ const GeneralButton: FC<Props> = (props) => {
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Application successfully canceled',
+            title: 'Application successfully cancelled',
           })
         } else {
           await request.put(`/application/cancel-application/${applicationIdEdit}`, {
@@ -224,7 +224,7 @@ const GeneralButton: FC<Props> = (props) => {
           swalToast.fire({
             timer: 1500,
             icon: 'success',
-            title: 'Application successfully canceled',
+            title: 'Application successfully cancelled',
           })
         }
       }
