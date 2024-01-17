@@ -1,6 +1,6 @@
-import {TableConfig} from '@/app/types'
+import { TableConfig } from '@/app/types'
 import Badge from '@/components/badge/Badge'
-import {CheckboxRounded} from '@/components/checkbox'
+import { CheckboxRounded } from '@/components/checkbox'
 
 export const DOCUMENT_TABLE_CONFIG: TableConfig = {
   endpoint: 'config/document_type',

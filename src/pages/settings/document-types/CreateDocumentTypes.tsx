@@ -43,6 +43,7 @@ const CreateDocumentType = ({
   handleUpdated,
 }: Props) => {
   const [status, setStatus] = useState(data?.status === 0 ? false : true)
+  const [isDefault, setIsDefault] = useState(data?.is_default === 0 ? false : true)
 
   const {rows, endpoint} = DOCUMENT_TABLE_CONFIG
 
@@ -156,24 +157,26 @@ const CreateDocumentType = ({
 
               const Component = component as any
 
-              if (['id', 'status', 'created_date', 'updated_date'].includes(row.key)) {
+              if (
+                ['id', 'status', 'created_date', 'updated_date', 'is_default'].includes(row.key)
+              ) {
                 return null
               }
 
-              if (typeComponent === 'checkbox-rounded') {
-                return (
-                  <div className='mt-16px' key={i}>
-                    <Component
-                      label={name}
-                      checked={values[key]}
-                      onChange={handleChange}
-                      subTextWhenChecked={subTextWhenChecked}
-                      subTextWhenNoChecked={subTextWhenNoChecked}
-                      id={key}
-                    />
-                  </div>
-                )
-              }
+              // if (typeComponent === 'checkbox-rounded') {
+              //   return (
+              //     <div className='mt-16px d-flex flex-row' key={i}>
+              //       <Component
+              //         label={name}
+              //         checked={values[key]}
+              //         onChange={handleChange}
+              //         subTextWhenChecked={subTextWhenChecked}
+              //         subTextWhenNoChecked={subTextWhenNoChecked}
+              //         id={key}
+              //       />
+              //     </div>
+              //   )
+              // }
 
               return (
                 <div key={row.key} style={{flex: '0 0 50%'}}>
@@ -206,7 +209,15 @@ const CreateDocumentType = ({
                 </div>
               )
             })}
-            <div className='mt-16px'>
+            <div className='mt-16px d-flex flex-row gap-5'>
+              <CheckboxRounded
+                showLabelCheck={true}
+                request_info={true}
+                label='Default'
+                checked={values.is_default}
+                onChange={handleChange}
+                id='is_default'
+              />
               <CheckboxRounded
                 label='Status'
                 checked={status}

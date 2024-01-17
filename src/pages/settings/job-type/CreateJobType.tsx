@@ -163,7 +163,7 @@ const CreateJobType = ({
 
               const Component = component as any
 
-              if (['id', 'status'].includes(row.key)) {
+              if (['id', 'status', 'is_default'].includes(row.key)) {
                 return null
               }
 
@@ -212,7 +212,15 @@ const CreateJobType = ({
               )
             })}
 
-            <div className='mt-16px'>
+            <div className='mt-16px d-flex flex-row gap-5'>
+              <CheckboxRounded
+                label='Default'
+                showLabelCheck={true}
+                request_info={true}
+                checked={values.is_default}
+                onChange={handleChange}
+                id='is_default'
+              />
               <CheckboxRounded
                 label='Status'
                 checked={status}

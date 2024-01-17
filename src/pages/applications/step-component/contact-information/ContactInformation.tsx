@@ -6,7 +6,12 @@ import {BLOCK_ADDRESS_CONFIG} from '../config'
 import {Select} from '@/components/select'
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {AddressTypeItem, ApplicationConfig, BlockAddress, PropsStepApplication} from '@/app/types'
-import {COUNTRY_PHONE_CODE, PROPERTY_TYPE, isFirstGetStepApplication} from '@/app/utils'
+import {
+  COUNTRY_PHONE_CODE,
+  PROPERTY_TYPE,
+  getIdDefault,
+  isFirstGetStepApplication,
+} from '@/app/utils'
 import {useParams} from 'react-router-dom'
 import AddressGroup from './AddressGroup'
 import {handleCreateBlockAddress} from '@/app/constants'

@@ -196,6 +196,10 @@ const CreateEditRejectionType = ({
 
                       const Component = component as any
 
+                      if (['is_default'].includes(row.key)) {
+                        return null
+                      }
+
                       if (typeComponent === 'checkbox-rounded') {
                         return (
                           <div className='mt-16px' key={i}>
@@ -246,7 +250,15 @@ const CreateEditRejectionType = ({
                 </>
               ) : null}
 
-              <div className='mt-16px'>
+              <div className='mt-16px d-flex flex-row gap-5'>
+                <CheckboxRounded
+                  label='Default'
+                  checked={values.is_default}
+                  onChange={handleChange}
+                  id='is_default'
+                  showLabelCheck={true}
+                  request_info={true}
+                />
                 <CheckboxRounded
                   label='Status'
                   checked={status}
