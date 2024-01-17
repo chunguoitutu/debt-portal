@@ -81,7 +81,6 @@ const LoanDetails: FC<PropsStepApplication> = ({
         !applicationIdEdit && setFieldValue(config.key, getIdDefault(data))
 
         let itemDefault = data?.find((el: any) => +el.is_default === 1) || data?.[0]
-        console.log(itemDefault)
 
         const isDraftOrCreate = [0, undefined].includes(values.status || 0)
 
