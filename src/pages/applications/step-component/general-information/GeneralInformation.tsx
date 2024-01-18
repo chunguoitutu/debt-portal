@@ -128,6 +128,12 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
   }, [values.is_existing])
 
   useEffect(() => {
+    const isApprovedOrRejected = [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+      values.status
+    )
+
+    if (isApprovedOrRejected) return
+
     if (values.identification_type === 'foreign_identification_number') {
       registerField('identification_expiry', {
         validate(value) {

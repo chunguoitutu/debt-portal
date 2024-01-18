@@ -239,9 +239,12 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Select',
     column: 6,
     options: TERM_UNIT,
-    defaultValue: TERM_UNIT[1].value,
+    defaultValue: TERM_UNIT[3].value,
     label: 'Term Unit',
-    validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
+    required: true,
+    validationFormik: Yup.string()
+      .required(convertMessageErrorRequired('Term Unit'))
+      .max(255, convertMessageErrorMaximum(255)),
   },
   {
     key: 'interest',
@@ -277,7 +280,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Acceptance Fee')),
   },
   {
     key: 'loan_terms',
@@ -301,7 +304,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Late Interest (%)')),
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Late Interest')),
   },
   {
     key: 'monthly_late_fee',
@@ -312,7 +315,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Late Fee')),
   },
   {
     key: 'application_date',
@@ -324,7 +327,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'date',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.date().required(convertMessageErrorRequired('Interest')),
+    validationFormik: Yup.date().required(convertMessageErrorRequired('Date of Application')),
   },
   {
     key: 'first_repayment_date',
@@ -336,7 +339,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'date',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.date().required(convertMessageErrorRequired('Interest')),
+    validationFormik: Yup.date().required(convertMessageErrorRequired('First Repayment Date')),
   },
   {
     key: 'monthly_due_date',
@@ -349,7 +352,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
+    validationFormik: Yup.number().required(convertMessageErrorRequired('Monthly Due Date')),
   },
   {
     key: 'loan_reason',

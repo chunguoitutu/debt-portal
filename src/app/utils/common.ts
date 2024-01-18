@@ -3,6 +3,7 @@ import numeral from 'numeral'
 import {ApplicationConfig, ErrorResponse} from '../types/common'
 import {DEFAULT_MESSAGE_ERROR_500} from '../constants'
 import moment from 'moment'
+import {TermUnit} from '../types/enum'
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -270,5 +271,23 @@ export function splitFullName(fullname: string) {
     ...defaultResult,
     firstname: capitalizeFirstText(firstname?.join(' ') || ''),
     lastname: capitalizeFirstText(lastname || ''),
+  }
+}
+
+export function convertInterestApplication(amountInterest: number, termUnit: string) {
+  const amount = +amountInterest || 0
+  const dailyInterest = amount / 31 // divide by 31 days
+
+  switch (termUnit) {
+    case TermUnit.DAILY:
+      return +dailyInterest.toFixed(2)
+    case TermUnit.WEEKLY:
+      return +(dailyInterest * 7).toFixed(2)
+    case TermUnit['BI-WEEKLY']:
+      return +(dailyInterest * 14).toFixed(2)
+    case TermUnit.MONTHLY:
+      return +amount.toFixed(2)
+    default:
+      return 0
   }
 }

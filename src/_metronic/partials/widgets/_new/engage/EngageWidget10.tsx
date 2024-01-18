@@ -23,6 +23,7 @@ import {KTCardBody} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import {useSocket} from '@/app/context/SocketContext'
 import {APPLICATION_LISTING_CONFIG_DASHBOARD} from '../../../../../pages/dashboard/config/config-application-dashboard'
+import {SESSION_NAME} from '@/app/constants'
 
 const ApplicationDashboard = () => {
   const {settings, rows} = APPLICATION_LISTING_CONFIG_DASHBOARD || {}
@@ -32,8 +33,10 @@ const ApplicationDashboard = () => {
   const {socket} = useSocket()
 
   // Get search criteria from session
-  const sessionData = isObject(parseJson(sessionStorage.getItem('application') || ''))
-    ? parseJson(sessionStorage.getItem('application') || '')
+  const sessionData = isObject(
+    parseJson(sessionStorage.getItem(SESSION_NAME.applicationFilter) || '')
+  )
+    ? parseJson(sessionStorage.getItem(SESSION_NAME.applicationFilter) || '')
     : {}
 
   const [showInput, setShowInput] = React.useState<boolean>(false)
@@ -128,7 +131,7 @@ const ApplicationDashboard = () => {
       currentPage,
     }
 
-    sessionStorage.setItem('application', JSON.stringify(data))
+    sessionStorage.setItem(SESSION_NAME.applicationFilter, JSON.stringify(data))
   }
 
   function handleNavigateEditApplication(item: ApplicationItem) {
