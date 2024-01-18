@@ -180,71 +180,73 @@ const CreateLoanType = ({
         </div>
         <div
           style={{
-            maxHeight: 'calc(100vh - 400px)',
+            maxHeight: 'calc(100vh - 200px)',
             overflowY: 'auto',
-            padding: '30px 27px 30px 30px',
+            padding: '30px 25px 30px 30px',
           }}
-          className='modal-body row'
+          className='modal-body'
         >
-          {rows.map((row, i) => {
-            const {infoCreateEdit, name, key} = row
-            const {
-              typeInput,
-              isRequired,
-              typeComponent,
-              component,
-              subTextWhenChecked,
-              subTextWhenNoChecked,
-              column,
-            } = infoCreateEdit || {}
+          <div className='row'>
+            {rows.map((row, i) => {
+              const {infoCreateEdit, name, key} = row
+              const {
+                typeInput,
+                isRequired,
+                typeComponent,
+                component,
+                subTextWhenChecked,
+                subTextWhenNoChecked,
+                column,
+              } = infoCreateEdit || {}
 
-            const Component = component as any
+              const Component = component as any
 
-            if (['id', 'status'].includes(row.key)) {
-              return null
-            }
+              if (['id', 'status'].includes(row.key)) {
+                return null
+              }
 
-            const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
+              const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
 
-            if (typeComponent === 'checkbox-rounded') {
+              if (typeComponent === 'checkbox-rounded') {
+                return (
+                  <div className='mt-16px col-6' key={i}>
+                    <Component
+                      label={name}
+                      checked={values[key]}
+                      onChange={handleChange}
+                      subTextWhenChecked={subTextWhenChecked}
+                      subTextWhenNoChecked={subTextWhenNoChecked}
+                      id={key}
+                    />
+                  </div>
+                )
+              }
+
               return (
-                <div className='mt-16px col-6' key={i}>
-                  <Component
-                    label={name}
-                    checked={values[key]}
+                <div className={clsx(['mb-16px', column ? 'col-6' : 'col-12'])} key={i}>
+                  <Input
+                    type={typeInput || 'text'}
+                    label={row.name}
+                    name={row.key}
+                    value={values[row.key] || ''}
                     onChange={handleChange}
-                    subTextWhenChecked={subTextWhenChecked}
-                    subTextWhenNoChecked={subTextWhenNoChecked}
-                    id={key}
+                    onBlur={handleBlur}
+                    required={isRequired}
+                    error={errors[row.key] as string}
+                    touched={!!touched[row.key]}
+                    {...props}
                   />
                 </div>
               )
-            }
-
-            return (
-              <div className={clsx(['mb-16px', column ? 'col-6' : 'col-12'])} key={i}>
-                <Input
-                  type={typeInput || 'text'}
-                  label={row.name}
-                  name={row.key}
-                  value={values[row.key] || ''}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required={isRequired}
-                  error={errors[row.key] as string}
-                  touched={!!touched[row.key]}
-                  {...props}
-                />
-              </div>
-            )
-          })}
-          <div className='mt-16px col-6'>
-            <CheckboxRounded
-              label='Status'
-              checked={status}
-              onChange={() => setStatus(!status)}
-              id='status'
-            />
+            })}
+            <div className='mt-16px col-6'>
+              <CheckboxRounded
+                label='Status'
+                checked={status}
+                onChange={() => setStatus(!status)}
+                id='status'
+              />
+            </div>
           </div>
         </div>
 

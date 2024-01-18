@@ -42,6 +42,8 @@ export const LOAN_LISTING_CONFIG: TableConfig = {
         component: Input,
         isSort: true,
       },
+      isLink: true,
+      linkUrl: '/customers/details'
     },
     {
       key: 'identification_no',

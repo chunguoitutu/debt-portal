@@ -512,12 +512,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     }
 
     if (typeComponent === 'Button') {
-      if (
-        values.status === ApplicationStatus.APPROVED ||
-        values.status === ApplicationStatus.REJECTED ||
-        values.status === ApplicationStatus.AWAITING_APPROVAL
-      )
-        return <></>
+      if (applicationIdEdit) return <></>
       return (
         <div className='d-flex flex-row w-100 justify-content-between align-items-center p-12px fill-singpass'>
           <div>

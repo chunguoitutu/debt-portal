@@ -250,7 +250,7 @@ const CreateEditRejectionType = ({
                 </>
               ) : null}
 
-              <div className='mt-16px d-flex flex-row gap-5'>
+              <div className='mt-16px d-flex flex-row gap-30px'>
                 <CheckboxRounded
                   label='Default'
                   checked={values.is_default}
