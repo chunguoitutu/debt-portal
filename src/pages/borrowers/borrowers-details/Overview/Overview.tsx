@@ -4,9 +4,9 @@ import SideBar from '@/components/sideBar.tsx'
 import Profile from './Profile'
 import Addresses from './Addresses'
 import Employment from './Employment'
-import Vehicle from './Vehicle'
 import CPF from './CPF'
 import Status from './Status'
+import Vehicles from './Vehicles'
 
 type Props = {
   data: any
@@ -26,8 +26,8 @@ const Overviews = [
     Comment: Employment,
   },
   {
-    title: 'Vehicle',
-    Comment: Vehicle,
+    title: 'Vehicles',
+    Comment: Vehicles,
   },
   {
     title: 'CPF',
@@ -38,8 +38,9 @@ const Overviews = [
     Comment: Status,
   },
 ]
+
 const Overview = ({data}: Props) => {
-  const [title, setTitle] = useState('Profile')
+  const [title, setTitle] = useState(Overviews[2].title)
   return (
     <>
       <SideBar

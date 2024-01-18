@@ -1,5 +1,5 @@
 import {useEffect, useMemo} from 'react'
-import {Navigate, Outlet, useLocation} from 'react-router-dom'
+import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import clsx from 'clsx'
 import {FooterWrapper} from '@/components/footer'
@@ -17,6 +17,7 @@ const MasterLayout = () => {
   const {setupSocket} = useSocket()
 
   const {pathname} = useLocation()
+  const navigate = useNavigate()
 
   const token = Cookies.get('token')
 
@@ -27,10 +28,12 @@ const MasterLayout = () => {
   }, [company_id])
 
   useEffect(() => {
-    if (!token) return
+    if (!token) return navigate('/login')
+
     refreshToken(token || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname, token])
+
   const isViewHeight = useMemo(() => {
     const arrCheck = ['application/create', 'application/edit', 'customers']
     return arrCheck.some((el) => pathname.includes(el))

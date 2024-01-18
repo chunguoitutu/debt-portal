@@ -922,14 +922,6 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           Component: MLCBCheck,
         },
         {
-          key: 'loan_amount_requested',
-          value: 'Loan Amount Required',
-          number: true,
-          dollars: '$',
-        },
-      ],
-      [
-        {
           key: 'loan_type_id',
           keyOfOptionFromApi: 'loan_type',
           value: 'Loan type',
@@ -939,25 +931,66 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           lable: 'type_name',
         },
         {
+          key: 'term_unit',
+          value: 'Term Unit',
+          Component: TermUnit,
+        },
+      ],
+      [
+        {
+          key: 'loan_amount_requested',
+          value: 'Loan Amount Required',
+          number: true,
+          dollars: '$',
+        },
+        {
+          key: 'amount_of_acceptance',
+          value: 'Acceptance Fee',
+          number: true,
+          dollars: '$',
+        },
+
+        {
           key: 'loan_terms',
           value: 'Loan Terms',
         },
       ],
       [
         {
-          key: 'term_unit',
-          value: 'Term Unit',
-          Component: TermUnit,
+          key: 'interest',
+          value: 'Interest (%)',
         },
         {
-          key: 'loan_reason',
-          value: 'Reason For Loan',
+          key: 'late_interest_per_month_percent',
+          value: 'Late Interest (%)',
+        },
+        {
+          key: 'monthly_late_fee',
+          value: 'Late Fee',
+          number: true,
+          dollars: '$',
         },
       ],
       [
         {
-          key: 'interest',
-          value: 'Interest (%)',
+          key: 'application_date',
+          value: 'Date of Application',
+          date: true,
+        },
+        {
+          key: 'first_repayment_date',
+          value: 'First Repayment Date',
+          date: true,
+        },
+        {
+          key: 'monthly_due_date',
+          value: 'Monthly Due Date',
+        },
+      ],
+      [
+        {
+          key: 'loan_reason',
+          value: 'Reason For Loan',
         },
       ],
     ],
