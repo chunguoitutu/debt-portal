@@ -1,6 +1,6 @@
-import {Option} from '@/app/types'
-import {CustomerEmployment, CustomerVehicle} from '@/app/types/customer'
-import {POSITION} from '@/app/utils'
+import { Option } from '@/app/types'
+import { CustomerCPF, CustomerEmployment, CustomerVehicle } from '@/app/types/customer'
+import { POSITION } from '@/app/utils'
 
 type Config<T = any> = ConfigOne<T> | ConfigTwo<T>
 
@@ -66,5 +66,24 @@ export const CUSTOMER_EMPLOYMENT_CONFIG: Config<keyof CustomerEmployment>[] = [
   {
     key: 'company_name',
     label: 'Company Name',
+  },
+]
+
+export const CPF_CONFIG: Config<keyof CustomerCPF>[] = [
+  {
+    key: 'date',
+    label: 'Date'
+  },
+  {
+    key: 'employer',
+    label: 'Employer'
+  },
+  {
+    key: 'amount',
+    label: 'Amount'
+  },
+  {
+    key: 'month',
+    label: 'Month'
   },
 ]

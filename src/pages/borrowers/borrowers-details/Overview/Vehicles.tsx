@@ -1,7 +1,7 @@
 import NoRecord from '@/components/no-records'
 import carImg from '@/app/images/car.svg'
 import {CustomerVehicle} from '@/app/types/customer'
-import {useEffect, useState} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import {VEHICLE_CONFIG} from './config'
 import {formatDate, formatMoney} from '@/app/utils'
 import clsx from 'clsx'
@@ -79,10 +79,10 @@ const Vehicles = ({data}: any) => {
                     }
 
                     return (
-                      <>
+                      <Fragment key={i}>
                         <span className='fs-14 text-gray-700 w-fit-content'>{el.label}</span>
                         <span className='fs-14 text-gray-900 fw-semibold'>{value}</span>
-                      </>
+                      </Fragment>
                     )
                   })}
                 </div>
