@@ -1,9 +1,9 @@
 import RepaymentSchedule from '@/pages/loans/loan-details/RepaymentSchedule'
 import Receipt from '@/pages/loans/loan-details/Receipt'
-import {LoanDetailsProps, MenuProps} from '../types'
+import { LoanDetailsProps, MenuProps } from '../types'
 import BadDebt from '@/pages/loans/loan-details/BadDebt'
 import LoanAssignmentAndActionLog from '@/pages/loans/loan-details/LoanAssignmentAndActionLog'
-import OutstandingLoan from '@/pages/borrowers/borrowers-details/Details/OutstandingLoan'
+import OutstandingLoan from '@/pages/borrowers/borrowers-details/details/OutstandingLoan'
 
 export function getMenuHorizontalLoanDetails(isAdminOrSuperAdmin: boolean) {
   let LOAN_DETAILS_MENU: MenuProps<LoanDetailsProps>[] = [
