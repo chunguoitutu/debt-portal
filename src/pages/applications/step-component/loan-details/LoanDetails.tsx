@@ -21,7 +21,16 @@ const LoanDetails: FC<PropsStepApplication> = ({
   optionListing,
   setOptionListing,
 }) => {
-  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    registerField,
+    unregisterField,
+  } = formik
   const {applicationIdEdit} = useParams()
   const {company_id, priority} = useAuth()
 
@@ -104,73 +113,32 @@ const LoanDetails: FC<PropsStepApplication> = ({
       (el: any) => el.id === Number(formik.values?.loan_type_id)
     )
 
-    const loanAmountRequested = +formik.values.loan_amount_requested
     const identification_type = formik.values.identification_type
 
-    if (formik.values.is_existing === 'existing') {
-      const quotaExisting = currentItem?.quota_existing
-      if (quotaExisting < loanAmountRequested) {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: `Loan Amount should not exceed ${quotaExisting}$`,
-        })
-      } else {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: undefined,
-        })
-      }
+    const isExisting = formik.values.is_existing
+    const isForeignIdentification = identification_type === 'foreign_identification_number'
+    let quota
+
+    if (isExisting === 'existing' && isForeignIdentification) {
+      quota = Math.min(
+        currentItem?.quota_existing,
+        currentItem?.quota_new,
+        currentItem?.quota_foreigner
+      )
+    } else if (isExisting === 'existing') {
+      quota = currentItem?.quota_existing
+    } else if (isExisting === 'new' && isForeignIdentification) {
+      quota = Math.min(currentItem?.quota_new, currentItem?.quota_foreigner)
+    } else if (isExisting === 'new') {
+      quota = currentItem?.quota_new
     }
 
-    if (formik.values.is_existing === 'new') {
-      const quotaNew = currentItem?.quota_new
-      if (quotaNew < loanAmountRequested) {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: `Loan Amount should not exceed ${quotaNew}$`,
-        })
-      } else {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: undefined,
-        })
-      }
-    }
-
-    if (
-      identification_type === 'foreign_identification_number' &&
-      formik.values.is_existing === 'existing'
-    ) {
-      const quotaExisting = currentItem?.quota_existing
-      if (quotaExisting < loanAmountRequested) {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: `Loan Amount should not exceed ${quotaExisting}$`,
-        })
-      } else {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: undefined,
-        })
-      }
-    }
-
-    if (
-      identification_type === 'foreign_identification_number' &&
-      formik.values.is_existing === 'new'
-    ) {
-      const quotaNew = currentItem?.quota_new
-      if (quotaNew < loanAmountRequested) {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: `Loan Amount should not exceed ${quotaNew}$`,
-        })
-      } else {
-        setErrorMessages({
-          ...errorMessages,
-          loan_amount_requested: undefined,
-        })
-      }
+    if (quota !== undefined) {
+      registerField('loan_amount_requested', {
+        validate(value) {
+          return quota < +value ? `Loan Amount should not exceed ${quota}$` : ''
+        },
+      })
     }
   }, [formik.values.loan_amount_requested])
 

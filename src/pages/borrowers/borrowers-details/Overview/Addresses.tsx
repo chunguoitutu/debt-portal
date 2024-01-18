@@ -37,8 +37,6 @@ type Props = {
 }
 
 const Addresses = ({data}: Props) => {
-  // console.log(data?.addresses)
-
   const [dataAddressType, setDataAddressType] = useState<any>([])
 
   useEffect(() => {

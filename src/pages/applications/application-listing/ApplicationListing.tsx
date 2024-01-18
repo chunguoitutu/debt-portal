@@ -240,6 +240,7 @@ const ApplicationListing = () => {
   const renderRows = () => {
     return data.map((item, idx) => {
       const termUnit = item?.term_unit
+      const customer_no = item?.customer_no
 
       return (
         <tr
@@ -250,7 +251,10 @@ const ApplicationListing = () => {
           ])}
         >
           {rowsConfigColumn.map(
-            ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
+            (
+              {key, component, classNameTableBody, isHide, options, infoFilter, isLink, linkUrl},
+              i
+            ) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
 
               if (item.application_no === 'A-CO-2024-00044') {
@@ -348,6 +352,21 @@ const ApplicationListing = () => {
                     {value}
                   </td>
                 )
+              }
+
+              if (key === 'fullname') {
+                if (isLink && item.status === 3) {
+                  return (
+                    <td key={i} className='fs-6 fw-medium cursor-pointer'>
+                      <Link
+                        to={`${linkUrl}/${customer_no}`}
+                        className='text-hover-primary text-gray-900'
+                      >
+                        {value}
+                      </Link>
+                    </td>
+                  )
+                }
               }
 
               return (

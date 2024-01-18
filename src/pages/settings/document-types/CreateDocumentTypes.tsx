@@ -141,7 +141,7 @@ const CreateDocumentType = ({
           </div>
         </div>
         <div
-          style={{maxHeight: 'calc(100vh - 400px)', overflowY: 'auto'}}
+          style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
           className='flex-row-fluid py-30px ps-30px pe-30px'
         >
           <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
@@ -209,7 +209,7 @@ const CreateDocumentType = ({
                 </div>
               )
             })}
-            <div className='mt-16px d-flex flex-row gap-5'>
+            <div className='mt-16px d-flex flex-row gap-30px'>
               <CheckboxRounded
                 showLabelCheck={true}
                 request_info={true}

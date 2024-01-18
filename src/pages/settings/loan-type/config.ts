@@ -35,17 +35,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         isRequired: true,
         column: 6
       },
-    },
-    {
-      classNameTableHead: 'w-200px ps-7 min-w-150px',
-      key: 'quota_existing',
-      name: 'Quota Existing',
-      infoCreateEdit: {
-        type: 'input',
-        typeInput: 'number',
-        isRequired: true,
-        column: 6
-      },
+
     },
     {
       classNameTableHead: 'w-500px min-w-150px',
@@ -59,17 +49,6 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       }
     },
     {
-      classNameTableHead: 'w-200px pe-3 min-w-150px',
-      key: 'quota_foreigner',
-      name: 'Quota Foreigner',
-      infoCreateEdit: {
-        type: 'input',
-        typeInput: 'number',
-        isRequired: true,
-        column: 6
-      },
-    },
-    {
       classNameTableHead: 'w-200px mt-3 pe-3 min-w-100px',
       key: 'interest',
       name: 'Default Interest',
@@ -78,17 +57,6 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         typeInput: 'number',
         isRequired: true,
         column: 6,
-      },
-    },
-    {
-      classNameTableHead: 'w-200px pe-3 min-w-120px',
-      key: 'late_fee',
-      name: 'Monthly Late Fee',
-      infoCreateEdit: {
-        type: 'input',
-        typeInput: 'number',
-        isRequired: true,
-        column: 6
       },
     },
     {
@@ -103,6 +71,41 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       },
     },
     {
+      classNameTableHead: 'w-200px ps-7 min-w-150px',
+      key: 'quota_existing',
+      name: 'Quota Existing',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+        column: 6
+      },
+    },
+    {
+      classNameTableHead: 'w-200px pe-3 min-w-150px',
+      key: 'quota_foreigner',
+      name: 'Quota Foreigner',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+        column: 6
+      },
+
+    },
+    {
+      classNameTableHead: 'w-200px pe-3 min-w-120px',
+      key: 'late_fee',
+      name: 'Monthly Late Fee',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+        column: 6
+      },
+
+    },
+    {
       classNameTableHead: 'w-200px pe-3 min-w-120px',
       key: 'late_interest',
       name: 'Late Interest per month',
@@ -112,6 +115,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         isRequired: true,
         column: 6
       },
+
     },
     {
       classNameTableHead: 'w-200px min-w-150px  text-center',

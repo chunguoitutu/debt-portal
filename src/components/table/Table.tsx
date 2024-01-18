@@ -13,7 +13,7 @@ import {KTCardBody} from '../../_metronic/helpers'
 import clsx from 'clsx'
 import {SearchCriteria, TableConfig} from '@/app/types'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
-import {convertErrorMessageResponse} from '@/app/utils'
+import {convertErrorMessageResponse, formatMoney} from '@/app/utils'
 
 type Props = {
   config: TableConfig
@@ -298,7 +298,7 @@ const Table: FC<Props> = ({
                         ) {
                           return (
                             <td className='fs-14 fw-semibold text-end' key={i}>
-                              ${value}
+                              {formatMoney(value)}
                             </td>
                           )
                         }

@@ -20,7 +20,7 @@ import {useAuth} from '@/app/context/AuthContext'
 import request from '@/app/axios'
 import numeral from 'numeral'
 import {PageTitle, PageLink} from '@/_metronic/layout/core'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import Badge from '@/components/badge/Badge'
 import {GLOBAL_CONSTANTS, SESSION_NAME} from '@/app/constants'
 import {Checkbox} from '@/components/checkbox'
@@ -176,7 +176,10 @@ const LoanListing = () => {
           ])}
         >
           {rowsConfigColumn.map(
-            ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
+            (
+              {key, component, classNameTableBody, isHide, options, infoFilter, isLink, linkUrl},
+              i
+            ) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
 
               const identificationNo = item?.borrower?.customer?.identification_no
@@ -217,11 +220,18 @@ const LoanListing = () => {
               }
 
               if (key === 'fullname') {
-                return (
-                  <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
-                    {getFullName(item?.borrower?.customer)}
-                  </td>
-                )
+                if (isLink) {
+                  return (
+                    <td key={i} className='fs-6 fw-medium cursor-pointer'>
+                      <Link
+                        to={`${linkUrl}/${item?.borrower?.customer?.customer_no}`}
+                        className='text-hover-primary text-gray-900'
+                      >
+                        {getFullName(item?.borrower?.customer)}
+                      </Link>
+                    </td>
+                  )
+                }
               }
 
               if (key === 'approval_date') {

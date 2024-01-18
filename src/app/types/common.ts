@@ -192,6 +192,8 @@ export type TableRow = {
     noThereAreCommas?: boolean
     isSort?: boolean
   }
+  isLink?: boolean
+  linkUrl?: string
 }
 
 export type TableConfig = {
@@ -586,6 +588,7 @@ export type ApplicationItem = {
   identification_no: string
   fullname: string
   loan_type: string
+  customer_no: any
 }
 
 export type LoanItem = {
