@@ -138,14 +138,14 @@ const Reject = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-800px'
       show={true}
       onHide={handleClose}
       backdrop={true}
     >
       <>
         <div className='modal-header p-30px'>
-          <h2>{!rejection?.id ? '' : 'Update'} Reject Application</h2>
+          <h2 className='mb-0'>{!rejection?.id ? '' : 'Update'}Reject Application</h2>
           <div className='btn btn-sm btn-icon btn-active-color-primary' onClick={handleClose}>
             <KTIcon className='fs-1' iconName='cross' />
           </div>

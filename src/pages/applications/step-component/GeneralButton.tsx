@@ -194,21 +194,9 @@ const GeneralButton: FC<Props> = (props) => {
 
       if (result.isConfirmed) {
         if (!applicationIdEdit) {
-          navigate('/application/create')
+          navigate('/application/listing')
           setCurrentStep(1)
           setStepCompleted(0)
-          formik.resetForm()
-
-          const listConfig = GENERAL_INFORMATION_CONFIG.filter((item) => item.dependencyApi)
-
-          listConfig.forEach((item) => {
-            if (item.key === 'country_id') return
-            setFieldValue(
-              item.key,
-              getIdDefault(optionListing[item.keyOfOptionFromApi || item.key])
-            )
-          })
-
           swalToast.fire({
             timer: 1500,
             icon: 'success',
@@ -218,7 +206,7 @@ const GeneralButton: FC<Props> = (props) => {
           await request.put(`/application/cancel-application/${applicationIdEdit}`, {
             application_id: applicationIdEdit,
           })
-          navigate('/application/create')
+          navigate('/application/listing')
           setCurrentStep(1)
           setStepCompleted(1)
           swalToast.fire({

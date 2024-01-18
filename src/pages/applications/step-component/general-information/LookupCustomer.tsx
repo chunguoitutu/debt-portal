@@ -301,7 +301,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             </div>
           </div>
         </div>
-        <Modal.Body style={{maxHeight: 450}} className='p-16px pt-0'>
+        <Modal.Body style={{maxHeight: 450}} className='p-16px pt-0 overflow-hidden'>
           <div>
             {/*  */}
             {Object.keys(checkFilter).length !== 0 &&
@@ -347,119 +347,115 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
               )}
             {/*  */}
           </div>
-          <KTCardBody className='pt-0 d-flex flex-column overflow-hidden'>
-            <div className='table-responsive flex-grow-1 overflow-auto h-100'>
-              <table
-                id='kt_table_users'
-                className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-              >
-                <thead
-                  className='border-top-bottom-thead position-sticky top-0 bg-white'
-                  style={{zIndex: 1}}
-                >
-                  <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-                    {rows
-                      .filter((item) => !item.isHide)
-                      .map((item, i) => {
-                        const {classNameTableHead, name, infoFilter, key} = item
 
-                        const {isSort} = infoFilter || {}
+          <div className='table-responsive mt-1 mh-350px'>
+            <table
+              id='kt_table_users'
+              className='table align-middle table-row-dashed fs-6 no-footer mb-0'
+            >
+              <thead className='table-foot-lookup position-sticky top-0 bg-white overflow-hidden border-bottom border-gray-200'>
+                <tr className='text-start text-muted fw-bolder fs-7 text-uppercase'>
+                  {rows
+                    .filter((item) => !item.isHide)
+                    .map((item, i) => {
+                      const {classNameTableHead, name, infoFilter, key} = item
 
-                        return (
-                          <th
-                            className={clsx([
-                              'text-nowrap min-w-75px user-select-none',
-                              classNameTableHead,
-                            ])}
-                            data-title={item.key}
-                            key={i}
-                            onClick={() => isSort && handleChangeSortBy(item)}
-                          >
-                            <div className='cursor-pointer'>
-                              <span className='fs-14 fw-bold'>{name}</span>
+                      const {isSort} = infoFilter || {}
 
-                              {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
-                            </div>
-                          </th>
-                        )
-                      })}
-                    {showAction && (
-                      <th className='text-end w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {showInput ? (
-                    <tr>
-                      {rows.map((row, i) => {
-                        if (row.key === 'id')
-                          return (
-                            <td key={i}>
-                              <React.Fragment />
-                            </td>
-                          )
+                      return (
+                        <th
+                          className={clsx([
+                            'text-nowrap min-w-75px user-select-none',
+                            classNameTableHead,
+                          ])}
+                          data-title={item.key}
+                          key={i}
+                          onClick={() => isSort && handleChangeSortBy(item)}
+                        >
+                          <div className='cursor-pointer'>
+                            <span className='fs-14 fw-bold'>{name}</span>
+
+                            {isSort && <SortBy isActive={keySort === key} orderBy={orderBy} />}
+                          </div>
+                        </th>
+                      )
+                    })}
+                  {showAction && (
+                    <th className='text-end w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {showInput ? (
+                  <tr>
+                    {rows.map((row, i) => {
+                      if (row.key === 'id')
                         return (
                           <td key={i}>
-                            <Input
-                              name={row.key}
-                              value={dataFilters[row.key] || ''}
-                              onChange={(e: React.ChangeEvent<any>) => {
-                                setDataFilter((prev) => ({
-                                  ...prev,
-                                  [row.key]: e.target.value,
-                                }))
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                  handleReGetApi()
-                                }
-                              }}
-                            />
+                            <React.Fragment />
                           </td>
                         )
-                      })}
-                      <td className='text-center' style={{height: 44}}>
-                        <div
-                          className='d-flex align-items-center justify-content-center gap-3'
-                          style={{height: 44}}
-                        >
-                          <div
-                            className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary reload-apply-filter'
-                            onClick={() => handleResetFilter()}
-                            style={{width: 44}}
-                          >
-                            <FontAwesomeIcon icon={faArrowsRotate} />
-                          </div>
-
-                          <Button
-                            className='btn text-primary btn-secondary fw-medium fs-14 btn-sm fw-medium text-primary reload-apply-filter'
-                            style={{
-                              backgroundColor: '#f9f9f9',
-                              width: 55,
+                      return (
+                        <td key={i}>
+                          <Input
+                            name={row.key}
+                            value={dataFilters[row.key] || ''}
+                            onChange={(e: React.ChangeEvent<any>) => {
+                              setDataFilter((prev) => ({
+                                ...prev,
+                                [row.key]: e.target.value,
+                              }))
                             }}
-                            onClick={handleReGetApi}
-                          >
-                            Apply
-                          </Button>
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                handleReGetApi()
+                              }
+                            }}
+                          />
+                        </td>
+                      )
+                    })}
+                    <td className='text-center' style={{height: 44}}>
+                      <div
+                        className='d-flex align-items-center justify-content-center gap-3'
+                        style={{height: 44}}
+                      >
+                        <div
+                          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 text-gray-600 text-hover-primary reload-apply-filter'
+                          onClick={() => handleResetFilter()}
+                          style={{width: 44}}
+                        >
+                          <FontAwesomeIcon icon={faArrowsRotate} />
                         </div>
-                      </td>
-                    </tr>
-                  ) : null}
-                  {data.length ? (
-                    renderRows()
-                  ) : (
-                    <tr>
-                      <td colSpan={7}>
-                        <div className='d-flex text-center w-100 align-content-center justify-content-center text-gray-600 fw-medium'>
-                          No matching records found
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </KTCardBody>
+
+                        <Button
+                          className='btn text-primary btn-secondary fw-medium fs-14 btn-sm fw-medium text-primary reload-apply-filter'
+                          style={{
+                            backgroundColor: '#f9f9f9',
+                            width: 55,
+                          }}
+                          onClick={handleReGetApi}
+                        >
+                          Apply
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ) : null}
+                {data.length ? (
+                  renderRows()
+                ) : (
+                  <tr>
+                    <td colSpan={7}>
+                      <div className='d-flex text-center w-100 align-content-center justify-content-center text-gray-600 fw-medium'>
+                        No matching records found
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </Modal.Body>
         <div
           style={{
