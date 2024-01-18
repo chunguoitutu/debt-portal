@@ -44,9 +44,9 @@ const Profile = ({data}: Props) => {
               {data?.profile?.[profile.key] || false ? (
                 data?.profile?.[profile.key]
               ) : (
-                <p className=' text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                <span className=' text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
                   None
-                </p>
+                </span>
               )}
             </p>
           </div>

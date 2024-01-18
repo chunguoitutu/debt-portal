@@ -206,6 +206,7 @@ export function Login() {
 
           <div className='d-grid mt-8'>
             <Button
+              type='submit'
               className='btn-primary text-center'
               loading={loading}
               disabled={

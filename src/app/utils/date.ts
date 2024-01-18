@@ -4,6 +4,9 @@ export function getCurrentDate(): number {
   return new Date().getDate()
 }
 
-export function formatDate(date: MomentInput): string {
-  return moment(date).isValid() ? moment(date).format('YYYY-MM-DD') : ''
+export function formatDate(
+  date: MomentInput,
+  typeFormat: 'YYYY-MM-DD' | 'MMM DD, YYYY' = 'YYYY-MM-DD'
+): string {
+  return moment(date).isValid() ? moment(date).format(typeFormat) : ''
 }
