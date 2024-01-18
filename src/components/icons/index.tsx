@@ -24,6 +24,9 @@ import Google from './Google'
 import Cascheck from './Cascheck'
 import UPCheck from './UPCheck'
 import FilterIconBorrower from './FilterIconBorrower'
+import MinusCustomer from './MinusCustomer'
+import AddCustomer from './AddCustomer'
+import AddressCustomer from './AddressCustomer'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -40,9 +43,12 @@ const icons = {
   Close: Close,
   Home: Home,
   Email: Email,
+  MinusCustomer: MinusCustomer,
+  AddCustomer: AddCustomer,
   Telephone: Telephone,
   HomeSmall: HomeSmall,
   Mes: Mes,
+  AddressCustomer: AddressCustomer,
   GoogleCheck: GoogleCheck,
   Warning: Warning,
   Google: Google,

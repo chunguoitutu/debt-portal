@@ -4,16 +4,17 @@ import {PageLink, PageTitle} from '@/_metronic/layout/core'
 import Loading from '@/components/loading'
 import NotFoundPage from '@/pages/not-found-page/NotFoundPage'
 import {useEffect, useMemo, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useLocation, useParams} from 'react-router-dom'
 
 import './style.scss'
 import HorizontalMenu from '@/components/menu'
 import {LoanInfo} from '@/app/types'
 import request from '@/app/axios'
-import {getMenuHorizontalLoanDetails} from '@/app/constants/menu'
+import {getMenuHorizontalCustomerDetails} from '@/app/constants/menu'
 import {useAuth} from '@/app/context/AuthContext'
 import BorrowersHeader from './BorrowersHeader'
-import Overview from './Overview/Overview'
+import Overview from './overview/Overview'
+
 type Props = {}
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -31,7 +32,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 ]
 
 const BorrowerDetail = (props: Props) => {
-  const {customerId = 0} = useParams()
+  const {customerId} = useParams()
   const {currentUser} = useAuth()
   const isAdminOrSuperAdmin = useMemo(
     () => ((currentUser?.priority || 0) > 2 ? false : true),
@@ -39,25 +40,26 @@ const BorrowerDetail = (props: Props) => {
   )
 
   const [error, setError] = useState<boolean>(false)
-  const [loanInfo, setLoanInfo] = useState<LoanInfo | null>(null)
+  const [customerInfo, setCustomerInfo] = useState<any | null>(null)
   const [activeMenu, setActiveMenu] = useState<string>(
-    getMenuHorizontalLoanDetails(isAdminOrSuperAdmin)?.[0].value
+    getMenuHorizontalCustomerDetails(isAdminOrSuperAdmin)?.[0].value
   )
 
-  const LOAN_DETAILS_MENU = useMemo(
-    () => getMenuHorizontalLoanDetails(isAdminOrSuperAdmin),
+  const CUSTOMER_DETAILS_MENU = useMemo(
+    () => getMenuHorizontalCustomerDetails(isAdminOrSuperAdmin),
     [isAdminOrSuperAdmin, currentUser]
   )
 
   useEffect(() => {
-    if (!+customerId) return setError(true)
+    if (!customerId) return setError(true)
 
     handleGetLoanDetails()
   }, [customerId])
 
   const CurrentComponent = useMemo(() => {
-    return getMenuHorizontalLoanDetails(isAdminOrSuperAdmin).find((el) => el.value === activeMenu)
-      ?.component
+    return getMenuHorizontalCustomerDetails(isAdminOrSuperAdmin).find(
+      (el) => el.value === activeMenu
+    )?.component
   }, [activeMenu])
 
   function handleChangeActiveMenu(newValue: string) {
@@ -66,14 +68,15 @@ const BorrowerDetail = (props: Props) => {
 
   async function handleGetLoanDetails() {
     // Expect a number
-    if (!+customerId) return
+    if (!customerId) return
 
     try {
-      // const {data} = await request.get(`/loan/details/${loanId}`)
-      // if (data.error) {
-      //   setError(true)
-      // }
-      // setLoanInfo(data.data)
+      const {data} = await request.get(`/borrower/details/${customerId}`)
+      if (data.error) {
+        setError(true)
+      }
+
+      setCustomerInfo(data.data)
     } catch (error) {
       setError(true)
     }
@@ -91,29 +94,31 @@ const BorrowerDetail = (props: Props) => {
         <div className='col-12 col-xxl-5 '>
           <div className='row h-100 flex-column flex-lg-row flex-xxl-column'>
             <div className='col-12 col-lg-6 col-xxl-12'>
-              <BorrowersHeader />
+              <BorrowersHeader data={customerInfo?.customer_details} />
             </div>
 
             <div className='col-12 col-lg-6 col-xxl-12 flex-grow-1 mt-20px mt-lg-0 mt-xxl-20px'>
-              <Overview />
+              <Overview data={customerInfo?.overview || {}} />
             </div>
           </div>
         </div>
 
         <div className='col-12 col-xxl-7'>
           <div className='card p-30px h-100'>
-            <h2 className='fs-20 fw-bolder mb-4'>Transactions History, Schedule And Bad Debt</h2>
+            <h2 className='fs-20 fw-bolder mb-4'>Details</h2>
 
             <HorizontalMenu
               className='mt-24px'
-              data={LOAN_DETAILS_MENU}
+              data={CUSTOMER_DETAILS_MENU}
               active={activeMenu}
               onChangeActiveMenu={(newValue: string) => {
                 handleChangeActiveMenu(newValue)
               }}
             />
 
-            {CurrentComponent && <CurrentComponent loanInfo={loanInfo} setLoanInfo={setLoanInfo} />}
+            {CurrentComponent && (
+              <CurrentComponent loanInfo={customerInfo} setLoanInfo={setCustomerInfo} />
+            )}
           </div>
         </div>
       </div>

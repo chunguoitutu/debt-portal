@@ -1,79 +1,57 @@
-import React from 'react'
+type Props = {
+  data: any
+}
 
-type Props = {}
+const Profiles = [
+  {
+    key: 'identification_no',
+    value: 'NRIC No',
+  },
+  {
+    key: 'gender',
+    value: 'Gender',
+  },
+  {
+    key: 'date_of_birth',
+    value: 'Date of birth',
+  },
+  {
+    key: 'country_id',
+    value: 'Nationalities',
+  },
+  {
+    key: 'company',
+    value: 'Company',
+  },
+  {
+    key: 'mobilephone_1',
+    value: 'Phone',
+  },
+  {
+    key: 'email1',
+    value: 'Email',
+  },
+]
 
-const Profile = (props: Props) => {
+const Profile = ({data}: Props) => {
   return (
-    <div>
-      Quê hương em từ lâu đã nổi tiếng khắp nơi với khu chợ nổi trên sông. Vốn dĩ bởi nơi đây có rất
-      nhiều kênh rạch và người dân di chuyển chủ yếu bằng thuyền, bằng ghe. Do vậy, mới thành những
-      buổi họp chợ trên mặt nước. Mới đầu chỉ để phục vụ người dân, sau nó mới trở thành một nét văn
-      hóa đặc trưng hấp dẫn bà con tứ xứ đến xem. Trên mặt nước những chiếc thuyền lớn có bé được
-      trang trí cầu kì, sặc sỡ với đủ thứ mặt hàng thơm ngon, hấp dẫn. Cả buổi chợ nơi đây lúc nào
-      cũng rộn rã và vui tươi, rộn ràng âm thanh người mua kẻ bán. Tất cả cứ nhẹ nhàng, yên bình
-      thật là thú vị. Quê hương em từ lâu đã nổi tiếng khắp nơi với khu chợ nổi trên sông. Vốn dĩ
-      bởi nơi đây có rất nhiều kênh rạch và người dân di chuyển chủ yếu bằng thuyền, bằng ghe. Do
-      vậy, mới thành những buổi họp chợ trên mặt nước. Mới đầu chỉ để phục vụ người dân, sau nó mới
-      trở thành một nét văn hóa đặc trưng hấp dẫn bà con tứ xứ đến xem. Trên mặt nước những chiếc
-      thuyền lớn có bé được trang trí cầu kì, sặc sỡ với đủ thứ mặt hàng thơm ngon, hấp dẫn. Cả buổi
-      chợ nơi đây lúc nào cũng rộn rã và vui tươi, rộn ràng âm thanh người mua kẻ bán. Tất cả cứ nhẹ
-      nhàng, yên bình thật là thú vị. Quê hương em từ lâu đã nổi tiếng khắp nơi với khu chợ nổi trên
-      sông. Vốn dĩ bởi nơi đây có rất nhiều kênh rạch và người dân di chuyển chủ yếu bằng thuyền,
-      bằng ghe. Do vậy, mới thành những buổi họp chợ trên mặt nước. Mới đầu chỉ để phục vụ người
-      dân, sau nó mới trở thành một nét văn hóa đặc trưng hấp dẫn bà con tứ xứ đến xem. Trên mặt
-      nước những chiếc thuyền lớn có bé được trang trí cầu kì, sặc sỡ với đủ thứ mặt hàng thơm ngon,
-      hấp dẫn. Cả buổi chợ nơi đây lúc nào cũng rộn rã và vui tươi, rộn ràng âm thanh người mua kẻ
-      bán. Tất cả cứ nhẹ nhàng, yên bình thật là thú vị. Quê hương em từ lâu đã nổi tiếng khắp nơi
-      với khu chợ nổi trên sông. Vốn dĩ bởi nơi đây có rất nhiều kênh rạch và người dân di chuyển
-      chủ yếu bằng thuyền, bằng ghe. Do vậy, mới thành những buổi họp chợ trên mặt nước. Mới đầu chỉ
-      để phục vụ người dân, sau nó mới trở thành một nét văn hóa đặc trưng hấp dẫn bà con tứ xứ đến
-      xem. Trên mặt nước những chiếc thuyền lớn có bé được trang trí cầu kì, sặc sỡ với đủ thứ mặt
-      hàng thơm ngon, hấp dẫn. Cả buổi chợ nơi đây lúc nào cũng rộn rã và vui tươi, rộn ràng âm
-      thanh người mua kẻ bán. Tất cả cứ nhẹ nhàng, yên bình thật là thú vị.Quê hương em từ lâu đã
-      nổi tiếng khắp nơi với khu chợ nổi trên sông. Vốn dĩ bởi nơi đây có rất nhiều kênh rạch và
-      người dân di chuyển chủ yếu bằng thuyền, bằng ghe. Do vậy, mới thành những buổi họp chợ trên
-      mặt nước. Mới đầu chỉ để phục vụ người dân, sau nó mới trở thành một nét văn hóa đặc trưng hấp
-      dẫn bà con tứ xứ đến xem. Trên mặt nước những chiếc thuyền lớn có bé được trang trí cầu kì,
-      sặc sỡ với đủ thứ mặt hàng thơm ngon, hấp dẫn. Cả buổi chợ nơi đây lúc nào cũng rộn rã và vui
-      tươi, rộn ràng âm thanh người mua kẻ bán. Tất cả cứ nhẹ nhàng, yên bình thật là thú vị.Quê
-      hương em từ lâu đã nổi tiếng khắp nơi với khu chợ nổi trên sông. Vốn dĩ bởi nơi đây có rất
-      nhiều kênh rạch và người dân di chuyển chủ yếu bằng thuyền, bằng ghe. Do vậy, mới thành những
-      buổi họp chợ trên mặt nước. Mới đầu chỉ để phục vụ người dân, sau nó mới trở thành một nét văn
-      hóa đặc trưng hấp dẫn bà con tứ xứ đến xem. Trên mặt nước những chiếc thuyền lớn có bé được
-      trang trí cầu kì, sặc sỡ với đủ thứ mặt hàng thơm ngon, hấp dẫn. Cả buổi chợ nơi đây lúc nào
-      cũng rộn rã và vui tươi, rộn ràng âm thanh người mua kẻ bán. Tất cả cứ nhẹ nhàng, yên bình
-      thật là thú vị.Quê hương em từ lâu đã nổi tiếng khắp nơi với khu chợ nổi trên sông. Vốn dĩ bởi
-      nơi đây có rất nhiều kênh rạch và người dân di chuyển chủ yếu bằng thuyền, bằng ghe. Do vậy,
-      mới thành những buổi họp chợ trên mặt nước. Mới đầu chỉ để phục vụ người dân, sau nó mới trở
-      thành một nét văn hóa đặc trưng hấp dẫn bà con tứ xứ đến xem. Trên mặt nước những chiếc thuyền
-      lớn có bé được trang trí cầu kì, sặc sỡ với đủ thứ mặt hàng thơm ngon, hấp dẫn. Cả buổi chợ
-      nơi đây lúc nào cũng rộn rã và vui tươi, rộn ràng âm thanh người mua kẻ bán. Tất cả cứ nhẹ
-      nhàng, yên bình thật là thú vị.Quê hương em từ lâu đã nổi tiếng khắp nơi với khu chợ nổi trên
-      sông. Vốn dĩ bởi nơi đây có rất nhiều kênh rạch và người dân di chuyển chủ yếu bằng thuyền,
-      bằng ghe. Do vậy, mới thành những buổi họp chợ trên mặt nước. Mới đầu chỉ để phục vụ người
-      dân, sau nó mới trở thành một nét văn hóa đặc trưng hấp dẫn bà con tứ xứ đến xem. Trên mặt
-      nước những chiếc thuyền lớn có bé được trang trí cầu kì, sặc sỡ với đủ thứ mặt hàng thơm ngon,
-      hấp dẫn. Cả buổi chợ nơi đây lúc nào cũng rộn rã và vui tươi, rộn ràng âm thanh người mua kẻ
-      bán. Tất cả cứ nhẹ nhàng, yên bình thật là thú vị.Quê hương em từ lâu đã nổi tiếng khắp nơi
-      với khu chợ nổi trên sông. Vốn dĩ bởi nơi đây có rất nhiều kênh rạch và người dân di chuyển
-      chủ yếu bằng thuyền, bằng ghe. Do vậy, mới thành những buổi họp chợ trên mặt nước. Mới đầu chỉ
-      để phục vụ người dân, sau nó mới trở thành một nét văn hóa đặc trưng hấp dẫn bà con tứ xứ đến
-      xem. Trên mặt nước những chiếc thuyền lớn có bé được trang trí cầu kì, sặc sỡ với đủ thứ mặt
-      hàng thơm ngon, hấp dẫn. Cả buổi chợ nơi đây lúc nào cũng rộn rã và vui tươi, rộn ràng âm
-      thanh người mua kẻ bán. Tất cả cứ nhẹ nhàng, yên bình thật là thú vị.Quê hương em từ lâu đã
-      nổi tiếng khắp nơi với khu chợ nổi trên sông. Vốn dĩ bởi nơi đây có rất nhiều kênh rạch và
-      người dân di chuyển chủ yếu bằng thuyền, bằng ghe. Do vậy, mới thành những buổi họp chợ trên
-      mặt nước. Mới đầu chỉ để phục vụ người dân, sau nó mới trở thành một nét văn hóa đặc trưng hấp
-      dẫn bà con tứ xứ đến xem. Trên mặt nước những chiếc thuyền lớn có bé được trang trí cầu kì,
-      sặc sỡ với đủ thứ mặt hàng thơm ngon, hấp dẫn. Cả buổi chợ nơi đây lúc nào cũng rộn rã và vui
-      tươi, rộn ràng âm thanh người mua kẻ bán. Tất cả cứ nhẹ nhàng, yên bình thật là thú vị.Quê
-      hương em từ lâu đã nổi tiếng khắp nơi với khu chợ nổi trên sông. Vốn dĩ bởi nơi đây có rất
-      nhiều kênh rạch và người dân di chuyển chủ yếu bằng thuyền, bằng ghe. Do vậy, mới thành những
-      buổi họp chợ trên mặt nước. Mới đầu chỉ để phục vụ người dân, sau nó mới trở thành một nét văn
-      hóa đặc trưng hấp dẫn bà con tứ xứ đến xem. Trên mặt nước những chiếc thuyền lớn có bé được
-      trang trí cầu kì, sặc sỡ với đủ thứ mặt hàng thơm ngon, hấp dẫn. Cả buổi chợ nơi đây lúc nào
-      cũng rộn rã và vui tươi, rộn ràng âm thanh người mua kẻ bán. Tất cả cứ nhẹ nhàng, yên bình
-      thật là thú vị.
+    <div className='d-flex flex-column gap-16px'>
+      {Profiles.map((profile, i) => {
+        return (
+          <div key={i} className='d-flex  gap-16px'>
+            <h1 className='col-3 fs-14 fw-normal text-gray-700 p-0 m-0'>{profile.value} </h1>
+            <p className='col-9 fs-14 fw-semibold text-gray-900 p-0 m-0'>
+              {data?.profile?.[profile.key] || false ? (
+                data?.profile?.[profile.key]
+              ) : (
+                <p className=' text-capitalize none-company-detail m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
+                  None
+                </p>
+              )}
+            </p>
+          </div>
+        )
+      })}
     </div>
   )
 }

@@ -41,6 +41,7 @@ const ValidationPhoneNumber: FC<Props> = ({
   const [otp, setOtp] = useState<string | null>(null)
   const [otpExpire, setOtpExpire] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
+
   const {applicationIdEdit} = useParams()
 
   const inputs: React.RefObject<HTMLInputElement>[] = Array.from({length: 6}, () => useRef(null))
@@ -59,7 +60,7 @@ const ValidationPhoneNumber: FC<Props> = ({
 
   const formik = useFormik({
     initialValues: {
-      phone_number: payload || '',
+      phone_number: !!payload ? (payload as string) : '',
     },
     validationSchema: validationSchema,
     onSubmit: handleSendOTP,
@@ -69,7 +70,10 @@ const ValidationPhoneNumber: FC<Props> = ({
     setLoading(true)
 
     try {
-      const {data} = await request.post('/site/send-otp', {payload: `+${payload}`})
+      if (!formik.values.phone_number) return
+      const {data} = await request.post('/site/send-otp', {
+        payload: `+${formik.values.phone_number}`,
+      })
       const {otp} = data || {}
 
       if (!otp) {
@@ -203,7 +207,7 @@ const ValidationPhoneNumber: FC<Props> = ({
             </div>
 
             <div className='place-control align-self-start d-flex flex-column gap-8px my-32px'>
-              <h3 className='fs-16 fw-semibold'>Type your 6-digit verification code</h3>
+              <h3 className='fs-16'>Type Your 6 Digit Verification Code</h3>
 
               <div className='d-flex align-items-center gap-12px'>
                 {inputs.map((inputRef, index) => (
@@ -218,7 +222,7 @@ const ValidationPhoneNumber: FC<Props> = ({
                   />
                 ))}
               </div>
-              {error && <ErrorMessage message={error || ''} />}
+              {error && <ErrorMessage message={error} />}
             </div>
 
             <span className='text-gray-600 fw-semibold fs-14'>
@@ -260,24 +264,34 @@ const ValidationPhoneNumber: FC<Props> = ({
                   </span>
                 </Tippy>
               }
+              required={true}
+              {...formik.getFieldProps('phone_number')}
             />
           </>
         )}
       </div>
       <div className='border-top border-gray-200 p-30px'>
-        <div className='d-flex align-items-center justify-content-center gap-8px'>
-          <Button className='btn-secondary fs-6' onClick={onClose} disabled={loading}>
-            Cancel
-          </Button>
-          <Button
-            disabled={loading}
-            loading={loading}
-            className='fs-6 btn-primary'
-            onClick={!otp ? handleSendOptToPhone : handleVerifyOTP}
-          >
-            Confirm
-          </Button>
-        </div>
+        {otp ? (
+          <div className='d-flex align-items-center justify-content-center gap-8px'>
+            <Button className='btn-secondary fs-6' onClick={onClose}>
+              Cancel
+            </Button>
+            <Button className='fs-6 btn-primary' onClick={handleVerifyOTP}>
+              Confirm
+            </Button>
+          </div>
+        ) : (
+          <div className='d-flex justify-content-end'>
+            <Button
+              className='btn-primary fs-6 w-fit-content ms-auto'
+              loading={loading}
+              disabled={loading}
+              onClick={() => formik.handleSubmit()}
+            >
+              Send OTP
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

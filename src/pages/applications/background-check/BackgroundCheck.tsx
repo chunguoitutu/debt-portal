@@ -214,23 +214,23 @@ const BackgroundCheck: FC<PropsStepApplication> = ({
         opacity: Number(toolsCheckCount?.validatePhone) !== 0,
         background: 'rgba(232, 255, 243, 0.85)',
         onclick: () => {
-          if (!!values.mobilephone_1) {
-            setShowValidationPhone(true)
-          } else {
-            swalConfirm.fire({
-              icon: 'error',
-              title: 'You must complete entering Contact Information',
-              showCancelButton: false,
-              confirmButtonText: 'OK',
-              customClass: {
-                popup: 'm-w-300px',
-                htmlContainer: 'fs-3',
-                cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
-                confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
-                actions: 'd-flex justify-content-center w-100 ',
-              },
-            })
-          }
+          // if (!!values.mobilephone_1) {
+          setShowValidationPhone(true)
+          // } else {
+          //   swalConfirm.fire({
+          //     icon: 'error',
+          //     title: 'You must complete entering Contact Information',
+          //     showCancelButton: false,
+          //     confirmButtonText: 'OK',
+          //     customClass: {
+          //       popup: 'm-w-300px',
+          //       htmlContainer: 'fs-3',
+          //       cancelButton: 'btn btn-lg order-0 fs-5 btn-secondary m-8px',
+          //       confirmButton: 'order-1 fs-5 btn btn-lg btn-primary m-8px',
+          //       actions: 'd-flex justify-content-center w-100 ',
+          //     },
+          //   })
+          // }
         },
       },
 
