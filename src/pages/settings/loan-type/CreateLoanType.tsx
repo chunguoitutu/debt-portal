@@ -16,6 +16,7 @@ import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
 import {useAuth} from '@/app/context/AuthContext'
+import clsx from 'clsx'
 
 type Props = {
   setLoadApi: any
@@ -165,7 +166,7 @@ const CreateLoanType = ({
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+      dialogClassName='modal-dialog modal-dialog-centered mw-800px'
       show={show}
       onHide={handleClose}
       backdrop={true}
@@ -183,91 +184,67 @@ const CreateLoanType = ({
             overflowY: 'auto',
             padding: '30px 27px 30px 30px',
           }}
-          className='modal-body  '
+          className='modal-body row'
         >
-          <div
-            ref={stepperRef}
-            className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
-            id='kt_modal_create_app_stepper'
-          >
-            <div className='flex-row-fluid'>
-              <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-                {rows.map((row, i) => {
-                  const {infoCreateEdit, name, key} = row
-                  const {
-                    typeInput,
-                    isRequired,
-                    typeComponent,
-                    component,
-                    subTextWhenChecked,
-                    subTextWhenNoChecked,
-                  } = infoCreateEdit || {}
+          {rows.map((row, i) => {
+            const {infoCreateEdit, name, key} = row
+            const {
+              typeInput,
+              isRequired,
+              typeComponent,
+              component,
+              subTextWhenChecked,
+              subTextWhenNoChecked,
+              column,
+            } = infoCreateEdit || {}
 
-                  const Component = component as any
+            const Component = component as any
 
-                  if (['id', 'status'].includes(row.key)) {
-                    return null
-                  }
+            if (['id', 'status'].includes(row.key)) {
+              return null
+            }
 
-                  const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
+            const props = row.key === 'interest' ? {noThereAreCommas: false} : {}
 
-                  if (typeComponent === 'checkbox-rounded') {
-                    return (
-                      <div className='mt-16px' key={i}>
-                        <Component
-                          label={name}
-                          checked={values[key]}
-                          onChange={handleChange}
-                          subTextWhenChecked={subTextWhenChecked}
-                          subTextWhenNoChecked={subTextWhenNoChecked}
-                          id={key}
-                        />
-                      </div>
-                    )
-                  }
-
-                  return (
-                    <div key={row.key} style={{flex: '0 0 50%'}}>
-                      {row.key === 'description' ? (
-                        <div className='mb-16px'>
-                          <TextArea
-                            label={row.name}
-                            name={row.key}
-                            value={values[row.key] || ''}
-                            onChange={handleChange}
-                            error={errors[row.key] as string}
-                            touched={!!touched[row.key]}
-                          />
-                        </div>
-                      ) : (
-                        <div className='d-flex flex-column mb-16px '>
-                          <Input
-                            type={typeInput || 'text'}
-                            label={row.name}
-                            name={row.key}
-                            value={values[row.key] || ''}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            required={isRequired}
-                            error={errors[row.key] as string}
-                            touched={!!touched[row.key]}
-                            {...props}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
-                <div className='mt-16px'>
-                  <CheckboxRounded
-                    label='Status'
-                    checked={status}
-                    onChange={() => setStatus(!status)}
-                    id='status'
+            if (typeComponent === 'checkbox-rounded') {
+              return (
+                <div className='mt-16px col-6' key={i}>
+                  <Component
+                    label={name}
+                    checked={values[key]}
+                    onChange={handleChange}
+                    subTextWhenChecked={subTextWhenChecked}
+                    subTextWhenNoChecked={subTextWhenNoChecked}
+                    id={key}
                   />
                 </div>
-              </form>
-            </div>
+              )
+            }
+
+            return (
+              <div className={clsx(['mb-16px', column ? 'col-6' : 'col-12'])} key={i}>
+                <Input
+                  type={typeInput || 'text'}
+                  label={row.name}
+                  name={row.key}
+                  value={values[row.key] || ''}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required={isRequired}
+                  error={errors[row.key] as string}
+                  touched={!!touched[row.key]}
+                  {...props}
+                />
+              </div>
+            )
+          })}
+          <div className='mt-16px col-6'>
+            <CheckboxRounded
+              label='Status'
+              checked={status}
+              onChange={() => setStatus(!status)}
+              id='status'
+            />
           </div>
         </div>
 

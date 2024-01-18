@@ -272,6 +272,7 @@ const CreateEditRole: FC<Props> = ({data, show, config, onClose, onRefreshListin
       title={data ? `Edit Role "${data.role_name}"` : 'New Role'}
       show={show}
       onClose={onClose}
+      dialogClassName='mw-800px'
     >
       <form className='py-30px ps-30px pe-30px'>
         {(rows || [])

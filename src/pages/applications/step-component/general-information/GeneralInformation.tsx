@@ -514,7 +514,8 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     if (typeComponent === 'Button') {
       if (
         values.status === ApplicationStatus.APPROVED ||
-        values.status === ApplicationStatus.REJECTED
+        values.status === ApplicationStatus.REJECTED ||
+        values.status === ApplicationStatus.AWAITING_APPROVAL
       )
         return <></>
       return (

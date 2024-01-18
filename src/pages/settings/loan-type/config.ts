@@ -20,6 +20,9 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
       classNameTableHead: 'w-50px w-90px',
       key: 'id',
       name: 'ID',
+      infoCreateEdit: {
+        column: 6
+      }
     },
     {
       classNameTableHead: 'w-200px min-w-150px',
@@ -30,32 +33,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         type: 'input',
         typeInput: 'text',
         isRequired: true,
-      },
-    },
-    {
-      classNameTableHead: 'w-500px min-w-150px',
-      classNameTableBody: 'four-line',
-      key: 'description',
-      name: 'Description',
-    },
-    {
-      classNameTableHead: 'w-200px mt-3 pe-3 min-w-100px',
-      key: 'interest',
-      name: 'Default Interest',
-      infoCreateEdit: {
-        type: 'input',
-        typeInput: 'number',
-        isRequired: true,
-      },
-    },
-    {
-      classNameTableHead: 'w-200px ps-7 min-w-120px',
-      key: 'quota_new',
-      name: 'Quota New',
-      infoCreateEdit: {
-        type: 'input',
-        typeInput: 'number',
-        isRequired: true,
+        column: 6
       },
     },
     {
@@ -66,7 +44,19 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         type: 'input',
         typeInput: 'number',
         isRequired: true,
+        column: 6
       },
+    },
+    {
+      classNameTableHead: 'w-500px min-w-150px',
+      classNameTableBody: 'four-line',
+      key: 'description',
+      name: 'Description',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'text',
+        column: 6
+      }
     },
     {
       classNameTableHead: 'w-200px pe-3 min-w-150px',
@@ -76,6 +66,18 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         type: 'input',
         typeInput: 'number',
         isRequired: true,
+        column: 6
+      },
+    },
+    {
+      classNameTableHead: 'w-200px mt-3 pe-3 min-w-100px',
+      key: 'interest',
+      name: 'Default Interest',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+        column: 6,
       },
     },
     {
@@ -86,6 +88,18 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         type: 'input',
         typeInput: 'number',
         isRequired: true,
+        column: 6
+      },
+    },
+    {
+      classNameTableHead: 'w-200px ps-7 min-w-120px',
+      key: 'quota_new',
+      name: 'Quota New',
+      infoCreateEdit: {
+        type: 'input',
+        typeInput: 'number',
+        isRequired: true,
+        column: 6
       },
     },
     {
@@ -96,6 +110,7 @@ export const LOAN_TYPE_TABLE_CONFIG: TableConfig = {
         type: 'input',
         typeInput: 'number',
         isRequired: true,
+        column: 6
       },
     },
     {
