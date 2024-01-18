@@ -1,4 +1,4 @@
-import {EmploymentStatus} from './common'
+import { EmploymentStatus } from './common'
 
 export type CustomerVehicle = {
   id: number
@@ -34,4 +34,13 @@ export type CustomerEmployment = {
   pay_date: string
   bankrupted: number
   bankrupt_plan: number
+}
+
+export type CustomerCPF = {
+  id: number
+  borrower_id: number
+  date: any
+  employer: any
+  amount: any
+  month: any
 }
