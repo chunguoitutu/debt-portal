@@ -870,7 +870,10 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                       id='kt_table_users'
                       className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
                     >
-                      <thead className='table-foot-lookup position-sticky top-0 bg-white border-bottom border-gray-200'>
+                      <thead
+                        className='table-foot-lookup position-sticky top-0 bg-white border-bottom border-gray-200'
+                        style={{zIndex: 1}}
+                      >
                         <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
                           {rowsConfigColumn
                             .filter((item) => !item.isHide)

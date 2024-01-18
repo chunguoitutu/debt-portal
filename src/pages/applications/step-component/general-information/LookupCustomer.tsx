@@ -348,7 +348,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             {/*  */}
           </div>
 
-          <div className='table-responsive mt-1 mh-350px'>
+          <div className='table-responsive mt-1 mh-350px ps-2 pe-2'>
             <table
               id='kt_table_users'
               className='table align-middle table-row-dashed fs-6 no-footer mb-0'

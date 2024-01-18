@@ -10,7 +10,7 @@ const HeaderUserMenu: FC = () => {
 
   return (
     <div className='dropdown-menu-application'>
-      <div className='dropdown-fixed fw-bold py-4 fs-6 w-300px'>
+      <div className='dropdown-fixed fw-bold py-4 fs-6 w-300px' style={{zIndex: 999999}}>
         <div className='d-flex ms-5 p-2'>
           <div className='symbol symbol-50px me-5'>
             <Avatar

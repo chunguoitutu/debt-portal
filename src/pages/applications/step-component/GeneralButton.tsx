@@ -201,6 +201,7 @@ const GeneralButton: FC<Props> = (props) => {
             timer: 1500,
             icon: 'success',
             title: 'Application successfully cancelled',
+            customClass: 'fs-5 fw-bolder',
           })
         } else {
           await request.put(`/application/cancel-application/${applicationIdEdit}`, {
@@ -213,6 +214,7 @@ const GeneralButton: FC<Props> = (props) => {
             timer: 1500,
             icon: 'success',
             title: 'Application successfully cancelled',
+            customClass: 'fs-5',
           })
         }
       }
