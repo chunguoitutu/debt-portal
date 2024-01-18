@@ -418,3 +418,19 @@ input[type='number']::-webkit-outer-spin-button {
 .padding-model-header {
   padding: 30px 25px 30px 30px;
 }
+
+.default_overview_customer {
+  color: var(--Primary---bs-primary, #1b84ff);
+  padding: 0;
+  margin: 0;
+  background-color: #e0eeff;
+  margin-left: 8px;
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 12px; /* 92.308% */
+}
