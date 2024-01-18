@@ -1,6 +1,6 @@
-import { Option } from '@/app/types'
-import { CustomerCPF, CustomerEmployment, CustomerVehicle } from '@/app/types/customer'
-import { POSITION } from '@/app/utils'
+import {Option} from '@/app/types'
+import {CustomerCPF, CustomerEmployment, CustomerVehicle} from '@/app/types/customer'
+import {POSITION} from '@/app/utils'
 
 type Config<T = any> = ConfigOne<T> | ConfigTwo<T>
 
@@ -72,18 +72,51 @@ export const CUSTOMER_EMPLOYMENT_CONFIG: Config<keyof CustomerEmployment>[] = [
 export const CPF_CONFIG: Config<keyof CustomerCPF>[] = [
   {
     key: 'date',
-    label: 'Date'
+    label: 'Date',
   },
   {
     key: 'employer',
-    label: 'Employer'
+    label: 'Employer',
   },
   {
     key: 'amount',
-    label: 'Amount'
+    label: 'Amount',
   },
   {
     key: 'month',
-    label: 'Month'
+    label: 'Month',
+  },
+]
+
+export const CUSTOMER_INCOME_CONFIG: Config<keyof CustomerEmployment>[] = [
+  {
+    key: 'annual_income',
+    label: 'Annual Gross Income',
+    format: 'money',
+  },
+  {
+    key: 'six_months_income',
+    label: 'Past 6 Month Gross Income',
+    format: 'money',
+  },
+  {
+    key: 'monthly_income',
+    label: 'Average Monthly Income',
+    format: 'money',
+  },
+  {
+    key: 'monthly_income_1',
+    label: 'Gross Monthly Income (last month)',
+    format: 'money',
+  },
+  {
+    key: 'monthly_income_2',
+    label: 'Gross Monthly Income (last month -1)',
+    format: 'money',
+  },
+  {
+    key: 'monthly_income_3',
+    label: 'Gross Monthly Income (last month -2)',
+    format: 'money',
   },
 ]

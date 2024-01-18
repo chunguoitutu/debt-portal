@@ -31,6 +31,7 @@ export type CustomerEmployment = {
   monthly_income_2: number
   monthly_income_3: number
   six_months_income: number
+  monthly_income: number
   pay_date: string
   bankrupted: number
   bankrupt_plan: number
