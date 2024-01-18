@@ -25,15 +25,9 @@ const LoanDetails: FC<PropsStepApplication> = ({
       optionListing,
       config,
     })
-    if (isFirstGet) {
-      onFetchDataList()
-    } else {
-      const listConfig = config.filter((item) => item.dependencyApi)
 
-      listConfig.forEach((item) => {
-        setFieldValue(item.key, getIdDefault(optionListing[item.keyOfOptionFromApi || item.key]))
-      })
-    }
+    isFirstGet && onFetchDataList()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
