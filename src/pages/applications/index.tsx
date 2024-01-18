@@ -26,6 +26,7 @@ import {
 } from '@/app/types'
 import {
   APPLICATION_STEP_CONTACT_INFO,
+  SESSION_NAME,
   STEP_APPLICATION,
   handleCreateBlockAddress,
 } from '@/app/constants'
@@ -38,7 +39,6 @@ import {
 } from '@/app/utils'
 import {swalToast} from '@/app/swal-notification'
 import clsx from 'clsx'
-import Reject from './step-component/reject/Reject'
 import Icons from '@/components/icons'
 import Cookies from 'js-cookie'
 import {useSocket} from '@/app/context/SocketContext'
@@ -302,6 +302,12 @@ export const Applications = () => {
         rejection, // only rejected (status = 2)
         cpf,
       } = data.data || ({} as ApplicationPayload & {[key: string]: any})
+
+      // set recently viewed application
+      sessionStorage.setItem(
+        SESSION_NAME.recentlyViewedApplicationId,
+        JSON.stringify(applicationIdEdit)
+      )
 
       setTools(
         data?.tools || {

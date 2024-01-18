@@ -32,7 +32,7 @@ import {FilterApplication} from './FilterApplication'
 import {faClose, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {useSocket} from '@/app/context/SocketContext'
 import {Checkbox} from '@/components/checkbox'
-import {GLOBAL_CONSTANTS} from '@/app/constants'
+import {GLOBAL_CONSTANTS, SESSION_NAME} from '@/app/constants'
 import gridImg from '@/app/images/grid.svg'
 import useClickOutside from './../../../app/hooks/useClickOutside'
 
@@ -98,9 +98,13 @@ const ApplicationListing = () => {
   const {socket} = useSocket()
 
   // Get search criteria from session
-  const sessionData = isObject(parseJson(sessionStorage.getItem('application') || ''))
-    ? parseJson(sessionStorage.getItem('application') || '')
+  const sessionData = isObject(
+    parseJson(sessionStorage.getItem(SESSION_NAME.applicationFilter) || '')
+  )
+    ? parseJson(sessionStorage.getItem(SESSION_NAME.applicationFilter) || '')
     : {}
+  const idRecentlyViewed =
+    +parseJson(sessionStorage.getItem(SESSION_NAME.recentlyViewedApplicationId)) || 0
 
   const [showInput, setShowInput] = React.useState<boolean>(false)
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
@@ -222,7 +226,7 @@ const ApplicationListing = () => {
       currentPage,
     }
 
-    sessionStorage.setItem('application', JSON.stringify(data))
+    sessionStorage.setItem(SESSION_NAME.applicationFilter, JSON.stringify(data))
   }
 
   function handleNavigateEditApplication(item: ApplicationItem) {
@@ -236,8 +240,15 @@ const ApplicationListing = () => {
   const renderRows = () => {
     return data.map((item, idx) => {
       const termUnit = item?.term_unit
+
       return (
-        <tr key={idx} className='hover-tr-listing cursor-pointer'>
+        <tr
+          key={idx}
+          className={clsx([
+            'hover-tr-listing cursor-pointer',
+            idRecentlyViewed === item.id && 'bg-light-primary',
+          ])}
+        >
           {rowsConfigColumn.map(
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}

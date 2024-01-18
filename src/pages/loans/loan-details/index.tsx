@@ -12,6 +12,7 @@ import {LoanInfo} from '@/app/types'
 import request from '@/app/axios'
 import {getMenuHorizontalLoanDetails} from '@/app/constants/menu'
 import {useAuth} from '@/app/context/AuthContext'
+import {SESSION_NAME} from '@/app/constants'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -72,6 +73,9 @@ const LoanDetails = () => {
       if (data.error) {
         setError(true)
       }
+
+      // set recently viewed application
+      sessionStorage.setItem(SESSION_NAME.recentlyViewedLoanId, JSON.stringify(loanId))
 
       setLoanInfo(data.data)
     } catch (error) {

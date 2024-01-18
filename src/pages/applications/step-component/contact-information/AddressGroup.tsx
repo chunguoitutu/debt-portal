@@ -105,7 +105,7 @@ const AddressGroup: FC<Props> = ({
             [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(values.status || 0)
           }
         >
-          + Add New Block
+          + Add Another Block
         </Button>
       </div>
     )

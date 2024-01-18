@@ -4,3 +4,10 @@ export enum ApplicationStatus {
   'REJECTED' = 2,
   'APPROVED' = 3,
 }
+
+export enum TermUnit {
+  'DAILY' = '0',
+  'WEEKLY' = '1',
+  'BI-WEEKLY' = '2',
+  'MONTHLY' = '3',
+}

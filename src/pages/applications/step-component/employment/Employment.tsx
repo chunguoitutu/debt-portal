@@ -135,10 +135,9 @@ const Employment: FC<PropsStepApplication> = (props) => {
 
     const className = !column ? 'flex-grow-1' : 'input-wrap flex-shrink-0 w-100 w-xxl-250px'
 
-    const isDisableApproveOrReject = [
-      ApplicationStatus.APPROVED,
-      ApplicationStatus.REJECTED,
-    ].includes(values.status)
+    const isApproveOrReject = [ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
+      values.status
+    )
 
     useEffect(() => {
       if (errors[key] && touched[key]) {
@@ -166,7 +165,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
       return (
         <div className={clsx(['d-flex flex-column w-100', column && 'w-xxl-unset'])}>
           <Component
-            disabled={isDisableApproveOrReject}
+            disabled={isApproveOrReject}
             value={values[key] || ''}
             onChange={handleChange}
             name={key}
@@ -260,7 +259,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
             transparent={key === 'company_telephone' ? false : true}
             type={typeInput === 'phone' ? 'number' : typeInput || 'text'}
             classShared={className}
-            disabled={disabled || isDisableApproveOrReject}
+            disabled={disabled || isApproveOrReject}
             onBlur={(e: any) => {
               handleBlur(e)
 
@@ -283,7 +282,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
                 <Tippy
                   offset={[120, 0]}
                   content='Please choose the phone number you prefer.'
-                  disabled={isDisableApproveOrReject}
+                  disabled={isApproveOrReject}
                 >
                   {/* Wrapper with a span tag to show tooltip */}
                   <span>

@@ -5,9 +5,15 @@ import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 import {useParams} from 'react-router-dom'
-import {formatNumber, getIdDefault, isFirstGetStepApplication} from '@/app/utils'
+import {
+  convertInterestApplication,
+  formatNumber,
+  getIdDefault,
+  isFirstGetStepApplication,
+} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
-import {ApplicationStatus} from '@/app/types/enum'
+import {ApplicationStatus, TermUnit} from '@/app/types/enum'
+import {error} from 'console'
 
 const LoanDetails: FC<PropsStepApplication> = ({
   config = [],
@@ -15,6 +21,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   optionListing,
   setOptionListing,
 }) => {
+  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
   const {applicationIdEdit} = useParams()
   const {company_id, priority} = useAuth()
 
@@ -31,26 +38,15 @@ const LoanDetails: FC<PropsStepApplication> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const {values, touched, errors, handleChange, handleBlur, setFieldValue} = formik
-
   useEffect(() => {
     if (!optionListing.loan_type) return
     const currentItem = optionListing.loan_type.find(
-      (el: any) => el.id === Number(formik.values?.loan_type_id)
+      (el: any) => el.id === Number(values?.loan_type_id)
     )
 
-    const interestByDay = formatNumber(currentItem?.interest / 31)
-
-    const interestByYear = currentItem?.interest * 12
-
-    if (formik.values.term_unit.toString() === '0') {
-      setFieldValue('interest', interestByDay || '')
-    } else if (formik.values.term_unit.toString() === '1') {
-      setFieldValue('interest', +currentItem?.interest || '')
-    } else if (formik.values.term_unit.toString() === '2') {
-      setFieldValue('interest', interestByYear || '')
-    }
-  }, [formik.values.term_unit, optionListing.loan_type_id, formik.values.interest])
+    const interest = convertInterestApplication(+currentItem.interest, values.term_unit)
+    setFieldValue('interest', interest || '')
+  }, [values.term_unit, optionListing.loan_type_id])
 
   async function onFetchDataList() {
     try {
@@ -89,7 +85,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
         if (isDraftOrCreate) {
           setFieldValue(`${config.key}`, itemDefault.id)
           setFieldValue(`interest`, itemDefault.interest || '')
-          setFieldValue('term_unit', 1)
+          setFieldValue('term_unit', TermUnit.MONTHLY)
           setFieldValue('monthly_late_fee', itemDefault.late_fee || '')
           setFieldValue('late_interest_per_month_percent', itemDefault.late_interest || '')
         }
@@ -316,7 +312,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
             keyLabelOption={keyLabelOfOptions}
             options={!!dependencyApi ? optionListing[keyOfOptionFromApi || key] || [] : options}
             touched={touched[key]}
-            errors={errors[key]}
+            error={errors[key]}
           />
         </div>
       )

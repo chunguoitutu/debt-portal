@@ -22,7 +22,7 @@ import numeral from 'numeral'
 import {PageTitle, PageLink} from '@/_metronic/layout/core'
 import {useNavigate} from 'react-router-dom'
 import Badge from '@/components/badge/Badge'
-import {GLOBAL_CONSTANTS} from '@/app/constants'
+import {GLOBAL_CONSTANTS, SESSION_NAME} from '@/app/constants'
 import {Checkbox} from '@/components/checkbox'
 import gridImg from '@/app/images/grid.svg'
 import useClickOutside from '@/app/hooks/useClickOutside'
@@ -77,6 +77,8 @@ const LoanListing = () => {
   const sessionData = isObject(parseJson(sessionStorage.getItem('loan') || ''))
     ? parseJson(sessionStorage.getItem('loan') || '')
     : {}
+  const idRecentlyViewed =
+    +parseJson(sessionStorage.getItem(SESSION_NAME.recentlyViewedLoanId)) || 0
 
   const {settings, rows} = LOAN_LISTING_CONFIG || {}
   const {showAction = true, showEditButton} = settings || {}
@@ -166,7 +168,13 @@ const LoanListing = () => {
       const termUnit = item?.application?.term_unit
 
       return (
-        <tr key={idx} className='hover-tr-listing cursor-pointer'>
+        <tr
+          key={idx}
+          className={clsx([
+            'hover-tr-listing cursor-pointer',
+            item.id === idRecentlyViewed && 'bg-light-primary',
+          ])}
+        >
           {rowsConfigColumn.map(
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
