@@ -3,6 +3,7 @@ import Receipt from '@/pages/loans/loan-details/Receipt'
 import {LoanDetailsProps, MenuProps} from '../types'
 import BadDebt from '@/pages/loans/loan-details/BadDebt'
 import LoanAssignmentAndActionLog from '@/pages/loans/loan-details/LoanAssignmentAndActionLog'
+import OutstandingLoan from '@/pages/borrowers/borrowers-details/Details/OutstandingLoan'
 
 export function getMenuHorizontalLoanDetails(isAdminOrSuperAdmin: boolean) {
   let LOAN_DETAILS_MENU: MenuProps<LoanDetailsProps>[] = [
@@ -43,4 +44,32 @@ export function getMenuHorizontalLoanDetails(isAdminOrSuperAdmin: boolean) {
   }
 
   return LOAN_DETAILS_MENU
+}
+
+export function getMenuHorizontalCustomerDetails(isAdminOrSuperAdmin: boolean) {
+  let CUSTOMER_DETAILS_MENU: MenuProps<LoanDetailsProps>[] = [
+    {
+      label: 'Outstanding Loan',
+      value: '1',
+      component: OutstandingLoan,
+    },
+    {
+      label: 'Full Settled Loan',
+      value: '2',
+    },
+    {
+      label: 'Unrecoverable Loan',
+      value: '3',
+    },
+    {
+      label: 'Supporting Attachment',
+      value: '4',
+    },
+    {
+      label: 'Remark',
+      value: '5',
+    },
+  ]
+
+  return CUSTOMER_DETAILS_MENU
 }

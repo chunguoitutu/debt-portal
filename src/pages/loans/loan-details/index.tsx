@@ -47,6 +47,7 @@ const LoanDetails = () => {
     () => getMenuHorizontalLoanDetails(isAdminOrSuperAdmin),
     [isAdminOrSuperAdmin, currentUser]
   )
+  console.log(LOAN_DETAILS_MENU)
 
   useEffect(() => {
     if (!+loanId) return setError(true)

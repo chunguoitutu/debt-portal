@@ -424,7 +424,11 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 {showViewButton && (
                   <ButtonViewDetail
                     onClick={() => {
-                      navigate(`/customers/details/${item?.id}`)
+                      navigate(`/customers/details/${item?.customer_no}`, {
+                        state: {
+                          id: item?.id,
+                        },
+                      })
                     }}
                   />
                 )}
