@@ -257,34 +257,6 @@ const LoanListing = () => {
                 )
               }
 
-              if (key === 'loan_term') {
-                let unitLabel = ''
-
-                if (termUnit === 0) {
-                  if (value === 0) {
-                    unitLabel = 'Month'
-                  } else if (value > 0 && value <= 1) {
-                    unitLabel = 'Day'
-                  } else if (value > 1) {
-                    unitLabel = 'Days'
-                  }
-                } else if (termUnit === 1) {
-                  unitLabel = value > 1 ? 'Months' : 'Month'
-                } else if (termUnit === 2) {
-                  unitLabel = value > 1 ? 'Years' : 'Year'
-                }
-
-                return (
-                  <td
-                    key={i}
-                    className='ps-8 text-end pe-8 fs-6 fw-medium'
-                    style={{color: '#071437'}}
-                  >
-                    {`${value} ${unitLabel}`}
-                  </td>
-                )
-              }
-
               if (key === 'status') {
                 let title: string = ''
                 let color: string = ''
