@@ -180,9 +180,9 @@ const CreateLoanType = ({
         </div>
         <div
           style={{
-            maxHeight: 'calc(100vh - 200px)',
+            maxHeight: 'calc(100vh - 350px)',
             overflowY: 'auto',
-            padding: '30px 25px 30px 30px',
+            padding: '30px 30px 30px 30px',
           }}
           className='modal-body'
         >
