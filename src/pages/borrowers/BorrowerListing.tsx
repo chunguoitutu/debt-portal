@@ -584,7 +584,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
               </div>
             </div>
             {/* chart line */}
-            <div className='col-12 col-lg-6 col-xxl-12 my-24px my-lg-0 mt-xxl-12px overflow-hidden'>
+            <div className='col-12 col-lg-6 col-xxl-12 my-24px my-lg-0 mt-xxl-14px overflow-hidden'>
               <div className='card h-100'>
                 <div className='loan-header p-30px pt-30px pb-0 position-relative '>
                   <div className='d-flex flex-column'>
@@ -609,7 +609,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
         </div>
 
         {/* right */}
-        <div className='col-12 col-xxl-9 d-flex flex-column' style={{height: '100%'}}>
+        <div className='col-12 col-xxl-9 d-flex flex-column ps-xxl-1' style={{height: '100%'}}>
           <div className='card w-100 d-flex flex-column overflow-auto mt-lg-6 mt-xxl-0'>
             <div className='h-100 overflow-hidden flex-grow-1'>
               <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
