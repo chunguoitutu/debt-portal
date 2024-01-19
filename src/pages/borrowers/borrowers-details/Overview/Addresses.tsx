@@ -82,7 +82,7 @@ const Addresses = ({data}: Props) => {
   }
   return (
     <div>
-      {newData.length > 1
+      {newData.length > 0
         ? (newData || [])?.map((array: any, index) => {
             return (
               <div key={index} className=''>

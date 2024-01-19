@@ -8,7 +8,6 @@ import FullName from './completion/FullName'
 import Address from './completion/Address'
 import GrossMonthlyIncomeCompletion from './completion/GrossMonthlyIncomeCompletion'
 import LableOptions from './completion/LableOptions'
-import SpecialZation from './completion/SpecialZation'
 import RenderOptionsApi from './completion/RenderOptionsApi'
 import MLCBCheck from './completion/MLCBCheck'
 import EmploymentStatus from './completion/EmploymentStatus'
@@ -277,7 +276,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'Acceptance Fee',
     column: 6,
-    typeInput: 'number',
+    typeInput: 'money',
     required: true,
     noThereAreCommas: false,
     validationFormik: Yup.number().required(convertMessageErrorRequired('Acceptance Fee')),
@@ -312,7 +311,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     label: 'Late Fee',
     column: 6,
-    typeInput: 'number',
+    typeInput: 'money',
     required: true,
     noThereAreCommas: false,
     validationFormik: Yup.number().required(convertMessageErrorRequired('Late Fee')),
@@ -912,7 +911,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     ],
   },
   {
-    col: 'col-xl-6',
+    col: 'col-xl-8',
     title: 'Loan Details',
     config: [
       [
@@ -996,7 +995,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     ],
   },
   {
-    col: 'col-xl-6',
+    col: 'col-xl-4',
     title: 'Contact Information',
     config: [
       [

@@ -53,7 +53,10 @@ const LoanDetails: FC<PropsStepApplication> = ({
       (el: any) => el.id === Number(values?.loan_type_id)
     )
 
+    if (!currentItem) return
+
     const interest = convertInterestApplication(+currentItem.interest, values.term_unit)
+
     setFieldValue('interest', interest || '')
   }, [values.term_unit, optionListing.loan_type_id])
 
@@ -253,7 +256,11 @@ const LoanDetails: FC<PropsStepApplication> = ({
                 setFieldValue('amount_of_acceptance', +(+e.target.value / 10).toFixed(2) || '')
               handleBlur(e)
             }}
-            transparent={key === 'loan_amount_requested' ? true : false}
+            transparent={[
+              'loan_amount_requested',
+              'amount_of_acceptance',
+              'monthly_late_fee',
+            ].includes(key)}
             name={key}
             classShared={className}
             disabled={isDisableForce || isApprovedOrRejected}
