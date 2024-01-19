@@ -49,8 +49,8 @@ const CPF = ({data}: any) => {
     <div className='d-flex flex-column gap-12px'>
       {dataParse?.length ? (
         dataParse?.map((cpf: CustomerCPF, i: number) => {
-          const counter = formatDate(cpf.date, 'MMM DD, YYYY')
-          const isActive = showCpf.includes(cpf.id)
+          const counter = formatDate(cpf?.date, 'MMM DD, YYYY')
+          const isActive = showCpf?.includes(cpf.id)
 
           return (
             <div
@@ -63,7 +63,7 @@ const CPF = ({data}: any) => {
               {/* Header */}
               <div
                 className='d-flex align-items-center justify-content-between gap-24px cursor-pointer'
-                onClick={() => handleToggleViewCpf(cpf.id)}
+                onClick={() => handleToggleViewCpf(cpf?.id)}
                 key={cpf.date}
               >
                 <div className='d-flex align-items-center gap-4px' key={i}>
@@ -89,7 +89,7 @@ const CPF = ({data}: any) => {
               {isActive && (
                 <div className='grid-2-column gap-12px' key={i + 1}>
                   {CPF_CONFIG?.map((el, i) => {
-                    let value = cpf[el.key]
+                    let value = cpf?.[el.key]
 
                     if (el?.key === 'date') {
                       value = formatDate(value, 'MMM DD, YYYY')
@@ -99,8 +99,8 @@ const CPF = ({data}: any) => {
 
                     return (
                       <Fragment key={i}>
-                        <span className='fs-14 text-gray-700 w-fit-content'>{el.label}</span>
-                        <span className='fs-14 text-gray-900 fw-semibold'>{value}</span>
+                        <span className='fs-14 text-gray-700 w-fit-content'>{el.label || ''}</span>
+                        <span className='fs-14 text-gray-900 fw-semibold'>{value || ''}</span>
                       </Fragment>
                     )
                   })}
