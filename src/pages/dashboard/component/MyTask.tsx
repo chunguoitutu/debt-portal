@@ -1,20 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTIcon} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import {KTIcon} from '../../../_metronic/helpers'
+import {Dropdown1} from '../../../_metronic/partials/content/dropdown/Dropdown1'
 
 type Props = {
   className: string
 }
 
-const ListsWidget5: React.FC<Props> = ({className}) => {
+const MyTask: React.FC<Props> = ({className}) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header align-items-center border-0 mt-4'>
         <h3 className='card-title align-items-start flex-column'>
           <span className='fw-bold mb-2 text-dark'>Activities</span>
-          <span className='text-muted fw-semibold fs-7'>890,344 Sales</span>
+          <span className='text-muted fw-semibold fs-7'>Assigned to Me</span>
         </h3>
         <div className='card-toolbar'>
           {/* begin::Menu */}
@@ -192,4 +192,4 @@ const ListsWidget5: React.FC<Props> = ({className}) => {
   )
 }
 
-export {ListsWidget5}
+export {MyTask}

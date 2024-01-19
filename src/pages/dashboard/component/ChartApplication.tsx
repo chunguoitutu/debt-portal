@@ -11,7 +11,7 @@ type Props = {
   chartRotate?: number
 }
 
-const ChartDashboard: FC<Props> = ({
+const ChartApplication: FC<Props> = ({
   className,
   chartSize = 70,
   chartLine = 11,
@@ -31,7 +31,7 @@ const ChartDashboard: FC<Props> = ({
 
     setTimeout(() => {
       initChart(chartSize, chartLine, chartRotate)
-    }, 10)
+    }, 1000)
   }
 
   const year = new Date().getFullYear()
@@ -150,4 +150,4 @@ const initChart = function (
   drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, 100 / 250)
 }
 
-export {ChartDashboard}
+export {ChartApplication}
