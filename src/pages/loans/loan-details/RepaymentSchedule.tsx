@@ -463,6 +463,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
         loading={loading}
         pageSize={pageSize}
         currentPage={currentPage}
+        showTableFooter={true}
         tableFooter={renderTableFooter()}
       />
 

@@ -1,13 +1,12 @@
 import {LoanDetailsProps, OrderBy, PaginationType} from '@/app/types'
 import {FC, useEffect, useMemo, useState} from 'react'
 import {TableSecondary} from '@/components/table'
-import RowPerPage from '@/components/row-per-page'
-import Pagination from '@/components/table/components/Pagination'
-import {Sum, filterObjectKeyNotEmpty, handleFormatFilter, isObject} from '@/app/utils'
-import {CONFIG_OUTSTANDING_LOAN__HISTORY} from './config'
 
-const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
-  const {outstanding_loan = []} = customerInfo || {}
+import {Sum, filterObjectKeyNotEmpty, handleFormatFilter, isObject} from '@/app/utils'
+import {CONFIG_FULL_SETTLED_LOAN__HISTORY} from './config'
+
+const FullSettledLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
+  const {full_settled_loan = []} = customerInfo || {}
 
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
@@ -62,47 +61,33 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
 
   return (
     <div>
-      <div className='d-flex align-items-center justify-content-between gap-16px py-16px border-bottom border-gray-200 position-relative'>
-        <div className='d-flex align-items-center gap-32px'>
-          {/* Note item */}
-          <div className='d-flex align-items-center gap-8px'>
-            <div className='bg-danger w-10px h-10px flex-shrink-0 rounded-circle'></div>
-            <span className='fs-14 fw-semibold text-gray-600'>Negative amount - loss</span>
-          </div>
-
-          {/* Note item */}
-          <div className='d-flex align-items-center gap-8px'>
-            <div className='bg-gray-900 w-10px h-10px flex-shrink-0 rounded-circle'></div>
-            <span className='fs-14 fw-semibold text-gray-600'>positive amount - profitable</span>
-          </div>
-        </div>
-      </div>
-
+      {/* Table */}
       <TableSecondary
         keySort={keySort}
         orderBy={orderBy}
         className='mt-16px mh-350px'
-        config={CONFIG_OUTSTANDING_LOAN__HISTORY}
+        config={CONFIG_FULL_SETTLED_LOAN__HISTORY}
         onChangeSortBy={handleChangeSortBy}
-        data={outstanding_loan}
+        data={full_settled_loan}
         actions={true}
         loading={loading}
         pageSize={pageSize}
         currentPage={currentPage}
-        showTableFooter={(outstanding_loan || []).length > 0}
+        showTableFooter={(full_settled_loan || []).length > 0}
         tableFooter={
           <tfoot className='table-foot-repayment position-sticky bottom-0 bg-gray-100'>
             <tr>
               <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
               <td></td>
-              <td className='text-end px-10px fs-16 fw-bold '> </td>
+              <td></td>
+              <td className='text-end px-10px fs-16 fw-bold '></td>
               <td className='text-end px-10px fs-16 fw-bold'>
-                {Sum('total_collection', outstanding_loan)}
+                {Sum('total_collection', full_settled_loan)}
               </td>
               <td className='text-end px-10px fs-16 fw-bold'>
-                {Sum('loan_amount', outstanding_loan)}
+                {Sum('loan_amount', full_settled_loan)}
               </td>
-              <td className='text-end px-10px fs-16 fw-bold'>{Sum('p&l', outstanding_loan)}</td>
+              <td className='text-end px-10px fs-16 fw-bold'>{Sum('p&l', full_settled_loan)}</td>
               <td></td>
             </tr>
           </tfoot>
@@ -112,4 +97,4 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
   )
 }
 
-export default OutstandingLoan
+export default FullSettledLoan

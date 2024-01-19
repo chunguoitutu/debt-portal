@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 
 import SideBar from '@/components/sideBar.tsx'
 import Profile from './Profile'
 import Addresses from './Addresses'
 import Employment from './Employment'
+import Vehicles from './Vehicles'
 import CPF from './CPF'
 import Status from './Status'
-import Vehicles from './Vehicles'
 
 type Props = {
   data: any

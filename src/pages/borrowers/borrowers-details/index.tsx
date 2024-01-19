@@ -13,7 +13,7 @@ import request from '@/app/axios'
 import {getMenuHorizontalCustomerDetails} from '@/app/constants/menu'
 import {useAuth} from '@/app/context/AuthContext'
 import BorrowersHeader from './BorrowersHeader'
-import Overview from './Overview/Overview'
+import Overview from './overview/Overview'
 
 type Props = {}
 const profileBreadCrumbs: Array<PageLink> = [
@@ -117,7 +117,12 @@ const BorrowerDetail = (props: Props) => {
             />
 
             {CurrentComponent && (
-              <CurrentComponent loanInfo={customerInfo} setLoanInfo={setCustomerInfo} />
+              <CurrentComponent
+                loanInfo={null}
+                setLoanInfo={() => {}}
+                customerInfo={customerInfo}
+                setCustomerInfo={setCustomerInfo}
+              />
             )}
           </div>
         </div>

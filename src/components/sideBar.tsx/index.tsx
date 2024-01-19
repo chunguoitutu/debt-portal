@@ -29,7 +29,11 @@ const SideBar = ({Overviews, setTitle, title, children}: Props) => {
                   style={{
                     backgroundColor: title === data.title ? '#F1F1F2' : 'transparent',
                   }}
-                  className='ps-14px pe-0 py-4px button-overviews-customers d-flex justify-content-between align-items-center'
+                  className={`ps-14px pe-0 py-4px button-overviews-customers d-flex justify-content-between align-items-center ${
+                    title === data.title
+                      ? 'text-gray-900  fw-semibold'
+                      : ' text-gray-700  fw-normal'
+                  }`}
                 >
                   {data.title}{' '}
                   {title === data.title && <p className='button-overviews-customers-2'></p>}

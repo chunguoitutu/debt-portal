@@ -3,6 +3,8 @@ import {Dispatch, SetStateAction} from 'react'
 export type LoanDetailsProps = {
   loanInfo: LoanInfo
   setLoanInfo: Dispatch<SetStateAction<LoanInfo | null>>
+  customerInfo?: customerInfo
+  setCustomerInfo?: Dispatch<SetStateAction<LoanInfo | null>>
 }
 
 export type LoanInfo = {
@@ -10,6 +12,14 @@ export type LoanInfo = {
   loan_details: LoanDetails
   loan_instalment_schedule: LoanInstalmentSchedule[]
   loan_payment_history: LoanReceiptInfo[]
+}
+
+export type customerInfo = {
+  customer_details: any
+  full_settled_loan: any
+  outstanding_loan: any
+  overview: any
+  unrecoverable_loan: any
 }
 
 export type LoanInfoDB = {

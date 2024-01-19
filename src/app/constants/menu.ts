@@ -1,9 +1,11 @@
 import RepaymentSchedule from '@/pages/loans/loan-details/RepaymentSchedule'
 import Receipt from '@/pages/loans/loan-details/Receipt'
-import { LoanDetailsProps, MenuProps } from '../types'
+import {LoanDetailsProps, MenuProps} from '../types'
 import BadDebt from '@/pages/loans/loan-details/BadDebt'
 import LoanAssignmentAndActionLog from '@/pages/loans/loan-details/LoanAssignmentAndActionLog'
 import OutstandingLoan from '@/pages/borrowers/borrowers-details/details/OutstandingLoan'
+import FullSettledLoan from '@/pages/borrowers/borrowers-details/details/FullSettledLoan'
+import UnrecoverableLoan from '@/pages/borrowers/borrowers-details/details/UnrecoverableLoan'
 
 export function getMenuHorizontalLoanDetails(isAdminOrSuperAdmin: boolean) {
   let LOAN_DETAILS_MENU: MenuProps<LoanDetailsProps>[] = [
@@ -56,10 +58,12 @@ export function getMenuHorizontalCustomerDetails(isAdminOrSuperAdmin: boolean) {
     {
       label: 'Full Settled Loan',
       value: '2',
+      component: FullSettledLoan,
     },
     {
       label: 'Unrecoverable Loan',
       value: '3',
+      component: UnrecoverableLoan,
     },
     {
       label: 'Supporting Attachment',

@@ -292,3 +292,10 @@ export function convertInterestApplication(amountInterest: number, termUnit: str
       return 0
   }
 }
+
+export const Sum = (key: string, data = []) => {
+  const total = data.reduce((sum, loan) => {
+    return sum + Number(loan[key] || 0)
+  }, 0)
+  return formatMoney(total)
+}
