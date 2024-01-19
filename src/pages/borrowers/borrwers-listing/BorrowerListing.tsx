@@ -19,7 +19,7 @@ import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {FilterBorrower} from './FilterBorrower'
 import {BORROWER_CONFIG_LISTING} from './config'
-import {GLOBAL_CONSTANTS} from '@/app/constants'
+import {GLOBAL_CONSTANTS, SESSION_NAME} from '@/app/constants'
 import {Checkbox} from '@/components/checkbox'
 import gridImg from '@/app/images/grid.svg'
 import './style.scss'
@@ -90,6 +90,9 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   const sessionData = isObject(parseJson(sessionStorage.getItem('borrower') || ''))
     ? parseJson(sessionStorage.getItem('borrower') || '')
     : {}
+
+  const idRecentlyViewed =
+    +parseJson(sessionStorage.getItem(SESSION_NAME.recentlyViewedCustomerId)) || 0
 
   const {settings, rows} = BORROWER_CONFIG_LISTING || {}
   const {showAction = true, showViewButton} = settings || {}
@@ -301,7 +304,12 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   const renderRows = () => {
     return data.map((item, idx) => {
       return (
-        <tr key={idx} className='hover-tr-listing cursor-pointer'>
+        <tr
+          key={idx}
+          className={`hover-tr-listing cursor-pointer ${
+            item.id === idRecentlyViewed && 'bg-light-primary'
+          }`}
+        >
           {rowsConfigColumn.map(
             ({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
               const {keyLabelOption, keyValueOption} = infoFilter || {}
@@ -424,6 +432,10 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                 {showViewButton && (
                   <ButtonViewDetail
                     onClick={() => {
+                      sessionStorage.setItem(
+                        SESSION_NAME.recentlyViewedCustomerId,
+                        JSON.stringify(item?.id)
+                      )
                       navigate(`/customers/details/${item?.customer_no}`, {
                         state: {
                           id: item?.id,

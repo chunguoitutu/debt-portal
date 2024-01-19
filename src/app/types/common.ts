@@ -1,7 +1,7 @@
-import { Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction } from 'react'
-import { FormikProps } from 'formik'
-import { ObjectSchema, Schema } from 'yup'
-import { ApprovalInfo, RejectedInfo } from './response'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
+import {FormikProps} from 'formik'
+import {ObjectSchema, Schema} from 'yup'
+import {ApprovalInfo, RejectedInfo} from './response'
 
 export type WithChildren = {
   children?: ReactNode
@@ -26,7 +26,7 @@ export type ErrorResponse = {
 export type DataResponse<T> = {
   error: boolean
   message: string
-  searchCriteria?: { [key: string]: string }
+  searchCriteria?: {[key: string]: string}
   data: T
 } & {
   [key: string]: any
@@ -162,6 +162,7 @@ export type TableRow = {
   classNameTableHead?: string
   classNameTableBody?: string
   component?: any
+  typeValue?: string
   isHide?: boolean // hide io table listing
   defaultShow?: boolean
   options?: Option[]
@@ -199,6 +200,7 @@ export type TableRow = {
 export type TableConfig = {
   settings: {
     showAction?: boolean
+
     showEditButton?: boolean
     showDeleteButton?: boolean
     showViewButton?: boolean
@@ -213,12 +215,14 @@ export type TableConfig = {
     messageEditSuccess?: string
     messageCreateError?: string
     messageCreateSuccess?: string
-    dependencies?: { [key: string]: string }
+    dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
     showMessageTitle?: string
     showFilter?: boolean
     endpoint?: string
+    endpointNavigate?: string
+
     swalToastTitle?: string
     showRefresh?: boolean
     validationCreateEdit?: ObjectSchema<any>
@@ -260,8 +264,8 @@ export type CheckboxTreeItem = {
   value: string
   label: string
   active?: boolean
-  children?: CheckboxTreeItem[] & { [key: string]: any }
-} & { [key: string]: any }
+  children?: CheckboxTreeItem[] & {[key: string]: any}
+} & {[key: string]: any}
 
 export type Option<T = any> = {
   label: string
@@ -291,7 +295,7 @@ export type ApplicationConfig = {
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: { [key: string]: string | number }[] | DropDownGroup[]
+  options?: {[key: string]: string | number}[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string

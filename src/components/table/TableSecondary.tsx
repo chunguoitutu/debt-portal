@@ -3,9 +3,10 @@ import clsx from 'clsx'
 import {FC, ReactNode, useMemo} from 'react'
 import SortBy from '../sort-by'
 import moment from 'moment'
-import numeral from 'numeral'
 import Loading from './components/Loading'
 import {formatMoney} from '@/app/utils'
+import ButtonViewDetail from '../button/ButtonViewDetail'
+import {useNavigate} from 'react-router-dom'
 
 type Props = {
   config: TableConfig
@@ -16,8 +17,10 @@ type Props = {
   loading?: boolean
   data: any[]
   currentPage?: number
+  showTableFooter?: boolean
   pageSize?: number
   tableFooter?: ReactNode
+  actions?: boolean
 }
 
 const TableSecondary: FC<Props> = ({
@@ -27,23 +30,26 @@ const TableSecondary: FC<Props> = ({
   orderBy = 'desc',
   data = [],
   loading,
+  showTableFooter = false,
   currentPage = 1,
   pageSize = 10,
+  actions = false,
   onChangeSortBy,
   tableFooter,
 }) => {
-  const {rows} = config
-
+  const {rows, settings} = config
+  const navigate = useNavigate()
   const ROW_LISTING = useMemo(() => {
     return rows.filter((el) => !el.isHide)
   }, [config])
 
-  function handleSwitchChangeValue(key: string, item: any, index: number) {
+  function handleSwitchChangeValue(typeValue: string, key: string, item: any, index: number) {
     const value = item[key]
-    switch (key) {
+    switch (!!typeValue ? typeValue : key) {
       case 'id':
         return index + 1 + pageSize * (currentPage - 1)
       case 'instalment_due_date':
+      case 'date':
         return moment(value, 'YYYY-MM-DD').format('MMM D, YYYY')
       case 'repayment_date':
         return moment(value).format('MMM D, YYYY')
@@ -54,6 +60,8 @@ const TableSecondary: FC<Props> = ({
       case 'late_interest':
       case 'instalment_total':
       case 'instalment_total_balance':
+        return formatMoney(value)
+      case 'money':
         return formatMoney(value)
       default:
         return value
@@ -98,6 +106,16 @@ const TableSecondary: FC<Props> = ({
                 </th>
               )
             })}
+
+            {actions && (
+              <th
+                className={clsx([
+                  'text-nowrap min-w-75px user-select-none px-10px pb-16px pt-0 text-end',
+                ])}
+              >
+                Actions
+              </th>
+            )}
           </tr>
         </thead>
 
@@ -108,9 +126,8 @@ const TableSecondary: FC<Props> = ({
               return (
                 <tr key={index}>
                   {ROW_LISTING.map((row, i) => {
-                    const {key, classNameTableBody} = row
-
-                    const value = handleSwitchChangeValue(key, item, index)
+                    const {key, classNameTableBody, typeValue} = row
+                    const value = handleSwitchChangeValue(typeValue, key, item, index)
                     const customClassName = handleSwitchClassName(key, item)
 
                     return (
@@ -126,6 +143,16 @@ const TableSecondary: FC<Props> = ({
                       </td>
                     )
                   })}
+
+                  {actions && (
+                    <td className='text-center'>
+                      <ButtonViewDetail
+                        onClick={() => {
+                          navigate(`${settings?.endpointNavigate}${item?.id}`)
+                        }}
+                      />
+                    </td>
+                  )}
                 </tr>
               )
             })
@@ -141,7 +168,7 @@ const TableSecondary: FC<Props> = ({
         </tbody>
 
         {/* Table footer */}
-        {tableFooter && tableFooter}
+        {tableFooter && showTableFooter && tableFooter}
       </table>
     </div>
   )

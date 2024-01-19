@@ -984,6 +984,9 @@ const COMPLETION_CONFIG: children_config_completion[] = [
         {
           key: 'monthly_due_date',
           value: 'Monthly Due Date',
+          options: MONTHLY_DUE_DATE,
+          Component: LableOptions,
+          keyFilter: 'value',
         },
       ],
       [
