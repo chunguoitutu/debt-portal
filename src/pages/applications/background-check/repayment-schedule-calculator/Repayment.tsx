@@ -1,72 +1,76 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import {Table} from 'react-bootstrap'
 import * as Yup from 'yup'
 import moment from 'moment'
 import {useFormik} from 'formik'
 import './style.scss'
 
-import {REPAYMENT_SHEDULE_CALCULATOR_CONFIG, REPAYMENT_SHEDULE_TABLES} from './config'
+import {REPAYMENT_SCHEDULE_CALCULATOR_CONFIG, REPAYMENT_SCHEDULE_TABLES} from './config'
 import {DEFAULT_MSG_ERROR, STEP_REPAYMENT_SCHEDULE_CALCULATOR} from '@/app/constants'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {Input} from '@/components/input'
 import {Select} from '@/components/select'
 import Step from '@/components/step/Step'
-import {MONTHLY_DUE_DATE, getCurrentDate} from '@/app/utils'
+import {MONTHLY_DUE_DATE, getDaysOfCurrentDate} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
 import Button from '@/components/button/Button'
+import {TermUnit} from '@/app/types/enum'
+import {DataResponse} from '@/app/types'
+import {PayloadRepaymentSchedule, RepaymentSchedule} from '@/app/types/calculate'
 
 type Props = {
   handleClose: any
   mobile?: boolean
 }
 
-type ResponseRepayment = {
-  balance_principal: number
-  instalment_due_date: string
-  instalment_no: number
-  interest_per_month: number
-  principal_per_month: number
-}
-
 export const RepaymentScheduleCalculatorSchema = Yup.object().shape({
-  totalsAmount: Yup.string().required('Amount of Loan $ is required'),
-  per_month_percent: Yup.string().required('Interest per Month % is required'),
-  totalsMonthPayment: Yup.string().required('No. of Instalment is required'),
+  loan_amount: Yup.string().required('Amount of Loan $ is required'),
+  interest_percent: Yup.string().required('Interest per Month % is required'),
+  total_cycle: Yup.string().required('No. of Instalment is required'),
   first_repayment_date: Yup.string().required('First Repayment Date is required'),
+  term_unit: Yup.string().required('Term Unit is required'),
   monthly_due_date: Yup.string().required('Monthly Due Date is required'),
 })
 const Repayment = ({handleClose, mobile = false}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const [currentStep, setCurrentStep] = useState<number>(1)
-  const [dataRepayment, setDataRepayment] = useState<ResponseRepayment[]>([])
+  const [dataRepayment, setDataRepayment] = useState<RepaymentSchedule>(null)
+
   function handleChangeStep(step: number) {
     setCurrentStep(step)
     if (stepperRef.current) {
       stepperRef.current.scrollTop = 0
     }
   }
-  const {rows} = REPAYMENT_SHEDULE_CALCULATOR_CONFIG
-  const {rows: rowsTable} = REPAYMENT_SHEDULE_TABLES
+
+  const {rows} = REPAYMENT_SCHEDULE_CALCULATOR_CONFIG
+  const {rows: rowsTable} = REPAYMENT_SCHEDULE_TABLES
+
+  const initialValues = useMemo(() => {
+    return rows.reduce(
+      (acc, item) => ({...acc, [item.key]: item.defaultValue || ''}),
+      {} as PayloadRepaymentSchedule
+    )
+  }, [])
+
   const {values, touched, errors, handleChange, handleSubmit, handleBlur, setFieldValue} =
-    useFormik({
-      initialValues: {
-        totalsAmount: '',
-        per_month_percent: '4.0',
-        totalsMonthPayment: '1',
-        first_repayment_date: moment(new Date()).format('YYYY-MM-DD'),
-        monthly_due_date: getCurrentDate(),
-      },
+    useFormik<PayloadRepaymentSchedule>({
+      initialValues: initialValues,
       validationSchema: RepaymentScheduleCalculatorSchema,
-      onSubmit: async (values: any, actions: any) => {
+      onSubmit: async () => {
         try {
-          const {data} = await request.post('/calculate', {
-            ...values,
+          const {data} = await request.post<DataResponse<RepaymentSchedule>>('/calculate', {
+            loan_amount: +values.loan_amount,
+            total_cycle: +values.total_cycle,
+            interest_percent: values.interest_percent,
+            first_repayment_date: values.first_repayment_date,
+            term_unit: +values.term_unit,
+            monthly_due_date: +values.monthly_due_date,
           })
-          if (data.data) {
-            setDataRepayment(data.data)
-            setCurrentStep(2)
-          }
+
+          setDataRepayment(data.data)
+          setCurrentStep(2)
         } catch (error) {
           swalToast.fire({
             icon: 'error',
@@ -75,15 +79,16 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
         }
       },
     })
+
   const dataFooterTable = React.useMemo(() => {
     if (dataRepayment) {
-      return dataRepayment.reduce(
-        (a, b) => {
-          const {interest_per_month, principal_per_month} = b
+      return dataRepayment.instalment_schedule.reduce(
+        (acc, item) => {
+          const {interest_repayment, principle_repayment} = item
           return {
-            totalPrinciple: a['totalPrinciple'] + principal_per_month,
-            totalInterest: a['totalInterest'] + interest_per_month,
-            totalMonthlyInst: a['totalMonthlyInst'] + (interest_per_month + principal_per_month),
+            totalPrinciple: acc['totalPrinciple'] + principle_repayment,
+            totalInterest: acc['totalInterest'] + interest_repayment,
+            totalMonthlyInst: acc['totalMonthlyInst'] + (interest_repayment + principle_repayment),
           }
         },
         {
@@ -120,12 +125,12 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
     values.monthly_due_date + getDayWithSuffix(values.monthly_due_date)
 
   useEffect(() => {
-    if (parseInt(values.totalsMonthPayment, 10) > 1) {
-      setFieldValue('per_month_percent', '3.95')
+    if (+values.total_cycle > 1) {
+      setFieldValue('interest_percent', 3.95)
     } else {
-      setFieldValue('per_month_percent', '4.0')
+      setFieldValue('interest_percent', 4)
     }
-  }, [values.totalsMonthPayment])
+  }, [values.total_cycle])
 
   return (
     <div
@@ -155,40 +160,48 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                     paddingLeft: mobile ? '0px' : '30px',
                   }}
                 >
-                  {rows?.map((row) => (
-                    <div key={row?.key}>
-                      {row?.typeComponent === 'select' ? (
-                        <Select
-                          label={row?.name}
-                          required={!!row?.require}
-                          isOptionDefault={false}
-                          id={row?.key}
-                          name={row.key}
-                          onChange={handleChange}
-                          error={errors[row?.key]}
-                          onBlur={handleBlur}
-                          touched={touched[row?.key]}
-                          options={MONTHLY_DUE_DATE || []}
-                          value={values[row?.key] || ''}
-                        />
-                      ) : (
-                        <div className='d-flex flex-column mb-16px'>
-                          <Input
-                            required={row?.require ? true : false}
+                  {rows?.map((row) => {
+                    if (
+                      row.key === 'monthly_due_date' &&
+                      values.term_unit.toString() !== TermUnit.MONTHLY
+                    )
+                      return <Fragment key={row.key}></Fragment>
+
+                    return (
+                      <div key={row?.key}>
+                        {row?.typeComponent === 'select' ? (
+                          <Select
                             label={row?.name}
-                            name={row?.key}
-                            onBlur={handleBlur}
-                            type={row.type}
-                            noThereAreCommas={row?.noThereAreCommas}
-                            value={values[row?.key] || ''}
+                            required={!!row?.require}
+                            isOptionDefault={false}
+                            id={row?.key}
+                            name={row.key}
                             onChange={handleChange}
-                            error={errors[row.key] as string}
-                            touched={!!touched[row.key]}
+                            error={errors[row?.key]}
+                            onBlur={handleBlur}
+                            touched={touched[row?.key]}
+                            options={row.options || []}
+                            value={values[row?.key] || ''}
                           />
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                        ) : (
+                          <div className='d-flex flex-column mb-16px'>
+                            <Input
+                              required={row?.require ? true : false}
+                              label={row?.name}
+                              name={row?.key}
+                              onBlur={handleBlur}
+                              type={row.type}
+                              noThereAreCommas={row?.noThereAreCommas}
+                              value={values[row?.key] || ''}
+                              onChange={handleChange}
+                              error={errors[row.key] as string}
+                              touched={!!touched[row.key]}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
                   <div className='d-flex flex-end py-30px '>
                     <Button
                       onClick={handleClose}
@@ -235,7 +248,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
                           Amount Of Loan $
                         </div>
-                        <div className='fs-4 fw-semibold'>${formatNumber(values.totalsAmount)}</div>
+                        <div className='fs-4 fw-semibold'>${formatNumber(values.loan_amount)}</div>
                       </div>
                       <div
                         className='gap-1 p-6'
@@ -244,17 +257,19 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
                           No. Of Instalment
                         </div>
-                        <div className='fs-4 fw-semibold'>{values.totalsMonthPayment}</div>
+                        <div className='fs-4 fw-semibold'>{values.total_cycle}</div>
                       </div>
-                      <div
-                        className={`gap-1 p-6`}
-                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
-                      >
-                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
-                          Monthly Due Date
+                      {values.term_unit.toString() === TermUnit.MONTHLY && (
+                        <div
+                          className={`gap-1 p-6`}
+                          style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                        >
+                          <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
+                            Monthly Due Date
+                          </div>
+                          <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
                         </div>
-                        <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
-                      </div>
+                      )}
                     </div>
                     <div
                       className={`${
@@ -269,7 +284,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           Interest Per Month %
                         </div>
                         <div className='fs-4 fw-semibold'>
-                          {formatNumber(values.per_month_percent)}
+                          {formatNumber(values.interest_percent)}
                         </div>
                       </div>
                       <div
@@ -293,25 +308,25 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           <tr>
                             <td className='label-calculator'>Loan Amount</td>
                             <td className='content-calculator w-200px p-12px'>
-                              ${formatNumber(values.totalsAmount)}
+                              ${formatNumber(values.loan_amount)}
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Interest (Per Month)</td>
                             <td className='content-calculator w-200px p-12px'>
-                              {formatNumber(values.per_month_percent)}%
+                              {formatNumber(values.interest_percent)}%
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Interest (Per Annum)</td>
                             <td className='content-calculator w-200px p-12px'>
-                              {formatNumber(+values.per_month_percent * 12)}%
+                              {formatNumber(+values.interest_percent * 12)}%
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Term</td>
                             <td className='content-calculator text-transform-none w-200px'>
-                              {values.totalsMonthPayment} Month(s)
+                              {values.total_cycle} Month(s)
                             </td>
                           </tr>
                         </tbody>
@@ -323,26 +338,19 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           <tr>
                             <td className='label-calculator'>Principal (Per Month)</td>
                             <td className='content-calculator w-200px p-12px'>
-                              ${formatNumber(+values.totalsAmount / +values.totalsMonthPayment)}
+                              ${formatNumber(+values.loan_amount / +values.total_cycle)}
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Interest (Per Month)</td>
                             <td className='content-calculator w-200px p-12px'>
-                              $
-                              {formatNumber(
-                                dataFooterTable.totalInterest / +values.totalsMonthPayment
-                              )}
+                              ${formatNumber(dataFooterTable.totalInterest / +values.total_cycle)}
                             </td>
                           </tr>
                           <tr>
                             <td className='label-calculator'>Monthly Instalment Amount</td>
                             <td className='content-calculator w-200px p-12px'>
-                              $
-                              {formatNumber(
-                                dataFooterTable.totalInterest / +values.totalsMonthPayment +
-                                  +values.totalsAmount / +values.totalsMonthPayment
-                              )}
+                              ${formatNumber(dataRepayment.amount_emi)}
                             </td>
                           </tr>
                           <tr>
@@ -371,20 +379,19 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {dataRepayment.map((el, index) => {
-                          const {interest_per_month, principal_per_month, instalment_due_date} = el
+                        {dataRepayment.instalment_schedule?.map((el, index) => {
                           const table = rowsTable.map((rt) => {
                             switch (rt.key) {
-                              case 'instalment_due_date':
+                              case 'date_repayment':
                                 return (
                                   <td key={rt.key} className='p-12px content-calculator fs-4'>
-                                    {moment(instalment_due_date).format('MM/DD/YYYY')}
+                                    {moment(el.date_repayment).format('MM/DD/YYYY')}
                                   </td>
                                 )
-                              case 'monthly_inst_amount':
+                              case 'amount_emi':
                                 return (
                                   <td key={rt.key} className='p-12px content-calculator fs-4'>
-                                    ${formatNumber(principal_per_month + interest_per_month)}
+                                    ${formatNumber(dataRepayment?.amount_emi || 0)}
                                   </td>
                                 )
                               default:

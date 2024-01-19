@@ -8,7 +8,7 @@ import {Modal, Tab, Table, Tabs} from 'react-bootstrap'
 import LookupCustomer from './LookupCustomer'
 import {AddressTypeItem, ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '@/app/axios'
-import {getCurrentDate} from '@/app/utils/get-current-date'
+import {getDaysOfCurrentDate} from '@/app/utils/get-current-date'
 import {useLocation, useParams, useSearchParams} from 'react-router-dom'
 import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
@@ -552,7 +552,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
             touched={touched[key]}
             error={errors[key]}
             min='1900-01-01'
-            max={key === 'date_of_birth' ? getCurrentDate() : undefined}
+            max={key === 'date_of_birth' ? getDaysOfCurrentDate() : undefined}
             insertRight={
               key === 'identification_no' ? (
                 <Tippy offset={[40, 0]} content='Lookup Customer' disabled={!!applicationIdEdit}>
