@@ -330,20 +330,20 @@ export const LOAN_TYPE: Option[] = [
 
 export const TERM_UNIT: Option[] = [
   {
-    value: '0',
-    label: 'Daily',
-  },
-  {
-    value: '1',
-    label: 'Weekly',
+    value: '3',
+    label: 'Monthly',
   },
   {
     value: '2',
     label: 'Bi-Weekly',
   },
   {
-    value: '3',
-    label: 'Monthly',
+    value: '1',
+    label: 'Weekly',
+  },
+  {
+    value: '0',
+    label: 'Daily',
   },
 ]
 
