@@ -25,7 +25,7 @@ const CPF = ({data}: any) => {
     const monthParse = parseJson(month)
     const employerParse = parseJson(employer)
 
-    const newData = dateParse.map((item, i) => {
+    const newData = dateParse?.map((item, i) => {
       return {
         date: item,
         amount: amountParse[i],
@@ -48,7 +48,7 @@ const CPF = ({data}: any) => {
   return (
     <div className='d-flex flex-column gap-12px'>
       {dataParse?.length ? (
-        dataParse.map((cpf: CustomerCPF, i: number) => {
+        dataParse?.map((cpf: CustomerCPF, i: number) => {
           const counter = formatDate(cpf.date, 'MMM DD, YYYY')
           const isActive = showCpf.includes(cpf.id)
 
@@ -88,7 +88,7 @@ const CPF = ({data}: any) => {
               {/* Body */}
               {isActive && (
                 <div className='grid-2-column gap-12px' key={i + 1}>
-                  {CPF_CONFIG.map((el, i) => {
+                  {CPF_CONFIG?.map((el, i) => {
                     let value = cpf[el.key]
 
                     if (el?.key === 'date') {
