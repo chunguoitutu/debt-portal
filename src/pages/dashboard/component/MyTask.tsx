@@ -65,7 +65,7 @@ const MyTask: React.FC<Props> = ({className}) => {
             {/* end::Badge */}
             {/* begin::Content */}
             <div className='timeline-content d-flex'>
-              <span className='fw-bold text-gray-800 ps-3'>AEOL meeting</span>
+              <span className='fw-bold text-gray-800 ps-3'>Internal meeting</span>
             </div>
             {/* end::Content */}
           </div>
@@ -84,6 +84,7 @@ const MyTask: React.FC<Props> = ({className}) => {
             <div className='timeline-content fw-bold text-gray-800 ps-3'>
               Make deposit
               <a href='#' className='text-primary'>
+                {' '}
                 USD 700
               </a>
               . to ESL
@@ -103,7 +104,11 @@ const MyTask: React.FC<Props> = ({className}) => {
             {/* end::Badge */}
             {/* begin::Text */}
             <div className='timeline-content fw-mormal text-muted ps-3'>
-              Indulging in poorly driving and keep structure keep great
+              Approval application
+              <a href='/application' className='text-primary'>
+                {' '}
+                A-CO-2024-00018
+              </a>
             </div>
             {/* end::Text */}
           </div>
@@ -120,9 +125,9 @@ const MyTask: React.FC<Props> = ({className}) => {
             {/* end::Badge */}
             {/* begin::Desc */}
             <div className='timeline-content fw-semibold text-gray-800 ps-3'>
-              New order placed
-              <a href='#' className='text-primary'>
-                #XF-2356
+              New application submitted
+              <a href='/application/listing' className='text-primary'>
+                {''} A-CO-2024-00020
               </a>
               .
             </div>
@@ -141,7 +146,11 @@ const MyTask: React.FC<Props> = ({className}) => {
             {/* end::Badge */}
             {/* begin::Text */}
             <div className='timeline-content fw-mormal text-muted ps-3'>
-              Indulging in poorly driving and keep structure keep great
+              Reject application
+              <a href='/application' className='text-primary'>
+                {' '}
+                A-CO-2024-00016
+              </a>
             </div>
             {/* end::Text */}
           </div>
@@ -158,9 +167,9 @@ const MyTask: React.FC<Props> = ({className}) => {
             {/* end::Badge */}
             {/* begin::Desc */}
             <div className='timeline-content fw-semibold text-gray-800 ps-3'>
-              New order placed
-              <a href='#' className='text-primary'>
-                #XF-2356
+              New application submitted
+              <a href='/application/listing' className='text-primary'>
+                {''} A-CO-2024-00021
               </a>
               .
             </div>
