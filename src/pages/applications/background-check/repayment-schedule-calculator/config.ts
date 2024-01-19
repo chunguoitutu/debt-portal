@@ -1,10 +1,28 @@
-import {getCurrentDate} from '@/app/utils'
+import {
+  InstalmentSchedule,
+  PayloadRepaymentSchedule,
+  RepaymentSchedule,
+} from '@/app/types/calculate'
+import {MONTHLY_DUE_DATE, TERM_UNIT, getDaysOfCurrentDate} from '@/app/utils'
+import moment from 'moment'
 
-export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
+export const REPAYMENT_SCHEDULE_CALCULATOR_CONFIG: {
+  endpoint: string
+  rows: {
+    key: keyof PayloadRepaymentSchedule
+    name: string
+    type: 'number' | 'date' | 'text'
+    noThereAreCommas?: boolean
+    require: boolean
+    typeComponent: 'input' | 'select'
+    defaultValue?: any
+    options?: any[]
+  }[]
+} = {
   endpoint: 'config/company/1',
   rows: [
     {
-      key: 'totalsAmount',
+      key: 'loan_amount',
       name: 'Amount of Loan $',
       type: 'number',
       noThereAreCommas: false,
@@ -12,20 +30,22 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       typeComponent: 'input',
     },
     {
-      key: 'totalsMonthPayment',
+      key: 'total_cycle',
       name: 'No. of Instalment',
       type: 'number',
       noThereAreCommas: true,
       require: true,
       typeComponent: 'input',
+      defaultValue: 1,
     },
     {
-      key: 'per_month_percent',
+      key: 'interest_percent',
       type: 'number',
       name: 'Interest per Month %',
       require: true,
       noThereAreCommas: false,
       typeComponent: 'input',
+      defaultValue: 4,
     },
     {
       key: 'first_repayment_date',
@@ -33,6 +53,16 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       type: 'date',
       require: true,
       typeComponent: 'input',
+      defaultValue: moment(new Date()).format('YYYY-MM-DD'),
+    },
+    {
+      key: 'term_unit',
+      name: 'Term Unit',
+      type: 'text',
+      require: true,
+      typeComponent: 'select',
+      options: TERM_UNIT,
+      defaultValue: TERM_UNIT[0].value,
     },
     {
       key: 'monthly_due_date',
@@ -40,27 +70,34 @@ export const REPAYMENT_SHEDULE_CALCULATOR_CONFIG = {
       type: 'text',
       require: true,
       typeComponent: 'select',
+      options: MONTHLY_DUE_DATE,
+      defaultValue: getDaysOfCurrentDate(),
     },
   ],
 }
 
-export const REPAYMENT_SHEDULE_TABLES = {
+export const REPAYMENT_SCHEDULE_TABLES: {
+  rows: {
+    key: keyof InstalmentSchedule | 'amount_emi'
+    name: string
+  }[]
+} = {
   rows: [
     {
-      key: 'instalment_due_date',
+      key: 'date_repayment',
       name: 'Date',
     },
     {
-      key: 'principal_per_month',
+      key: 'principle_repayment',
       name: 'Principal Repayment',
     },
     {
-      key: 'interest_per_month',
+      key: 'interest_repayment',
       name: 'Interest Repayment',
     },
     {
-      key: 'monthly_inst_amount',
-      name: 'Total Repayment',
+      key: 'amount_emi',
+      name: 'Total Repayment (EMI)',
     },
     {
       key: 'balance_principal',
