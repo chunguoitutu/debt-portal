@@ -5,12 +5,12 @@ import {useIntl} from 'react-intl'
 import {PageTitle} from '@/_metronic/layout/core'
 import {toAbsoluteUrl} from '@/_metronic/helpers'
 import {ApplicationDemoDashBoard} from '@/pages/dashboard/component/ApplicationDashBoard'
-import {ToDoList} from '@/pages/dashboard/component/ToDoList'
 import {CustomerListingDashboard} from '@/pages/dashboard/component/CustomerDashboard'
 import {CountApplication} from '@/pages/dashboard/component/CountApplication'
-import {ExternalLinks} from '@/pages/dashboard/component/ExternalLinks'
-import {ChartDashboard} from '@/pages/dashboard/component/ChartDashboard'
+import {ChartCustomer} from '@/pages/dashboard/component/ChartCustomer'
+import {ChartApplication} from '@/pages/dashboard/component/ChartApplication'
 import {ContactDashBoard} from '@/pages/dashboard/component/ContactDashboard'
+import {MyTask} from './component/MyTask'
 
 const DashboardPage: FC = () => (
   <>
@@ -34,8 +34,8 @@ const DashboardPage: FC = () => (
       </div>
 
       <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10'>
-        <ChartDashboard className='h-md-50 mb-5 mb-xl-10' />
-        <ExternalLinks className='h-lg-50' />
+        <ChartApplication className='h-md-50 mb-5 mb-xl-10' />
+        <ChartCustomer className='h-md-50 mb-5 mb-xl-10' />
       </div>
 
       <div className='col-xxl-6'>
@@ -44,16 +44,13 @@ const DashboardPage: FC = () => (
     </div>
 
     {/**Part 2 */}
-    <div className='row gx-5 gx-xl-10'>
-      <div className='col-xxl-6 mb-5 mb-xl-10'></div>
-    </div>
 
     <div className='row gy-5 gx-xl-8'>
-      <div className='col-xxl-4'>
-        <ToDoList className='card-xxl-stretch mb-xl-3' />
+      <div className='col-xxl-3'>
+        <MyTask className='card-xxl-stretch mb-xl-3' />
       </div>
 
-      <div className='col-12 col-xxl-8'>
+      <div className='col-12 col-xxl-9'>
         <CustomerListingDashboard className='card-xxl-stretch mb-5 mb-xl-8' />
       </div>
     </div>
