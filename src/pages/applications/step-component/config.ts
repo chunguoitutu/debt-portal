@@ -911,7 +911,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     ],
   },
   {
-    col: 'col-xl-6',
+    col: 'col-xl-8',
     title: 'Loan Details',
     config: [
       [
@@ -995,7 +995,7 @@ const COMPLETION_CONFIG: children_config_completion[] = [
     ],
   },
   {
-    col: 'col-xl-6',
+    col: 'col-xl-4',
     title: 'Contact Information',
     config: [
       [

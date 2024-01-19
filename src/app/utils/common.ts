@@ -276,9 +276,10 @@ export function splitFullName(fullname: string) {
 
 export function convertInterestApplication(amountInterest: number, termUnit: string) {
   const amount = +amountInterest || 0
+
   const dailyInterest = amount / 31 // divide by 31 days
 
-  switch (termUnit) {
+  switch (termUnit.toString()) {
     case TermUnit.DAILY:
       return +dailyInterest.toFixed(2)
     case TermUnit.WEEKLY:
