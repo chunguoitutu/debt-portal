@@ -1005,20 +1005,9 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           dollars: '+65',
         },
         {
-          key: 'homephone',
-          value: 'Phone Number 4',
-          dollars: '+65',
-        },
-      ],
-      [
-        {
           key: 'mobilephone_2',
           value: 'Phone Number 2',
           dollars: '+65',
-        },
-        {
-          key: 'email_1',
-          value: 'Email',
         },
       ],
       [
@@ -1027,6 +1016,19 @@ const COMPLETION_CONFIG: children_config_completion[] = [
           value: 'Phone Number 3',
           dollars: '+65',
         },
+        {
+          key: 'homephone',
+          value: 'Phone Number 4',
+          dollars: '+65',
+        },
+      ],
+      [
+        {
+          key: 'email_1',
+          value: 'Email',
+        },
+      ],
+      [
         {
           key: 'email_2',
           value: 'Alternate Email',
