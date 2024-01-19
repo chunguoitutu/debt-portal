@@ -1,3 +1,4 @@
+import {formatMoney} from '@/app/utils'
 import React from 'react'
 
 function getAbbreviation(name: string) {
@@ -85,7 +86,7 @@ const BorrowersHeader = ({data}: Props) => {
           </p>
           <div className='d-flex justify-content-center align-items-center flex-column p-0 m-0 gap-8px my-24px'>
             <p className='fs-20 fw-bold m-0 p-0 loan-amount-customer'>
-              ${Number(data?.outstanding_loan_amount || 0)}
+              {formatMoney(data?.outstanding_loan_amount || 0)}
             </p>
             <p className='p-0 m-0'>outstanding loan amount</p>
           </div>
@@ -97,7 +98,8 @@ const BorrowersHeader = ({data}: Props) => {
               className='d-flex justify-content-center align-items-center py-0 px-8px  m-0 flex-column py-4px gap-8px'
             >
               <p className='p-0 m-0 fs-20 text-gray-900 fw-bold'>
-                {Number(data?.full_settled) || 0} loans
+                {Number(data?.full_settled) || 0}{' '}
+                {[1, 0].includes(Number(data?.outstanding_loan || 0)) ? 'loan' : 'loans'}
               </p>
               <p>Full Settled</p>
             </div>
@@ -108,13 +110,15 @@ const BorrowersHeader = ({data}: Props) => {
               }}
             >
               <p className='p-0 m-0 fs-20 text-gray-900 fw-bold'>
-                {Number(data?.unrecoverable || 0)} loans
+                {Number(data?.unrecoverable || 0)}{' '}
+                {[1, 0].includes(Number(data?.outstanding_loan || 0)) ? 'loan' : 'loans'}
               </p>
               <p>Unrecoverable</p>
             </div>
             <div className='d-flex justify-content-center align-items-center py-0 px-8px m-0  flex-column  gap-8px '>
               <p className='p-0 m-0 fs-20 text-gray-900 fw-bold'>
-                {Number(data?.outstanding_loan || 0)} loans
+                {Number(data?.outstanding_loan || 0)}{' '}
+                {[1, 0].includes(Number(data?.outstanding_loan || 0)) ? 'loan' : 'loans'}
               </p>
               <p className='fs-12 text-gray-700 fw-normal'>Outstanding Loan</p>
             </div>

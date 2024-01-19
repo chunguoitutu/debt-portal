@@ -11,13 +11,13 @@ const SideBar = ({Overviews, setTitle, title, children}: Props) => {
   return (
     <div className='card h-100'>
       <h1 className='m-0 pt-30px px-30px'>Overview</h1>
-      <div className='d-flex'>
-        <div className='col-3 py-22px ps-16px '>
+      <div className='d-flex h-100'>
+        <div className='col-3 py-22px ps-16px  h-100'>
           <div
             style={{
               borderRight: '1px solid #F1F1F2',
             }}
-            className=' d-flex flex-column gap-8px'
+            className=' d-flex flex-column gap-8px h-100'
           >
             {Overviews.map((data, i) => {
               return (
