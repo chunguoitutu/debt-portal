@@ -19,7 +19,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       classNameTableHead: 'fs-14 text-end',
       format: 'date',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'date',
@@ -33,7 +33,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       classNameTableHead: 'fs-14 text-end',
       format: 'money',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -47,7 +47,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       classNameTableHead: 'fs-14 text-end',
       format: 'money',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -61,7 +61,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       classNameTableHead: 'fs-14 text-end',
       format: 'money',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -75,7 +75,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       classNameTableHead: 'fs-14 text-end',
       format: 'money',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -89,7 +89,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       classNameTableHead: 'fs-14 text-end',
       format: 'money',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -104,7 +104,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       defaultShow: false,
       format: 'money',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -119,7 +119,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       defaultShow: false,
       format: 'money',
       infoFilter: {
-        isSort: true,
+        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',

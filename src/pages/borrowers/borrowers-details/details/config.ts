@@ -21,7 +21,7 @@ export const CONFIG_OUTSTANDING_LOAN__HISTORY: TableConfig = {
       name: 'Full Repayment Date',
       classNameTableHead: 'text-end',
       classNameTableBody: 'text-end',
-      typeValue: 'date',
+      format: 'date',
     },
     {
       key: 'total_collection',
@@ -67,14 +67,14 @@ export const CONFIG_FULL_SETTLED_LOAN__HISTORY: TableConfig = {
       name: 'Loan Date',
       classNameTableHead: 'text-end',
       classNameTableBody: 'text-end',
-      typeValue: 'date',
+      format: 'date',
     },
     {
       key: 'settle_date',
       name: 'Settle Date',
       classNameTableHead: 'text-end',
       classNameTableBody: 'text-end',
-      typeValue: 'date',
+      format: 'date',
     },
     {
       key: 'total_collection',

@@ -106,10 +106,8 @@ const TableSecondary: FC<Props> = ({
 
                     let value = item[key]
 
-                    if (typeValue === 'date') {
+                    if (format === 'date') {
                       value = formatDate(value, 'MMM DD, YYYY')
-                    } else if (format === 'date') {
-                      value = formatDate(value, 'YYYY-MM-DD')
                     } else if (format === 'money') {
                       value = formatMoney(value)
                     }
