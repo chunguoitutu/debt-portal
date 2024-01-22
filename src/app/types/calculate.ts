@@ -1,13 +1,9 @@
-export type RepaymentSchedule = {
-  instalment_schedule: InstalmentSchedule[]
-  amount_emi: number
-}
-
 export type InstalmentSchedule = {
-  date_repayment: string
-  principle_repayment: number
-  interest_repayment: number
-  balance_principal: number
+  date: string
+  principal: number
+  interest: number
+  amount_balance: number
+  amount_emi: number
 }
 
 export type PayloadRepaymentSchedule = {

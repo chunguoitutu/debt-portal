@@ -4,7 +4,7 @@ import {FC, ReactNode, useMemo} from 'react'
 import SortBy from '../sort-by'
 import moment from 'moment'
 import Loading from './components/Loading'
-import {formatMoney} from '@/app/utils'
+import {formatDate, formatMoney} from '@/app/utils'
 import ButtonViewDetail from '../button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
 
@@ -42,31 +42,6 @@ const TableSecondary: FC<Props> = ({
   const ROW_LISTING = useMemo(() => {
     return rows.filter((el) => !el.isHide)
   }, [config])
-
-  function handleSwitchChangeValue(typeValue: string, key: string, item: any, index: number) {
-    const value = item[key]
-    switch (!!typeValue ? typeValue : key) {
-      case 'id':
-        return index + 1 + pageSize * (currentPage - 1)
-      case 'instalment_due_date':
-      case 'date':
-        return moment(value, 'YYYY-MM-DD').format('MMM D, YYYY')
-      case 'repayment_date':
-        return moment(value).format('MMM D, YYYY')
-      case 'principal':
-      case 'principal_balance':
-      case 'interest':
-      case 'interest_balance':
-      case 'late_interest':
-      case 'instalment_total':
-      case 'instalment_total_balance':
-        return formatMoney(value)
-      case 'money':
-        return formatMoney(value)
-      default:
-        return value
-    }
-  }
 
   function handleSwitchClassName(key: string, item: any) {
     switch (key) {
@@ -126,9 +101,15 @@ const TableSecondary: FC<Props> = ({
               return (
                 <tr key={index}>
                   {ROW_LISTING.map((row, i) => {
-                    const {key, classNameTableBody, typeValue} = row
-                    const value = handleSwitchChangeValue(typeValue, key, item, index)
+                    const {key, classNameTableBody, format} = row
                     const customClassName = handleSwitchClassName(key, item)
+
+                    let value = item[key]
+                    if (format === 'date') {
+                      value = formatDate(value, 'YYYY-MM-DD')
+                    } else if (format === 'money') {
+                      value = formatMoney(value)
+                    }
 
                     return (
                       <td
@@ -142,7 +123,7 @@ const TableSecondary: FC<Props> = ({
                         ])}
                         key={i}
                       >
-                        {value}
+                        {key === 'id' ? index + 1 : value}
                       </td>
                     )
                   })}

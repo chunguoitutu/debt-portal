@@ -12,7 +12,7 @@ import {filterObjectKeyNotEmpty, handleFormatFilter, isObject} from '@/app/utils
 import moment from 'moment'
 
 const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
-  const {loan_payment_history = []} = loanInfo || {}
+  const {instalment_schedule = []} = loanInfo || {}
 
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
@@ -222,7 +222,7 @@ const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
         className='mt-16px mh-350px'
         config={CONFIG_RECEIPT_HISTORY}
         onChangeSortBy={handleChangeSortBy}
-        data={loan_payment_history}
+        data={[]}
         loading={loading}
         pageSize={pageSize}
         currentPage={currentPage}
@@ -230,7 +230,7 @@ const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
 
       <div className='d-flex align-items-center justify-content-between gap-16px mt-30px'>
         <RowPerPage
-          lenghtData={loan_payment_history.length}
+          lenghtData={0}
           limit={pagination.pageSize}
           page={pagination.currentPage}
           setLimit={(e: any) => {
@@ -240,7 +240,7 @@ const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
 
         <Pagination
           onChangePagePagination={handleChangePagination}
-          searchCriteria={{...pagination, total: loan_payment_history?.length || 0}}
+          searchCriteria={{...pagination, total: 0}}
         />
       </div>
     </div>

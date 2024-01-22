@@ -1,8 +1,4 @@
-import {
-  InstalmentSchedule,
-  PayloadRepaymentSchedule,
-  RepaymentSchedule,
-} from '@/app/types/calculate'
+import {InstalmentSchedule, PayloadRepaymentSchedule} from '@/app/types/calculate'
 import {MONTHLY_DUE_DATE, TERM_UNIT, getDaysOfCurrentDate} from '@/app/utils'
 import moment from 'moment'
 
@@ -84,15 +80,15 @@ export const REPAYMENT_SCHEDULE_TABLES: {
 } = {
   rows: [
     {
-      key: 'date_repayment',
+      key: 'date',
       name: 'Date',
     },
     {
-      key: 'principle_repayment',
+      key: 'principal',
       name: 'Principal Repayment',
     },
     {
-      key: 'interest_repayment',
+      key: 'interest',
       name: 'Interest Repayment',
     },
     {
@@ -100,7 +96,7 @@ export const REPAYMENT_SCHEDULE_TABLES: {
       name: 'Total Repayment (EMI)',
     },
     {
-      key: 'balance_principal',
+      key: 'amount_balance',
       name: 'Principal Balance',
     },
   ],
