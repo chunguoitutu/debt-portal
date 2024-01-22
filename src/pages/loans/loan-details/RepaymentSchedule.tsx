@@ -1,11 +1,11 @@
 import {
+  InstalmentSchedule,
   LoanDetailsProps,
-  LoanInstalmentSchedule,
   OrderBy,
   PaginationType,
   TotalRepayment,
 } from '@/app/types'
-import {ChangeEvent, FC, Fragment, useEffect, useMemo, useRef, useState} from 'react'
+import {ChangeEvent, FC, Fragment, useMemo, useRef, useState} from 'react'
 import {CONFIG_REPAYMENT_SCHEDULE} from './config'
 import {TableSecondary} from '@/components/table'
 import RowPerPage from '@/components/row-per-page'
@@ -26,7 +26,7 @@ import {GLOBAL_CONSTANTS} from '@/app/constants'
 import useClickOutside from '@/app/hooks/useClickOutside'
 
 const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
-  const {loan_instalment_schedule = []} = loanInfo || {}
+  const {instalment_schedule = []} = loanInfo || {}
 
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
@@ -52,23 +52,6 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
     setShowConfigColumn(false)
   })
 
-  const filterHasValue = useMemo(() => {
-    const newFilter = filterObjectKeyNotEmpty(dataFilter)
-
-    const finishFilter = Object.keys(newFilter).reduce((acc, key) => {
-      if (isObject(newFilter[key])) {
-        const newObject = filterObjectKeyNotEmpty(newFilter[key])
-        const isHasValue = Object.keys(newObject).length ? true : false
-
-        return {...acc, ...(isHasValue ? {[key]: newObject} : {})}
-      }
-
-      return {...acc, [key]: newFilter[key]}
-    }, {})
-
-    return finishFilter
-  }, [dataFilterSubmitted])
-
   const configTable = useMemo(() => {
     const keyIgnored = Object.keys(configColumnSubmitted).filter(
       (key) => configColumnSubmitted[key] === false
@@ -81,8 +64,8 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
     }
   }, [configColumnSubmitted])
 
-  const loanRepayment: LoanInstalmentSchedule[] = useMemo(() => {
-    let newData = [...loan_instalment_schedule]
+  const loanRepayment: InstalmentSchedule[] = useMemo(() => {
+    let newData = [...instalment_schedule]
     const qtySkip = (currentPage - 1) * pageSize
 
     // Slice current page
@@ -90,8 +73,8 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
     newData = newData.map((item) => ({
       ...item,
-      instalment_total: +(item.principal + item.interest).toFixed(2) || 0,
-      instalment_total_balance: +(item.principal_balance + item.interest_balance).toFixed(2) || 0,
+      total: +(item.principal + item.interest).toFixed(2) || 0,
+      total_balance: +(item.principal + item.interest).toFixed(2) || 0,
     }))
     return newData
   }, [pageSize, currentPage])
@@ -100,24 +83,27 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
     const result = loanRepayment.reduce(
       (acc: TotalRepayment, item) => ({
         ...acc,
-        total_principal: item.principal + (acc?.total_principal || 0),
-        total_principal_balance: item.principal_balance + (acc?.total_principal_balance || 0),
-        total_interest: item.interest + (acc?.total_interest || 0),
-        total_interest_balance: item.interest_balance + (acc?.total_interest_balance || 0),
-        total_late_interest: item.late_interest + (acc?.total_late_interest || 0),
-        total_instalment: item.instalment_total + (acc?.total_instalment || 0),
-        total_instalment_balance:
-          item.instalment_total_balance + (acc?.total_instalment_balance || 0),
+        total_principal: item.principal + acc?.total_principal,
+        total_principal_balance: item.principal + acc?.total_principal_balance,
+        total_interest: item.interest + acc?.total_interest,
+        total_interest_balance: item.interest + acc?.total_interest_balance,
+        total_late_interest: 0 + acc?.total_late_interest,
+        total_instalment: 0 + acc?.total_instalment,
+        total_instalment_balance: 0 + acc?.total_instalment_balance,
       }),
-      {} as TotalRepayment
+      {
+        total_principal: 0,
+        total_principal_balance: 0,
+        total_interest: 0,
+        total_interest_balance: 0,
+        total_late_interest: 0,
+        total_instalment: 0,
+        total_instalment_balance: 0,
+      }
     )
 
     return result
   }, [loanRepayment])
-
-  useEffect(() => {
-    handleGetListing()
-  }, [pageSize, currentPage, loadApi, keySort, orderBy])
 
   function handleInitialConfigColumn() {
     let config = CONFIG_REPAYMENT_SCHEDULE.rows
@@ -154,59 +140,6 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
   // Change page number
   function handleChangePagination(goToPage: number) {
     setPagination({...pagination, currentPage: goToPage})
-  }
-
-  function handleShowToggleFilter() {
-    setShowFilterPopup(!showFilterPopup)
-  }
-
-  function handleResetFilter() {
-    setDataFilter({})
-    setLoadApi(!loadApi)
-  }
-
-  /**
-   * Change search value.
-   * @param e element event
-   * @param key Expected use for range search
-   */
-  function handleChangeFilter(e: React.ChangeEvent<HTMLInputElement>, key?: 'gte' | 'lte') {
-    const {value, name} = e.target
-    setDataFilter({
-      ...dataFilter,
-      [name]: key
-        ? {
-            ...dataFilter[name],
-            [key]: value,
-          }
-        : value,
-    })
-  }
-
-  function handleFilter() {
-    setPagination({...pagination, currentPage: 1})
-    setLoadApi(!loadApi)
-  }
-
-  async function handleGetListing() {
-    const newDataFilter = handleFormatFilter({
-      dataFilter: {
-        ...dataFilter,
-      },
-      keyDate: ['application_date'],
-      keyNumber: ['loan_type_id', 'id', 'loan_terms'],
-    })
-    setDataFilterSubmitted(dataFilter) // show data filtered
-    setLoading(true)
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 300))
-
-      setLoading(false)
-    } catch (error) {
-    } finally {
-      setLoading(false)
-    }
   }
 
   function handleToggleConfigColumn() {
@@ -277,8 +210,8 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
           {configTable.rows.map((el, i) => {
             const value = handleDisplayTotalByKey(el.key)
 
-            // hidden column instalment_due_date when table has show due date
-            if (el.key === 'instalment_due_date' && configColumnSubmitted[el.key])
+            // hidden column date when table has show date
+            if (el.key === 'date' && configColumnSubmitted[el.key])
               return <Fragment key={i}></Fragment>
 
             return (
@@ -287,7 +220,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
                   'fs-4 fw-bold',
                   el.key === 'id' ? 'p-16px text-start' : 'px-10px text-end',
                 ])}
-                colSpan={el.key === 'id' && configColumnSubmitted?.['instalment_due_date'] ? 2 : 1}
+                colSpan={el.key === 'id' && configColumnSubmitted?.['date'] ? 2 : 1}
                 key={i}
               >
                 {+value || +value === 0 ? formatMoney(+value) : value}
@@ -374,83 +307,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
             </div>
           )}
         </div>
-        {/* {showFilterPopup && (
-          <FilterPopup
-            className='top-0'
-            onClose={handleShowToggleFilter}
-            dataFilter={dataFilter}
-            dataOption={{}}
-            handleLoadApi={handleFilter}
-            handleResetFilter={handleResetFilter}
-            handleChangeFilter={handleChangeFilter}
-            rows={CONFIG_REPAYMENT_SCHEDULE.rows}
-          />
-        )}
-
-        <Button
-          onClick={handleShowToggleFilter}
-          className={clsx(['align-self-center fs-6 text-primary btn btn-secondary h-45px'])}
-        >
-          <Icons name={'filterIcon'} />
-          Filter
-        </Button> */}
       </div>
-
-      {/* {!!Object.keys(filterHasValue).length && (
-        <div className='d-flex justify-content pt-14px m-0'>
-          <h1 className='fs-14 text-gray-600 fw-semibold m-0 py-4px mt-16px'>Filter:</h1>
-
-          <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap'>
-            {Object.keys(filterHasValue).map((key, i) => {
-              const currentConfig = CONFIG_REPAYMENT_SCHEDULE.rows.find((row) => row.key === key)
-
-              const name = currentConfig?.name
-              const isDate = currentConfig?.infoFilter?.typeInput === 'date' ? true : false
-
-              let value = filterHasValue[key]
-
-              if (isObject(value)) {
-                const fromValue =
-                  isDate && value?.gte ? moment(value?.gte).format('MMM D, YYYY') : value?.gte
-                const toValue =
-                  isDate && value?.lte ? moment(value?.lte).format('MMM D, YYYY') : value?.lte
-
-                // gte key comes first, followed by lte
-                value = [fromValue || '...', toValue || '...'].join(' - ')
-              }
-
-              return (
-                <div className='wrapper-filter-application mt-16px ms-16px py-0' key={i}>
-                  <h2 className='filter-title-show'>
-                    {name}: {value}
-                  </h2>
-                  <div
-                    onClick={() => {
-                      const _newDataFilter = {...dataFilter}
-                      delete _newDataFilter[key]
-
-                      setDataFilter(_newDataFilter)
-                      setLoadApi(!loadApi)
-                    }}
-                    className='p-0 m-0 cursor-pointer'
-                  >
-                    <Icons name={'CloseSmall'} />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          <button
-            onClick={() => {
-              handleResetFilter()
-            }}
-            className='reset-all-filter-application mt-16px ms-16px'
-          >
-            Reset All
-          </button>
-        </div>
-      )} */}
 
       {/* Table */}
       <TableSecondary
@@ -469,7 +326,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
       <div className='d-flex align-items-center justify-content-between gap-16px mt-30px'>
         <RowPerPage
-          lenghtData={loan_instalment_schedule.length}
+          lenghtData={instalment_schedule.length}
           limit={pagination.pageSize}
           page={pagination.currentPage}
           setLimit={(e: any) => {
@@ -479,7 +336,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
 
         <Pagination
           onChangePagePagination={handleChangePagination}
-          searchCriteria={{...pagination, total: loan_instalment_schedule?.length || 0}}
+          searchCriteria={{...pagination, total: instalment_schedule?.length || 0}}
         />
       </div>
     </div>

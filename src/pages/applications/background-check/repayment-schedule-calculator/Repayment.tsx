@@ -12,12 +12,11 @@ import {swalToast} from '@/app/swal-notification'
 import {Input} from '@/components/input'
 import {Select} from '@/components/select'
 import Step from '@/components/step/Step'
-import {MONTHLY_DUE_DATE, getDaysOfCurrentDate} from '@/app/utils'
 import {formatNumber} from '@/app/utils'
 import Button from '@/components/button/Button'
 import {TermUnit} from '@/app/types/enum'
 import {DataResponse} from '@/app/types'
-import {PayloadRepaymentSchedule, RepaymentSchedule} from '@/app/types/calculate'
+import {InstalmentSchedule, PayloadRepaymentSchedule} from '@/app/types/calculate'
 
 type Props = {
   handleClose: any
@@ -32,10 +31,11 @@ export const RepaymentScheduleCalculatorSchema = Yup.object().shape({
   term_unit: Yup.string().required('Term Unit is required'),
   monthly_due_date: Yup.string().required('Monthly Due Date is required'),
 })
+
 const Repayment = ({handleClose, mobile = false}: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const [currentStep, setCurrentStep] = useState<number>(1)
-  const [dataRepayment, setDataRepayment] = useState<RepaymentSchedule>(null)
+  const [dataRepayment, setDataRepayment] = useState<InstalmentSchedule[]>(null)
 
   function handleChangeStep(step: number) {
     setCurrentStep(step)
@@ -60,7 +60,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
       validationSchema: RepaymentScheduleCalculatorSchema,
       onSubmit: async () => {
         try {
-          const {data} = await request.post<DataResponse<RepaymentSchedule>>('/calculate', {
+          const {data} = await request.post<DataResponse<InstalmentSchedule[]>>('/calculate', {
             loan_amount: +values.loan_amount,
             total_cycle: +values.total_cycle,
             interest_percent: values.interest_percent,
@@ -82,22 +82,24 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
 
   const dataFooterTable = React.useMemo(() => {
     if (dataRepayment) {
-      return dataRepayment.instalment_schedule.reduce(
+      return dataRepayment.reduce(
         (acc, item) => {
-          const {interest_repayment, principle_repayment} = item
+          const {interest, amount_emi} = item
+
           return {
-            totalPrinciple: acc['totalPrinciple'] + principle_repayment,
-            totalInterest: acc['totalInterest'] + interest_repayment,
-            totalMonthlyInst: acc['totalMonthlyInst'] + (interest_repayment + principle_repayment),
+            ...acc,
+            totalInterest: acc['totalInterest'] + interest,
+            totalMonthlyInst: acc['totalMonthlyInst'] + amount_emi,
           }
         },
         {
           totalInterest: 0,
           totalMonthlyInst: 0,
-          totalPrinciple: 0,
+          totalPrinciple: +values.loan_amount,
         }
       )
     }
+
     return {
       totalInterest: 0,
       totalMonthlyInst: 0,
@@ -125,11 +127,9 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
     values.monthly_due_date + getDayWithSuffix(values.monthly_due_date)
 
   useEffect(() => {
-    if (+values.total_cycle > 1) {
-      setFieldValue('interest_percent', 3.95)
-    } else {
-      setFieldValue('interest_percent', 4)
-    }
+    let value = +values.total_cycle > 1 ? 3.91 : 4
+
+    setFieldValue('interest_percent', value)
   }, [values.total_cycle])
 
   return (
@@ -350,7 +350,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           <tr>
                             <td className='label-calculator'>Monthly Instalment Amount</td>
                             <td className='content-calculator w-200px p-12px'>
-                              ${formatNumber(dataRepayment.amount_emi)}
+                              ${formatNumber(dataRepayment?.[0]?.amount_emi)}
                             </td>
                           </tr>
                           <tr>
@@ -379,19 +379,13 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {dataRepayment.instalment_schedule?.map((el, index) => {
+                        {dataRepayment?.map((el, index) => {
                           const table = rowsTable.map((rt) => {
                             switch (rt.key) {
-                              case 'date_repayment':
+                              case 'date':
                                 return (
                                   <td key={rt.key} className='p-12px content-calculator fs-4'>
-                                    {moment(el.date_repayment).format('MM/DD/YYYY')}
-                                  </td>
-                                )
-                              case 'amount_emi':
-                                return (
-                                  <td key={rt.key} className='p-12px content-calculator fs-4'>
-                                    ${formatNumber(dataRepayment?.amount_emi || 0)}
+                                    {moment(el.date).format('MM/DD/YYYY')}
                                   </td>
                                 )
                               default:

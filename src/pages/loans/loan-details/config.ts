@@ -1,5 +1,5 @@
-import { TableConfig } from '@/app/types'
-import { Input } from '@/components/input'
+import {TableConfig} from '@/app/types'
+import {Input} from '@/components/input'
 
 export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
   settings: {
@@ -10,13 +10,14 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'id',
       name: '#',
       classNameTableHead: 'repayment-id ps-1',
-      classNameTableBody: 'ps-1'
+      classNameTableBody: 'ps-1',
     },
     {
-      key: 'instalment_due_date',
+      key: 'date',
       name: 'Date',
-      classNameTableBody: 'text-end text-nowrap fs-14',
-      classNameTableHead: 'text-end fs-14',
+      classNameTableBody: 'text-end text-nowrap',
+      classNameTableHead: 'fs-14 text-end',
+      format: 'date',
       infoFilter: {
         isSort: true,
         isFromTo: true,
@@ -30,6 +31,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       name: 'Principal',
       classNameTableBody: 'text-end',
       classNameTableHead: 'fs-14 text-end',
+      format: 'money',
       infoFilter: {
         isSort: true,
         isFromTo: true,
@@ -43,6 +45,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       name: 'Principal Balance',
       classNameTableBody: 'text-end',
       classNameTableHead: 'fs-14 text-end',
+      format: 'money',
       infoFilter: {
         isSort: true,
         isFromTo: true,
@@ -56,6 +59,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       name: 'Interest',
       classNameTableBody: 'text-end',
       classNameTableHead: 'fs-14 text-end',
+      format: 'money',
       infoFilter: {
         isSort: true,
         isFromTo: true,
@@ -69,6 +73,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       name: 'Interest Balance',
       classNameTableBody: 'text-end',
       classNameTableHead: 'fs-14 text-end',
+      format: 'money',
       infoFilter: {
         isSort: true,
         isFromTo: true,
@@ -82,6 +87,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       name: 'Late Interest',
       classNameTableBody: 'text-end',
       classNameTableHead: 'fs-14 text-end',
+      format: 'money',
       infoFilter: {
         isSort: true,
         isFromTo: true,
@@ -91,11 +97,12 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       },
     },
     {
-      key: 'instalment_total',
+      key: 'total',
       name: 'Instalment',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'text-end',
+      classNameTableHead: 'fs-14 text-end',
       defaultShow: false,
+      format: 'money',
       infoFilter: {
         isSort: true,
         isFromTo: true,
@@ -105,11 +112,12 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       },
     },
     {
-      key: 'instalment_total_balance',
+      key: 'total_balance',
       name: 'Instalment Balance',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'text-end',
+      classNameTableHead: 'fs-14 text-end',
       defaultShow: false,
+      format: 'money',
       infoFilter: {
         isSort: true,
         isFromTo: true,

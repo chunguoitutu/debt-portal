@@ -166,6 +166,7 @@ export type TableRow = {
   isHide?: boolean // hide io table listing
   defaultShow?: boolean
   options?: Option[]
+  format?: 'money' | 'date'
   infoCreateEdit?: {
     type?: string
     typeInput?: HTMLInputTypeAttribute
