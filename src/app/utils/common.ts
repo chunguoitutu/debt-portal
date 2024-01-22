@@ -293,9 +293,9 @@ export function convertInterestApplication(amountInterest: number, termUnit: str
   }
 }
 
-export const Sum = (key: string, data = []) => {
+export const Sum = (key: string, data = [], format = true) => {
   const total = data.reduce((sum, loan) => {
     return sum + Number(loan[key] || 0)
   }, 0)
-  return formatMoney(total)
+  return format ? formatMoney(total) : total
 }

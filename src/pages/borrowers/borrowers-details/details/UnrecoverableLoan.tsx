@@ -47,6 +47,33 @@ const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
     }
   }
 
+  const tableFooter = () => {
+    return (
+      <tfoot className='table-foot-repayment position-sticky bottom-0 bg-gray-100'>
+        <tr>
+          <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
+          <td></td>
+          <td></td>
+          <td className='text-end px-10px fs-16 fw-bold '> </td>
+          <td className='text-end px-10px fs-16 fw-bold'>
+            {Sum('total_collection', unrecoverable_loan)}
+          </td>
+          <td className='text-end px-10px fs-16 fw-bold'>
+            {Sum('loan_amount', unrecoverable_loan)}
+          </td>
+          <td
+            style={{
+              color: +Sum('p&l', unrecoverable_loan, false) < 0 ? '#F64E60' : '#071437',
+            }}
+            className='text-end px-10px fs-16 fw-bold'
+          >
+            {Sum('p&l', unrecoverable_loan)}
+          </td>
+          <td></td>
+        </tr>
+      </tfoot>
+    )
+  }
   return (
     <div>
       {/* Table */}
@@ -62,24 +89,7 @@ const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
         pageSize={pageSize}
         currentPage={currentPage}
         showTableFooter={(unrecoverable_loan || []).length > 0}
-        tableFooter={
-          <tfoot className='table-foot-repayment position-sticky bottom-0 bg-gray-100'>
-            <tr>
-              <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
-              <td></td>
-              <td></td>
-              <td className='text-end px-10px fs-16 fw-bold '> </td>
-              <td className='text-end px-10px fs-16 fw-bold'>
-                {Sum('total_collection', unrecoverable_loan)}
-              </td>
-              <td className='text-end px-10px fs-16 fw-bold'>
-                {Sum('loan_amount', unrecoverable_loan)}
-              </td>
-              <td className='text-end px-10px fs-16 fw-bold'>{Sum('p&l', unrecoverable_loan)}</td>
-              <td></td>
-            </tr>
-          </tfoot>
-        }
+        tableFooter={tableFooter()}
       />
     </div>
   )

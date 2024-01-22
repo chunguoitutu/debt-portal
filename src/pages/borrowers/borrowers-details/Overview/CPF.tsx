@@ -12,7 +12,7 @@ const CPF = ({data}: any) => {
 
   const dataCPF = cpfData?.[0]
 
-  const [showCpf, setShowCpf] = useState<any[]>([])
+  const [showCpf, setShowCpf] = useState<any[]>([0])
 
   const [dataParse, setDataParse] = useState<any>(null)
 
@@ -50,7 +50,8 @@ const CPF = ({data}: any) => {
       {dataParse?.length ? (
         dataParse?.map((cpf: CustomerCPF, i: number) => {
           const counter = formatDate(cpf?.date, 'MMM DD, YYYY')
-          const isActive = showCpf?.includes(cpf.id)
+
+          const isActive = showCpf?.includes(i)
 
           return (
             <div
@@ -63,7 +64,7 @@ const CPF = ({data}: any) => {
               {/* Header */}
               <div
                 className='d-flex align-items-center justify-content-between gap-24px cursor-pointer'
-                onClick={() => handleToggleViewCpf(cpf?.id)}
+                onClick={() => handleToggleViewCpf(i)}
                 key={cpf.date}
               >
                 <div className='d-flex align-items-center gap-4px' key={i}>

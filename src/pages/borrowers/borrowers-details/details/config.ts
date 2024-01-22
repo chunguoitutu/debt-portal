@@ -5,6 +5,7 @@ export const CONFIG_OUTSTANDING_LOAN__HISTORY: TableConfig = {
   settings: {
     endPointGetListing: '/',
     endpointNavigate: '/loans/details/',
+    saveSESSION_NAME: 'recentlyViewedLoanId',
   },
   rows: [
     {
@@ -81,6 +82,7 @@ export const CONFIG_FULL_SETTLED_LOAN__HISTORY: TableConfig = {
   settings: {
     endPointGetListing: '/',
     endpointNavigate: '/loans/details/',
+    saveSESSION_NAME: 'recentlyViewedLoanId',
   },
   rows: [
     {

@@ -60,6 +60,30 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
     }
   }
 
+  const tableFooter = () => {
+    return (
+      <tfoot className='table-foot-repayment position-sticky bottom-0 z-0 bg-gray-100'>
+        <tr>
+          <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
+          <td></td>
+          <td className='text-end px-10px fs-16 fw-bold '> </td>
+          <td className='text-end px-10px fs-16 fw-bold'>
+            {Sum('total_collection', outstanding_loan)}
+          </td>
+          <td className='text-end px-10px fs-16 fw-bold'>{Sum('loan_amount', outstanding_loan)}</td>
+          <td
+            style={{
+              color: +Sum('p&l', outstanding_loan, false) < 0 ? '#F64E60' : '#071437',
+            }}
+            className='text-end px-10px fs-16 fw-bold'
+          >
+            {Sum('p&l', outstanding_loan)}
+          </td>
+          <td></td>
+        </tr>
+      </tfoot>
+    )
+  }
   return (
     <div>
       <div className='d-flex align-items-center justify-content-between gap-16px py-16px border-bottom border-gray-200 position-relative'>
@@ -90,23 +114,7 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
         pageSize={pageSize}
         currentPage={currentPage}
         showTableFooter={(outstanding_loan || []).length > 0}
-        tableFooter={
-          <tfoot className='table-foot-repayment position-sticky bottom-0 bg-gray-100'>
-            <tr>
-              <td className='fs-16 fw-bold p-16px text-start'>Total</td>
-              <td></td>
-              <td className='text-end px-10px fs-16 fw-bold'> </td>
-              <td className='text-end px-10px fs-16 fw-bold'>
-                {Sum('total_collection', outstanding_loan)}
-              </td>
-              <td className='text-end px-10px fs-16 fw-bold'>
-                {Sum('loan_amount', outstanding_loan)}
-              </td>
-              <td className='text-end px-10px fs-16 fw-bold'>{Sum('p&l', outstanding_loan)}</td>
-              <td></td>
-            </tr>
-          </tfoot>
-        }
+        tableFooter={tableFooter()}
       />
     </div>
   )
