@@ -106,7 +106,7 @@ const LoanDetails = () => {
 
         <div className='col-12 col-xxl-8'>
           <div className='card p-30px h-100'>
-            <h2 className='fs-20 fw-bolder mb-4'>Transactions History, Schedule And Bad Debt</h2>
+            <h2 className='fs-20 fw-bolder mb-4'>Details</h2>
 
             <HorizontalMenu
               className='mt-24px'

@@ -2,14 +2,32 @@
   .loan-identification-no,
   .loan-amount,
   .loan-interest {
-    font-size: 32px;
-    line-height: 39px;
+    font-size: 24px;
+    line-height: 24px;
+  }
+
+  .border-dashed-loan {
+    border-radius: 8px;
+    border: 1px dashed var(--Gray---bs-gray-300, #dbdfe9);
+    background: #fff;
+    .boder-bottom-dashed {
+      border-bottom: 1px dashed var(--Gray---bs-gray-300, #dbdfe9);
+    }
+    .boder-end-dashed {
+      border-right: 1px dashed var(--Gray---bs-gray-300, #dbdfe9);
+    }
+  }
+
+  .bg-F64E60 {
+    background-color: #f64e60;
   }
 
   .loan-ribbon {
     content: '';
     position: absolute;
     top: 0;
+    width: 72px;
+    height: 112px;
     right: 30px;
     padding-bottom: 50px;
     clip-path: polygon(100% 0%, 100% 0, 0 0, 0 100%, 50% calc(100% - 20px), 100% 100%);
@@ -31,10 +49,11 @@
   }
 
   .config-column-grid {
+    width: 385px;
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 24px;
+    left: 135px;
     transform: translateX(calc(-100% - 8px));
     box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.18);
     z-index: 4;

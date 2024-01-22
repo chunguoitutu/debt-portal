@@ -125,13 +125,13 @@ const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
         <div className='d-flex align-items-center gap-32px'>
           {/* Note item */}
           <div className='d-flex align-items-center gap-8px'>
-            <div className='bg-danger w-10px h-10px flex-shrink-0 rounded-circle'></div>
+            <div className='bg-F64E60 w-10px h-10px flex-shrink-0 rounded-circle'></div>
             <span className='fs-14 fw-semibold text-gray-600'>Late Payment</span>
           </div>
 
           {/* Note item */}
           <div className='d-flex align-items-center gap-8px'>
-            <div className='bg-gray-900 w-10px h-10px flex-shrink-0 rounded-circle'></div>
+            <div className='bg-primary w-10px h-10px flex-shrink-0 rounded-circle'></div>
             <span className='fs-14 fw-semibold text-gray-600'>On-Time Payment</span>
           </div>
         </div>

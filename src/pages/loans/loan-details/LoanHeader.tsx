@@ -14,7 +14,7 @@ const LoanHeader: FC<LoanDetailsProps> = ({loanInfo}) => {
   return (
     <div className='loan-header card p-30px position-relative'>
       <div className='d-flex flex-column gap-4px pb-30px'>
-        <h1 className='loan-identification-no fs-14 fs-bolder'>{loan_details.loan_acc_no}</h1>
+        <h1 className='loan-identification-no fw-bolder'>{loan_details.loan_acc_no}</h1>
         <span className='fs-14 text-gray-500 fw-semibold'>
           Application No:{' '}
           <span
@@ -32,27 +32,12 @@ const LoanHeader: FC<LoanDetailsProps> = ({loanInfo}) => {
       </div>
 
       {/* Loan date payment */}
-      <div className='d-flex flex-column gap-4px'>
-        {loan_instalment_schedule?.[0]?.instalment_due_date && (
-          <span className='text-gray-700 fs-14'>
-            Loan Start Date:{' '}
-            <strong className='fw-bold'>
-              {moment(loan_instalment_schedule?.[0]?.instalment_due_date).format('MMM D, YYYY')}
-            </strong>
-          </span>
-        )}
 
-        <span className='text-gray-700 fs-14'>
-          Loan Next Due Date:{' '}
-          <strong className='fw-bold'>{moment(new Date()).format('MMM D, YYYY')}</strong>
-        </span>
-      </div>
-
-      <div className='p-16px mt-16px border border-gray-200 rounded-inherit'>
+      <div className='p-16px mt-16px border-dashed-loan rounded-inherit'>
         {/* Loan info payment */}
-        <div className='d-flex border-bottom border-gray-200 mb-16px pb-16px'>
-          <div className='d-flex flex-column fs-14 flex-grow-1 border-end border-gray-200 pe-16px me-16px'>
-            <span className='loan-amount fw-bolder'>
+        <div className='d-flex boder-bottom-dashed mb-16px pb-16px'>
+          <div className='d-flex flex-column fs-14 flex-grow-1 boder-end-dashed pe-16px me-16px'>
+            <span className='loan-amount fs-2 fw-bold'>
               {formatMoney(loan_details.amount_of_loan)}
             </span>
             <span>Loan Amount</span>
@@ -67,9 +52,23 @@ const LoanHeader: FC<LoanDetailsProps> = ({loanInfo}) => {
         </div>
 
         {/* View more */}
-        <span className='text-gray-700 text-hover-primary cursor-pointer fs-14 w-100 d-flex align-items-center justify-content-between gap-16px'>
-          View More <FontAwesomeIcon icon={faChevronRight} />
-        </span>
+        <div className='d-flex flex-column gap-4px'>
+          {loan_instalment_schedule?.[0]?.instalment_due_date && (
+            <span className='text-gray-500 fs-14'>
+              Loan Start Date:{' '}
+              <span className='fw-bold text-gray-900'>
+                {moment(loan_instalment_schedule?.[0]?.instalment_due_date).format('MMM D, YYYY')}
+              </span>
+            </span>
+          )}
+
+          <span className='text-gray-500 fs-14'>
+            Loan Next Due Date:{' '}
+            <span className='fw-bold text-gray-900'>
+              {moment(new Date()).format('MMM D, YYYY')}
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   )

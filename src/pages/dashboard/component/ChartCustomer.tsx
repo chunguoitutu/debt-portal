@@ -170,7 +170,7 @@ const ChartCustomer: FC<Props> = ({className, size = 70, line = 11, rotate = 145
               <KTIcon iconName='arrow-up' className='fs-5 text-success ms-n1' /> 20%
             </span>
           </div>
-          <span className='text-gray-500 pt-1 fw-semibold fs-6'>{`Total customer in the ${year}`}</span>
+          <span className='text-gray-500 pt-1 fw-semibold fs-6'>{`Total customers in the ${year}`}</span>
         </div>
       </div>
 

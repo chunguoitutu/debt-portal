@@ -22,7 +22,7 @@ const NextPayment: FC<LoanDetailsProps> = () => {
 
                 {/* payment info */}
                 <div className='d-flex flex-column gap-4px flex-grow-1'>
-                  <span className='fs-13 fw-semibold text-danger'>
+                  <span className='fs-13 fw-semibold' style={{color: '#F64E60'}}>
                     {moment(new Date()).format('MMM D, YYYY')}
                   </span>
                   <span className='fs-20 fw-bold'>{numeral(10031.415).format('$0,0.00')}</span>
