@@ -2,11 +2,11 @@ import NoRecord from '@/components/no-records'
 import carImg from '@/app/images/car.svg'
 import {CustomerVehicle} from '@/app/types/customer'
 import {Fragment, useEffect, useState} from 'react'
-import {VEHICLE_CONFIG} from './config'
+import {DataOverview, VEHICLE_CONFIG} from './config'
 import {formatDate, formatMoney} from '@/app/utils'
 import clsx from 'clsx'
 
-const Vehicles = ({data}: any) => {
+const Vehicles = ({data}: DataOverview) => {
   const {vehicle: vehicleListing} = data || {}
 
   const [viewVehicle, setViewVehicle] = useState<number[]>([])

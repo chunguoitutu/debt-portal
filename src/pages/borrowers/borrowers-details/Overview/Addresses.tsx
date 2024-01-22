@@ -2,43 +2,9 @@ import request from '@/app/axios'
 import Icons from '@/components/icons'
 import NoRecord from '@/components/no-records'
 import React, {useEffect, useState} from 'react'
+import {CONFIG_ADDRESS, DataOverview} from './config'
 
-const config = [
-  {
-    key: 'unit',
-    value: 'Unit',
-  },
-  {
-    key: 'block',
-    value: 'Block',
-  },
-  {
-    key: 'building',
-    value: 'Building',
-  },
-  {
-    key: 'street',
-    value: 'Street',
-  },
-  {
-    key: 'postal_code',
-    value: 'Postal',
-  },
-  {
-    key: 'country',
-    value: 'Country',
-  },
-  {
-    key: 'address_label',
-    value: 'Address Label',
-  },
-]
-
-type Props = {
-  data: any
-}
-
-const Addresses = ({data}: Props) => {
+const Addresses = ({data}: DataOverview) => {
   const [open, setOpen] = useState<any>({
     index1: 1,
     index2: 1,
@@ -136,7 +102,7 @@ const Addresses = ({data}: Props) => {
                           )}
                         </div>
                       </div>
-                      {config.map((confg, i) => {
+                      {CONFIG_ADDRESS.map((confg, i) => {
                         return (
                           <div key={i}>
                             {open?.index1 === index + 1 && open.index2 === idx + 1 && (

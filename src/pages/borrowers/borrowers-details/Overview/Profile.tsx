@@ -1,42 +1,9 @@
-type Props = {
-  data: any
-}
+import {CONFIG_PROFILE, DataOverview} from './config'
 
-const Profiles = [
-  {
-    key: 'identification_no',
-    value: 'NRIC No',
-  },
-  {
-    key: 'gender',
-    value: 'Gender',
-  },
-  {
-    key: 'date_of_birth',
-    value: 'Date of birth',
-  },
-  {
-    key: 'country_id',
-    value: 'Nationalities',
-  },
-  {
-    key: 'company',
-    value: 'Company',
-  },
-  {
-    key: 'mobilephone_1',
-    value: 'Phone',
-  },
-  {
-    key: 'email1',
-    value: 'Email',
-  },
-]
-
-const Profile = ({data}: Props) => {
+const Profile = ({data}: DataOverview) => {
   return (
     <div className='d-flex flex-column gap-16px'>
-      {Profiles.map((profile, i) => {
+      {CONFIG_PROFILE.map((profile, i) => {
         return (
           <div key={i} className='d-flex  gap-16px'>
             <h1 className='col-3 fs-14 fw-normal text-gray-700 p-0 m-0'>{profile.value} </h1>

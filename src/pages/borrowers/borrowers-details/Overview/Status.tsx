@@ -1,22 +1,9 @@
-import React from 'react'
+import {CONFIG_STATUS, DataOverview} from './config'
 
-type Props = {
-  data: any
-}
-const StatusS = [
-  {
-    key: 'blacklisted',
-    value: 'Blacklisted',
-  },
-  {
-    key: 'exclusion_remarks',
-    value: 'Exclusion remarks',
-  },
-]
-const Status = ({data}: Props) => {
+const Status = ({data}: DataOverview) => {
   return (
     <div className='d-flex flex-column gap-16px'>
-      {StatusS.map((status, i) => {
+      {CONFIG_STATUS.map((status, i) => {
         return (
           <div key={i} className='d-flex  gap-16px'>
             <h1 className='col-3 fs-14 fw-normal text-gray-700 p-0 m-0'>{status.value} </h1>

@@ -7,49 +7,23 @@ import Employment from './Employment'
 import Vehicles from './Vehicles'
 import CPF from './CPF'
 import Status from './Status'
+import {CONFIG_OVERVIEW} from './config'
 
 type Props = {
   data: any
 }
 
-const Overviews = [
-  {
-    title: 'Profile',
-    Comment: Profile,
-  },
-  {
-    title: 'Addresses',
-    Comment: Addresses,
-  },
-  {
-    title: 'Employment',
-    Comment: Employment,
-  },
-  {
-    title: 'Vehicles',
-    Comment: Vehicles,
-  },
-  {
-    title: 'CPF',
-    Comment: CPF,
-  },
-  {
-    title: 'Status',
-    Comment: Status,
-  },
-]
-
 const Overview = ({data}: Props) => {
-  const [title, setTitle] = useState(Overviews[2].title)
+  const [title, setTitle] = useState(CONFIG_OVERVIEW[2].title)
   return (
     <>
       <SideBar
         setTitle={setTitle}
-        Overviews={Overviews}
+        Overviews={CONFIG_OVERVIEW}
         title={title}
         children={
           <>
-            {Overviews.map((overview, idx) => {
+            {CONFIG_OVERVIEW.map((overview, idx) => {
               const Component: any = overview.Comment
               if (overview.title === title) {
                 return (

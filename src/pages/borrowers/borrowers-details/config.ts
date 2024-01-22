@@ -17,7 +17,6 @@ export const CONFIG_REPAYMENT_SCHEDULE_CUSTOMER: TableConfig = {
       classNameTableBody: 'text-end text-nowrap',
       classNameTableHead: 'text-end',
       infoFilter: {
-        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'date',
@@ -30,7 +29,6 @@ export const CONFIG_REPAYMENT_SCHEDULE_CUSTOMER: TableConfig = {
       classNameTableBody: 'text-end',
       classNameTableHead: 'text-end',
       infoFilter: {
-        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -43,7 +41,6 @@ export const CONFIG_REPAYMENT_SCHEDULE_CUSTOMER: TableConfig = {
       classNameTableBody: 'text-end',
       classNameTableHead: 'text-end',
       infoFilter: {
-        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -56,7 +53,6 @@ export const CONFIG_REPAYMENT_SCHEDULE_CUSTOMER: TableConfig = {
       classNameTableBody: 'text-end',
       classNameTableHead: 'text-end',
       infoFilter: {
-        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -69,7 +65,6 @@ export const CONFIG_REPAYMENT_SCHEDULE_CUSTOMER: TableConfig = {
       classNameTableBody: 'text-end',
       classNameTableHead: 'text-end',
       infoFilter: {
-        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
@@ -83,11 +78,9 @@ export const CONFIG_REPAYMENT_SCHEDULE_CUSTOMER: TableConfig = {
       classNameTableHead: 'text-end',
       defaultShow: false,
       infoFilter: {
-        // isSort: true,
         isFromTo: true,
         typeComponent: 'input',
         typeInput: 'number',
-        // component: Input,
       },
     },
   ],

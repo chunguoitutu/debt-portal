@@ -1,56 +1,12 @@
-import {formatMoney} from '@/app/utils'
-import React from 'react'
-
-function getAbbreviation(name: string) {
-  const words = name.split(' ')
-  let abbreviation = ''
-
-  words.forEach((word) => {
-    abbreviation += word.charAt(0).toUpperCase()
-  })
-
-  return abbreviation
-}
-
-const activeCustomer = [
-  {
-    value: 1,
-    label: 'active',
-    background: '#E8FFF3',
-    color: '#50CD89',
-  },
-  {
-    value: 2,
-    label: 'In-Prison',
-    background: '#FFE2E5',
-    color: '#F64E60',
-  },
-  {
-    value: 3,
-    label: 'Decreased',
-    background: '#FFE2E5',
-    color: '#F64E60',
-  },
-  {
-    value: 4,
-    label: 'Bankrupt',
-    background: '#FFE2E5',
-    color: '#F64E60',
-  },
-  {
-    value: 5,
-    label: 'Missing',
-    background: '#FFE2E5',
-    color: '#F64E60',
-  },
-]
+import {formatMoney, getAbbreviation} from '@/app/utils'
+import {config_activeCustomer} from './overview/config'
 
 interface Props {
   data: any
 }
 
 const BorrowersHeader = ({data}: Props) => {
-  const dataActive = activeCustomer.filter((el) => el.value === Number(data?.status || 1))[0]
+  const dataActive = config_activeCustomer.filter((el) => el.value === Number(data?.status || 1))[0]
   return (
     <div className='card d-flex flex-row '>
       <div

@@ -1,10 +1,10 @@
 import {Fragment, useMemo} from 'react'
-import {CUSTOMER_EMPLOYMENT_CONFIG, CUSTOMER_INCOME_CONFIG} from './config'
+import {CUSTOMER_EMPLOYMENT_CONFIG, CUSTOMER_INCOME_CONFIG, DataOverview} from './config'
 import clsx from 'clsx'
 import {Table} from 'react-bootstrap'
 import {formatMoney} from '@/app/utils'
 
-const Employment = ({data}: any) => {
+const Employment = ({data}: DataOverview) => {
   const {employment} = data || {}
 
   const isSelfEmployed = useMemo(() => {
@@ -47,7 +47,7 @@ const Employment = ({data}: any) => {
       <Table className='table-bordered mb-24px'>
         <tbody className='border-gray-300'>
           {CUSTOMER_INCOME_CONFIG.map((el, i) => {
-            let value = employment?.[el.key]
+            let value: any = employment?.[el.key]
 
             if (el.format === 'money') {
               value = formatMoney(value)

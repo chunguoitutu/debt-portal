@@ -4,11 +4,10 @@ import {PageLink, PageTitle} from '@/_metronic/layout/core'
 import Loading from '@/components/loading'
 import NotFoundPage from '@/pages/not-found-page/NotFoundPage'
 import {useEffect, useMemo, useState} from 'react'
-import {useLocation, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 
 import './style.scss'
 import HorizontalMenu from '@/components/menu'
-import {LoanInfo} from '@/app/types'
 import request from '@/app/axios'
 import {getMenuHorizontalCustomerDetails} from '@/app/constants/menu'
 import {useAuth} from '@/app/context/AuthContext'
@@ -83,9 +82,9 @@ const BorrowerDetail = (props: Props) => {
   }
 
   // ============================== RENDER JSX, handle logic above ======================================================
-  // if (error) return <NotFoundPage />
+  if (error) return <NotFoundPage />
 
-  // if (!loanInfo) return <Loading />
+  if (!customerInfo) return <Loading />
 
   return (
     <div className='loan-details-page h-100'>

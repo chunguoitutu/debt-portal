@@ -3,11 +3,11 @@ import clsx from 'clsx'
 import {Fragment, useEffect, useState} from 'react'
 import cpfImg from '@/app/images/cpf.svg'
 
-import {CPF_CONFIG} from './config'
+import {CPF_CONFIG, DataOverview} from './config'
 import {formatDate, formatMoney, parseJson} from '@/app/utils'
 import NoRecord from '@/components/no-records'
 
-const CPF = ({data}: any) => {
+const CPF = ({data}: DataOverview) => {
   const {cpf: cpfData} = data || {}
 
   const dataCPF = cpfData?.[0]

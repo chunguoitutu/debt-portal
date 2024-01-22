@@ -299,3 +299,14 @@ export const Sum = (key: string, data = [], format = true) => {
   }, 0)
   return format ? formatMoney(total) : total
 }
+
+export function getAbbreviation(name: string) {
+  const words = name.split(' ')
+  let abbreviation = ''
+
+  words.forEach((word) => {
+    abbreviation += word.charAt(0).toUpperCase()
+  })
+
+  return abbreviation
+}
