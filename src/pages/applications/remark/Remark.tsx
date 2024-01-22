@@ -60,7 +60,7 @@ const Remark: FC<Props> = ({
   const handleUpdate = async (payload, isCreate: boolean = false) => {
     if (idUpdate) {
       try {
-        await request.put('/remark/' + idUpdate, {
+        await request.put('site/remark/' + idUpdate, {
           data: {
             application_notes: JSON.stringify(payload),
           },

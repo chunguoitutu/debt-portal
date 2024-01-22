@@ -60,14 +60,17 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
       validationSchema: RepaymentScheduleCalculatorSchema,
       onSubmit: async () => {
         try {
-          const {data} = await request.post<DataResponse<InstalmentSchedule[]>>('/calculate', {
-            loan_amount: +values.loan_amount,
-            total_cycle: +values.total_cycle,
-            interest_percent: values.interest_percent,
-            first_repayment_date: values.first_repayment_date,
-            term_unit: +values.term_unit,
-            monthly_due_date: +values.monthly_due_date,
-          })
+          const {data} = await request.post<DataResponse<InstalmentSchedule[]>>(
+            '/site/calc-repayment',
+            {
+              loan_amount: +values.loan_amount,
+              total_cycle: +values.total_cycle,
+              interest_percent: values.interest_percent,
+              first_repayment_date: values.first_repayment_date,
+              term_unit: +values.term_unit,
+              monthly_due_date: +values.monthly_due_date,
+            }
+          )
 
           setDataRepayment(data.data)
           setCurrentStep(2)
@@ -81,29 +84,12 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
     })
 
   const dataFooterTable = React.useMemo(() => {
-    if (dataRepayment) {
-      return dataRepayment?.reduce(
-        (acc, item) => {
-          const {interest, amount_emi} = item
-
-          return {
-            ...acc,
-            totalInterest: acc['totalInterest'] + interest,
-            totalMonthlyInst: acc['totalMonthlyInst'] + amount_emi,
-          }
-        },
-        {
-          totalInterest: 0,
-          totalMonthlyInst: 0,
-          totalPrinciple: +values.loan_amount,
-        }
-      )
-    }
+    const totalMonthlyInst = +dataRepayment?.[0]?.amount_emi * +values.total_cycle || 0
 
     return {
-      totalInterest: 0,
-      totalMonthlyInst: 0,
-      totalPrinciple: 0,
+      totalInterest: totalMonthlyInst - +values.loan_amount || 0,
+      totalMonthlyInst: totalMonthlyInst,
+      totalPrincipal: +values.loan_amount || 0,
     }
   }, [dataRepayment])
 
@@ -401,7 +387,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         <tr style={{backgroundColor: '#F9F9F9'}}>
                           <td className='border-right-table p-12px label-calculator fs-4'>Total</td>
                           <td className='border-right-table p-12px label-calculator fs-4'>
-                            ${formatNumber(dataFooterTable.totalPrinciple)}
+                            ${formatNumber(dataFooterTable.totalPrincipal)}
                           </td>
                           <td className='border-right-table p-12px label-calculator fs-4'>
                             ${formatNumber(dataFooterTable.totalInterest)}
