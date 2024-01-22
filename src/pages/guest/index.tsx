@@ -125,10 +125,10 @@ const Guest = () => {
             setIsSignature={setIsSignature}
           />
         )}
-        <div className='d-flex align-items-center justify-content-between  gap-16px py-30px'>
-          <div>
+        <div className='d-flex align-items-center justify-content-between w-100  w-100 gap-30px py-30px'>
+          <div className='w-100'>
             {!email && !!isSignature && (
-              <div className='p-24px card'>
+              <div className='p-24px card w-100'>
                 <p className='m-0 pb-8px fs-16 text-gray-900 fw-semibold'>
                   Please enter your email to revise the contract
                 </p>
@@ -143,7 +143,7 @@ const Guest = () => {
               </div>
             )}
           </div>
-          <div className=''>
+          <div className='d-flex flex-shrink-0'>
             <Button className='btn-light-primary ' disabled={loading} onClick={handleTogglePopup}>
               Create Signature
             </Button>

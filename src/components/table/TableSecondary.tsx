@@ -132,6 +132,9 @@ const TableSecondary: FC<Props> = ({
 
                     return (
                       <td
+                        style={{
+                          color: +item[key] < 0 && ['p&l'].includes(key) ? '#F64E60' : '#071437',
+                        }}
                         className={clsx([
                           'fs-14 fw-semibold py-16px px-10px',
                           classNameTableBody,
@@ -148,6 +151,10 @@ const TableSecondary: FC<Props> = ({
                     <td className='text-center'>
                       <ButtonViewDetail
                         onClick={() => {
+                          sessionStorage.setItem(
+                            settings?.saveSESSION_NAME,
+                            JSON.stringify(item?.id)
+                          )
                           navigate(`${settings?.endpointNavigate}${item?.id}`)
                         }}
                       />

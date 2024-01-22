@@ -200,7 +200,7 @@ export type TableRow = {
 export type TableConfig = {
   settings: {
     showAction?: boolean
-
+    saveSESSION_NAME?: string
     showEditButton?: boolean
     showDeleteButton?: boolean
     showViewButton?: boolean
