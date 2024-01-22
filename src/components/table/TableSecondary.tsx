@@ -85,7 +85,7 @@ const TableSecondary: FC<Props> = ({
       >
         {/* Table head */}
         <thead className='position-sticky top-0 bg-white'>
-          <tr className='text-start text-muted fw-bolder fs-7 text-uppercase'>
+          <tr className='text-start text-muted fw-bold fs-6 text-uppercase'>
             {ROW_LISTING.map((el, i) => {
               const {key, name, classNameTableHead, infoFilter} = el
               const {isSort} = infoFilter || {}

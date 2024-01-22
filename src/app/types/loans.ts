@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction} from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 export type LoanDetailsProps = {
   loanInfo: LoanInfo
@@ -197,6 +197,7 @@ export type LoanAssignment = {
 }
 
 export type TotalRepayment = {
+  key: string
   total_principal: number
   total_principal_balance: number
   total_interest: number
