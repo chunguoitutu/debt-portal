@@ -59,7 +59,7 @@ const TableSecondary: FC<Props> = ({
         className='table align-middle table-row-dashed fs-6 no-footer mb-0'
       >
         {/* Table head */}
-        <thead className='position-sticky top-0 bg-white'>
+        <thead className='position-sticky z-3 top-0 bg-white'>
           <tr className='text-start text-muted fw-bold fs-6 text-uppercase'>
             {ROW_LISTING.map((el, i) => {
               const {key, name, classNameTableHead, infoFilter} = el
@@ -101,11 +101,14 @@ const TableSecondary: FC<Props> = ({
               return (
                 <tr key={index}>
                   {ROW_LISTING.map((row, i) => {
-                    const {key, classNameTableBody, format} = row
+                    const {key, classNameTableBody, format, typeValue} = row
                     const customClassName = handleSwitchClassName(key, item)
 
                     let value = item[key]
-                    if (format === 'date') {
+
+                    if (typeValue === 'date') {
+                      value = formatDate(value, 'MMM DD, YYYY')
+                    } else if (format === 'date') {
                       value = formatDate(value, 'YYYY-MM-DD')
                     } else if (format === 'money') {
                       value = formatMoney(value)

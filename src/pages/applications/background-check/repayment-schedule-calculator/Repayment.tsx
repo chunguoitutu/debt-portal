@@ -82,7 +82,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
 
   const dataFooterTable = React.useMemo(() => {
     if (dataRepayment) {
-      return dataRepayment.reduce(
+      return dataRepayment?.reduce(
         (acc, item) => {
           const {interest, amount_emi} = item
 

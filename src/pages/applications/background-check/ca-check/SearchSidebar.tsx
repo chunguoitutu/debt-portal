@@ -64,14 +64,6 @@ const SearchSidebar: React.FC<SearchSidebarProps> = ({searchPluginInstance}) => 
           search,
         } = renderSearchProps
 
-        const handleSearchKeyDown = (e: React.KeyboardEvent) => {
-          setSearchStatus(SearchStatus.Searching)
-          search().then((matches) => {
-            setSearchStatus(SearchStatus.FoundResults)
-            setMatches(matches)
-          })
-        }
-
         return (
           <div
             style={{

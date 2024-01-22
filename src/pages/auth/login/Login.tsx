@@ -33,7 +33,6 @@ const initialValues = {
 export function Login() {
   const [loading, setLoading] = useState(false)
   const [searchParams] = useSearchParams()
-  const [isAdmin, setIsAdmin] = useState(false)
   const [listBranch, setListBranch] = useState<null | any[]>(null)
   const [token, setToken] = useState<any>({})
   const redirect = searchParams.get('redirect')

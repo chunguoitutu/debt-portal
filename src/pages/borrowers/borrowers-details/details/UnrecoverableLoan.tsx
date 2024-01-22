@@ -11,15 +11,10 @@ const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
   const [keySort, setKeySort] = useState<string>('id')
-  const [pagination, setPagination] = useState<PaginationType>({
-    pageSize: 10,
-    currentPage: 1,
-  })
-  const {pageSize, currentPage} = pagination
 
   useEffect(() => {
     handleGetListing()
-  }, [pageSize, currentPage, keySort, orderBy])
+  }, [keySort, orderBy])
 
   /**
    * Handle change filter sort
@@ -80,14 +75,12 @@ const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
       <TableSecondary
         keySort={keySort}
         orderBy={orderBy}
-        className='mt-16px mh-350px'
+        className='mt-16px mh-500px'
         config={CONFIG_FULL_SETTLED_LOAN__HISTORY}
         onChangeSortBy={handleChangeSortBy}
         data={unrecoverable_loan}
         actions={true}
         loading={loading}
-        pageSize={pageSize}
-        currentPage={currentPage}
         showTableFooter={(unrecoverable_loan || []).length > 0}
         tableFooter={tableFooter()}
       />

@@ -1,9 +1,7 @@
 import {LoanDetailsProps, OrderBy, PaginationType} from '@/app/types'
-import {FC, useEffect, useMemo, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {TableSecondary} from '@/components/table'
-import RowPerPage from '@/components/row-per-page'
-import Pagination from '@/components/table/components/Pagination'
-import {Sum, filterObjectKeyNotEmpty, handleFormatFilter, isObject} from '@/app/utils'
+import {Sum} from '@/app/utils'
 import {CONFIG_OUTSTANDING_LOAN__HISTORY} from './config'
 
 const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
@@ -12,19 +10,10 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
   const [keySort, setKeySort] = useState<string>('id')
-  const [dataFilter, setDataFilter] = useState<{[key: string]: any}>({})
-  const [dataFilterSubmitted, setDataFilterSubmitted] = useState<{[key: string]: any}>({})
-  const [loadApi, setLoadApi] = useState<boolean>(true)
-  const [showFilterPopup, setShowFilterPopup] = useState<boolean>(false)
-  const [pagination, setPagination] = useState<PaginationType>({
-    pageSize: 10,
-    currentPage: 1,
-  })
-  const {pageSize, currentPage} = pagination
 
   useEffect(() => {
     handleGetListing()
-  }, [pageSize, currentPage, loadApi, keySort, orderBy])
+  }, [keySort, orderBy])
 
   /**
    * Handle change filter sort
@@ -39,14 +28,6 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
   }
 
   async function handleGetListing() {
-    const newDataFilter = handleFormatFilter({
-      dataFilter: {
-        ...dataFilter,
-      },
-      keyDate: ['application_date'],
-      keyNumber: ['loan_type_id', 'id', 'loan_terms'],
-    })
-    setDataFilterSubmitted(dataFilter) // show data filtered
     setLoading(true)
 
     try {
@@ -105,14 +86,12 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
       <TableSecondary
         keySort={keySort}
         orderBy={orderBy}
-        className='mt-16px mh-350px'
+        className='mt-16px mh-500px'
         config={CONFIG_OUTSTANDING_LOAN__HISTORY}
         onChangeSortBy={handleChangeSortBy}
         data={outstanding_loan}
         actions={true}
         loading={loading}
-        pageSize={pageSize}
-        currentPage={currentPage}
         showTableFooter={(outstanding_loan || []).length > 0}
         tableFooter={tableFooter()}
       />
