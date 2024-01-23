@@ -1,5 +1,5 @@
 import {formatMoney, getAbbreviation} from '@/app/utils'
-import {config_activeCustomer} from './overview/config'
+import {config_activeCustomer} from './infor-overview/config'
 
 interface Props {
   data: any
