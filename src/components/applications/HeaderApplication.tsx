@@ -29,7 +29,7 @@ const HeaderApplication: FC<Props> = ({labelStep, percentCompleted, className, i
           {<h3 className='fs-20 m-0 text-gray-900'>{newLabel}</h3>}
           {application_date && (
             <span className='text-gay-700 fs-14'>
-              Create Date: {moment(application_date).format('MM/DD/YYYY')}
+              Create Date: {moment(application_date).format('DD MMM, YYYY')}
             </span>
           )}
         </div>

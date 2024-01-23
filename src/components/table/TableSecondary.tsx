@@ -1,10 +1,10 @@
 import {OrderBy, TableConfig} from '@/app/types'
 import clsx from 'clsx'
-import {FC, ReactNode, useMemo} from 'react'
+import {Component, FC, ReactNode, useMemo} from 'react'
 import SortBy from '../sort-by'
 import moment from 'moment'
 import Loading from './components/Loading'
-import {formatDate, formatMoney} from '@/app/utils'
+import {formatDate, formatMoney, getFullName} from '@/app/utils'
 import ButtonViewDetail from '../button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
 
@@ -93,7 +93,6 @@ const TableSecondary: FC<Props> = ({
             )}
           </tr>
         </thead>
-
         {/* Table body */}
         <tbody>
           {Array.isArray(data) && !!data.length ? (
@@ -101,15 +100,52 @@ const TableSecondary: FC<Props> = ({
               return (
                 <tr key={index}>
                   {ROW_LISTING.map((row, i) => {
-                    const {key, classNameTableBody, format, typeValue} = row
+                    const {key, classNameTableBody, format, typeValue, component} = row
                     const customClassName = handleSwitchClassName(key, item)
 
+                    let Component = component
                     let value = item[key]
 
                     if (format === 'date') {
-                      value = formatDate(value, 'MMM DD, YYYY')
+                      value = formatDate(value, 'DD/MM/YYYY')
                     } else if (format === 'money') {
                       value = formatMoney(value)
+                    }
+
+                    if (key === 'fullname') {
+                      return (
+                        <td
+                          key={i}
+                          className='fs-6 fw-medium w-250px ps-10'
+                          style={{color: '#071437'}}
+                        >
+                          {getFullName(item)}
+                        </td>
+                      )
+                    }
+
+                    if (key === 'blacklisted') {
+                      return (
+                        <td
+                          key={i}
+                          className='fs-6 fw-medium w-250px text-center'
+                          style={{color: '#071437'}}
+                        >
+                          {item.blacklisted === 0 ? 'No' : 'Yes'}
+                        </td>
+                      )
+                    }
+
+                    if (key === 'exclusion') {
+                      return (
+                        <td
+                          key={i}
+                          className='fs-6 fw-medium w-250px text-center'
+                          style={{color: '#071437'}}
+                        >
+                          {value === 0 ? 'No' : 'Yes'}
+                        </td>
+                      )
                     }
 
                     return (
@@ -155,7 +191,6 @@ const TableSecondary: FC<Props> = ({
             </tr>
           )}
         </tbody>
-
         {/* Table footer */}
         {tableFooter && showTableFooter && tableFooter}
       </table>

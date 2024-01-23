@@ -1,8 +1,11 @@
 .loan-details-page {
   .loan-identification-no,
-  .loan-amount,
-  .loan-interest {
+  .loan-amount {
     font-size: 24px;
+    line-height: 24px;
+  }
+  .loan-interest {
+    font-size: 20px;
     line-height: 24px;
   }
 

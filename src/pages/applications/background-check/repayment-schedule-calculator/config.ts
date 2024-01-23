@@ -1,5 +1,5 @@
-import {InstalmentSchedule, PayloadRepaymentSchedule} from '@/app/types/calculate'
-import {MONTHLY_DUE_DATE, TERM_UNIT, getDaysOfCurrentDate} from '@/app/utils'
+import { InstalmentSchedule, PayloadRepaymentSchedule } from '@/app/types/calculate'
+import { MONTHLY_DUE_DATE, TERM_UNIT, getDaysOfCurrentDate } from '@/app/utils'
 import moment from 'moment'
 
 export const REPAYMENT_SCHEDULE_CALCULATOR_CONFIG: {
@@ -37,7 +37,7 @@ export const REPAYMENT_SCHEDULE_CALCULATOR_CONFIG: {
     {
       key: 'interest_percent',
       type: 'number',
-      name: 'Interest per Month %',
+      name: 'Interest %',
       require: true,
       noThereAreCommas: false,
       typeComponent: 'input',

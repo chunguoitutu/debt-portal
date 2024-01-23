@@ -12,7 +12,7 @@ import {swalToast} from '@/app/swal-notification'
 import {Input} from '@/components/input'
 import {Select} from '@/components/select'
 import Step from '@/components/step/Step'
-import {formatNumber} from '@/app/utils'
+import {convertInterestApplication, formatNumber} from '@/app/utils'
 import Button from '@/components/button/Button'
 import {TermUnit} from '@/app/types/enum'
 import {DataResponse} from '@/app/types'
@@ -115,8 +115,10 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
   useEffect(() => {
     let value = +values.total_cycle > 1 ? 3.91 : 4
 
-    setFieldValue('interest_percent', value)
-  }, [values.total_cycle])
+    const interest = convertInterestApplication(value, values.term_unit.toString())
+
+    setFieldValue('interest_percent', interest)
+  }, [values.total_cycle, values.term_unit])
 
   return (
     <div
@@ -245,6 +247,24 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         </div>
                         <div className='fs-4 fw-semibold'>{values.total_cycle}</div>
                       </div>
+                      <div
+                        className='gap-1 p-6'
+                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                      >
+                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Term Unit</div>
+                        <div className='fs-4 fw-semibold'>
+                          {values.term_unit.toString() === '0'
+                            ? 'Daily'
+                            : values.term_unit.toString() === '1'
+                            ? 'Weekly'
+                            : values.term_unit.toString() === '2'
+                            ? 'Bi-Weekly'
+                            : values.term_unit.toString() === '3'
+                            ? 'Monthly'
+                            : 'Unknown'}
+                        </div>
+                      </div>
+
                       {values.term_unit.toString() === TermUnit.MONTHLY && (
                         <div
                           className={`gap-1 p-6`}
@@ -281,7 +301,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           First Repayment Date
                         </div>
                         <div className='fs-4 fw-semibold'>
-                          {moment(values.first_repayment_date).format('MMM DD, YYYY')}
+                          {moment(values.first_repayment_date).format('DD/MM/YYYY')}
                         </div>
                       </div>
                     </div>
@@ -298,7 +318,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                             </td>
                           </tr>
                           <tr>
-                            <td className='label-calculator'>Interest (Per Month)</td>
+                            <td className='label-calculator'>Interest</td>
                             <td className='content-calculator w-200px p-12px'>
                               {formatNumber(values.interest_percent)}%
                             </td>
@@ -312,7 +332,17 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           <tr>
                             <td className='label-calculator'>Term</td>
                             <td className='content-calculator text-transform-none w-200px'>
-                              {values.total_cycle} Month(s)
+                              {values.total_cycle}{' '}
+                              {values.term_unit.toString() === '0'
+                                ? 'Day'
+                                : values.term_unit.toString() === '1'
+                                ? 'Week'
+                                : values.term_unit.toString() === '2'
+                                ? 'Bi-Week'
+                                : values.term_unit.toString() === '3'
+                                ? 'Month'
+                                : 'Unknown'}
+                              (s)
                             </td>
                           </tr>
                         </tbody>
@@ -322,19 +352,19 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       <Table responsive='sm' className='table-bordered mb-24px'>
                         <tbody>
                           <tr>
-                            <td className='label-calculator'>Principal (Per Month)</td>
+                            <td className='label-calculator'>Principal</td>
                             <td className='content-calculator w-200px p-12px'>
                               ${formatNumber(+values.loan_amount / +values.total_cycle)}
                             </td>
                           </tr>
                           <tr>
-                            <td className='label-calculator'>Interest (Per Month)</td>
+                            <td className='label-calculator'>Interest</td>
                             <td className='content-calculator w-200px p-12px'>
                               ${formatNumber(dataFooterTable.totalInterest / +values.total_cycle)}
                             </td>
                           </tr>
                           <tr>
-                            <td className='label-calculator'>Monthly Instalment Amount</td>
+                            <td className='label-calculator'>Amount Paid In Instalments</td>
                             <td className='content-calculator w-200px p-12px'>
                               ${formatNumber(dataRepayment?.[0]?.amount_emi)}
                             </td>
@@ -371,7 +401,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                               case 'date':
                                 return (
                                   <td key={rt.key} className='p-12px content-calculator fs-4'>
-                                    {moment(el.date).format('MM/DD/YYYY')}
+                                    {moment(el.date).format('DD/MM/YYYY')}
                                   </td>
                                 )
                               default:

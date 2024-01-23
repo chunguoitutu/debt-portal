@@ -1,5 +1,5 @@
-import {TableConfig} from '@/app/types'
-import {Input} from '@/components/input'
+import { TableConfig } from '@/app/types'
+import { Input } from '@/components/input'
 
 export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
   settings: {
