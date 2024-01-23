@@ -12,7 +12,7 @@ import request from '@/app/axios'
 import {getMenuHorizontalCustomerDetails} from '@/app/constants/menu'
 import {useAuth} from '@/app/context/AuthContext'
 import BorrowersHeader from './BorrowersHeader'
-import Overview from './overview/Overview'
+import Overview from './infor-overview/Overview'
 
 type Props = {}
 const profileBreadCrumbs: Array<PageLink> = [
