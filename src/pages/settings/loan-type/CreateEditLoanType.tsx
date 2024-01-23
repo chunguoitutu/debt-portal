@@ -118,7 +118,7 @@ const CreateLoanType = ({
         }
       } else {
         try {
-          await request.post(endpoint + '/' + data?.id, {
+          await request.put(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
             is_default: values.is_default ? 1 : 0,

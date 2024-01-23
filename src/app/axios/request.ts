@@ -32,8 +32,8 @@ export function updateInfoUser(id: number, updateUserInfo: updateUserInfo) {
 }
 
 export function updatePasswordCurrentUser(updatePasswordInfo: UpdatePasswordInfo) {
-  const endPoint = '/user/change-pass'
-  return request.post(endPoint, updatePasswordInfo)
+  const endPoint = `/user/change-pass/${updatePasswordInfo.id}`
+  return request.put(endPoint, updatePasswordInfo)
 }
 
 export function getRoleList() {
@@ -53,7 +53,7 @@ export function createNewRole(data: Omit<RoleInfo, 'id'> & {company_id: number})
 
 export function updateRole({data, id}: UpdateById<Omit<RoleInfo, 'id'>>) {
   const endPoint = `/config/role/${id}`
-  return request.post(endPoint, data)
+  return request.put(endPoint, data)
 }
 
 export function getUserList(searchCriteria: SearchCriteria) {

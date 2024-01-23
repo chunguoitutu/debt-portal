@@ -10,7 +10,7 @@ import {KTIcon} from '@/_metronic/helpers'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {CheckboxRounded} from '@/components/checkbox'
-import {CREATE_COMPANY_CONFIG} from '../company-management/config'
+import {CREATE_COMPANY_CONFIG} from '../organization/config'
 import {useAuth} from '@/app/context/AuthContext'
 import Cookies from 'js-cookie'
 import Tippy from '@tippyjs/react'
@@ -127,7 +127,7 @@ const CreateEditCompanies = ({
           .finally(() => setSubmitting(false))
       } else {
         await request
-          .post('config/company/' + information?.id, payload)
+          .put('config/company/' + information?.id, payload)
           .then((response) => {
             if (!response.data?.error) {
               swalToast.fire({
