@@ -24,11 +24,11 @@ export const CompanyManagement = () => {
 
         rows.forEach((row) => {
           if (row.key === 'open_date') {
-            setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'), false)
+            setFieldValue(row.key, moment(information?.['open_date']).format('DD MMM, YYYY'), false)
           } else if (row.key === 'license_expiry_date') {
             setFieldValue(
               row.key,
-              moment(information?.['license_expiry_date']).format('YYYY-MM-DD'),
+              moment(information?.['license_expiry_date']).format('DD MMM, YYYY'),
               false
             )
           } else {
@@ -148,10 +148,10 @@ export const CompanyManagement = () => {
                 (information?.email || '').trim() === (values?.email || '').trim() &&
                 Number(information?.telephone) ===
                   Number(!!values?.telephone ? values?.telephone : 0) &&
-                moment(information?.['open_date']).format('YYYY-MM-DD') ===
-                  moment(values?.['open_date']).format('YYYY-MM-DD') &&
-                moment(information?.['license_expiry_date']).format('YYYY-MM-DD') ===
-                  moment(values?.['license_expiry_date']).format('YYYY-MM-DD'))
+                moment(information?.['open_date']).format('DD MMM, YYYY') ===
+                  moment(values?.['open_date']).format('DD MMM, YYYY') &&
+                moment(information?.['license_expiry_date']).format('DD MMM, YYYY') ===
+                  moment(values?.['license_expiry_date']).format('DD MMM, YYYY'))
             }
             type='reset'
             onClick={() => setLoadApi(!loadapi)}
@@ -176,10 +176,10 @@ export const CompanyManagement = () => {
                 (information?.email || '').trim() === (values?.email || '').trim() &&
                 Number(information?.telephone) ===
                   Number(!!values?.telephone ? values?.telephone : 0) &&
-                moment(information?.['open_date']).format('YYYY-MM-DD') ===
-                  moment(values?.['open_date']).format('YYYY-MM-DD') &&
-                moment(information?.['license_expiry_date']).format('YYYY-MM-DD') ===
-                  moment(values?.['license_expiry_date']).format('YYYY-MM-DD'))
+                moment(information?.['open_date']).format('DD MMM, YYYY') ===
+                  moment(values?.['open_date']).format('DD MMM, YYYY') &&
+                moment(information?.['license_expiry_date']).format('DD MMM, YYYY') ===
+                  moment(values?.['license_expiry_date']).format('DD MMM, YYYY'))
             }
             loading={isSubmitting}
             onClick={() => handleSubmit()}

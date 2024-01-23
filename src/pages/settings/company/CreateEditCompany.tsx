@@ -163,9 +163,12 @@ const CreateEditCompanies = ({
     if (information) {
       rows.forEach((row) => {
         if (row.key === 'open_date') {
-          setFieldValue(row.key, moment(information?.['open_date']).format('YYYY-MM-DD'))
+          setFieldValue(row.key, moment(information?.['open_date']).format('DD MMM, YYYY'))
         } else if (row.key === 'license_expiry_date') {
-          setFieldValue(row.key, moment(information?.['license_expiry_date']).format('YYYY-MM-DD'))
+          setFieldValue(
+            row.key,
+            moment(information?.['license_expiry_date']).format('DD MMM, YYYY')
+          )
         } else {
           setFieldValue(row.key, information[row.key])
         }

@@ -49,7 +49,7 @@ const CPF = ({data}: DataOverview) => {
     <div className='d-flex flex-column gap-12px'>
       {dataParse?.length ? (
         dataParse?.map((cpf: CustomerCPF, i: number) => {
-          const counter = formatDate(cpf?.date, 'DD/MM/YYYY')
+          const counter = formatDate(cpf?.date, 'DD MMM, YYYY')
 
           const isActive = showCpf?.includes(i)
 
@@ -93,7 +93,7 @@ const CPF = ({data}: DataOverview) => {
                     let value = cpf?.[el.key]
 
                     if (el?.key === 'date') {
-                      value = formatDate(value, 'DD/MM/YYYY')
+                      value = formatDate(value, 'DD MMM, YYYY')
                     } else if (el?.key === 'amount') {
                       value = formatMoney(+value)
                     }

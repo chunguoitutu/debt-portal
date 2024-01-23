@@ -26,6 +26,15 @@ export const REPAYMENT_SCHEDULE_CALCULATOR_CONFIG: {
       typeComponent: 'input',
     },
     {
+      key: 'term_unit',
+      name: 'Term Unit',
+      type: 'text',
+      require: true,
+      typeComponent: 'select',
+      options: TERM_UNIT,
+      defaultValue: TERM_UNIT[0].value,
+    },
+    {
       key: 'total_cycle',
       name: 'No. of Instalment',
       type: 'number',
@@ -51,15 +60,7 @@ export const REPAYMENT_SCHEDULE_CALCULATOR_CONFIG: {
       typeComponent: 'input',
       defaultValue: moment(new Date()).format('YYYY-MM-DD'),
     },
-    {
-      key: 'term_unit',
-      name: 'Term Unit',
-      type: 'text',
-      require: true,
-      typeComponent: 'select',
-      options: TERM_UNIT,
-      defaultValue: TERM_UNIT[0].value,
-    },
+
     {
       key: 'monthly_due_date',
       name: 'Monthly Due Date',
