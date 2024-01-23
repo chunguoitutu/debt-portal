@@ -256,6 +256,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
             value={searchValue}
             transparent={true}
             onChange={handleChangeSearch}
+            className='fs-5'
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 handleReGetApi()

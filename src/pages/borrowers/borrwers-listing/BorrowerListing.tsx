@@ -32,6 +32,7 @@ import useClickOutside from '@/app/hooks/useClickOutside'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
 import chartResponsive from '@/app/images/ChartListing.png'
+import {TableSecondary} from '@/components/table'
 
 type Props = {
   chartSize?: number
@@ -532,6 +533,18 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode])
 
+  // const configTable = useMemo(() => {
+  //   const keyIgnored = Object.keys(configColumnSubmitted).filter(
+  //     (key) => configColumnSubmitted[key] === false
+  //   )
+
+  //   const newRows = BORROWER_CONFIG_LISTING.rows.filter((el) => !keyIgnored.includes(el.key))
+  //   return {
+  //     ...BORROWER_CONFIG_LISTING,
+  //     rows: newRows,
+  //   }
+  // }, [configColumnSubmitted])
+
   return (
     <div
       className=' d-flex flex-column flex-grow-1 h-fit-content overflow-hidden'
@@ -541,7 +554,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
         {/* left */}
         <div className='col-12 col-xxl-3 h-xxl-100'>
           {/* chart circle */}
-          <div className='row h-xxl-100'>
+          <div className='row h-xxl-100 overflow-auto'>
             <div className='col-12 col-lg-6 col-xxl-12 flex-grow-1'>
               <div className='card p-30px flex-grow-1 h-100'>
                 <div className='d-flex flex-column'>
@@ -626,8 +639,8 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
         {/* right */}
         <div className='col-12 col-xxl-9 d-flex flex-column ps-xxl-1' style={{height: '100%'}}>
-          <div className='card w-100 d-flex flex-column overflow-auto mt-lg-6 mt-xxl-0'>
-            <div className='h-100 overflow-hidden flex-grow-1'>
+          <div className='card w-100 d-flex flex-column overflow-auto mt-lg-6 mt-xxl-0 h-100'>
+            <div className='h-100 overflow-hidden flex-grow-1 h-100'>
               <PageTitle breadcrumbs={profileBreadCrumbs}>{'Customer Listing'}</PageTitle>
               {showInput && (
                 <FilterBorrower
@@ -640,7 +653,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                   dataOption={dataOption}
                 />
               )}
-              <div className='d-flex flex-column h-100 overflow-hidden'>
+              <div className='d-flex flex-column h-100 overflow-hidden h-100'>
                 <div className='d-flex flex-row align-items-center p-16px'>
                   <Input
                     classShared='flex-grow-1 h-30px mb-5 '
@@ -779,7 +792,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     Object.keys(checkFilter).length === 1 &&
                     Object.keys(checkFilter).includes('searchBar')
                   ) && (
-                    <div className='d-flex align-self-center px-30px pb-5 ps-5'>
+                    <div className='d-flex align-self-center px-30px pb-5 ps-6 w-100'>
                       <h1 className='fs-14 text-gray-600 fw-semibold m-0 pt-4px mt-2'>Filter:</h1>
 
                       <div className='d-flex justify-content-start align-items-center p-0 m-0 flex-wrap '>
@@ -962,6 +975,46 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     {loading && <Loading />}
                   </div>
                 </KTCardBody>
+
+                {/* <TableSecondary
+                  keySort={keySort}
+                  orderBy={orderBy}
+                  className='mh-350px'
+                  config={configTable}
+                  onChangeSortBy={() => {}}
+                  data={data}
+                  loading={loading}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  showTableFooter={true}
+                />
+                <div
+                  style={{
+                    padding: '16px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <RowPerPage
+                    lenghtData={searchCriteria.total}
+                    limit={searchCriteria.pageSize}
+                    page={searchCriteria.currentPage}
+                    setLimit={(e: any) => {
+                      setSearchCriteria({
+                        ...searchCriteria,
+                        pageSize: +e.target.value,
+                        currentPage: 1,
+                      })
+                    }}
+                  />
+
+                  <Pagination
+                    onChangePagePagination={handleChangePagination}
+                    searchCriteria={searchCriteria}
+                  />
+
+                  {loading && <Loading />}
+                </div> */}
               </div>
             </div>
           </div>

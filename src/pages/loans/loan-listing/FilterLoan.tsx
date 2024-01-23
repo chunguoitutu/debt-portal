@@ -44,7 +44,7 @@ export function FilterLoan({
         <div className='separator p-0 border-gray-200'></div>
 
         <div
-          style={{maxHeight: 'calc(100vh - 450px)', overflowY: 'auto'}}
+          style={{maxHeight: 'calc(100vh - 580px)', overflowY: 'auto'}}
           className='p-30px pt-8px pb-30px'
         >
           {rows.map((row, i) => {

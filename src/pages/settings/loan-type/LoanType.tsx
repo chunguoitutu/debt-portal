@@ -2,7 +2,7 @@
 import {useState} from 'react'
 
 import {LOAN_TYPE_TABLE_CONFIG} from './config'
-import CreateLoanType from './CreateLoanType'
+import CreateLoanType from './CreateEditLoanType'
 import Table from '@/components/table/Table'
 
 const LoanTypes = () => {

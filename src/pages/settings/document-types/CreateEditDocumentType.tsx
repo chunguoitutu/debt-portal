@@ -33,7 +33,7 @@ export const CreateLoanTypeSchema = Yup.object().shape({
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const CreateDocumentType = ({
+const CreateEditDocumentType = ({
   show,
   handleClose,
   title = 'New',
@@ -251,4 +251,4 @@ const CreateDocumentType = ({
     modalsRoot
   )
 }
-export default CreateDocumentType
+export default CreateEditDocumentType

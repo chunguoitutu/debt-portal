@@ -217,7 +217,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
             return (
               <td
                 className={clsx([
-                  'fs-4 fw-bold',
+                  'fs-4 fw-bold ps-0',
                   el.key === 'id' ? 'p-16px text-start' : 'px-10px text-end',
                 ])}
                 colSpan={el.key === 'id' && configColumnSubmitted?.['date'] ? 2 : 1}

@@ -46,7 +46,7 @@ export function FilterApplication({
 
         <div
           style={{
-            maxHeight: 'calc(100vh - 450px)',
+            maxHeight: 'calc(100vh - 580px)',
             overflowY: 'auto',
             padding: '8px 25px 30px 30px ',
           }}

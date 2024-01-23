@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
 
-import CreateDocumentType from './CreateDocumentTypes'
+import CreateEditDocumentType from './CreateEditDocumentType'
 import {DOCUMENT_TABLE_CONFIG} from './config'
 import Table from '@/components/table/Table'
 
@@ -20,7 +20,7 @@ const DocumentTypes = () => {
     <>
       <div>
         {showPopupCreate && (
-          <CreateDocumentType
+          <CreateEditDocumentType
             setLoadApi={setLoadApi}
             loadApi={loadapi}
             show={showPopupCreate}
@@ -38,7 +38,7 @@ const DocumentTypes = () => {
         />
       </div>
       {showPopupEdit ? (
-        <CreateDocumentType
+        <CreateEditDocumentType
           setLoadApi={setLoadApi}
           loadApi={loadapi}
           show={showPopupEdit}

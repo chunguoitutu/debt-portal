@@ -1,7 +1,8 @@
 import {KTIcon} from '@/_metronic/helpers'
+import useClickOutside from '@/app/hooks/useClickOutside'
 import {TableRow} from '@/app/types'
 import clsx from 'clsx'
-import {Fragment} from 'react'
+import {Fragment, useRef} from 'react'
 
 interface Props {
   rows: TableRow[]
@@ -24,12 +25,18 @@ export function FilterPopup({
   handleResetFilter,
   onClose,
 }: Props) {
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useClickOutside(selectRef, () => {
+    onClose()
+  })
   return (
     <div
       className={clsx([
         'menu-filter-application card w-xxl-400px w-300px min-h-200px overflow-hidden d-flex flex-column',
         className,
       ])}
+      ref={selectRef}
       data-kt-menu='true'
     >
       <div className='position-relative p-0'>

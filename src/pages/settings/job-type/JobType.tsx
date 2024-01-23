@@ -2,7 +2,7 @@
 import {useState} from 'react'
 
 import {JOB_TABLE_CONFIG} from './config'
-import CreateJobType from './CreateJobType'
+import CreateJobType from './CreateEditJobType'
 import Table from '@/components/table/Table'
 
 const JobType = () => {

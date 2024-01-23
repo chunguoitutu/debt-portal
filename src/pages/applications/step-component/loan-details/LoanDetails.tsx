@@ -34,8 +34,6 @@ const LoanDetails: FC<PropsStepApplication> = ({
   const {applicationIdEdit} = useParams()
   const {company_id, priority} = useAuth()
 
-  const [errorMessages, setErrorMessages] = useState<any>({})
-
   useEffect(() => {
     const isFirstGet = isFirstGetStepApplication({
       optionListing,
