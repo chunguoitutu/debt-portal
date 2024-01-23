@@ -134,7 +134,7 @@ const AddressGroup: FC<Props> = ({
 
   async function handleRemoveBlockAddress(item: BlockAddress, index: number) {
     try {
-      item.id && (await request.delete(`/address/${item.id}`))
+      item.id && (await request.delete(`/site/address/${item.id}`))
       setValues(
         {
           ...values,

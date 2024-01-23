@@ -192,7 +192,7 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
     if (!data?.id) return
 
     try {
-      const {data: dataRes} = await request.post(apiUpdateUser + `/${data.id}`, {
+      const {data: dataRes} = await request.put(apiUpdateUser + `/${data.id}`, {
         ...payload,
         company_id: +company_id,
       })

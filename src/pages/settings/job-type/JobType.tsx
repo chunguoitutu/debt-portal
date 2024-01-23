@@ -2,8 +2,8 @@
 import {useState} from 'react'
 
 import {JOB_TABLE_CONFIG} from './config'
-import CreateJobType from './CreateEditJobType'
 import Table from '@/components/table/Table'
+import CreateEditJobType from './CreateEditJobType'
 
 const JobType = () => {
   const [showPopupCreate, setShowPopupCreate] = useState<boolean>(false)
@@ -21,7 +21,7 @@ const JobType = () => {
     <>
       <div>
         {showPopupCreate && (
-          <CreateJobType
+          <CreateEditJobType
             setLoadApi={setLoadApi}
             loadApi={loadapi}
             show={showPopupCreate}
@@ -39,7 +39,7 @@ const JobType = () => {
         />
       </div>
       {showPopupEdit ? (
-        <CreateJobType
+        <CreateEditJobType
           setLoadApi={setLoadApi}
           loadApi={loadapi}
           show={showPopupEdit}

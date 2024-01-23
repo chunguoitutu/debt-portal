@@ -95,7 +95,7 @@ const CreateEditDocumentType = ({
         }
       } else {
         try {
-          const response = await request.post(endpoint + '/' + data?.id, {
+          const response = await request.put(endpoint + '/' + data?.id, {
             ...values,
             status: status ? 1 : 0,
             is_default: values.is_default ? 1 : 0,
