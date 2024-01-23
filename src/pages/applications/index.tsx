@@ -46,7 +46,7 @@ import {RightToolbar} from '@/_metronic/layout/components/toolbar/right-toll-bar
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Application',
+    title: 'Applications',
     path: '/application',
     isSeparator: false,
     isActive: false,

@@ -115,7 +115,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
   useEffect(() => {
     let value = +values.total_cycle > 1 ? 3.91 : 4
 
-    const interest = convertInterestApplication(4, values.term_unit.toString())
+    const interest = convertInterestApplication(value, values.term_unit.toString())
 
     setFieldValue('interest_percent', interest)
   }, [values.total_cycle, values.term_unit])
@@ -242,15 +242,6 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         className='gap-1 p-6'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
-                          No. Of Instalment
-                        </div>
-                        <div className='fs-4 fw-semibold'>{values.total_cycle}</div>
-                      </div>
-                      <div
-                        className='gap-1 p-6'
-                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
-                      >
                         <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Term Unit</div>
                         <div className='fs-4 fw-semibold'>
                           {values.term_unit.toString() === '0'
@@ -265,32 +256,29 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         </div>
                       </div>
 
-                      {values.term_unit.toString() === TermUnit.MONTHLY && (
-                        <div
-                          className={`gap-1 p-6`}
-                          style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
-                        >
-                          <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
-                            Monthly Due Date
-                          </div>
-                          <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      className={`${
-                        mobile ? ' ' : 'gap-10 '
-                      } d-flex justify-content-start algin-items-center w-100`}
-                    >
                       <div
                         className='gap-1 p-6'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
                         <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
-                          Interest Per Month %
+                          No. Of Instalment
                         </div>
-                        <div className='fs-4 fw-semibold'>
-                          {formatNumber(values.interest_percent)}
+                        <div className='fs-4 fw-semibold'>{values.total_cycle}</div>
+                      </div>
+
+                      <div
+                        className={`${
+                          mobile ? ' ' : 'gap-10 '
+                        } d-flex justify-content-start algin-items-center w-100`}
+                      >
+                        <div
+                          className='gap-1 p-6'
+                          style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                        >
+                          <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Interest %</div>
+                          <div className='fs-4 fw-semibold'>
+                            {formatNumber(values.interest_percent)}
+                          </div>
                         </div>
                       </div>
                       <div
@@ -304,6 +292,17 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           {moment(values.first_repayment_date).format('DD/MM/YYYY')}
                         </div>
                       </div>
+                      {values.term_unit.toString() === TermUnit.MONTHLY && (
+                        <div
+                          className={`gap-1 p-6`}
+                          style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                        >
+                          <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
+                            Monthly Due Date
+                          </div>
+                          <div className='fs-4 fw-semibold'>{formattedMonthlyDueDate}</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* calculator table */}
