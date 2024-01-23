@@ -113,9 +113,9 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
     values.monthly_due_date + getDayWithSuffix(values.monthly_due_date)
 
   useEffect(() => {
-    let value = 4 //interest default per month
+    let value = +values.total_cycle > 1 ? 3.91 : 4
 
-    const interest = convertInterestApplication(value, values.term_unit.toString())
+    const interest = convertInterestApplication(4, values.term_unit.toString())
 
     setFieldValue('interest_percent', interest)
   }, [values.total_cycle, values.term_unit])
