@@ -39,6 +39,11 @@ const MasterLayout = () => {
     return arrCheck.some((el) => pathname.includes(el))
   }, [pathname])
 
+  const isBorrowerListing = useMemo(() => {
+    const arrCheck = ['customers']
+    return arrCheck.some((el) => pathname.includes(el))
+  }, [pathname])
+
   return (
     <PageDataProvider>
       <div
@@ -57,6 +62,7 @@ const MasterLayout = () => {
                 className={clsx([
                   'd-flex flex-column flex-column-fluid app-container flex-grow-1',
                   isViewHeight && 'app-main-content',
+                  isBorrowerListing && 'app-main-content-customer',
                 ])}
               >
                 <ToolbarWrapper />

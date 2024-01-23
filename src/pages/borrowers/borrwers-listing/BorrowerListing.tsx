@@ -890,7 +890,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                   )}
 
                 <KTCardBody className='p-0 d-flex flex-column overflow-hidden'>
-                  <div className='table-responsive flex-grow-1 overflow-auto h-100'>
+                  <div className='table-responsive flex-grow-1 overflow-auto h-100 mh-600px'>
                     <table
                       id='kt_table_users'
                       className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
