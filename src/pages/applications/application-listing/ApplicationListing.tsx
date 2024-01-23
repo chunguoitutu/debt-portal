@@ -277,7 +277,7 @@ const ApplicationListing = () => {
               }
 
               if (key === 'application_date') {
-                value = moment(item[key]).format('DD/MM/YYYY')
+                value = moment(item[key]).format('DD MMM, YYYY')
               }
 
               if (key === 'loan_amount_requested') {

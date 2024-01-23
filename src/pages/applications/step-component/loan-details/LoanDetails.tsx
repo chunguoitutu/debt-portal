@@ -39,9 +39,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
       optionListing,
       config,
     })
-
     isFirstGet && onFetchDataList()
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -56,7 +54,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
     const interest = convertInterestApplication(+currentItem.interest, values.term_unit)
 
     setFieldValue('interest', interest || '')
-  }, [values.term_unit, optionListing.loan_type_id])
+  }, [values.term_unit, optionListing.loan_type_id, values.loan_type_id])
 
   async function onFetchDataList() {
     try {

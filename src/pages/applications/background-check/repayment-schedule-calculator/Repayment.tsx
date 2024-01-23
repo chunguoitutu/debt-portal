@@ -113,7 +113,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
     values.monthly_due_date + getDayWithSuffix(values.monthly_due_date)
 
   useEffect(() => {
-    let value = +values.total_cycle > 1 ? 3.91 : 4
+    let value = 4 //interest default per month
 
     const interest = convertInterestApplication(value, values.term_unit.toString())
 
@@ -401,7 +401,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                               case 'date':
                                 return (
                                   <td key={rt.key} className='p-12px content-calculator fs-4'>
-                                    {moment(el.date).format('DD/MM/YYYY')}
+                                    {moment(el.date).format('DD MMM, YYYY')}
                                   </td>
                                 )
                               default:
