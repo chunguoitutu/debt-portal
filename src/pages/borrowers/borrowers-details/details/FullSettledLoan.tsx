@@ -4,6 +4,7 @@ import {TableSecondary} from '@/components/table'
 
 import {Sum} from '@/app/utils'
 import {CONFIG_FULL_SETTLED_LOAN__HISTORY} from './config'
+import TableFooterCustomer from './TableFooterCustomer'
 
 const FullSettledLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
   const {full_settled_loan = []} = customerInfo || {}
@@ -42,33 +43,6 @@ const FullSettledLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
     }
   }
 
-  const tableFooter = () => {
-    return (
-      <tfoot className='table-foot-repayment position-sticky bottom-0 bg-gray-100'>
-        <tr>
-          <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
-          <td></td>
-          <td></td>
-          <td className='text-end px-10px fs-16 fw-bold '></td>
-          <td className='text-end px-10px fs-16 fw-bold'>
-            {Sum('total_collection', full_settled_loan)}
-          </td>
-          <td className='text-end px-10px fs-16 fw-bold'>
-            {Sum('loan_amount', full_settled_loan)}
-          </td>
-          <td
-            style={{
-              color: +Sum('p&l', full_settled_loan, false) < 0 ? '#F64E60' : '#071437',
-            }}
-            className='text-end px-10px fs-16 fw-bold'
-          >
-            {Sum('p&l', full_settled_loan)}
-          </td>
-          <td></td>
-        </tr>
-      </tfoot>
-    )
-  }
   return (
     <div>
       {/* Table */}
@@ -82,7 +56,10 @@ const FullSettledLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
         actions={true}
         loading={loading}
         showTableFooter={(full_settled_loan || []).length > 0}
-        tableFooter={tableFooter()}
+        tableFooter={TableFooterCustomer({
+          data: full_settled_loan,
+          KeyData: ['total_collection', 'loan_amount', 'p&l'],
+        })}
       />
     </div>
   )

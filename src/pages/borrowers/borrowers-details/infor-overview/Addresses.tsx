@@ -1,7 +1,7 @@
 import request from '@/app/axios'
 import Icons from '@/components/icons'
 import NoRecord from '@/components/no-records'
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {CONFIG_ADDRESS, DataOverview} from './config'
 
 const Addresses = ({data}: DataOverview) => {

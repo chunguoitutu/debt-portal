@@ -6,6 +6,7 @@ import cpfImg from '@/app/images/cpf.svg'
 import {CPF_CONFIG, DataOverview} from './config'
 import {formatDate, formatMoney, parseJson} from '@/app/utils'
 import NoRecord from '@/components/no-records'
+import Icons from '@/components/icons'
 
 const CPF = ({data}: DataOverview) => {
   const {cpf: cpfData} = data || {}
@@ -72,18 +73,7 @@ const CPF = ({data}: DataOverview) => {
                   <span className='fs-16 fw-semibold'>{counter}</span>
                 </div>
 
-                {isActive ? (
-                  <i className='ki-duotone ki-minus-square toggle-on text-primary fs-1'>
-                    <span className='path1'></span>
-                    <span className='path2'></span>
-                  </i>
-                ) : (
-                  <i className='ki-duotone ki-plus-square toggle-off fs-1'>
-                    <span className='path1'></span>
-                    <span className='path2'></span>
-                    <span className='path3'></span>
-                  </i>
-                )}
+                {isActive ? <Icons name={'MinusCustomer'} /> : <Icons name={'AddCustomer'} />}
               </div>
 
               {/* Body */}

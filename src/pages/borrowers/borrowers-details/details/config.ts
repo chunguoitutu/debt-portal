@@ -1,5 +1,4 @@
 import {TableConfig} from '@/app/types'
-import {Input} from '@/components/input'
 
 export const CONFIG_OUTSTANDING_LOAN__HISTORY: TableConfig = {
   settings: {
