@@ -29,6 +29,7 @@ import AddCustomer from './AddCustomer'
 import AddressCustomer from './AddressCustomer'
 import TimeMyTasks from './TimeMyTasks'
 import PeopleMyTasks from './PeopleMyTasks'
+import FileMyTask from './FileMyTask'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -62,6 +63,7 @@ const icons = {
   FilterIconBorrower: FilterIconBorrower,
   TimeMyTasks: TimeMyTasks,
   PeopleMyTasks: PeopleMyTasks,
+  FileMyTask: FileMyTask,
 }
 
 const Icons = ({name}) => {

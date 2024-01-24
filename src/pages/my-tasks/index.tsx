@@ -7,6 +7,8 @@ import './styles.scss'
 import MapData from './MapData'
 import request from '@/app/axios'
 import CreateEditMyTask from './CreateEditMyTask'
+import {useFormik} from 'formik'
+import moment from 'moment'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -26,12 +28,29 @@ const profileBreadCrumbs: Array<PageLink> = [
 function MyTasks() {
   const [priority, setPriority] = useState<number[]>([])
   const [data, setData] = useState([])
+  const [loadApi, setLoadApi] = useState(false)
+  const {values, handleChange, setFieldValue} = useFormik({
+    initialValues: {
+      startDate: '',
+      endDate: '',
+    },
+    // validationSchema:'',
+    onSubmit: () => {},
+  })
 
   useEffect(() => {
-    request.get('/my-tasks/listing').then((res) => {
-      setData(res?.data?.data)
-    })
-  }, [])
+    request
+      .post('/my-tasks/listing', {
+        startDate: values.startDate,
+        endDate: values.endDate,
+        priority: {
+          in: priority.length === 4 ? [] : priority,
+        },
+      })
+      .then((res) => {
+        setData(res?.data?.data)
+      })
+  }, [loadApi, priority])
 
   return (
     <div className='h-100'>
@@ -41,20 +60,40 @@ function MyTasks() {
           <h1 className='text-gray-900 m-0  fs-20 fw-bold'>My Tasks</h1>
           <div className='d-flex justify-content-center align-items-center gap-16px'>
             <p className='text-gray-700  fw-semibold fs-16 p-0 m-0 '>from</p>
-            <Input type='date' />
+            <Input
+              id='startDate'
+              name='startDate'
+              value={values.startDate}
+              onChange={handleChange}
+              type='date'
+            />
             <p className='text-gray-700  fw-semibold fs-16 p-0 m-0 '>to</p>
-            <Input type='date' />
+            <Input
+              id='endDate'
+              name='endDate'
+              value={values.endDate}
+              onChange={handleChange}
+              type='date'
+            />
 
             <Button
               type='reset'
-              onClick={() => {}}
+              onClick={() => {
+                setLoadApi(!loadApi)
+              }}
               className='btn-lg btn-secondary align-self-center  fs-6'
             >
               Apply
             </Button>
             <Button
               type='reset'
-              onClick={() => {}}
+              onClick={() => {
+                console.log(values)
+                console.log()
+
+                setFieldValue('endDate', moment().format('YYYY-MM-YY'))
+                setFieldValue('startDate', moment().format('YYYY-MM-YY'))
+              }}
               className='btn-lg btn-secondary align-self-center  fs-6'
             >
               Today

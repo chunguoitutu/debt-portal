@@ -1,6 +1,8 @@
 import {useDrop} from 'react-dnd'
 import ButtonMyTask from './ButtonMyTask'
 import Cookies from 'js-cookie'
+import ViewMyTask from './ViewMyTask'
+import {useState} from 'react'
 
 type Props = {
   dataS: Array<any>
@@ -9,6 +11,7 @@ type Props = {
 }
 
 const MapData = ({dataS, statusMyTaskTable, setData}: Props) => {
+  const [showDetails, setShowDetails] = useState(false)
   const [{isOver}, drop] = useDrop(
     () => ({
       accept: 'task',
@@ -27,10 +30,24 @@ const MapData = ({dataS, statusMyTaskTable, setData}: Props) => {
 
   return (
     <div ref={drop} className={`wrapper-my-tasks d-flex flex-column gap-8px`}>
+      {
+        <ViewMyTask
+          show={showDetails}
+          onShow={() => {
+            setShowDetails(!showDetails)
+          }}
+        />
+      }
       {dataS.map((data, i) => {
         if (data?.task === statusMyTaskTable)
           return (
-            <div key={i} className=''>
+            <div
+              onClick={() => {
+                setShowDetails(true)
+              }}
+              key={i}
+              className=''
+            >
               <ButtonMyTask data={data} />
             </div>
           )
