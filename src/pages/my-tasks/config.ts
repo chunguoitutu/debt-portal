@@ -1,5 +1,5 @@
 import { MyTaskConfig, TableConfig } from '@/app/types'
-import { POSITION, PRIORITY_MY_TASK, convertMessageErrorMaximum } from '@/app/utils'
+import { POSITION, PRIORITY_TASK, convertMessageErrorMaximum } from '@/app/utils'
 import { Select } from '@/components/select'
 import FileDocument from '../applications/step-component/employment/FileDocument'
 import Radio from '@/components/radio/Radio'
@@ -12,8 +12,8 @@ import { TextArea } from '@/components/textarea'
 const MY_TASK_CONFIG: MyTaskConfig[] = [
     {
         key: 'my_task_priority',
-        data: PRIORITY_MY_TASK,
-        defaultValue: PRIORITY_MY_TASK[0].value,
+        data: PRIORITY_TASK,
+        defaultValue: PRIORITY_TASK[0].value,
         component: Radio,
         typeComponent: 'Radio',
         label: ' ',
