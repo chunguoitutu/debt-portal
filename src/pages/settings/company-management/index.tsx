@@ -6,7 +6,7 @@ import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {swalToast} from '@/app/swal-notification'
 import request from '@/app/axios'
-import {CREATE_COMPANY_CONFIG} from './config'
+import {CREATE_COMPANY_CONFIG} from '../organization/config'
 
 export const CompanyManagement = () => {
   const {settings, rows} = CREATE_COMPANY_CONFIG('Organization')

@@ -359,9 +359,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       const NRIC = dataSingpass.identification_no
 
       // send api
-      await request.post(`/application/nric_no/${NRIC}`, {
-        company_id,
-      })
+      await request.get(`/application/nric/${NRIC}`)
 
       // Update newDataSingpass after the API call
       newDataSingpass = {
@@ -384,9 +382,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
     try {
       if (singpass && values.identification_no === singpassValues.identification_no) return
 
-      const {data} = await request.post(`/application/nric_no/${values['identification_no']}`, {
-        company_id,
-      })
+      const {data} = await request.get(`/application/nric/${values['identification_no']}`)
 
       const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
       setStepCompleted(0)
