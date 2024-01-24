@@ -95,7 +95,7 @@ const Reject = ({
       setSubmitting(true)
       try {
         if (!rejection?.id) {
-          await request.post('application/application-reject', {
+          await request.post('application/rejection', {
             rejection_type_id: +values.rejection_id,
             application_id: +applicationIdEdit,
             rejection_note: values.description,
@@ -107,7 +107,7 @@ const Reject = ({
             title: `Application successfully rejected`,
           })
         } else {
-          await request.put('application/application-reject/' + rejection?.id, {
+          await request.put('application/rejection/' + rejection?.id, {
             rejection_type_id: +values.rejection_id,
             rejection_note: values.description,
             rejected_by: currentUser?.id,

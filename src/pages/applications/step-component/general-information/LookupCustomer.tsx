@@ -102,9 +102,7 @@ const LookupCustomer = ({show, onClose, formik}: Props) => {
 
   async function handleGetApplicationById(nric: any) {
     try {
-      const {data} = await request.post(`/application/nric_no/${nric}`, {
-        company_id,
-      })
+      const {data} = await request.get(`/application/nric/${nric}`)
 
       const formattedDateOfBirth = moment(data?.data.date_of_birth).format('YYYY-MM-DD')
       //step 1

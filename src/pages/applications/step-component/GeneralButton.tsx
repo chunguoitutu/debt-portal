@@ -204,9 +204,7 @@ const GeneralButton: FC<Props> = (props) => {
             customClass: 'fs-5 fw-bolder',
           })
         } else {
-          await request.put(`/application/cancel-application/${applicationIdEdit}`, {
-            application_id: applicationIdEdit,
-          })
+          await request.put(`/application/cancel/${applicationIdEdit}`)
           navigate('/application/listing')
           setCurrentStep(1)
           setStepCompleted(1)

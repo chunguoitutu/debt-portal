@@ -34,7 +34,7 @@ const MLCB: FC<Props> = ({onClose, setToolsCheckCount, toolsCheckCount}) => {
     })
     setLoading(type)
     try {
-      const {data} = await request.post(`/site/mlcb-check`, {
+      const {data} = await request.put(`/mlcb/report`, {
         id: +applicationIdEdit,
         report_type: type,
       })
