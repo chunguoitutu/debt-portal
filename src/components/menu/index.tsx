@@ -24,7 +24,7 @@ const HorizontalMenu: FC<Props> = ({data, active, className, onChangeActiveMenu}
           <span
             className={clsx([
               'menu-item fs-14 fw-semibold cursor-pointer pb-24px position-relative',
-              isActive ? 'active text-gray-900' : 'text-gray-500',
+              isActive ? 'active text-gray-900' : 'text-gray-600',
             ])}
             key={i}
             onClick={() => onChangeActiveMenu(item.value)}

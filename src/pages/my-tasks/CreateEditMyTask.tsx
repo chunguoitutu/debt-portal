@@ -8,18 +8,25 @@ import {KTIcon} from '@/_metronic/helpers'
 import {MY_TASK_CONFIG} from './config'
 import {Input} from '@/components/input'
 import {TextArea} from '@/components/textarea'
-import {DataResponse, PropsStepApplication, UserInfo} from '@/app/types'
+import {Base64Item, DataResponse, PropsStepApplication, UserInfo} from '@/app/types'
 import clsx from 'clsx'
 import Radio from '@/components/radio/Radio'
 import {Select} from '@/components/select'
 import UploadFile from '@/components/file/UploadFile'
-import {PRIORITY_MY_TASK, convertMessageErrorRequired, getFullName} from '@/app/utils'
+import {
+  PRIORITY_TASK,
+  convertFileToBase64,
+  convertMessageErrorRequired,
+  getFullName,
+} from '@/app/utils'
 import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {getDaysOfCurrentDate} from '@/app/utils/get-current-date'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import {MyTaskProps} from '@/app/types/my-task'
+import {swalToast} from '@/app/swal-notification'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
+import RenderFile from '@/components/file/RenderFile'
 
 type props = {
   data?: any
@@ -31,6 +38,9 @@ const schema = Yup.object().shape({
 
 const CreateEditMyTask = ({data}: props) => {
   const [showPopupCreate, setShowPopupCreate] = useState(false)
+  const [file, setFile] = useState<Base64Item[]>([])
+  const [descriptionState, setDescriptionState] = useState<any>('')
+
   const [userListing, setUserListing] = useState<(UserInfo & {fullname: string})[]>([])
   const {company_id} = useAuth()
 
@@ -38,9 +48,32 @@ const CreateEditMyTask = ({data}: props) => {
     setShowPopupCreate(!showPopupCreate)
   }
 
-  function handleCreateTask() {
-    alert('Create Successfully')
-    setShowPopupCreate(!showPopupCreate)
+  async function handleCreateTask() {
+    const payload = {
+      task_title: values?.task_title,
+      start_date: values?.start_date,
+      end_date: values?.end_date,
+      officer_id: +values?.officer_id,
+      priority: values?.priority,
+      document: values?.document,
+      description: descriptionState,
+    }
+
+    try {
+      // logic post in here
+      // const {} = request.post('/abc', payload)
+      swalToast.fire({
+        icon: 'success',
+        title: 'New Task Create Successfully',
+      })
+    } catch (error) {
+      swalToast.fire({
+        icon: 'error',
+        title: DEFAULT_MSG_ERROR,
+      })
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const {
@@ -55,12 +88,13 @@ const CreateEditMyTask = ({data}: props) => {
     setSubmitting,
   } = useFormik({
     initialValues: {
-      priority: data?.priority || '',
+      priority: PRIORITY_TASK[1].value || '',
       task_title: data?.task_title || '',
       officer_id: data?.loan_assignment?.officer_id || '',
-      description: data?.description || '',
       start_date: data?.start_date || '',
       end_date: data?.end_date || '',
+      document: data?.document || [],
+      description: data?.descriptionState || '',
     },
     validationSchema: schema,
     onSubmit: () => handleCreateTask(),
@@ -78,7 +112,7 @@ const CreateEditMyTask = ({data}: props) => {
     try {
       const {data} = await request.post<DataResponse<UserInfo[]>>('/user/listing', {
         company_id: +company_id,
-        priority_great_than: 2, // except super admin and admin
+        priority_great_than: 2,
         pageSize: 999999999999999,
         currentPage: 1,
       })
@@ -95,24 +129,73 @@ const CreateEditMyTask = ({data}: props) => {
     }
   }
 
+  async function handleFileChange(event: any) {
+    const files: FileList | null = event.target.files
+
+    const fileList = Array.from(files || []).filter((file) => {
+      const fileSizeMB = file.size / (1024 * 1024)
+
+      return fileSizeMB <= 200 && file.type === 'application/pdf'
+    })
+
+    if (!fileList.length) {
+      event.target.value = ''
+      return swalToast.fire({
+        icon: 'error',
+        title: 'Something went wrong. Please make sure your file is pdf and does not exceed 200MB',
+      })
+    }
+
+    const fileBase64List: Base64Item[] = []
+
+    try {
+      for (const file of fileList) {
+        const fileBase64 = await convertFileToBase64(file)
+
+        if (!fileBase64) return
+
+        const newFile: Base64Item = {
+          document_name: file.name || '',
+          base64: fileBase64,
+          size: file.size,
+          type: file.type,
+        }
+        fileBase64List.push(newFile)
+      }
+    } catch (error) {
+      //   return swalToast.fire({
+      //     icon: 'error',
+      //     title: 'Something went wrong.',
+      //   })
+    }
+
+    event.target.value = ''
+    setFile([...file, ...fileBase64List])
+  }
+
+  function handleChangeDescription(value: string) {
+    setDescriptionState(value)
+  }
+
   function renderComponent() {
     return (
       <div className='col-12'>
         <div className='row mb-4'>
           <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Priority</div>
           <div className='d-flex flex-row gap-16px col-10'>
-            {PRIORITY_MY_TASK.map((item, i) => (
+            {PRIORITY_TASK.map((item, i) => (
               <Radio
                 key={i}
                 classNameLabel={clsx([
-                  data?.priority === item.value ? 'fs-4 fw-medium' : 'text-gray-600 fs-4 fw-medium',
+                  values.priority === item.value
+                    ? 'fs-4 fw-medium'
+                    : 'text-gray-600 fs-4 fw-medium',
                 ])}
                 name='priority'
                 label={item.label}
-                checked={data?.priority === item.value}
+                checked={values.priority === item.value}
                 value={item.value}
                 onChange={handleChange}
-                defaultValue={data?.priority[0]}
               />
             ))}
           </div>
@@ -131,20 +214,18 @@ const CreateEditMyTask = ({data}: props) => {
               modules={{
                 toolbar: [['link'], [{list: 'ordered'}, {list: 'bullet'}]],
               }}
-              style={{height: 120, marginBottom: 40}}
               formats={['link', 'list', 'bullet']}
               id='description'
-              key={'description'}
-              value={values.description}
-              onChange={handleChange}
+              value={descriptionState}
+              onChange={handleChangeDescription}
             />
           </div>
         </div>
         <div className='row mb-4'>
           <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Start - End</div>
-          <div className='col-10'>
+          <div className='col-10 ' style={{width: '81%'}}>
             <div className='row'>
-              <div className='col-12 d-flex flex-row gap-1'>
+              <div className='col-12 d-flex flex-row gap-6'>
                 <div className='col-6'>
                   <Input
                     name={'start_date'}
@@ -184,12 +265,37 @@ const CreateEditMyTask = ({data}: props) => {
         <div className='row mb-4'>
           <div className='col-2 fs-16 fw-medium text-gray-900 pt-2'>Attachment</div>
           <div className='col-10'>
-            <UploadFile handleFileChange={() => {}} />
+            <UploadFile
+              className='w-100'
+              handleFileChange={(e) => {
+                handleFileChange(e)
+              }}
+            />
           </div>
         </div>
+        {!!file.length && (
+          <div className='col-12'>
+            <div className='row'>
+              <div className='col-2'></div>
+              <div className='col-10'>
+                <RenderFile
+                  className='mt-30px pt-30px border-top border-gray-200'
+                  url='/borrower-document/'
+                  arrayMap={file || []}
+                  setUploadFile={(index) => {
+                    const updatedFiles = [...file]
+                    updatedFiles.splice(index, 1)
+                    setFile(updatedFiles)
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
+
   return (
     <div>
       <Button onClick={handleShowCreate}>Create Task</Button>
@@ -217,7 +323,7 @@ const CreateEditMyTask = ({data}: props) => {
 
           {/* Body */}
           <div
-            style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
+            style={{maxHeight: 'calc(100vh - 300px)', overflowY: 'auto'}}
             className='flex-row-fluid py-30px ps-30px pe-30px'
           >
             {renderComponent()}

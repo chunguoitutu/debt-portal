@@ -22,7 +22,7 @@ const RowPerPage = ({limit = 10, page = 1, lenghtData = 0, setLimit}: Props) => 
           ]}
         />
       </div>
-      <p className='mb-0 text-gray-600 fs-14 '>
+      <p className='mb-0 text-gray-600 fs-14 fw-semibold'>
         {page * Number(limit) - (Number(limit) - 1) < lenghtData
           ? page * Number(limit) - (Number(limit) - 1)
           : lenghtData}

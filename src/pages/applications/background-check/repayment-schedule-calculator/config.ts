@@ -58,7 +58,7 @@ export const REPAYMENT_SCHEDULE_CALCULATOR_CONFIG: {
       type: 'date',
       require: true,
       typeComponent: 'input',
-      defaultValue: moment(new Date()).format('YYYY-MM-DD'),
+      defaultValue: moment(new Date()).add(1, 'months').format('YYYY-MM-DD'),
     },
 
     {

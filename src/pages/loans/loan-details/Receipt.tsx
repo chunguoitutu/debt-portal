@@ -139,7 +139,7 @@ const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
         {/* Popup */}
         {showFilterPopup && (
           <FilterPopup
-            className='top-0'
+            className='filter-loan-top-custom'
             onClose={handleShowToggleFilter}
             dataFilter={dataFilter}
             dataOption={{}}
@@ -150,13 +150,20 @@ const Receipt: FC<LoanDetailsProps> = ({loanInfo}) => {
           />
         )}
 
-        <Button
+        {/* <Button
           onClick={handleShowToggleFilter}
           className={clsx(['align-self-center fs-6 text-primary btn btn-secondary h-45px'])}
         >
           <Icons name={'filterIcon'} />
           Filter
-        </Button>
+        </Button> */}
+        <div
+          className='d-flex align-items-center fs-14 gap-2px cursor-pointer text-gray-600 text-hover-gray-900  fs-14 d-inline-block fw-semibold'
+          onClick={handleShowToggleFilter}
+        >
+          <Icons name={'FilterIconBorrower'} />
+          Filter
+        </div>
       </div>
 
       {!!Object.keys(filterHasValue).length && (
