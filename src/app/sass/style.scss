@@ -265,15 +265,15 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
-@media (min-width: 1400px) {
-  .app-main-content-customer {
-    height: calc(100vh - 160px);
-  }
+// @media (min-width: 1400px) and (max-width: 1560px) {
+//   .app-main-content-customer {
+//     height: calc(100vh - 160px);
+//   }
 
-  .app-root-view-height {
-    overflow-y: hidden !important;
-  }
-}
+//   .app-root-view-height {
+//     overflow-y: hidden !important;
+//   }
+// }
 .wrapper-reject-title-application {
   padding: 16px;
   align-items: flex-start;

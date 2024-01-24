@@ -37,3 +37,9 @@
     background-color: var(--bs-gray-200);
   }
 }
+
+@media (min-width: 1024px) {
+  .h-110-custom {
+    height: 115%;
+  }
+}
