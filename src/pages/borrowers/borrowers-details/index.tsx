@@ -32,7 +32,7 @@ const profileBreadCrumbs: Array<PageLink> = [
 
 const BorrowerDetail = (props: Props) => {
   const {customerId} = useParams()
-  const {currentUser} = useAuth()
+  const {currentUser, company_id} = useAuth()
   const isAdminOrSuperAdmin = useMemo(
     () => ((currentUser?.priority || 0) > 2 ? false : true),
     [currentUser]
@@ -70,7 +70,7 @@ const BorrowerDetail = (props: Props) => {
     if (!customerId) return
 
     try {
-      const {data} = await request.get(`/borrower/details/${customerId}`)
+      const {data} = await request.post(`/borrower/details/${customerId}`, {company_id})
       if (data.error) {
         setError(true)
       }

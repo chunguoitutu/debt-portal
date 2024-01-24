@@ -5,6 +5,7 @@ import {Fragment, useEffect, useState} from 'react'
 import {DataOverview, VEHICLE_CONFIG} from './config'
 import {formatDate, formatMoney} from '@/app/utils'
 import clsx from 'clsx'
+import Icons from '@/components/icons'
 
 const Vehicles = ({data}: DataOverview) => {
   const {vehicle: vehicleListing} = data || {}
@@ -52,18 +53,7 @@ const Vehicles = ({data}: DataOverview) => {
                   <span className='fs-16 fw-semibold'>Vehicle {counter}</span>
                 </div>
 
-                {isActive ? (
-                  <i className='ki-duotone ki-minus-square toggle-on text-primary fs-1'>
-                    <span className='path1'></span>
-                    <span className='path2'></span>
-                  </i>
-                ) : (
-                  <i className='ki-duotone ki-plus-square toggle-off fs-1'>
-                    <span className='path1'></span>
-                    <span className='path2'></span>
-                    <span className='path3'></span>
-                  </i>
-                )}
+                {isActive ? <Icons name={'MinusCustomer'} /> : <Icons name={'AddCustomer'} />}
               </div>
 
               {/* Body */}

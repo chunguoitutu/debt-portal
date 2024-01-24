@@ -27,6 +27,8 @@ import FilterIconBorrower from './FilterIconBorrower'
 import MinusCustomer from './MinusCustomer'
 import AddCustomer from './AddCustomer'
 import AddressCustomer from './AddressCustomer'
+import TimeMyTasks from './TimeMyTasks'
+import PeopleMyTasks from './PeopleMyTasks'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -58,6 +60,8 @@ const icons = {
   Cascheck: Cascheck,
   UPCheck: UPCheck,
   FilterIconBorrower: FilterIconBorrower,
+  TimeMyTasks: TimeMyTasks,
+  PeopleMyTasks: PeopleMyTasks,
 }
 
 const Icons = ({name}) => {

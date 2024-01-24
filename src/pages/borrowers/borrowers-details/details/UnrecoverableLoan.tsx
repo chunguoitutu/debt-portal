@@ -1,9 +1,10 @@
-import {LoanDetailsProps, OrderBy, PaginationType} from '@/app/types'
+import {LoanDetailsProps, OrderBy} from '@/app/types'
 import {FC, useEffect, useState} from 'react'
 import {TableSecondary} from '@/components/table'
 
 import {CONFIG_FULL_SETTLED_LOAN__HISTORY} from './config'
-import {Sum, formatMoney} from '@/app/utils'
+import {Sum} from '@/app/utils'
+import TableFooterCustomer from './TableFooterCustomer'
 
 const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
   const {unrecoverable_loan = []} = customerInfo || {}
@@ -42,33 +43,6 @@ const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
     }
   }
 
-  const tableFooter = () => {
-    return (
-      <tfoot className='table-foot-repayment position-sticky bottom-0 bg-gray-100'>
-        <tr>
-          <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
-          <td></td>
-          <td></td>
-          <td className='text-end px-10px fs-16 fw-bold '> </td>
-          <td className='text-end px-10px fs-16 fw-bold'>
-            {Sum('total_collection', unrecoverable_loan)}
-          </td>
-          <td className='text-end px-10px fs-16 fw-bold'>
-            {Sum('loan_amount', unrecoverable_loan)}
-          </td>
-          <td
-            style={{
-              color: +Sum('p&l', unrecoverable_loan, false) < 0 ? '#F64E60' : '#071437',
-            }}
-            className='text-end px-10px fs-16 fw-bold'
-          >
-            {Sum('p&l', unrecoverable_loan)}
-          </td>
-          <td></td>
-        </tr>
-      </tfoot>
-    )
-  }
   return (
     <div>
       {/* Table */}
@@ -82,7 +56,10 @@ const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
         actions={true}
         loading={loading}
         showTableFooter={(unrecoverable_loan || []).length > 0}
-        tableFooter={tableFooter()}
+        tableFooter={TableFooterCustomer({
+          data: unrecoverable_loan,
+          KeyData: ['total_collection', 'loan_amount', 'p&l'],
+        })}
       />
     </div>
   )

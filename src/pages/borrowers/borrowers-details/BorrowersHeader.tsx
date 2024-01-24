@@ -22,7 +22,7 @@ const BorrowersHeader = ({data}: Props) => {
         </div>
         <div className=' pb-30px pt-12px px-30px m-0 d-flex justify-content-center align-items-center gap-8px flex-column'>
           <p className='text-gray-900 fs-20 fw-bold p-0 m-0 text-center'>{data?.fullName || ''}</p>
-          <p className='fw-normal fs-16 text-gray-900 p-0 m-0'>{data?.customer_no}</p>
+          <p className='fw-normal fs-16 text-gray-900 p-0 m-0'>{data?.customer_no || ''}</p>
           <p
             style={{
               color: dataActive?.color,

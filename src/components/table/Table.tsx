@@ -264,16 +264,16 @@ const Table: FC<Props> = ({
                 data.map((item, idx) => {
                   return (
                     <tr key={idx} className='fw-medium'>
-                      {rows.map(({key, component, classNameTableBody, isHide, color}, i) => {
+                      {rows.map(({key, component, classNameTableBody, isHide, color}, index) => {
                         if (isHide) {
-                          return <Fragment key={i}></Fragment>
+                          return <Fragment key={index}></Fragment>
                         }
                         let Component = component || Fragment
                         let value = item[key]
 
                         if (key === 'id') {
                           return (
-                            <td key={i} className='w-xxl-6 fw-semibold fs-14'>
+                            <td key={index} className='w-xxl-6 fw-semibold fs-14'>
                               {Number(idx) +
                                 1 +
                                 (Number(searchCriteria.currentPage) *
@@ -285,8 +285,8 @@ const Table: FC<Props> = ({
 
                         if (['created_date', 'updated_date'].includes(key)) {
                           return (
-                            <td className='fs-14 fw-semibold' key={i}>
-                              {moment(value).format('DD MMM, YYYY')}
+                            <td className='fs-14 fw-semibold' key={index}>
+                              {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )
                         }
@@ -297,7 +297,7 @@ const Table: FC<Props> = ({
                           )
                         ) {
                           return (
-                            <td className='fs-14 fw-semibold text-end' key={i}>
+                            <td className='fs-14 fw-semibold text-end' key={index}>
                               {formatMoney(value)}
                             </td>
                           )
@@ -305,15 +305,15 @@ const Table: FC<Props> = ({
 
                         if (['open_date'].includes(key)) {
                           return (
-                            <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={i}>
-                              {moment(value).format('DD MMM, YYYY')}
+                            <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={index}>
+                              {moment(value).format('MMM DD, YYYY')}
                             </td>
                           )
                         }
 
                         if (['late_interest', 'interest'].includes(key)) {
                           return (
-                            <td className={`fs-14 fw-semibold text-end`} key={i}>
+                            <td className={`fs-14 fw-semibold text-end`} key={index}>
                               {value !== null && value !== undefined ? `${value}%` : ''}
                             </td>
                           )
@@ -344,7 +344,7 @@ const Table: FC<Props> = ({
 
                             return (
                               <td
-                                key={i}
+                                key={index}
                                 className='text-center fs-14 min-w-150px fw-semibold'
                                 style={{
                                   borderBottom: 'none',
@@ -363,7 +363,7 @@ const Table: FC<Props> = ({
                           //HANDLE ADD PERMISSION DROPDOWN
                           if (key === 'permissions') {
                             return (
-                              <td key={i}>
+                              <td key={index}>
                                 <Component
                                   tittle={''}
                                   checked={handlePermissionChecked(item[key])}
@@ -373,7 +373,7 @@ const Table: FC<Props> = ({
                           }
 
                           return (
-                            <td key={i} className='fs-14 min-w-150px fw-semibold'>
+                            <td key={index} className='fs-14 min-w-150px fw-semibold'>
                               <>
                                 <Component
                                   data={item}
@@ -386,7 +386,7 @@ const Table: FC<Props> = ({
                         }
 
                         return (
-                          <td key={i}>
+                          <td key={index}>
                             {component ? (
                               <Component />
                             ) : (

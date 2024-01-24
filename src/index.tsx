@@ -29,6 +29,8 @@ import {PrimeReactProvider} from 'primereact/api'
 import 'primereact/resources/themes/lara-light-indigo/theme.css'
 import {AuthProvider} from './app/context/AuthContext'
 import {SocketProvider} from './app/context/SocketContext'
+import {DndProvider} from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend'
 /**
  * Creates `axios-mock-adapter` instance for provided `axios` instance, add
  * basic Metronic mocks and returns it.
@@ -51,7 +53,9 @@ if (container) {
         <AuthProvider>
           <SocketProvider>
             <PrimeReactProvider>
-              <AppRoutes />
+              <DndProvider backend={HTML5Backend}>
+                <AppRoutes />
+              </DndProvider>
             </PrimeReactProvider>
           </SocketProvider>
         </AuthProvider>

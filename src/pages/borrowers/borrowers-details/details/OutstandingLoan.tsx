@@ -1,4 +1,4 @@
-import {LoanDetailsProps, OrderBy, PaginationType} from '@/app/types'
+import {LoanDetailsProps, OrderBy} from '@/app/types'
 import {FC, useEffect, useState} from 'react'
 import {TableSecondary} from '@/components/table'
 import {Sum} from '@/app/utils'
