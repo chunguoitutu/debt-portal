@@ -230,7 +230,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       } d-flex justify-content-start algin-items-center w-100`}
                     >
                       <div
-                        className='gap-1 p-6 w'
+                        className='gap-1 p-6 ps-12px'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
                         <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
@@ -240,7 +240,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       </div>
                       <div
                         className='gap-1 p-6'
-                        style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                        style={{width: mobile ? '170px' : 'fit-content', minWidth: '150px'}}
                       >
                         <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Term Unit</div>
                         <div className='fs-4 fw-semibold'>
@@ -269,11 +269,11 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       <div
                         className={`${
                           mobile ? ' ' : 'gap-10 '
-                        } d-flex justify-content-start algin-items-center w-100`}
+                        } d-flex justify-content-center algin-items-center`}
                       >
                         <div
-                          className='gap-1 p-6'
-                          style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                          className='gap-1 p-6 ms-4'
+                          style={{width: mobile ? '170px' : 'fit-content', minWidth: '175px'}}
                         >
                           <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Interest %</div>
                           <div className='fs-4 fw-semibold'>
@@ -330,7 +330,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           </tr>
                           <tr>
                             <td className='label-calculator'>Term</td>
-                            <td className='content-calculator text-transform-none w-200px'>
+                            <td className='content-calculator text-transform-none w-200px p-12px'>
                               {values.total_cycle}{' '}
                               {values.term_unit.toString() === '0'
                                 ? 'Day'
@@ -370,7 +370,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           </tr>
                           <tr>
                             <td className='label-calculator'>Total Interest For Full Term</td>
-                            <td className='content-calculator w-200px'>
+                            <td className='content-calculator w-200px p-12px'>
                               ${formatNumber(dataFooterTable.totalInterest)}
                             </td>
                           </tr>
