@@ -114,8 +114,8 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
     {
       key: 'total_balance',
       name: 'Instalment Balance',
-      classNameTableBody: 'text-end',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableBody: 'text-end pe-0',
+      classNameTableHead: 'fs-14 text-end pe-0',
       defaultShow: false,
       format: 'money',
       infoFilter: {

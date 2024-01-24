@@ -63,7 +63,7 @@ const Vehicles = ({data}: DataOverview) => {
                     let value = vehicle[el.key]
 
                     if (el?.format === 'date') {
-                      value = formatDate(value, 'MMM DD, YYYY')
+                      value = formatDate(value, 'DD MMM, YYYY')
                     } else if (el?.format === 'money') {
                       value = formatMoney(+value)
                     }

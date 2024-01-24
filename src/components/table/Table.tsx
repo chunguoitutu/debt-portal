@@ -286,7 +286,7 @@ const Table: FC<Props> = ({
                         if (['created_date', 'updated_date'].includes(key)) {
                           return (
                             <td className='fs-14 fw-semibold' key={index}>
-                              {moment(value).format('MMM DD, YYYY')}
+                              {moment(value).format('DD MMM, YYYY')}
                             </td>
                           )
                         }
@@ -306,7 +306,7 @@ const Table: FC<Props> = ({
                         if (['open_date'].includes(key)) {
                           return (
                             <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={index}>
-                              {moment(value).format('MMM DD, YYYY')}
+                              {moment(value).format('DD MMM, YYYY')}
                             </td>
                           )
                         }

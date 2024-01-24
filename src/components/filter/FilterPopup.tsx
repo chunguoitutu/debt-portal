@@ -36,6 +36,7 @@ export function FilterPopup({
         'menu-filter-application card w-xxl-400px w-300px min-h-200px overflow-hidden d-flex flex-column',
         className,
       ])}
+      style={{top: '30px'}}
       ref={selectRef}
       data-kt-menu='true'
     >

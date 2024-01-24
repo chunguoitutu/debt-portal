@@ -6,6 +6,7 @@ import {useEffect, useState} from 'react'
 import './styles.scss'
 import MapData from './MapData'
 import request from '@/app/axios'
+import CreateEditMyTask from './CreateEditMyTask'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -58,9 +59,7 @@ function MyTasks() {
             >
               Today
             </Button>
-            <Button className='btn-lg btn-primary fs-6' type='submit' onClick={() => {}}>
-              Create Task
-            </Button>
+            <CreateEditMyTask />
           </div>
         </div>
         <div

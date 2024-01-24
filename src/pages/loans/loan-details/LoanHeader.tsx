@@ -51,7 +51,7 @@ const LoanHeader: FC<LoanDetailsProps> = ({loanInfo}) => {
           {instalment_schedule?.[0]?.date && (
             <div className='row'>
               <span className='col-6 text-gray-500 fs-14'>Loan Start Date: </span>
-              <span className='col-6 fw-bold text-gray-900'>
+              <span className='col-6 fw-bold text-gray-900 fs-14'>
                 {moment(instalment_schedule?.[0]?.date).format('DD MMM, YYYY')}
               </span>
             </div>
@@ -59,7 +59,7 @@ const LoanHeader: FC<LoanDetailsProps> = ({loanInfo}) => {
 
           <div className='row'>
             <span className='text-gray-500 fs-14 col-6'>Loan Next Due Date: </span>
-            <span className='fw-bold text-gray-900 col-6'>
+            <span className='fw-bold text-gray-900 col-6 fs-14'>
               {moment(new Date()).format('DD MMM, YYYY')}
             </span>
           </div>
