@@ -1,6 +1,7 @@
 import Icons from '@/components/icons'
 import React from 'react'
 import {useDrag} from 'react-dnd'
+import PriorityMyTasks from './priorityMyTasks'
 
 type Props = {
   data: any
@@ -27,10 +28,7 @@ const ButtonMyTask = ({data}: Props) => {
       ref={drag}
       className='card p-16px d-flex flex-column wrapper-my-tasks-child gap-16px'
     >
-      <div className='d-flex align-items-center gap-8px'>
-        <div className='bg-primary w-10px h-10px flex-shrink-0 rounded-circle'></div>
-        <span className='fs-14 fw-semibold text-gray-600'>{data?.priority}</span>
-      </div>
+      <PriorityMyTasks status={data?.status} />
       <div className='d-flex flex-column gap-8px '>
         <h3 className='p-0 m-0 fs-16 fw-semibold test-gray-900'>{data?.title}</h3>
         <p className='p-0 m-0 fs-14 fw-normal test-gray-600'>{data?.DESCRIPTION}</p>
@@ -41,7 +39,7 @@ const ButtonMyTask = ({data}: Props) => {
           <p className='fs-14 fw-normal test-gay-900'>{data?.date}</p>
         </div>
         <div className='d-flex align-items-center gap-8px  p-0 m-0'>
-          <Icons name={'TimeMyTasks'} />
+          <Icons name={'PeopleMyTasks'} />
           <p className='fs-14 fw-normal test-gay-900 p-0 m-0'>{data?.user}</p>
         </div>
       </div>

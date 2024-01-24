@@ -1,28 +1,15 @@
 import {Checkbox} from '@/components/checkbox'
+import {priorityMyTasks} from './config'
 
 type Props = {
   value: any
   onChange: (e) => void
 }
 
-const filterMyTasks = [
-  {
-    value: 1,
-    label: 'High',
-  },
-  {
-    value: 2,
-    label: 'Medium',
-  },
-  {
-    value: 3,
-    label: 'Low',
-  },
-]
 const StatusMyTasks = ({value, onChange}: Props) => {
   return (
     <div className='d-flex gap-16px  align-items-center'>
-      {filterMyTasks.map((data, index) => {
+      {priorityMyTasks.map((data, index) => {
         return (
           <Checkbox
             key={index}

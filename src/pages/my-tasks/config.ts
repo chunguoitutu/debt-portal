@@ -1,64 +1,132 @@
-import { MyTaskConfig, TableConfig } from '@/app/types'
-import { POSITION, PRIORITY_TASK, convertMessageErrorMaximum } from '@/app/utils'
-import { Select } from '@/components/select'
+import {MyTaskConfig, TableConfig} from '@/app/types'
+import {POSITION, PRIORITY_TASK, convertMessageErrorMaximum} from '@/app/utils'
+import {Select} from '@/components/select'
 import FileDocument from '../applications/step-component/employment/FileDocument'
 import Radio from '@/components/radio/Radio'
-import { Input } from '@/components/input'
+import {Input} from '@/components/input'
 import * as Yup from 'yup'
-import { TextArea } from '@/components/textarea'
-
-
+import {TextArea} from '@/components/textarea'
 
 const MY_TASK_CONFIG: MyTaskConfig[] = [
-    {
-        key: 'my_task_priority',
-        data: PRIORITY_TASK,
-        defaultValue: PRIORITY_TASK[0].value,
-        component: Radio,
-        typeComponent: 'Radio',
-        label: ' ',
-    },
-    {
-        key: 'task_title',
-        component: Input,
-        typeComponent: 'Input',
-        label: 'Task Title',
-        validationFormik: Yup.string().max(100, convertMessageErrorMaximum(100)),
-    },
-    {
-        key: 'description',
-        component: TextArea,
-        typeComponent: 'Input',
-        label: 'Description',
-    },
-    {
-        key: 'start_date',
-        component: Input,
-        typeComponent: 'Input',
-        label: 'Telephone',
-        column: 6,
-    },
-    {
-        key: 'end_date',
-        component: Input,
-        typeComponent: 'Input',
-        column: 6,
-        className: 'justify-content-xxl-end',
-    },
-    {
-        key: 'assign_to',
-        component: Select,
-        typeComponent: 'Select',
-        options: POSITION,
-        label: 'Assigne To',
-    },
+  {
+    key: 'my_task_priority',
+    data: PRIORITY_TASK,
+    defaultValue: PRIORITY_TASK[0].value,
+    component: Radio,
+    typeComponent: 'Radio',
+    label: ' ',
+  },
+  {
+    key: 'task_title',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Task Title',
+    validationFormik: Yup.string().max(100, convertMessageErrorMaximum(100)),
+  },
+  {
+    key: 'description',
+    component: TextArea,
+    typeComponent: 'Input',
+    label: 'Description',
+  },
+  {
+    key: 'start_date',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Telephone',
+    column: 6,
+  },
+  {
+    key: 'end_date',
+    component: Input,
+    typeComponent: 'Input',
+    column: 6,
+    className: 'justify-content-xxl-end',
+  },
+  {
+    key: 'assign_to',
+    component: Select,
+    typeComponent: 'Select',
+    options: POSITION,
+    label: 'Assigne To',
+  },
 
-    {
-        key: 'file_documents',
-        component: FileDocument,
-        defaultValue: [],
-    },
+  {
+    key: 'file_documents',
+    component: FileDocument,
+    defaultValue: [],
+  },
+  {
+    key: 'my_task_priority',
+    data: PRIORITY_TASK,
+    defaultValue: PRIORITY_TASK[0].value,
+    component: Radio,
+    typeComponent: 'Radio',
+    label: ' ',
+  },
+  {
+    key: 'task_title',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Task Title',
+    validationFormik: Yup.string().max(100, convertMessageErrorMaximum(100)),
+  },
+  {
+    key: 'description',
+    component: TextArea,
+    typeComponent: 'Input',
+    label: 'Description',
+  },
+  {
+    key: 'start_date',
+    component: Input,
+    typeComponent: 'Input',
+    label: 'Telephone',
+    column: 6,
+  },
+  {
+    key: 'end_date',
+    component: Input,
+    typeComponent: 'Input',
+    column: 6,
+    className: 'justify-content-xxl-end',
+  },
+  {
+    key: 'assign_to',
+    component: Select,
+    typeComponent: 'Select',
+    options: POSITION,
+    label: 'Assigne To',
+  },
 
+  {
+    key: 'file_documents',
+    component: FileDocument,
+    defaultValue: [],
+  },
 ]
 
-export { MY_TASK_CONFIG }
+export {MY_TASK_CONFIG}
+
+export const priorityMyTasks = [
+  {
+    value: 1,
+    label: 'High',
+    bg: '#F1416C',
+  },
+  {
+    value: 2,
+    label: 'Medium',
+    bg: '#0D6EFD',
+  },
+  {
+    value: 3,
+    label: 'Low',
+    bg: '#FFC107',
+  },
+  {
+    value: 4,
+    label: 'Urgent',
+    bg: '#F1416C',
+  },
+]
