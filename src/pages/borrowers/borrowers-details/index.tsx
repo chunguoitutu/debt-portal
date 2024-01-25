@@ -70,7 +70,7 @@ const BorrowerDetail = (props: Props) => {
     if (!customerId) return
 
     try {
-      const {data} = await request.post(`/borrower/details/${customerId}`, {company_id})
+      const {data} = await request.get(`/borrower/details/${customerId}`)
       if (data.error) {
         setError(true)
       }
