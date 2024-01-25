@@ -8,19 +8,14 @@ interface Props {
 const BorrowersHeader = ({data}: Props) => {
   const dataActive = config_activeCustomer.filter((el) => el.value === Number(data?.status || 1))[0]
   return (
-    <div className='card d-flex flex-row '>
-      <div
-        style={{
-          borderRight: '1px solid #F1F1F2',
-        }}
-        className='col-lg-5'
-      >
+    <div className='card d-flex flex-column flex-3xxl-row '>
+      <div className='col-3xxl-5 col-12 wrapper-borrowers-header'>
         <div className=' pt-30px pb-12px px-16px m-0 d-flex justify-content-center align-items-center '>
           <p className='text-uppercase avatar-borrowers '>
             {getAbbreviation(`${data?.fullName || ''}`)}
           </p>
         </div>
-        <div className=' pb-30px pt-12px px-30px m-0 d-flex justify-content-center align-items-center gap-8px flex-column'>
+        <div className=' pb-16px pb-3xxl-30px pt-12px px-30px m-0 d-flex justify-content-center align-items-center gap-8px flex-column'>
           <p className='text-gray-900 fs-20 fw-bold p-0 m-0 text-center'>{data?.fullName || ''}</p>
           <p className='fw-normal fs-16 text-gray-900 p-0 m-0'>{data?.customer_no || ''}</p>
           <p
@@ -35,7 +30,7 @@ const BorrowersHeader = ({data}: Props) => {
           </p>
         </div>
       </div>
-      <div className='col-lg-7 p-30px d-flex justify-content-center align-items-center'>
+      <div className=' col-3xxl-7 col-12  px-30px pt-0px pt-3xxl-30px pb-30px d-flex justify-content-center align-items-center'>
         <div className='p-0 m-0'>
           <p className=' text-gray-900 fs-12 p-0 m-0 text-center fw-semibold '>
             General information about the loan
@@ -49,7 +44,7 @@ const BorrowersHeader = ({data}: Props) => {
           <div className='d-flex justify-content-center align-items-center'>
             <div
               style={{
-                borderRight: '1px solid #F1F1F2',
+                borderRight: '1px solid #DBDFE9',
               }}
               className='d-flex justify-content-center align-items-center py-0 px-8px  m-0 flex-column py-0 gap-8px'
             >
@@ -62,7 +57,7 @@ const BorrowersHeader = ({data}: Props) => {
             <div
               className='d-flex justify-content-center align-items-center py-0 px-8px mx-8px  m-0  flex-column  gap-8px'
               style={{
-                borderRight: '1px solid #F1F1F2',
+                borderRight: '1px solid #DBDFE9',
               }}
             >
               <p className='p-0 m-0 fs-20 text-gray-900 fw-bold'>

@@ -73,7 +73,7 @@ const TableSecondary: FC<Props> = ({
               return (
                 <th
                   className={clsx([
-                    'text-nowrap min-w-75px user-select-none px-10px pb-16px pt-0 test-gray-600',
+                    'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 test-gray-600',
                     isSort && 'cursor-pointer',
                     classNameTableHead,
                   ])}
@@ -91,7 +91,7 @@ const TableSecondary: FC<Props> = ({
             {actions && (
               <th
                 className={clsx([
-                  'text-nowrap min-w-75px user-select-none px-10px pb-16px pt-0 text-end',
+                  'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 text-end',
                 ])}
               >
                 Actions

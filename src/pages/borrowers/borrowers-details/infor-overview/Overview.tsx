@@ -8,7 +8,7 @@ type Props = {
 }
 
 const Overview = ({data}: Props) => {
-  const [title, setTitle] = useState(CONFIG_OVERVIEW[2].title)
+  const [title, setTitle] = useState(CONFIG_OVERVIEW[0].title)
   return (
     <>
       <SideBar

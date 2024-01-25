@@ -81,21 +81,29 @@ $utilities: map-merge(
     ),
     'border-top-width': (
       property: border-top-width,
+      responsive: true,
+
       class: border-top,
       values: $border-widths,
     ),
     'border-bottom-width': (
       property: border-bottom-width,
+      responsive: true,
+
       class: border-bottom,
       values: $border-widths,
     ),
     'border-right-width': (
       property: border-right-width,
+      responsive: true,
+
       class: border-right,
       values: $border-widths,
     ),
     'border-left-width': (
       property: border-left-width,
+      responsive: true,
+
       class: border-left,
       values: $border-widths,
     ),

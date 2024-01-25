@@ -48,7 +48,7 @@ const FullSettledLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
       <TableSecondary
         keySort={keySort}
         orderBy={orderBy}
-        className='mt-16px mh-500px'
+        className='mt-8px mh-500px'
         config={CONFIG_FULL_SETTLED_LOAN__HISTORY}
         onChangeSortBy={handleChangeSortBy}
         data={full_settled_loan}

@@ -242,7 +242,7 @@ export const CONFIG_PROFILE = [
   },
   {
     key: 'date_of_birth',
-    value: 'Date of birth',
+    value: 'Date of Birth',
     startTest: '',
   },
   {
