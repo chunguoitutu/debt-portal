@@ -63,7 +63,7 @@ const ViewMyTask = ({show, onShow}: Props) => {
           <p className='title-my-tasks-view-date'>{moment(data.date).format('MMM - YYYY')}</p>
         </div>
         <div className='d-flex justify-content-center align-items-center'>
-          <p className='pe-24px p-0 m-0 test-gray-600'>
+          <p className='pe-24px p-0 m-0 text-gray-600 fs-14 font-italic'>
             Updated {moment().diff(moment(data.date), 'days')} days ago
           </p>
           <div className='cursor-pointer p-0 m-0' onClick={onShow}>
@@ -85,7 +85,7 @@ const ViewMyTask = ({show, onShow}: Props) => {
             <h1 className='fs-16 test-gray-900 fw-semibold m-0 px-0 pt-16px pb-8px '>
               {data.title}
             </h1>
-            <p className='fs-14 fw-normal test-gray-600'>{data.note}</p>
+            <p className='fs-14 fw-normal text-gray-600'>{data.note}</p>
           </div>
           <div className='pt-8px d-flex flex-column gap-8px'>
             {data.link.map((el, i) => {

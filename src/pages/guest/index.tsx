@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useState} from 'react'
 import nothingImg from '@/app/images/nothing.png'
 import {useSocket} from '@/app/context/SocketContext'
 import {PdfViewer} from './PdfViewer'

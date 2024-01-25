@@ -112,63 +112,77 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
 
   const renderRows = () => {
     return data.map((item, idx) => {
+      const customer_no = item.customer_no
+      console.log(item)
       return (
         <tr key={idx}>
-          {rows.map(({key, component, classNameTableBody, isHide, infoFilter, options}, i) => {
-            const {keyLabelOption, keyValueOption} = infoFilter || {}
+          {rows.map(
+            (
+              {key, component, classNameTableBody, isHide, infoFilter, options, isLink, linkUrl},
+              i
+            ) => {
+              const {keyLabelOption, keyValueOption} = infoFilter || {}
 
-            if (isHide) {
-              return <React.Fragment key={i}></React.Fragment>
-            }
-            let Component = component || React.Fragment
-            let value = item[key]
+              if (isHide) {
+                return <React.Fragment key={i}></React.Fragment>
+              }
+              let Component = component || React.Fragment
+              let value = item[key]
 
-            if (key === 'id') {
+              if (key === 'id') {
+                return (
+                  <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
+                    {Number(idx) +
+                      1 +
+                      (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
+                        Number(searchCriteria.pageSize))}
+                  </td>
+                )
+              }
+
+              if (key === 'identification_no') {
+                return (
+                  <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
+                    {value}
+                  </td>
+                )
+              }
+
+              if (key === 'fullname') {
+                if (isLink) {
+                  return (
+                    <td key={i} className='fs-6 fw-medium cursor-pointer'>
+                      <Link
+                        to={`${linkUrl}/${customer_no}`}
+                        className='text-hover-primary text-gray-900'
+                      >
+                        {getFullName(item)}
+                      </Link>
+                    </td>
+                  )
+                }
+              }
+
+              if (dataOption[key] || options) {
+                const currentItem =
+                  (options || dataOption[key]).find(
+                    (item) => item[keyValueOption || 'value'] === value
+                  ) || {}
+
+                value = currentItem[keyLabelOption || 'label'] || ''
+              }
+
               return (
-                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
-                  {Number(idx) +
-                    1 +
-                    (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
-                      Number(searchCriteria.pageSize))}
+                <td key={i} className={classNameTableBody}>
+                  {component ? (
+                    <Component />
+                  ) : (
+                    <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
+                  )}
                 </td>
               )
             }
-
-            if (key === 'identification_no') {
-              return (
-                <td key={i} className='fs-6 fw-medium' style={{color: '#071437'}}>
-                  {value}
-                </td>
-              )
-            }
-
-            if (key === 'fullname') {
-              return (
-                <td key={i} className='fs-6 fw-medium w-250px' style={{color: '#071437'}}>
-                  {getFullName(item)}
-                </td>
-              )
-            }
-
-            if (dataOption[key] || options) {
-              const currentItem =
-                (options || dataOption[key]).find(
-                  (item) => item[keyValueOption || 'value'] === value
-                ) || {}
-
-              value = currentItem[keyLabelOption || 'label'] || ''
-            }
-
-            return (
-              <td key={i} className={classNameTableBody}>
-                {component ? (
-                  <Component />
-                ) : (
-                  <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
-                )}
-              </td>
-            )
-          })}
+          )}
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>

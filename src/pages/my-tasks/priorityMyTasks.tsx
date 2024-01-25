@@ -15,7 +15,7 @@ const PriorityMyTasks = ({status}: Props) => {
           }}
           className=' w-10px h-10px flex-shrink-0 rounded-circle'
         ></div>
-        <span className='fs-14 fw-semibold text-gray-600'>{view?.[0].label}</span>
+        <span className='fs-14 fw-normal text-gray-900'>{view?.[0].label}</span>
       </div>
     </div>
   )

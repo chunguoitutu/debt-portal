@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
 import './style.scss'
 
-import Icons from '@/components/icons'
 import RenderFile from '@/components/file/RenderFile'
 import UploadFile from '@/components/file/UploadFile'
 

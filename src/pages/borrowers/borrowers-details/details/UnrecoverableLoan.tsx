@@ -3,7 +3,6 @@ import {FC, useEffect, useState} from 'react'
 import {TableSecondary} from '@/components/table'
 
 import {CONFIG_FULL_SETTLED_LOAN__HISTORY} from './config'
-import {Sum} from '@/app/utils'
 import TableFooterCustomer from './TableFooterCustomer'
 
 const UnrecoverableLoan: FC<LoanDetailsProps> = ({customerInfo}) => {

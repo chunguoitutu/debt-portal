@@ -38,6 +38,8 @@ export const APPLICATION_LISTING_CONFIG_DASHBOARD: TableConfig = {
                 component: Input,
                 isSort: true,
             },
+            isLink: true,
+            linkUrl: '/customers/details'
         },
 
         {

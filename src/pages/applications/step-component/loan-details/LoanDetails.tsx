@@ -1,19 +1,13 @@
-import {FC, Fragment, useEffect, useState} from 'react'
+import {FC, Fragment, useEffect} from 'react'
 import clsx from 'clsx'
 
 import ErrorMessage from '@/components/error/ErrorMessage'
 import {ApplicationConfig, PropsStepApplication} from '@/app/types'
 import request from '../../../../app/axios'
 import {useParams} from 'react-router-dom'
-import {
-  convertInterestApplication,
-  formatNumber,
-  getIdDefault,
-  isFirstGetStepApplication,
-} from '@/app/utils'
+import {convertInterestApplication, getIdDefault, isFirstGetStepApplication} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 import {ApplicationStatus, TermUnit} from '@/app/types/enum'
-import {error} from 'console'
 
 const LoanDetails: FC<PropsStepApplication> = ({
   config = [],
@@ -21,16 +15,7 @@ const LoanDetails: FC<PropsStepApplication> = ({
   optionListing,
   setOptionListing,
 }) => {
-  const {
-    values,
-    touched,
-    errors,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    registerField,
-    unregisterField,
-  } = formik
+  const {values, touched, errors, handleChange, handleBlur, setFieldValue, registerField} = formik
   const {applicationIdEdit} = useParams()
   const {company_id, priority} = useAuth()
 

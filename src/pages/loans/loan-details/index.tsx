@@ -109,7 +109,7 @@ const LoanDetails = () => {
             <h2 className='fs-20 fw-bolder mb-4'>Details</h2>
 
             <HorizontalMenu
-              className='mt-24px'
+              className='mt-7px'
               data={LOAN_DETAILS_MENU}
               active={activeMenu}
               onChangeActiveMenu={(newValue: string) => {

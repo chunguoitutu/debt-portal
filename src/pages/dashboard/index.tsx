@@ -8,9 +8,9 @@ import {ApplicationDemoDashBoard} from '@/pages/dashboard/component/ApplicationD
 import {CustomerListingDashboard} from '@/pages/dashboard/component/CustomerDashboard'
 import {CountApplication} from '@/pages/dashboard/component/CountApplication'
 import {ChartCustomer} from '@/pages/dashboard/component/ChartCustomer'
-import {ChartApplication} from '@/pages/dashboard/component/ChartApplication'
+import {ChartApplication} from '@/pages/dashboard/component/InformationChartApplication'
 import {ContactDashBoard} from '@/pages/dashboard/component/ContactDashboard'
-import {MyTask} from './component/MyTask'
+import {UserTask} from './component/UserTask'
 
 const DashboardPage: FC = () => (
   <>
@@ -48,7 +48,7 @@ const DashboardPage: FC = () => (
     <div className='col-xxl-12'>
       <div className='row gy-5 gx-xl-8 '>
         <div className='col-xxl-3'>
-          <MyTask className='card-xxl-stretch mb-xl-3' />
+          <UserTask className='card-xxl-stretch mb-xl-3' />
         </div>
 
         <div className='col-12 col-xxl-9'>

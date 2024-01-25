@@ -1,6 +1,5 @@
 import {FC, useEffect, useMemo, useRef, useState} from 'react'
-import {useLocation, useNavigate, useParams, useSearchParams} from 'react-router-dom'
-import moment from 'moment'
+import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import './style.scss'
 import BackgroundCheck from './background-check/BackgroundCheck'
 import Step from '../../components/step/Step'

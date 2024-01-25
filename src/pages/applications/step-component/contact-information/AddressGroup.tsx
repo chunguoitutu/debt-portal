@@ -8,7 +8,6 @@ import {
   YES_NO_OPTION,
 } from '@/app/utils'
 import {CheckboxRounded} from '@/components/checkbox'
-import Radio from '@/components/radio/Radio'
 import {Select} from '@/components/select'
 import clsx from 'clsx'
 import {FormikProps} from 'formik'

@@ -1,6 +1,6 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link, useNavigate} from 'react-router-dom'
-import React, {ChangeEvent, Fragment, RefObject, useEffect, useMemo, useRef, useState} from 'react'
+import React, {ChangeEvent, Fragment, useEffect, useMemo, useRef, useState} from 'react'
 import numeral from 'numeral'
 import moment from 'moment'
 import clsx from 'clsx'

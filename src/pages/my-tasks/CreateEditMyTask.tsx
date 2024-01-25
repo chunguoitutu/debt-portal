@@ -1,29 +1,28 @@
+import clsx from 'clsx'
 import Button from '@/components/button/Button'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-import {ChangeEvent, FC, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
+import 'react-quill/dist/quill.snow.css'
+import ReactQuill from 'react-quill'
+import request from '@/app/axios'
 import * as Yup from 'yup'
 
 import {KTIcon} from '@/_metronic/helpers'
+import Radio from '@/components/radio/Radio'
 import {MY_TASK_CONFIG} from './config'
 import {Input} from '@/components/input'
-import {TextArea} from '@/components/textarea'
-import {Base64Item, DataResponse, PropsStepApplication, UserInfo} from '@/app/types'
-import clsx from 'clsx'
-import Radio from '@/components/radio/Radio'
-import {Select} from '@/components/select'
+import {Base64Item, DataResponse, UserInfo} from '@/app/types'
 import UploadFile from '@/components/file/UploadFile'
+import {Select} from '@/components/select'
 import {
   PRIORITY_TASK,
   convertFileToBase64,
   convertMessageErrorRequired,
   getFullName,
 } from '@/app/utils'
-import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {getDaysOfCurrentDate} from '@/app/utils/get-current-date'
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
 import {swalToast} from '@/app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import RenderFile from '@/components/file/RenderFile'
@@ -180,7 +179,7 @@ const CreateEditMyTask = ({data}: props) => {
   function renderComponent() {
     return (
       <div className='col-12'>
-        <div className='row mb-4'>
+        <div className='row mb-16px'>
           <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Priority</div>
           <div className='d-flex flex-row gap-16px col-10'>
             {PRIORITY_TASK.map((item, i) => (
@@ -200,13 +199,13 @@ const CreateEditMyTask = ({data}: props) => {
             ))}
           </div>
         </div>
-        <div className='row mb-4'>
+        <div className='row mb-16px'>
           <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Task Title</div>
           <div className='col-10'>
             <Input name={'task_title'} value={values.task_title} onChange={handleChange} />
           </div>
         </div>
-        <div className='row mb-4'>
+        <div className='row mb-16px'>
           <div className='col-2 fs-16 fw-medium text-gray-900 pt-2'>Description</div>
           <div className='col-10'>
             <ReactQuill
@@ -221,7 +220,7 @@ const CreateEditMyTask = ({data}: props) => {
             />
           </div>
         </div>
-        <div className='row mb-4'>
+        <div className='row mb-16px'>
           <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Start - End</div>
           <div className='col-10 ' style={{width: '81%'}}>
             <div className='row'>
@@ -262,7 +261,7 @@ const CreateEditMyTask = ({data}: props) => {
             />
           </div>
         </div>
-        <div className='row mb-4'>
+        <div className='row'>
           <div className='col-2 fs-16 fw-medium text-gray-900 pt-2'>Attachment</div>
           <div className='col-10'>
             <UploadFile

@@ -2,7 +2,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react'
 import {KTIcon} from '../../../_metronic/helpers'
 import {getCSSVariableValue} from '../../../_metronic/assets/ts/_utils'
-import {useThemeMode} from '../../../_metronic/partials/layout/theme-mode/ThemeModeProvider'
 import {BorrowerItem, OrderBy, ResponseBorrowerListing, SearchCriteria} from '@/app/types'
 import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
@@ -24,11 +23,9 @@ const ChartCustomer: FC<Props> = ({className, size = 70, line = 11, rotate = 145
     : {}
 
   const {settings, rows} = BORROWER_CONFIG_LISTING || {}
-  const {showAction = true, showEditButton} = settings || {}
   const [loadApi, setLoadApi] = React.useState<boolean>(true)
 
   const [data, setData] = React.useState<BorrowerItem[]>([])
-  const [dataOption, setDataOption] = useState<{[key: string]: any[]}>({})
   const [loading, setLoading] = useState<boolean>(false)
   const [dataFilter, setDataFilter] = React.useState<{[key: string]: any}>(
     isObject(sessionData?.dataFilter) ? sessionData?.dataFilter : {}

@@ -2,7 +2,6 @@ import {LoanDetailsProps, OrderBy} from '@/app/types'
 import {FC, useEffect, useState} from 'react'
 import {TableSecondary} from '@/components/table'
 
-import {Sum} from '@/app/utils'
 import {CONFIG_FULL_SETTLED_LOAN__HISTORY} from './config'
 import TableFooterCustomer from './TableFooterCustomer'
 

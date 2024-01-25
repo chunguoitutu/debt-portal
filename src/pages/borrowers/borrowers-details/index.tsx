@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {PageLink, PageTitle} from '@/_metronic/layout/core'
 import Loading from '@/components/loading'
 import NotFoundPage from '@/pages/not-found-page/NotFoundPage'
