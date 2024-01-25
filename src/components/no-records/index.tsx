@@ -7,7 +7,7 @@ const NoRecord = () => {
         }}
         className='fs-14 fw-semibold '
       >
-        We couldn't find any records
+        No matching records found
       </span>
     </div>
   )

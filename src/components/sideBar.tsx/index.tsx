@@ -29,7 +29,7 @@ const SideBar = ({Overviews, setTitle, title, children}: Props) => {
                   style={{
                     backgroundColor: title === data.title ? '#F1F1F2' : 'transparent',
                   }}
-                  className={`ps-14px pe-0 py-4px button-overviews-customers d-flex justify-content-between align-items-center ${
+                  className={`ps-14px pe-0 py-4px button-overviews-customers fs-16 d-flex justify-content-between align-items-center ${
                     title === data.title
                       ? 'text-gray-900  fw-semibold'
                       : ' text-gray-700  fw-normal'
@@ -42,17 +42,8 @@ const SideBar = ({Overviews, setTitle, title, children}: Props) => {
             })}
           </div>
         </div>
-        <div className='d-flex flex-column col-9 '>
-          <div
-            style={{
-              maxHeight: 'calc(100vh - 620px)',
-              overflow: 'auto',
-              minHeight: '200px',
-            }}
-            className=' p-30px'
-          >
-            {children}
-          </div>
+        <div className='d-flex flex-column col-9  side-bar-customer-details'>
+          <div className=' p-30px'>{children}</div>
           <div className='w-100 pt-30px'></div>
         </div>
       </div>

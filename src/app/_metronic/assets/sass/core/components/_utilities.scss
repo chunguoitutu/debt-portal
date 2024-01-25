@@ -75,21 +75,25 @@ $utilities: map-merge(
       values: $zindex-values,
     ),
     'border-top-width': (
+      responsive: true,
       property: border-top-width,
       class: border-top,
       values: $border-widths,
     ),
     'border-bottom-width': (
+      responsive: true,
       property: border-bottom-width,
       class: border-bottom,
       values: $border-widths,
     ),
     'border-right-width': (
+      responsive: true,
       property: border-right-width,
       class: border-right,
       values: $border-widths,
     ),
     'border-left-width': (
+      responsive: true,
       property: border-left-width,
       class: border-left,
       values: $border-widths,

@@ -7,7 +7,12 @@ type Props = {
 
 const TableFooterCustomer = ({data, KeyData}: Props) => {
   return (
-    <tfoot className='table-foot-repayment position-sticky bottom-0 bg-gray-100'>
+    <tfoot
+      style={{
+        bottom: '-1px',
+      }}
+      className='table-foot-repayment position-sticky bg-gray-100'
+    >
       <tr>
         <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
         <td></td>

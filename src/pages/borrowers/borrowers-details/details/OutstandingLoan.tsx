@@ -43,7 +43,12 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
 
   const tableFooter = () => {
     return (
-      <tfoot className='table-foot-repayment position-sticky bottom-0 z-0 bg-gray-100'>
+      <tfoot
+        style={{
+          bottom: '-1px',
+        }}
+        className='table-foot-repayment position-sticky  z-0 bg-gray-100'
+      >
         <tr>
           <td className='fs-16 fw-bold  p-16px text-start'>Total</td>
           <td></td>
@@ -72,7 +77,7 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
           {/* Note item */}
           <div className='d-flex align-items-center gap-8px'>
             <div className='bg-F64E60 w-10px h-10px flex-shrink-0 rounded-circle'></div>
-            <span className='fs-14 fw-semibold text-gray-600'>Negative amount - loss</span>
+            <span className='fs-14 fw-semibold text-gray-600'>Negative Amount - Loss</span>
           </div>
 
           {/* Note item */}
@@ -83,7 +88,7 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
               }}
               className=' w-10px h-10px flex-shrink-0 rounded-circle'
             ></div>
-            <span className='fs-14 fw-semibold text-gray-600'>Positive amount - profitable</span>
+            <span className='fs-14 fw-semibold text-gray-600'>Positive Amount - Profitable</span>
           </div>
         </div>
       </div>
@@ -91,7 +96,7 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
       <TableSecondary
         keySort={keySort}
         orderBy={orderBy}
-        className='mt-16px mh-500px'
+        className='mt-8px mh-500px'
         config={CONFIG_OUTSTANDING_LOAN__HISTORY}
         onChangeSortBy={handleChangeSortBy}
         data={outstanding_loan}
