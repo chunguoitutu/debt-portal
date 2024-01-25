@@ -173,7 +173,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                             value={values[row?.key] || ''}
                           />
                         ) : (
-                          <div className='d-flex flex-column mb-16px'>
+                          <div className='d-flex flex-column mb-16px' style={{marginTop: '-4px'}}>
                             <Input
                               required={row?.require ? true : false}
                               label={row?.name}
@@ -234,7 +234,10 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         className='gap-1 p-6 ps-4 ps-lg-4'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
+                        <div
+                          className='fs-7 fw-medium text-gray-600 text-nowrap'
+                          style={{marginTop: '-2px'}}
+                        >
                           Amount Of Loan $
                         </div>
                         <div className='fs-4 fw-semibold'>${formatNumber(values.loan_amount)}</div>
