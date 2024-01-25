@@ -77,8 +77,13 @@ const OutstandingLoan: FC<LoanDetailsProps> = ({customerInfo}) => {
 
           {/* Note item */}
           <div className='d-flex align-items-center gap-8px'>
-            <div className='bg-primary w-10px h-10px flex-shrink-0 rounded-circle'></div>
-            <span className='fs-14 fw-semibold text-gray-600'>positive amount - profitable</span>
+            <div
+              style={{
+                backgroundColor: '#071437',
+              }}
+              className=' w-10px h-10px flex-shrink-0 rounded-circle'
+            ></div>
+            <span className='fs-14 fw-semibold text-gray-600'>Positive amount - profitable</span>
           </div>
         </div>
       </div>

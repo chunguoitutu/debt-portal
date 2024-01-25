@@ -1,5 +1,4 @@
 import Icons from '@/components/icons'
-import React from 'react'
 import {useDrag} from 'react-dnd'
 import PriorityMyTasks from './priorityMyTasks'
 
@@ -24,7 +23,6 @@ const ButtonMyTask = ({data}: Props) => {
         opacity: isDragging ? '0.3' : '1',
         cursor: 'move',
       }}
-      draggable
       ref={drag}
       className='card p-16px d-flex flex-column wrapper-my-tasks-child gap-16px'
     >

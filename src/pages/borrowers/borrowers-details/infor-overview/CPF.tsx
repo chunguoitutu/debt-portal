@@ -64,7 +64,7 @@ const CPF = ({data}: DataOverview) => {
             >
               {/* Header */}
               <div
-                className='d-flex align-items-center justify-content-between gap-24px cursor-pointer'
+                className='d-flex align-items-center  justify-content-between gap-24px cursor-pointer'
                 onClick={() => handleToggleViewCpf(i)}
                 key={cpf.date}
               >
@@ -78,7 +78,13 @@ const CPF = ({data}: DataOverview) => {
 
               {/* Body */}
               {isActive && (
-                <div className='grid-2-column gap-12px' key={i + 1}>
+                <div
+                  style={{
+                    paddingLeft: '28px',
+                  }}
+                  className='grid-2-column gap-12px  '
+                  key={i + 1}
+                >
                   {CPF_CONFIG?.map((el, i) => {
                     let value = cpf?.[el.key]
 

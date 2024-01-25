@@ -59,7 +59,13 @@ const TableSecondary: FC<Props> = ({
         className='table align-middle table-row-dashed fs-6 no-footer mb-0'
       >
         {/* Table head */}
-        <thead className='position-sticky z-3 top-0 bg-white'>
+
+        <thead
+          style={{
+            zIndex: '1',
+          }}
+          className='position-sticky z-3 top-0 bg-white'
+        >
           <tr className='text-start text-muted fw-bold fs-6 text-uppercase'>
             {ROW_LISTING.map((el, i) => {
               const {key, name, classNameTableHead, infoFilter} = el
@@ -67,7 +73,7 @@ const TableSecondary: FC<Props> = ({
               return (
                 <th
                   className={clsx([
-                    'text-nowrap min-w-75px user-select-none px-10px pb-16px pt-0',
+                    'text-nowrap min-w-75px user-select-none px-10px pb-16px pt-0 test-gray-600',
                     isSort && 'cursor-pointer',
                     classNameTableHead,
                   ])}
@@ -140,7 +146,7 @@ const TableSecondary: FC<Props> = ({
                       return (
                         <td
                           key={i}
-                          className='fs-6 fw-medium w-250px text-center'
+                          className='fs-6 fw-medium w-250px text-center '
                           style={{color: '#071437'}}
                         >
                           {value === 0 ? 'No' : 'Yes'}
@@ -151,10 +157,11 @@ const TableSecondary: FC<Props> = ({
                     return (
                       <td
                         style={{
+                          whiteSpace: 'nowrap',
                           color: +item[key] < 0 && ['p&l'].includes(key) ? '#F64E60' : '#071437',
                         }}
                         className={clsx([
-                          'fs-14 fw-semibold py-16px px-10px',
+                          'fs-14 fw-semibold py-16px px-10px ',
                           classNameTableBody,
                           customClassName,
                         ])}

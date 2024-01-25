@@ -3,6 +3,7 @@ import Icons from '@/components/icons'
 import NoRecord from '@/components/no-records'
 import {useEffect, useState} from 'react'
 import {CONFIG_ADDRESS, DataOverview} from './config'
+import {capitalizeFirstLetter} from '@/app/utils'
 
 const Addresses = ({data}: DataOverview) => {
   const [open, setOpen] = useState<any>({
@@ -39,13 +40,7 @@ const Addresses = ({data}: DataOverview) => {
     )
     setNewData(Object.values(groupedData) || [])
   }, [])
-  const capitalizeFirstLetter = (str: string) => {
-    return str
-      .toLowerCase()
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
-  }
+
   return (
     <div>
       {newData.length > 0
@@ -75,7 +70,9 @@ const Addresses = ({data}: DataOverview) => {
                             })
                           }
                         }}
-                        className='d-flex justify-content-between align-items-center  my-12px cursor-pointer'
+                        className={`d-flex justify-content-between align-items-center cursor-pointer ${
+                          index === 0 && idx === 0 ? 'pb-12px' : 'py-12px'
+                        }`}
                       >
                         <div className='d-flex justify-content-center align-items-center'>
                           <Icons name={'AddressCustomer'} />
@@ -110,7 +107,7 @@ const Addresses = ({data}: DataOverview) => {
                                 style={{
                                   marginLeft: '28px',
                                 }}
-                                className='d-flex  gap-16px  mb-12px'
+                                className='d-flex align-items-center  gap-16px  mb-12px'
                               >
                                 <p className='col-3 fs-14 fw-normal text-gray-700 p-0 m-0'>
                                   {confg.value}
