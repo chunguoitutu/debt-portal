@@ -53,4 +53,10 @@
     top: 0;
     height: fit-content;
   }
+
+  @media (min-width: 1400px) {
+    .top-1200 {
+      margin-top: 0px !important;
+    }
+  }
 }
