@@ -45,13 +45,15 @@ const DashboardPage: FC = () => (
 
     {/**Part 2 */}
 
-    <div className='row gy-5 gx-xl-8'>
-      <div className='col-xxl-3'>
-        <MyTask className='card-xxl-stretch mb-xl-3' />
-      </div>
+    <div className='col-xxl-12'>
+      <div className='row gy-5 gx-xl-8 '>
+        <div className='col-xxl-3'>
+          <MyTask className='card-xxl-stretch mb-xl-3' />
+        </div>
 
-      <div className='col-12 col-xxl-9'>
-        <CustomerListingDashboard className='card-xxl-stretch mb-5 mb-xl-8' />
+        <div className='col-12 col-xxl-9'>
+          <CustomerListingDashboard className='card-xxl-stretch mb-5 mb-xl-8' />
+        </div>
       </div>
     </div>
   </>
