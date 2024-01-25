@@ -230,7 +230,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       } d-flex justify-content-start algin-items-center w-100`}
                     >
                       <div
-                        className='gap-1 p-6 ps-12px'
+                        className='gap-1 p-6 ps-4 ps-lg-4'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
                         <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
@@ -242,8 +242,10 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         className='gap-1 p-6'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: '150px'}}
                       >
-                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Term Unit</div>
-                        <div className='fs-4 fw-semibold'>
+                        <div className='fs-7 fw-medium text-gray-600 text-center text-lg-start text-nowrap'>
+                          Term Unit
+                        </div>
+                        <div className='fs-4 fw-semibold text-center text-lg-start'>
                           {values.term_unit.toString() === '0'
                             ? 'Daily'
                             : values.term_unit.toString() === '1'
@@ -265,36 +267,38 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         </div>
                         <div className='fs-4 fw-semibold'>{values.total_cycle}</div>
                       </div>
-
+                    </div>
+                    <div
+                      className={`${
+                        mobile ? ' ' : 'gap-10 '
+                      } d-flex justify-content-start algin-items-center w-100`}
+                    >
                       <div
-                        className={`${
-                          mobile ? ' ' : 'gap-10 '
-                        } d-flex justify-content-center algin-items-center`}
-                      >
-                        <div
-                          className='gap-1 p-6 ms-4'
-                          style={{width: mobile ? '170px' : 'fit-content', minWidth: '175px'}}
-                        >
-                          <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Interest %</div>
-                          <div className='fs-4 fw-semibold'>
-                            {formatNumber(values.interest_percent)}
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className='gap-1 p-6'
+                        className='gap-1 p-6 ps-lg-4'
                         style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                       >
-                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
-                          First Repayment Date
-                        </div>
+                        <div className='fs-7 fw-medium text-gray-600 text-nowrap'>Interest %</div>
                         <div className='fs-4 fw-semibold'>
-                          {moment(values.first_repayment_date).format('DD/MM/YYYY')}
+                          {formatNumber(values.interest_percent)}
+                        </div>
+                      </div>
+
+                      <div className='pe-7'>
+                        <div
+                          className='gap-1 p-6'
+                          style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
+                        >
+                          <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
+                            First Repayment Date
+                          </div>
+                          <div className='fs-4 fw-semibold'>
+                            {moment(values.first_repayment_date).format('DD/MM/YYYY')}
+                          </div>
                         </div>
                       </div>
                       {values.term_unit.toString() === TermUnit.MONTHLY && (
                         <div
-                          className={`gap-1 p-6`}
+                          className={`gap-1 p-6 align-items-start ps-0`}
                           style={{width: mobile ? '170px' : 'fit-content', minWidth: 'auto'}}
                         >
                           <div className='fs-7 fw-medium text-gray-600 text-nowrap'>
@@ -305,7 +309,6 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       )}
                     </div>
                   </div>
-                  {/* calculator table */}
                   <div className='pt-24px row algin-items-center justify-content-between'>
                     <div className={`${mobile ? 'col-12 ' : 'col-6'} `}>
                       <Table className='table-bordered mb-24px ' responsive='sm'>
@@ -330,7 +333,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           </tr>
                           <tr>
                             <td className='label-calculator'>Term</td>
-                            <td className='content-calculator text-transform-none w-200px p-12px'>
+                            <td className='content-calculator text-transform-none w-200px'>
                               {values.total_cycle}{' '}
                               {values.term_unit.toString() === '0'
                                 ? 'Day'
@@ -370,7 +373,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           </tr>
                           <tr>
                             <td className='label-calculator'>Total Interest For Full Term</td>
-                            <td className='content-calculator w-200px p-12px'>
+                            <td className='content-calculator w-200px'>
                               ${formatNumber(dataFooterTable.totalInterest)}
                             </td>
                           </tr>
@@ -378,6 +381,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                       </Table>
                     </div>
                   </div>
+                  {/* calculator table */}
                   {/* table show charge per month */}
                   <div className='overflow-y-auto pt-0'>
                     <Table responsive='sm' className='table-bordered'>

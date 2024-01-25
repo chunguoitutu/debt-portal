@@ -9,7 +9,7 @@ type Props = {
 
 const MyTask: React.FC<Props> = ({className}) => {
   return (
-    <div className={`card ${className}`}>
+    <div className={`card ${className} custom-w`} style={{width: '99%'}}>
       {/* begin::Header */}
       <div className='card-header align-items-center border-0 mt-4'>
         <h3 className='card-title align-items-start flex-column'>

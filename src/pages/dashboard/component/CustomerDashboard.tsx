@@ -3,6 +3,7 @@ import {KTCardBody} from '@/_metronic/helpers'
 import React, {useEffect, useState} from 'react'
 import clsx from 'clsx'
 import {BorrowerItem, OrderBy, ResponseBorrowerListing, SearchCriteria} from '@/app/types'
+import './style.scss'
 
 import Loading from '@/components/table/components/Loading'
 import {getFullName, handleFormatFilter, isObject, parseJson} from '@/app/utils'
@@ -180,7 +181,7 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
     })
   }
   return (
-    <div className={`card ${className}`}>
+    <div className={`card ${className} w-listing`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-start flex-column'>

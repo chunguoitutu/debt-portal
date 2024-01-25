@@ -137,3 +137,14 @@
   border-top-left-radius: 0px;
   padding: 26px 30px;
 }
+
+@media (max-width: 1400px) {
+  .custom-w {
+    min-width: 100%;
+  }
+}
+@media (min-width: 1401px) {
+  .w-listing {
+    margin-left: 2px;
+  }
+}
