@@ -1,6 +1,6 @@
-import { Option } from '@/app/types'
-import { CustomerCPF, CustomerEmployment, CustomerVehicle } from '@/app/types/customer'
-import { POSITION } from '@/app/utils'
+import {Option} from '@/app/types'
+import {CustomerCPF, CustomerEmployment, CustomerVehicle} from '@/app/types/customer'
+import {POSITION} from '@/app/utils'
 import Profile from './Profile'
 import Employment from './Employment'
 import Addresses from './Addresses'
@@ -233,30 +233,37 @@ export const CONFIG_PROFILE = [
   {
     key: 'identification_no',
     value: 'NRIC No',
+    startTest: '',
   },
   {
     key: 'gender',
     value: 'Gender',
+    startTest: '',
   },
   {
     key: 'date_of_birth',
     value: 'Date of birth',
+    startTest: '',
   },
   {
     key: 'country_id',
-    value: 'Nationalities',
+    value: 'Nationality',
+    startTest: '',
   },
   {
     key: 'company',
     value: 'Company',
+    startTest: '',
   },
   {
     key: 'mobilephone_1',
     value: 'Phone',
+    startTest: '+65',
   },
   {
     key: 'email1',
     value: 'Email',
+    startTest: '',
   },
 ]
 
@@ -274,7 +281,7 @@ export const CONFIG_STATUS = [
 export const config_activeCustomer = [
   {
     value: 1,
-    label: 'active',
+    label: 'Active',
     background: '#E8FFF3',
     color: '#50CD89',
   },

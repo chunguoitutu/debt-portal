@@ -17,7 +17,7 @@ import Overview from './infor-overview/Overview'
 type Props = {}
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'customers',
+    title: 'Customers',
     path: '/customers/listing',
     isSeparator: false,
     isActive: false,
@@ -104,10 +104,10 @@ const BorrowerDetail = (props: Props) => {
 
         <div className='col-12 col-xxl-7'>
           <div className='card p-30px h-100'>
-            <h2 className='fs-20 fw-bolder mb-4'>Details</h2>
+            <h2 className='fs-20 fw-bolder mb-0'>Details</h2>
 
             <HorizontalMenu
-              className='mt-24px'
+              className='mt-20px'
               data={CUSTOMER_DETAILS_MENU}
               active={activeMenu}
               onChangeActiveMenu={(newValue: string) => {

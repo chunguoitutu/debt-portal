@@ -14,7 +14,7 @@ const Employment = ({data}: DataOverview) => {
   return (
     <div className='d-flex flex-column gap-16px'>
       {/* Header */}
-      <div className='grid-2-column gap-12px'>
+      <div className='grid-2-column gap-16px'>
         {CUSTOMER_EMPLOYMENT_CONFIG.map((el, i) => {
           let value = employment?.[el.key]
 
@@ -54,8 +54,8 @@ const Employment = ({data}: DataOverview) => {
             }
             return (
               <tr key={i}>
-                <td className='text-gray-700 fs-14'>{el.label}</td>
-                <td className='fw-semibold'>{value}</td>
+                <td className='text-gray-700 fs-14 p-8px'>{el.label}</td>
+                <td className='fw-semibold p-8px'>{value}</td>
               </tr>
             )
           })}

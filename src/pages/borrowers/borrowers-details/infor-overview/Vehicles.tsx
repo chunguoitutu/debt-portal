@@ -58,7 +58,12 @@ const Vehicles = ({data}: DataOverview) => {
 
               {/* Body */}
               {isActive && (
-                <div className='grid-2-column gap-12px'>
+                <div
+                  style={{
+                    paddingLeft: '28px',
+                  }}
+                  className='grid-2-column gap-12px'
+                >
                   {VEHICLE_CONFIG.map((el, i) => {
                     let value = vehicle[el.key]
 
