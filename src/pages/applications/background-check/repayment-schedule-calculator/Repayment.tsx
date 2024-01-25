@@ -142,6 +142,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
             {currentStep === 1 ? (
               <>
                 <div
+                  className='mt-lg-30px top-1200'
                   style={{
                     width: mobile ? 'calc(100% - 10px)' : '60.3%',
                     marginTop: mobile ? '30px' : '0',
@@ -211,7 +212,7 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
             ) : (
               <>
                 <div
-                  className='position-relative'
+                  className='position-relative top-1200'
                   style={{
                     width: mobile ? 'calc(100% - 10px)' : '100%',
                     marginTop: mobile ? '30px' : '0',
@@ -390,7 +391,10 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                           {rowsTable.map((el) => (
                             <th
                               key={el.name}
-                              className='border-right-table p-12px label-calculator align-top'
+                              className={`border-right-table p-12px label-calculator align-top ${
+                                el.name === 'Date' ? '' : 'text-end'
+                              }`}
+                              style={{minWidth: '132px'}}
                             >
                               {el.name}
                             </th>
@@ -403,13 +407,19 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                             switch (rt.key) {
                               case 'date':
                                 return (
-                                  <td key={rt.key} className='p-12px content-calculator fs-4'>
+                                  <td
+                                    key={rt.key}
+                                    className='p-12px content-calculator fs-4 min-w-150'
+                                  >
                                     {moment(el.date).format('DD MMM, YYYY')}
                                   </td>
                                 )
                               default:
                                 return (
-                                  <td key={rt.key} className='p-12px content-calculator fs-4'>
+                                  <td
+                                    key={rt.key}
+                                    className='p-12px content-calculator fs-4 text-end'
+                                  >
                                     ${formatNumber(el[rt.key])}
                                   </td>
                                 )
@@ -419,16 +429,16 @@ const Repayment = ({handleClose, mobile = false}: Props) => {
                         })}
                         <tr style={{backgroundColor: '#F9F9F9'}}>
                           <td className='border-right-table p-12px label-calculator fs-4'>Total</td>
-                          <td className='border-right-table p-12px label-calculator fs-4'>
+                          <td className='border-right-table p-12px label-calculator fs-4 text-end'>
                             ${formatNumber(dataFooterTable.totalPrincipal)}
                           </td>
-                          <td className='border-right-table p-12px label-calculator fs-4'>
+                          <td className='border-right-table p-12px label-calculator fs-4 text-end'>
                             ${formatNumber(dataFooterTable.totalInterest)}
                           </td>
-                          <td className='border-right-table p-12px label-calculator fs-4'>
+                          <td className='border-right-table p-12px label-calculator fs-4 text-end'>
                             ${formatNumber(dataFooterTable.totalMonthlyInst)}
                           </td>
-                          <td className='border-right-table p-12px label-calculator fs-4'></td>
+                          <td className='border-right-table p-12px label-calculator fs-4 text-end'></td>
                         </tr>
                       </tbody>
                     </Table>
