@@ -44,7 +44,7 @@ const BorrowersHeader = ({data}: Props) => {
             <p className='fs-20 fw-bold m-0 p-0 loan-amount-customer'>
               {formatMoney(data?.outstanding_loan_amount || 0)}
             </p>
-            <p className='p-0 m-0 test-gray-700 fs-13'>Outstanding loan amount</p>
+            <p className='p-0 m-0 test-gray-700 fs-12'>Outstanding loan amount</p>
           </div>
           <div className='d-flex justify-content-center align-items-center'>
             <div
