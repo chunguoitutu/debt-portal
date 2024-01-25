@@ -42,6 +42,7 @@ const Settings: React.FC = () => {
     touched,
     errors,
     handleBlur,
+    dirty,
   } = useFormik<UserProfile>({
     initialValues: {
       firstname: currentUser?.firstname || '',
@@ -215,13 +216,7 @@ const Settings: React.FC = () => {
 
             <div className='card-footer d-flex justify-content-end py-6 px-9'>
               <button
-                disabled={
-                  loading ||
-                  (originalData?.email.trim() === values.email.trim() &&
-                    originalData?.lastname.trim() === values.lastname.trim() &&
-                    originalData?.telephone.trim() === values.telephone.trim() &&
-                    originalData?.firstname.trim() === values.firstname.trim())
-                }
+                disabled={!dirty}
                 type='button'
                 className='btn btn-secondary align-self-center me-8px'
                 onClick={handleDiscardChanges}
@@ -231,13 +226,7 @@ const Settings: React.FC = () => {
               <button
                 type='submit'
                 className='btn btn-primary align-self-center fs-14'
-                disabled={
-                  loading ||
-                  (originalData?.email.trim() === values.email.trim() &&
-                    originalData?.lastname.trim() === values.lastname.trim() &&
-                    originalData?.telephone.trim() === values.telephone.trim() &&
-                    originalData?.firstname.trim() === values.firstname.trim())
-                }
+                disabled={!dirty}
                 onClick={() => handleSubmit}
               >
                 {!loading && 'Save Changes'}

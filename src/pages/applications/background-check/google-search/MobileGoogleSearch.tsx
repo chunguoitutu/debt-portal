@@ -1,5 +1,5 @@
 import {KTIcon} from '@/_metronic/helpers'
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import GoogleSearch from './GoogleSearch'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'

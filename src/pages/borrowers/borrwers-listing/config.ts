@@ -1,5 +1,5 @@
 import { TableConfig } from '@/app/types'
-import { BLACKLIST_OPTION, EXCLUSION_OPTION, GENDER, ID_TYPE, STATUS_APPLICATION_FILTER, STATUS_CUSTOMER_LISTING } from '@/app/utils'
+import { BLACKLIST_OPTION, EXCLUSION_OPTION, STATUS_CUSTOMER_LISTING } from '@/app/utils'
 import { Input } from '@/components/input'
 import { Select } from '@/components/select'
 

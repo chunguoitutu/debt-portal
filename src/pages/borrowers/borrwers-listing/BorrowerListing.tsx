@@ -14,7 +14,7 @@ import Pagination from '@/components/table/components/Pagination'
 import SortBy from '@/components/sort-by'
 import moment from 'moment'
 import Loading from '@/components/table/components/Loading'
-import {getFullName, handleFormatFilter, isObject, parseJson} from '@/app/utils'
+import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
 import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {FilterBorrower} from './FilterBorrower'
@@ -31,8 +31,6 @@ import Badge from '@/components/badge/Badge'
 import useClickOutside from '@/app/hooks/useClickOutside'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
-import chartResponsive from '@/app/images/ChartListing.png'
-import {TableSecondary} from '@/components/table'
 
 type Props = {
   chartSize?: number
@@ -975,46 +973,6 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     {loading && <Loading />}
                   </div>
                 </KTCardBody>
-
-                {/* <TableSecondary
-                  keySort={keySort}
-                  orderBy={orderBy}
-                  className='mh-350px'
-                  config={configTable}
-                  onChangeSortBy={() => {}}
-                  data={data}
-                  loading={loading}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  showTableFooter={true}
-                />
-                <div
-                  style={{
-                    padding: '16px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <RowPerPage
-                    lenghtData={searchCriteria.total}
-                    limit={searchCriteria.pageSize}
-                    page={searchCriteria.currentPage}
-                    setLimit={(e: any) => {
-                      setSearchCriteria({
-                        ...searchCriteria,
-                        pageSize: +e.target.value,
-                        currentPage: 1,
-                      })
-                    }}
-                  />
-
-                  <Pagination
-                    onChangePagePagination={handleChangePagination}
-                    searchCriteria={searchCriteria}
-                  />
-
-                  {loading && <Loading />}
-                </div> */}
               </div>
             </div>
           </div>

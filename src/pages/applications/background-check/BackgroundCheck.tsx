@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useState} from 'react'
+import {FC, useState} from 'react'
 
 import ContentListButton from '@/components/list-button/ContentListButton'
 import RepaymentScheduleCalculator from './repayment-schedule-calculator/RepaymentScheduleCalculator'
@@ -13,8 +13,6 @@ import {PropsStepApplication} from '@/app/types'
 import CaCheckDeskTop from './ca-check/DesktopCaCheck'
 import {getFullName} from '@/app/utils'
 import {ApplicationStatus} from '@/app/types/enum'
-import request from '@/app/axios'
-import {useAuth} from '@/app/context/AuthContext'
 
 const BackgroundCheck: FC<PropsStepApplication> = ({
   formik,

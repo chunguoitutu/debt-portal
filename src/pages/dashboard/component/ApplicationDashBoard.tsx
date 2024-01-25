@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {Link, useNavigate} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
-import numeral from 'numeral'
-import moment from 'moment'
 import clsx from 'clsx'
 import './style.scss'
 
@@ -15,7 +13,7 @@ import {
   TableRow,
 } from '@/app/types'
 import request from '@/app/axios'
-import {handleFormatFilter, isObject, parseJson} from '@/app/utils'
+import {isObject, parseJson} from '@/app/utils'
 import Badge from '@/components/badge/Badge'
 import Loading from '@/components/table/components/Loading'
 import ButtonEdit from '@/components/button/ButtonEdit'
@@ -139,68 +137,89 @@ const ApplicationDemoDashBoard = () => {
 
   const renderRows = () => {
     return data.map((item, idx) => {
+      const customer_no = item?.customer_no
       return (
         <tr key={idx}>
-          {rows.map(({key, component, classNameTableBody, isHide, options, infoFilter}, i) => {
-            const {keyLabelOption, keyValueOption} = infoFilter || {}
+          {rows.map(
+            (
+              {key, component, classNameTableBody, isHide, options, infoFilter, isLink, linkUrl},
+              i
+            ) => {
+              const {keyLabelOption, keyValueOption} = infoFilter || {}
 
-            if (isHide) {
-              return <React.Fragment key={i}></React.Fragment>
-            }
-            let Component = component || React.Fragment
-            let value = item[key]
+              if (isHide) {
+                return <React.Fragment key={i}></React.Fragment>
+              }
+              let Component = component || React.Fragment
+              let value = item[key]
 
-            if (key === 'id') {
-              return (
-                <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
-                  {Number(idx) +
-                    1 +
-                    (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
-                      Number(searchCriteria.pageSize))}
-                </td>
-              )
-            }
+              if (key === 'id') {
+                return (
+                  <td key={i} className='w-xxl-6 fw-semibold fs-14 ps-5'>
+                    {Number(idx) +
+                      1 +
+                      (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
+                        Number(searchCriteria.pageSize))}
+                  </td>
+                )
+              }
 
-            if (key === 'status') {
-              let title: string = ''
-              let color: string = ''
-              if (item[key] === 1) {
-                title = 'Awaiting Approval'
-                color = 'warning'
-              } else if (item[key] === 2) {
-                title = 'Rejected'
-                color = 'danger'
-              } else if (item[key] === 3) {
-                title = 'Approved'
-                color = 'success'
-              } else {
-                title = 'Draft'
-                color = 'info'
+              if (key === 'fullname') {
+                if (isLink && item.status === 3) {
+                  return (
+                    <td key={i} className='fs-6 fw-medium cursor-pointer'>
+                      <Link
+                        to={`${linkUrl}/${customer_no}`}
+                        className='text-hover-primary text-gray-900'
+                      >
+                        {value}
+                      </Link>
+                    </td>
+                  )
+                }
+              }
+
+              if (key === 'status') {
+                let title: string = ''
+                let color: string = ''
+                if (item[key] === 1) {
+                  title = 'Awaiting Approval'
+                  color = 'warning'
+                } else if (item[key] === 2) {
+                  title = 'Rejected'
+                  color = 'danger'
+                } else if (item[key] === 3) {
+                  title = 'Approved'
+                  color = 'success'
+                } else {
+                  title = 'Draft'
+                  color = 'info'
+                }
+
+                return (
+                  <td
+                    key={i}
+                    className={clsx([
+                      'fs-14 fw-semibold hover-applications-listing',
+                      classNameTableBody,
+                    ])}
+                  >
+                    <Badge color={color as any} title={title as any} key={i} />
+                  </td>
+                )
               }
 
               return (
-                <td
-                  key={i}
-                  className={clsx([
-                    'fs-14 fw-semibold hover-applications-listing',
-                    classNameTableBody,
-                  ])}
-                >
-                  <Badge color={color as any} title={title as any} key={i} />
+                <td key={i} className={classNameTableBody}>
+                  {component ? (
+                    <Component />
+                  ) : (
+                    <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
+                  )}
                 </td>
               )
             }
-
-            return (
-              <td key={i} className={classNameTableBody}>
-                {component ? (
-                  <Component />
-                ) : (
-                  <span className='fw-semibold fs-14 fw-semibold'>{value}</span>
-                )}
-              </td>
-            )
-          })}
+          )}
           {showAction && showEditButton && (
             <td className='text-center'>
               <div className='d-flex align-items-center justify-content-center gap-1'>

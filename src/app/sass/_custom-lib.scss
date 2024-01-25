@@ -86,11 +86,14 @@
   .ql-editor p {
     font-size: 16px !important;
     color: #4b5675 !important;
-    font-weight: 600;
+    font-weight: 500;
   }
   &:focus-within {
     border: 1px solid #0c2de2 !important;
     box-shadow: 0px 0px 2px 3px rgba(27, 132, 255, 0.16), 0px 2px 2px 0px rgba(0, 0, 0, 0.16);
     background: #fff;
+  }
+  .ql-formats svg {
+    height: 20px !important;
   }
 }

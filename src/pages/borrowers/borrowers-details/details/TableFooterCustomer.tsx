@@ -1,5 +1,4 @@
 import {Sum} from '@/app/utils'
-import React from 'react'
 
 type Props = {
   data: any[]

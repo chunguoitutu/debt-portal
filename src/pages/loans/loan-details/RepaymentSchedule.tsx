@@ -217,7 +217,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
             return (
               <td
                 className={clsx([
-                  'fs-4 fw-bold ps-0  pe-0',
+                  'fs-4 fw-bold ps-0 ',
                   el.key === 'id' ? 'p-16px text-start' : 'px-10px text-end',
                 ])}
                 colSpan={el.key === 'id' && configColumnSubmitted?.['date'] ? 2 : 1}
@@ -313,7 +313,7 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
       <TableSecondary
         keySort={keySort}
         orderBy={orderBy}
-        className='mt-16px mh-360px'
+        className='mt-8px mh-360px'
         config={configTable}
         onChangeSortBy={handleChangeSortBy}
         data={loanRepayment}

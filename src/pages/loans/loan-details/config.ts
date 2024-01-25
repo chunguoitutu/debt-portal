@@ -9,14 +9,14 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
     {
       key: 'id',
       name: '#',
-      classNameTableHead: 'repayment-id ps-1',
+      classNameTableHead: 'pb-8px repayment-id ps-1',
       classNameTableBody: 'ps-1',
     },
     {
       key: 'date',
       name: 'Date',
       classNameTableBody: 'text-end text-nowrap',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableHead: 'pb-8px fs-14 text-end',
       format: 'date',
       infoFilter: {
         // isSort: true,
@@ -30,7 +30,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'principal',
       name: 'Principal',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableHead: 'pb-8px fs-14 text-end',
       format: 'money',
       infoFilter: {
         // isSort: true,
@@ -44,7 +44,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'principal_balance',
       name: 'Principal Balance',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableHead: 'pb-8px fs-14 text-end',
       format: 'money',
       infoFilter: {
         // isSort: true,
@@ -58,7 +58,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'interest',
       name: 'Interest',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableHead: 'pb-8px fs-14 text-end',
       format: 'money',
       infoFilter: {
         // isSort: true,
@@ -72,7 +72,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'interest_balance',
       name: 'Interest Balance',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableHead: 'pb-8px fs-14 text-end',
       format: 'money',
       infoFilter: {
         // isSort: true,
@@ -86,7 +86,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'late_interest',
       name: 'Late Interest',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableHead: 'pb-8px fs-14 text-end',
       format: 'money',
       infoFilter: {
         // isSort: true,
@@ -100,7 +100,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'total',
       name: 'Instalment',
       classNameTableBody: 'text-end',
-      classNameTableHead: 'fs-14 text-end',
+      classNameTableHead: 'pb-8px fs-14 text-end',
       defaultShow: false,
       format: 'money',
       infoFilter: {
@@ -115,7 +115,7 @@ export const CONFIG_REPAYMENT_SCHEDULE: TableConfig = {
       key: 'total_balance',
       name: 'Instalment Balance',
       classNameTableBody: 'text-end pe-0',
-      classNameTableHead: 'fs-14 text-end pe-0',
+      classNameTableHead: 'pb-8px fs-14 text-end pe-0',
       defaultShow: false,
       format: 'money',
       infoFilter: {

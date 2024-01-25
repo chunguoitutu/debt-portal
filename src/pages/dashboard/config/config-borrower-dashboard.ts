@@ -38,6 +38,8 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
                 component: Input,
                 isSort: true,
             },
+            isLink: true,
+            linkUrl: '/customers/details'
         },
         {
             key: 'identification_type',
