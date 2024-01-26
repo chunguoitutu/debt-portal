@@ -1,4 +1,4 @@
-import moment, { MomentInput } from 'moment'
+import moment, {MomentInput} from 'moment'
 
 export function getDaysOfCurrentDate(): number {
   return new Date().getDate()

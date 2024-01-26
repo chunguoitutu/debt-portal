@@ -31,8 +31,6 @@ const TableSecondary: FC<Props> = ({
   data = [],
   loading,
   showTableFooter = false,
-  currentPage = 1,
-  pageSize = 10,
   actions = false,
   onChangeSortBy,
   tableFooter,
@@ -75,7 +73,7 @@ const TableSecondary: FC<Props> = ({
               return (
                 <th
                   className={clsx([
-                    'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 text-gray-600',
+                    'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 text-gray-500',
                     isColumnLast && 'text-end pe-0',
                     isSort && 'cursor-pointer',
                     classNameTableHead,
@@ -113,7 +111,6 @@ const TableSecondary: FC<Props> = ({
                     const customClassName = handleSwitchClassName(key, item)
                     const isColumnLast = ROW_LISTING.length === i + 1
 
-                    let Component = component
                     let value = item[key]
 
                     if (format === 'date') {
