@@ -61,7 +61,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
   ref
 ) => {
   const [typeCustom, setTypeCustom] = useState<string>(
-    type === 'money' ? 'text' : type === 'number' ? 'text' : type
+    ['money', 'phone', 'number'].includes(type) ? 'text' : type
   )
 
   const defaultId = useId()
@@ -133,20 +133,20 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 
         <input
           ref={ref}
-          onKeyPressCapture={(e) =>
-            ['number', 'money'].includes(type) &&
-            handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
-          }
-          onPaste={(e) =>
-            ['number', 'money'].includes(type) &&
-            handlePaste({e: e, noThereAreCommas: noThereAreCommas})
-          }
           type={typeCustom}
           className={`bg-inherit form-control rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
           id={id || defaultId || name}
           name={name}
           {...(ref ? {} : {value: value})}
           {...rest}
+          onKeyPressCapture={(e) =>
+            ['number', 'money', 'phone'].includes(type) &&
+            handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
+          }
+          onPaste={(e) =>
+            ['number', 'money', 'phone'].includes(type) &&
+            handlePaste({e: e, noThereAreCommas: noThereAreCommas})
+          }
         />
         {type === 'password'
           ? !!value.toString().length &&

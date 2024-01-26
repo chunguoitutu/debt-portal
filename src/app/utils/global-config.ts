@@ -1,7 +1,7 @@
 import RejectionType from '../../pages/settings/rejection-type/RejectionType'
-import RolePage from '../../pages/settings/role/RoleManagement'
-import UserManagement from '../../pages/settings/user/UserManagement'
-import { v4 as uuidv4 } from 'uuid'
+import Role from '../../pages/settings/role/Role'
+import User from '../../pages/settings/user/User'
+import {v4 as uuidv4} from 'uuid'
 import {
   DropDownGroup,
   EmploymentStatus,
@@ -9,36 +9,14 @@ import {
   MenuSettingItem,
   Option,
 } from '../types/common'
-import CompanyListing from '../../pages/settings/company/CompanyManagement'
-import DocumentTypes from '../../pages/settings/document-types/DocumentTypes'
+import CompanyListing from '../../pages/settings/company/Company'
+import DocumentType from '../../pages/settings/document-type/DocumentType'
 import JobType from '../../pages/settings/job-type/JobType'
 import AddressType from '../../pages/settings/address-type/AddressType'
-import MarkettingType from '../../pages/settings/marketing-type/MarketingType'
+import MarketingType from '../../pages/settings/marketing-type/MarketingType'
 import UploadFileCasCheck from '@/pages/settings/upload-file-cas-check'
-import LoanTypes from './../../pages/settings/loan-type/LoanType'
-
-export const ROLE_PRIORITY: Option[] = [
-  {
-    value: 1,
-    label: 'Full-Access',
-  },
-  {
-    value: 2,
-    label: 'Branch Manager',
-  },
-  {
-    value: 3,
-    label: 'Finance',
-  },
-  {
-    value: 4,
-    label: 'Agent',
-  },
-  {
-    value: 5,
-    label: 'Debt Collect',
-  },
-]
+import LoanType from './../../pages/settings/loan-type/LoanType'
+import {Organization} from '@/pages/settings/organization'
 
 export const ACCOUNT_DEPARTMENT: Option[] = [
   {
@@ -396,9 +374,9 @@ export const LOAN_TERM: Option[] = [
 ]
 
 export const PRIORITY_TASK: Option[] = [
-  { label: 'High', value: '0' },
-  { label: 'Medium', value: '1' },
-  { label: 'Low', value: '2' },
+  {label: 'High', value: '0'},
+  {label: 'Medium', value: '1'},
+  {label: 'Low', value: '2'},
 ]
 
 export const PURPOSE_OF_LOAN: Option[] = [
@@ -611,61 +589,61 @@ export const RESIDENTIAL_TYPE: DropDownGroup[] = [
 ]
 
 export const HOUSING_HDB_TYPE: Option[] = [
-  { label: '1-Room Flat (HDB)', value: '111' },
-  { label: '2-Room Flat (HDB)', value: '112' },
-  { label: '3-Room Flat (HDB)', value: '113' },
-  { label: '4-Room Flat (HDB)', value: '114' },
-  { label: '5-Room Flat (HDB)', value: '115' },
-  { label: 'Executive Flat (HDB)', value: '116' },
+  {label: '1-Room Flat (HDB)', value: '111'},
+  {label: '2-Room Flat (HDB)', value: '112'},
+  {label: '3-Room Flat (HDB)', value: '113'},
+  {label: '4-Room Flat (HDB)', value: '114'},
+  {label: '5-Room Flat (HDB)', value: '115'},
+  {label: 'Executive Flat (HDB)', value: '116'},
   {
     label: 'Housing and Urban Development Company (HUDC) Flat (excluding those privatized)',
     value: '117',
   },
-  { label: 'Studio Apartment (HDB)', value: '118' },
+  {label: 'Studio Apartment (HDB)', value: '118'},
 ]
 
 export const HOUSING_PRIVATE_RESIDENTIAL: Option[] = [
-  { label: 'Bungalow', value: '121' },
-  { label: 'Semi-Detached House', value: '122' },
-  { label: 'Terrace House', value: '123' },
-  { label: 'Condominium', value: '131' },
-  { label: 'Executive Condominium', value: '132' },
-  { label: 'Other Apartments nec', value: '139' },
-  { label: 'Shophouse', value: '141' },
-  { label: 'Other Housing Units nec', value: '149' },
+  {label: 'Bungalow', value: '121'},
+  {label: 'Semi-Detached House', value: '122'},
+  {label: 'Terrace House', value: '123'},
+  {label: 'Condominium', value: '131'},
+  {label: 'Executive Condominium', value: '132'},
+  {label: 'Other Apartments nec', value: '139'},
+  {label: 'Shophouse', value: '141'},
+  {label: 'Other Housing Units nec', value: '149'},
 ]
 
 export const HOME_OWNERSHIP: Option[] = [
-  { label: 'Self-Owned', value: 'Self-Owned' },
-  { label: 'Rental', value: 'Rental' },
+  {label: 'Self-Owned', value: 'Self-Owned'},
+  {label: 'Rental', value: 'Rental'},
 ]
 
 export const STAYING_CONDITION: Option[] = [
-  { label: 'Alone', value: 'Alone' },
-  { label: 'Family Members', value: 'Family Members' },
+  {label: 'Alone', value: 'Alone'},
+  {label: 'Family Members', value: 'Family Members'},
 ]
 
 export const SALUTATION_OPTION: Option[] = [
-  { label: 'Mr', value: 'mr' },
-  { label: 'Ms', value: 'ms' },
-  { label: 'Mrs', value: 'mrs' },
-  { label: 'Mdm', value: 'mdm' },
-  { label: 'Dr', value: 'dr' },
+  {label: 'Mr', value: 'mr'},
+  {label: 'Ms', value: 'ms'},
+  {label: 'Mrs', value: 'mrs'},
+  {label: 'Mdm', value: 'mdm'},
+  {label: 'Dr', value: 'dr'},
 ]
 
 export const YES_NO_OPTION: Option[] = [
-  { label: 'Yes', value: '1' },
-  { label: 'No', value: '0' },
+  {label: 'Yes', value: '1'},
+  {label: 'No', value: '0'},
 ]
 
 export const REASON_BAD_DEBT: Option[] = [
-  { label: 'In-Prison', value: 'In-Prison' },
-  { label: 'Deceased', value: 'Deceased' },
-  { label: 'Bankrupt', value: 'Bankrupt' },
-  { label: 'MIA', value: 'MIA' },
+  {label: 'In-Prison', value: 'In-Prison'},
+  {label: 'Deceased', value: 'Deceased'},
+  {label: 'Bankrupt', value: 'Bankrupt'},
+  {label: 'MIA', value: 'MIA'},
 ]
 
-export const COUNTRY_PHONE_CODE: Option[] = [{ label: '+65', value: '+65' }]
+export const COUNTRY_PHONE_CODE: Option[] = [{label: '+65', value: '+65'}]
 
 const nth = (d) => {
   const dString = String(d)
@@ -683,7 +661,7 @@ const nth = (d) => {
   }
 }
 
-export const MONTHLY_DUE_DATE: any = Array.from({ length: 31 }).reduce((a: any, _, i) => {
+export const MONTHLY_DUE_DATE: any = Array.from({length: 31}).reduce((a: any, _, i) => {
   const value = [
     ...a,
     {
@@ -774,7 +752,7 @@ export const OBLIGATION: AdvanceConfig[] = [
 
 export const ROUTER_SETTING = [
   // {
-  //   path: 'company-management',
+  //   path: 'organization',
   //   labelBreadCrumbs: 'Organization Information',
   //   component: Organization,
   //   priority: [1],
@@ -789,25 +767,25 @@ export const ROUTER_SETTING = [
     path: 'manager-users',
     labelBreadCrumbs: 'Manager Users',
     priority: [1, 2],
-    component: UserManagement,
+    component: User,
   },
   {
     path: 'document-type',
     labelBreadCrumbs: 'Document Type',
     priority: [1],
-    component: DocumentTypes,
+    component: DocumentType,
   },
   {
     path: 'loan-type',
     labelBreadCrumbs: 'Loan Type',
     priority: [1, 2],
-    component: LoanTypes,
+    component: LoanType,
   },
   {
     path: 'manager-roles',
     labelBreadCrumbs: 'Manager Roles',
     priority: [1, 2],
-    component: RolePage,
+    component: Role,
   },
   {
     path: 'job-type',
@@ -825,7 +803,7 @@ export const ROUTER_SETTING = [
     path: 'marketing-type',
     labelBreadCrumbs: 'Marketing Type',
     priority: [1],
-    component: MarkettingType,
+    component: MarketingType,
   },
   {
     path: 'rejection-type',
@@ -849,7 +827,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
     children: [
       // {
       //   id: uuidv4(),
-      //   to: '/settings/company-management',
+      //   to: '/settings/organization',
       //   label: 'Organization Information',
       //   priority: [1],
       // },
@@ -862,7 +840,7 @@ export const MENU_SETTING_LISTING: MenuSettingItem[] = [
       {
         id: uuidv4(),
         to: '/settings/manager-users',
-        label: 'Manager  Users',
+        label: 'Manager Users',
         priority: [1, 2],
       },
       {

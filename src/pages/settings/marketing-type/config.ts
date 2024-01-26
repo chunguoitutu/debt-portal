@@ -1,8 +1,9 @@
-import {TableConfig} from '@/app/types'
+import {MarketingTypeItem, TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
 import {CheckboxRounded} from '@/components/checkbox'
+import * as Yup from 'yup'
 
-export const MAKETTING_TABLE_CONFIG: TableConfig = {
+export const MARKETING_TABLE_CONFIG: TableConfig<keyof MarketingTypeItem> = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -15,13 +16,17 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
     buttonAddNew: 'New Marketing Type',
     endpoint: 'config/marketing_type',
     swalToastTitle: 'Marketing Type "/%/" successfully',
+    validation: Yup.object().shape({
+      marketing_type_name: Yup.string()
+        .required('Marketing Type is required')
+        .trim()
+        .max(255, 'Marketing Type must be at most 255 characters'),
+    }),
   },
   rows: [
     {
       classNameTableHead: 'w-90px min-w-20px',
-
       key: 'id',
-
       name: 'ID',
     },
     {
@@ -29,9 +34,9 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
       name: 'Marketing Type',
       color: '#252F4A',
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
+        typeComponent: 'input',
+        type: 'text',
+        required: true,
       },
     },
     {
@@ -40,16 +45,22 @@ export const MAKETTING_TABLE_CONFIG: TableConfig = {
       name: 'Default',
       component: Badge,
       infoCreateEdit: {
+        className: 'w-fit-content',
         typeComponent: 'checkbox-rounded',
         component: CheckboxRounded,
-        subTextWhenChecked: 'Yes',
-        subTextWhenNoChecked: 'No',
+        defaultValue: 0,
       },
     },
     {
       key: 'status',
       name: 'Status',
       component: Badge,
+      infoCreateEdit: {
+        className: 'w-fit-content',
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        defaultValue: 1,
+      },
     },
   ],
 }

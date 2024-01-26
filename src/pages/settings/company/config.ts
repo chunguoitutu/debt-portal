@@ -1,7 +1,7 @@
-import {TableConfig} from '@/app/types'
+import {CompanyItem, TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
 
-export const COMPANY_TABLE_CONFIG: TableConfig = {
+export const COMPANY_TABLE_CONFIG: TableConfig<keyof CompanyItem> = {
   settings: {
     showAction: true,
     showEditButton: true,

@@ -1,5 +1,5 @@
 import {MyTaskConfig, TableConfig} from '@/app/types'
-import {POSITION, PRIORITY_TASK, convertMessageErrorMaximum} from '@/app/utils'
+import {POSITION, PRIORITY_TASK, convertFieldMaximum} from '@/app/utils'
 import {Select} from '@/components/select'
 import FileDocument from '../applications/step-component/employment/FileDocument'
 import Radio from '@/components/radio/Radio'
@@ -21,7 +21,7 @@ const MY_TASK_CONFIG: MyTaskConfig[] = [
     component: Input,
     typeComponent: 'Input',
     label: 'Task Title',
-    validationFormik: Yup.string().max(100, convertMessageErrorMaximum(100)),
+    validationFormik: Yup.string().max(100, convertFieldMaximum(100)),
   },
   {
     key: 'description',
@@ -69,7 +69,7 @@ const MY_TASK_CONFIG: MyTaskConfig[] = [
     component: Input,
     typeComponent: 'Input',
     label: 'Task Title',
-    validationFormik: Yup.string().max(100, convertMessageErrorMaximum(100)),
+    validationFormik: Yup.string().max(100, convertFieldMaximum(100)),
   },
   {
     key: 'description',

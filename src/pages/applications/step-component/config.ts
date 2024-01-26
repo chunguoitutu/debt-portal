@@ -15,7 +15,7 @@ import FileDocument from './employment/FileDocument'
 import RenderFileDocument from './completion/RenderFileDocument'
 import {children_config_completion} from './completion'
 import {ApplicationConfig, TableConfig} from '@/app/types'
-import {convertMessageErrorMaximum, convertMessageErrorRequired} from '@/app/utils'
+import {convertFieldMaximum, convertFieldRequired} from '@/app/utils'
 import {
   BANKRUPTCY,
   CUSTOMER_TYPE,
@@ -49,8 +49,8 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     required: true,
     label: 'Last Name',
     validationFormik: Yup.string()
-      .max(255, convertMessageErrorMaximum(255))
-      .required(convertMessageErrorRequired('Last Name')),
+      .max(255, convertFieldMaximum(255))
+      .required(convertFieldRequired('Last Name')),
   },
   {
     key: 'is_existing',
@@ -76,8 +76,8 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     required: true,
     validationFormik: Yup.string()
       .min(4, 'Minimum 4 characters')
-      .max(64, convertMessageErrorMaximum(64))
-      .required(convertMessageErrorRequired('NRIC No./FIN')),
+      .max(64, convertFieldMaximum(64))
+      .required(convertFieldRequired('NRIC No./FIN')),
   },
   {
     key: 'identification_no_confirm',
@@ -88,7 +88,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
 
     required: true,
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Confirm NRIC'))
+      .required(convertFieldRequired('Confirm NRIC'))
       .oneOf([Yup.ref('identification_no')], 'Confirm NRIC must match'),
   },
   {
@@ -101,8 +101,8 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     className: 'justify-content-xxl-end',
     options: ID_TYPE,
     validationFormik: Yup.string()
-      .max(255, convertMessageErrorMaximum(255))
-      .required(convertMessageErrorRequired('ID Type')),
+      .max(255, convertFieldMaximum(255))
+      .required(convertFieldRequired('ID Type')),
   },
   {
     key: 'identification_expiry',
@@ -121,8 +121,8 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'First Name',
     required: true,
     validationFormik: Yup.string()
-      .max(255, convertMessageErrorMaximum(255))
-      .required(convertMessageErrorRequired('First Name')),
+      .max(255, convertFieldMaximum(255))
+      .required(convertFieldRequired('First Name')),
   },
   {
     key: 'lastname',
@@ -132,8 +132,8 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Last Name',
     required: true,
     validationFormik: Yup.string()
-      .max(255, convertMessageErrorMaximum(255))
-      .required(convertMessageErrorRequired('First Name')),
+      .max(255, convertFieldMaximum(255))
+      .required(convertFieldRequired('First Name')),
   },
 
   //**HOLD */
@@ -146,7 +146,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
   //   required: true,
   //   options: RESIDENTIAL_TYPE,
   //   dropDownGroup: true,
-  //   validationFormik: Yup.string().required(convertMessageErrorRequired('Residential Type')),
+  //   validationFormik: Yup.string().required(convertFieldRequired('Residential Type')),
   // },
   {
     key: 'marketing_type_id',
@@ -159,7 +159,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'marketing_type_name',
     keyValueOfOptions: 'id',
     dependencyApi: 'config/marketing_type/listing',
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Marketing Type')),
+    validationFormik: Yup.number().required(convertFieldRequired('Marketing Type')),
   },
   {
     key: 'gender',
@@ -169,7 +169,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Gender',
     required: true,
     options: GENDER,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Gender')),
+    validationFormik: Yup.string().required(convertFieldRequired('Gender')),
   },
   {
     key: 'date_of_birth',
@@ -180,7 +180,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     required: true,
     className: 'justify-content-xxl-end',
     typeInput: 'date',
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Date of Birth')),
+    validationFormik: Yup.string().required(convertFieldRequired('Date of Birth')),
   },
   {
     key: 'country_id',
@@ -194,7 +194,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     keyValueOfOptions: 'id',
     dependencyApi: 'config/country/listing',
     required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Nationality')),
+    validationFormik: Yup.string().required(convertFieldRequired('Nationality')),
   },
   {
     key: 'spoken_language',
@@ -206,7 +206,7 @@ const GENERAL_INFORMATION_CONFIG: ApplicationConfig[] = [
     label: 'Language Spoken',
     className: 'justify-content-xxl-end',
     required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Language Spoken')),
+    validationFormik: Yup.string().required(convertFieldRequired('Language Spoken')),
   },
 ]
 
@@ -230,7 +230,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'type_name',
     keyValueOfOptions: 'id',
     dependencyApi: '/config/loan_type/listing',
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Loan Type')),
+    validationFormik: Yup.number().required(convertFieldRequired('Loan Type')),
   },
   {
     key: 'term_unit',
@@ -242,8 +242,8 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     label: 'Term Unit',
     required: true,
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Term Unit'))
-      .max(255, convertMessageErrorMaximum(255)),
+      .required(convertFieldRequired('Term Unit'))
+      .max(255, convertFieldMaximum(255)),
   },
   {
     key: 'interest',
@@ -254,7 +254,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Interest')),
+    validationFormik: Yup.number().required(convertFieldRequired('Interest')),
   },
   {
     key: 'loan_amount_requested',
@@ -266,7 +266,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'money',
     noThereAreCommas: false,
     validationFormik: Yup.number()
-      .required(convertMessageErrorRequired('Loan Amount'))
+      .required(convertFieldRequired('Loan Amount'))
       // .moreThan(0, 'Loan Amount must be greater than 0')
       .max(999999999999, 'Loan Amount must be less than or equal to 999999999999$'),
   },
@@ -279,7 +279,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'money',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Acceptance Fee')),
+    validationFormik: Yup.number().required(convertFieldRequired('Acceptance Fee')),
   },
   {
     key: 'loan_terms',
@@ -290,8 +290,8 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     required: true,
     typeInput: 'number',
     validationFormik: Yup.number()
-      .required(convertMessageErrorRequired('Loan Terms'))
-      .max(100, convertMessageErrorMaximum(100, true))
+      .required(convertFieldRequired('Loan Terms'))
+      .max(100, convertFieldMaximum(100, true))
       .min(1, 'Loan Terms must be greater than 0'),
   },
   {
@@ -303,7 +303,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Late Interest')),
+    validationFormik: Yup.number().required(convertFieldRequired('Late Interest')),
   },
   {
     key: 'monthly_late_fee',
@@ -314,7 +314,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'money',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Late Fee')),
+    validationFormik: Yup.number().required(convertFieldRequired('Late Fee')),
   },
   {
     key: 'application_date',
@@ -326,7 +326,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'date',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.date().required(convertMessageErrorRequired('Date of Application')),
+    validationFormik: Yup.date().required(convertFieldRequired('Date of Application')),
   },
   {
     key: 'first_repayment_date',
@@ -338,7 +338,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'date',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.date().required(convertMessageErrorRequired('First Repayment Date')),
+    validationFormik: Yup.date().required(convertFieldRequired('First Repayment Date')),
   },
   {
     key: 'monthly_due_date',
@@ -351,7 +351,7 @@ const LOAN_DETAILS_CONFIG: ApplicationConfig[] = [
     typeInput: 'number',
     required: true,
     noThereAreCommas: false,
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Monthly Due Date')),
+    validationFormik: Yup.number().required(convertFieldRequired('Monthly Due Date')),
   },
   {
     key: 'loan_reason',
@@ -370,8 +370,8 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     column: 6,
     typeInput: 'phone',
     validationFormik: Yup.string()
-      .max(64, convertMessageErrorMaximum(64))
-      .required(convertMessageErrorRequired('Phone Number 1')),
+      .max(64, convertFieldMaximum(64))
+      .required(convertFieldRequired('Phone Number 1')),
     required: true,
   },
   {
@@ -382,7 +382,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     column: 6,
     typeInput: 'phone',
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'mobilephone_3',
@@ -391,7 +391,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     label: 'Phone Number 3',
     column: 6,
     typeInput: 'phone',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'homephone',
@@ -401,7 +401,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     typeInput: 'phone',
     label: 'Phone Number 4',
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'email_1',
@@ -409,9 +409,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Email',
-    validationFormik: Yup.string()
-      .email('Email invalid.')
-      .max(255, convertMessageErrorMaximum(255)),
+    validationFormik: Yup.string().email('Email invalid.').max(255, convertFieldMaximum(255)),
   },
   {
     key: 'email_2',
@@ -422,7 +420,7 @@ const CONTACT_INFORMATION: ApplicationConfig[] = [
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
       .email('Alternate Email invalid.')
-      .max(255, convertMessageErrorMaximum(255)),
+      .max(255, convertFieldMaximum(255)),
   },
 ]
 
@@ -442,7 +440,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Bank Name 1',
-    validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
+    validationFormik: Yup.string().max(1024, convertFieldMaximum(1024)),
   },
   {
     key: 'bank_name_2',
@@ -451,7 +449,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Bank Name 2',
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
+    validationFormik: Yup.string().max(1024, convertFieldMaximum(1024)),
   },
   {
     key: 'account_number_1',
@@ -459,7 +457,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Bank Acc 1',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'account_number_2',
@@ -468,7 +466,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Bank Acc 2',
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'bank_code_1',
@@ -476,7 +474,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     typeComponent: 'Input',
     column: 6,
     label: 'Bank Code 1',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'bank_code_2',
@@ -485,7 +483,7 @@ const BANK_INFO_CONFIG: ApplicationConfig[] = [
     column: 6,
     label: 'Bank Code 2',
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
 ]
 
@@ -513,14 +511,14 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     component: Input,
     typeComponent: 'Input',
     label: 'Company Name',
-    validationFormik: Yup.string().max(100, convertMessageErrorMaximum(100)),
+    validationFormik: Yup.string().max(100, convertFieldMaximum(100)),
   },
   {
     key: 'address',
     component: Input,
     typeComponent: 'Input',
     label: 'Address',
-    validationFormik: Yup.string().max(1024, convertMessageErrorMaximum(1024)),
+    validationFormik: Yup.string().max(1024, convertFieldMaximum(1024)),
   },
   {
     key: 'company_telephone',
@@ -529,7 +527,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     label: 'Telephone',
     column: 6,
     typeInput: 'phone',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'portal_code',
@@ -538,7 +536,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     label: 'Postal Code',
     column: 6,
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'position',
@@ -547,7 +545,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     options: POSITION,
     label: 'Position',
     column: 6,
-    validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
+    validationFormik: Yup.string().max(255, convertFieldMaximum(255)),
   },
   {
     key: 'occupation',
@@ -556,7 +554,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     label: 'Occupation',
     column: 6,
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(64, convertMessageErrorMaximum(64)),
+    validationFormik: Yup.string().max(64, convertFieldMaximum(64)),
   },
   {
     key: 'job_type_id',
@@ -568,7 +566,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     keyLabelOfOptions: 'job_type_name',
     keyValueOfOptions: 'id',
     dependencyApi: '/config/job_type/listing',
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Job Type')),
+    validationFormik: Yup.number().required(convertFieldRequired('Job Type')),
     required: true,
   },
   {
@@ -579,7 +577,7 @@ const EMPLOYMENT_CONFIG: ApplicationConfig[] = [
     typeInput: 'money',
     required: true,
     desc: 'include AWS and Bonus',
-    validationFormik: Yup.number().required(convertMessageErrorRequired('Annual Gross Income')),
+    validationFormik: Yup.number().required(convertFieldRequired('Annual Gross Income')),
   },
   {
     key: 'monthly_income_1',
@@ -651,7 +649,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     // keyLabelOfOptions: 'address_type_name',
     // keyValueOfOptions: 'id',
     // required: true,
-    // validationFormik: Yup.string().required(convertMessageErrorRequired('Address Type')),
+    // validationFormik: Yup.string().required(convertFieldRequired('Address Type')),
   },
   {
     key: 'housing_type',
@@ -662,7 +660,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     column: 6,
     className: 'justify-content-xxl-end',
     required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Housing Type')),
+    validationFormik: Yup.string().required(convertFieldRequired('Housing Type')),
   },
   {
     key: 'home_ownership',
@@ -674,7 +672,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     className: 'justify-content-xxl-end',
     options: HOME_OWNERSHIP,
     required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Home Ownership')),
+    validationFormik: Yup.string().required(convertFieldRequired('Home Ownership')),
   },
   {
     key: 'staying_condition',
@@ -686,7 +684,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     className: 'justify-content-xxl-end',
     options: STAYING_CONDITION,
     required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Country')),
+    validationFormik: Yup.string().required(convertFieldRequired('Country')),
   },
   {
     key: 'unit',
@@ -695,8 +693,8 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Unit',
     column: 2,
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Street 1'))
-      .max(255, convertMessageErrorMaximum(255)),
+      .required(convertFieldRequired('Street 1'))
+      .max(255, convertFieldMaximum(255)),
   },
   {
     key: 'block',
@@ -705,8 +703,8 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Block',
     column: 2,
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Street 1'))
-      .max(255, convertMessageErrorMaximum(255)),
+      .required(convertFieldRequired('Street 1'))
+      .max(255, convertFieldMaximum(255)),
   },
   {
     key: 'building',
@@ -715,8 +713,8 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Building',
     column: 8,
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Street 1'))
-      .max(255, convertMessageErrorMaximum(255)),
+      .required(convertFieldRequired('Street 1'))
+      .max(255, convertFieldMaximum(255)),
   },
   {
     key: 'street',
@@ -725,7 +723,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     label: 'Street',
     column: 12,
     className: 'justify-content-xxl-end',
-    validationFormik: Yup.string().max(255, convertMessageErrorMaximum(255)),
+    validationFormik: Yup.string().max(255, convertFieldMaximum(255)),
   },
   {
     key: 'postal_code',
@@ -736,8 +734,8 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     required: true,
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Postal'))
-      .max(255, convertMessageErrorMaximum(255)),
+      .required(convertFieldRequired('Postal'))
+      .max(255, convertFieldMaximum(255)),
   },
   {
     key: 'country',
@@ -752,7 +750,7 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     defaultValue: 'SINGAPORE', //default value country is Singapore
     dependencyApi: 'config/country/listing',
     required: true,
-    validationFormik: Yup.string().required(convertMessageErrorRequired('Country')),
+    validationFormik: Yup.string().required(convertFieldRequired('Country')),
   },
   // {
   //   key: 'city',
@@ -777,8 +775,8 @@ const BLOCK_ADDRESS_CONFIG: ApplicationConfig[] = [
     column: 4,
     className: 'justify-content-xxl-end',
     validationFormik: Yup.string()
-      .required(convertMessageErrorRequired('Address Label'))
-      .max(1024, convertMessageErrorMaximum(1024)),
+      .required(convertFieldRequired('Address Label'))
+      .max(1024, convertFieldMaximum(1024)),
   },
 ]
 

@@ -1,258 +1,232 @@
-import {useState} from 'react'
-import {createPortal} from 'react-dom'
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import {ChangeEvent, FC, Fragment, useMemo, useState} from 'react'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-import * as Yup from 'yup'
-
-import {convertErrorMessageResponse} from '@/app/utils'
-import {swalToast} from '@/app/swal-notification'
 import {JOB_TABLE_CONFIG} from './config'
 import request from '@/app/axios'
+import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
 import {TextArea} from '@/components/textarea'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
+import {convertErrorMessageResponse} from '@/app/utils'
+import {DataResponse, JobTypeItem} from '@/app/types'
 import {CheckboxRounded} from '@/components/checkbox'
+import clsx from 'clsx'
 
 type Props = {
-  setLoadApi: any
-  loadApi: boolean
-  data?: any
-  show: boolean
-  title?: string
+  data?: JobTypeItem
   handleClose: () => void
   handleUpdated: () => void
 }
 
-export const CreateJobTypeSchema = Yup.object().shape({
-  job_type_name: Yup.string()
-    .required('Job Type is required')
-    .max(255, 'Job Type must be at most 255 characters'),
-  description: Yup.string().max(45, 'Description must be at most 45 characters'),
-})
+const CreateEditJobType: FC<Props> = ({handleClose, data, handleUpdated}) => {
+  const {rows, settings} = JOB_TABLE_CONFIG
+  const {endpoint, validation} = settings
 
-const modalsRoot = document.getElementById('root-modals') || document.body
+  const generateField = useMemo(() => {
+    return rows
+      .filter((row) => row.infoCreateEdit)
+      .reduce(
+        (acc, config) => ({
+          ...acc,
+          [config.key]: data?.[config.key] ?? config.infoCreateEdit?.defaultValue ?? '',
+        }),
+        {} as JobTypeItem
+      )
 
-const CreateJobType = ({
-  show,
-  handleClose,
-  title = 'New',
-  data = {},
-  loadApi,
-  setLoadApi,
-  handleUpdated,
-}: Props) => {
-  const [status, setStatus] = useState(data?.status === 0 ? false : true)
-  const {rows, endpoint} = JOB_TABLE_CONFIG
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   const {
     values,
     touched,
     errors,
     isSubmitting,
-    handleChange,
+    dirty,
     handleSubmit,
-    resetForm,
     setSubmitting,
-  } = useFormik({
-    initialValues: {
-      job_type_name: data.job_type_name || '',
-      description: data.description || '',
-      request_more_information: data.request_more_information === 1 ? true : false,
-      is_default: data.is_default === 1 ? true : false,
-    },
-    validationSchema: CreateJobTypeSchema,
-    onSubmit: async (values: any, actions: any) => {
-      if (title === 'New') {
-        try {
-          const response = await request.post(endpoint || '', {
-            ...values,
-            request_more_information: values.request_more_information ? 1 : 0,
-            status: status ? 1 : 0,
-            is_default: values.is_default ? 1 : 0,
-          })
-          const job_name = values.job_type_name
-          handleUpdated()
-          handleClose()
-          resetForm()
-          setStatus(false)
-          setLoadApi(!loadApi)
-          swalToast.fire({
-            icon: 'success',
-            title: `Job Type "${job_name}" successfully created`,
-
-            timer: 1500,
-          })
-        } catch (error) {
-          const message = convertErrorMessageResponse(error)
-          swalToast.fire({
-            icon: 'error',
-            title: message,
-            timer: 1500,
-          })
-        } finally {
-          setSubmitting(false)
-        }
-      } else {
-        try {
-          const response = await request.post(endpoint + '/' + data?.id, {
-            ...values,
-            request_more_information: values.request_more_information ? 1 : 0,
-            status: status ? 1 : 0,
-            is_default: values.is_default ? 1 : 0,
-          })
-          const job_name = values.job_type_name
-          handleUpdated()
-          handleClose()
-          setLoadApi(!loadApi)
-          swalToast.fire({
-            icon: 'success',
-            title: `Job Type "${job_name}" successfully updated`,
-          })
-        } catch (error) {
-          const message = convertErrorMessageResponse(error)
-          swalToast.fire({
-            icon: 'error',
-            title: message,
-            timer: 1500,
-          })
-        } finally {
-          setSubmitting(false)
-        }
-      }
-    },
+    handleBlur,
+    setFieldValue,
+  } = useFormik<JobTypeItem>({
+    initialValues: generateField,
+    validationSchema: validation,
+    validateOnChange: false,
+    onSubmit: handleCreateOrUpdate,
   })
 
-  return createPortal(
+  async function handleCreateOrUpdate() {
+    const payload = validation.cast(values) // automatically trim and format number (declare in validateSchema formik)
+
+    try {
+      const {data: dataRes} = data?.id
+        ? await request.put<DataResponse<JobTypeItem>>(endpoint + '/' + data?.id, payload) // edit
+        : await request.post<DataResponse<JobTypeItem>>(endpoint || '', payload) // create
+
+      // unknown error
+      if (dataRes?.error) {
+        return swalToast.fire({
+          icon: 'error',
+          title: convertErrorMessageResponse(dataRes?.message),
+        })
+      }
+
+      const message = `Job Type "${dataRes?.data?.job_type_name}" successfully ${
+        data?.id ? 'updated' : 'created'
+      }`
+
+      handleUpdated()
+      handleClose()
+      swalToast.fire({
+        icon: 'success',
+        title: message,
+      })
+    } catch (error) {
+      swalToast.fire({
+        icon: 'error',
+        title: convertErrorMessageResponse(error),
+      })
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  function handleChange(e: ChangeEvent<any>) {
+    const {name, type, value, checked} = e.target
+
+    const newValue = type === 'checkbox' ? +checked : value
+    setFieldValue(name, newValue)
+  }
+
+  return (
     <Modal
       id='kt_modal_create_app'
       tabIndex={-1}
+      style={{}}
       aria-hidden='true'
       dialogClassName='modal-dialog modal-dialog-centered mw-800px'
-      show={show}
+      show={true}
       onHide={handleClose}
       backdrop={true}
     >
-      <>
+      {/* Header */}
+      <div className='modal-header p-30px'>
+        <h2 className='m-0'>{data?.id ? 'Edit' : 'New'} Job Type</h2>
+        <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
+          <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
+        </div>
+      </div>
+
+      {/* Body */}
+      <div
+        style={{maxHeight: 'calc(100vh - 200px)'}}
+        className='modal-body py-30px ps-30px pe-30px overflow-x-auto'
+      >
         <div
-          style={{
-            padding: '30px 25px 30px 30px',
-          }}
-          className='modal-header '
+          className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
+          id='kt_modal_create_app_stepper'
         >
-          <h2 className='m-0'>{title} Job Type</h2>
-          <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
-            <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
+          <div className='flex-row-fluid'>
+            <form
+              className='row gx-30px gy-16px'
+              onSubmit={handleSubmit}
+              noValidate
+              id='kt_modal_create_app_form'
+            >
+              <>
+                {rows
+                  .filter((data) => !!data.infoCreateEdit)
+                  .map((row) => {
+                    const {infoCreateEdit, name, key} = row
+                    const {
+                      type,
+                      required,
+                      typeComponent,
+                      column,
+                      className,
+                      subTextWhenChecked,
+                      subTextWhenNoChecked,
+                    } = infoCreateEdit || {}
+
+                    switch (typeComponent) {
+                      case 'checkbox-rounded':
+                        return (
+                          <div className={clsx([`col-${column || 12}`, className])} key={key}>
+                            <CheckboxRounded
+                              key={key}
+                              name={key}
+                              label={name}
+                              checked={!!values[key]}
+                              onChange={handleChange}
+                              subTextWhenChecked={subTextWhenChecked}
+                              subTextWhenNoChecked={subTextWhenNoChecked}
+                              id={key}
+                            />
+                          </div>
+                        )
+                      case 'input':
+                        return (
+                          <div className={clsx([`col-${column || 12}`, className])} key={key}>
+                            <Input
+                              required={!!required}
+                              label={name}
+                              onBlur={handleBlur}
+                              name={key}
+                              value={values[key] || ''}
+                              type={type}
+                              onChange={handleChange}
+                              error={errors[key] as string}
+                              touched={!!touched[key]}
+                            />
+                          </div>
+                        )
+                      case 'textarea':
+                        return (
+                          <div className={clsx([`col-${column || 12}`, className])} key={key}>
+                            <TextArea
+                              label={name}
+                              onBlur={handleBlur}
+                              name={key}
+                              value={values[key] || ''}
+                              onChange={handleChange}
+                              error={errors[key] as string}
+                              touched={!!touched[key]}
+                            />
+                          </div>
+                        )
+                      default:
+                        return <Fragment key={key}></Fragment>
+                    }
+                  })}
+              </>
+            </form>
           </div>
         </div>
-        <div
-          style={{maxHeight: 'calc(100vh - 200px)', overflowY: 'auto'}}
-          className='flex-row-fluid py-30px ps-30px pe-30px'
+      </div>
+
+      {/* Action */}
+      <div className='d-flex flex-end py-30px ps-30px pe-30px border-top border-gray-200'>
+        <Button
+          type='reset'
+          onClick={handleClose}
+          disabled={isSubmitting}
+          className='btn-lg btn-secondary align-self-center me-8px fs-6'
         >
-          <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
-            {rows.map((row, i) => {
-              const {infoCreateEdit, name, key} = row
-              const {
-                typeInput,
-                isRequired,
-                typeComponent,
-                component,
-                subTextWhenChecked,
-                subTextWhenNoChecked,
-              } = infoCreateEdit || {}
-
-              const Component = component as any
-
-              if (['id', 'status', 'is_default'].includes(row.key)) {
-                return null
-              }
-
-              if (typeComponent === 'checkbox-rounded') {
-                return (
-                  <div className='mt-16px' key={i}>
-                    <Component
-                      label={name}
-                      checked={values[key]}
-                      onChange={handleChange}
-                      subTextWhenChecked={subTextWhenChecked}
-                      subTextWhenNoChecked={subTextWhenNoChecked}
-                      id={key}
-                    />
-                  </div>
-                )
-              }
-
-              return (
-                <div key={row.key} style={{flex: '0 0 50%'}}>
-                  {row.key === 'description' ? (
-                    <div>
-                      <TextArea
-                        label={row.name}
-                        name={row.key}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                        error={errors[row.key] as string}
-                        touched={!!touched[row.key]}
-                      />
-                    </div>
-                  ) : (
-                    <div className='d-flex flex-column mb-16px'>
-                      <Input
-                        label={row.name}
-                        name={row.key}
-                        value={values[row.key] || ''}
-                        onChange={handleChange}
-                        required={isRequired}
-                        error={errors[row.key] as string}
-                        touched={!!touched[row.key]}
-                      />
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-
-            <div className='mt-16px d-flex flex-row gap-30px'>
-              <CheckboxRounded
-                label='Default'
-                showLabelCheck={true}
-                request_info={true}
-                checked={values.is_default}
-                onChange={handleChange}
-                id='is_default'
-              />
-              <CheckboxRounded
-                label='Status'
-                checked={status}
-                onChange={() => setStatus(!status)}
-                id='status'
-              />
-            </div>
-          </form>
-        </div>
-        <div className='border-top border-gray-200'>
-          <div className='d-flex justify-content-end py-30px ps-30px pe-30px'>
-            <Button
-              type='reset'
-              onClick={() => handleClose()}
-              className='btn-lg btn-secondary align-self-center me-8px fs-6'
-            >
-              Cancel
-            </Button>
-            <Button
-              type='submit'
-              className='btn-lg btn-primary fs-6'
-              onClick={() => handleSubmit()}
-              loading={isSubmitting}
-            >
-              {title === 'New' ? 'Create' : 'Update'}
-            </Button>
-          </div>
-        </div>
-      </>
-    </Modal>,
-    modalsRoot
+          Cancel
+        </Button>
+        <Button
+          type='submit'
+          className='btn-lg btn-primary fs-6'
+          loading={isSubmitting}
+          disabled={isSubmitting || (data?.id && !dirty)}
+          onClick={() => handleSubmit()}
+        >
+          {data?.id ? 'Update' : 'Create'}
+        </Button>
+      </div>
+    </Modal>
   )
 }
 
-export default CreateJobType
+export default CreateEditJobType

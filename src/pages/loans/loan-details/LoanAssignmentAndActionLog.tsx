@@ -2,7 +2,7 @@ import request from '@/app/axios'
 import {useAuth} from '@/app/context/AuthContext'
 import {swalToast} from '@/app/swal-notification'
 import {DataResponse, LoanAssignment, LoanDetailsProps, UserInfo} from '@/app/types'
-import {convertMessageErrorRequired, getFullName} from '@/app/utils'
+import {convertFieldRequired, getFullName} from '@/app/utils'
 import Button from '@/components/button/Button'
 import {Select} from '@/components/select'
 import {useFormik} from 'formik'
@@ -11,7 +11,7 @@ import * as Yup from 'yup'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 
 const schema = Yup.object().shape({
-  officer_id: Yup.string().required(convertMessageErrorRequired()),
+  officer_id: Yup.string().required(convertFieldRequired()),
 })
 
 const LoanAssignmentAndActionLog: FC<LoanDetailsProps> = ({loanInfo: dataInfo, setLoanInfo}) => {

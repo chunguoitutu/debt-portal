@@ -1,17 +1,16 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react'
 
-import {JOB_TABLE_CONFIG} from './config'
+import {USER_TABLE_CONFIG} from './config'
+import CreateEditUser from './CreateEditUser'
 import Table from '@/components/table/Table'
-import {JobTypeItem} from '@/app/types'
-import CreateEditJobType from './CreateEditJobType'
+import {UserItem} from '@/app/types'
 
-const JobType = () => {
-  const [dataItem, setDataItem] = useState<JobTypeItem | null>(null)
+const User = () => {
+  const [dataItem, setDataItem] = useState<UserItem | null>(null)
   const [showPopup, setShowPopup] = useState<boolean>(false)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
-  function handleShowPopup(item?: JobTypeItem) {
+  function handleShowPopup(item?: UserItem) {
     setShowPopup(true)
     item && setDataItem(item)
   }
@@ -28,7 +27,7 @@ const JobType = () => {
   return (
     <>
       {showPopup && (
-        <CreateEditJobType
+        <CreateEditUser
           data={dataItem}
           handleClose={handleClosePopup}
           handleUpdated={handleAfterUpdate}
@@ -36,7 +35,7 @@ const JobType = () => {
       )}
 
       <Table
-        config={JOB_TABLE_CONFIG}
+        config={USER_TABLE_CONFIG}
         onEditItem={handleShowPopup}
         isUpdated={isUpdated}
         setIsUpdated={setIsUpdated}
@@ -46,4 +45,4 @@ const JobType = () => {
   )
 }
 
-export default JobType
+export default User

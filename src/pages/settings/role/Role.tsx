@@ -1,16 +1,16 @@
 import {useState} from 'react'
 
+import CreateEditRole from './CreateEditRole'
 import Table from '@/components/table/Table'
-import {MARKETING_TABLE_CONFIG} from './config'
-import CreateEditMarketingType from './CreateEditMarketing'
-import {MarketingTypeItem} from '@/app/types'
+import {ROLE_TABLE_CONFIG} from './config'
+import {RoleItem} from '@/app/types'
 
-const MarketingType = () => {
-  const [dataItem, setDataItem] = useState<MarketingTypeItem | null>(null)
+const Role = () => {
+  const [dataItem, setDataItem] = useState<RoleItem | null>(null)
   const [showPopup, setShowPopup] = useState<boolean>(false)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
-  function handleShowPopup(item?: MarketingTypeItem) {
+  function handleShowPopup(item?: RoleItem) {
     setShowPopup(true)
     item && setDataItem(item)
   }
@@ -27,7 +27,7 @@ const MarketingType = () => {
   return (
     <>
       {showPopup && (
-        <CreateEditMarketingType
+        <CreateEditRole
           data={dataItem}
           handleClose={handleClosePopup}
           handleUpdated={handleAfterUpdate}
@@ -35,7 +35,7 @@ const MarketingType = () => {
       )}
 
       <Table
-        config={MARKETING_TABLE_CONFIG}
+        config={ROLE_TABLE_CONFIG}
         onEditItem={handleShowPopup}
         isUpdated={isUpdated}
         setIsUpdated={setIsUpdated}
@@ -45,4 +45,4 @@ const MarketingType = () => {
   )
 }
 
-export default MarketingType
+export default Role

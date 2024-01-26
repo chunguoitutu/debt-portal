@@ -48,15 +48,15 @@ export const formatNumber = (num: any) => {
   return numeral(num).format('0,0.00')
 }
 
-export function convertMessageErrorMaximum(maxChar: number, isNumber?: boolean) {
+export function convertFieldMaximum(maxChar: number, isNumber?: boolean) {
   return `Maximum ${maxChar}` + (isNumber ? ' for this field' : ' symbols')
 }
 
-export function convertMessageErrorRequired(fieldLabel?: string) {
+export function convertFieldRequired(fieldLabel?: string) {
   return `${fieldLabel ? fieldLabel : 'This field'} is required`
 }
 
-export function convertMessageErrorPassword(label: string) {
+export function convertFieldPassword(label: string) {
   return `${label} must be at least 8 characters including at least one letter, one number, and one special character`
 }
 

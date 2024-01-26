@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {ChangeEvent, FC, Fragment, useMemo, useState} from 'react'
+import {ChangeEvent, FC, useMemo, useState} from 'react'
 import {Modal} from 'react-bootstrap'
+import * as Yup from 'yup'
 import {useFormik} from 'formik'
+
+import {ADDRESS_TABLE_CONFIG} from './config'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
 import {KTIcon} from '@/_metronic/helpers'
@@ -10,19 +13,16 @@ import {TextArea} from '@/components/textarea'
 import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
 import {convertErrorMessageResponse} from '@/app/utils'
-import {DataResponse, RejectionTypeItem} from '@/app/types'
-import {CheckboxRounded} from '@/components/checkbox'
-import clsx from 'clsx'
-import {REJECTION_TYPE_TABLE_CONFIG} from './config'
+import {AddressTypeItem, DataResponse} from '@/app/types'
 
 type Props = {
-  data?: RejectionTypeItem
+  data?: AddressTypeItem
   handleClose: () => void
   handleUpdated: () => void
 }
 
-const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) => {
-  const {rows, settings} = REJECTION_TYPE_TABLE_CONFIG
+const CreateEditAddressType: FC<Props> = ({handleClose, data, handleUpdated}) => {
+  const {rows, settings} = ADDRESS_TABLE_CONFIG
   const {endpoint, validation} = settings
 
   const generateField = useMemo(() => {
@@ -33,7 +33,7 @@ const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) 
           ...acc,
           [config.key]: data?.[config.key] ?? config.infoCreateEdit?.defaultValue ?? '',
         }),
-        {} as RejectionTypeItem
+        {} as AddressTypeItem
       )
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +49,7 @@ const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) 
     setSubmitting,
     handleBlur,
     setFieldValue,
-  } = useFormik<RejectionTypeItem>({
+  } = useFormik<AddressTypeItem>({
     initialValues: generateField,
     validationSchema: validation,
     validateOnChange: false,
@@ -61,8 +61,8 @@ const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) 
 
     try {
       const {data: dataRes} = data?.id
-        ? await request.put<DataResponse<RejectionTypeItem>>(endpoint + '/' + data?.id, payload) // edit
-        : await request.post<DataResponse<RejectionTypeItem>>(endpoint || '', payload) // create
+        ? await request.put<DataResponse<AddressTypeItem>>(endpoint + '/' + data?.id, payload) // edit
+        : await request.post<DataResponse<AddressTypeItem>>(endpoint || '', payload) // create
 
       // unknown error
       if (dataRes?.error) {
@@ -72,7 +72,7 @@ const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) 
         })
       }
 
-      const message = `Rejection Type "${dataRes?.data?.rejection_type_name}" successfully ${
+      const message = `Address Type "${dataRes?.data?.address_type_name}" successfully ${
         data?.id ? 'updated' : 'created'
       }`
 
@@ -112,7 +112,7 @@ const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) 
     >
       {/* Header */}
       <div className='modal-header p-30px'>
-        <h2 className='m-0'>{data?.id ? 'Edit' : 'New'} Rejection Type</h2>
+        <h2 className='m-0'>{data?.id ? 'Edit' : 'New'} Address Type</h2>
         <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
           <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
         </div>
@@ -120,85 +120,78 @@ const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) 
 
       {/* Body */}
       <div
-        style={{maxHeight: 'calc(100vh - 240px)'}}
+        style={{maxHeight: 'calc(100vh - 200px)'}}
         className='modal-body py-30px ps-30px pe-30px overflow-x-auto'
       >
         <div
           className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
           id='kt_modal_create_app_stepper'
         >
-          <div className='flex-row-fluid'>
-            <form
-              className='row gx-30px gy-16px'
-              onSubmit={handleSubmit}
-              noValidate
-              id='kt_modal_create_app_form'
-            >
+          <div className='flex-row-fluid '>
+            <form onSubmit={handleSubmit} noValidate id='kt_modal_create_app_form'>
               <>
                 {rows
                   .filter((data) => !!data.infoCreateEdit)
-                  .map((row) => {
+                  .map((row, i) => {
                     const {infoCreateEdit, name, key} = row
                     const {
                       type,
                       required,
                       typeComponent,
-                      column,
-                      className,
+                      component,
                       subTextWhenChecked,
                       subTextWhenNoChecked,
                     } = infoCreateEdit || {}
 
-                    switch (typeComponent) {
-                      case 'checkbox-rounded':
-                        return (
-                          <div className={clsx([`col-${column || 12}`, className])} key={key}>
-                            <CheckboxRounded
-                              key={key}
-                              name={key}
-                              label={name}
-                              checked={!!values[key]}
-                              onChange={handleChange}
-                              subTextWhenChecked={subTextWhenChecked}
-                              subTextWhenNoChecked={subTextWhenNoChecked}
-                              id={key}
-                            />
-                          </div>
-                        )
-                      case 'input':
-                        return (
-                          <div className={clsx([`col-${column || 12}`, className])} key={key}>
-                            <Input
-                              required={!!required}
-                              label={name}
-                              onBlur={handleBlur}
-                              name={key}
-                              value={values[key] || ''}
-                              type={type}
-                              onChange={handleChange}
-                              error={errors[key] as string}
-                              touched={!!touched[key]}
-                              noThereAreCommas={false}
-                            />
-                          </div>
-                        )
-                      case 'textarea':
-                        return (
-                          <div className={clsx([`col-${column || 12}`, className])} key={key}>
-                            <TextArea
-                              label={name}
-                              onBlur={handleBlur}
-                              name={key}
-                              value={values[key] || ''}
-                              onChange={handleChange}
-                              error={errors[key] as string}
-                              touched={!!touched[key]}
-                            />
-                          </div>
-                        )
-                      default:
-                        return <Fragment key={key}></Fragment>
+                    const Component = component as any
+
+                    if (typeComponent === 'checkbox-rounded') {
+                      return (
+                        <div className='mt-16px' key={i}>
+                          <Component
+                            name={key}
+                            label={name}
+                            checked={values[key]}
+                            onChange={handleChange}
+                            subTextWhenChecked={subTextWhenChecked}
+                            subTextWhenNoChecked={subTextWhenNoChecked}
+                            id={key}
+                          />
+                        </div>
+                      )
                     }
+
+                    return (
+                      <div key={key} style={{flex: '0 0 50%'}}>
+                        {key === 'description' ? (
+                          <div className='mb-16px'>
+                            <TextArea
+                              onBlur={handleBlur}
+                              label={name}
+                              name={key}
+                              value={values[key] || ''}
+                              onChange={handleChange}
+                              error={errors[key] as string}
+                              touched={!!touched[key]}
+                            />
+                          </div>
+                        ) : (
+                          <div className='d-flex flex-column mb-16px'>
+                            <Input
+                              onBlur={handleBlur}
+                              required={!!required ? true : false}
+                              label={name}
+                              name={key}
+                              type={type}
+                              value={values[row?.key] || ''}
+                              onChange={handleChange}
+                              error={errors[key] as string}
+                              touched={!!touched[key]}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )
                   })}
               </>
             </form>
@@ -230,4 +223,4 @@ const CreateEditRejectionType: FC<Props> = ({handleClose, data, handleUpdated}) 
   )
 }
 
-export default CreateEditRejectionType
+export default CreateEditAddressType

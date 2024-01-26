@@ -1,12 +1,32 @@
-import {TableConfig} from '@/app/types'
-import Priority from './Priority'
+import {Option, RoleItem, TableConfig} from '@/app/types'
 import {Select} from '@/components/select'
 import Badge from '@/components/badge/Badge'
-import {SelectRolePermission} from '@/components/select'
-import {CheckboxRounded} from '@/components/checkbox'
 import * as Yup from 'yup'
 
-export const ROLE_TABLE_CONFIG: TableConfig = {
+export const ROLE_PRIORITY: Option[] = [
+  {
+    value: 1,
+    label: 'Full-Access',
+  },
+  {
+    value: 2,
+    label: 'Branch Manager',
+  },
+  {
+    value: 3,
+    label: 'Finance',
+  },
+  {
+    value: 4,
+    label: 'Agent',
+  },
+  {
+    value: 5,
+    label: 'Debt Collect',
+  },
+]
+
+export const ROLE_TABLE_CONFIG: TableConfig<keyof RoleItem> = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -14,12 +34,13 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
     showViewButton: false,
     endPointDelete: '/config/role',
     endPointGetListing: '/config/role',
+    endpoint: '/config/role',
     messageDeleteSuccess: 'Role "/%/" successfully deleted',
     buttonAddNew: 'New Role',
     showMessageTitle: 'role_name',
-    validationCreateEdit: Yup.object().shape({
-      role_name: Yup.string().required('Role name is required'),
-      priority: Yup.number().min(1, 'Priority is required').required('Priority is required'),
+    validation: Yup.object().shape({
+      role_name: Yup.string().trim().required('Role name is required'),
+      priority: Yup.number().required('Priority is required'),
     }),
   },
   rows: [
@@ -34,8 +55,20 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       classNameTableBody: 'text-break',
       color: '#252F4A',
       infoCreateEdit: {
-        type: 'input',
-        isRequired: true,
+        typeComponent: 'input',
+        required: true,
+      },
+    },
+    {
+      key: 'priority',
+      name: 'Priority',
+      format: 'option',
+      options: ROLE_PRIORITY,
+      infoCreateEdit: {
+        typeComponent: 'select',
+        required: true,
+        component: Select,
+        options: ROLE_PRIORITY,
       },
     },
     {
@@ -44,17 +77,7 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       key: 'description',
       name: 'Description',
       infoCreateEdit: {
-        type: 'textarea',
-      },
-    },
-    {
-      key: 'priority',
-      name: 'Priority',
-      component: Priority,
-      infoCreateEdit: {
-        type: 'input',
-        isRequired: true,
-        component: Select,
+        typeComponent: 'textarea',
       },
     },
     /**
@@ -71,8 +94,8 @@ export const ROLE_TABLE_CONFIG: TableConfig = {
       name: 'Status',
       component: Badge,
       infoCreateEdit: {
-        type: 'input',
-        component: CheckboxRounded,
+        typeComponent: 'checkbox-rounded',
+        defaultValue: 1,
       },
     },
   ],

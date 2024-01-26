@@ -1,6 +1,6 @@
 import {TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
-import {CheckboxRounded} from '@/components/checkbox'
+import * as Yup from 'yup'
 
 export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
   settings: {
@@ -15,6 +15,17 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
     endpoint: 'config/rejection_type',
     showMessageTitle: 'rejection_type_name',
     swalToastTitle: 'Rejection Type "/%/" successfully',
+    validation: Yup.object().shape({
+      rejection_type_name: Yup.string()
+        .trim()
+        .required('Rejection Type is required')
+        .max(255, 'Rejection Type must be at most 255 characters'),
+      rejection_type_code: Yup.string()
+        .trim()
+        .required('Code is required')
+        .max(64, 'Code must be at most 64 characters'),
+      description: Yup.string().trim().max(1024, 'Description must be at most 1024 characters'),
+    }),
   },
   rows: [
     {
@@ -27,9 +38,9 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
       color: '#252F4A',
       name: 'Rejection Type',
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
+        typeComponent: 'input',
+        type: 'text',
+        required: true,
       },
     },
     {
@@ -38,9 +49,9 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'Code',
 
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
+        typeComponent: 'input',
+        type: 'text',
+        required: true,
       },
     },
     {
@@ -48,9 +59,8 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'Description',
       classNameTableHead: 'w-400px min-w-150px',
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
+        typeComponent: 'input',
+        type: 'text',
       },
     },
     {
@@ -59,16 +69,22 @@ export const REJECTION_TYPE_TABLE_CONFIG: TableConfig = {
       name: 'Default',
       component: Badge,
       infoCreateEdit: {
+        className: 'w-fit-content',
         typeComponent: 'checkbox-rounded',
-        component: CheckboxRounded,
         subTextWhenChecked: 'Yes',
         subTextWhenNoChecked: 'No',
+        defaultValue: 0,
       },
     },
     {
       key: 'status',
       name: 'Status',
       component: Badge,
+      infoCreateEdit: {
+        className: 'w-fit-content',
+        typeComponent: 'checkbox-rounded',
+        defaultValue: 1,
+      },
     },
   ],
 }

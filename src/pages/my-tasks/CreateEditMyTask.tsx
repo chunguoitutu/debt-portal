@@ -15,12 +15,7 @@ import {Input} from '@/components/input'
 import {Base64Item, DataResponse, UserInfo} from '@/app/types'
 import UploadFile from '@/components/file/UploadFile'
 import {Select} from '@/components/select'
-import {
-  PRIORITY_TASK,
-  convertFileToBase64,
-  convertMessageErrorRequired,
-  getFullName,
-} from '@/app/utils'
+import {PRIORITY_TASK, convertFileToBase64, convertFieldRequired, getFullName} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 import {getDaysOfCurrentDate} from '@/app/utils/get-current-date'
 import {swalToast} from '@/app/swal-notification'
@@ -32,7 +27,7 @@ type props = {
 }
 
 const schema = Yup.object().shape({
-  task_title: Yup.string().required(convertMessageErrorRequired()),
+  task_title: Yup.string().required(convertFieldRequired()),
 })
 
 const CreateEditMyTask = ({data}: props) => {

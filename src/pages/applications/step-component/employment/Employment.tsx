@@ -7,7 +7,7 @@ import request from '@/app/axios'
 import {Select} from '@/components/select'
 import {
   COUNTRY_PHONE_CODE,
-  convertMessageErrorRequired,
+  convertFieldRequired,
   getIdDefault,
   isFirstGetStepApplication,
 } from '@/app/utils'
@@ -47,7 +47,7 @@ const Employment: FC<PropsStepApplication> = (props) => {
       configMatch.forEach((config) => {
         registerField(config.key, {
           validate(value) {
-            return !value?.trim() ? convertMessageErrorRequired(config.label) : ''
+            return !value?.trim() ? convertFieldRequired(config.label) : ''
           },
         })
       })

@@ -23,14 +23,12 @@ type Props = {
   setIsUpdated?: any
   handleAddNew: () => void
   isShowFilter?: boolean
-  setSearchCriterias?: any
   setSttTable?: any
 }
 
 const Table: FC<Props> = ({
   config,
   onEditItem,
-  setSearchCriterias = () => {},
   onViewDetail,
   isUpdated,
   setIsUpdated,
@@ -117,12 +115,6 @@ const Table: FC<Props> = ({
           total: data?.total_count || 0,
           currentPage: data?.searchCriteria?.currentPage || 1,
         }))
-      data?.searchCriteria &&
-        setSearchCriterias((prev) => ({
-          ...prev,
-          total: data?.total_count || 0,
-          currentPage: data?.searchCriteria?.currentPage || 1,
-        }))
     } catch (error) {
       // no thing
     } finally {
@@ -178,7 +170,6 @@ const Table: FC<Props> = ({
 
   async function handleChangePagination(goToPage: number) {
     setSearchCriteria((prev) => ({...prev, currentPage: goToPage}))
-    setSearchCriterias((prev) => ({...prev, currentPage: goToPage}))
     await onFetchDataList({...pagination, currentPage: goToPage})
   }
 
@@ -247,7 +238,7 @@ const Table: FC<Props> = ({
                   </th>
                 ))}
                 {(showAction || showRefresh) && (
-                  <th className='text-center w-150px '>
+                  <th className='text-center w-150px'>
                     <div
                       className={clsx([
                         'w-100 d-flex justify-content-center text-uppercase text-gray-500 align-items-center fs-14 fw-bold',
@@ -262,153 +253,171 @@ const Table: FC<Props> = ({
             <tbody className='text-gray-600 fw-bold'>
               {data.length > 0 ? (
                 data.map((item, idx) => {
+                  const orderNumber =
+                    Number(idx) +
+                    1 +
+                    (Number(searchCriteria.currentPage) * Number(searchCriteria.pageSize) -
+                      Number(searchCriteria.pageSize))
+
                   return (
                     <tr key={idx} className='fw-medium'>
-                      {rows.map(({key, component, classNameTableBody, isHide, color}, index) => {
-                        if (isHide) {
-                          return <Fragment key={index}></Fragment>
-                        }
-                        let Component = component || Fragment
-                        let value = item[key]
+                      {rows.map(
+                        (
+                          {key, component, classNameTableBody, isHide, color, format, options},
+                          index
+                        ) => {
+                          if (isHide) {
+                            return <Fragment key={index}></Fragment>
+                          }
+                          let Component = component || Fragment
+                          let value = item[key]
 
-                        if (key === 'id') {
-                          return (
-                            <td key={index} className='w-xxl-6 fw-semibold fs-14'>
-                              {Number(idx) +
-                                1 +
-                                (Number(searchCriteria.currentPage) *
-                                  Number(searchCriteria.pageSize) -
-                                  Number(searchCriteria.pageSize))}
-                            </td>
-                          )
-                        }
+                          if (key === 'id') {
+                            return (
+                              <td key={index} className='w-xxl-6 fw-semibold fs-14'>
+                                {orderNumber}
+                              </td>
+                            )
+                          }
 
-                        if (['created_date', 'updated_date'].includes(key)) {
-                          return (
-                            <td className='fs-14 fw-semibold' key={index}>
-                              {moment(value).format('DD MMM, YYYY')}
-                            </td>
-                          )
-                        }
+                          if (['created_date', 'updated_date'].includes(key)) {
+                            return (
+                              <td className='fs-14 fw-semibold' key={index}>
+                                {moment(value).format('DD MMM, YYYY')}
+                              </td>
+                            )
+                          }
 
-                        if (
-                          ['quota_new', 'quota_existing', 'quota_foreigner', 'late_fee'].includes(
-                            key
-                          )
-                        ) {
-                          return (
-                            <td className='fs-14 fw-semibold text-end' key={index}>
-                              {formatMoney(value)}
-                            </td>
-                          )
-                        }
-
-                        if (['open_date'].includes(key)) {
-                          return (
-                            <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={index}>
-                              {moment(value).format('DD MMM, YYYY')}
-                            </td>
-                          )
-                        }
-
-                        if (['late_interest', 'interest'].includes(key)) {
-                          return (
-                            <td className={`fs-14 fw-semibold text-end`} key={index}>
-                              {value !== null && value !== undefined ? `${value}%` : ''}
-                            </td>
-                          )
-                        }
-
-                        if (key === 'telephone') {
-                          return (
-                            <td className='fs-14 fw-semibold' style={{color: 'rgb(120, 130, 157)'}}>
-                              {value ? `+65${value}` : ''}
-                            </td>
-                          )
-                        }
-
-                        if (component) {
                           if (
-                            [
-                              'is_default',
-                              'status',
-                              'is_active',
-                              'request_more_information',
-                            ].includes(key)
+                            ['quota_new', 'quota_existing', 'quota_foreigner', 'late_fee'].includes(
+                              key
+                            )
                           ) {
-                            let title = value === 1 ? 'Active' : 'Disable'
+                            return (
+                              <td className='fs-14 fw-semibold text-end' key={index}>
+                                {formatMoney(value)}
+                              </td>
+                            )
+                          }
 
-                            if (['is_default', 'request_more_information'].includes(key)) {
-                              title = value === 1 ? 'Yes' : 'No'
+                          if (['open_date'].includes(key)) {
+                            return (
+                              <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={index}>
+                                {moment(value).format('DD MMM, YYYY')}
+                              </td>
+                            )
+                          }
+
+                          if (['late_interest', 'interest'].includes(key)) {
+                            return (
+                              <td className={`fs-14 fw-semibold text-end`} key={index}>
+                                {value !== null && value !== undefined ? `${value}%` : ''}
+                              </td>
+                            )
+                          }
+
+                          if (key === 'telephone') {
+                            return (
+                              <td
+                                className='fs-14 fw-semibold'
+                                style={{color: 'rgb(120, 130, 157)'}}
+                                key={index}
+                              >
+                                {value ? `+65${value}` : ''}
+                              </td>
+                            )
+                          }
+
+                          if (format === 'option') {
+                            const labelMatch =
+                              options?.find((o) => o?.value?.toString() === item?.[key]?.toString())
+                                ?.label || ''
+                            value = labelMatch
+                          }
+
+                          if (component) {
+                            if (
+                              [
+                                'is_default',
+                                'status',
+                                'is_active',
+                                'request_more_information',
+                              ].includes(key)
+                            ) {
+                              let title = value === 1 ? 'Active' : 'Disable'
+
+                              if (['is_default', 'request_more_information'].includes(key)) {
+                                title = value === 1 ? 'Yes' : 'No'
+                              }
+
+                              return (
+                                <td
+                                  key={index}
+                                  className='text-center fs-14 min-w-150px fw-semibold'
+                                  style={{
+                                    borderBottom: 'none',
+                                  }}
+                                >
+                                  <div className='d-flex align-items-center justify-content-center gap-1'>
+                                    <Component
+                                      color={value === 1 ? 'success' : 'danger'}
+                                      title={title}
+                                    />
+                                  </div>
+                                </td>
+                              )
+                            }
+
+                            //HANDLE ADD PERMISSION DROPDOWN
+                            if (key === 'permissions') {
+                              return (
+                                <td key={index}>
+                                  <Component
+                                    tittle={''}
+                                    checked={handlePermissionChecked(item[key])}
+                                  />
+                                </td>
+                              )
                             }
 
                             return (
-                              <td
-                                key={index}
-                                className='text-center fs-14 min-w-150px fw-semibold'
-                                style={{
-                                  borderBottom: 'none',
-                                }}
-                              >
-                                <div className='d-flex align-items-center justify-content-center gap-1'>
+                              <td key={index} className='fs-14 min-w-150px fw-semibold'>
+                                <>
                                   <Component
-                                    color={value === 1 ? 'success' : 'danger'}
-                                    title={title}
+                                    data={item}
+                                    isUpdated={isUpdated}
+                                    setIsUpdated={setIsUpdated}
                                   />
-                                </div>
-                              </td>
-                            )
-                          }
-
-                          //HANDLE ADD PERMISSION DROPDOWN
-                          if (key === 'permissions') {
-                            return (
-                              <td key={index}>
-                                <Component
-                                  tittle={''}
-                                  checked={handlePermissionChecked(item[key])}
-                                />
+                                </>
                               </td>
                             )
                           }
 
                           return (
-                            <td key={index} className='fs-14 min-w-150px fw-semibold'>
-                              <>
-                                <Component
-                                  data={item}
-                                  isUpdated={isUpdated}
-                                  setIsUpdated={setIsUpdated}
-                                />
-                              </>
+                            <td key={index}>
+                              {component ? (
+                                <Component />
+                              ) : (
+                                <span
+                                  style={{
+                                    color: !!color ? color : '#78829D',
+                                  }}
+                                  className={clsx(['fs-14 fw-semibold', classNameTableBody])}
+                                >
+                                  {value}
+                                </span>
+                              )}
                             </td>
                           )
                         }
-
-                        return (
-                          <td key={index}>
-                            {component ? (
-                              <Component />
-                            ) : (
-                              <span
-                                style={{
-                                  color: !!color ? color : '#78829D',
-                                }}
-                                className={clsx(['fs-14 fw-semibold', classNameTableBody])}
-                              >
-                                {value}
-                              </span>
-                            )}
-                          </td>
-                        )
-                      })}
+                      )}
                       {showAction && (showDeleteButton || showEditButton || showViewButton) && (
                         <td className='text-center'>
                           <div className='d-flex align-items-center justify-content-center gap-1'>
                             {showViewButton && (
                               <ButtonViewDetail
                                 onClick={() => {
-                                  handleViewDetailItem(item, idx)
+                                  handleViewDetailItem(item, orderNumber)
                                 }}
                               />
                             )}
@@ -427,10 +436,7 @@ const Table: FC<Props> = ({
               ) : (
                 <tr>
                   <td colSpan={rows.length}>
-                    <div
-                      style={{fontSize: '14px', fontWeight: '500', lineHeight: '20px'}}
-                      className='d-flex text-center w-100 align-content-center justify-content-center'
-                    >
+                    <div className='d-flex text-center w-100 align-content-center justify-content-center fs-14 fw-semibold'>
                       No matching records found
                     </div>
                   </td>

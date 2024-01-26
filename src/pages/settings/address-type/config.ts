@@ -1,8 +1,9 @@
-import {TableConfig} from '@/app/types'
+import {AddressTypeItem, TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
 import {CheckboxRounded} from '@/components/checkbox'
+import * as Yup from 'yup'
 
-export const ADDRESS_TABLE_CONFIG: TableConfig = {
+export const ADDRESS_TABLE_CONFIG: TableConfig<keyof AddressTypeItem> = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -15,6 +16,13 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
     endpoint: 'config/address_type',
     showMessageTitle: 'address_type_name',
     swalToastTitle: 'Address Type "/%/" successfully',
+    validation: Yup.object().shape({
+      address_type_name: Yup.string()
+        .trim()
+        .required('Address Type is required')
+        .max(255, 'Address Type must be at most 255 characters'),
+      description: Yup.string().trim().max(1024, 'Description must be at most 1024 characters'),
+    }),
   },
   rows: [
     {
@@ -28,9 +36,9 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
       name: 'Address Type',
       color: '#252F4A',
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
+        typeComponent: 'input',
+        type: 'text',
+        required: true,
       },
     },
     {
@@ -39,8 +47,8 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
       classNameTableHead: 'w-600px min-w-150px',
       classNameTableBody: 'four-line',
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
+        typeComponent: 'input',
+        type: 'text',
       },
     },
     // {
@@ -59,6 +67,11 @@ export const ADDRESS_TABLE_CONFIG: TableConfig = {
       key: 'status',
       name: 'Status',
       component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        defaultValue: 1,
+      },
     },
   ],
 }
