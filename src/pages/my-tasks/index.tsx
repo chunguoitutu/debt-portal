@@ -132,10 +132,7 @@ function MyTasks() {
           <div className='col-3'>
             <div className=' d-flex align-items-center gap-8px  pb-16px'>
               <h2 className='p-0 m-0 text-gray-900 fs-16 fw-semibold'>ON PROGRESS</h2>
-              <p className='p-0 m-0 fs-14 fw-normal text-gray-500'>
-                {data.length} {''}
-                {data.length > 0 ? 'tasks' : 'task'}
-              </p>
+              <p className='p-0 m-0 fs-14 fw-normal text-gray-500'>(2 tasks)</p>
             </div>
             <MapData setData={setData} dataS={data} statusMyTaskTable='onprogress' />
           </div>
