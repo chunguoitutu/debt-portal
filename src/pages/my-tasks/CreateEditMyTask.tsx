@@ -337,7 +337,7 @@ const CreateEditMyTask = ({data}: props) => {
               <Button
                 type='reset'
                 onClick={handleCreateTask}
-                className='btn-lg btn-primary align-self-center me-5px fs-6'
+                className='btn-lg btn-primary align-self-center me-4px fs-6'
               >
                 Create
               </Button>
