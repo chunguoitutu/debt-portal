@@ -27,13 +27,13 @@ export const COMPANY_TABLE_CONFIG: TableConfig<keyof CompanyItem> = {
     {
       key: 'company_code',
       name: 'Business Unit Code',
-      classNameTableHead: 'w-250px ps-10',
-      classNameTableBody: 'ps-7',
+      classNameTableHead: 'w-250px',
+      classNameTableBody: '',
     },
     {
       key: 'business_uen',
       name: 'Business Unit UEN',
-      classNameTableHead: 'pe-30px',
+      classNameTableHead: '',
     },
     {
       key: 'contact_person',
@@ -60,7 +60,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig<keyof CompanyItem> = {
       key: 'open_date',
       name: 'Open Date',
       format: 'date',
-      classNameTableHead: 'w-250px pe-3 text-end',
+      classNameTableHead: 'w-250px text-end',
       classNameTableBody: 'text-end',
     },
     {

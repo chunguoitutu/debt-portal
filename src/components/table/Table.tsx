@@ -282,7 +282,7 @@ const Table: FC<Props> = ({
 
                           switch (format) {
                             case 'date':
-                              value = formatDate('DD MMM, YYYY')
+                              value = formatDate(value, 'DD MMM, YYYY')
                               break
                             case 'money':
                               value = formatMoney(+value)
@@ -293,8 +293,10 @@ const Table: FC<Props> = ({
                               break
                             case 'percent':
                               value = value ? `${value}%` : ''
+                              break
                             case 'phone':
                               value = value ? `+65${value}` : ''
+                              break
                             default:
                               break
                           }
@@ -358,7 +360,7 @@ const Table: FC<Props> = ({
                           }
 
                           return (
-                            <td key={index}>
+                            <td key={index} className='pe-0'>
                               {component ? (
                                 <Component />
                               ) : (
@@ -366,7 +368,10 @@ const Table: FC<Props> = ({
                                   style={{
                                     color: !!color ? color : '#78829D',
                                   }}
-                                  className={clsx(['fs-14 fw-semibold', classNameTableBody])}
+                                  className={clsx([
+                                    'fs-14 fw-semibold d-block',
+                                    classNameTableBody,
+                                  ])}
                                 >
                                   {value}
                                 </span>
