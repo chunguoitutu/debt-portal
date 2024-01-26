@@ -1,10 +1,9 @@
-import { TableConfig } from '@/app/types'
-import { BLACKLIST_OPTION, EXCLUSION_OPTION, STATUS_CUSTOMER_LISTING } from '@/app/utils'
-import { Input } from '@/components/input'
-import { Select } from '@/components/select'
+import {TableConfig} from '@/app/types'
+import {BLACKLIST_OPTION, EXCLUSION_OPTION, STATUS_CUSTOMER_LISTING} from '@/app/utils'
+import {Input} from '@/components/input'
+import {Select} from '@/components/select'
 
 export const BORROWER_CONFIG_LISTING: TableConfig = {
-  endpoint: '',
   settings: {
     showAction: true,
     showEditButton: true,
@@ -48,7 +47,6 @@ export const BORROWER_CONFIG_LISTING: TableConfig = {
       key: 'identification_no',
       name: 'NRIC No',
       infoFilter: {
-
         typeComponent: 'input',
         component: Input,
         isSort: true,

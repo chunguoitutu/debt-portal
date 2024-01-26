@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Button from '@/components/button/Button'
 import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
@@ -15,19 +14,20 @@ import {Input} from '@/components/input'
 import {Base64Item, DataResponse, UserInfo} from '@/app/types'
 import UploadFile from '@/components/file/UploadFile'
 import {Select} from '@/components/select'
-import {PRIORITY_TASK, convertFileToBase64, convertFieldRequired, getFullName} from '@/app/utils'
+import {PRIORITY_TASK, convertFieldRequired, convertFileToBase64, getFullName} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 import {getDaysOfCurrentDate} from '@/app/utils/get-current-date'
 import {swalToast} from '@/app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import RenderFile from '@/components/file/RenderFile'
+import clsx from 'clsx'
 
 type props = {
   data?: any
 }
 
 const schema = Yup.object().shape({
-  task_title: Yup.string().required(convertFieldRequired()),
+  task_title: Yup.string().required(convertFieldRequired('Task Title')),
 })
 
 const CreateEditMyTask = ({data}: props) => {
@@ -58,7 +58,7 @@ const CreateEditMyTask = ({data}: props) => {
       // const {} = request.post('/abc', payload)
       swalToast.fire({
         icon: 'success',
-        title: 'New Task Create Successfully',
+        title: 'Task Successfully Created',
       })
     } catch (error) {
       swalToast.fire({
@@ -175,7 +175,7 @@ const CreateEditMyTask = ({data}: props) => {
     return (
       <div className='col-12'>
         <div className='row mb-16px'>
-          <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Priority</div>
+          <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center '>Priority</div>
           <div className='d-flex flex-row gap-16px col-10'>
             {PRIORITY_TASK.map((item, i) => (
               <Radio
@@ -195,13 +195,13 @@ const CreateEditMyTask = ({data}: props) => {
           </div>
         </div>
         <div className='row mb-16px'>
-          <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Task Title</div>
+          <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center '>Task Title</div>
           <div className='col-10'>
             <Input name={'task_title'} value={values.task_title} onChange={handleChange} />
           </div>
         </div>
         <div className='row mb-16px'>
-          <div className='col-2 fs-16 fw-medium text-gray-900 pt-2'>Description</div>
+          <div className='col-2 fs-16 fw-medium text-gray-900  pt-2'>Description</div>
           <div className='col-10'>
             <ReactQuill
               theme='snow'
@@ -216,7 +216,7 @@ const CreateEditMyTask = ({data}: props) => {
           </div>
         </div>
         <div className='row mb-16px'>
-          <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Start - End</div>
+          <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center '>Start - End</div>
           <div className='col-10 ' style={{width: '81.5%'}}>
             <div className='row'>
               <div className='col-12 d-flex flex-row gap-5'>
@@ -243,7 +243,7 @@ const CreateEditMyTask = ({data}: props) => {
           </div>
         </div>
         <div className='row'>
-          <div className='col-2 fs-16 fw-medium text-gray-900 pt-2'>Assign To</div>
+          <div className='col-2 fs-16 fw-medium text-gray-900  pt-2'>Assign To</div>
           <div className='col-10'>
             <Select
               name='officer_id'
@@ -258,7 +258,7 @@ const CreateEditMyTask = ({data}: props) => {
           </div>
         </div>
         <div className='row'>
-          <div className='col-2 fs-16 fw-medium text-gray-900 pt-2'>Attachment</div>
+          <div className='col-2 fs-16 fw-medium text-gray-900  pt-2'>Attachment</div>
           <div className='col-10'>
             <UploadFile
               className='w-100'
@@ -300,7 +300,7 @@ const CreateEditMyTask = ({data}: props) => {
           tabIndex={-1}
           style={{}}
           aria-hidden='true'
-          dialogClassName='modal-dialog modal-dialog-centered mw-900px'
+          dialogClassName='modal-dialog modal-dialog-centered mw-850px'
           show={showPopupCreate}
           backdrop={true}
           onHide={() => setShowPopupCreate(false)}
@@ -312,7 +312,7 @@ const CreateEditMyTask = ({data}: props) => {
               className='btn btn-sm btn-icon btn-active-color-primary'
               onClick={() => setShowPopupCreate(false)}
             >
-              <KTIcon className='fs-1' iconName='cross' />
+              <KTIcon className='fs-1 ms-4' iconName='cross' />
             </div>
           </div>
 
@@ -337,7 +337,7 @@ const CreateEditMyTask = ({data}: props) => {
               <Button
                 type='reset'
                 onClick={handleCreateTask}
-                className='btn-lg btn-primary align-self-center me-8px fs-6'
+                className='btn-lg btn-primary align-self-center me-5px fs-6'
               >
                 Create
               </Button>

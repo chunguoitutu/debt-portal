@@ -75,7 +75,7 @@ function MyTasks() {
               value={values.endDate}
               onChange={handleChange}
               type='date'
-              style={{maxWidth: '160px'}}
+              style={{maxWidth: '155px'}}
             />
 
             <Button
