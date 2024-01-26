@@ -17,7 +17,7 @@ const data = {
   title: 'Contract Signing and Disbursement',
   note: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry,s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
   link: [
-    'http://example.ysentertaiment.com/kasufd/jau62537hd/826hndalsmnd/9827364/task001',
+    'https://www.w3schools.com/',
     'http://example.ysentertaiment.com/kasufd/9827364/task001',
     'http://example.ysentertaiment.com/dsfsdf/fsd541/sdf451/task365',
   ],
@@ -57,13 +57,13 @@ const ViewMyTask = ({show, onShow}: Props) => {
       onHide={onShow}
       backdrop={true}
     >
-      <div className='d-flex justify-content-between align-items-start p-30px  '>
+      <div className='d-flex justify-content-between align-items-start p-30px'>
         <div>
           <h2 className='m-0 title-my-tasks-view'>{moment(data.date).date()}</h2>
           <p className='title-my-tasks-view-date'>{moment(data.date).format('MMM - YYYY')}</p>
         </div>
         <div className='d-flex justify-content-center align-items-center'>
-          <p className='pe-24px p-0 m-0 text-gray-600 fs-14 font-italic'>
+          <p className='pe-24px p-0 m-0 text-gray-600 fs-14 font-italic mb-2'>
             Updated {moment().diff(moment(data.date), 'days')} days ago
           </p>
           <div className='cursor-pointer p-0 m-0' onClick={onShow}>
@@ -94,8 +94,13 @@ const ViewMyTask = ({show, onShow}: Props) => {
                   className='d-flex justify-content-start align-items-start text-break gap-8px'
                   key={i}
                 >
-                  <div className='bg-primary w-5px h-5px flex-shrink-0 rounded-circle mt-8px'></div>{' '}
-                  <p className='link-view-my-tasks'>{el}</p>
+                  <div
+                    className='bg-primary w-5px h-5px flex-shrink-0 rounded-circle mt-8px'
+                    key={i}
+                  ></div>{' '}
+                  <a href={`${el}`} className='link-view-my-tasks'>
+                    {el}
+                  </a>
                 </div>
               )
             })}
@@ -134,9 +139,10 @@ const ViewMyTask = ({show, onShow}: Props) => {
                     border: '1px solid  #F1F1F2',
                   }}
                   className='d-flex justify-content-start rounded-8 align-items-center gap-16px py-8px'
+                  key={i}
                 >
                   <Icons name={'FileMyTask'} />
-                  <div className='d-flex flex-column gay-4px'>
+                  <div className='d-flex flex-column gay-4px' key={i}>
                     <h1 className='fs-12 text-gray-900 fw-semibold p-0 m-0'>{e.name}</h1>
                     <p className='fs-12 text-B5B5C3 fw-semibold p-0 m-0'>
                       {convertSize(Number(e.size) || 0)}

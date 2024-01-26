@@ -202,13 +202,6 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
     }
   }
 
-  console.log(
-    configTable.rows.map((el, i) => {
-      el.key
-      return el.key
-    })
-  )
-
   // ============================== RENDER JSX, handle logic above ======================================================
   function renderTableFooter() {
     return (

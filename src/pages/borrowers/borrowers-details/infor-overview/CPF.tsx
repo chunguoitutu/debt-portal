@@ -18,6 +18,7 @@ const CPF = ({data}: DataOverview) => {
   const [dataParse, setDataParse] = useState<any>(null)
 
   useEffect(() => {
+    if (!dataCPF) return
     const {amount, date, employer, month} = dataCPF
     if (!amount || !date || !employer || !month) return
 
@@ -60,7 +61,7 @@ const CPF = ({data}: DataOverview) => {
                 'd-flex flex-column gap-16px',
                 i !== 0 && 'pt-12px border-0 border-top-1 border-dashed border-gray-300',
               ])}
-              key={cpf.id}
+              key={cpf.id || i}
             >
               {/* Header */}
               <div

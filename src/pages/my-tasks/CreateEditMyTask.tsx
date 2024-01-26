@@ -222,9 +222,9 @@ const CreateEditMyTask = ({data}: props) => {
         </div>
         <div className='row mb-16px'>
           <div className='col-2 fs-16 fw-medium text-gray-900 align-self-center'>Start - End</div>
-          <div className='col-10 ' style={{width: '81%'}}>
+          <div className='col-10 ' style={{width: '81.5%'}}>
             <div className='row'>
-              <div className='col-12 d-flex flex-row gap-6'>
+              <div className='col-12 d-flex flex-row gap-5'>
                 <div className='col-6'>
                   <Input
                     name={'start_date'}
@@ -252,6 +252,7 @@ const CreateEditMyTask = ({data}: props) => {
           <div className='col-10'>
             <Select
               name='officer_id'
+              classShared='mb-16px'
               options={userListing}
               keyValueOption={'id'}
               keyLabelOption={'fullname'}
