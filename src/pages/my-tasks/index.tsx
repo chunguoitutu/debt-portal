@@ -59,13 +59,14 @@ function MyTasks() {
         <div className='d-flex pt-30px px-30px justify-content-between align-items-center pb-16px'>
           <h1 className='text-gray-900 m-0  fs-20 fw-bold'>My Tasks</h1>
           <div className='d-flex justify-content-center align-items-center gap-16px'>
-            <p className='text-gray-700  fw-semibold fs-16 p-0 m-0 '>from</p>
+            <p className='text-gray-700 fw-semibold fs-16 p-0 m-0 '>from</p>
             <Input
               id='startDate'
               name='startDate'
               value={values.startDate}
               onChange={handleChange}
               type='date'
+              style={{maxWidth: '147px'}}
             />
             <p className='text-gray-700  fw-semibold fs-16 p-0 m-0 '>to</p>
             <Input
@@ -74,6 +75,7 @@ function MyTasks() {
               value={values.endDate}
               onChange={handleChange}
               type='date'
+              style={{maxWidth: '147px'}}
             />
 
             <Button
@@ -108,7 +110,7 @@ function MyTasks() {
           }}
           className='py-8px px-30px d-flex align-items-center  gap-16px'
         >
-          <p className='p-0 m-0 fs-14 fw-semibold'>Priority:</p>
+          <p className='p-0 m-0 fs-14 fw-semibold text-gray-600'>Priority:</p>
           <StatusMyTasks
             value={priority}
             onChange={(e) => {
@@ -122,34 +124,36 @@ function MyTasks() {
           />
         </div>
 
-        <div className='px-30px pt-8px  pb-8px  d-flex position-relative h-100 gap-4px '>
+        <div className='p-30px pt-8px pb-8px d-flex position-relative h-100 gap-4px '>
           <div className='col-3 h-100 '>
             <div className=' d-flex align-items-center gap-8px pb-16px'>
-              <h2 className='p-0 m-0 test-gray-900 fs-16 fw-semibold'>TO DO LIST</h2>
-              <p className='p-0 m-0 fs-14 fw-normal test-gray-500'>(5 to do)</p>
+              <h2 className='p-0 m-0 text-gray-900 fs-16 fw-semibold'>TO DO LIST</h2>
+              <p className='p-0 m-0 fs-14 fw-normal text-gray-500'>(5 to do)</p>
             </div>
             <MapData setData={setData} dataS={data} statusMyTaskTable='todo' />
           </div>
           <div className='col-3'>
             <div className=' d-flex align-items-center gap-8px  pb-16px'>
-              <h2 className='p-0 m-0 test-gray-900 fs-16 fw-semibold'>ON PROGRESS</h2>
-              <p className='p-0 m-0 fs-14 fw-normal test-gray-500'>(2 tasks)</p>
+              <h2 className='p-0 m-0 text-gray-900 fs-16 fw-semibold'>ON PROGRESS</h2>
+              <p className='p-0 m-0 fs-14 fw-normal text-gray-500'>(2 tasks)</p>
             </div>
             <MapData setData={setData} dataS={data} statusMyTaskTable='onprogress' />
           </div>
           <div className='col-3'>
             <div className=' d-flex align-items-center gap-8px  pb-16px'>
-              <h2 className='p-0 m-0 test-gray-900 fs-16 fw-semibold'>DONE</h2>
-              <p className='p-0 m-0 fs-14 fw-normal test-gray-500'>(3 tasks)</p>
+              <h2 className='p-0 m-0 text-gray-900 fs-16 fw-semibold'>DONE</h2>
+              <p className='p-0 m-0 fs-14 fw-normal text-gray-500'>(3 tasks)</p>
             </div>
             <MapData setData={setData} dataS={data} statusMyTaskTable='done' />
           </div>
           <div className='col-3'>
-            <div className=' d-flex align-items-center gap-8px  pb-16px'>
-              <h2 className='p-0 m-0 test-gray-900 fs-16 fw-semibold'>REVISED</h2>
-              <p className='p-0 m-0 fs-14 fw-normal test-gray-500'>(0 tasks)</p>
+            <div style={{width: '97%', height: '100%'}}>
+              <div className=' d-flex align-items-center gap-8px  pb-16px'>
+                <h2 className='p-0 m-0 text-gray-900 fs-16 fw-semibold'>REVISED</h2>
+                <p className='p-0 m-0 fs-14 fw-normal text-gray-500'>(0 tasks)</p>
+              </div>
+              <MapData setData={setData} dataS={data} statusMyTaskTable='revised' />
             </div>
-            <MapData setData={setData} dataS={data} statusMyTaskTable='revised' />
           </div>
         </div>
       </div>

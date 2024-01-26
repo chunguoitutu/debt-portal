@@ -22,6 +22,7 @@ const ButtonMyTask = ({data}: Props) => {
       style={{
         opacity: isDragging ? '0.3' : '1',
         cursor: 'move',
+        borderRadius: '16px',
       }}
       ref={drag}
       className='card p-16px d-flex flex-column wrapper-my-tasks-child gap-16px'
@@ -29,16 +30,16 @@ const ButtonMyTask = ({data}: Props) => {
       <PriorityMyTasks status={data?.status} />
       <div className='d-flex flex-column gap-8px '>
         <h3 className='p-0 m-0 fs-16 fw-semibold test-gray-900'>{data?.title}</h3>
-        <p className='p-0 m-0 fs-14 fw-normal test-gray-600'>{data?.DESCRIPTION}</p>
+        <p className='p-0 m-0 fs-14 fw-normal text-gray-600'>{data?.DESCRIPTION}</p>
       </div>
       <div className='d-flex flex-column'>
         <div className='d-flex align-items-center gap-8px'>
           <Icons name={'TimeMyTasks'} />
-          <p className='fs-14 fw-normal test-gay-900'>{data?.date}</p>
+          <p className='fs-13 fw-normal text-gay-900 mb-0'>{data?.date}</p>
         </div>
         <div className='d-flex align-items-center gap-8px  p-0 m-0'>
           <Icons name={'PeopleMyTasks'} />
-          <p className='fs-14 fw-normal test-gay-900 p-0 m-0'>{data?.user}</p>
+          <p className='fs-13 fw-normal text-gay-900 p-0 m-0'>{data?.user}</p>
         </div>
       </div>
     </div>
