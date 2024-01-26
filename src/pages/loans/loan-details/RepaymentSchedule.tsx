@@ -202,6 +202,13 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
     }
   }
 
+  console.log(
+    configTable.rows.map((el, i) => {
+      el.key
+      return el.key
+    })
+  )
+
   // ============================== RENDER JSX, handle logic above ======================================================
   function renderTableFooter() {
     return (
@@ -210,6 +217,8 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
           {configTable.rows.map((el, i) => {
             const value = handleDisplayTotalByKey(el.key)
 
+            const columnLast = configTable.rows.length === i + 1
+
             // hidden column date when table has show date
             if (el.key === 'date' && configColumnSubmitted[el.key])
               return <Fragment key={i}></Fragment>
@@ -217,8 +226,9 @@ const RepaymentSchedule: FC<LoanDetailsProps> = ({loanInfo}) => {
             return (
               <td
                 className={clsx([
-                  'fs-4 fw-bold ps-0 ',
-                  el.key === 'id' ? 'p-16px text-start' : 'px-10px text-end',
+                  'fs-4 fw-bold px-10px',
+                  i === 0 ? 'ps-0 text-start' : 'text-end',
+                  columnLast && 'pe-0',
                 ])}
                 colSpan={el.key === 'id' && configColumnSubmitted?.['date'] ? 2 : 1}
                 key={i}

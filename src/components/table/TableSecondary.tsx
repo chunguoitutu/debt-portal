@@ -64,16 +64,18 @@ const TableSecondary: FC<Props> = ({
           style={{
             zIndex: '1',
           }}
-          className='position-sticky z-3 top-0 bg-white'
+          className='position-sticky z-3 top-0 bg-white border-bottom border-gray-200'
         >
           <tr className='text-start text-muted fw-bold fs-6 text-uppercase'>
             {ROW_LISTING.map((el, i) => {
               const {key, name, classNameTableHead, infoFilter} = el
               const {isSort} = infoFilter || {}
+              const isColumnLast = ROW_LISTING.length === i + 1
               return (
                 <th
                   className={clsx([
                     'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 test-gray-600',
+                    isColumnLast && 'text-end pe-0',
                     isSort && 'cursor-pointer',
                     classNameTableHead,
                   ])}
@@ -108,6 +110,7 @@ const TableSecondary: FC<Props> = ({
                   {ROW_LISTING.map((row, i) => {
                     const {key, classNameTableBody, format, typeValue, component} = row
                     const customClassName = handleSwitchClassName(key, item)
+                    const isColumnLast = ROW_LISTING.length === i + 1
 
                     let Component = component
                     let value = item[key]
@@ -162,6 +165,7 @@ const TableSecondary: FC<Props> = ({
                         }}
                         className={clsx([
                           'fs-14 fw-semibold py-16px px-10px ',
+                          isColumnLast && 'text-end pe-0',
                           classNameTableBody,
                           customClassName,
                         ])}

@@ -85,9 +85,9 @@ const ViewMyTask = ({show, onShow}: Props) => {
             <h1 className='fs-16 test-gray-900 fw-semibold m-0 px-0 pt-16px pb-8px '>
               {data.title}
             </h1>
-            <p className='fs-14 fw-normal text-gray-600'>{data.note}</p>
+            <p className='fs-14 fw-normal text-gray-600 mb-0'>{data.note}</p>
           </div>
-          <div className='pt-8px d-flex flex-column gap-8px'>
+          <div className='pt-8px d-flex flex-column gap-8px ps-8px'>
             {data.link.map((el, i) => {
               return (
                 <div
@@ -104,31 +104,27 @@ const ViewMyTask = ({show, onShow}: Props) => {
         <div className='col-5'>
           <div className='d-flex justify-content-start align-items-center gap-8px'>
             <Icons name={'TimeMyTasks'} />
-            <p className='fs-13 test-gray-600 fw-normal p-0 m-0'>Start Date:</p>
+            <p className='fs-13 text-gray-600 fw-normal p-0 m-0'>Start Date:</p>
             <p className='m-0 fs-13 test-gray-900 fw-normal p-0'>
               {moment(data.startDate).format('DD MMM, YYYY')}
             </p>
           </div>
           <div className='d-flex justify-content-start align-items-center gap-8px pt-10px'>
             <Icons name={'TimeMyTasks'} />
-            <p className='fs-13 test-gray-600 fw-normal p-0 m-0'>Start Date:</p>
+            <p className='fs-13 text-gray-600 fw-normal p-0 m-0'>End Date:</p>
             <p className='m-0 fs-13 test-gray-900 fw-normal p-0'>
-              {moment(data.startDate).format('DD MMM, YYYY')}
+              {moment(data.endDate).format('DD MMM, YYYY')}
             </p>
           </div>
           <div className='d-flex justify-content-start align-items-center gap-8px  pt-10px'>
             <Icons name={'PeopleMyTasks'} />
-            <p className='fs-13 test-gray-600 fw-normal p-0 m-0'>Start Date:</p>
-            <p className='m-0 fs-13 test-gray-900 fw-normal p-0'>
-              {moment(data.startDate).format('DD MMM, YYYY')}
-            </p>
+            <p className='fs-13 text-gray-600 fw-normal p-0 m-0'>Created by:</p>
+            <p className='m-0 fs-13 test-gray-900 fw-normal p-0'>{data.createedBy}</p>
           </div>
           <div className='d-flex justify-content-start align-items-center gap-8px  pt-10px'>
             <Icons name={'PeopleMyTasks'} />
-            <p className='fs-13 test-gray-600 fw-normal p-0 m-0'>Start Date:</p>
-            <p className='m-0 fs-13 test-gray-900 fw-normal p-0'>
-              {moment(data.startDate).format('DD MMM, YYYY')}
-            </p>
+            <p className='fs-13 text-gray-600 fw-normal p-0 m-0'>Assign to:</p>
+            <p className='m-0 fs-13 test-gray-900 fw-normal p-0'>{data.assignTo}</p>
           </div>
           <div className='d-flex flex-column gap-8px mt-16px'>
             {data.file.map((e, i) => {
@@ -137,12 +133,12 @@ const ViewMyTask = ({show, onShow}: Props) => {
                   style={{
                     border: '1px solid  #F1F1F2',
                   }}
-                  className='d-flex justify-content-start rounded-5 align-items-center gap-16px py-8px'
+                  className='d-flex justify-content-start rounded-8 align-items-center gap-16px py-8px'
                 >
                   <Icons name={'FileMyTask'} />
                   <div className='d-flex flex-column gay-4px'>
-                    <h1 className='fs-12 test-gray-900 fw-semibold p-0 m-0'>{e.name}</h1>
-                    <p className='fs-12  test-gray-400 fw-semibold p-0 m-0'>
+                    <h1 className='fs-12 text-gray-900 fw-semibold p-0 m-0'>{e.name}</h1>
+                    <p className='fs-12 text-B5B5C3 fw-semibold p-0 m-0'>
                       {convertSize(Number(e.size) || 0)}
                     </p>
                   </div>
@@ -153,7 +149,7 @@ const ViewMyTask = ({show, onShow}: Props) => {
         </div>
       </div>
       <div
-        className='p-30px d-flex justify-content-end gap-16px'
+        className='p-30px d-flex justify-content-end gap-8px'
         style={{
           borderTop: '1px solid  #F1F1F2',
         }}
