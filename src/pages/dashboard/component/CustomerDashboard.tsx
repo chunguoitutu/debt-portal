@@ -113,7 +113,6 @@ const CustomerListingDashboard: React.FC<Props> = ({className}) => {
   const renderRows = () => {
     return data.map((item, idx) => {
       const customer_no = item.customer_no
-      console.log(item)
       return (
         <tr key={idx}>
           {rows.map(

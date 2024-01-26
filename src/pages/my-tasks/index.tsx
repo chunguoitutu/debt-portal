@@ -66,7 +66,7 @@ function MyTasks() {
               value={values.startDate}
               onChange={handleChange}
               type='date'
-              style={{maxWidth: '147px'}}
+              style={{maxWidth: '155px'}}
             />
             <p className='text-gray-700  fw-semibold fs-16 p-0 m-0 '>to</p>
             <Input
@@ -75,7 +75,7 @@ function MyTasks() {
               value={values.endDate}
               onChange={handleChange}
               type='date'
-              style={{maxWidth: '147px'}}
+              style={{maxWidth: '160px'}}
             />
 
             <Button
@@ -90,9 +90,6 @@ function MyTasks() {
             <Button
               type='reset'
               onClick={() => {
-                console.log(values)
-                console.log()
-
                 setFieldValue('endDate', moment().format('YYYY-MM-YY'))
                 setFieldValue('startDate', moment().format('YYYY-MM-YY'))
               }}

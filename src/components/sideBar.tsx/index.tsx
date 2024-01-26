@@ -12,7 +12,7 @@ const SideBar = ({Overviews, setTitle, title, children}: Props) => {
     <div className='card h-100'>
       <h1 className='m-0 pt-30px px-30px fs-20 fw-bolder'>Overview</h1>
       <div className='d-flex h-100'>
-        <div className='col-3 py-22px ps-16px  h-100'>
+        <div className='col-3 py-22px ps-16px h-100' style={{minWidth: '140px'}}>
           <div
             style={{
               borderRight: '1px solid #F1F1F2',

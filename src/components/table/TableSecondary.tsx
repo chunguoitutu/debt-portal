@@ -63,8 +63,9 @@ const TableSecondary: FC<Props> = ({
         <thead
           style={{
             zIndex: '1',
+            borderBottom: '1px solid #f1f1f4',
           }}
-          className='position-sticky z-3 top-0 bg-white border-bottom border-gray-200'
+          className='position-sticky z-3 top-0 bg-white'
         >
           <tr className='text-start text-muted fw-bold fs-6 text-uppercase'>
             {ROW_LISTING.map((el, i) => {
@@ -74,7 +75,7 @@ const TableSecondary: FC<Props> = ({
               return (
                 <th
                   className={clsx([
-                    'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 test-gray-600',
+                    'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 text-gray-600',
                     isColumnLast && 'text-end pe-0',
                     isSort && 'cursor-pointer',
                     classNameTableHead,
@@ -96,7 +97,7 @@ const TableSecondary: FC<Props> = ({
                   'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 text-end',
                 ])}
               >
-                Actions
+                Action
               </th>
             )}
           </tr>

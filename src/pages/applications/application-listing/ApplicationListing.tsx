@@ -945,7 +945,7 @@ const ApplicationListing = () => {
                       )
                     })}
                   {showAction && (
-                    <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Actions</th>
+                    <th className='text-center w-125px fs-6 fw-bold pt-2 pb-2'>Action</th>
                   )}
                 </tr>
               </thead>
