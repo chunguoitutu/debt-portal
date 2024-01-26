@@ -1,11 +1,10 @@
 import request from '.'
+import {RoleItem} from '../types'
 import {
   DataResponse,
   LoginInfo,
   LoginResponse,
-  RoleInfo,
   SearchCriteria,
-  UpdateById,
   UpdatePasswordInfo,
   UpdateUserResponse,
   UserInfo,
@@ -38,22 +37,12 @@ export function updatePasswordCurrentUser(updatePasswordInfo: UpdatePasswordInfo
 
 export function getRoleList() {
   const endPoint = '/config/role'
-  return request.get<DataResponse<RoleInfo[]>>(endPoint)
+  return request.get<DataResponse<RoleItem[]>>(endPoint)
 }
 
 export function deleteRoleById(id: number) {
   const endPoint = `/config/role/${id}`
   return request.delete(endPoint)
-}
-
-export function createNewRole(data: Omit<RoleInfo, 'id'> & {company_id: number}) {
-  const endPoint = '/config/role'
-  return request.post(endPoint, data)
-}
-
-export function updateRole({data, id}: UpdateById<Omit<RoleInfo, 'id'>>) {
-  const endPoint = `/config/role/${id}`
-  return request.put(endPoint, data)
 }
 
 export function getUserList(searchCriteria: SearchCriteria) {

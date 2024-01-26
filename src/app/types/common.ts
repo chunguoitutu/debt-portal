@@ -144,7 +144,7 @@ export type ResponseBorrowerListing = {
   searchBar?: string
 }
 
-export type TableRow<T> = {
+export type TableRow<T = string> = {
   key: T
   name: string
   color?: string

@@ -300,6 +300,7 @@ export const Applications = () => {
         approval, // only approval (status = 3)
         rejection, // only rejected (status = 2)
         cpf,
+        tools,
       } = data.data || ({} as ApplicationPayload & {[key: string]: any})
 
       // set recently viewed application
@@ -307,9 +308,10 @@ export const Applications = () => {
         SESSION_NAME.recentlyViewedApplicationId,
         JSON.stringify(applicationIdEdit)
       )
+      console.log(tools)
 
       setTools(
-        data?.tools || {
+        tools || {
           Google: '',
           UN: '',
           CAS: '',

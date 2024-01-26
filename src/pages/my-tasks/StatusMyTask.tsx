@@ -8,7 +8,7 @@ type Props = {
 
 const StatusMyTasks = ({value, onChange}: Props) => {
   return (
-    <div className='d-flex gap-16px  align-items-center'>
+    <div className='d-flex gap-24px align-items-center'>
       {priorityMyTasks.map((data, index) => {
         return (
           <Checkbox

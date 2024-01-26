@@ -2,7 +2,7 @@ type Props = {}
 
 const PeopleMyTasks = (props: Props) => {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' width='17' height='18' viewBox='0 0 17 18' fill='none'>
+    <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 17 18' fill='none'>
       <path
         d='M7.22535 8.12253C9.1638 8.12253 10.7352 6.55111 10.7352 4.61266C10.7352 2.67421 9.1638 1.10278 7.22535 1.10278C5.2869 1.10278 3.71548 2.67421 3.71548 4.61266C3.71548 6.55111 5.2869 8.12253 7.22535 8.12253Z'
         stroke='#071437'

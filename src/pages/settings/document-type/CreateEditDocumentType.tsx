@@ -149,7 +149,7 @@ const CreateEditDocumentType = ({data, handleClose, handleUpdated}: Props) => {
                         key={key}
                         name={key}
                         label={name}
-                        checked={values[key]}
+                        checked={!!values[key]}
                         onChange={handleChange}
                         subTextWhenChecked={subTextWhenChecked}
                         subTextWhenNoChecked={subTextWhenNoChecked}
