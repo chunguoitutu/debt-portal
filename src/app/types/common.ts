@@ -155,7 +155,7 @@ export type TableRow<T = string> = {
   isHide?: boolean // hide io table listing
   defaultShow?: boolean
   options?: Option[]
-  format?: 'money' | 'date' | 'option'
+  format?: 'money' | 'date' | 'option' | 'percent' | "phone"
   infoCreateEdit?: {
     className?: string
     type?: HTMLInputTypeAttribute

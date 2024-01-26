@@ -52,13 +52,17 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig<keyof DocumentTypeItem> = {
 
     {
       classNameTableHead: 'w-200px align-items-center min-w-150px',
+      classNameTableBody: 'text-end',
       key: 'created_date',
       name: 'Created Date',
+      format: 'date',
     },
     {
       classNameTableHead: 'w-200px align-items-center min-w-150px',
+      classNameTableBody: 'text-end',
       key: 'updated_date',
       name: 'Updated Date',
+      format: 'date',
     },
     {
       classNameTableHead: 'w-200px text-center min-w-150px',

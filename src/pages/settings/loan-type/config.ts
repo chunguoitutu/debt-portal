@@ -57,6 +57,7 @@ export const LOAN_TYPE_CONFIG: TableConfig<keyof LoanTypeItem> = {
       classNameTableHead: 'w-200px mt-3 pe-3 min-w-100px',
       key: 'interest',
       name: 'Default Interest',
+      format: 'percent',
       infoCreateEdit: {
         typeComponent: 'input',
         type: 'number',
@@ -68,6 +69,7 @@ export const LOAN_TYPE_CONFIG: TableConfig<keyof LoanTypeItem> = {
       classNameTableHead: 'w-200px ps-7 min-w-120px',
       key: 'quota_new',
       name: 'Quota New',
+      format: 'money',
       infoCreateEdit: {
         typeComponent: 'input',
         type: 'number',
@@ -79,6 +81,7 @@ export const LOAN_TYPE_CONFIG: TableConfig<keyof LoanTypeItem> = {
       classNameTableHead: 'w-200px ps-7 min-w-150px',
       key: 'quota_existing',
       name: 'Quota Existing',
+      format: 'money',
       infoCreateEdit: {
         typeComponent: 'input',
         type: 'number',
@@ -90,6 +93,7 @@ export const LOAN_TYPE_CONFIG: TableConfig<keyof LoanTypeItem> = {
       classNameTableHead: 'w-200px pe-3 min-w-150px',
       key: 'quota_foreigner',
       name: 'Quota Foreigner',
+      format: 'money',
       infoCreateEdit: {
         typeComponent: 'input',
         type: 'number',
@@ -101,6 +105,7 @@ export const LOAN_TYPE_CONFIG: TableConfig<keyof LoanTypeItem> = {
       classNameTableHead: 'w-200px pe-3 min-w-120px',
       key: 'late_fee',
       name: 'Monthly Late Fee',
+      format: 'money',
       infoCreateEdit: {
         typeComponent: 'input',
         type: 'number',
@@ -112,6 +117,7 @@ export const LOAN_TYPE_CONFIG: TableConfig<keyof LoanTypeItem> = {
       classNameTableHead: 'w-200px pe-3 min-w-120px',
       key: 'late_interest',
       name: 'Late Interest per month',
+      format: 'percent',
       infoCreateEdit: {
         typeComponent: 'input',
         type: 'number',

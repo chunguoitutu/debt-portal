@@ -108,6 +108,7 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
         name: 'Telephone',
         type: 'phone',
         typeComponent: 'input',
+        format: 'phone',
       },
       {
         key: 'email',
@@ -117,6 +118,7 @@ export function CREATE_COMPANY_CONFIG(type: 'Organization' | 'Business Unit') {
       },
       {
         key: 'open_date',
+        format: 'date',
         name: 'Open Date',
         type: 'date',
         required: true,

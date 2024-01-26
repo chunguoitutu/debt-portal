@@ -49,6 +49,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig<keyof CompanyItem> = {
       key: 'telephone',
       isHide: true,
       name: 'Telephone',
+      format: 'phone',
     },
     {
       key: 'email',
@@ -58,6 +59,7 @@ export const COMPANY_TABLE_CONFIG: TableConfig<keyof CompanyItem> = {
     {
       key: 'open_date',
       name: 'Open Date',
+      format: 'date',
       classNameTableHead: 'w-250px pe-3 text-end',
       classNameTableBody: 'text-end',
     },

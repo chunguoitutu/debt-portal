@@ -13,7 +13,7 @@ import {KTCardBody} from '../../_metronic/helpers'
 import clsx from 'clsx'
 import {SearchCriteria, TableConfig} from '@/app/types'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
-import {convertErrorMessageResponse, formatMoney} from '@/app/utils'
+import {convertErrorMessageResponse, formatDate, formatMoney} from '@/app/utils'
 
 type Props = {
   config: TableConfig
@@ -280,59 +280,23 @@ const Table: FC<Props> = ({
                             )
                           }
 
-                          if (['created_date', 'updated_date'].includes(key)) {
-                            return (
-                              <td className='fs-14 fw-semibold' key={index}>
-                                {moment(value).format('DD MMM, YYYY')}
-                              </td>
-                            )
-                          }
-
-                          if (
-                            ['quota_new', 'quota_existing', 'quota_foreigner', 'late_fee'].includes(
-                              key
-                            )
-                          ) {
-                            return (
-                              <td className='fs-14 fw-semibold text-end' key={index}>
-                                {formatMoney(value)}
-                              </td>
-                            )
-                          }
-
-                          if (['open_date'].includes(key)) {
-                            return (
-                              <td className={`fs-14 fw-semibold ${classNameTableBody}`} key={index}>
-                                {moment(value).format('DD MMM, YYYY')}
-                              </td>
-                            )
-                          }
-
-                          if (['late_interest', 'interest'].includes(key)) {
-                            return (
-                              <td className={`fs-14 fw-semibold text-end`} key={index}>
-                                {value !== null && value !== undefined ? `${value}%` : ''}
-                              </td>
-                            )
-                          }
-
-                          if (key === 'telephone') {
-                            return (
-                              <td
-                                className='fs-14 fw-semibold'
-                                style={{color: 'rgb(120, 130, 157)'}}
-                                key={index}
-                              >
-                                {value ? `+65${value}` : ''}
-                              </td>
-                            )
-                          }
-
-                          if (format === 'option') {
-                            const labelMatch =
-                              options?.find((o) => o?.value?.toString() === item?.[key]?.toString())
-                                ?.label || ''
-                            value = labelMatch
+                          switch (format) {
+                            case 'date':
+                              value = formatDate('DD MMM, YYYY')
+                              break
+                            case 'money':
+                              value = formatMoney(+value)
+                              break
+                            case 'option':
+                              const label = options?.find((o) => o?.value === value)?.label || ''
+                              value = label
+                              break
+                            case 'percent':
+                              value = value ? `${value}%` : ''
+                            case 'phone':
+                              value = value ? `+65${value}` : ''
+                            default:
+                              break
                           }
 
                           if (component) {
