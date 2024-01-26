@@ -4,36 +4,25 @@ import moment from 'moment'
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {KTIcon} from '@/_metronic/helpers'
-import {COMPANY_TABLE_CONFIG} from './config'
+import clsx from 'clsx'
+import {formatDate} from '@/app/utils'
+import {CompanyItem} from '@/app/types'
 
 interface IProps {
-  show: boolean
-  data: any
+  data: CompanyItem
   handleClose: () => void
-  handleCloseShowEdit: () => void
-
-  id: Number
-  searchCriterias?: any
+  handleShowEdit: () => void
   sttTable?: number
 }
 
-const CompanyDetail = ({
-  data = {},
-  handleCloseShowEdit,
-  handleClose,
-  show,
-  searchCriterias,
-  sttTable,
-}: IProps) => {
-  const {rows} = COMPANY_TABLE_CONFIG
-
+const CompanyDetails = ({data, handleShowEdit, handleClose, sttTable}: IProps) => {
   return (
     <Modal
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
       dialogClassName='modal-dialog modal-dialog-centered mw-modal-1000px '
-      show={show}
+      show={true}
       onHide={handleClose}
       animation={true}
     >
@@ -45,19 +34,22 @@ const CompanyDetail = ({
       </div>
       <div className='d-flex align-items-center justify-content-center'>
         <div
-          style={{maxHeight: 'calc(100vh - 250px)', overflow: 'auto'}}
-          className=' py-30px ps-30px pe-30px w-100'
+          style={{maxHeight: 'calc(100vh - 250px)'}}
+          className='overflow-x-auto py-30px ps-30px pe-30px w-100'
         >
           <div className='d-flex justify-content-start p-0 m-0 mb-30px '>
             <div className='icons-company-detail p-12px m-0 gap-8 d-flex justify-content-center align-items-center flex-column bg-gray-100'>
               <Icons name={'Home'} />
             </div>
             <div className='ps-24px'>
-              {data?.status === 1 ? (
-                <div className='badge fs-7 fw-semibold badge-light-success'>Active</div>
-              ) : (
-                <div className='badge fs-7 fw-semibold badge-light-danger'>Disable</div>
-              )}
+              <div
+                className={clsx([
+                  'badge fs-7 fw-semibold',
+                  data?.status === 1 ? 'badge-light-success' : 'badge-light-danger',
+                ])}
+              >
+                {data?.status === 1 ? 'Active' : 'Disable'}
+              </div>
               <div>
                 <h1 className='text-capitalize fs-14 fw-semibold color-company-detail mt-4px mb-0'>
                   Business Unit Name
@@ -113,12 +105,7 @@ const CompanyDetail = ({
                 ID
               </h1>
               <p className='p-0 m-0 fs-16 h-100  text-uppercase fw-semibold text-gray-800'>
-                {JSON.stringify(
-                  Number(sttTable) +
-                    1 +
-                    (Number(searchCriterias.currentPage) * Number(searchCriterias.pageSize) -
-                      Number(searchCriterias.pageSize))
-                )}
+                {sttTable}
               </p>
             </div>
             <div className=' h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
@@ -141,7 +128,7 @@ const CompanyDetail = ({
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 License Number
               </h1>
-              <p className='p-0  h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
+              <div className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
                 {!!data?.license_no ? (
                   <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
                     {data?.license_no}
@@ -151,7 +138,7 @@ const CompanyDetail = ({
                     None
                   </p>
                 )}
-              </p>
+              </div>
             </div>
           </div>
 
@@ -186,15 +173,16 @@ const CompanyDetail = ({
               <h1 className='text-capitalize fs-14  fw-semibold color-company-detail m-0 p-0'>
                 License Expiry Date
               </h1>
-              {!!data?.license_expiry_date ? (
-                <p className='p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800'>
-                  {moment(data?.license_expiry_date).format('MMM DD, YYYY')}
-                </p>
-              ) : (
-                <p className='text-capitalize none-company-detail  m-0 p-0 h-100 fs-16 fw-semibold text-gray-800 font-italic'>
-                  None
-                </p>
-              )}
+              <p
+                className={clsx([
+                  'p-0 h-100 m-0 fs-16 text-capitalize fw-semibold text-gray-800',
+                  !data?.license_expiry_date && 'none-company-detail font-italic',
+                ])}
+              >
+                {data?.license_expiry_date
+                  ? formatDate(data?.license_expiry_date, 'MMM DD, YYYY')
+                  : 'None'}
+              </p>
             </div>
 
             <div className='h-100 wrapper-company-detail d-flex flex-column gap-4 justify-content-center align-items-start'>
@@ -206,15 +194,7 @@ const CompanyDetail = ({
                   href={`https://${data.web_url}`}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='fs-16 fw-semibold text-gray-800 text-hover-primary'
-                  style={{
-                    cursor: 'pointer',
-                    maxWidth: '210px',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: 'inline-block',
-                  }}
+                  className='fs-16 fw-semibold text-gray-800 text-hover-primary text-truncate cursor-pointer mw-200px'
                 >
                   {data?.web_url}
                 </a>
@@ -227,6 +207,8 @@ const CompanyDetail = ({
           </div>
         </div>
       </div>
+
+      {/* Action */}
       <div className='d-flex flex-end py-30px ps-30px pe-30px border-top border-gray-200'>
         <Button
           type='reset'
@@ -235,15 +217,11 @@ const CompanyDetail = ({
         >
           Cancel
         </Button>
-        <Button
-          className='btn-lg btn-primary fs-6'
-          type='submit'
-          onClick={() => handleCloseShowEdit()}
-        >
+        <Button className='btn-lg btn-primary fs-6' type='submit' onClick={handleShowEdit}>
           Edit Business Unit
         </Button>
       </div>
     </Modal>
   )
 }
-export default CompanyDetail
+export default CompanyDetails

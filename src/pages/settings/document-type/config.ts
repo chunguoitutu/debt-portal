@@ -1,9 +1,9 @@
-import { TableConfig } from '@/app/types'
+import {DocumentTypeItem, TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
-import { CheckboxRounded } from '@/components/checkbox'
+import {CheckboxRounded} from '@/components/checkbox'
+import * as Yup from 'yup'
 
-export const DOCUMENT_TABLE_CONFIG: TableConfig = {
-  endpoint: 'config/document_type',
+export const DOCUMENT_TABLE_CONFIG: TableConfig<keyof DocumentTypeItem> = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -14,6 +14,14 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
     messageDeleteSuccess: 'Document Type "/%/" successfully deleted',
     buttonAddNew: 'New Document',
     showMessageTitle: 'type_name',
+    endpoint: 'config/document_type',
+    validation: Yup.object().shape({
+      type_name: Yup.string()
+        .trim()
+        .required('Document Type is required')
+        .max(255, 'Document Type must be at most 255 characters'),
+      description: Yup.string().trim().max(1024, 'Description must be at most 1024 characters'),
+    }),
   },
   rows: [
     {
@@ -27,9 +35,9 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       name: 'Document Type',
       color: '#252F4A',
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
+        typeComponent: 'input',
+        type: 'text',
+        required: true,
       },
     },
     {
@@ -37,6 +45,9 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
+      infoCreateEdit: {
+        typeComponent: 'textarea',
+      },
     },
 
     {
@@ -59,6 +70,8 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
         component: CheckboxRounded,
         subTextWhenChecked: 'Yes',
         subTextWhenNoChecked: 'No',
+        defaultValue: 0,
+        className: 'w-fit-content',
       },
     },
     {
@@ -66,6 +79,12 @@ export const DOCUMENT_TABLE_CONFIG: TableConfig = {
       key: 'status',
       name: 'Status',
       component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        defaultValue: 1,
+        className: 'w-fit-content',
+      },
     },
   ],
 }

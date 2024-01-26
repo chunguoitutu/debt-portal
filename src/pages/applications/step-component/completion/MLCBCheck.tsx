@@ -6,7 +6,7 @@ type Props = {
 const MLCBCheck = ({data, config}: Props) => {
   return (
     <div className='fw-semibold pt-4px pt-0 px-0 m-0 min-h-20px text-gray-900 fs-14'>
-      {!!data[config.key] ? 'Opt-in consent to disclose information to MLCB and SMECB ' : ''}
+      {!!data?.[config.key] ? 'Opt-in consent to disclose information to MLCB and SMECB ' : ''}
     </div>
   )
 }

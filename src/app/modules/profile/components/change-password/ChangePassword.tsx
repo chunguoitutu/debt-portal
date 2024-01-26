@@ -4,7 +4,7 @@ import {FormikHelpers, useFormik} from 'formik'
 import * as Yup from 'yup'
 import Button from '@/components/button/Button'
 import {Input} from '@/components/input'
-import {convertErrorMessageResponse, convertMessageErrorPassword} from '@/app/utils'
+import {convertErrorMessageResponse, convertFieldPassword} from '@/app/utils'
 import {useAuth} from '@/app/context/AuthContext'
 import {UpdatePasswordInfo} from '@/app/types'
 import {updatePasswordCurrentUser} from '@/app/axios/request'
@@ -34,17 +34,17 @@ const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]
 
 const passwordFormValidationSchema = Yup.object().shape({
   new_password: Yup.string()
-    .matches(regexPassword, convertMessageErrorPassword('New Password'))
+    .matches(regexPassword, convertFieldPassword('New Password'))
     .required('New Password is required'),
   confirm_new_password: Yup.string()
-    .matches(regexPassword, convertMessageErrorPassword('Confirm New Password'))
+    .matches(regexPassword, convertFieldPassword('Confirm New Password'))
     .required('Confirm New Password is required')
     .oneOf([Yup.ref('new_password')], 'Confirm New Password must match'),
 })
 
 const oldPasswordValidationSchema = Yup.object().shape({
   old_password: Yup.string()
-    .matches(regexPassword, convertMessageErrorPassword('Current Password'))
+    .matches(regexPassword, convertFieldPassword('Current Password'))
     .required('Current Password is required'),
 })
 

@@ -18,7 +18,7 @@ import {KTIcon} from '@/_metronic/helpers'
 import {
   PROPERTY_TYPE,
   capitalizeFirstText,
-  convertMessageErrorRequired,
+  convertFieldRequired,
   convertResidentialTypeSingPass,
   getIdDefault,
   isFirstGetStepApplication,
@@ -144,7 +144,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
           const monthsDiff = dateSelected.diff(dateNext2Months, 'months', true)
 
           if (!value) {
-            return convertMessageErrorRequired('ID Expired')
+            return convertFieldRequired('ID Expired')
           }
 
           if (monthsDiff <= 0) {
@@ -392,7 +392,7 @@ const GeneralInformation: FC<PropsStepApplication> = (props) => {
       setFieldValue('lastname', data?.data.lastname || '', true)
       setFieldValue('customer_no', data?.data.customer_no || '', true)
       setFieldValue('residential_type', data?.data.borrower[0]?.residential_type || '', true)
-      setFieldValue('identification_type', data?.data.identification_type || '', true)
+      setFieldValue('identification_type', data?.data?.identification_type || '', true)
       setFieldValue('gender', data?.data.gender || '', true)
       setFieldValue('date_of_birth', formattedDateOfBirth || '', true)
       setFieldValue('country_id', data?.data.country_id || '', true)

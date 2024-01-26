@@ -1,9 +1,9 @@
-import {TableConfig} from '@/app/types'
+import {JobTypeItem, TableConfig} from '@/app/types'
 import Badge from '@/components/badge/Badge'
 import {CheckboxRounded} from '@/components/checkbox'
+import * as Yup from 'yup'
 
-export const JOB_TABLE_CONFIG: TableConfig = {
-  endpoint: 'config/job_type',
+export const JOB_TABLE_CONFIG: TableConfig<keyof JobTypeItem> = {
   settings: {
     showAction: true,
     showEditButton: true,
@@ -14,6 +14,14 @@ export const JOB_TABLE_CONFIG: TableConfig = {
     messageDeleteSuccess: 'Job type "/%/" successfully deleted',
     buttonAddNew: 'New Job',
     showMessageTitle: 'job_type_name',
+    endpoint: 'config/job_type',
+    validation: Yup.object().shape({
+      job_type_name: Yup.string()
+        .trim()
+        .required('Job Type is required')
+        .max(255, 'Job Type must be at most 255 characters'),
+      description: Yup.string().trim().max(1024, 'Description must be at most 1024 characters'),
+    }),
   },
   rows: [
     {
@@ -27,9 +35,9 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       name: 'Job Type',
       color: '#252F4A',
       infoCreateEdit: {
-        type: 'input',
-        typeInput: 'text',
-        isRequired: true,
+        typeComponent: 'input',
+        type: 'text',
+        required: true,
       },
     },
     {
@@ -37,6 +45,9 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       classNameTableBody: 'four-line',
       key: 'description',
       name: 'Description',
+      infoCreateEdit: {
+        typeComponent: 'textarea',
+      },
     },
     // {
     //   classNameTableHead: 'w-50 w-70px',
@@ -53,6 +64,7 @@ export const JOB_TABLE_CONFIG: TableConfig = {
         component: CheckboxRounded,
         subTextWhenChecked: 'Yes',
         subTextWhenNoChecked: 'No',
+        defaultValue: 0,
       },
     },
     {
@@ -65,6 +77,8 @@ export const JOB_TABLE_CONFIG: TableConfig = {
         component: CheckboxRounded,
         subTextWhenChecked: 'Yes',
         subTextWhenNoChecked: 'No',
+        className: 'w-fit-content',
+        defaultValue: 0,
       },
     },
     {
@@ -72,6 +86,12 @@ export const JOB_TABLE_CONFIG: TableConfig = {
       key: 'status',
       name: 'Status',
       component: Badge,
+      infoCreateEdit: {
+        typeComponent: 'checkbox-rounded',
+        component: CheckboxRounded,
+        className: 'w-fit-content',
+        defaultValue: 1,
+      },
     },
   ],
 }

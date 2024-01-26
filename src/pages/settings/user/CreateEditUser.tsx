@@ -1,90 +1,67 @@
-import {FC, Fragment, useEffect, useMemo, useState} from 'react'
-import clsx from 'clsx'
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import {ChangeEvent, FC, Fragment, useEffect, useMemo, useState} from 'react'
+import {Modal} from 'react-bootstrap'
 import {useFormik} from 'formik'
-
-import {TableConfig, TableRow, UserInfo} from '@/app/types'
-import {useAuth} from '@/app/context/AuthContext'
 import request from '@/app/axios'
 import {swalToast} from '@/app/swal-notification'
-import {DEFAULT_MSG_ERROR} from '@/app/constants'
-import Modal from '@/components/modal/Modal'
-import ErrorMessage from '@/components/error/ErrorMessage'
+import {KTIcon} from '@/_metronic/helpers'
+import {TextArea} from '@/components/textarea'
+import {Input} from '@/components/input'
 import Button from '@/components/button/Button'
-import {COUNTRY_PHONE_CODE, convertErrorMessageResponse} from '@/app/utils'
-import Tippy from '@tippyjs/react'
+import {
+  COUNTRY_PHONE_CODE,
+  convertErrorMessageResponse,
+  convertFieldPassword,
+  convertFieldRequired,
+} from '@/app/utils'
+import {DataResponse, TableRow, UserItem} from '@/app/types'
+import {CheckboxRounded} from '@/components/checkbox'
+import clsx from 'clsx'
+import {USER_TABLE_CONFIG} from './config'
 import {Select} from '@/components/select'
+import {useAuth} from '@/app/context/AuthContext'
+import Tippy from '@tippyjs/react'
+import {regexPassword} from '@/app/constants'
 
 type Props = {
-  config?: TableConfig
-  data?: UserInfo
-  show: boolean
-  onClose: () => void
-  onRefreshListing: () => Promise<void>
+  data?: UserItem
+  handleClose: () => void
+  handleUpdated: () => void
 }
 
-export interface CreateEditUser
-  extends Omit<
-    UserInfo,
-    | 'priority'
-    | 'role_name'
-    | 'company_name'
-    | 'id'
-    | 'status'
-    | 'permissions'
-    | 'last_login_date'
-    | 'role_id'
-    | 'company_id'
-  > {
-  password: string | undefined
-  role_id: string | number
-}
+const CreateEditUser: FC<Props> = ({handleClose, data, handleUpdated}) => {
+  const {rows, settings} = USER_TABLE_CONFIG
+  const {endpoint, validation} = settings
 
-const initialValues: CreateEditUser = {
-  firstname: '',
-  lastname: '',
-  username: '',
-  password: '',
-  role_id: '',
-  email: '',
-  telephone: '',
-  is_active: true,
-}
-
-const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListing}) => {
   const [dataOption, setDataOption] = useState<{
     [key: string]: any[]
   }>({})
 
-  const {apiCreateUser, apiUpdateUser} = config?.settings?.dependencies || {}
-  const {rows = [], settings} = config || {}
-  const {validationCreateEdit, validationEdit} = settings || {}
-
   const {currentUser, company_id} = useAuth()
 
-  const formik = useFormik<any>({
-    initialValues,
-    validationSchema: data ? validationEdit : validationCreateEdit,
-    onSubmit: handleSubmitForm,
-  })
-  const {
-    values,
-    touched,
-    errors,
-    isSubmitting,
-    handleChange,
-    handleSubmit,
-    resetForm,
-    handleBlur,
-    setValues,
-    setSubmitting,
-  } = formik
+  const generateField = useMemo(() => {
+    return rows
+      .filter((row) => row.infoCreateEdit)
+      .reduce(
+        (acc, config) => ({
+          ...acc,
+          [config.key]: data?.[config.key] ?? config.infoCreateEdit?.defaultValue ?? '',
+        }),
+        {} as UserItem
+      )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   useEffect(() => {
     if (!currentUser) return
 
     const rowHasDependencyApi = rows.filter((el) => el?.infoCreateEdit?.dependencyApi)
     const allDependencyApi = rowHasDependencyApi.map((el) =>
-      request.post(el?.infoCreateEdit?.dependencyApi as string, {company_id, status: 1})
+      request.post(el?.infoCreateEdit?.dependencyApi as string, {
+        company_id,
+      })
     )
 
     // GET all dependency of select component
@@ -100,303 +77,281 @@ const CreateEditUser: FC<Props> = ({data, show, config, onClose, onRefreshListin
         )?.key
 
         // unexpected
-        if (data.error || !keyOption || !Array.isArray(options) || !options.length) return
+        if (data.error || !keyOption || !Array.isArray(options) || !options?.length) return
 
         newDataOption = {...newDataOption, [keyOption]: options}
       })
 
       setDataOption(newDataOption)
     })
-
-    if (!data) return
-    const {firstname, lastname, username, role_id, email, telephone, is_active} = data
-
-    setValues({
-      ...values,
-      firstname,
-
-      lastname,
-      username,
-      role_id,
-      email,
-      telephone,
-      is_active: !!is_active,
-    })
-
-    return () => resetForm()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser])
 
-  const fieldAccount = ['username', 'password', 'role_id']
+  useEffect(() => {
+    registerField('password', {
+      validate(value: string) {
+        if (!value?.trim()) {
+          return !data?.id ? convertFieldRequired('Password') : setFieldValue('password', '')
+        }
 
-  const dataAccount = useMemo(() => {
-    return rows?.filter(({infoCreateEdit, key}) => fieldAccount.includes(key) && infoCreateEdit)
-  }, [rows])
-  const dataInformation = useMemo(() => {
-    return rows?.filter(({infoCreateEdit, key}) => !fieldAccount.includes(key) && infoCreateEdit)
-  }, [rows])
+        if (!value?.trim()?.match(regexPassword)) {
+          return convertFieldPassword('Password')
+        }
 
-  function handleSubmitForm(values: CreateEditUser) {
-    const mappingPayload = {
-      ...values,
-      is_active: values.is_active ? 1 : 0,
-      company_id: +company_id || 0,
-      role_id: +values.role_id,
-      telephone: values.telephone.toString(),
-      password: values.password || undefined,
+        return ''
+      },
+    })
+  }, [])
+
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    dirty,
+    handleSubmit,
+    setSubmitting,
+    handleBlur,
+    setFieldValue,
+    registerField,
+  } = useFormik<UserItem>({
+    initialValues: generateField,
+    validationSchema: validation,
+    validateOnChange: false,
+    onSubmit: handleCreateOrUpdate,
+  })
+
+  async function handleCreateOrUpdate() {
+    const payload = validation.cast(values) // automatically trim and format number (declare in validateSchema formik)
+    const newPayload = {
+      ...payload,
+      company_id,
     }
-    if (data) {
-      onUpdateUser(mappingPayload)
-    } else {
-      handleCreateUser(mappingPayload)
-    }
-  }
 
-  async function handleCreateUser(payload: CreateEditUser) {
     try {
-      const {data} = await request.post(apiCreateUser, {
-        ...payload,
-        company_id: +company_id,
-      })
+      const {data: dataRes} = data?.id
+        ? await request.put<DataResponse<UserItem>>(endpoint + '/' + data?.id, newPayload) // edit
+        : await request.post<DataResponse<UserItem>>(endpoint || '', newPayload) // create
 
-      // handle after create successfully
-      if (!data?.error) {
-        await onRefreshListing()
-        onClose()
-        const user_name = values.username
-        swalToast.fire({
-          title: `User "${user_name}" successfully created`,
-          icon: 'success',
-        })
-      } else {
-        swalToast.fire({
-          title: DEFAULT_MSG_ERROR,
+      // unknown error
+      if (dataRes?.error) {
+        return swalToast.fire({
           icon: 'error',
+          title: convertErrorMessageResponse(dataRes?.message),
         })
       }
-    } catch (error: any) {
-      const message = convertErrorMessageResponse(error)
 
+      const message = `User "${dataRes?.data?.username}" successfully ${
+        data?.id ? 'updated' : 'created'
+      }`
+
+      handleUpdated()
+      handleClose()
       swalToast.fire({
+        icon: 'success',
         title: message,
+      })
+    } catch (error) {
+      swalToast.fire({
         icon: 'error',
+        title: convertErrorMessageResponse(error),
       })
     } finally {
       setSubmitting(false)
     }
   }
 
-  async function onUpdateUser(payload: CreateEditUser) {
-    // Pass if id = 0
-    if (!data?.id) return
+  function handleChange(e: ChangeEvent<any>) {
+    const {name, type, value, checked} = e.target
 
-    try {
-      const {data: dataRes} = await request.put(apiUpdateUser + `/${data.id}`, {
-        ...payload,
-        company_id: +company_id,
-      })
-      if (!dataRes?.error) {
-        await onRefreshListing()
-        const user_name = values.username
-        onClose()
-        swalToast.fire({
-          title: `User "${user_name}" successfully updated`,
-          icon: 'success',
-        })
-      } else {
-        swalToast.fire({
-          title: "Can't update user",
-          icon: 'error',
-        })
-      }
-    } catch (error: any) {
-      const message = convertErrorMessageResponse(error)
-      swalToast.fire({
-        title: message,
-        icon: 'error',
-      })
-    } finally {
-      setSubmitting(false)
-    }
+    const newValue = type === 'checkbox' ? +checked : value
+    setFieldValue(name, newValue)
   }
 
-  function generatePropsComponent(row: TableRow) {
-    const {infoCreateEdit, key, name} = row
-    const {typeComponent, isRequired, typeInput, keyLabelOption, keyValueOption, options} =
-      infoCreateEdit || {}
+  // ====================================== RENDER JSX , handle logic above ================================
+  function renderComponent(info: TableRow<string>) {
+    const {infoCreateEdit, name, key} = info
+    const {
+      type,
+      required,
+      typeComponent,
+      column,
+      className,
+      subTextWhenChecked,
+      subTextWhenNoChecked,
+      keyLabelOption,
+      keyValueOption,
+      options,
+    } = infoCreateEdit || {}
 
-    // General props
-    let props: {[key: string]: any} = {
-      value: values[key] || '',
-      name: key,
-      onChange: handleChange,
-      onBlur: handleBlur,
+    switch (typeComponent) {
+      case 'checkbox-rounded':
+        return (
+          <div className={clsx([`col-${column || 12}`, className])} key={key}>
+            <CheckboxRounded
+              key={key}
+              name={key}
+              label={name}
+              checked={!!values[key]}
+              onChange={handleChange}
+              subTextWhenChecked={subTextWhenChecked}
+              subTextWhenNoChecked={subTextWhenNoChecked}
+              id={key}
+            />
+          </div>
+        )
+      case 'input':
+        return (
+          <div className={clsx([`col-${column || 12}`, className])} key={key}>
+            <Input
+              id={name}
+              required={key === 'password' && data?.id ? true : !!required}
+              label={name}
+              onBlur={handleBlur}
+              name={key}
+              value={values[key]}
+              type={type}
+              onChange={handleChange}
+              error={errors[key] as string}
+              touched={!!touched[key]}
+              noThereAreCommas={false}
+              autoComplete='new-password'
+              insertLeft={
+                type === 'phone' ? (
+                  <Tippy
+                    offset={[120, 0]}
+                    content='Please choose the phone number you prefer'
+                    disabled
+                  >
+                    {/* Wrapper with a span tag to show tooltip */}
+                    <span>
+                      <Select
+                        onChange={handleChange}
+                        value={values[key]}
+                        isOptionDefault={false}
+                        classShared='m-0'
+                        className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
+                        name='country_phone_code'
+                        options={COUNTRY_PHONE_CODE}
+                        disabled={true}
+                      />
+                    </span>
+                  </Tippy>
+                ) : undefined
+              }
+            />
+          </div>
+        )
+      case 'textarea':
+        return (
+          <div className={clsx([`col-${column || 12}`, className])} key={key}>
+            <TextArea
+              label={name}
+              onBlur={handleBlur}
+              name={key}
+              value={values[key] || ''}
+              onChange={handleChange}
+              error={errors[key] as string}
+              touched={!!touched[key]}
+            />
+          </div>
+        )
+      case 'select':
+        return (
+          <div className={clsx([`col-${column || 12}`, className])} key={key}>
+            <Select
+              required={required}
+              label={name}
+              name={key}
+              value={values[key] || ''}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              keyLabelOption={keyLabelOption || 'label'}
+              keyValueOption={keyValueOption || dataOption[key] ? 'id' : 'value'}
+              error={errors[key] as string}
+              touched={!!touched[key]}
+              classShared=''
+              options={dataOption[key] || options || []}
+            />
+          </div>
+        )
+      default:
+        return <Fragment key={key}></Fragment>
     }
-
-    if (typeComponent === 'input') {
-      props = {
-        ...props,
-        transparent: true,
-        required: key === 'password' && data ? false : isRequired,
-        type: typeInput,
-        label: name,
-        autoComplete: 'off',
-      }
-    }
-
-    if (typeComponent === 'select') {
-      props = {
-        ...props,
-        required: isRequired,
-        type: typeInput,
-        label: name,
-        options: dataOption[key] || options || [],
-        keyLabelOption: keyLabelOption || 'label',
-        keyValueOption: keyValueOption || dataOption[key] ? 'id' : 'value',
-        classShared: '',
-      }
-    }
-
-    if (typeComponent === 'checkbox-rounded') {
-      props = {
-        ...props,
-        checked: values[key],
-        title: name,
-      }
-
-      delete props.value
-    }
-
-    return props
   }
 
   return (
     <Modal
-      title={data ? `Edit User "${data.username}"` : 'New User'}
-      show={show || true}
-      onClose={onClose}
-      dialogClassName='mw-modal-1200px'
+      id='kt_modal_create_app'
+      tabIndex={-1}
+      style={{}}
+      aria-hidden='true'
+      dialogClassName='modal-dialog modal-dialog-centered mw-1000px'
+      show={true}
+      onHide={handleClose}
+      backdrop={true}
     >
-      <div className='py-30px ps-30px pe-30px d-flex'>
-        <div className='flex-grow-1 pe-6 border-end border-gray-200'>
-          <h3 className='mb-24px fw-bold'>Information</h3>
-          <div className='row gx-5'>
-            {dataInformation.map((item, i) => {
-              const {infoCreateEdit, key, name} = item
-              const {component, typeComponent, column, typeInput} = infoCreateEdit || {}
-
-              if (component) {
-                const Component = component as FC<any>
-                const props = generatePropsComponent(item)
-
-                if (key === 'is_active') {
-                  const Component = component as any
-                  return (
-                    <div className='mt-16px' key={i}>
-                      <Component
-                        label={name}
-                        checked={values[key]}
-                        onChange={handleChange}
-                        id={key}
-                      />
-                    </div>
-                  )
-                }
-
-                return (
-                  <div className={clsx(['mb-16px', column ? 'col-6' : 'col-12'])} key={i}>
-                    <Component
-                      {...props}
-                      transparent={false}
-                      insertLeft={
-                        typeInput === 'phone' ? (
-                          <Tippy
-                            offset={[120, 0]}
-                            content='Please choose the phone number you prefer.'
-                          >
-                            {/* Wrapper with a span tag to show tooltip */}
-                            <span>
-                              <Select
-                                disabled
-                                onChange={handleChange}
-                                value={values[key]}
-                                isOptionDefault={false}
-                                classShared='m-0'
-                                className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
-                                name='country_phone_code'
-                                options={COUNTRY_PHONE_CODE}
-                              />
-                            </span>
-                          </Tippy>
-                        ) : undefined
-                      }
-                    />
-
-                    {/* special cases not show error here */}
-                    {typeComponent && errors[key] && touched[key] && (
-                      <ErrorMessage message={errors[key] as string} />
-                    )}
-                  </div>
-                )
-              }
-
-              // unexpected
-              return <Fragment key={i} />
-            })}
-          </div>
+      {/* Header */}
+      <div className='modal-header p-30px'>
+        <h2 className='m-0'>{data?.id ? 'Edit' : 'New'} User</h2>
+        <div className='cursor-pointer p-0 m-0' onClick={handleClose}>
+          <KTIcon className='fs-1 btn-hover-close' iconName='cross' />
         </div>
+      </div>
 
-        <div className='w-300px ps-6 flex-shrink-0'>
-          <h3 className='mb-24px fw-bold'>Account</h3>
-          <div className='row gx-5 last-child-marin-0'>
-            {dataAccount.map((item, i) => {
-              const {infoCreateEdit, key, name} = item
-              const {component, typeComponent, column, isLastChild} = infoCreateEdit || {}
-
-              const Component = component as any
-
-              if (component) {
-                const Component = component as FC
-                const props = generatePropsComponent(item)
-
-                return (
-                  <div
-                    className={clsx([isLastChild ? 'm-0' : 'mb-16px', column ? 'col-6' : 'col-12'])}
-                    key={i}
-                  >
-                    <Component {...props} />
-
-                    {/* special cases not show error here */}
-                    {typeComponent && errors[key] && touched[key] && (
-                      <ErrorMessage message={errors[key] as string} />
-                    )}
+      {/* Body */}
+      <div
+        style={{maxHeight: 'calc(100vh - 240px)'}}
+        className='modal-body py-30px ps-30px pe-30px overflow-x-auto'
+      >
+        <div
+          className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
+          id='kt_modal_create_app_stepper'
+        >
+          <div className='flex-row-fluid'>
+            <form className='row gx-30px gy-16px' onSubmit={handleSubmit}>
+              <div className='col-8 border border-left-0 border-top-0 border-bottom-0 border-gray-200'>
+                <div className='row g-16px'>
+                  <div className='col-12'>
+                    <h3 className='mb-8px fw-bold'>Information</h3>
                   </div>
-                )
-              }
-
-              // unexpected
-              return <Fragment key={i} />
-            })}
+                  {rows
+                    .filter((el) => !!el.infoCreateEdit && el.infoCreateEdit?.group !== 'account')
+                    .map(renderComponent)}
+                </div>
+              </div>
+              <div className='col-4'>
+                <div className='row g-16px'>
+                  <div className='col-12'>
+                    <h3 className='mb-8px fw-bold'>Account</h3>
+                  </div>
+                  {rows
+                    .filter((el) => !!el.infoCreateEdit && el.infoCreateEdit?.group === 'account')
+                    .map(renderComponent)}
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
 
+      {/* Action */}
       <div className='d-flex flex-end py-30px ps-30px pe-30px border-top border-gray-200'>
         <Button
           type='reset'
-          onClick={() => onClose()}
+          onClick={handleClose}
+          disabled={isSubmitting}
           className='btn-lg btn-secondary align-self-center me-8px fs-6'
         >
           Cancel
         </Button>
         <Button
-          className='btn-lg btn-primary fs-6'
           type='submit'
+          className='btn-lg btn-primary fs-6'
           loading={isSubmitting}
+          disabled={isSubmitting || (data?.id && !dirty)}
           onClick={() => handleSubmit()}
         >
-          {data ? 'Update' : 'Create'}
+          {data?.id ? 'Update' : 'Create'}
         </Button>
       </div>
     </Modal>

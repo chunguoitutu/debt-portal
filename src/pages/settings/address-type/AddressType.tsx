@@ -2,55 +2,45 @@ import {useState} from 'react'
 
 import Table from '@/components/table/Table'
 import {ADDRESS_TABLE_CONFIG} from './config'
-import {CreateEditAddress} from './CreateEditAddress'
+import {AddressTypeItem} from '@/app/types'
+import CreateEditAddressType from './CreateEditAddressType'
 
 const AddressType = () => {
-  const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
-  const [loadapi, setLoadApi] = useState<boolean>(false)
-  const [dataItem, setDataItem] = useState({})
-  const [editShowCreateAppModal, setEditShowCreateAppModal] = useState<boolean>(false)
+  const [dataItem, setDataItem] = useState<AddressTypeItem | null>(null)
+  const [showPopup, setShowPopup] = useState<boolean>(false)
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
-  function handleEditItem(item: any) {
-    setEditShowCreateAppModal(true)
-    setDataItem(item)
+  function handleShowPopup(item?: AddressTypeItem) {
+    setShowPopup(true)
+    item && setDataItem(item)
+  }
+
+  function handleAfterUpdate() {
+    setIsUpdated(true)
+  }
+
+  function handleClosePopup() {
+    setShowPopup(false)
+    setDataItem(null)
   }
 
   return (
     <>
-      <div>
-        {showCreateAppModal && (
-          <CreateEditAddress
-            setLoadApi={setLoadApi}
-            loadapi={loadapi}
-            show={showCreateAppModal}
-            handleClose={() => setShowCreateAppModal(false)}
-            handleUpdated={() => setIsUpdated(true)}
-          />
-        )}
-        <Table
-          config={ADDRESS_TABLE_CONFIG}
-          onEditItem={handleEditItem}
-          isUpdated={isUpdated}
-          setIsUpdated={setIsUpdated}
-          handleAddNew={() => setShowCreateAppModal(!showCreateAppModal)}
-        />
-      </div>
-
-      {editShowCreateAppModal ? (
-        <CreateEditAddress
-          setLoadApi={setLoadApi}
-          loadapi={loadapi}
-          show={editShowCreateAppModal}
-          titleLable='Edit'
+      {showPopup && (
+        <CreateEditAddressType
           data={dataItem}
-          handleClose={() => {
-            setEditShowCreateAppModal(false)
-            setDataItem({})
-          }}
-          handleUpdated={() => setIsUpdated(true)}
+          handleClose={handleClosePopup}
+          handleUpdated={handleAfterUpdate}
         />
-      ) : null}
+      )}
+
+      <Table
+        config={ADDRESS_TABLE_CONFIG}
+        onEditItem={handleShowPopup}
+        isUpdated={isUpdated}
+        setIsUpdated={setIsUpdated}
+        handleAddNew={() => handleShowPopup()}
+      />
     </>
   )
 }

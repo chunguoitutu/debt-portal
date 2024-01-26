@@ -32,3 +32,5 @@ export const GLOBAL_CONSTANTS = {
   loanConfigColumn: 'loan-config-column',
   borrowerConfigColumn: 'borrower-config-column',
 }
+
+export const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/gi

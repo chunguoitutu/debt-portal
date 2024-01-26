@@ -30,7 +30,7 @@ const RenderOptionsApi = ({config, data}: Props) => {
   }
 
   const lable: any = dataLoanType.filter(
-    (d: any) => Number(d[config.keyFilter]) === Number(data[config.key])
+    (d: any) => Number(d[config.keyFilter]) === Number(data?.[config.key])
   )
 
   return (

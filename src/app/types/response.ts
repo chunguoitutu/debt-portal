@@ -28,13 +28,3 @@ export type RejectedInfo = {
   updated_at: string
   rejected_reason: string
 }
-
-export type AddressTypeItem = {
-  id: number
-  address_type_name: string
-  description: string
-  status: number
-  delete_at: string | null
-  deleted: number
-  is_default: number
-}
