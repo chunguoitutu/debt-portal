@@ -1,7 +1,6 @@
 import {Navigate, Outlet} from 'react-router-dom'
 import logo from './../../app/images/logoMC.png'
 import Cookies from 'js-cookie'
-import {FooterWrapper} from '@/components/footer'
 import './style.scss'
 
 const AuthLayout = () => {

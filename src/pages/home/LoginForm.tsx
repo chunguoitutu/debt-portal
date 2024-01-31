@@ -1,20 +1,12 @@
+import {useShared} from '@/app/context/SharedContext'
+import {HomeProps} from '@/app/types'
 import Button from '@/components/button/Button'
 import {Input} from '@/components/input'
 import clsx from 'clsx'
 import {useFormik} from 'formik'
-import {useEffect, useState} from 'react'
+import {FC, useState} from 'react'
 
-const LoginForm = () => {
-  const [className, setClassName] = useState<string>('')
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setClassName('show')
-  //   }, 300)
-
-  //   return () => clearTimeout(timer)
-  // }, [])
-
+const LoginForm: FC<HomeProps> = ({screenWidth}) => {
   const {status, errors, touched, handleSubmit, getFieldProps, setStatus, setSubmitting} =
     useFormik({
       initialValues: {
@@ -23,20 +15,25 @@ const LoginForm = () => {
       },
       onSubmit: () => {},
     })
+
+  const {showLoginForm} = useShared()
+
   return (
     <div
       className={clsx([
-        'card d-flex flex-column gap-24px p-30px py-lg-60px px-lg-80px align-self-center dashboard-animation fade w-100 w-lg-fit-content',
-        className,
+        'card d-flex flex-column gap-24px p-30px py-lg-60px px-lg-80px align-self-center login-form fade w-100 w-lg-fit-content',
+        showLoginForm ? 'viewed' : 'visibility-hidden',
+        screenWidth < 992 && 'order-1',
+        !showLoginForm && screenWidth < 992 && 'position-absolute z-index-negative',
       ])}
     >
       <h3 className='m-0 text-gray-900 fw-bold fs-26 text-center'>Sign in</h3>
 
       <Button
-        className='btn-light btn-active-light-primary'
-        onClick={() => {
-          alert('This feature is not available.')
-        }}
+        className='btn btn-light btn-active-light-primary cursor-pointer'
+        // onClick={() => {
+        //   alert('This feature is not available.')
+        // }}
       >
         Sign In With Singpass
       </Button>
@@ -67,6 +64,7 @@ const LoginForm = () => {
       </div>
 
       <Button
+        className='btn-primary cursor-pointer'
         onClick={() => {
           alert('This feature is not available.')
         }}

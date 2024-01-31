@@ -25,7 +25,6 @@ export * from './mixed/MixedWidget15'
 export * from './lists/ListsWidget1'
 export * from './lists/ListsWidget2'
 export * from './lists/ListsWidget4'
-export * from '../../../pages/dashboard/component/UserTask'
 export * from './lists/ListsWidget6'
 export * from './lists/ListsWidget7'
 export * from './lists/ListsWidget8'
@@ -80,6 +79,3 @@ export * from './tiles/TilesWidget4'
 export * from './tiles/TilesWidget5'
 
 // new
-
-
-export * from './_new/engage/EngageWidget10'

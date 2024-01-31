@@ -110,7 +110,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         className={clsx([
           ` ${
             transparent ? 'input-advance_transparent' : 'input-advance'
-          } form-input-custom form-control form-control-lg  p-0 d-flex align-items-center overflow-hidden`,
+          } form-input-custom form-control form-control-lg p-0 d-flex align-items-center overflow-hidden form-control-solid`,
           classInputWrap,
           rest.disabled && 'disabled',
         ])}

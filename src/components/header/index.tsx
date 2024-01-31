@@ -1,10 +1,23 @@
+import {useShared} from '@/app/context/SharedContext'
 import Button from '../button/Button'
 import './style.scss'
 import logo from '@/app/images/logo-mc.png'
 
 const Header = () => {
+  const {showLoginForm, setShowLoginForm} = useShared()
+
+  function toggleFormLogin() {
+    if (!showLoginForm) {
+      window?.scroll({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
+    setShowLoginForm((prev) => !prev)
+  }
+
   return (
-    <header className='header position-sticky top-0 z-index-1 py-20px bg-black'>
+    <header className='header py-20px bg-black'>
       <div className='container d-flex align-items-center justify-content-between gap-12px gap-sm-24px'>
         <div className='d-flex align-items-center'>
           <img src={logo} alt='logo' className='w-30px object-fit-cover' />
@@ -27,7 +40,7 @@ const Header = () => {
           <Button className='border border-primary text-white bg-hover-primary'>
             Login With Singpass
           </Button>
-          <Button>Login</Button>
+          <Button onClick={toggleFormLogin}>Login</Button>
         </div>
       </div>
     </header>

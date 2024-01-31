@@ -1,4 +1,4 @@
-.dashboard {
+.home {
   .fade {
     opacity: 0;
   }
@@ -7,14 +7,19 @@
     transform: translateY(5px);
   }
 
-  .dashboard-animation {
-    &.show {
+  .home-animation,
+  .login-form {
+    &.viewed {
       transition-duration: 0.3s;
       transition-timing-function: linear;
-      transition-property: all;
+      transition-property: transform, opacity;
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  .login-form {
+    transform-origin: top right;
   }
 
   .introduce {

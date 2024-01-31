@@ -308,7 +308,6 @@ export const Applications = () => {
         SESSION_NAME.recentlyViewedApplicationId,
         JSON.stringify(applicationIdEdit)
       )
-      console.log(tools)
 
       setTools(
         tools || {
