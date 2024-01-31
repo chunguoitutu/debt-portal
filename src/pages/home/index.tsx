@@ -1,12 +1,6 @@
 import './style.scss'
-import Introduce from './Introduce'
-import FinancialInstitutions from './FinancialInstitutions'
-import Team from './Team'
-import AboutUs from './AboutUs'
-import DashboardHeader from './Header'
-import Footer from '@/components/footer'
-import Header from '@/components/header'
 import {useEffect, useState} from 'react'
+import {COMPONENT_LIST} from './config'
 
 const Home = () => {
   const [screenWidth, setScreenWidth] = useState<number>(
@@ -17,7 +11,7 @@ const Home = () => {
     const screenHeight = window.innerHeight || document.documentElement.clientHeight
 
     const handler = () => {
-      const animationList = document.querySelectorAll('.dashboard-animation')
+      const animationList = document.querySelectorAll('.home-animation')
 
       if (!animationList) return
 
@@ -26,8 +20,8 @@ const Home = () => {
         const isInViewport = !(rect.bottom < 0 || rect.top > screenHeight)
 
         if (isInViewport) {
-          const isViewed = animation.classList.contains('show')
-          !isViewed && animation.classList?.add('show')
+          const isViewed = animation.classList.contains('viewed')
+          !isViewed && animation.classList?.add('viewed')
         }
       })
     }
@@ -58,12 +52,11 @@ const Home = () => {
   }, [])
 
   return (
-    <div className='dashboard'>
-      <DashboardHeader screenWidth={screenWidth} />
-      <Introduce screenWidth={screenWidth} />
-      <FinancialInstitutions screenWidth={screenWidth} />
-      <Team screenWidth={screenWidth} />
-      <AboutUs screenWidth={screenWidth} />
+    <div className='home'>
+      {COMPONENT_LIST.map((el) => {
+        const Component = el.component
+        return <Component screenWidth={screenWidth} key={el.id} />
+      })}
     </div>
   )
 }

@@ -208,3 +208,7 @@ input:-webkit-autofill:active {
 .delay-0-2 {
   transition-delay: 0.2s !important;
 }
+
+.z-index-negative {
+  z-index: -1 !important;
+}

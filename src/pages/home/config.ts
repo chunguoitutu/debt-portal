@@ -1,3 +1,33 @@
+import {HomeComponent} from '@/app/types/home'
+import HomeHeader from './Header'
+import Introduce from './Introduce'
+import FinancialInstitutions from './FinancialInstitutions'
+import Team from './Team'
+import AboutUs from './AboutUs'
+
+export const COMPONENT_LIST: HomeComponent[] = [
+  {
+    id: 1,
+    component: HomeHeader,
+  },
+  {
+    id: 2,
+    component: Introduce,
+  },
+  {
+    id: 3,
+    component: FinancialInstitutions,
+  },
+  {
+    id: 4,
+    component: Team,
+  },
+  {
+    id: 5,
+    component: AboutUs,
+  },
+]
+
 export const INTRODUCE_LIST = [
   {
     className: 'bg-black',

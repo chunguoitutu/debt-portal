@@ -31,6 +31,7 @@ import {AuthProvider} from './app/context/AuthContext'
 import {SocketProvider} from './app/context/SocketContext'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
+import {ShareProvider} from './app/context/SharedContext'
 /**
  * Creates `axios-mock-adapter` instance for provided `axios` instance, add
  * basic Metronic mocks and returns it.
@@ -51,13 +52,15 @@ if (container) {
     <QueryClientProvider client={queryClient}>
       <MetronicI18nProvider>
         <AuthProvider>
-          <SocketProvider>
-            <PrimeReactProvider>
-              <DndProvider backend={HTML5Backend}>
-                <AppRoutes />
-              </DndProvider>
-            </PrimeReactProvider>
-          </SocketProvider>
+          <ShareProvider>
+            <SocketProvider>
+              <PrimeReactProvider>
+                <DndProvider backend={HTML5Backend}>
+                  <AppRoutes />
+                </DndProvider>
+              </PrimeReactProvider>
+            </SocketProvider>
+          </ShareProvider>
         </AuthProvider>
       </MetronicI18nProvider>
     </QueryClientProvider>

@@ -31,8 +31,8 @@ import BorrowersListing from '@/pages/borrowers/borrwers-listing/BorrowerListing
 import LoanDetails from '@/pages/loans/loan-details'
 import CaCheck from '@/pages/applications/background-check/ca-check'
 import BorrowerDetail from '@/pages/borrowers/borrowers-details'
-import Home from '@/pages/dashboard'
 import DashBoardPortal from '@/pages/dashboard-portal'
+import Home from '@/pages/home'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 

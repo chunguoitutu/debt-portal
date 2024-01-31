@@ -4,19 +4,23 @@ import LoginForm from './LoginForm'
 import dashboardImg from '@/app/images/dashboard.png'
 import {FC} from 'react'
 import clsx from 'clsx'
-import {DashboardProps} from '@/app/types'
+import {HomeProps} from '@/app/types'
 
-const DashboardHeader: FC<DashboardProps> = () => {
+const HomeHeader: FC<HomeProps> = (props) => {
+  const {screenWidth} = props
+
   return (
     <section
-      className='dashboard-block dashboard-header py-120px'
+      className='dashboard-header py-120px'
       style={{
         background: `url('${dashboardImg}') no-repeat center center / cover`,
       }}
     >
       <div className='container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-60px'>
-        <div className='d-flex flex-column gap-24px mw-600px'>
-          <div className={clsx(['dashboard-animation fade bot-to-top'])}>
+        <div
+          className={clsx(['d-flex flex-column gap-24px mw-600px', screenWidth < 992 && 'order-2'])}
+        >
+          <div className={clsx(['home-animation fade bot-to-top'])}>
             <span className='d-inline-flex align-items-center gap-16px text-white mb-16px fs-16'>
               Welcome To <span className='d-inline-block w-60px h-1px bg-white'></span>
             </span>
@@ -27,7 +31,7 @@ const DashboardHeader: FC<DashboardProps> = () => {
 
           <span
             className={clsx(
-              'fs-20 text-white text-capitalize dashboard-animation fade bot-to-top delay-0-3'
+              'fs-20 text-white text-capitalize home-animation fade bot-to-top delay-0-3'
             )}
           >
             “ With our eyes on the long-term future, we invest in tomorrow knowing that we can make
@@ -36,7 +40,7 @@ const DashboardHeader: FC<DashboardProps> = () => {
 
           <Button
             className={clsx([
-              'btn-primary w-fit-content py-12px px-20px dashboard-animation fade bot-to-top delay-0-4',
+              'btn-primary w-fit-content py-12px px-20px home-animation fade bot-to-top delay-0-4',
             ])}
             iconRight={faChevronRight}
             classNameIcon='fs-12'
@@ -45,10 +49,10 @@ const DashboardHeader: FC<DashboardProps> = () => {
           </Button>
         </div>
 
-        <LoginForm />
+        <LoginForm {...props} />
       </div>
     </section>
   )
 }
 
-export default DashboardHeader
+export default HomeHeader
