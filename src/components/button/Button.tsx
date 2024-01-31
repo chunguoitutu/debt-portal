@@ -25,9 +25,11 @@ const Button: FC<Props> = ({
 }) => {
   return (
     <button className={clsx(['btn', className])} {...rest}>
-      {iconLeft && <FontAwesomeIcon icon={iconLeft} className={clsx(['me-2', classNameIcon])} />}
+      {iconLeft && <FontAwesomeIcon icon={iconLeft} className={clsx(['me-8px', classNameIcon])} />}
       {loading ? (textLoading ? textLoading : 'Please wait...') : children}
-      {iconRight && <FontAwesomeIcon icon={iconRight} className={clsx(['ms-2', classNameIcon])} />}
+      {iconRight && (
+        <FontAwesomeIcon icon={iconRight} className={clsx(['ms-8px', classNameIcon])} />
+      )}
       {loading && <span className='spinner-border spinner-border-sm align-middle ms-2'></span>}
     </button>
   )

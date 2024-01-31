@@ -20,7 +20,6 @@ import {getCSSVariableValue} from '../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import SettingPageRouter from '../pages/settings/SettingPageRouter'
 import {Applications} from '../pages/applications'
-import {DashboardWrapper} from '../pages/dashboard'
 import Transactions from '../pages/transactions'
 import MyTasks from '../pages/my-tasks'
 import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
@@ -32,6 +31,7 @@ import BorrowersListing from '@/pages/borrowers/borrwers-listing/BorrowerListing
 import LoanDetails from '@/pages/loans/loan-details'
 import CaCheck from '@/pages/applications/background-check/ca-check'
 import BorrowerDetail from '@/pages/borrowers/borrowers-details'
+import Home from '@/pages/dashboard'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -61,9 +61,10 @@ const AppRoutes: FC = () => {
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
+          <Route path='/transactions' element={<Transactions />} />
 
           <Route element={<MasterLayout />}>
-            <Route path='dashboard' element={<DashboardWrapper />} />
+            <Route index element={<Home />} />
             <Route path='/application'>
               <Route index element={<ApplicationListing />} />
               <Route path='listing' element={<ApplicationListing />} />
@@ -80,7 +81,6 @@ const AppRoutes: FC = () => {
               <Route path='listing' element={<BorrowersListing />} />
               <Route path='details/:customerId' element={<BorrowerDetail />} />
             </Route>
-            <Route path='/transactions' element={<Transactions />} />
             <Route path='/my-tasks' element={<MyTasks />} />
             <Route path='guest' element={<Guest />} />
 

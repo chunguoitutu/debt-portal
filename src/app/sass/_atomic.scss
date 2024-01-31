@@ -19,6 +19,16 @@
   -webkit-line-clamp: 4;
 }
 
+.five-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 5;
+}
+
+.six-line {
+  @extend .multiple-line;
+  -webkit-line-clamp: 6;
+}
+
 .text-gray {
   color: #c4cada;
 }
@@ -152,4 +162,49 @@ input:-webkit-autofill:active {
 
 .font-italic {
   font-style: italic;
+}
+
+.lh-scale-1 {
+  line-height: 1 !important;
+}
+
+.lh-scale-1-5 {
+  line-height: 1.5 !important;
+}
+
+.fs-66 {
+  font-size: 5.077rem;
+}
+
+.fs-44 {
+  font-size: 3.385rem;
+}
+
+.fs-26 {
+  font-size: 2rem;
+  @extend .lh-scale-1-5;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.delay-1 {
+  transition-delay: 1s !important;
+}
+
+.delay-2 {
+  transition-delay: 2s !important;
+}
+
+.delay-0-6 {
+  transition-delay: 0.6s !important;
+}
+
+.delay-0-4 {
+  transition-delay: 0.4s !important;
+}
+
+.delay-0-2 {
+  transition-delay: 0.2s !important;
 }

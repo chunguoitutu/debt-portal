@@ -8,7 +8,7 @@ $prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
 
 // Bootstrap color system
 $white: #ffffff !default;
-$black: #000000 !default;
+$black: #000812 !default;
 
 // Bootstrap grey colors
 $gray-100: #f9f9f9 !default;
@@ -43,6 +43,9 @@ $primary: #3699ff !default;
 $primary-active: #187de4 !default;
 $primary-light: #e9f3ff !default;
 $primary-inverse: $white !default;
+
+$blue: #0a1b3c;
+$blue-medium: #00204c;
 
 // Secondary colors
 $secondary: $gray-300 !default;
@@ -96,6 +99,8 @@ $theme-colors: (
   'warning': $warning,
   'danger': $danger,
   'dark': $dark,
+  'blue': $blue,
+  'blue-medium': $blue-medium,
 ) !default;
 
 // Contextual active state colors
@@ -271,8 +276,14 @@ $spacers: (
     (
       $spacer * 5,
     ),
-  // 96px,
+  212px: 212px,
+  120px: 120px,
+  108px: 108px,
+  100px: 100px,
   96px: 96px,
+  80px: 80px,
+  72px: 72px,
+  60px: 60px,
   48px: 48px,
   36px: 36px,
   12px: 12px,
@@ -595,7 +606,7 @@ $font-sizes: (
   // 88.25px
   7hx: $font-size-base * 7.5,
   // 91.5px
-  7tx: $font-size-base * 7.75 // 94.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  7tx: $font-size-base * 7.75,
 ) !default;
 
 $headings-font-weight: 600 !default;
@@ -1210,6 +1221,7 @@ $custom-sizes: (
   250px: 250px,
   275px: 275px,
   300px: 300px,
+  320px: 320px,
   325px: 325px,
   350px: 350px,
   360px: 360px,
@@ -1222,10 +1234,12 @@ $custom-sizes: (
   550px: 550px,
   600px: 600px,
   650px: 650px,
+  675px: 675px,
   700px: 700px,
   750px: 750px,
   800px: 800px,
   850px: 850px,
+  875px: 875px,
   900px: 900px,
   950px: 950px,
   1000px: 1000px,

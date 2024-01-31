@@ -3,7 +3,7 @@ import React from 'react'
 type Props = {}
 
 const Transactions = (props: Props) => {
-  return <div></div>
+  return <div>hi</div>
 }
 
 export default Transactions
