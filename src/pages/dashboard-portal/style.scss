@@ -154,3 +154,27 @@
     padding-right: 10px !important;
   }
 }
+
+//circle
+.quarter-circle-first {
+  border: 54px solid #f3f3f3;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 0 0 0 100px;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.quarter-circle-second {
+  border: 33px solid #fff;
+  position: absolute;
+  top: -55px !important;
+  right: -55px !important;
+  width: 25px;
+  height: 25px;
+  border-radius: 0 0 0 100px;
+  z-index: 0;
+}
