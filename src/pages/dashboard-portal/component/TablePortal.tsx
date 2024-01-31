@@ -44,30 +44,30 @@ const TablePortal: FC<LoanDetailsProps> = ({loanInfo}) => {
 
   return (
     <div className='table-portal w-100 mt-20px mt-lg-0 res-parent-table-portal'>
-      <div className='p-30px'>
+      <div className='p-30px pb-20px'>
         <div className='d-flex flex-row align-items-center justify-content-between'>
           <div className='table-header-title-res'>
             <div className='fs-20 fw-bold text-gray-900'>All Active Loans</div>
             <div className='fs-14 text-gray-400 fw-normal'>You have 2 active loans</div>
           </div>
-          <div className='d-flex flex-row text-primary cursor-pointer gap-8px'>
+          <div className='d-flex flex-row text-primary cursor-pointer gap-8px hover-underline'>
             <div className='fs-14 text-primary fw-medium'>View Other Loans</div>
             <FontAwesomeIcon icon={faChevronRight} className='mt-1' />
           </div>
         </div>
-        <div>
-          {/* Table */}
-          <TableSecondary
-            keySort={keySort}
-            orderBy={orderBy}
-            className='mt-8px mh-500px'
-            config={LOAN_CUSTOMER_PORTAL}
-            onChangeSortBy={handleChangeSortBy}
-            data={instalment_schedule}
-            actions={true}
-            loading={loading}
-          />
-        </div>
+      </div>
+      <div className='p-12px pt-0'>
+        {/* Table */}
+        <TableSecondary
+          keySort={keySort}
+          orderBy={orderBy}
+          className='mt-8px mh-500px'
+          config={LOAN_CUSTOMER_PORTAL}
+          onChangeSortBy={handleChangeSortBy}
+          data={instalment_schedule}
+          actions={true}
+          loading={loading}
+        />
       </div>
     </div>
   )

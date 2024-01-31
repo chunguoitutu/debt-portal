@@ -95,7 +95,7 @@ const NextPayment = () => {
 
   const CustomNextArrow = () => (
     <div className='align-self-center cursor-pointer'>
-      <FontAwesomeIcon icon={faChevronRight} />
+      <FontAwesomeIcon icon={faChevronRight} color='#4b5675' className='p-8px' />
     </div>
   )
 
@@ -109,15 +109,15 @@ const NextPayment = () => {
     infinite: false,
     slidesToShow: slideShowRes,
     slidesToScroll: 1,
-    className: 'd-flex flex-row pb-30px',
+    className: 'd-flex flex-row pb-44px',
     nextArrow: <CustomNextArrow />,
     // prevArrow: <CustomPrevArrow />,
   }
 
   return (
-    <div className='bg-white dashboard-portal p-30px zya' style={{height: '97%'}}>
+    <div className='bg-white dashboard-portal p-30px pt-20px zya' style={{height: '97%'}}>
       {/* header */}
-      <div className='pb-30px text-gray-900 fs-20 fw-bold'>Next Closest Repayment Date</div>
+      <div className='text-gray-900 fs-20 fw-bold pb-44px'>Next Closest Repayment Date</div>
       {/* body */}
       {/* calendar */}
       <Slider {...sliderSettings}>
@@ -125,7 +125,7 @@ const NextPayment = () => {
           <div
             key={i}
             className={clsx([
-              'd-flex flex-column gap-8px p-8px cursor-pointer me-16px',
+              'd-flex flex-column gap-8px p-8px cursor-pointer',
               active.includes(i) ? 'calendar text-white' : 'calendar-no-active text-gray-700',
             ])}
             onClick={() => {

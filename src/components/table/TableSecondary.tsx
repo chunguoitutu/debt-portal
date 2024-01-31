@@ -7,6 +7,7 @@ import Loading from './components/Loading'
 import {formatDate, formatMoney, getFullName} from '@/app/utils'
 import ButtonViewDetail from '../button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
+import Badge from '@/components/badge/Badge'
 
 type Props = {
   config: TableConfig
@@ -92,7 +93,7 @@ const TableSecondary: FC<Props> = ({
             {actions && (
               <th
                 className={clsx([
-                  'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 text-end',
+                  'text-nowrap min-w-75px user-select-none px-10px pb-8px pt-0 text-center',
                 ])}
               >
                 Action
@@ -155,6 +156,36 @@ const TableSecondary: FC<Props> = ({
                       )
                     }
 
+                    if (key === 'status') {
+                      let title: string = ''
+                      let color: string = ''
+                      if (item[key] === 1) {
+                        title = 'Active'
+                        color = 'success'
+                      } else if (item[key] === 2) {
+                        title = 'In-Prison'
+                        color = 'danger'
+                      } else if (item[key] === 3) {
+                        title = 'Bankrupt'
+                        color = 'danger'
+                      } else {
+                        title = 'Decreased'
+                        color = 'danger'
+                      }
+
+                      return (
+                        <td
+                          key={i}
+                          className={clsx([
+                            'fs-14 fw-semibold hover-applications-listing',
+                            classNameTableBody,
+                          ])}
+                        >
+                          <Badge color={color as any} title={title as any} key={i} />
+                        </td>
+                      )
+                    }
+
                     return (
                       <td
                         style={{
@@ -162,7 +193,7 @@ const TableSecondary: FC<Props> = ({
                           color: +item[key] < 0 && ['p&l'].includes(key) ? '#F64E60' : '#071437',
                         }}
                         className={clsx([
-                          'fs-14 fw-semibold py-16px px-10px ',
+                          'fs-14 fw-normal py-16px px-10px ',
                           isColumnLast && 'text-end pe-0',
                           classNameTableBody,
                           customClassName,

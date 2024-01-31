@@ -91,7 +91,7 @@
     min-width: 95px;
     max-width: 100px;
     height: 81px;
-    background-color: #0d6efd;
+    background-color: #1b84ff;
     color: #fff;
     border-radius: 16px;
   }
@@ -169,7 +169,7 @@
 }
 
 .quarter-circle-second {
-  border: 33px solid #fff;
+  border: 31px solid #fff;
   position: absolute;
   top: -55px !important;
   right: -55px !important;
@@ -177,4 +177,10 @@
   height: 25px;
   border-radius: 0 0 0 100px;
   z-index: 0;
+}
+
+.hover-underline {
+  &:hover {
+    text-decoration: underline;
+  }
 }
