@@ -15,7 +15,7 @@ const FinancialInstitutions: FC<HomeProps> = () => {
           <img
             src={dashboardImg}
             alt='financial institutions'
-            className='fade home-animation w-475px object-fit-cover'
+            className='fade home-animation w-475px mw-100 object-fit-cover'
           />
 
           <div className='d-flex flex-column gap-24px text-gray-900 text-capitalize'>

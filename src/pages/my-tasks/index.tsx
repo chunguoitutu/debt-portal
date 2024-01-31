@@ -1,4 +1,4 @@
-import {PageLink, PageTitle} from '@/_metronic/layout/core'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
 import Button from '@/components/button/Button'
 import {Input} from '@/components/input'
 import StatusMyTasks from './StatusMyTask'

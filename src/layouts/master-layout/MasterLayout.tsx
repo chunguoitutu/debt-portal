@@ -1,18 +1,16 @@
-import {useEffect} from 'react'
-import {Outlet, useLocation, useNavigate} from 'react-router-dom'
-import Cookies from 'js-cookie'
-import clsx from 'clsx'
-import {useAuth} from '@/app/context/AuthContext'
-import {PageDataProvider} from '@/_metronic/layout/core'
-import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
+import {Outlet, useNavigate} from 'react-router-dom'
+
 import Footer from '@/components/footer'
 import Header from '@/components/header'
+import {PageDataProvider} from '@/components/breadcrumbs'
+import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
+import clsx from 'clsx'
 
 const MasterLayout = () => {
   // const {refreshToken} = useAuth()
 
   // const {pathname} = useLocation()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   // const token = Cookies.get('token')
 

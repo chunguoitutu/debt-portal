@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import {HeaderNotificationsMenu} from '../../../partials'
 import {AiOutlineSetting} from 'react-icons/ai'
 import {IoMdNotificationsOutline} from 'react-icons/io'
 import {useLayout} from '../../core'
@@ -8,7 +7,6 @@ import {Link, useLocation} from 'react-router-dom'
 import Avatar from '../../../../app/modules/profile/components/profile/Avatar'
 import {useMemo, useState} from 'react'
 import {useAuth} from '../../../../app/context/AuthContext'
-import HeaderUserMenu from '@/_metronic/partials/layout/header-menus/HeaderUserMenu'
 import './style.scss'
 import {getFullName} from '@/app/utils'
 
@@ -67,7 +65,7 @@ const Navbar = () => {
         >
           <IoMdNotificationsOutline className={btnIconClass} />
         </div>
-        <HeaderNotificationsMenu />
+        {/* <HeaderNotificationsMenu /> */}
       </div>
       <div
         className={clsx('app-navbar-item', itemClass)}
@@ -100,7 +98,7 @@ const Navbar = () => {
                 right: 200,
               }}
             >
-              <HeaderUserMenu />
+              {/* <HeaderUserMenu /> */}
             </div>
           )}
         </div>

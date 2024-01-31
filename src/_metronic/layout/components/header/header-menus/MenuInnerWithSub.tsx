@@ -1,7 +1,8 @@
 import {FC, useEffect, useRef} from 'react'
 import {useLocation} from 'react-router'
+import {checkIsActive, KTIcon} from '../../../../helpers'
+import {WithChildren} from '@/app/types'
 import clsx from 'clsx'
-import {checkIsActive, KTIcon, WithChildren} from '../../../../helpers'
 
 type Props = {
   to: string

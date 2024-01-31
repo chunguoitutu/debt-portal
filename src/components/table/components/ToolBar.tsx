@@ -1,8 +1,8 @@
 import {useMemo} from 'react'
 import {useAuth} from '../../../app/context/AuthContext'
-import {UsersListFilter} from '../../../app/modules/apps/user-management/users-list/components/header/UsersListFilter'
-import {KTIcon} from '../../../_metronic/helpers'
 import {TableConfig} from '@/app/types'
+import {KTIcon} from '@/_metronic/helpers'
+import {UsersListFilter} from '@/app/modules/apps/user-management/users-list/components/header/UsersListFilter'
 
 type Props = {
   config: TableConfig

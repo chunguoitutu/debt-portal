@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useLayout} from '../../../core'
-import {usePageData} from '../../../core/PageData'
+import {usePageData} from '@/components/breadcrumbs'
 
 const PageTitle = () => {
   const {pageTitle, pageDescription, pageBreadcrumbs} = usePageData()

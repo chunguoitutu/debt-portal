@@ -23,8 +23,6 @@ import Badge from '@/components/badge/Badge'
 import Loading from '@/components/table/components/Loading'
 import ButtonEdit from '@/components/button/ButtonEdit'
 import SortBy from '@/components/sort-by'
-import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {KTCardBody, KTIcon} from '@/_metronic/helpers'
 import {useAuth} from '@/app/context/AuthContext'
 import {Input} from '@/components/input'
 import Pagination from '@/components/table/components/Pagination'
@@ -35,6 +33,8 @@ import {Checkbox} from '@/components/checkbox'
 import {GLOBAL_CONSTANTS, SESSION_NAME} from '@/app/constants'
 import gridImg from '@/app/images/grid.svg'
 import useClickOutside from './../../../app/hooks/useClickOutside'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
+import {KTIcon} from '@/_metronic/helpers'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -911,7 +911,7 @@ const ApplicationListing = () => {
             </div>
           )}
 
-        <KTCardBody className='p-0'>
+        <div className='p-0'>
           <div className='table-responsive'>
             <table
               id='kt_table_users'
@@ -964,7 +964,7 @@ const ApplicationListing = () => {
               </tbody>
             </table>
           </div>
-        </KTCardBody>
+        </div>
 
         <div
           style={{
