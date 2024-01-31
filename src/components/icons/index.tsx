@@ -30,6 +30,11 @@ import AddressCustomer from './AddressCustomer'
 import TimeMyTasks from './TimeMyTasks'
 import PeopleMyTasks from './PeopleMyTasks'
 import FileMyTask from './FileMyTask'
+import DatePortal from './DatePortal'
+import ArrowLeft from './ArrowLeft'
+import ActiveMyTasks from './ActiveMyTasks'
+import ActiveMyTasksBlack from './ActiveMyTasksBlack'
+import ArrowLink from './ArrowLink'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -64,6 +69,11 @@ const icons = {
   TimeMyTasks: TimeMyTasks,
   PeopleMyTasks: PeopleMyTasks,
   FileMyTask: FileMyTask,
+  DatePortal: DatePortal,
+  ArrowLeft: ArrowLeft,
+  ActiveMyTasksBlack: ActiveMyTasksBlack,
+  ActiveMyTasks: ActiveMyTasks,
+  ArrowLink: ArrowLink,
 }
 
 const Icons = ({name}) => {

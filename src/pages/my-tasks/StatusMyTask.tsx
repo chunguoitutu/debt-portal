@@ -3,7 +3,7 @@ import {priorityMyTasks} from './config'
 
 type Props = {
   value: any
-  onChange: (e) => void
+  onChange: (e: any) => void
 }
 
 const StatusMyTasks = ({value, onChange}: Props) => {
