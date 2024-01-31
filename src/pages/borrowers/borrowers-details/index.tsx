@@ -1,4 +1,4 @@
-import {PageLink, PageTitle} from '@/_metronic/layout/core'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
 import Loading from '@/components/loading'
 import NotFoundPage from '@/pages/not-found-page/NotFoundPage'
 import {useEffect, useMemo, useState} from 'react'

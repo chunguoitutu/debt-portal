@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import {BuilderPage} from './BuilderPage'
-import {PageTitle} from '../../_metronic/layout/core'
+import {PageTitle} from '@/components/breadcrumbs'
 
 const BuilderPageWrapper: FC = () => {
   return (

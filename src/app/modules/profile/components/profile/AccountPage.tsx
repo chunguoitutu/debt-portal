@@ -1,10 +1,10 @@
 import React from 'react'
 import {Navigate, Route, Routes, Outlet} from 'react-router-dom'
 
-import {PageLink, PageTitle} from '../../../../../_metronic/layout/core'
 import {AccountHeader} from './AccountHeader'
 import {Overview} from './Overview'
 import {Settings} from './Settings'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
 
 const accountBreadCrumbs: Array<PageLink> = [
   {

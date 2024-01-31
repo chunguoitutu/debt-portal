@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import {KTIcon, toAbsoluteUrl} from '@/_metronic/helpers'
 import React from 'react'
-import {KTIcon, toAbsoluteUrl} from '../../../_metronic/helpers'
 import {Link, useLocation} from 'react-router-dom'
-import {Dropdown1} from '../../../_metronic/partials'
 
 const ProfileHeader: React.FC = () => {
   const location = useLocation()
@@ -82,7 +81,6 @@ const ProfileHeader: React.FC = () => {
                   >
                     <i className='bi bi-three-dots fs-3'></i>
                   </button>
-                  <Dropdown1 />
                 </div>
               </div>
             </div>

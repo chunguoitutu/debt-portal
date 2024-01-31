@@ -1,3 +1,4 @@
+import {WithChildren} from '@/app/types'
 import React, {
   createContext,
   Dispatch,
@@ -7,7 +8,6 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import {WithChildren} from '../../helpers'
 
 const MetronicSplashScreenContext = createContext<Dispatch<SetStateAction<number>> | undefined>(
   undefined

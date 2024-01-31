@@ -10,7 +10,6 @@ import {BLOCK_ADDRESS_CONFIG} from './step-component/config'
 import {useFormik} from 'formik'
 import GeneralButton from './step-component/GeneralButton'
 import NotFoundPage from '../not-found-page/NotFoundPage'
-import {PageLink, PageTitle} from '../../_metronic/layout/core'
 import request from '../../app/axios'
 import {useAuth} from '../../app/context/AuthContext'
 import {
@@ -41,6 +40,7 @@ import clsx from 'clsx'
 import Icons from '@/components/icons'
 import Cookies from 'js-cookie'
 import {useSocket} from '@/app/context/SocketContext'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
 import {RightToolbar} from '@/_metronic/layout/components/toolbar/right-toll-bar/RightToolbar'
 
 const profileBreadCrumbs: Array<PageLink> = [

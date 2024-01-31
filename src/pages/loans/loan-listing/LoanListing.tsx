@@ -1,4 +1,3 @@
-import {KTCardBody, KTIcon} from '@/_metronic/helpers'
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {Input} from '@/components/input'
@@ -19,13 +18,14 @@ import moment from 'moment'
 import {useAuth} from '@/app/context/AuthContext'
 import request from '@/app/axios'
 import numeral from 'numeral'
-import {PageTitle, PageLink} from '@/_metronic/layout/core'
 import {Link, useNavigate} from 'react-router-dom'
 import Badge from '@/components/badge/Badge'
 import {GLOBAL_CONSTANTS, SESSION_NAME} from '@/app/constants'
 import {Checkbox} from '@/components/checkbox'
 import gridImg from '@/app/images/grid.svg'
 import useClickOutside from '@/app/hooks/useClickOutside'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
+import {KTIcon} from '@/_metronic/helpers'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
@@ -726,7 +726,7 @@ const LoanListing = () => {
           )}
 
         {/* listing rows */}
-        <KTCardBody className='p-0'>
+        <div className='p-0'>
           <div className='table-responsive'>
             <table
               id='kt_table_users'
@@ -779,7 +779,7 @@ const LoanListing = () => {
               </tbody>
             </table>
           </div>
-        </KTCardBody>
+        </div>
 
         <div
           style={{

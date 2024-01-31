@@ -1,8 +1,7 @@
 import {FC, useState, createContext, useContext, Dispatch, SetStateAction} from 'react'
-import {WithChildren} from '../../_metronic/helpers'
 import Cookies from 'js-cookie'
 import {swalToast} from '../swal-notification'
-import {JwtDecode, UserInfo} from '../types/common'
+import {JwtDecode, UserInfo, WithChildren} from '../types/common'
 import {getCurrentUser} from '../axios/request'
 import jwtDecode from 'jwt-decode'
 

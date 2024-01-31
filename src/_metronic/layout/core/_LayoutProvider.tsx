@@ -15,7 +15,7 @@ import {
   LayoutType,
   ToolbarType,
 } from './_Models'
-import {WithChildren} from '../../helpers'
+import {WithChildren} from '@/app/types'
 
 export interface LayoutContextModel {
   config: ILayout
