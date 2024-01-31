@@ -9,13 +9,7 @@ import {FC, Suspense, lazy} from 'react'
 import {Routes, Route, BrowserRouter, Navigate, Outlet} from 'react-router-dom'
 import {ErrorsPage} from '../app/modules/errors/ErrorsPage'
 import {App} from '../App'
-import {AuthLayout} from '../layouts/auth-layout/AuthLayout'
-import {Login} from '../pages/auth/login/Login'
-import {ForgotPassword} from '../pages/auth/forgot-password/ForgotPassword'
-// import {DashboardWrapper} from '../pages/dashboard-metronic/DashboardWrapper'
 import {MasterLayout} from '../layouts/master-layout/MasterLayout'
-
-import {WithChildren} from '../_metronic/helpers'
 import {getCSSVariableValue} from '../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import SettingPageRouter from '../pages/settings/SettingPageRouter'
@@ -23,7 +17,6 @@ import {Applications} from '../pages/applications'
 import Transactions from '../pages/transactions'
 import MyTasks from '../pages/my-tasks'
 import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
-import {Logout} from '../pages/auth/logout/Logout'
 import {useAuth} from '../app/context/AuthContext'
 import Guest from '@/pages/guest'
 import LoanListing from '@/pages/loans/loan-listing/LoanListing'
@@ -33,6 +26,7 @@ import CaCheck from '@/pages/applications/background-check/ca-check'
 import BorrowerDetail from '@/pages/borrowers/borrowers-details'
 import DashBoardPortal from '@/pages/dashboard-portal'
 import Home from '@/pages/home'
+import {WithChildren} from '@/app/types'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -61,7 +55,6 @@ const AppRoutes: FC = () => {
       <Routes>
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
-          <Route path='logout' element={<Logout />} />
           <Route path='/transactions' element={<Transactions />} />
 
           <Route element={<MasterLayout />}>
@@ -105,10 +98,6 @@ const AppRoutes: FC = () => {
             />
           </Route>
 
-          <Route element={<AuthLayout />}>
-            <Route path='login' element={<Login />} />
-            <Route path='forgot-password' element={<ForgotPassword />} />
-          </Route>
           <Route path='cas_check_listing_pdf' element={<CaCheck />} />
           {/* Not match any router */}
           <Route path='/' element={<Navigate to={currentUser ? '/dashboard' : '/login'} />} />

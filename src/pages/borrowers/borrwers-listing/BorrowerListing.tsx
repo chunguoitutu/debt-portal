@@ -1,5 +1,3 @@
-import {KTCardBody, KTIcon} from '@/_metronic/helpers'
-import {PageLink, PageTitle} from '@/_metronic/layout/core'
 import Button from '@/components/button/Button'
 import Icons from '@/components/icons'
 import {Input} from '@/components/input'
@@ -24,13 +22,14 @@ import {Checkbox} from '@/components/checkbox'
 import gridImg from '@/app/images/grid.svg'
 import './style.scss'
 import {getCSSVariableValue} from '@/_metronic/assets/ts/_utils'
-import {useThemeMode} from '@/_metronic/partials'
 
 import ChartImg from '@/app/images/ChartBorrowerListing.png'
 import Badge from '@/components/badge/Badge'
 import useClickOutside from '@/app/hooks/useClickOutside'
 import ButtonViewDetail from '@/components/button/ButtonViewDetail'
 import {useNavigate} from 'react-router-dom'
+import {PageLink, PageTitle} from '@/components/breadcrumbs'
+import {KTIcon} from '@/_metronic/helpers'
 
 type Props = {
   chartSize?: number
@@ -514,8 +513,6 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
     drawCircle('#C62828', options.lineWidth, 100 / 350)
   }
 
-  const {mode} = useThemeMode()
-
   const refreshChart = () => {
     if (!chartRef.current) {
       return
@@ -529,7 +526,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
   useEffect(() => {
     refreshChart()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode])
+  }, [])
 
   // const configTable = useMemo(() => {
   //   const keyIgnored = Object.keys(configColumnSubmitted).filter(
@@ -887,7 +884,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
                     </div>
                   )}
 
-                <KTCardBody className='p-0 d-flex flex-column overflow-hidden'>
+                <div className='p-0 d-flex flex-column overflow-hidden'>
                   <div className='table-responsive flex-grow-1 overflow-auto h-100 mh-600px'>
                     <table
                       id='kt_table_users'
@@ -972,7 +969,7 @@ const BorrowersListing: FC<Props> = ({chartSize = 100, chartLine = 18, chartRota
 
                     {loading && <Loading />}
                   </div>
-                </KTCardBody>
+                </div>
               </div>
             </div>
           </div>

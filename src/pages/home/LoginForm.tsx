@@ -22,7 +22,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
     <div
       className={clsx([
         'card d-flex flex-column gap-24px p-30px py-lg-60px px-lg-80px align-self-center login-form fade w-100 w-lg-fit-content',
-        showLoginForm ? 'viewed' : 'visibility-hidden',
+        showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
         screenWidth < 992 && 'order-1',
         !showLoginForm && screenWidth < 992 && 'position-absolute z-index-negative',
       ])}
