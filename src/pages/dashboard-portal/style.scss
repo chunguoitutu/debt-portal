@@ -1,0 +1,156 @@
+.main-portal {
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    padding-left: calc(100% - 99%) !important;
+    padding-right: calc(100% - 99%) !important;
+  }
+
+  .res-next-payment {
+    @media (max-width: 991px) {
+      display: flex;
+      flex-direction: column;
+      padding-left: calc(100% - 99%) !important;
+      padding-right: calc(100% - 99%) !important;
+      width: 100% !important;
+    }
+  }
+  .column-res-amount {
+    @media (max-width: 991px) {
+      columns: 12;
+    }
+    @media (max-width: 550px) {
+      flex-direction: column;
+    }
+  }
+  .fragment-parent {
+    @media (max-width: 991px) {
+      width: 100% !important;
+      gap: 16px;
+    }
+  }
+  .res-amount-details {
+    @media (max-width: 991px) {
+      width: 100% !important;
+      gap: 16px !important;
+    }
+    @media (max-width: 550px) {
+      flex-direction: column;
+      columns: 12;
+      width: 100% !important;
+      display: flex;
+    }
+  }
+}
+
+.chart-resp {
+  @media (max-width: 550px) {
+    width: 20px;
+    height: 20px;
+  }
+}
+.res-parent-amount-details {
+  @media (max-width: 550px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+}
+.res-detail-text-head {
+  @media (min-width: 660px) {
+    margin-top: 30px;
+  }
+  @media (max-width: 550px) {
+    margin-top: 0px;
+  }
+}
+
+.res-parent-table-portal {
+  @media (min-width: 778px) {
+    margin-top: 0px !important;
+  }
+}
+
+.table-header-title-res {
+  @media (max-width: 400px) {
+    columns: 12;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.dashboard-portal {
+  border-radius: 8px;
+  border-top: 10px solid #0d6efd !important;
+  box-shadow: 0px 0px 24px 10px rgba(0, 0, 0, 0.06), 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f1f2;
+  overflow: auto;
+
+  .calendar {
+    min-width: 95px;
+    max-width: 100px;
+    height: 81px;
+    background-color: #0d6efd;
+    color: #fff;
+    border-radius: 16px;
+  }
+  .calendar-text-head {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .calendar-no-active {
+    min-width: 95px;
+    max-width: 100px;
+
+    height: 81px;
+    color: #4b5675;
+    border-radius: 16px;
+  }
+  .calendar-detail-date {
+    font-size: 44px;
+    font-weight: 600;
+    color: var(--bs-primary);
+  }
+  .calendar-detail-my {
+    color: #071437;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .loan-details {
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px dashed #99a1b7;
+  }
+}
+.loan-amount-portal {
+  border-radius: 8px;
+  border: 1px solid #f1f1f2;
+  background: #fff;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+  .loan-amount-title {
+    color: #071437;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+.table-portal {
+  border-radius: 8px;
+  border: 1px solid #f1f1f2;
+  background: #fff;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+}
+
+.app-main-loan {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+  @media (max-width: 1800px) {
+    padding-left: calc(100px - 50px) !important;
+    padding-right: calc(100px - 50px) !important;
+  }
+  @media (max-width: 1024px) {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
