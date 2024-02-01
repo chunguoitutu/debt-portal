@@ -5,3 +5,132 @@
   border-bottom: 1px solid rgba(249, 249, 249, 0.2);
   height: var(--height-header);
 }
+
+.img-header-portal {
+  background-color: rgb(192, 192, 192);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+  border-radius: 0.475rem;
+  cursor: pointer !important;
+}
+
+.dropdown-menu-application {
+  @keyframes dropdownAnimation {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .dropdown-fixed {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255, 255);
+    border-radius: 0.475rem;
+    position: absolute;
+    top: 40px;
+    left: -40px;
+    width: 200px;
+    height: fit-content;
+    animation: dropdownAnimation 0.3s ease;
+    box-shadow: rgba(82, 63, 105, 0.15) 0px 0px 50px 0px;
+    &:hover {
+      display: flex;
+      height: fit-content;
+    }
+  }
+
+  .menu-item-child {
+    &:hover {
+      background-color: #f9f9f9;
+    }
+  }
+}
+
+.text-full-mid-last-name {
+  color: #fff;
+}
+
+.dropdown-text-role {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.link-header-portal {
+  padding-top: 2px;
+  height: 90px;
+}
+
+.active-link {
+  color: #fff;
+  padding-bottom: 0px;
+  border-bottom: 2px solid;
+}
+.disable-link {
+  color: #fff;
+  padding-bottom: 2px;
+  opacity: 0.7;
+}
+
+.menu-header-mobile {
+  color: #fff;
+  opacity: 0.7;
+  font-size: 18px;
+}
+
+.header-mobile-menu-portal {
+  z-index: 1000000000 !important;
+  position: fixed;
+  width: 100vw;
+  right: 0px;
+  top: 0px;
+  height: 100vh;
+  background-color: #00000033;
+  overflow: none;
+}
+
+.mobile-menu-portal {
+  width: 225px;
+  animation: animate-wrapper-remark-mes 0.8s alternate;
+  padding: 8px;
+  background-color: #fff;
+  max-height: 100vh;
+  height: 100vh;
+  overflow: auto;
+}
+
+@keyframes animate-wrapper-remark-mes {
+  0% {
+    right: -225px;
+  }
+  25% {
+    right: -175px;
+  }
+  50% {
+    right: -125px;
+  }
+  75% {
+    right: -55px;
+  }
+  100% {
+    right: 0px;
+  }
+}
+
+.active-mobile {
+  background-color: #000812;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.disable-mobile {
+  color: #858585;
+}

@@ -1,12 +1,37 @@
 import {useShared} from '@/app/context/SharedContext'
-import Button from '../button/Button'
 import './style.scss'
-import logo from '@/app/images/logo-mc.png'
-import {useNavigate} from 'react-router-dom'
+import {NavLink, useLocation, useNavigate} from 'react-router-dom'
 
-const Header = () => {
+import {Dispatch, useState} from 'react'
+import ImgHeader from './ImgHeader'
+import LogoHeader from './LogoHeader'
+import LogInHeader from './LogInHeader'
+
+export const linkHeader = [
+  {id: 2, to: '/dashboard', title: 'Dashboard'},
+  {
+    id: 3,
+    to: '/my-loans',
+    title: 'My Loans',
+  },
+  {
+    id: 4,
+    to: '/application',
+    title: 'New Application',
+  },
+]
+interface Props {
+  setSCroll: Dispatch<any>
+  scroll: boolean
+}
+
+const Header = ({setSCroll, scroll}: Props) => {
   const {showLoginForm, setShowLoginForm} = useShared()
+  const [isMenuVisible, setMenuVisible] = useState(false)
   const navigate = useNavigate()
+
+  const location = useLocation()
+  const currentPath = location.pathname
 
   function toggleFormLogin() {
     if (!showLoginForm) {
@@ -22,32 +47,61 @@ const Header = () => {
     navigate('/')
   }
 
+  const fakeData = {
+    lastName: 'Fung',
+    firstName: 'Yong Chang',
+    role: 'customer',
+  }
+
+  const showMenu = () => {
+    setMenuVisible(true)
+  }
+
+  const hideMenu = () => {
+    setMenuVisible(false)
+  }
+
   return (
-    <header className='header py-20px bg-black'>
-      <div className='container d-flex align-items-center justify-content-between gap-12px gap-sm-24px'>
-        <div className='d-flex align-items-center cursor-pointer' onClick={handleNavigate}>
-          <img src={logo} alt='logo' className='w-30px object-fit-cover' />
-
-          <div className='ps-10px ms-10px border border-left-1 border-top-0 border-right-0 border-bottom-0 border-gray-400 d-none d-sm-block'>
-            <h3 className='fs-16 fw-semibold m-0 text-white text-nowrap'>Finance 360</h3>
-            <h3 className='fs-14 fw-normal m-0 text-white text-nowrap'>MCK Group</h3>
-          </div>
-        </div>
-
+    <header className='header  bg-black'>
+      <div className='container h-100 d-flex align-items-center justify-content-between gap-12px gap-sm-24px'>
         {/* Logged */}
-        {/* <nav>
-          <ul className='m-0 list-style-none'>
-            <li className=''>Home</li>
-          </ul>
-        </nav> */}
+        <LogoHeader handleNavigate={handleNavigate} />
+
+        {currentPath !== '/' && (
+          <div className='d-none d-md-block h-100'>
+            <div className='d-flex justify-content-center h-100 align-items-center '>
+              {linkHeader.map((el, i) => {
+                return (
+                  <NavLink
+                    className={({isActive}) =>
+                      `${
+                        isActive ? 'active-link ' : 'disable-link'
+                      }  px-16px d-flex fs-16 fw-semibold justify-content-center  align-items-center link-header-portal`
+                    }
+                    key={i}
+                    to={el?.to}
+                  >
+                    {el?.title}
+                  </NavLink>
+                )
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Not logged */}
-        <div className='d-flex align-items-center gap-8px gap-sm-16px'>
-          <Button className='border border-primary text-white bg-hover-primary'>
-            Login With Singpass
-          </Button>
-          <Button onClick={toggleFormLogin}>Login</Button>
-        </div>
+        {currentPath === '/' ? (
+          <LogInHeader toggleFormLogin={toggleFormLogin} />
+        ) : (
+          <ImgHeader
+            setSCroll={setSCroll}
+            scroll={scroll}
+            data={fakeData}
+            hideMenu={hideMenu}
+            showMenu={showMenu}
+            isMenuVisible={isMenuVisible}
+          />
+        )}
       </div>
     </header>
   )

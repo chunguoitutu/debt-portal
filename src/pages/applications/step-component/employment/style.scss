@@ -1,9 +1,0 @@
-.file-document-style {
-  .hover-document {
-    border: 1px solid #b5b5c3;
-    &:hover {
-      border: 1px solid var(--primary-bs-primary, #1b84ff);
-      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-    }
-  }
-}
