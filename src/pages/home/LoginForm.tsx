@@ -30,7 +30,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
       <h3 className='m-0 text-gray-900 fw-bold fs-26 text-center'>Sign in</h3>
 
       <Button
-        className='btn btn-light btn-active-light-primary cursor-pointer'
+        className='btn btn-light-danger cursor-pointer'
         // onClick={() => {
         //   alert('This feature is not available.')
         // }}
