@@ -1,8 +1,8 @@
-import {Dispatch, SetStateAction} from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 export type LoanDetailsProps = {
-  loanInfo: LoanInfo
-  setLoanInfo: Dispatch<SetStateAction<LoanInfo | null>>
+  loanInfo?: LoanInfo
+  setLoanInfo?: Dispatch<SetStateAction<LoanInfo | null>>
   customerInfo?: customerInfo
   setCustomerInfo?: Dispatch<SetStateAction<LoanInfo | null>>
 }

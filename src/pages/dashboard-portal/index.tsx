@@ -15,6 +15,22 @@ const DashBoardPortal = () => {
         loan_amount: '12',
         status: 1,
       },
+      {
+        id: 3,
+        loan_no: 'L-MC-2024-00003',
+        total_collection: 0,
+        full_repayment_date: '2025-02-28T00:00:00.000Z',
+        loan_amount: '12',
+        status: 1,
+      },
+      {
+        id: 3,
+        loan_no: 'L-MC-2024-00003',
+        total_collection: 0,
+        full_repayment_date: '2025-02-28T00:00:00.000Z',
+        loan_amount: '12',
+        status: 1,
+      },
     ],
   })
   return (

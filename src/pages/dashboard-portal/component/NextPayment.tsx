@@ -84,26 +84,11 @@ const NextPayment = () => {
     setSelectedPayment(isSelected ? null : data[id])
   }
 
-  function handleNextButtonClick() {
-    const currentIndex = displayedData.length
-    const nextData = data.slice(currentIndex, currentIndex + 1)
-
-    if (nextData.length > 0) {
-      setDisplayedData((prevData) => [...prevData, ...nextData])
-    }
-  }
-
   const CustomNextArrow = () => (
     <div className='align-self-center cursor-pointer'>
       <FontAwesomeIcon icon={faChevronRight} color='#4b5675' className='p-8px' />
     </div>
   )
-
-  // const CustomPrevArrow = () => (
-  //   <div className='align-self-center cursor-pointer'>
-  //     <FontAwesomeIcon icon={faChevronLeft} />
-  //   </div>
-  // )
 
   const sliderSettings = {
     infinite: false,
@@ -111,7 +96,6 @@ const NextPayment = () => {
     slidesToScroll: 1,
     className: 'd-flex flex-row pb-44px',
     nextArrow: <CustomNextArrow />,
-    // prevArrow: <CustomPrevArrow />,
   }
 
   return (
@@ -151,7 +135,9 @@ const NextPayment = () => {
           <div className='row'>
             <div className='col-6'>
               <div className='loan-details'>
-                <div className='fs-16 fw-normal text-gray-500 text-truncate'>Instalment Total</div>
+                <div className='fs-16 fw-normal text-gray-500 text-two-line-customer text-three-line-customer'>
+                  Instalment Total
+                </div>
                 <div className='fs-2 fw-medium text-gray-900'>
                   {selectedPayment && formatMoney(selectedPayment.instalment)}
                 </div>
@@ -160,14 +146,14 @@ const NextPayment = () => {
             </div>
             <div className='col-6'>
               <div className='loan-details'>
-                <div className='fs-16 fw-normal text-gray-500 text-truncate'>
-                  Instalment Total Balance
-                </div>
+                <div className='fs-16 fw-normal text-gray-500 '>Instalment Total Balance</div>
                 <div className='fs-2 fw-medium text-gray-900'>
                   {selectedPayment && formatMoney(selectedPayment.instalment_balance)}
                 </div>
               </div>
-              <Button className='w-100 mt-16px btn btn-primary'>Payment Now</Button>
+              <Button className='w-100 mt-16px btn btn-primary btn-mobile-responsive-customer'>
+                Payment Now
+              </Button>
             </div>
           </div>
         </div>

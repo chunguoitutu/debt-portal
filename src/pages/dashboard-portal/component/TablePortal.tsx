@@ -4,13 +4,30 @@ import {faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import {TableSecondary} from '@/components/table'
 import {FC, useEffect, useState} from 'react'
 import {LoanDetailsProps, OrderBy} from '@/app/types'
-import {LOAN_CUSTOMER_PORTAL} from '../config'
+import {LOAN_CUSTOMER_PORTAL, LOAN_CUSTOMER_PORTAL_CARD_MOBILE} from '../config'
+import TableMobile from '@/components/table/TableMobile'
 
 const TablePortal: FC<LoanDetailsProps> = ({loanInfo}) => {
   const {instalment_schedule = []} = loanInfo || {}
   const [loading, setLoading] = useState<boolean>(false)
   const [orderBy, setOrderBy] = useState<OrderBy>('desc')
   const [keySort, setKeySort] = useState<string>('id')
+  const [isMobile, setIsMobile] = useState<boolean>(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const clientWidth = document.documentElement.clientWidth
+      setIsMobile(clientWidth < 520)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      setIsMobile(true)
+    }
+  }, [document.documentElement.clientWidth < 520])
 
   useEffect(() => {
     handleGetListing()
@@ -50,24 +67,46 @@ const TablePortal: FC<LoanDetailsProps> = ({loanInfo}) => {
             <div className='fs-20 fw-bold text-gray-900'>All Active Loans</div>
             <div className='fs-14 text-gray-400 fw-normal'>You have 2 active loans</div>
           </div>
-          <div className='d-flex flex-row text-primary cursor-pointer gap-8px hover-underline'>
-            <div className='fs-14 text-primary fw-medium'>View Other Loans</div>
-            <FontAwesomeIcon icon={faChevronRight} className='mt-1' />
-          </div>
+          {!isMobile ? (
+            <div className='d-flex flex-row text-primary cursor-pointer gap-8px hover-underline'>
+              <div className='fs-14 text-primary fw-medium'>View Other Loans</div>
+              <FontAwesomeIcon icon={faChevronRight} className='mt-1' />
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
-      <div className='p-12px pt-0'>
-        {/* Table */}
-        <TableSecondary
-          keySort={keySort}
-          orderBy={orderBy}
-          className='mt-8px mh-500px'
-          config={LOAN_CUSTOMER_PORTAL}
-          onChangeSortBy={handleChangeSortBy}
-          data={instalment_schedule}
-          actions={true}
-          loading={loading}
-        />
+      <div className='p-0'>
+        {isMobile ? (
+          <div className='d-flex flex-column p-12px'>
+            <TableMobile
+              keySort={keySort}
+              orderBy={orderBy}
+              className='mt-8px mh-500px'
+              config={LOAN_CUSTOMER_PORTAL_CARD_MOBILE}
+              onChangeSortBy={handleChangeSortBy}
+              data={instalment_schedule}
+              actions={true}
+              loading={loading}
+            />
+            <div className='d-flex flex-row text-primary align-items-center justify-content-center cursor-pointer gap-8px hover-underline mt-16px'>
+              <div className='fs-14 text-primary fw-medium'>View Other Loans</div>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </div>
+          </div>
+        ) : (
+          <TableSecondary
+            keySort={keySort}
+            orderBy={orderBy}
+            className='mt-8px mh-500px'
+            config={LOAN_CUSTOMER_PORTAL}
+            onChangeSortBy={handleChangeSortBy}
+            data={instalment_schedule}
+            actions={true}
+            loading={loading}
+          />
+        )}
       </div>
     </div>
   )
