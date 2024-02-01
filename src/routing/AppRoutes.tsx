@@ -28,6 +28,7 @@ import DashBoardPortal from '@/pages/dashboard-portal'
 import Home from '@/pages/home'
 import {WithChildren} from '@/app/types'
 import Profile from '@/pages/profile'
+import LoanDetailsPortal from '@/pages/loan-portal'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -80,6 +81,7 @@ const AppRoutes: FC = () => {
               <Route path='details/:customerId' element={<BorrowerDetail />} />
             </Route>
             <Route path='/portal' element={<DashBoardPortal />} />
+            <Route path='/portal-loan-details' element={<LoanDetailsPortal />} />
             <Route path='/my-tasks' element={<MyTasks />} />
             <Route path='guest' element={<Guest />} />
 
