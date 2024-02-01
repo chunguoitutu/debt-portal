@@ -99,7 +99,7 @@ const NextPayment = () => {
   }
 
   return (
-    <div className='bg-white dashboard-portal p-30px pt-20px zya' style={{height: '97%'}}>
+    <div className='bg-white dashboard-portal p-30px pt-20px main-height'>
       {/* header */}
       <div className='text-gray-900 fs-20 fw-bold pb-44px'>Next Closest Repayment Date</div>
       {/* body */}
@@ -121,9 +121,6 @@ const NextPayment = () => {
             <div className='text-center fs-14 fw-medium'>{payment.month}</div>
           </div>
         ))}
-        {/* <div className='align-self-center cursor-pointer '>
-        <Icons name={'NextIcon'} />
-      </div> */}
       </Slider>
       {/* calendar detail */}
       <div className='gap-16px'>
@@ -133,8 +130,8 @@ const NextPayment = () => {
         </div>
         <div className='col-12'>
           <div className='row'>
-            <div className='col-6'>
-              <div className='loan-details'>
+            <div className='col-6 d-flex flex-column'>
+              <div className='loan-details d-flex flex-column justify-content-between flex-grow-1'>
                 <div className='fs-16 fw-normal text-gray-500 text-two-line-customer text-three-line-customer'>
                   Instalment Total
                 </div>
@@ -142,18 +139,28 @@ const NextPayment = () => {
                   {selectedPayment && formatMoney(selectedPayment.instalment)}
                 </div>
               </div>
-              <Button className='w-100 mt-16px btn btn-secondary'>View Loan Details</Button>
             </div>
-            <div className='col-6'>
-              <div className='loan-details'>
+            <div className='col-6 d-flex flex-column'>
+              <div className='loan-details d-flex flex-column justify-content-between flex-grow-1'>
                 <div className='fs-16 fw-normal text-gray-500 '>Instalment Total Balance</div>
                 <div className='fs-2 fw-medium text-gray-900'>
                   {selectedPayment && formatMoney(selectedPayment.instalment_balance)}
                 </div>
               </div>
-              <Button className='w-100 mt-16px btn btn-primary btn-mobile-responsive-customer'>
-                Payment Now
-              </Button>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-6 d-flex flex-column'>
+              <div className='d-flex flex-column justify-content-between h-100'>
+                <Button className='w-100 mt-16px btn btn-secondary '>View Loan Details</Button>
+              </div>
+            </div>
+            <div className='col-6 d-flex flex-column'>
+              <div className='d-flex flex-column justify-content-between h-100'>
+                <Button className='w-100 mt-16px btn btn-primary btn-mobile-responsive-customer'>
+                  Payment Now
+                </Button>
+              </div>
             </div>
           </div>
         </div>
