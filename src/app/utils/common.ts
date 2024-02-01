@@ -1,9 +1,10 @@
 import axios, {AxiosError} from 'axios'
 import numeral from 'numeral'
-import {ApplicationConfig, ErrorResponse} from '../types/common'
+import {ApplicationConfig, ErrorResponse, TableRow} from '../types/common'
 import {DEFAULT_MESSAGE_ERROR_500} from '../constants'
 import moment from 'moment'
 import {TermUnit} from '../types/enum'
+import {formatDate} from './date'
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -317,4 +318,35 @@ export const capitalizeFirstLetter = (str: string) => {
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
+}
+
+export function formatData(row: TableRow, data: any) {
+  const {key, format, formatDate: formatDateType, options} = row
+  let value = data?.[key] || ''
+
+  switch (format) {
+    case 'fullname':
+      value = getFullName(data)
+      break
+    case 'date':
+      value = formatDate(value, formatDateType || 'DD MMM, YYYY')
+      break
+    case 'money':
+      value = formatMoney(+value)
+      break
+    case 'option':
+      const label = options?.find((o) => o?.value === value)?.label || ''
+      value = label
+      break
+    case 'percent':
+      value = value ? `${value}%` : ''
+      break
+    case 'phone':
+      value = value ? `+65${value}` : ''
+      break
+    default:
+      break
+  }
+
+  return value
 }

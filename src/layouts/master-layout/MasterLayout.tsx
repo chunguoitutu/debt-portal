@@ -25,7 +25,7 @@ const MasterLayout = () => {
     <PageDataProvider>
       <main className={clsx(['d-flex flex-column min-h-100vh'])}>
         <Header />
-        <div className='mt-90px'>{true && <Outlet />}</div>
+        <div className='mt-90px flex-grow-1'>{true && <Outlet />}</div>
         <Footer />
       </main>
       <ScrollTop />
