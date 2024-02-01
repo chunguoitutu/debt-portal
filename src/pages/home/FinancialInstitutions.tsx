@@ -1,14 +1,24 @@
 import dashboardImg from '@/app/images/dashboard-financial.png'
 import {HomeProps} from '@/app/types'
 import {FC} from 'react'
+import financialInstitutionsImg from '@/app/images/dashboard-financial-institutions.svg'
 
 const FinancialInstitutions: FC<HomeProps> = () => {
   return (
     <section className='py-100px'>
-      <div className='container d-flex flex-column gap-72px'>
-        <header className='text-center home-animation fade bot-to-top'>
+      <div className='container d-flex flex-column align-items-center gap-72px'>
+        <header className='text-center home-animation fade bot-to-top position-relative w-fit-content'>
+          <div className='mw-100 pe-none user-select-none h-0 z-index-negative'>
+            <img
+              src={financialInstitutionsImg}
+              alt='financial institutions'
+              className='mw-100 object-fit-cover'
+            />
+          </div>
           <h2 className='fs-44 mb-4px'>Financial Institutions</h2>
-          <span className='text-uppercase fs-14 text-gray-600'>GENERAL INTRODUCTION</span>
+          <span className='text-uppercase fs-14 text-gray-600 letter-spacing-2'>
+            GENERAL INTRODUCTION
+          </span>
         </header>
 
         <div className='d-flex flex-column flex-lg-row justify-content-between gap-20px'>
@@ -18,19 +28,19 @@ const FinancialInstitutions: FC<HomeProps> = () => {
             className='fade home-animation w-475px mw-100 object-fit-cover'
           />
 
-          <div className='d-flex flex-column gap-24px text-gray-900 text-capitalize'>
-            <h6 className='m-0 fs-16 home-animation fade bot-to-top delay-0-2'>
+          <div className='d-flex flex-column gap-24px text-gray-900'>
+            <h6 className='m-0 fs-16 fw-semibold home-animation fade bot-to-top delay-0-2'>
               A cornerstone of our business for more than a decade, MCK has invested heavily in
               financial institutions and will continue to invest in this important, high-return
               sector. Until now, our focus has been on businesses offering unsecured personal and
-              business loans
+              business loans.
             </h6>
-            <h6 className='m-0 fs-16 home-animation fade bot-to-top delay-0-4'>
-              however, we see finance as a robust growth market with strong potential in secure
+            <h6 className='m-0 fs-16 fw-semibold home-animation fade bot-to-top delay-0-4'>
+              However, we see finance as a robust growth market with strong potential in secure
               business loans and home loans. As a major financial hub in Southeast Asia, the
               financial sector is crucial to Singapore's economy and as digital transformation
               progresses throughout the region we believe the sector will move from strength to
-              strength
+              strength.
             </h6>
           </div>
         </div>

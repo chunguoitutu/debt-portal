@@ -18,10 +18,10 @@ const HomeHeader: FC<HomeProps> = (props) => {
     >
       <div className='container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-60px'>
         <div
-          className={clsx(['d-flex flex-column gap-24px mw-600px', screenWidth < 992 && 'order-2'])}
+          className={clsx(['d-flex flex-column gap-24px mw-500px', screenWidth < 992 && 'order-2'])}
         >
           <div className={clsx(['home-animation fade bot-to-top'])}>
-            <span className='d-inline-flex align-items-center gap-16px text-white mb-16px fs-16'>
+            <span className='d-inline-flex align-items-center gap-16px text-white mb-16px fs-20 fw-semibold'>
               Welcome To <span className='d-inline-block w-60px h-1px bg-white'></span>
             </span>
 
@@ -31,7 +31,7 @@ const HomeHeader: FC<HomeProps> = (props) => {
 
           <span
             className={clsx(
-              'fs-20 text-white text-capitalize home-animation fade bot-to-top delay-0-3'
+              'fs-20 text-white fw-semibold home-animation fade bot-to-top delay-0-3'
             )}
           >
             “ With our eyes on the long-term future, we invest in tomorrow knowing that we can make
