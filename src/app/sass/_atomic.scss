@@ -216,3 +216,11 @@ input:-webkit-autofill:active {
 .letter-spacing-2 {
   letter-spacing: 2px;
 }
+
+.pencil-icon {
+  &:hover {
+    > span {
+      color: var(--bs-primary);
+    }
+  }
+}

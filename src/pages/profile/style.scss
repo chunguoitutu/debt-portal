@@ -1,0 +1,25 @@
+.profile {
+  .avatar {
+    $size: 140px;
+    width: $size;
+    aspect-ratio: 4 / 4;
+  }
+
+  .profile__menu {
+    .profile__menu--item {
+      position: relative;
+
+      &:hover::before,
+      &.active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        border-radius: 30px;
+        background-color: var(--bs-gray-900);
+      }
+    }
+  }
+}

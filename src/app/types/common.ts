@@ -140,18 +140,23 @@ export type ResponseBorrowerListing = {
   searchBar?: string
 }
 
+export type FormatDate = 'YYYY-MM-DD' | 'DD/MM/YYYY' | 'MMM DD, YYYY' | 'DD MMM, YYYY'
+
 export type TableRow<T = string> = {
   key: T
   name: string
   color?: string
   classNameTableHead?: string
   classNameTableBody?: string
+  className?: string
   component?: any
   typeValue?: string
   isHide?: boolean // hide io table listing
   defaultShow?: boolean
   options?: Option[]
-  format?: 'money' | 'date' | 'option' | 'percent' | 'phone'
+  format?: 'money' | 'date' | 'option' | 'percent' | 'phone' | 'fullname'
+  formatDate?: FormatDate
+  isEditField?: boolean
   infoCreateEdit?: {
     className?: string
     type?: HTMLInputTypeAttribute
@@ -668,4 +673,12 @@ export type TypeFormControl = 'checkbox-rounded' | 'input'
 
 export type WithChildren = {
   children?: ReactNode
+}
+
+export type MenuItem<T = any> = {
+  id: number
+  label: string
+  to?: string
+  default?: boolean
+  component?: FC<T>
 }
