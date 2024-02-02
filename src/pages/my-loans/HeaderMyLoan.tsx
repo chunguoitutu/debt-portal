@@ -16,12 +16,11 @@ const HeaderMyLoan = ({filter, setFilter}: Props) => {
         } `}</p>
       </div>
       <div className='p-20px flex-column flex-md-row d-flex justify-content-between align-items-md-center '>
-        <div className='d-flex  justify-content-start h-100 align-items-center gap-16px'>
+        <div className='d-flex flex-column flex-md-row  justify-content-start h-100 align-items-start align-items-md-center gap-16px'>
           <h1 className='fw-semibold fs-14 text-gray-600 m-0 p-0'>Filter:</h1>
           <StatusMyLoans
             value={filter}
             onChange={(e) => {
-              console.log(e?.target?.value)
               if (!filter.includes(Number(e?.target?.value))) {
                 setFilter([...filter, Number(e?.target?.value)])
               } else {
