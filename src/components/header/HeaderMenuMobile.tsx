@@ -1,13 +1,21 @@
 import {NavLink} from 'react-router-dom'
 import {linkHeader} from '.'
+import clsx from 'clsx'
+import {useShared} from '@/app/context/SharedContext'
 
 type Props = {
   onClose: () => void
 }
 
 const HeaderMenuMobile = ({onClose}: Props) => {
+  const {showLoginForm} = useShared()
   return (
-    <div className='header-mobile-menu-portal d-flex justify-content-center align-items-center'>
+    <div
+      className={clsx([
+        'header-mobile-menu-portal d-flex justify-content-center align-items-center ',
+        !showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
+      ])}
+    >
       <div onClick={onClose} className='w-100 h-100'></div>
       <div className='mobile-menu-portal'>
         <div className='d-flex justify-content-center flex-column align-items-start '>

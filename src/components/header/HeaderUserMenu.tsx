@@ -1,10 +1,22 @@
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import './style.scss'
 import {getTheBeginningAndEndOfTheName} from '@/app/utils'
+import Cookies from 'js-cookie'
+import {useShared} from '@/app/context/SharedContext'
 
 const HeaderUserMenu: FC = () => {
   const navigate = useNavigate()
+  const {setShowLoginForm} = useShared()
+
+  function handleLogOut() {
+    Cookies.remove('token')
+    setTimeout(() => {
+      setShowLoginForm(true)
+    }, 0)
+    navigate('/')
+  }
+
   return (
     <div className='dropdown-menu-application'>
       <div className='dropdown-fixed fw-bold py-4 fs-6 w-250px' style={{zIndex: 999999}}>
@@ -40,9 +52,7 @@ const HeaderUserMenu: FC = () => {
 
         <div className='menu-item px-5'>
           <span
-            onClick={() => {
-              navigate('/')
-            }}
+            onClick={handleLogOut}
             className='menu-link px-5 fs-6 text-dropdown-black text-gray-900 menu-item-child'
           >
             Sign Out

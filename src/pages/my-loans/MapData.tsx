@@ -1,6 +1,5 @@
-import {formatMoney} from '@/app/utils'
+import {formatDate, formatMoney} from '@/app/utils'
 import Icons from '@/components/icons'
-import moment from 'moment'
 import {Link} from 'react-router-dom'
 
 type Props = {
@@ -21,11 +20,9 @@ const MapData = ({data}: Props) => {
                 </div>
                 <div className='position-relative'>
                   <div className='position-absolute icons-active-my-tasks-portal'>
-                    {Number(el.active) === 1 ? (
-                      <Icons name={'ActiveMyTasks'} />
-                    ) : (
-                      <Icons name={'ActiveMyTasksBlack'} />
-                    )}
+                    <Icons
+                      name={Number(el.active) === 1 ? 'ActiveMyTasks' : 'ActiveMyTasksBlack'}
+                    />
                   </div>
                   <p className='position-absolute active-my-tasks-portal-absolute'>Active</p>
                 </div>
@@ -40,7 +37,7 @@ const MapData = ({data}: Props) => {
                     <div className='d-flex justify-content-center ps-12px ps-md-0  align-items-center  gap-8px'>
                       <Icons name={'DatePortal'} />
                       <p className=' m-0 p-0 fs-12 fw-normal test-gray-900'>
-                        {moment(el?.approval_date).format('DD MMM, YYYY')}
+                        {formatDate(el?.approval_date, 'DD MMM, YYYY')}
                       </p>
                     </div>
                     <div className='d-flex justify-content-center align-items-center  gap-8px'>
@@ -53,7 +50,7 @@ const MapData = ({data}: Props) => {
                     </div>
                   </div>
                   <Link
-                    className='d-flex justify-content-center  ps-12px ps-md-0 align-items-center gap-8px'
+                    className='d-flex justify-content-center wrapper-link-details-my-task  ps-12px ps-md-0 align-items-center gap-8px'
                     to={'/my-loans/details/1'}
                   >
                     <p className='link-details-my-task p-0 m-0 fs-13'>Details</p>{' '}

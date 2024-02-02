@@ -1,13 +1,17 @@
 import {useShared} from '@/app/context/SharedContext'
 import './style.scss'
-import {NavLink, useLocation, useNavigate} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 
-import {Dispatch, useState} from 'react'
+import {Dispatch, useEffect, useState} from 'react'
 import ImgHeader from './ImgHeader'
 import LogoHeader from './LogoHeader'
 import LogInHeader from './LogInHeader'
+import Cookies from 'js-cookie'
+import clsx from 'clsx'
 
 export const linkHeader = [
+  {id: 2, to: '/', title: 'Home'},
+
   {id: 2, to: '/dashboard', title: 'Dashboard'},
   {
     id: 3,
@@ -26,12 +30,13 @@ interface Props {
 }
 
 const Header = ({setSCroll, scroll}: Props) => {
+  const [token, setToken] = useState(Cookies.get('token'))
   const {showLoginForm, setShowLoginForm} = useShared()
   const [isMenuVisible, setMenuVisible] = useState(false)
   const navigate = useNavigate()
-
-  const location = useLocation()
-  const currentPath = location.pathname
+  useEffect(() => {
+    setToken(Cookies.get('token'))
+  }, [Cookies.get('token')])
 
   function toggleFormLogin() {
     if (!showLoginForm) {
@@ -44,11 +49,7 @@ const Header = ({setSCroll, scroll}: Props) => {
   }
 
   function handleNavigate() {
-    if (currentPath === '/') {
-      navigate('/')
-    } else {
-      navigate('/dashboard')
-    }
+    navigate('/')
   }
 
   const fakeData = {
@@ -71,8 +72,13 @@ const Header = ({setSCroll, scroll}: Props) => {
         {/* Logged */}
         <LogoHeader handleNavigate={handleNavigate} />
 
-        {currentPath !== '/' && (
-          <div className='d-none d-md-block h-100'>
+        {!!token && (
+          <div
+            className={clsx([
+              'd-none d-md-block h-100 ',
+              !showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
+            ])}
+          >
             <div className='d-flex justify-content-center h-100 align-items-center '>
               {linkHeader.map((el, i) => {
                 return (
@@ -94,7 +100,7 @@ const Header = ({setSCroll, scroll}: Props) => {
         )}
 
         {/* Not logged */}
-        {currentPath === '/' ? (
+        {!token ? (
           <LogInHeader toggleFormLogin={toggleFormLogin} />
         ) : (
           <ImgHeader
