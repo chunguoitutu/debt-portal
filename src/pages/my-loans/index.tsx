@@ -9,8 +9,8 @@ const profileBreadCrumbs = {
   title: 'My Loans',
   link: [
     {
-      to: '/',
-      titleLink: 'Home',
+      to: '/dashboard',
+      titleLink: 'Dashboard',
     },
   ],
   render: ['My Loans'],
