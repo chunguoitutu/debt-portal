@@ -83,7 +83,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
               tomorrow.setDate(tomorrow.getDate() + 1)
               setShowLoginForm(false)
               Cookies.set('token', 'kha-dep-trai-cute', {expires: tomorrow})
-              navigate('/')
+              navigate('/dashboard')
             }}
           >
             Sign In
