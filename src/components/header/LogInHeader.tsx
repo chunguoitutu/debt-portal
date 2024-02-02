@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import Button from '../button/Button'
-import {useShared} from '@/app/context/SharedContext'
 
 type Props = {
   toggleFormLogin: () => void

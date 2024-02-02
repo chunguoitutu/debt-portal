@@ -5,8 +5,7 @@ import Header from '@/components/header'
 import {PageDataProvider} from '@/components/breadcrumbs'
 import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
 import clsx from 'clsx'
-import {useEffect, useState} from 'react'
-import {useShared} from '@/app/context/SharedContext'
+import {useState} from 'react'
 
 const MasterLayout = () => {
   const [scroll, setSCroll] = useState(false)
@@ -23,11 +22,6 @@ const MasterLayout = () => {
   //   refreshToken(token || '')
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [pathname, token])'
-
-  const {showLoginForm} = useShared()
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [showLoginForm])
 
   return (
     <PageDataProvider>
