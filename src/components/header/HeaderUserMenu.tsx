@@ -12,8 +12,12 @@ const HeaderUserMenu: FC = () => {
   function handleLogOut() {
     Cookies.remove('token')
     setTimeout(() => {
+      window?.scroll({
+        top: 0,
+        behavior: 'smooth',
+      })
       setShowLoginForm(true)
-    }, 0)
+    }, 100)
     navigate('/')
   }
 
