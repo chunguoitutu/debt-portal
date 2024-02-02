@@ -1,5 +1,5 @@
 .wrapper-title-container {
-  background: #1b1e27;
+  background: #0d101af0;
 }
 
 .title-header-container {
@@ -10,7 +10,7 @@
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0.52px;
-  padding-bottom: 8px;
+  padding-bottom: 4px;
   margin: 0;
 }
 
@@ -23,4 +23,8 @@
   text-transform: capitalize;
   padding: 0;
   margin: 0;
+}
+
+.link-title-container {
+  color: #6ea8fe;
 }
