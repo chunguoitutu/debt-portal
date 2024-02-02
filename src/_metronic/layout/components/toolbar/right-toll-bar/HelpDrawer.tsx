@@ -7,12 +7,7 @@ import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {PropsStepApplication} from '@/app/types'
 import {ApplicationStatus} from '@/app/types/enum'
 import Icons from '@/components/icons'
-import MobileMLCB from '@/pages/applications/background-check/MLCB/MobileMLCB'
-import MobileCaCheck from '@/pages/applications/background-check/ca-check/MobileCaCheck'
-import MobileGoogleSearch from '@/pages/applications/background-check/google-search/MobileGoogleSearch'
-import MobileRepayment from '@/pages/applications/background-check/repayment-schedule-calculator/MobileRepayment'
-import MobilePageCheck from '@/pages/applications/background-check/up-page-check/MobilePageCheck'
-import MobileValidationPhoneNumber from '@/pages/applications/background-check/validate-phone-number/MobileValidationPhone'
+
 import {FC, useMemo, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
@@ -300,136 +295,7 @@ const HelpDrawer: FC<PropsStepApplication> = ({
       data-kt-drawer-direction='end'
       data-kt-drawer-toggle='#kt_help_toggle'
       data-kt-drawer-close='#kt_help_close'
-    >
-      <div className='d-flex w-100'>
-        {show && true && <MobileRepayment handleShow={() => setShow(false)} />}
-        {showSearchCheck && true && (
-          <MobileGoogleSearch
-            tools={tools}
-            borrower_id={borrower_id || 0}
-            setTools={setTools}
-            status={[ApplicationStatus.APPROVED, ApplicationStatus.REJECTED].includes(
-              values.status || 0
-            )}
-            Nric_no={values.identification_no}
-            payload={fullname}
-            handleShow={() => setShowSearchCheck(false)}
-          />
-        )}
-        {showValidationPhone && true && (
-          <MobileValidationPhoneNumber
-            setToolsCheckCount={setToolsCheckCount}
-            toolsCheckCount={toolsCheckCount}
-            payload={+values.mobilephone_1}
-            handleShow={() => setShowValidationPhone(false)}
-          />
-        )}
-        {showMLCBReport && [ApplicationStatus.AWAITING_APPROVAL].includes(values.status || 0) && (
-          <MobileMLCB
-            setToolsCheckCount={setToolsCheckCount}
-            toolsCheckCount={
-              toolsCheckCount || {
-                MLCB: 0,
-                Cross: 0,
-                validatePhone: 0,
-              }
-            }
-            handleShow={() => setShowMLCBReport(false)}
-          />
-        )}
-        {showSearchPageCheck && true && (
-          <MobilePageCheck
-            tools={tools}
-            borrower_id={borrower_id || 0}
-            setTools={setTools}
-            status={[ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
-              values.status || 0
-            )}
-            Nric_no={values.identification_no}
-            payload={values.lastname}
-            handleShow={() => setShowSearchPageCheck(false)}
-          />
-        )}
-        {showCaCheck && true && (
-          <MobileCaCheck
-            tools={tools}
-            borrower_id={borrower_id || 0}
-            setTools={setTools}
-            status={[ApplicationStatus.REJECTED, ApplicationStatus.APPROVED].includes(
-              values.status || 0
-            )}
-            Nric_no={values.identification_no}
-            payload={fullname}
-            handleShow={() => setShowCaCheck(false)}
-          />
-        )}
-        <div className='card shadow-none rounded-0 w-350px flex-shrink-0'>
-          <div
-            className=' p-30px d-flex justify-content-between align-items-center'
-            style={{
-              border: '1px solid #F1F1F2',
-            }}
-          >
-            <h5 className='font-bold fs-20 text-gray-900 m-0'>Background Check</h5>
-
-            <div className='card-toolbar'>
-              <button
-                onClick={() => {
-                  setShow(false)
-                  setShowValidationPhone(false)
-                  setShowMLCBReport(false)
-                  setShowSearchCheck(false)
-                  setShowCaCheck(false)
-                  setShowSearchPageCheck(false)
-                }}
-                type='button'
-                className='btn btn-sm btn-icon explore-btn-dismiss '
-                id='kt_help_close'
-              >
-                <KTIcon iconName='cross' className='fs-2' />
-              </button>
-            </div>
-          </div>
-          <div style={{maxHeight: 'calc(100vh - 100px)', overflowY: 'auto'}} className='p-30px'>
-            {configBackgroudCheck?.row.map((data, index) => (
-              <div className='m-0 p-0' key={index}>
-                {!!data?.show && (
-                  <>
-                    <button
-                      className={`py-12px px-4px
-               bg-transparent d-flex justify-content-center align-items-center ${
-                 index === configBackgroudCheck?.row.length - 1 && 'border-top border-gray-200'
-               }`}
-                      onClick={data.onclick}
-                      style={{
-                        opacity: !!data?.opacity ? '1' : '0.6',
-                        border: 'none',
-                      }}
-                    >
-                      <span
-                        style={{
-                          border: 'none',
-                          borderRadius: '8px',
-                          background: data?.background,
-                        }}
-                        className={`
-                  h-48px w-48px me-5
-                d-flex justify-content-center align-items-center flex-shrink-0`}
-                      >
-                        {data.icon}
-                      </span>
-                      <span className='text-gray-700 text-start fw-semibold fs-14'>
-                        {data.value}
-                      </span>
-                    </button>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    ></div>
   )
 }
 

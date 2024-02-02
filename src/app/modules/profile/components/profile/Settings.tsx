@@ -11,7 +11,6 @@ import ChangePassword from '../change-password/ChangePassword'
 import {Input} from '@/components/input'
 import Tippy from '@tippyjs/react'
 import {Select} from '@/components/select'
-import {COUNTRY_PHONE_CODE} from '@/app/utils'
 
 const profileDetailsSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required'),

@@ -4,7 +4,6 @@ import {AiOutlineClose} from 'react-icons/ai'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import request from '@/app/axios'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
-import {file} from '@/pages/applications/step-component/employment/FileDocument'
 import clsx from 'clsx'
 
 type Props = {
@@ -18,7 +17,7 @@ type Props = {
 const RenderFile = ({arrayMap, setUploadFile, url = '', className, disabled}: Props) => {
   return (
     <div className={clsx(['d-flex flex-wrap gap-24px', className])}>
-      {arrayMap.map((data: file, index: number) => {
+      {arrayMap.map((data, index: number) => {
         return (
           <div key={index} className='file-document-style'>
             {!!data?.base64 && (

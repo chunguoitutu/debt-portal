@@ -3,7 +3,6 @@ import {useLocation} from 'react-router'
 import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {checkIsActive, KTIcon} from '../../../../helpers'
-import {ApplicationsMenu} from '../../../../../pages/applications/applications-menu/ApplicationsMenu'
 
 type Props = {
   to: string
@@ -82,9 +81,7 @@ const MenuItem: FC<Props> = ({
           style={{
             position: 'relative',
           }}
-        >
-          <ApplicationsMenu />
-        </div>
+        ></div>
       )}
     </div>
   )
