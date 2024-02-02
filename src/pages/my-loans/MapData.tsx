@@ -36,13 +36,13 @@ const MapData = ({data}: Props) => {
                   <div className='d-flex flex-column flex-md-row gap-8px gap-xl-12px justify-content-center align-items-center'>
                     <div className='d-flex justify-content-center ps-12px ps-md-0  align-items-center  gap-8px'>
                       <Icons name={'DatePortal'} />
-                      <p className=' m-0 p-0 fs-12 fw-normal test-gray-900'>
+                      <p className=' m-0 p-0 fs-13 fw-normal test-gray-900'>
                         {formatDate(el?.approval_date, 'DD MMM, YYYY')}
                       </p>
                     </div>
                     <div className='d-flex justify-content-center align-items-center  gap-8px'>
                       <Icons name={'TimeMyTasks'} />
-                      <p className=' m-0 p-0 fs-12 fw-normal test-gray-900'>
+                      <p className=' m-0 p-0 fs-13 fw-normal test-gray-900'>
                         {`${el?.loan_terms} ${
                           [1, 0].includes(Number(el?.loan_terms)) ? 'month' : 'months'
                         }`}
