@@ -74,6 +74,7 @@ const TableSecondary: FC<Props> = ({
               const {key, name, classNameTableHead, infoFilter} = el
               const {isSort} = infoFilter || {}
               const isColumnLast = ROW_LISTING.length === i + 1
+
               return (
                 <th
                   className={clsx([
@@ -116,6 +117,8 @@ const TableSecondary: FC<Props> = ({
                     const isColumnLast = ROW_LISTING.length === i + 1
 
                     let value = item[key]
+
+                    console.log(settings?.endpointNavigate, item?.id)
 
                     if (format === 'date') {
                       value = formatDate(value, 'DD MMM, YYYY')
@@ -216,7 +219,7 @@ const TableSecondary: FC<Props> = ({
                             settings?.saveSESSION_NAME,
                             JSON.stringify(item?.id)
                           )
-                          navigate(`${settings?.endpointNavigate}${item?.id}`)
+                          navigate(`${settings?.endpointNavigate}/${item?.id}`)
                         }}
                       />
                     </td>

@@ -64,10 +64,13 @@ const AppRoutes: FC = () => {
             </Route>
             <Route path='/customers'></Route>
             <Route path='/portal' element={<DashBoardPortal />} />
-            <Route path='/portal-loan-details' element={<LoanDetailsPortal />} />
 
             <Route path='/portal' element={<DashBoardPortal />} />
-            <Route path='/my-loans' element={<MyLoans />} />
+
+            <Route path='/my-loans'>
+              <Route index element={<MyLoans />} />
+              <Route path='details/:id' element={<LoanDetailsPortal />} />
+            </Route>
 
             <Route
               path='/account/*'

@@ -54,7 +54,7 @@ const MapData = ({data}: Props) => {
                   </div>
                   <Link
                     className='d-flex justify-content-center  ps-12px ps-md-0 align-items-center gap-8px'
-                    to={'/'}
+                    to={'/my-loans/details/1'}
                   >
                     <p className='link-details-my-task p-0 m-0'>Details</p>{' '}
                     <Icons name={'ArrowLeft'} />

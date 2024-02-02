@@ -1,7 +1,12 @@
 import {formatDate, formatMoney} from '@/app/utils'
 import moment from 'moment'
+import {FC} from 'react'
 
-const RepaymentHistoryPortal = () => {
+type Props = {
+  className?: string
+}
+
+const RepaymentHistoryPortal: FC<Props> = ({className}) => {
   const data = [
     {
       no_payment: '26th',
@@ -34,7 +39,9 @@ const RepaymentHistoryPortal = () => {
   ]
 
   return (
-    <div className={`loan-amount-portal p-20px gap-20px position-relative h-100 flex-grow-1 `}>
+    <div
+      className={`loan-amount-portal p-20px gap-20px position-relative h-100 flex-grow-1 ${className}`}
+    >
       <div className='loan-amount-title'>Repayment History</div>
       <div className='text-gray-400 fs-14 fw-normal mt-2'>Past 12 months</div>
 
