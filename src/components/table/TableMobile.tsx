@@ -41,11 +41,11 @@ const TableMobile: FC<Props> = ({
   const {rows, settings} = config
 
   return (
-    <div className='row g-20px'>
+    <div className='row g-12px'>
       {Array.isArray(data) && !!data.length ? (
         data.map((item, index) => (
           <div className='col-12' key={index}>
-            <div className='card p-20px'>
+            <div className='card p-12px'>
               {rows.map((row, i) => {
                 const {key, format, name} = row
                 let value = item[key]
@@ -84,6 +84,10 @@ const TableMobile: FC<Props> = ({
                       />
                     </div>
                   )
+                }
+
+                if (key === 'loan_no') {
+                  return <div className='text-gray-900 fw-bold ps-10px mb-8px'>{value}</div>
                 }
 
                 return (

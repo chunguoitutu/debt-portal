@@ -72,7 +72,7 @@ const TablePortal: FC<LoanDetailsProps> = ({loanInfo}) => {
 
   return (
     <div className='table-portal w-100 mt-20px mt-lg-0 res-parent-table-portal'>
-      <div className='p-30px pb-20px'>
+      <div className='p-20px p-xxl-30px p-xl-30px p-lg-30px p-md-30px p-sm-30px pb-8px pb-xl-20px pb-lg-20px pb-md-20px pb-sm-20px'>
         <div className='d-flex flex-row align-items-center justify-content-between'>
           <div className='table-header-title-res'>
             <div className='fs-20 fw-bold text-gray-900'>All Active Loans</div>
@@ -92,7 +92,10 @@ const TablePortal: FC<LoanDetailsProps> = ({loanInfo}) => {
       </div>
       <div className='p-0'>
         {isMobile ? (
-          <div className='d-flex flex-column p-12px cursor-pointer' onClick={handleViewLoanDetails}>
+          <div
+            className='d-flex flex-column pt-12px p-20px cursor-pointer'
+            onClick={handleViewLoanDetails}
+          >
             <TableMobile
               keySort={keySort}
               orderBy={orderBy}

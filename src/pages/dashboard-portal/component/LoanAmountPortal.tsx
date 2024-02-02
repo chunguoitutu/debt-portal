@@ -11,14 +11,16 @@ const LoanAmountPortal: React.FC<Props> = ({className}: Props) => {
     <div className={`loan-amount-portal p-30px gap-20px position-relative ${className}`}>
       <div className='res-parent-amount-details position-relative' style={{zIndex: 1}}>
         <img src={ChartPortal} alt='chart-portal' className='chart-resp' />
-        <div className='loan-amount-title mt-xl-20px mt-lg-20px res-detail-text-head'>
-          Loan Amount
-        </div>
+      </div>
+      <div className='loan-amount-title mt-xl-20px mt-lg-20px res-detail-text-head'>
+        Loan Amount
       </div>
       <div className='fs-14 fw-normal text-gray-400'>No. Of Instalment: 12 Monthly</div>
       <div className='d-flex align-items-center mt-20px'>
-        <span className='fs-3 fw-bold text-gray-500 me-1 mt-2 align-self-start'>$</span>
-        <span className='fs-2hx fw-bold text-gray-900'>60,785</span>
+        <span className='fs-3 fs-20px-responsive fw-bold text-gray-500 me-1 mt-2 align-self-start'>
+          $
+        </span>
+        <span className='fs-2hx fw-bold text-gray-900 fs-24px-responsive'>60,785</span>
       </div>
 
       <div className='quarter-circle-first'>
