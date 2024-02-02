@@ -22,18 +22,20 @@ const AboutUs: FC<HomeProps> = () => {
           <span className='text-uppercase fs-14 text-gray-600 mb-4px align-self-center align-self-lg-start letter-spacing-2'>
             GENERAL INTRODUCTION
           </span>
-          <h3 className='fs-44 mb-20px fw-bold align-self-center align-self-lg-start'>
+          <h3 className='fs-46 mb-20px fw-bold align-self-center align-self-lg-start home__title two-line'>
             Message from our Chairman
           </h3>
 
-          <span className='d-inline-block fs-20 mb-20px fw-semibold home-animation fade delay-0-2 align-self-start'>
+          <span className='d-inline-block fs-20 mb-20px fw-semibold home-animation fade delay-0-2 align-self-start text-blue-medium'>
             “Our goal is to create a better and more sustainable tomorrow, for you and your future
-            generations.” Empower your future.
+            generations.”
           </span>
 
           <div className='home-animation fade delay-0-4 align-self-start'>
-            <h5 className='text-primary m-0'>Daniel Koh</h5>
-            <h6 className='text-capitalize fw-normal'>Chairman & Founder of MCK Group</h6>
+            <h5 className='text-primary m-0 fs-20'>Daniel Koh</h5>
+            <h6 className='text-capitalize fw-normal text-gray-700 fs-14'>
+              Chairman & Founder of MCK Group
+            </h6>
           </div>
         </div>
       </div>

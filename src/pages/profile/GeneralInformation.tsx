@@ -1,20 +1,30 @@
 import {Fragment, useMemo, useState} from 'react'
-import {PROFILE_CONFIG, currentUser} from './config'
+import {EDIT_PROFILE_LIST, PROFILE_CONFIG, currentUser} from './config'
 import {formatData} from '@/app/utils'
 import clsx from 'clsx'
-import ModalEditPhone from './ModalEditPhone'
+import ModalEdit from './ModalEdit'
 
 const GeneralInformation = () => {
-  const [showModal, setShowModal] = useState<string | null>('phone')
+  const [showModal, setShowModal] = useState<string | null>(null)
 
   function handleShowModalEdit(key: string) {
-    if (!['email', 'phone'].includes(key)) return alert('Something went wrong')
     setShowModal(key)
+  }
+
+  const config = useMemo(() => {
+    const config = EDIT_PROFILE_LIST.find((el) => el.key === showModal)?.config
+    return config
+  }, [showModal])
+
+  function handleClosePopup() {
+    setShowModal(null)
   }
 
   return (
     <section className='card p-24px d-flex flex-column gap-30px h-100'>
-      {showModal === 'phone' && <ModalEditPhone />}
+      {showModal && config && (
+        <ModalEdit onClose={handleClosePopup} config={config} currentUser={currentUser} />
+      )}
       <h3 className='fs-20 fw-bold m-0'>General Information</h3>
 
       <div className='row gy-16px gy-sm-24px'>

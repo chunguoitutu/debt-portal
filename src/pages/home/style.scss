@@ -34,9 +34,26 @@
 
   .about-us {
     .about-us__img {
+      aspect-ratio: 1/1;
       border-top-left-radius: 0 !important;
       position: relative;
       background: linear-gradient(131deg, var(--bs-primary) -12.48%, var(--bs-black) 51.09%);
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  .home {
+    .home__title {
+      font-size: 2.333rem;
+    }
+
+    .company_name {
+      font-size: 2.333rem;
+    }
+
+    .organization_name {
+      font-size: 2.667rem;
     }
   }
 }

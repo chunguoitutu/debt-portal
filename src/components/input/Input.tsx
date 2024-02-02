@@ -101,7 +101,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
       {label && (
         <Label
           htmlFor={id || defaultId || name}
-          className='d-flex align-items-center fs-16 fw-semibold mb-8px'
+          className='d-flex align-items-center fs-14 fw-semibold mb-8px'
           label={label}
           required={required}
         />
@@ -134,11 +134,10 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         <input
           ref={ref}
           type={typeCustom}
-          className={`bg-inherit form-control rounded-0 border-0 p-12px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
+          className={`bg-inherit form-control rounded-0 border-0 px-12px py-10px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
           id={id || defaultId || name}
           name={name}
           {...(ref ? {} : {value: value})}
-          {...rest}
           onKeyPressCapture={(e) =>
             ['number', 'money', 'phone'].includes(type) &&
             handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
@@ -147,11 +146,12 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
             ['number', 'money', 'phone'].includes(type) &&
             handlePaste({e: e, noThereAreCommas: noThereAreCommas})
           }
+          {...rest}
         />
         {type === 'password'
           ? !!value.toString().length &&
             showIconTogglePassword && (
-              <span className='pwd-icon text-gray-400  p-8px text-hover-gray-600 cursor-pointer'>
+              <span className='pwd-icon text-gray-400 p-8px text-hover-gray-600 cursor-pointer'>
                 <FontAwesomeIcon
                   icon={typeCustom === 'password' ? faEyeSlash : faEye}
                   onClick={handleChangeTypeInput}

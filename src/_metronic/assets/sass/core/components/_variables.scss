@@ -47,6 +47,9 @@ $primary-inverse: $white !default;
 $blue: #0a1b3c;
 $blue-medium: #00204c;
 
+$yellow-light: #fff8dd;
+$yellow: #ffc107;
+
 // Secondary colors
 $secondary: $gray-300 !default;
 $secondary-active: $gray-400 !default;
@@ -70,6 +73,8 @@ $info: #8950fc !default;
 $info-active: #7337ee !default;
 $info-light: #eee5ff !default;
 $info-inverse: $white !default;
+
+$info-light: #f8f5ff !default;
 
 // Warning colors
 $warning: #ffa800 !default;
@@ -101,6 +106,9 @@ $theme-colors: (
   'dark': $dark,
   'blue': $blue,
   'blue-medium': $blue-medium,
+  'yellow-light': $yellow-light,
+  'yellow': $yellow,
+  'info-light': $info-light,
 ) !default;
 
 // Contextual active state colors

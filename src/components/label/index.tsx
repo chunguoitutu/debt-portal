@@ -10,15 +10,15 @@ type Props = {
 
 const Label: FC<Props> = ({htmlFor, label, required, className}) => {
   return (
-    <label className={clsx('cursor-pointer', className)} htmlFor={htmlFor}>
-      <span
-        className={clsx([
-          'text-gray-900 fs-16 text-capitalize fw-semibold',
-          required && 'required',
-        ])}
-      >
-        {label}
-      </span>
+    <label
+      className={clsx(
+        'cursor-pointer text-gray-900 text-capitalize fw-semibold',
+        required && 'required',
+        className
+      )}
+      htmlFor={htmlFor}
+    >
+      {label}
     </label>
   )
 }
