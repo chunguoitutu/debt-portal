@@ -21,6 +21,7 @@ import {WithChildren} from '@/app/types'
 import Profile from '@/pages/profile'
 import MyLoans from '@/pages/my-loans'
 import Application from '@/pages/application'
+import LoanDetailsPortal from '@/pages/loan-portal'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -61,6 +62,9 @@ const AppRoutes: FC = () => {
             <Route path='/dashboard'>
               <Route index element={<DashBoardPortal />} />
             </Route>
+            <Route path='/customers'></Route>
+            <Route path='/portal' element={<DashBoardPortal />} />
+            <Route path='/portal-loan-details' element={<LoanDetailsPortal />} />
 
             <Route path='/portal' element={<DashBoardPortal />} />
             <Route path='/my-loans' element={<MyLoans />} />

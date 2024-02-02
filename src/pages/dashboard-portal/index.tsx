@@ -37,7 +37,7 @@ const DashBoardPortal = () => {
     <div className='container app-main-loan'>
       <div className='col-12 h-fit-content main-portal'>
         <div className='row h-fit-content mb-xl-1'>
-          <div className='col-xxl-6 col-xl-6 col-lg-7 res-next-payment'>
+          <div className='col-xxl-6 col-xl-7 col-lg-7 res-next-payment'>
             <NextPayment />
           </div>
           <div className='col-xxl-3 col-xl-3 col-lg-1 w-50 fragment-parent w-lg-25 flex-grow-1'>
