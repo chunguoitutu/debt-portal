@@ -8,7 +8,7 @@ type Props = {
 
 const HeaderMyLoan = ({filter, setFilter}: Props) => {
   return (
-    <div className='card'>
+    <div className='card mb-20px'>
       <div className='p-20px  border-b-1px'>
         <h1 className='fs-20 fw-bold text-gray-900 p-0 mb-8px'>All Active Loans</h1>
         <p className='fs-14 text-gray-400 fw-normal p-0 m-0'>{`You have ${1} active ${
@@ -17,7 +17,7 @@ const HeaderMyLoan = ({filter, setFilter}: Props) => {
       </div>
       <div className='p-20px flex-column flex-md-row d-flex justify-content-between align-items-md-center '>
         <div className='d-flex  justify-content-start h-100 align-items-center gap-16px'>
-          <h1 className='fw-fw-semibold fs-14 text-gray-600 m-0 p-0'>Filter:</h1>
+          <h1 className='fw-semibold fs-14 text-gray-600 m-0 p-0'>Filter:</h1>
           <StatusMyLoans
             value={filter}
             onChange={(e) => {

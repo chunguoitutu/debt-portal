@@ -16,9 +16,7 @@ const StatusMyLoans = ({value, onChange}: Props) => {
             name={data.label}
             value={Number(data.value)}
             label={data.label}
-            classNameLabel={`${
-              (value || []).includes(Number(data.value)) ? 'text-gray-900 ' : 'text-gray-600 '
-            } fs-14 fw-semibold`}
+            classNameLabel={`text-gray-900 fs-14 fw-semibold`}
             checked={(value || []).includes(Number(data.value))}
             onChange={onChange}
           />

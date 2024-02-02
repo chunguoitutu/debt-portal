@@ -22,7 +22,9 @@ const TitleContainer = ({data}: Props) => {
           {data?.link.map((el, i) => {
             return (
               <div key={i} className='d-flex justify-content-center align-items-center '>
-                <Link to={el?.to}>{el.titleLink}</Link>
+                <Link to={el?.to} className='link-title-container'>
+                  {el.titleLink}
+                </Link>
                 <div className='px-12px'>
                   <Icons name={'ArrowLink'} />
                 </div>

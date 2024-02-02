@@ -44,7 +44,11 @@ const Header = ({setSCroll, scroll}: Props) => {
   }
 
   function handleNavigate() {
-    navigate('/')
+    if (currentPath === '/') {
+      navigate('/')
+    } else {
+      navigate('/dashboard')
+    }
   }
 
   const fakeData = {

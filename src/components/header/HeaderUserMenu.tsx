@@ -1,5 +1,5 @@
 import {FC} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import './style.scss'
 import {getTheBeginningAndEndOfTheName} from '@/app/utils'
 
@@ -25,16 +25,16 @@ const HeaderUserMenu: FC = () => {
           </div>
         </div>
 
-        {/* <div className='separator my-2'></div> */}
+        <div className='separator my-2'></div>
 
-        {/* <div className='menu-item px-5 my-1'>
+        <div className='menu-item px-5 my-1'>
           <Link
-            to='/account/overview'
-            className='menu-link px-5 fs-6 text-dropdown-black menu-item-child'
+            to='/profile'
+            className='menu-link px-5 fs-6 text-dropdown-black text-gray-900 menu-item-child'
           >
-            Account Settings
+            Profile
           </Link>
-        </div> */}
+        </div>
 
         <div className='separator my-2'></div>
 
@@ -43,7 +43,7 @@ const HeaderUserMenu: FC = () => {
             onClick={() => {
               navigate('/')
             }}
-            className='menu-link px-5 fs-6 text-dropdown-black menu-item-child'
+            className='menu-link px-5 fs-6 text-dropdown-black text-gray-900 menu-item-child'
           >
             Sign Out
           </span>
