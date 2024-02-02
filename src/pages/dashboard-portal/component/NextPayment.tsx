@@ -94,7 +94,7 @@ const NextPayment = () => {
     infinite: false,
     slidesToShow: slideShowRes,
     slidesToScroll: 1,
-    className: 'd-flex flex-row pb-44px',
+    className: 'd-flex flex-row pb-xxl-44px pb-lg-24px pb-mb-44px pb-sm-44px pb-xs-44px pb-44px',
     nextArrow: <CustomNextArrow />,
   }
 
