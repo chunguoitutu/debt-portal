@@ -3,10 +3,15 @@ import {faArrowRight} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import './../style.scss'
 import {Button} from 'react-bootstrap'
+import {FC} from 'react'
 
-const NextPaymentDatePortal = () => {
+type Props = {
+  className?: string
+}
+
+const NextPaymentDatePortal: FC<Props> = ({className}) => {
   return (
-    <div className={`loan-amount-portal p-20px gap-20px position-relative`}>
+    <div className={`loan-amount-portal p-20px gap-20px position-relative ${className}`}>
       <div className='loan-amount-title'>Next Payment Date</div>
 
       <div className='d-flex flex-row gap-24px mt-20px'>

@@ -8,7 +8,7 @@ const DashBoardPortal = () => {
   const [loanInfo, setLoanInfo] = useState<any>({
     instalment_schedule: [
       {
-        id: 3,
+        id: 1,
         loan_no: 'L-MC-2024-00003',
         total_collection: 0,
         full_repayment_date: '2025-02-28T00:00:00.000Z',
@@ -16,7 +16,7 @@ const DashBoardPortal = () => {
         status: 1,
       },
       {
-        id: 3,
+        id: 1,
         loan_no: 'L-MC-2024-00003',
         total_collection: 0,
         full_repayment_date: '2025-02-28T00:00:00.000Z',
@@ -24,7 +24,7 @@ const DashBoardPortal = () => {
         status: 1,
       },
       {
-        id: 3,
+        id: 1,
         loan_no: 'L-MC-2024-00003',
         total_collection: 0,
         full_repayment_date: '2025-02-28T00:00:00.000Z',

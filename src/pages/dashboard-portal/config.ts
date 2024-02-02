@@ -5,7 +5,7 @@ import { Badge } from 'react-bootstrap'
 export const LOAN_CUSTOMER_PORTAL: TableConfig = {
     settings: {
         endPointGetListing: '/',
-        endpointNavigate: '/loans/details/',
+        endpointNavigate: '/my-loans/details',
         saveSESSION_NAME: 'recentlyViewedLoanId',
     },
     rows: [
@@ -53,7 +53,7 @@ export const LOAN_CUSTOMER_PORTAL: TableConfig = {
 export const LOAN_CUSTOMER_PORTAL_CARD_MOBILE: TableConfig = {
     settings: {
         endPointGetListing: '/',
-        endpointNavigate: '/loans/details/',
+        endpointNavigate: '/my-loans/details/1',
         saveSESSION_NAME: 'recentlyViewedLoanId',
     },
     rows: [

@@ -6,3 +6,39 @@
     border-radius: 8px;
   }
 }
+
+@media (max-width: 1199px) {
+  .fs-responsive-loan-chart-details {
+    font-size: 24px !important;
+  }
+  .amount-loan-details-repsonsive-font {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .hihi {
+    margin-top: 20px !important;
+  }
+}
+
+.sub-title-chart-loan {
+  @media (max-width: 400px) {
+    height: 46.78px !important;
+  }
+  @media (min-width: 1142px) and (max-width: 1199px) {
+    height: 53.34px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .hoho {
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 459px) {
+  .hjhj {
+    width: 100% !important;
+  }
+}

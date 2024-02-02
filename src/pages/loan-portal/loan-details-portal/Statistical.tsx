@@ -7,9 +7,10 @@ type Props = {
   chartSize?: number
   chartLine?: number
   chartRotate?: number
+  className?: string
 }
 
-const Statistical: FC<Props> = ({chartSize = 140, chartLine = 25, chartRotate = 0}) => {
+const Statistical: FC<Props> = ({chartSize = 120, chartLine = 25, chartRotate = 0, className}) => {
   //=================================MAIN LOGIC IN HERE=================================//
 
   //==================================START HANDLE FOR CHART==================================//
@@ -92,7 +93,7 @@ const Statistical: FC<Props> = ({chartSize = 140, chartLine = 25, chartRotate = 
   //==================================END HANDLE FOR CHART==================================//
 
   return (
-    <div className={`loan-amount-portal mt-20px p-20px position-relative`}>
+    <div className={`loan-amount-portal p-20px position-relative ${className}`}>
       <div className='loan-amount-title'>Next Payment Date</div>
 
       <div className='text-gray-500 fs-14 mt-16px fw-normal'>
@@ -100,8 +101,11 @@ const Statistical: FC<Props> = ({chartSize = 140, chartLine = 25, chartRotate = 
       </div>
 
       <div className='pt-24px'>
-        <div className='d-flex flex-wrap align-items-start justify-content-start'>
-          <div className='d-flex flex-center pt-2'>
+        <div className='d-flex flex-wrap align-items-start justify-content-start hoho pt-xl-44px pt-xxl-0'>
+          <div className='d-flex flex-center w-lg-100 w-xl-unset w-xs-100 pt-2 hjhj'>
+            <div className='position-absolute fw-bold text-gray-900' style={{fontSize: '20px'}}>
+              75%
+            </div>
             <div
               id='kt_card_widget_17_chart'
               ref={chartRef}
@@ -110,14 +114,22 @@ const Statistical: FC<Props> = ({chartSize = 140, chartLine = 25, chartRotate = 
               data-kt-line={chartLine}
             ></div>
           </div>
-          <div className='d-flex flex-column ps-24px'>
-            <div className='mb-20px'>
-              <div className='text-gray-900 fs-2hx fw-bold'>{formatMoney(820)}</div>
-              <div className='text-gray-600 fw-normal fs-4'>Payment amount</div>
+          <div className='d-flex flex-column ps-xl-24px ps-lg-0px flex-md-row gap-md-20px gap-sm-20px ps-md-30px ps-sm-20px mt-md-30px mt-lg-0 mt-xl-0 flex-xl-column flex-lg-column gap-xl-0 gap-lg-0 ps-sx-20px'>
+            <div className='mb-xl-20px mb-lg-8px'>
+              <div className='text-gray-900 fs-2hx fw-bold fs-responsive-loan-chart-details'>
+                {formatMoney(820)}
+              </div>
+              <div className='text-gray-600 fw-normal fs-4 amount-loan-details-repsonsive-font'>
+                Payment amount
+              </div>
             </div>
             <div>
-              <div className='text-primary fs-2hx fw-bold'>{formatMoney(26640)}</div>
-              <div className='text-gray-600 fw-normal fs-4'>Balance at the end of the period</div>
+              <div className='text-primary fs-2hx fw-bold fs-responsive-loan-chart-details'>
+                {formatMoney(26640)}
+              </div>
+              <div className='text-gray-600 fw-normal fs-4 amount-loan-details-repsonsive-font text-truncate'>
+                Balance at the end of the period
+              </div>
             </div>
           </div>
         </div>
