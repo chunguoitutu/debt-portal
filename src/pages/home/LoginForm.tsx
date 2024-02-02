@@ -5,6 +5,7 @@ import {Input} from '@/components/input'
 import clsx from 'clsx'
 import {useFormik} from 'formik'
 import {FC, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 
 const LoginForm: FC<HomeProps> = ({screenWidth}) => {
   const {status, errors, touched, handleSubmit, getFieldProps, setStatus, setSubmitting} =
@@ -15,7 +16,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
       },
       onSubmit: () => {},
     })
-
+  const navigate = useNavigate()
   const {showLoginForm} = useShared()
 
   return (
@@ -66,7 +67,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
       <Button
         className='btn-primary cursor-pointer'
         onClick={() => {
-          alert('This feature is not available.')
+          navigate('/dashboard')
         }}
       >
         Sign In

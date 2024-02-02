@@ -12,22 +12,15 @@ import {App} from '../App'
 import {MasterLayout} from '../layouts/master-layout/MasterLayout'
 import {getCSSVariableValue} from '../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
-import SettingPageRouter from '../pages/settings/SettingPageRouter'
-import {Applications} from '../pages/applications'
-import Transactions from '../pages/transactions'
-import MyTasks from '../pages/my-tasks'
-import ApplicationListing from '../pages/applications/application-listing/ApplicationListing'
+
 import {useAuth} from '../app/context/AuthContext'
-import Guest from '@/pages/guest'
-import LoanListing from '@/pages/loans/loan-listing/LoanListing'
-import BorrowersListing from '@/pages/borrowers/borrwers-listing/BorrowerListing'
-import LoanDetails from '@/pages/loans/loan-details'
-import CaCheck from '@/pages/applications/background-check/ca-check'
-import BorrowerDetail from '@/pages/borrowers/borrowers-details'
+
 import DashBoardPortal from '@/pages/dashboard-portal'
 import Home from '@/pages/home'
 import {WithChildren} from '@/app/types'
 import Profile from '@/pages/profile'
+import MyLoans from '@/pages/my-loans'
+import Application from '@/pages/application'
 import LoanDetailsPortal from '@/pages/loan-portal'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
@@ -57,7 +50,6 @@ const AppRoutes: FC = () => {
       <Routes>
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
-          <Route path='/transactions' element={<Transactions />} />
 
           <Route element={<MasterLayout />}>
             <Route index element={<Home />} />
@@ -65,35 +57,18 @@ const AppRoutes: FC = () => {
               <Route index element={<Profile />} />
             </Route>
             <Route path='/application'>
-              <Route index element={<ApplicationListing />} />
-              <Route path='listing' element={<ApplicationListing />} />
-              <Route path='create' element={<Applications />} />
-              <Route path='edit/:applicationIdEdit' element={<Applications />} />
+              <Route index element={<Application />} />
             </Route>
-            <Route path='/loans'>
-              <Route index element={<LoanListing />} />
-              <Route path='listing' element={<LoanListing />} />
-              <Route path='details/:loanId' element={<LoanDetails />} />
+            <Route path='/dashboard'>
+              <Route index element={<DashBoardPortal />} />
             </Route>
-            <Route path='/customers'>
-              <Route index element={<BorrowersListing />} />
-              <Route path='listing' element={<BorrowersListing />} />
-              <Route path='details/:customerId' element={<BorrowerDetail />} />
-            </Route>
+            <Route path='/customers'></Route>
             <Route path='/portal' element={<DashBoardPortal />} />
             <Route path='/portal-loan-details' element={<LoanDetailsPortal />} />
-            <Route path='/my-tasks' element={<MyTasks />} />
-            <Route path='guest' element={<Guest />} />
 
-            {/* Lazy Modules */}
-            <Route
-              path='settings/*'
-              element={
-                <SuspensedView>
-                  <SettingPageRouter />
-                </SuspensedView>
-              }
-            />
+            <Route path='/portal' element={<DashBoardPortal />} />
+            <Route path='/my-loans' element={<MyLoans />} />
+
             <Route
               path='/account/*'
               element={
@@ -104,7 +79,6 @@ const AppRoutes: FC = () => {
             />
           </Route>
 
-          <Route path='cas_check_listing_pdf' element={<CaCheck />} />
           {/* Not match any router */}
           <Route path='/' element={<Navigate to={currentUser ? '/dashboard' : '/login'} />} />
           <Route path='*' element={<Navigate to={currentUser ? '/error/404' : '/login'} />} />

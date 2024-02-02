@@ -5,8 +5,10 @@ import Header from '@/components/header'
 import {PageDataProvider} from '@/components/breadcrumbs'
 import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
 import clsx from 'clsx'
+import {useState} from 'react'
 
 const MasterLayout = () => {
+  const [scroll, setSCroll] = useState(false)
   // const {refreshToken} = useAuth()
 
   // const {pathname} = useLocation()
@@ -23,9 +25,11 @@ const MasterLayout = () => {
 
   return (
     <PageDataProvider>
-      <main className={clsx(['d-flex flex-column min-h-100vh'])}>
-        <Header />
-        <div className='mt-90px flex-grow-1'>{true && <Outlet />}</div>
+      <main className={clsx([`d-flex flex-column  ${scroll && 'overflow-hidden'}`])}>
+        <div>
+          <Header setSCroll={setSCroll} scroll={scroll} />
+          <div className='mt-90px min-height-main-container'>{true && <Outlet />}</div>
+        </div>
         <Footer />
       </main>
       <ScrollTop />

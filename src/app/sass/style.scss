@@ -26,7 +26,7 @@ input:-webkit-autofill:active {
 // Use media to avoid auto-scaling horizontal scrolling on screens <= 990
 @media screen and (min-width: 991px) {
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 1px;
   }
 }
 *::-webkit-scrollbar-thumb {
@@ -489,4 +489,8 @@ input[type='number']::-webkit-outer-spin-button {
 
 .border-b-1px {
   border-bottom: 1px solid var(--Gray---bs-gray-300, #dbdfe9);
+}
+
+.min-height-main-container {
+  min-height: calc(100vh - 150px);
 }

@@ -350,3 +350,8 @@ export function formatData(row: TableRow, data: any) {
 
   return value
 }
+export const getTheBeginningAndEndOfTheName = (str: string) => {
+  return `${str.charAt(0).toUpperCase()}${
+    str.length > 1 && str.charAt(str.length - 1).toUpperCase()
+  }`
+}
