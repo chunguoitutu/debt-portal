@@ -15,7 +15,7 @@ const FinancialInstitutions: FC<HomeProps> = () => {
               className='mw-100 object-fit-cover'
             />
           </div>
-          <h2 className='fs-44 mb-4px'>Financial Institutions</h2>
+          <h2 className='home__title fs-46 mb-4px two-line'>Financial Institutions</h2>
           <span className='text-uppercase fs-14 text-gray-600 letter-spacing-2'>
             GENERAL INTRODUCTION
           </span>
@@ -29,13 +29,13 @@ const FinancialInstitutions: FC<HomeProps> = () => {
           />
 
           <div className='d-flex flex-column gap-24px text-gray-900'>
-            <h6 className='m-0 fs-16 fw-semibold home-animation fade bot-to-top delay-0-2'>
+            <h6 className='m-0 fs-16 fw-normal home-animation fade bot-to-top delay-0-2 text-justify'>
               A cornerstone of our business for more than a decade, MCK has invested heavily in
               financial institutions and will continue to invest in this important, high-return
               sector. Until now, our focus has been on businesses offering unsecured personal and
               business loans.
             </h6>
-            <h6 className='m-0 fs-16 fw-semibold home-animation fade bot-to-top delay-0-4'>
+            <h6 className='m-0 fs-16 fw-normal home-animation fade bot-to-top delay-0-4 text-justify'>
               However, we see finance as a robust growth market with strong potential in secure
               business loans and home loans. As a major financial hub in Southeast Asia, the
               financial sector is crucial to Singapore's economy and as digital transformation

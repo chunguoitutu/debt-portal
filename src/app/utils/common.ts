@@ -1,10 +1,12 @@
 import axios, {AxiosError} from 'axios'
 import numeral from 'numeral'
-import {ApplicationConfig, ErrorResponse, TableRow} from '../types/common'
+import {ApplicationConfig, ErrorResponse, Option, TableRow} from '../types/common'
 import {DEFAULT_MESSAGE_ERROR_500} from '../constants'
 import moment from 'moment'
 import {TermUnit} from '../types/enum'
 import {formatDate} from './date'
+
+export const COUNTRY_PHONE_CODE: Option[] = [{label: '+65', value: '+65'}]
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -350,6 +352,7 @@ export function formatData(row: TableRow, data: any) {
 
   return value
 }
+
 export const getTheBeginningAndEndOfTheName = (str: string) => {
   return `${str.charAt(0).toUpperCase()}${
     str.length > 1 && str.charAt(str.length - 1).toUpperCase()

@@ -21,12 +21,14 @@ const HomeHeader: FC<HomeProps> = (props) => {
           className={clsx(['d-flex flex-column gap-24px mw-500px', screenWidth < 992 && 'order-2'])}
         >
           <div className={clsx(['home-animation fade bot-to-top'])}>
-            <span className='d-inline-flex align-items-center gap-16px text-white mb-16px fs-20 fw-semibold'>
-              Welcome To <span className='d-inline-block w-60px h-1px bg-white'></span>
+            <span className='d-inline-flex align-items-center gap-16px text-white mb-16px fs-24 fw-semibold'>
+              Welcome To <span className='d-none d-sm-inline-block w-60px h-1px bg-white'></span>
             </span>
 
-            <h2 className='fs-66 text-white fw-bolder m-0 lh-scale-1'>FINANCE 360</h2>
-            <h3 className='fs-44 text-primary fw-bolder m-0 lh-scale-1-5'>MCK DYNAMICS.</h3>
+            <h2 className='company_name fs-66 text-white fw-bolder m-0 lh-scale-1'>FINANCE 360</h2>
+            <h3 className='organization_name fs-44 text-primary fw-bolder m-0 lh-scale-1-5'>
+              MCK DYNAMICS.
+            </h3>
           </div>
 
           <span
