@@ -189,7 +189,6 @@ const Settings: React.FC = () => {
                             classShared='m-0'
                             className='supplement-input-advance border-0 border-right-1 rounded-right-0 bg-none px-4 w-fit-content mw-65px text-truncate text-align-last-center'
                             name='country_phone_code'
-                            options={COUNTRY_PHONE_CODE}
                           />
                         </span>
                       </Tippy>
