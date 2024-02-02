@@ -94,14 +94,16 @@ const NextPayment = () => {
     infinite: false,
     slidesToShow: slideShowRes,
     slidesToScroll: 1,
-    className: 'd-flex flex-row pb-xxl-44px pb-lg-24px pb-mb-44px pb-sm-44px pb-xs-44px pb-44px',
+    className: 'd-flex flex-row pb-20px pb-xxl-40px pb-xl-24px pb-lg-40px pb-md-40px',
     nextArrow: <CustomNextArrow />,
   }
 
   return (
-    <div className='bg-white dashboard-portal p-30px pt-20px main-height'>
+    <div className='bg-white dashboard-portal p-xxl-30px p-xl-30px p-lg-30px p-20px pt-20px main-height '>
       {/* header */}
-      <div className='text-gray-900 fs-20 fw-bold pb-44px'>Next Closest Repayment Date</div>
+      <div className='text-gray-900 fs-20 fw-bold pb-20px pb-xxl-44px pb-xl-44px pb-lg-38px pb-md-40px '>
+        Next Closest Repayment Date
+      </div>
       {/* body */}
       {/* calendar */}
       <Slider {...sliderSettings}>

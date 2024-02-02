@@ -20,7 +20,7 @@ const LoanDetailsPortal = () => {
   return (
     <>
       <TitleContainer data={profileBreadCrumbs} />
-      <div className='portal-loan-details container app-main-loan next-payment-date-portal overflow-hidden'>
+      <div className='portal-loan-details container my-30px next-payment-date-portal overflow-hidden'>
         <div className='col-12'>
           <div className='row w-xl-100'>
             {/* col left */}
