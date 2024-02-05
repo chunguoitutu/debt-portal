@@ -27,7 +27,7 @@ const GeneralInformation = () => {
       )}
       <h3 className='fs-20 fw-bold m-0'>General Information</h3>
 
-      <div className='row gy-16px gy-sm-24px'>
+      <div className='row gy-24px gy-lg-32px'>
         {PROFILE_CONFIG.map((el) => (
           <Fragment key={el.key}>
             <div className='col-12 col-sm-3'>
