@@ -99,7 +99,7 @@ const NextPayment = () => {
   }
 
   return (
-    <div className='bg-white dashboard-portal p-xxl-30px p-xl-30px p-lg-30px p-20px pt-20px main-height '>
+    <div className='bg-white dashboard-portal p-xxl-30px p-xl-30px p-lg-30px p-20px pt-20px main-height kj'>
       {/* header */}
       <div className='text-gray-900 fs-20 fw-bold pb-20px pb-xxl-44px pb-xl-44px pb-lg-38px pb-md-40px '>
         Next Closest Repayment Date

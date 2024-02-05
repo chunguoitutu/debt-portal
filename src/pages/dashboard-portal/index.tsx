@@ -48,7 +48,7 @@ const DashBoardPortal = () => {
   return (
     <>
       <TitleContainer data={profileBreadCrumbs} />
-      <div className='container  my-20px'>
+      <div className='container my-20px my-xxl-41px my-xl-41px my-lg-41px ps-20px pe-20px ps-xxl-0 ps-xl-0 ps-lg-0 ps-md-0 pe-xxl-0 pe-xl-0 pe-lg-0 pe-md-0 padding-responsive'>
         <div className='col-12 h-fit-content main-portal'>
           <div className='row h-fit-content mb-xl-1'>
             <div className='col-xxl-6 col-xl-7 col-lg-7 res-next-payment'>
