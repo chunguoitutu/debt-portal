@@ -14,10 +14,11 @@
         content: '';
         position: absolute;
         left: 0;
-        top: 0;
-        bottom: 0;
-        width: 3px;
+        top: 50%;
+        width: 4px;
+        height: 20px;
         border-radius: 30px;
+        transform: translateY(-50%);
         background-color: var(--bs-gray-900);
       }
     }

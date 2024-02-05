@@ -13,7 +13,7 @@ const AvatarAndMenu: FC<ProfileProps> = ({activeId, setActiveId}) => {
   }
 
   return (
-    <section className='card p-24px d-flex flex-column justify-content-center align-items-center gap-32px h-100'>
+    <section className='card p-24px d-flex flex-column justify-content-center align-items-center gap-20px h-100'>
       {/* Avatar */}
       <div className='avatar w-140px mw-100'>
         <img
@@ -24,22 +24,22 @@ const AvatarAndMenu: FC<ProfileProps> = ({activeId, setActiveId}) => {
       </div>
 
       {/* Name and email */}
-      <div className='d-flex flex-column gap-12px text-center w-100'>
-        <h2 className='fw-bolder fs-20 m-0 text-truncate'>Tan Xiao Hui</h2>
-        <span className='d-block text-gray-600 fs-14 fw-normal text-truncate'>
+      <div className='d-flex flex-column gap-8px text-center w-100'>
+        <h2 className='fw-bold fs-20 m-0 text-truncate'>Tan Xiao Hui</h2>
+        <span className='d-block text-gray-400 fs-14 fw-normal text-truncate'>
           tan-xiao-hui@gmail.com
         </span>
       </div>
 
       {/* Menu */}
       <nav className='align-self-start w-100 profile__menu'>
-        <ul className='m-0 p-0 list-style-none d-flex flex-column gap-12px'>
+        <ul className='m-0 p-0 list-style-none d-flex flex-column'>
           {PROFILE_MENU.map((el) => (
             <li
               key={el.id}
               onClick={() => handleChangeActiveId(el.id)}
               className={clsx([
-                'profile__menu--item fs-16 fw-semibold ps-24px ps-lg-32px my-8px text-gray-600 text-hover-gray-900 cursor-pointer',
+                'profile__menu--item fs-16 fw-semibold ps-24px ps-lg-32px py-16px text-gray-600 text-hover-gray-900 cursor-pointer',
                 activeId === el.id && 'active',
               ])}
             >

@@ -21,7 +21,7 @@ const GeneralInformation = () => {
   }
 
   return (
-    <section className='card p-24px d-flex flex-column gap-30px h-100'>
+    <section className='card px-20px py-60px d-flex flex-column gap-30px h-100'>
       {showModal && config && (
         <ModalEdit onClose={handleClosePopup} config={config} currentUser={currentUser} />
       )}
@@ -31,12 +31,12 @@ const GeneralInformation = () => {
         {PROFILE_CONFIG.map((el) => (
           <Fragment key={el.key}>
             <div className='col-12 col-sm-3'>
-              <span className='fs-14 text-gray-500'>{el.name}</span>
+              <span className='fs-16 text-gray-600'>{el.name}</span>
             </div>
             <div className='col-12 col-sm-9 mt-4px mt-sm-24px'>
               <span
                 className={clsx([
-                  'd-flex justify-content-between gap-16px fs-14 fw-semibold',
+                  'd-flex justify-content-between gap-16px fs-16 fw-semibold',
                   el.className,
                 ])}
               >
