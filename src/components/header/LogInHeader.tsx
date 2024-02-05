@@ -10,7 +10,7 @@ const LogInHeader = ({toggleFormLogin}: Props) => {
       <Button className='border border-primary text-info-light bg-hover-primary'>
         Login With Singpass
       </Button>
-      <Button onClick={toggleFormLogin}>Login</Button>
+      <Button onClick={toggleFormLogin}>Sign In</Button>
     </div>
   )
 }

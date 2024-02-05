@@ -12,6 +12,10 @@ const profileBreadCrumbs = {
       to: '/',
       titleLink: 'Home',
     },
+    {
+      to: '/my-loans',
+      titleLink: 'My Loans',
+    },
   ],
   render: ['Loan Details'],
 }
