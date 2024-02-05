@@ -43,8 +43,8 @@ export const LOAN_CUSTOMER_PORTAL: TableConfig = {
         {
             key: 'status',
             name: 'Status',
-            classNameTableHead: 'text-end',
-            classNameTableBody: 'text-end pe-1',
+            classNameTableHead: 'text-end pe-1',
+            classNameTableBody: 'text-end pe-0',
             component: Badge,
         },
     ],

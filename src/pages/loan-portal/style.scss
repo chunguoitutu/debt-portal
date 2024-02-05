@@ -5,6 +5,12 @@
     height: 136px;
     border-radius: 8px;
   }
+  .calendar-responsive {
+    border: 1px dashed #c4cada;
+    max-width: 125px;
+    height: 136px;
+    border-radius: 8px;
+  }
 }
 
 @media (max-width: 1199px) {
@@ -40,5 +46,59 @@
 @media (max-width: 459px) {
   .hjhj {
     width: 100% !important;
+  }
+}
+
+.kaka {
+  @media (max-width: 572px) {
+    width: 100% !important;
+  }
+}
+
+.pt30-cus {
+  @media (min-width: 1700px) {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  @media (max-width: 1699px) {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+  @media (max-width: 580px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.juji {
+  @media (min-width: 992px) {
+    margin-top: 13px !important;
+  }
+  @media (min-width: 1200px) and (max-width: 1399px) {
+    margin-top: 28px !important;
+  }
+  @media (min-width: 1400px) {
+    margin-top: 13px !important;
+  }
+  @media (min-width: 601px) and (max-width: 767px) {
+    margin-top: 15px !important;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    margin-top: 32px !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  .responsive-pe {
+    padding-right: 23px !important;
+  }
+  .responsive-ps {
+    padding-left: 0px !important;
+  }
+}
+
+.h-custom-responsive {
+  @media (min-width: 1142px) and (max-width: 1199px) {
+    height: 53.33px !important;
   }
 }

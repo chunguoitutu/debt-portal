@@ -12,7 +12,7 @@ const statusClass = {
 const Badge: FC<BadgeProps> = ({color, title}) => {
   const statusClassName = useMemo(() => statusClass[color], [color])
 
-  return <span className={`badge fs-7 fw-semibold ${statusClassName}`}>{title}</span>
+  return <span className={`badge fs-5 fw-semibold ${statusClassName}`}>{title}</span>
 }
 
 export default Badge
