@@ -28,7 +28,7 @@ const MasterLayout = () => {
       <main className={clsx([`d-flex flex-column  ${scroll && 'overflow-hidden'}`])}>
         <div>
           <Header setSCroll={setSCroll} scroll={scroll} />
-          <div className='mt-90px min-height-main-container'>{true && <Outlet />}</div>
+          <div className='mt-85px min-height-main-container'>{true && <Outlet />}</div>
         </div>
         <Footer />
       </main>

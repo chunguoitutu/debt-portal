@@ -68,7 +68,7 @@ const Header = ({setSCroll, scroll}: Props) => {
 
   return (
     <header className='header  bg-black'>
-      <div className='container h-100 d-flex align-items-center justify-content-between gap-12px gap-sm-24px'>
+      <div className='container h-100 d-flex align-items-center justify-content-between gap-12px gap-sm-24px p-20px p-md-0'>
         {/* Logged */}
         <LogoHeader handleNavigate={handleNavigate} />
 
@@ -82,17 +82,18 @@ const Header = ({setSCroll, scroll}: Props) => {
             <div className='d-flex justify-content-center h-100 align-items-center '>
               {linkHeader.map((el, i) => {
                 return (
-                  <NavLink
-                    className={({isActive}) =>
-                      `${
-                        isActive ? 'active-link ' : 'disable-link'
-                      }  px-16px d-flex fs-16 fw-semibold justify-content-center  align-items-center link-header-portal`
-                    }
-                    key={i}
-                    to={el?.to}
-                  >
-                    {el?.title}
-                  </NavLink>
+                  <div key={i} className='cursor-pointer'>
+                    <NavLink
+                      className={({isActive}) =>
+                        `${
+                          isActive ? 'active-link ' : 'disable-link'
+                        }   d-flex fs-14 fw-semibold justify-content-center  align-items-center link-header-portal`
+                      }
+                      to={el?.to}
+                    >
+                      {el?.title}
+                    </NavLink>
+                  </div>
                 )
               })}
             </div>

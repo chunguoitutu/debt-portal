@@ -30,7 +30,7 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
         onMouseLeave={hideMenu}
         className=' d-flex justify-content-center  h-100 align-items-center cursor-pointer'
       >
-        <h1 className='img-header-portal fs-13 fw-bold text-black p-0 m-0'>
+        <h1 className='img-header-portal fs-13 fw-bold text-black w-28px h-28px w-lg-35px h-lg-35px p-0 m-0'>
           {getTheBeginningAndEndOfTheName('Fung Yong Chang' || '')}
         </h1>
         <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
@@ -60,7 +60,7 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
         title='Show header menu'
       >
         <div
-          className='btn btn-icon btn-active-color-primary w-35px h-35px '
+          className='btn btn-icon btn-active-color-primary w-28px h-28px '
           id='kt_app_header_menu_toggle'
         >
           <FontAwesomeIcon icon={faList} className='menu-header-mobile' />
