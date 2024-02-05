@@ -15,7 +15,7 @@ const HeaderMyLoan = ({filter, setFilter}: Props) => {
           [1, 0].includes(1) ? 'loan' : 'loans'
         } `}</p>
       </div>
-      <div className='p-20px flex-column flex-md-row d-flex justify-content-between align-items-md-center '>
+      <div className='p-20px flex-row flex-md-row d-flex justify-content-between align-items-md-center   '>
         <div className='d-flex flex-column flex-md-row  justify-content-start h-100 align-items-start align-items-md-center gap-16px'>
           <h1 className='fw-semibold fs-14 text-gray-600 m-0 p-0'>Filter:</h1>
           <StatusMyLoans
@@ -30,7 +30,7 @@ const HeaderMyLoan = ({filter, setFilter}: Props) => {
             }}
           />
         </div>
-        <div className='d-flex flex-column flex-md-row justify-content-start mt-20px mt-md-0 align-items-start gap-16px'>
+        <div className='d-flex flex-column flex-md-row justify-content-end mt-20px mt-md-0 align-items-start gap-16px'>
           <div className='d-flex align-items-center justify-content-start gap-8px'>
             <div className='bg-primary w-10px h-10px flex-shrink-0 rounded-circle'></div>
             <span className='fs-14 fw-semibold text-gray-600'>Outstanding Loan</span>
