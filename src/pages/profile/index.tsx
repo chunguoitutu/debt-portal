@@ -11,12 +11,12 @@ const Profile = () => {
   }, [activeId])
 
   return (
-    <div className='profile container py-30px'>
-      <div className='row gy-24px gx-4px gx-sm-16px'>
-        <div className='col-12 col-sm-4'>
+    <div className='profile container py-20px py-md-40px'>
+      <div className='row gy-24px gx-4px gx-md-16px'>
+        <div className='col-12 col-md-4'>
           <AvatarAndMenu activeId={activeId} setActiveId={setActiveId} />
         </div>
-        <div className='col-12 col-sm-8'>
+        <div className='col-12 col-md-8'>
           <Component />
         </div>
       </div>

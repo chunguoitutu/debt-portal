@@ -21,41 +21,43 @@ const GeneralInformation = () => {
   }
 
   return (
-    <section className='card p-20px d-flex flex-column gap-30px h-100'>
+    <section className='general__info card p-20px d-flex flex-column gap-30px h-100'>
       {showModal && config && (
         <ModalEdit onClose={handleClosePopup} config={config} currentUser={currentUser} />
       )}
       <h3 className='fs-20 fw-bold m-0'>General Information</h3>
 
-      <div className='row gy-24px gy-lg-32px'>
-        {PROFILE_CONFIG.map((el) => (
-          <Fragment key={el.key}>
-            <div className='col-12 col-sm-3'>
-              <span className='fs-16 text-gray-600'>{el.name}</span>
-            </div>
-            <div className='col-12 col-sm-9 mt-4px mt-sm-24px'>
-              <span
-                className={clsx([
-                  'd-flex justify-content-between gap-16px fs-16 fw-semibold',
-                  el.className,
-                ])}
-              >
-                {formatData(el, currentUser)}
+      <div className='row gy-16px'>
+        {PROFILE_CONFIG.map((el, i) => (
+          <div className=' col-12 pt-16px' key={el.key}>
+            <div className={clsx(['info-column row gx-0 gy-16px', i === 0 && 'first-child'])}>
+              <div className='col-12 col-sm-3'>
+                <span className='label text-gray-600'>{el.name}</span>
+              </div>
+              <div className='col-12 col-sm-9 mt-4px mt-sm-16px'>
+                <span
+                  className={clsx([
+                    'd-flex justify-content-between gap-16px text fw-semibold ps-0 ps-sm-16px',
+                    el.className,
+                  ])}
+                >
+                  {formatData(el, currentUser)}
 
-                {el.isEditField && (
-                  <div
-                    className='pencil-icon w-25px h-25px flex-shrink-0 d-flex align-items-center justify-content-center rounded-5 bg-hover-light-primary cursor-pointer'
-                    onClick={() => handleShowModalEdit(el.key)}
-                  >
-                    <span className='ki-duotone ki-pencil'>
-                      <span className='path1'></span>
-                      <span className='path2'></span>
-                    </span>
-                  </div>
-                )}
-              </span>
+                  {el.isEditField && (
+                    <div
+                      className='pencil-icon w-25px h-25px flex-shrink-0 d-flex align-items-center justify-content-center rounded-5 bg-hover-light-primary cursor-pointer'
+                      onClick={() => handleShowModalEdit(el.key)}
+                    >
+                      <span className='ki-duotone ki-pencil'>
+                        <span className='path1'></span>
+                        <span className='path2'></span>
+                      </span>
+                    </div>
+                  )}
+                </span>
+              </div>
             </div>
-          </Fragment>
+          </div>
         ))}
       </div>
     </section>
