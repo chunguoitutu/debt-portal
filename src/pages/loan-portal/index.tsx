@@ -12,12 +12,14 @@ const profileBreadCrumbs = {
       to: '/',
       titleLink: 'Home',
     },
+  ],
+  render: ['Loan Details'],
+  linkWhite: [
     {
       to: '/my-loans',
       titleLink: 'My Loans',
     },
   ],
-  render: ['Loan Details'],
 }
 
 const LoanDetailsPortal = () => {
