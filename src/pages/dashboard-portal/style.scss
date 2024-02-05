@@ -225,12 +225,9 @@
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
-  @media (min-width: 1025px) {
-    padding-left: 8px !important;
-  }
 }
 
-.pt30-cus {
+.pt30-cus-dashboard {
   @media (min-width: 1700px) {
     padding-top: 40px !important;
     padding-bottom: 40px !important;
@@ -238,6 +235,9 @@
   @media (max-width: 1699px) {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
+  }
+  @media (min-width: 1024px) {
+    padding-left: 10px !important;
   }
   @media (max-width: 580px) {
     padding-left: 20px;
@@ -256,6 +256,14 @@
   }
 }
 
+.padding-custom-main-dislay {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  @media (max-width: 575px) {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
 @media (max-width: 463px) {
   .w-responsive-mobile {
     margin-left: -5px;
