@@ -27,7 +27,7 @@ const TextArea: FC<TextAreaProps> = ({
     <div className={`${classShared}`}>
       {label && (
         <Label
-          className='d-flex align-items-center fs-5 fw-semibold mb-8px'
+          className='d-flex align-items-center fs-14 fw-semibold mb-8px'
           required={required}
           label={label}
           htmlFor={id || defaultId || name}
