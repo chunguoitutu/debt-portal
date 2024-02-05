@@ -32,9 +32,9 @@ const MapData = ({data}: Props) => {
                 <p className='fs-16 fw-bold text-gray-900 mb-20px p-0'>
                   {formatMoney(Number(el?.loan_amount))}
                 </p>
-                <div className='d-flex flex-column flex-md-row gap-8px gap-md-0 justify-content-between align-items-start align-items-md-center '>
-                  <div className='d-flex flex-column flex-md-row gap-8px gap-xl-12px justify-content-center align-items-center'>
-                    <div className='d-flex justify-content-center ps-12px ps-md-0  align-items-center  gap-8px'>
+                <div className='d-flex flex-row flex-md-row gap-8px gap-md-0 justify-content-between align-items-end align-items-md-center '>
+                  <div className='d-flex flex-column flex-md-row gap-8px gap-xl-12px justify-content-center align-items-start align-items-md-center'>
+                    <div className='d-flex justify-content-center ps-0 ps-md-0  align-items-center  gap-8px'>
                       <Icons name={'DatePortal'} />
                       <p className=' m-0 p-0 fs-13 fw-normal test-gray-900'>
                         {formatDate(el?.approval_date, 'DD MMM, YYYY')}

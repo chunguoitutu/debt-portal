@@ -21,8 +21,8 @@ function MyLoans() {
   return (
     <div className=' my-task-wrapper'>
       <TitleContainer data={profileBreadCrumbs} />
-      <div className='px-30px'>
-        <div className='container my-30px p-0 '>
+      <div className='px-20px'>
+        <div className='container my-20px p-0 '>
           <HeaderMyLoan filter={filter} setFilter={setFilter} />
           <MapData data={fakeData} />
         </div>
