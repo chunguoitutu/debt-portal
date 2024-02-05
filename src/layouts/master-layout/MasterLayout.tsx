@@ -25,10 +25,10 @@ const MasterLayout = () => {
 
   return (
     <PageDataProvider>
-      <main className={clsx([`d-flex flex-column  ${scroll && 'overflow-hidden'}`])}>
-        <div>
+      <main className={clsx([`d-flex flex-column min-vh-100 ${scroll && 'overflow-hidden'}`])}>
+        <div className='d-flex flex-column flex-grow-1'>
           <Header setSCroll={setSCroll} scroll={scroll} />
-          <div className='mt-85px min-height-main-container'>{true && <Outlet />}</div>
+          <div className='mt-85px'>{true && <Outlet />}</div>
         </div>
         <Footer />
       </main>
