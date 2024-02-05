@@ -10,6 +10,10 @@ type Props = {
       titleLink: string
     }[]
     render: string[]
+    linkWhite?: {
+      to: string
+      titleLink: string
+    }[]
   }
 }
 
@@ -24,6 +28,18 @@ const TitleContainer = ({data}: Props) => {
               <div key={i} className='d-flex justify-content-center align-items-center '>
                 <Link to={el?.to} className='link-title-container fs-12 '>
                   {el.titleLink}
+                </Link>
+                <div className='px-12px'>
+                  <Icons name={'ArrowLink'} />
+                </div>
+              </div>
+            )
+          })}
+          {(data?.linkWhite || []).map((el, i) => {
+            return (
+              <div key={i} className='d-flex justify-content-center align-items-center '>
+                <Link to={el?.to} className='link-title-container-white fs-12 '>
+                  {el?.titleLink}
                 </Link>
                 <div className='px-12px'>
                   <Icons name={'ArrowLink'} />
