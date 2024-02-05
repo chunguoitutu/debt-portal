@@ -21,7 +21,7 @@ const GeneralInformation = () => {
   }
 
   return (
-    <section className='card px-20px py-60px d-flex flex-column gap-30px h-100'>
+    <section className='card p-20px d-flex flex-column gap-30px h-100'>
       {showModal && config && (
         <ModalEdit onClose={handleClosePopup} config={config} currentUser={currentUser} />
       )}

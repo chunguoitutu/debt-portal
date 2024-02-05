@@ -13,7 +13,7 @@ const AvatarAndMenu: FC<ProfileProps> = ({activeId, setActiveId}) => {
   }
 
   return (
-    <section className='card p-24px d-flex flex-column justify-content-center align-items-center gap-20px h-100'>
+    <section className='card p-20px py-60px d-flex flex-column justify-content-center align-items-center gap-20px h-100'>
       {/* Avatar */}
       <div className='avatar w-140px mw-100'>
         <img
