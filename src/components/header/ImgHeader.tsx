@@ -37,7 +37,9 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
           <p className='text-full-mid-last-name fs-14 p-0 mb-4px'>
             {`${data?.lastName} ${data?.firstName}` || 'Guest'}
           </p>
-          <p className='dropdown-text-role  fs-12 fw-normal p-0 m-0'>{data?.role || ''}</p>
+          <p className='dropdown-text-role  text-capitalize  fs-12 fw-normal p-0 m-0'>
+            {data?.role || ''}
+          </p>
         </div>
         {isMenuVisible && (
           <div

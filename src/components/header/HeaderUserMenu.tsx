@@ -35,8 +35,8 @@ const HeaderUserMenu: FC = () => {
             <a href='#' className='fw-bold text-muted text-hover-primary fs-7 two-line'>
               {''}
             </a>
-            <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
-              {'customer'}
+            <a href='#' className='fw-bold text-muted text-capitalize text-hover-primary fs-7'>
+              {'Customer'}
             </a>
           </div>
         </div>
