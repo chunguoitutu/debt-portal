@@ -200,7 +200,7 @@ const ModalEdit: FC<EditModalProps> = ({config, currentUser, onClose}) => {
       onHide={() => !dirty && onClose()} // only click outside close modal dialog when values changed
       backdrop={true}
     >
-      <form className='p-30px d-flex flex-column gap-32px'>
+      <form className='p-30px d-flex flex-column gap-32px '>
         <h3 className='fs-24 fw-bold text-center m-0'>{otp ? otpInfo?.label : label}</h3>
 
         {otp ? (

@@ -681,4 +681,5 @@ export type MenuItem<T = any> = {
   to?: string
   default?: boolean
   component?: FC<T>
+  className?: string
 }

@@ -13,7 +13,7 @@ const AvatarAndMenu: FC<ProfileProps> = ({activeId, setActiveId}) => {
   }
 
   return (
-    <section className='card p-20px py-60px d-flex flex-column justify-content-center align-items-center gap-20px h-100'>
+    <section className='card p-20px pt-60px pb-0 pb-md-60px d-flex flex-column justify-content-center align-items-center gap-20px h-100'>
       {/* Avatar */}
       <div className='avatar w-140px mw-100'>
         <img
@@ -33,13 +33,13 @@ const AvatarAndMenu: FC<ProfileProps> = ({activeId, setActiveId}) => {
 
       {/* Menu */}
       <nav className='align-self-start w-100 profile__menu'>
-        <ul className='m-0 p-0 list-style-none d-flex flex-column'>
+        <ul className='m-0 p-0 list-style-none d-flex flex-md-column'>
           {PROFILE_MENU.map((el) => (
             <li
               key={el.id}
               onClick={() => handleChangeActiveId(el.id)}
               className={clsx([
-                'profile__menu--item fs-16 fw-semibold ps-24px ps-lg-32px py-16px text-gray-600 text-hover-gray-900 cursor-pointer',
+                'profile__menu--item flex-grow-1 fw-semibold ps-md-32px py-16px text-gray-600 cursor-pointer text-center text-md-start',
                 activeId === el.id && 'active',
               ])}
             >
