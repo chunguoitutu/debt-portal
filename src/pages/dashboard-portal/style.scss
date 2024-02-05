@@ -212,3 +212,17 @@
     margin-bottom: 20px !important;
   }
 }
+
+.fix-row-responsive {
+  @media (max-width: 742px) {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+}
+
+.padding-responsive {
+  @media (min-width: 576px) and (max-width: 767px) {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+}

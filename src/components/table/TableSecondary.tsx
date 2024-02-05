@@ -118,8 +118,6 @@ const TableSecondary: FC<Props> = ({
 
                     let value = item[key]
 
-                    console.log(settings?.endpointNavigate, item?.id)
-
                     if (format === 'date') {
                       value = formatDate(value, 'DD MMM, YYYY')
                     } else if (format === 'money') {
