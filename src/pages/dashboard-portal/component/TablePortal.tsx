@@ -73,7 +73,7 @@ const TablePortal: FC<LoanDetailsProps> = ({loanInfo}) => {
   }
 
   return (
-    <div className='table-portal w-100 mt-20px mt-lg-0 res-parent-table-portal w-responsive-mobile'>
+    <div className='table-portal w-100 mt-20px mt-lg-0 res-parent-table-portal w-responsive-mobile kiki'>
       <div className='p-20px p-xxl-30px p-xl-30px p-lg-30px p-md-30px p-sm-30px pb-8px pb-xl-20px pb-lg-20px pb-md-20px pb-sm-20px'>
         <div className='d-flex flex-row align-items-center justify-content-between'>
           <div className='table-header-title-res'>

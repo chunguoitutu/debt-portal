@@ -10,7 +10,7 @@ type Props = {
   className?: string
 }
 
-const Statistical: FC<Props> = ({chartSize = 120, chartLine = 25, chartRotate = 0, className}) => {
+const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 0, className}) => {
   //=================================MAIN LOGIC IN HERE=================================//
 
   const [isMobile, setIsMobile] = useState<boolean>(
@@ -38,7 +38,7 @@ const Statistical: FC<Props> = ({chartSize = 120, chartLine = 25, chartRotate = 
   const chartRef = useRef<HTMLDivElement | null>(null)
 
   const initChart = function (
-    chartSize: number = 120,
+    chartSize: number = 160,
     chartLine: number = 18,
     chartRotate: number = 145
   ) {
