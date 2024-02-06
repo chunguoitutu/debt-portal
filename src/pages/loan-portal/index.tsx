@@ -37,7 +37,7 @@ const LoanDetailsPortal = () => {
                   <ChartLoanDetailsPortal className='' />
                 </div>
                 <div className='col-lg-6 col-xxl-12 height-custom-portal-loan h-xl-100 mt-xxl-0 hihi responsive-pe'>
-                  <Statistical className='flex-grow-1 h-lg-100 h-xxl-fit-content mt-md-20px mt-sm-20px mt-lg-0 mt-xxl-20px mt-xl-0' />
+                  <Statistical className='flex-grow-1 h-lg-100 h-xxl-fit-content mt-md-20px mt-sm-20px mt-lg-0 mt-xxl-20px mt-xl-0 haiz' />
                 </div>
               </div>
             </div>
