@@ -62,7 +62,7 @@ const RepaymentHistoryPortal: FC<Props> = ({className}) => {
   return (
     <div
       className={`loan-amount-portal p-20px gap-20px position-relative h-100 flex-grow-1 overflow-auto ${className}`}
-      style={{maxHeight: '759px'}}
+      style={{maxHeight: '763px'}}
     >
       <div className='loan-amount-title'>Repayment History</div>
       <div className='text-gray-400 fs-14 fw-normal mt-2'>Past 12 months</div>
