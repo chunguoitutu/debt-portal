@@ -22,6 +22,7 @@ import Profile from '@/pages/profile'
 import MyLoans from '@/pages/my-loans'
 import Application from '@/pages/application'
 import LoanDetailsPortal from '@/pages/loan-portal'
+import Cookies from 'js-cookie'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -44,6 +45,8 @@ const SuspensedView: FC<WithChildren> = ({children}) => {
 }
 
 const AppRoutes: FC = () => {
+  console.log(1)
+
   const {currentUser} = useAuth()
   return (
     <BrowserRouter>
@@ -83,8 +86,8 @@ const AppRoutes: FC = () => {
           </Route>
 
           {/* Not match any router */}
-          <Route path='/' element={<Navigate to={currentUser ? '/dashboard' : '/login'} />} />
-          <Route path='*' element={<Navigate to={currentUser ? '/error/404' : '/login'} />} />
+          <Route path='/' element={<Navigate to={Cookies.get('token') ? '/dashboard' : '/'} />} />
+          <Route path='*' element={<Navigate to={Cookies.get('token') ? '/error/404' : '/'} />} />
         </Route>
       </Routes>
     </BrowserRouter>

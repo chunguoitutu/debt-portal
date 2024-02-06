@@ -121,11 +121,12 @@
 }
 
 .active-mobile {
-  background-color: #000812;
+  background-color: #0d101a;
   border-radius: 8px;
   color: #ffffff;
 }
 
 .disable-mobile {
-  color: #858585;
+  color: var(--bs-gray-900);
+  opacity: 0.4;
 }

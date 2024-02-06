@@ -48,7 +48,7 @@ const GeneralInformation = () => {
                       className='pencil-icon w-25px h-25px flex-shrink-0 d-flex align-items-center justify-content-center rounded-5 bg-hover-light-primary cursor-pointer'
                       onClick={() => handleShowModalEdit(el.key)}
                     >
-                      <span className='ki-duotone ki-pencil'>
+                      <span className='ki-duotone ki-pencil fs-14'>
                         <span className='path1'></span>
                         <span className='path2'></span>
                       </span>
