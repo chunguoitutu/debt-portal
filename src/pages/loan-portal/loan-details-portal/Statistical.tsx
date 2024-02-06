@@ -144,7 +144,7 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
                     <div className='text-gray-700 fw-normal fs-4 amount-loan-details-repsonsive-font font-375px col-6'>
                       Payment amount
                     </div>
-                    <div className='text-gray-900 fs-2hx fw-bold fs-responsive-loan-chart-details col-6 text-end font-money'>
+                    <div className='text-gray-900 fs-2hx fw-bold fs-responsive-loan-chart-details col-6 text-end font-money mobile-mt-money'>
                       {formatMoney(820)}
                     </div>
                   </div>
