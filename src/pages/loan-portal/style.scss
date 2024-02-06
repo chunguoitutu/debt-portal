@@ -183,11 +183,15 @@
 }
 
 .smt-mb {
-  @media (min-width: 376px) and (max-width: 1399px) {
+  @media (min-width: 577px) and (max-width: 1399px) {
     margin-bottom: 30px !important;
+  }
+
+  @media (min-width: 376px) and (max-width: 576px) {
+    margin-bottom: 0px !important;
   }
 }
 
 .mobile-mt-money {
-  margin-top: -5px !important;
+  margin-top: -9px !important;
 }
