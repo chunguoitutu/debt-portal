@@ -54,7 +54,6 @@
 
   .font-money {
     font-size: 21px !important;
-    color: #071437 !important;
   }
   .met {
     padding-right: 10px !important;
@@ -180,5 +179,11 @@
   }
   .olaf {
     width: 100% !important;
+  }
+}
+
+.smt-mb {
+  @media (min-width: 376px) and (max-width: 1399px) {
+    margin-bottom: 30px !important;
   }
 }

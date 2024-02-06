@@ -42,7 +42,7 @@ const LoanDetailsPortal = () => {
               </div>
             </div>
             {/* col right */}
-            <div className='col-xxl-7 col-lg-12 col-xs-12 hihi ps-0 poi'>
+            <div className='col-xxl-7 col-lg-12 col-xs-12 hihi ps-0 poi smt-mb'>
               <RepaymentHistoryPortal className='container mt-xl-20px mt-xxl-0 mt-lg-20px mt-md-20px mt-sm-20px col-xs-12 olaf' />
             </div>
           </div>
