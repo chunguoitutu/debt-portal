@@ -6,7 +6,7 @@ import {FC} from 'react'
 const AboutUs: FC<HomeProps> = () => {
   return (
     <section className='about-us py-100px'>
-      <div className='container d-flex flex-column flex-lg-row align-items-center gap-30px'>
+      <div className='container padding-responsive d-flex flex-column flex-lg-row align-items-center gap-30px'>
         <img
           src={dashboardCeo}
           alt='team-img'

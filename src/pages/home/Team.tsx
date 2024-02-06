@@ -10,7 +10,7 @@ const Team: FC<HomeProps> = () => {
         background: `url('${dashboardImg}') no-repeat center center / cover`,
       }}
     >
-      <div className='container d-flex flex-column gap-72px'>
+      <div className='container padding-responsive d-flex flex-column gap-72px'>
         <header className='text-center home-animation fade bot-to-top'>
           <h2 className='text-white fs-46 home__title mb-4px two-line'>
             At MCK, Perfection in Everything We Do
