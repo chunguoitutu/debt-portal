@@ -97,12 +97,9 @@
   top: 0px;
   height: 100vh;
   overflow: none;
-  background-color: #00000059;
-  transform: translateX(100%);
 
   &.showed {
-    transition: all 0.2s linear;
-    transform: translateX(0);
+    background-color: #00000059;
   }
 }
 
@@ -115,6 +112,12 @@
   position: fixed;
   top: 0;
   right: 0;
+  transform: translateX(100%);
+
+  &.showed {
+    transition: all 0.2s linear;
+    transform: translateX(0);
+  }
 }
 
 .active-mobile {
