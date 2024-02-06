@@ -1,9 +1,8 @@
 import {getTheBeginningAndEndOfTheName} from '@/app/utils'
 import HeaderUserMenu from './HeaderUserMenu'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faList} from '@fortawesome/free-solid-svg-icons'
 import HeaderMenuMobile from './HeaderMenuMobile'
 import {Dispatch, useState} from 'react'
+import barsImg from '@/app/images/bar.png'
 
 type Props = {
   showMenu: () => void
@@ -30,10 +29,10 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
         onMouseLeave={hideMenu}
         className=' d-flex justify-content-center  h-100 align-items-center cursor-pointer'
       >
-        <h1 className='img-header-portal fs-13 fw-bold text-black w-28px h-28px w-lg-35px h-lg-35px p-0 m-0'>
+        <h1 className='img-header-portal fs-13 fw-bold text-black w-28px h-28px w-lg-35px h-lg-35px p-0 m-0 me-12px'>
           {getTheBeginningAndEndOfTheName('Fung Yong Chang' || '')}
         </h1>
-        <div style={{marginLeft: '16px'}} className='d-none d-xl-block'>
+        <div className='d-none d-xl-block'>
           <p className='text-full-mid-last-name fs-14 p-0 mb-4px'>
             {`${data?.lastName} ${data?.firstName}` || 'Guest'}
           </p>
@@ -58,24 +57,18 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
           setShow(true)
           setSCroll(true)
         }}
-        className='app-navbar-item d-lg-none ms-2 '
+        className='app-navbar-item d-lg-none ms-2'
         title='Show header menu'
       >
-        <div
-          className='btn btn-icon btn-active-color-primary w-28px h-28px '
-          id='kt_app_header_menu_toggle'
-        >
-          <FontAwesomeIcon icon={faList} className='menu-header-mobile' />
-        </div>
+        <img src={barsImg} alt='bars' className='cursor-pointer' />
       </div>
-      {show && (
-        <HeaderMenuMobile
-          onClose={() => {
-            setShow(false)
-            setSCroll(false)
-          }}
-        />
-      )}
+      <HeaderMenuMobile
+        show={show}
+        onClose={() => {
+          setShow(false)
+          setSCroll(false)
+        }}
+      />
     </div>
   )
 }

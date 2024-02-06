@@ -87,7 +87,7 @@ const Header = ({setSCroll, scroll}: Props) => {
                       className={({isActive}) =>
                         `${
                           isActive ? 'active-link ' : 'disable-link'
-                        }   d-flex fs-14 fw-semibold justify-content-center  align-items-center link-header-portal`
+                        }   d-flex fs-14 fw-semibold justify-content-center align-items-center link-header-portal`
                       }
                       to={el?.to}
                     >

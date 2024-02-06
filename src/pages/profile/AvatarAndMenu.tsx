@@ -39,11 +39,17 @@ const AvatarAndMenu: FC<ProfileProps> = ({activeId, setActiveId}) => {
               key={el.id}
               onClick={() => handleChangeActiveId(el.id)}
               className={clsx([
-                'profile__menu--item flex-grow-1 fw-semibold ps-md-32px py-16px text-gray-600 cursor-pointer text-center text-md-start',
-                activeId === el.id && 'active',
+                'flex-grow-1 fw-semibold text-gray-600 cursor-pointer text-center text-md-start',
               ])}
             >
-              {el.label}
+              <span
+                className={clsx([
+                  'profile__menu--item ps-md-32px d-inline-block py-16px h-100',
+                  activeId === el.id && 'active',
+                ])}
+              >
+                {el.label}
+              </span>
             </li>
           ))}
         </ul>

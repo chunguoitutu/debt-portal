@@ -87,7 +87,11 @@ const TableMobile: FC<Props> = ({
                 }
 
                 if (key === 'loan_no') {
-                  return <div className='text-gray-900 fw-bold fs-16 mb-8px'>{value}</div>
+                  return (
+                    <div className='text-gray-900 fw-bold fs-16 mb-8px' key={i}>
+                      {value}
+                    </div>
+                  )
                 }
 
                 return (
