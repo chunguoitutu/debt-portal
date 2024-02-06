@@ -2,8 +2,6 @@
   @media (max-width: 1024px) {
     display: flex;
     flex-direction: column;
-    padding-left: calc(100% - 99%) !important;
-    padding-right: calc(100% - 99%) !important;
   }
 
   .res-next-payment {
@@ -204,6 +202,23 @@
   }
 }
 
+.kiki {
+  @media (min-width: 768px) and (max-width: 777px) {
+    margin-top: 5px !important;
+  }
+  @media (min-width: 992px) {
+    width: 101.1% !important;
+    margin-left: -2px;
+  }
+}
+
+.responsive-992 {
+  @media (min-width: 992px) {
+    padding-right: 20px !important;
+    padding-left: 8px !important;
+  }
+}
+
 .main-height {
   @media (min-width: 993px) {
     height: 97% !important;
@@ -237,7 +252,7 @@
     padding-bottom: 30px !important;
   }
   @media (min-width: 1024px) {
-    padding-left: 10px !important;
+    padding-right: 0px !important;
   }
   @media (max-width: 580px) {
     padding-left: 20px;
@@ -252,7 +267,7 @@
   }
   .w-responsive-mobile {
     margin-left: -5px;
-    width: 102% !important;
+    width: 101.5% !important;
   }
 }
 .lck {

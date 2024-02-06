@@ -12,7 +12,7 @@ const ChartLoanDetailsPortal: FC<Props> = ({className}) => {
     <div className={`col-12 ${className}`}>
       <div className='row'>
         <div className={`col-6 kaka`}>
-          <div className='loan-amount-portal mt-20px p-20px gap-20px'>
+          <div className='loan-amount-portal mt-20px p-20px gap-20px height-992'>
             <img src={ChartPortal} alt='' />
             <div className='text-gray-900 fw-bold fs-2hx fs-responsive-loan-chart-details mt-16px'>
               {formatMoney(25000)}
@@ -21,7 +21,7 @@ const ChartLoanDetailsPortal: FC<Props> = ({className}) => {
           </div>
         </div>
         <div className={`col-6 kaka`}>
-          <div className='loan-amount-portal mt-20px p-20px gap-20px'>
+          <div className='loan-amount-portal mt-20px p-20px gap-20px height-992'>
             <img src={ChartPortal} alt='' />
             <div className='text-gray-900 fw-bold fs-2hx fs-responsive-loan-chart-details mt-16px'>
               3.8%

@@ -124,7 +124,7 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
           </div>
 
           <div className='pt-20px'>
-            <div className='d-flex flex-wrap align-items-start justify-content-start hoho pt-xl-44px pt-xxl-0'>
+            <div className='d-flex flex-wrap align-items-start justify-content-start hoho pt-xxl-0'>
               <div className='d-flex flex-center  w-100 pt-2 hjhj align-items-center justify-content-center'>
                 <div className='position-absolute fw-bold text-gray-900' style={{fontSize: '20px'}}>
                   75%
@@ -170,7 +170,7 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
             Payment amount & Balance at the end of period
           </div>
 
-          <div className='pt-20px'>
+          <div className=''>
             <div className='d-flex flex-wrap align-items-start justify-content-start hoho pt-xl-44px pt-xxl-0'>
               <div className='d-flex flex-center w-lg-100 w-xl-unset w-xs-100 pt-2 hjhj'>
                 <div className='position-absolute fw-bold text-gray-900' style={{fontSize: '20px'}}>

@@ -74,7 +74,7 @@ const TableMobile: FC<Props> = ({
                   return (
                     <div
                       key={i}
-                      className='text-start fs-14 ps-2 mb-2 w-100 d-flex align-items-center justify-content-between'
+                      className='text-start fs-14 mb-2 w-100 d-flex align-items-center justify-content-between'
                     >
                       <Badge color={color as any} title={title as any} key={i} />
                       <FontAwesomeIcon
@@ -87,7 +87,7 @@ const TableMobile: FC<Props> = ({
                 }
 
                 if (key === 'loan_no') {
-                  return <div className='text-gray-900 fw-bold fs-16 ps-8px mb-8px'>{value}</div>
+                  return <div className='text-gray-900 fw-bold fs-16 mb-8px'>{value}</div>
                 }
 
                 return (
@@ -96,7 +96,7 @@ const TableMobile: FC<Props> = ({
                     key={i}
                   >
                     <div
-                      className={clsx(['text-nowrap fw-normal px-8px pb-4px pt-4px text-gray-500'])}
+                      className={clsx(['text-nowrap fw-normal pb-4px pt-4px text-gray-500'])}
                       data-title={key}
                       key={i}
                     >
