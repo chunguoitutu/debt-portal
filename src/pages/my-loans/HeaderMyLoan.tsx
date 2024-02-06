@@ -31,12 +31,22 @@ const HeaderMyLoan = ({filter, setFilter}: Props) => {
           />
         </div>
         <div className='d-flex flex-column flex-md-row justify-content-end mt-20px mt-md-0 align-items-start gap-16px'>
-          <div className='d-flex align-items-center justify-content-start gap-8px'>
+          <div
+            style={{
+              minHeight: '21px',
+            }}
+            className='d-flex align-items-center justify-content-start gap-8px'
+          >
             <div className='bg-primary w-10px h-10px flex-shrink-0 rounded-circle'></div>
             <span className='fs-14 fw-semibold text-gray-600'>Outstanding Loan</span>
           </div>
 
-          <div className='d-flex align-items-center gap-8px'>
+          <div
+            style={{
+              minHeight: '21px',
+            }}
+            className='d-flex align-items-center gap-8px'
+          >
             <div
               style={{
                 backgroundColor: '#071437',

@@ -17,9 +17,9 @@ const AboutUs: FC<HomeProps> = () => {
           <img
             src={quote}
             alt='quote'
-            className='mb-20px d-block home-animation fade align-self-center align-self-lg-start'
+            className='mb-20px d-block home-animation fade align-self-start'
           />
-          <span className='text-uppercase fs-14 text-gray-600 mb-4px align-self-center align-self-lg-start letter-spacing-2'>
+          <span className='text-uppercase fs-14 text-gray-600 mb-4px align-self-start letter-spacing-2'>
             GENERAL INTRODUCTION
           </span>
           <h3 className='fs-46 mb-20px fw-bold align-self-center align-self-lg-start home__title two-line'>

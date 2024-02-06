@@ -26,7 +26,7 @@ const HeaderUserMenu: FC = () => {
       <div className='dropdown-fixed fw-bold py-4 fs-6 w-250px' style={{zIndex: 999999}}>
         <div className='d-flex ms-5 p-2'>
           <div className='symbol symbol-50px me-5'>
-            <h1 className='img-header-portal fs-13 fw-bold text-black p-0 m-0'>
+            <h1 className='img-header-portal w-28px w-lg-35px aspect-ratio-1-1 fs-13 fw-bold text-black p-0 m-0'>
               {getTheBeginningAndEndOfTheName('Fung Yong Chang' || '')}
             </h1>
           </div>
