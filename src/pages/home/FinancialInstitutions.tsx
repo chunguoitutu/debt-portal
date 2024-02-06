@@ -8,7 +8,7 @@ const FinancialInstitutions: FC<HomeProps> = () => {
     <section className='py-100px'>
       <div className='container d-flex flex-column align-items-center gap-72px'>
         <header className='text-center home-animation fade bot-to-top position-relative w-fit-content'>
-          <div className='mw-100 pe-none user-select-none h-0 z-index-negative'>
+          <div className='mw-100 pe-none user-select-none position-relative h-0 z-index-negative'>
             <img
               src={financialInstitutionsImg}
               alt='financial institutions'

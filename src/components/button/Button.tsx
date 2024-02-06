@@ -14,7 +14,7 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className
 }
 
 const Button: FC<Props> = ({
-  className = 'btn-primary',
+  className = 'btn-primary ',
   classNameIcon = '',
   loading,
   textLoading,

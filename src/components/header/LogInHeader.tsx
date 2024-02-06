@@ -7,10 +7,12 @@ type Props = {
 const LogInHeader = ({toggleFormLogin}: Props) => {
   return (
     <div className={clsx(['d-flex align-items-center gap-8px gap-sm-16px'])}>
-      <Button className='border border-primary text-info-light bg-hover-primary'>
+      <Button className='border border-primary text-info-light bg-hover-primary fs-14'>
         Login With Singpass
       </Button>
-      <Button onClick={toggleFormLogin}>Sign In</Button>
+      <Button className='btn-primary fs-14' onClick={toggleFormLogin}>
+        Sign In
+      </Button>
     </div>
   )
 }
