@@ -29,10 +29,10 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
         onMouseLeave={hideMenu}
         className=' d-flex justify-content-center  h-100 align-items-center cursor-pointer'
       >
-        <h1 className='img-header-portal fs-13 fw-bold text-black w-28px h-28px w-lg-35px h-lg-35px p-0 m-0 me-12px'>
+        <h1 className='img-header-portal fs-13 fw-bold text-black w-28px h-28px w-lg-35px h-lg-35px p-0 m-0'>
           {getTheBeginningAndEndOfTheName('Fung Yong Chang' || '')}
         </h1>
-        <div className='d-none d-xl-block'>
+        <div className='d-none d-xl-block ms-12px'>
           <p className='text-full-mid-last-name fs-14 p-0 mb-4px'>
             {`${data?.lastName} ${data?.firstName}` || 'Guest'}
           </p>
@@ -57,7 +57,7 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
           setShow(true)
           setSCroll(true)
         }}
-        className='app-navbar-item d-lg-none ms-2'
+        className='app-navbar-item d-lg-none ms-12px'
         title='Show header menu'
       >
         <img src={barsImg} alt='bars' className='cursor-pointer' />
