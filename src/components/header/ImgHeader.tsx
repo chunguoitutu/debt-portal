@@ -57,7 +57,7 @@ const ImgHeader = ({showMenu, hideMenu, isMenuVisible, data, setSCroll, scroll}:
           setShow(true)
           setSCroll(true)
         }}
-        className='app-navbar-item d-lg-none ms-2'
+        className='app-navbar-item d-md-none ms-2'
         title='Show header menu'
       >
         <img src={barsImg} alt='bars' className='cursor-pointer' />

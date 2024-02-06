@@ -16,7 +16,7 @@ const HomeHeader: FC<HomeProps> = (props) => {
         background: `url('${dashboardImg}') no-repeat center center / cover`,
       }}
     >
-      <div className='container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-60px'>
+      <div className='container padding-responsive d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-60px'>
         <div
           className={clsx(['d-flex flex-column gap-24px mw-500px', screenWidth < 992 && 'order-2'])}
         >

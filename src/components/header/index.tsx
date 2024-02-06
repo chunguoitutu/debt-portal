@@ -76,7 +76,7 @@ const Header = ({setSCroll, scroll}: Props) => {
         {!!token && (
           <div
             className={clsx([
-              'd-none d-lg-block h-100 ',
+              'd-none d-md-block h-100',
               !showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
             ])}
           >
