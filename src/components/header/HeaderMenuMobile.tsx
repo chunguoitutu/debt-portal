@@ -22,7 +22,10 @@ const HeaderMenuMobile = ({show, onClose}: Props) => {
       ])}
     >
       <nav
-        className='mobile-menu-portal d-flex flex-column justify-content-center gap-16px p-16px'
+        className={clsx([
+          'mobile-menu-portal d-flex flex-column justify-content-center gap-16px p-16px',
+          show ? 'showed' : 'visibility-hidden pe-none user-select-none',
+        ])}
         ref={menuRef}
       >
         {linkHeader.map((el, i) => {
