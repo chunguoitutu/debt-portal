@@ -122,7 +122,7 @@
 
 @media (max-width: 575px) {
   .pow {
-    width: 100% !important;
+    width: 101% !important;
     padding-left: 9px !important;
     padding-right: 18px !important;
   }
@@ -157,5 +157,28 @@
 .h-custom-responsive {
   @media (min-width: 1142px) and (max-width: 1199px) {
     height: 53.33px !important;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 575px) {
+  .yasuo {
+    width: 101% !important;
+  }
+  .olaf {
+    width: 101% !important;
+  }
+}
+@media (min-width: 576px) and (max-width: 991px) {
+  .yone {
+    width: 101% !important;
+  }
+  .sylas {
+    width: 101.6% !important;
+  }
+  .jayce {
+    width: 104.4% !important;
+  }
+  .olaf {
+    width: 100% !important;
   }
 }

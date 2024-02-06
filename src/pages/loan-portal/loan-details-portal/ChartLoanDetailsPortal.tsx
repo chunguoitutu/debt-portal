@@ -10,7 +10,7 @@ type Props = {
 const ChartLoanDetailsPortal: FC<Props> = ({className}) => {
   return (
     <div className={`col-12 ${className}`}>
-      <div className='row'>
+      <div className='row jayce'>
         <div className={`col-6 kaka`}>
           <div className='loan-amount-portal mt-20px p-20px gap-20px height-992'>
             <img src={ChartPortal} alt='' />
