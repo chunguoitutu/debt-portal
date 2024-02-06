@@ -35,7 +35,7 @@ const NextPaymentDatePortal: FC<Props> = ({className}) => {
         <div className={`loan-amount-portal p-20px gap-20px position-relative ${className}`}>
           <div className='loan-amount-title'>Next Payment Date</div>
 
-          <div className='d-flex flex-column gap-24px mt-20px'>
+          <div className='d-flex flex-column gap-12px mt-20px'>
             <div className='calendar-responsive p-16px'>
               <div className='text-primary fw-bold' style={{fontSize: '32px'}}>
                 12
@@ -43,7 +43,7 @@ const NextPaymentDatePortal: FC<Props> = ({className}) => {
               <div className='text-gray-900 fs-3 fw-bold mt-2'>Dec, 2024</div>
             </div>
 
-            <div className='d-flex flex-column w-100 gap-10px'>
+            <div className='d-flex flex-column w-100 gap-8px'>
               <div className='d-flex flex-row align-items-center justify-content-between'>
                 <div className='text-gray-900 fs-14 fw-normal'>Number of days due</div>
                 <div className='fs-16 text-gray-900 fw-bold'>2 days</div>

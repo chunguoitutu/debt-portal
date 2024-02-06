@@ -29,9 +29,6 @@
 }
 
 .sub-title-chart-loan {
-  @media (max-width: 400px) {
-    height: 46.78px !important;
-  }
   @media (min-width: 1142px) and (max-width: 1199px) {
     height: 53.34px !important;
   }
@@ -46,6 +43,37 @@
 @media (max-width: 459px) {
   .hjhj {
     width: 100% !important;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 386px) {
+  .font-375px {
+    font-size: 15px !important;
+    color: #4b5675 !important;
+  }
+
+  .font-money {
+    font-size: 21px !important;
+    color: #071437 !important;
+  }
+  .met {
+    padding-right: 10px !important;
+  }
+}
+
+.w-custom-repayment {
+  @media (min-width: 576px) and (max-width: 576px) {
+    margin-right: 22px !important;
+    width: 96.9% !important;
+  }
+  @media (min-width: 577px) and (max-width: 991px) {
+    width: 98.5% !important;
+  }
+}
+
+.haiz {
+  @media (min-width: 576px) and (max-width: 991px) {
+    width: 100.7% !important;
   }
 }
 
@@ -120,6 +148,10 @@
   .responsive-ps {
     padding-right: 6px !important;
   }
+}
+
+.mh-731px {
+  max-height: 731px !important;
 }
 
 .h-custom-responsive {

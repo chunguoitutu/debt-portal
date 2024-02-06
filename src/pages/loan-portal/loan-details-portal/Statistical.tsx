@@ -116,13 +116,14 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
   return (
     <>
       {isMobile ? (
-        <div className={`loan-amount-portal p-20px position-relative ${className}`}>
+        <div className={`loan-amount-portal p-20px position-relative  ${className}`}>
           <div className='loan-amount-title'>Statistical</div>
 
-          <div className='text-gray-400 fs-14 mt-8px fw-normal pb-20px'>
-            Payment amount & Balance at the end of period
-          </div>
+          <div className='text-gray-400 fs-14 mt-8px fw-normal'>Payment amount &</div>
 
+          <div className='text-gray-400 fs-14  fw-normal pb-20px'>
+            Balance at the end of the period
+          </div>
           <div className='pt-20px'>
             <div className='d-flex flex-wrap align-items-start justify-content-start hoho pt-xxl-0'>
               <div className='d-flex flex-center  w-100 pt-2 hjhj align-items-center justify-content-center'>
@@ -140,20 +141,20 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
               <div className='d-flex flex-column ps-xl-24px ps-lg-0px flex-md-row gap-md-20px gap-sm-20px ps-md-30px ps-sm-20px mt-md-30px mt-lg-0 mt-xl-0 flex-xl-column flex-lg-column gap-xl-0 gap-lg-0 ps-sx-20px w-100'>
                 <div className='mb-xl-20px mb-lg-8px col-12 w-100'>
                   <div className='row'>
-                    <div className='text-gray-700 fw-normal fs-4 amount-loan-details-repsonsive-font col-6'>
+                    <div className='text-gray-700 fw-normal fs-4 amount-loan-details-repsonsive-font font-375px col-6'>
                       Payment amount
                     </div>
-                    <div className='text-gray-900 fs-2hx fw-bold fs-responsive-loan-chart-details col-6 text-end'>
+                    <div className='text-gray-900 fs-2hx fw-bold fs-responsive-loan-chart-details col-6 text-end font-money'>
                       {formatMoney(820)}
                     </div>
                   </div>
                 </div>
                 <div className='d-flex flex-row col-12 w-100'>
                   <div className='row flex-grow-1'>
-                    <div className='text-gray-700 fw-normal fs-4 amount-loan-details-repsonsive-font col-6'>
+                    <div className='text-gray-700 fw-normal fs-4 amount-loan-details-repsonsive-font font-375px col-6'>
                       Balance at the end of the period
                     </div>
-                    <div className='text-primary fs-2hx fw-bold fs-responsive-loan-chart-details col-6 text-end text-balance'>
+                    <div className='text-primary fs-2hx fw-bold fs-responsive-loan-chart-details col-6 text-end text-balance font-money'>
                       {formatMoney(26640)}
                     </div>
                   </div>
@@ -167,7 +168,7 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
           <div className='loan-amount-title'>Statistical</div>
 
           <div className='text-gray-400 fs-14 mt-8px fw-normal pb-20px'>
-            Payment amount & Balance at the end of period
+            Payment amount & Balance at the end of the period
           </div>
 
           <div className=''>

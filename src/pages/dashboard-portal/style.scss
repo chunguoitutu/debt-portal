@@ -204,27 +204,33 @@
 
 .kiki {
   @media (min-width: 768px) and (max-width: 777px) {
-    margin-top: 5px !important;
+    margin-top: 1px !important;
   }
   @media (min-width: 992px) {
-    width: 101.1% !important;
+    width: 101.7% !important;
     margin-left: -2px;
   }
 }
 
 .responsive-992 {
   @media (min-width: 992px) {
-    padding-right: 20px !important;
+    padding-right: 12px !important;
     padding-left: 8px !important;
   }
 }
 
 .main-height {
   @media (min-width: 993px) {
-    height: 97% !important;
+    height: 96% !important;
   }
   @media (max-width: 992px) {
     margin-bottom: 20px !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1999px) {
+  .w-98percent {
+    width: 98% !important;
   }
 }
 
@@ -252,7 +258,7 @@
     padding-bottom: 30px !important;
   }
   @media (min-width: 1024px) {
-    padding-right: 0px !important;
+    padding-right: 12px !important;
   }
   @media (max-width: 580px) {
     padding-left: 20px;
