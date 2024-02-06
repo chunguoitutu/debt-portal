@@ -194,4 +194,7 @@
 
 .mobile-mt-money {
   margin-top: -9px !important;
+  @media (min-width: 375px) and (max-width: 386px) {
+    margin-top: -7px !important;
+  }
 }
