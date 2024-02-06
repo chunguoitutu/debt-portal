@@ -29,9 +29,6 @@
 }
 
 .sub-title-chart-loan {
-  @media (max-width: 400px) {
-    height: 46.78px !important;
-  }
   @media (min-width: 1142px) and (max-width: 1199px) {
     height: 53.34px !important;
   }
@@ -49,6 +46,36 @@
   }
 }
 
+@media (min-width: 375px) and (max-width: 386px) {
+  .font-375px {
+    font-size: 15px !important;
+    color: #4b5675 !important;
+  }
+
+  .font-money {
+    font-size: 21px !important;
+  }
+  .met {
+    padding-right: 10px !important;
+  }
+}
+
+.w-custom-repayment {
+  @media (min-width: 576px) and (max-width: 576px) {
+    margin-right: 22px !important;
+    width: 96.9% !important;
+  }
+  @media (min-width: 577px) and (max-width: 991px) {
+    width: 98.5% !important;
+  }
+}
+
+.haiz {
+  @media (min-width: 576px) and (max-width: 991px) {
+    width: 100.7% !important;
+  }
+}
+
 .kaka {
   @media (max-width: 572px) {
     width: 100% !important;
@@ -62,7 +89,7 @@
   }
   @media (max-width: 1699px) {
     padding-top: 30px !important;
-    padding-bottom: 30px !important;
+    padding-bottom: 20px !important;
   }
   @media (max-width: 580px) {
     padding-top: 20px !important;
@@ -94,7 +121,7 @@
 
 @media (max-width: 575px) {
   .pow {
-    width: 100% !important;
+    width: 101% !important;
     padding-left: 9px !important;
     padding-right: 18px !important;
   }
@@ -122,8 +149,52 @@
   }
 }
 
+.mh-731px {
+  max-height: 731px !important;
+}
+
 .h-custom-responsive {
   @media (min-width: 1142px) and (max-width: 1199px) {
     height: 53.33px !important;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 575px) {
+  .yasuo {
+    width: 101% !important;
+  }
+  .olaf {
+    width: 101% !important;
+  }
+}
+@media (min-width: 576px) and (max-width: 991px) {
+  .yone {
+    width: 101% !important;
+  }
+  .sylas {
+    width: 101.6% !important;
+  }
+  .jayce {
+    width: 104.4% !important;
+  }
+  .olaf {
+    width: 100% !important;
+  }
+}
+
+.smt-mb {
+  @media (min-width: 577px) and (max-width: 1399px) {
+    margin-bottom: 30px !important;
+  }
+
+  @media (min-width: 376px) and (max-width: 576px) {
+    margin-bottom: 0px !important;
+  }
+}
+
+.mobile-mt-money {
+  margin-top: -9px !important;
+  @media (min-width: 375px) and (max-width: 386px) {
+    margin-top: -7px !important;
   }
 }

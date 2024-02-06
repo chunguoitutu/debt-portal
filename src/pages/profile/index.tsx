@@ -2,6 +2,18 @@ import './style.scss'
 import AvatarAndMenu from './AvatarAndMenu'
 import {Fragment, useMemo, useState} from 'react'
 import {PROFILE_MENU} from './config'
+import TitleContainer from '@/components/title-container.tsx'
+
+const profileBreadCrumbs = {
+  title: 'My Profile',
+  link: [
+    {
+      to: '/',
+      titleLink: 'Home',
+    },
+  ],
+  render: ['My Profile'],
+}
 
 const Profile = () => {
   const [activeId, setActiveId] = useState<number>(PROFILE_MENU.find((el) => el.default)?.id)

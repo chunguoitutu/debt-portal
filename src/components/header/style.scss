@@ -127,5 +127,6 @@
 }
 
 .disable-mobile {
-  color: #858585;
+  color: var(--bs-gray-900);
+  opacity: 0.4;
 }

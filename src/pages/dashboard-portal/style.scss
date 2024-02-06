@@ -204,27 +204,33 @@
 
 .kiki {
   @media (min-width: 768px) and (max-width: 777px) {
-    margin-top: 5px !important;
+    margin-top: 1px !important;
   }
   @media (min-width: 992px) {
-    width: 101.1% !important;
+    width: 101.7% !important;
     margin-left: -2px;
   }
 }
 
 .responsive-992 {
   @media (min-width: 992px) {
-    padding-right: 20px !important;
+    padding-right: 12px !important;
     padding-left: 8px !important;
   }
 }
 
 .main-height {
   @media (min-width: 993px) {
-    height: 97% !important;
+    height: 95.8% !important;
   }
   @media (max-width: 992px) {
     margin-bottom: 20px !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1999px) {
+  .w-98percent {
+    width: 98% !important;
   }
 }
 
@@ -246,17 +252,45 @@
   @media (min-width: 1700px) {
     padding-top: 40px !important;
     padding-bottom: 40px !important;
+    padding-right: 16px !important;
   }
-  @media (max-width: 1699px) {
+  @media (min-width: 1200px) and (max-width: 1440px) {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
+    padding-right: 12px !important;
   }
-  @media (min-width: 1024px) {
-    padding-right: 0px !important;
+
+  @media (min-width: 1441px) and (max-width: 1699px) {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    padding-right: 18px !important;
+  }
+
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    padding-right: 26px !important;
+  }
+  @media (min-width: 992px) and (max-width: 1023px) {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    padding-right: 26px !important;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    padding-right: 0 !important;
+  }
+  @media (min-width: 581px) and (max-width: 767px) {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    padding-right: 26px !important;
   }
   @media (max-width: 580px) {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
   }
 }
 
