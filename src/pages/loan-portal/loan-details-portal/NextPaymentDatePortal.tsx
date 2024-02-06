@@ -10,7 +10,9 @@ type Props = {
 }
 
 const NextPaymentDatePortal: FC<Props> = ({className}) => {
-  const [isMobile, setIsMobile] = useState<boolean>(false)
+  const [isMobile, setIsMobile] = useState<boolean>(
+    document.documentElement.clientWidth < 600 ? true : false
+  )
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,7 +48,7 @@ const NextPaymentDatePortal: FC<Props> = ({className}) => {
                 <div className='text-gray-900 fs-14 fw-normal'>Number of days due</div>
                 <div className='fs-16 text-gray-900 fw-bold'>2 days</div>
               </div>
-              <div className='d-flex flex-row align-items-center justify-content-between'>
+              <div className='d-flex flex-row align-items-center justify-content-between gap-20px'>
                 <div className='text-gray-900 fs-14 fw-normal'>
                   Expected payment during the period
                 </div>
@@ -73,7 +75,7 @@ const NextPaymentDatePortal: FC<Props> = ({className}) => {
                 <div className='text-gray-900 fs-14 fw-normal'>Number of days due</div>
                 <div className='fs-16 text-gray-900 fw-bold'>2 days</div>
               </div>
-              <div className='d-flex flex-row align-items-center justify-content-between'>
+              <div className='d-flex flex-row align-items-center justify-content-between gap-20px'>
                 <div className='text-gray-900 fs-14 fw-normal'>
                   Expected payment during the period
                 </div>
