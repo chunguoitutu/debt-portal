@@ -124,7 +124,7 @@ const RepaymentHistoryPortal: FC<Props> = ({className}) => {
                 <div className='fs-14 text-gray-900 fw-normal'>
                   Balance at the end of the period
                 </div>
-                <div className='fs-16 fw-normal text-primary fw-bold align-self-end'>
+                <div className='fs-16 fw-normal text-primary fw-bold align-self-center'>
                   {formatMoney(item.balance_at_the_end)}
                 </div>
               </div>
