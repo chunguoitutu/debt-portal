@@ -11,33 +11,36 @@ const HomeHeader: FC<HomeProps> = (props) => {
 
   return (
     <section
-      className='dashboard-header py-120px'
+      className='dashboard-header py-153px py-lg-120px'
       style={{
         background: `url('${dashboardImg}') no-repeat center center / cover`,
       }}
     >
       <div className='container padding-responsive d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-60px'>
         <div
-          className={clsx(['d-flex flex-column gap-24px mw-500px', screenWidth < 992 && 'order-2'])}
+          className={clsx([
+            'd-flex flex-column gap-16px gap-lg-24px mw-700px',
+            screenWidth < 992 && 'order-2',
+          ])}
         >
           <div className={clsx(['home-animation fade bot-to-top'])}>
-            <span className='d-inline-flex align-items-center gap-16px text-white mb-16px fs-24 fw-semibold'>
-              Welcome To <span className='d-none d-sm-inline-block w-60px h-1px bg-white'></span>
+            <span className='welcome d-inline-flex align-items-center gap-16px text-white mb-8px mb-lg-16px fs-24 fw-semibold'>
+              Welcome To <span className='w-60px h-1px bg-white'></span>
             </span>
 
             <h2 className='company_name fs-66 text-white fw-bolder m-0 lh-scale-1'>FINANCE 360</h2>
-            <h3 className='organization_name fs-44 text-primary fw-bolder m-0 lh-scale-1-5'>
+            <h3 className='organization_name fs-44 text-primary fw-bolder m-0 line-height-1-5'>
               MCK DYNAMICS.
             </h3>
           </div>
 
           <span
             className={clsx(
-              'fs-20 text-white fw-semibold home-animation fade bot-to-top delay-0-3'
+              'content fs-20 text-white fw-semibold home-animation fade bot-to-top delay-0-3'
             )}
           >
-            “ With our eyes on the long-term future, we invest in tomorrow knowing that we can make
-            a difference today.”
+            “With our eyes on the long-term future, we invest in tomorrow knowing that we can make a
+            difference today.”
           </span>
 
           <Button

@@ -14,7 +14,7 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className
 }
 
 const Button: FC<Props> = ({
-  className = 'btn-primary ',
+  className = 'btn-primary',
   classNameIcon = '',
   loading,
   textLoading,
@@ -24,7 +24,7 @@ const Button: FC<Props> = ({
   ...rest
 }) => {
   return (
-    <button className={clsx(['btn', className])} {...rest}>
+    <button className={clsx(['btn fs-14', className])} {...rest}>
       {iconLeft && <FontAwesomeIcon icon={iconLeft} className={clsx(['me-8px', classNameIcon])} />}
       {loading ? (textLoading ? textLoading : 'Please wait...') : children}
       {iconRight && (
