@@ -195,10 +195,23 @@
   }
 }
 
+.virus {
+  @media (min-width: 576px) and (max-width: 991px) {
+    width: 100.9% !important;
+    margin-left: -3px;
+  }
+}
+
 .btn-mobile-responsive-customer {
   @media (min-width: 336px) and (max-width: 404px) {
     height: 60.19px !important;
     align-self: center !important;
+  }
+}
+
+.lcs {
+  @media (min-width: 992px) and (max-width: 1199px) {
+    width: 99.5% !important;
   }
 }
 
