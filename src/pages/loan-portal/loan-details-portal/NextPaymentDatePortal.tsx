@@ -70,7 +70,7 @@ const NextPaymentDatePortal: FC<Props> = ({className}) => {
               <div className='text-gray-900 fs-3 fw-bold mt-2 text-nowrap'>Dec, 2024</div>
             </div>
 
-            <div className='d-flex flex-column w-75 gap-8px'>
+            <div className='d-flex flex-column w-100 gap-8px'>
               <div className='d-flex flex-row align-items-center justify-content-between'>
                 <div className='text-gray-900 fs-14 fw-normal'>Number of days due</div>
                 <div className='fs-16 text-gray-900 fw-bold'>2 days</div>
