@@ -175,7 +175,7 @@
   height: 25px;
   border-radius: 0 0 0 100px;
   z-index: 0;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .quarter-circle-second {
@@ -206,8 +206,12 @@
   @media (min-width: 768px) and (max-width: 777px) {
     margin-top: 1px !important;
   }
-  @media (min-width: 992px) {
-    width: 101.7% !important;
+  @media (min-width: 992px) and (max-width: 1199px) {
+    width: 103.3% !important;
+    margin-left: 0px;
+  }
+  @media (min-width: 1200px) and (max-width: 1999px) {
+    width: 101.3% !important;
     margin-left: 0px;
   }
 }

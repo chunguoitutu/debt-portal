@@ -170,7 +170,12 @@
     width: 101% !important;
   }
 }
-@media (min-width: 576px) and (max-width: 991px) {
+@media (min-width: 575px) and (max-width: 576px) {
+  .olaf {
+    width: 97.2% !important;
+  }
+}
+@media (min-width: 577px) and (max-width: 991px) {
   .yone {
     width: 101% !important;
   }
@@ -186,11 +191,11 @@
 }
 
 .smt-mb {
-  @media (min-width: 577px) and (max-width: 1399px) {
+  @media (min-width: 576px) and (max-width: 1399px) {
     margin-bottom: 30px !important;
   }
 
-  @media (min-width: 376px) and (max-width: 576px) {
+  @media (min-width: 376px) and (max-width: 575px) {
     margin-bottom: 0px !important;
   }
 }
@@ -199,5 +204,17 @@
   margin-top: -9px !important;
   @media (min-width: 375px) and (max-width: 386px) {
     margin-top: -7px !important;
+  }
+}
+
+.ibra {
+  @media (min-width: 786px) and (max-width: 991px) {
+    margin-left: -6px !important;
+  }
+}
+
+.reus {
+  @media (min-width: 786px) and (max-width: 991px) {
+    padding-right: 13px !important;
   }
 }
