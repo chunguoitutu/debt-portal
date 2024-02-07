@@ -185,7 +185,7 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
                   data-kt-line={chartLine}
                 ></div>
               </div>
-              <div className='d-flex flex-column ps-xl-30px ps-lg-0px flex-md-row gap-md-20px gap-sm-20px ps-md-30px ps-sm-20px mt-md-30px mt-lg-0 mt-xl-0 flex-xl-column flex-lg-column gap-xl-0 gap-lg-0 ps-sx-20px'>
+              <div className='d-flex flex-column ps-xl-30px ps-lg-0px flex-md-row gap-md-20px gap-sm-20px ps-md-30px ps-sm-20px mt-md-60px mt-lg-0 mt-xl-0 flex-xl-column flex-lg-column gap-xl-0 gap-lg-0 ps-sx-20px'>
                 <div className='mb-xl-20px mb-lg-8px'>
                   <div className='text-gray-900 fs-2hx fw-bold fs-responsive-loan-chart-details'>
                     {formatMoney(820)}
