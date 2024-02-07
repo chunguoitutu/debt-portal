@@ -165,11 +165,11 @@ input:-webkit-autofill:active {
 }
 
 .lh-scale-1 {
-  line-height: 1 !important;
+  line-height: 1;
 }
 
-.lh-scale-1-5 {
-  line-height: 1.5 !important;
+.line-height-1-5 {
+  line-height: 1.5;
 }
 
 .fs-66 {
@@ -186,12 +186,12 @@ input:-webkit-autofill:active {
 
 .fs-26 {
   font-size: 26px;
-  @extend .lh-scale-1-5;
+  @extend .line-height-1-5;
 }
 
 .fs-24 {
   font-size: 24px;
-  @extend .lh-scale-1-5;
+  @extend .line-height-1-5;
 }
 
 .text-justify {

@@ -5,12 +5,12 @@ import {FC} from 'react'
 const Team: FC<HomeProps> = () => {
   return (
     <section
-      className='team py-212px'
+      className='team py-140px py-lg-212px'
       style={{
         background: `url('${dashboardImg}') no-repeat center center / cover`,
       }}
     >
-      <div className='container padding-responsive d-flex flex-column gap-72px'>
+      <div className='container padding-responsive d-flex flex-column gap-60px'>
         <header className='text-center home-animation fade bot-to-top'>
           <h2 className='text-white fs-46 home__title mb-4px two-line'>
             At MCK, Perfection in Everything We Do
@@ -20,7 +20,7 @@ const Team: FC<HomeProps> = () => {
           </span>
         </header>
 
-        <span className='fs-16 text-gray-600 w-900px mw-100 align-self-center text-center home-animation fade bot-to-top delay-0-2 text-break'>
+        <span className='fs-16 fw-semibold text-gray-600 w-900px mw-100 align-self-center text-center home-animation fade bot-to-top delay-0-2 text-break'>
           With our eyes on the long-term future, we invest in tomorrow knowing that we can make a
           difference today. Our strong work ethic, financial solidity and professionalism all play a
           vital role in our constant pursuit to be the best in our industry. We take tremendous
