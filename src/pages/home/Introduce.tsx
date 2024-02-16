@@ -17,7 +17,7 @@ const Introduce: FC<HomeProps> = ({screenWidth}) => {
                 ])}
               >
                 <h3 className='text-white text-center fs-24 fw-semibold'>{el.label}</h3>
-                <span className='introduce__text text-center six-line text-gray-500 fs-14 fw-semibold'>
+                <span className='introduce__text text-center text-gray-500 fs-14 fw-semibold'>
                   {el.content}
                 </span>
               </div>
