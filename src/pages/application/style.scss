@@ -1,0 +1,11 @@
+.new-application-portal {
+  @media (min-width: 300px) and (max-width: 577px) {
+    .padding-custom {
+      margin-left: 20px !important;
+      margin-right: 20px !important;
+    }
+    .padding-top-custom {
+      padding-top: 20px !important;
+    }
+  }
+}
