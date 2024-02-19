@@ -32,8 +32,6 @@ const Statistical: FC<Props> = ({chartSize = 160, chartLine = 25, chartRotate = 
     }
   }, [document.documentElement.clientWidth < 520])
 
-  console.log(isMobile)
-
   //==================================START HANDLE FOR CHART==================================//
   const chartRef = useRef<HTMLDivElement | null>(null)
 

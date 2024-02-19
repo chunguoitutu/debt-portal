@@ -233,6 +233,32 @@ input:-webkit-autofill:active {
     }
   }
 }
+
 .aspect-ratio-1-1 {
   aspect-ratio: 1/1;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    padding-inline: 30px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .wrapper {
+    padding-inline: 60px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .wrapper {
+    padding-inline: 0px;
+  }
 }

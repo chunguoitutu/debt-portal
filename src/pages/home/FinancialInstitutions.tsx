@@ -6,7 +6,7 @@ import financialInstitutionsImg from '@/app/images/dashboard-financial-instituti
 const FinancialInstitutions: FC<HomeProps> = () => {
   return (
     <section className='py-50px py-lg-100px'>
-      <div className='container padding-responsive d-flex flex-column align-items-center gap-20px gap-lg-72px'>
+      <div className='wrapper d-flex flex-column align-items-center gap-20px gap-lg-72px'>
         <header className='text-center home-animation fade bot-to-top position-relative w-fit-content'>
           <div className='mw-100 pe-none user-select-none position-relative h-0 z-index-negative'>
             <img

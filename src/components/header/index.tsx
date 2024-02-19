@@ -47,7 +47,6 @@ const Header = ({setSCroll, scroll}: Props) => {
     }
     setShowLoginForm(!showLoginForm)
   }
-  console.log(showLoginForm)
 
   function handleNavigate() {
     navigate('/')
