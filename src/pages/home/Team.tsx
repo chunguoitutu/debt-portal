@@ -5,12 +5,12 @@ import {FC} from 'react'
 const Team: FC<HomeProps> = () => {
   return (
     <section
-      className='team py-140px py-lg-212px'
+      className='team py-140px py-lg-200px py-2xl-212px'
       style={{
         background: `url('${dashboardImg}') no-repeat center center / cover`,
       }}
     >
-      <div className='container padding-responsive d-flex flex-column gap-60px'>
+      <div className='wrapper d-flex flex-column gap-60px'>
         <header className='text-center home-animation fade bot-to-top'>
           <h2 className='text-white fs-46 home__title mb-4px two-line'>
             At MCK, Perfection in Everything We Do

@@ -13,8 +13,6 @@ import {MasterLayout} from '../layouts/master-layout/MasterLayout'
 import {getCSSVariableValue} from '../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
 
-import {useAuth} from '../app/context/AuthContext'
-
 import DashBoardPortal from '@/pages/dashboard-portal'
 import Home from '@/pages/home'
 import {WithChildren} from '@/app/types'
@@ -45,7 +43,6 @@ const SuspensedView: FC<WithChildren> = ({children}) => {
 }
 
 const AppRoutes: FC = () => {
-  const {currentUser} = useAuth()
   return (
     <BrowserRouter>
       <Routes>

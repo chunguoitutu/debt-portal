@@ -6,7 +6,7 @@ import {FC} from 'react'
 const AboutUs: FC<HomeProps> = () => {
   return (
     <section className='about-us py-100px'>
-      <div className='container padding-responsive d-flex flex-column flex-lg-row align-items-center gap-20px gap-lg-30px'>
+      <div className='wrapper d-flex flex-column flex-lg-row align-items-center gap-20px gap-lg-60px'>
         <img
           src={dashboardCeo}
           alt='team-img'
@@ -26,7 +26,7 @@ const AboutUs: FC<HomeProps> = () => {
             Message From Our Chairman
           </h3>
 
-          <span className='content d-inline-block fs-20 mb-20px fw-semibold home-animation fade delay-0-2 align-self-start text-blue-medium'>
+          <span className='content d-inline-block fs-20 mb-20px mb-lg-24px mb-xxl-20px fw-semibold home-animation fade delay-0-2 align-self-start text-blue-medium'>
             “Our goal is to create a better and more sustainable tomorrow, for you and your future
             generations.”
           </span>

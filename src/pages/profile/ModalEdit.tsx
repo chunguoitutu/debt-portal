@@ -195,12 +195,13 @@ const ModalEdit: FC<EditModalProps> = ({config, currentUser, onClose}) => {
       id='kt_modal_create_app'
       tabIndex={-1}
       aria-hidden='true'
-      dialogClassName='modal-dialog modal-dialog-centered mw-500px'
+      dialogClassName='modal-dialog modal-dialog-centered w-100 mw-500px mx-20px'
+      className='d-flex align-items-center justify-content-center'
       show={true}
       onHide={() => !dirty && onClose()} // only click outside close modal dialog when values changed
       backdrop={true}
     >
-      <form className='p-30px d-flex flex-column gap-32px '>
+      <form className='px-20px py-30px d-flex flex-column gap-32px'>
         <h3 className='fs-24 fw-bold text-center m-0'>{otp ? otpInfo?.label : label}</h3>
 
         {otp ? (
@@ -221,7 +222,7 @@ const ModalEdit: FC<EditModalProps> = ({config, currentUser, onClose}) => {
               <div className='d-flex align-items-center gap-12px'>
                 {inputs.map((inputRef, index) => (
                   <Input
-                    className='w-60px h-60px text-align-center text-center'
+                    className='flex-grow-1 mw-60px h-60px text-align-center text-center'
                     key={index}
                     type='number'
                     maxLength={1}
@@ -261,22 +262,27 @@ const ModalEdit: FC<EditModalProps> = ({config, currentUser, onClose}) => {
             </div>
           </div>
         )}
-      </form>
 
-      {/* Action */}
-      <div className='d-flex align-items-center justify-content-center gap-8px border-top border-gray-200 p-16px'>
-        <Button className='btn-secondary' disabled={isSubmitting} onClick={onClose}>
-          Cancel
-        </Button>
-        <Button
-          type='submit'
-          loading={isSubmitting}
-          disabled={!dirty || isSubmitting}
-          onClick={() => (otp ? handleVerifyOTP() : isSendOtp ? handleSubmit() : handleUpdate())}
-        >
-          Submit
-        </Button>
-      </div>
+        {/* Action */}
+        <div className='d-flex align-items-center justify-content-center gap-8px'>
+          <Button
+            className='btn-secondary w-50 w-lg-unset'
+            disabled={isSubmitting}
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            className='btn-primary w-50 w-lg-unset'
+            type='submit'
+            loading={isSubmitting}
+            disabled={!dirty || isSubmitting}
+            onClick={() => (otp ? handleVerifyOTP() : isSendOtp ? handleSubmit() : handleUpdate())}
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
     </Modal>
   )
 }

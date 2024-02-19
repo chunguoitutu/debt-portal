@@ -5,18 +5,25 @@ import dashboardImg from '@/app/images/dashboard.png'
 import {FC} from 'react'
 import clsx from 'clsx'
 import {HomeProps} from '@/app/types'
+import Cookies from 'js-cookie'
+import {useShared} from '@/app/context/SharedContext'
 
 const HomeHeader: FC<HomeProps> = (props) => {
   const {screenWidth} = props
+  const {showLoginForm} = useShared()
+  const token = Cookies.get('token')
 
   return (
     <section
-      className='dashboard-header py-153px py-lg-120px'
+      className={clsx([
+        'dashboard-header py-lg-120px py-2xl-155px py-xxl-108px',
+        showLoginForm ? 'py-66px' : 'py-153px',
+      ])}
       style={{
         background: `url('${dashboardImg}') no-repeat center center / cover`,
       }}
     >
-      <div className='container padding-responsive d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-60px'>
+      <div className='wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-66px'>
         <div
           className={clsx([
             'd-flex flex-column gap-16px gap-lg-24px mw-700px',
@@ -54,7 +61,7 @@ const HomeHeader: FC<HomeProps> = (props) => {
           </Button>
         </div>
 
-        <LoginForm {...props} />
+        {!token && <LoginForm {...props} />}
       </div>
     </section>
   )

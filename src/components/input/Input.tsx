@@ -134,7 +134,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         <input
           ref={ref}
           type={typeCustom}
-          className={`bg-inherit form-control rounded-0 border-0 px-12px py-10px w-100 h-100 outline-none fw-semibold text-gray-700 fs-4 ${className} ${classNameAdvanced}`}
+          className={`bg-inherit form-control rounded-0 border-0 px-12px py-10px w-100 h-100 outline-none fw-semibold text-gray-700 fs-16 ${className} ${classNameAdvanced}`}
           id={id || defaultId || name}
           name={name}
           {...(ref ? {} : {value: value})}

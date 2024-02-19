@@ -27,7 +27,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
     <>
       <div
         className={clsx([
-          'card d-flex flex-column gap-24px p-30px align-self-center login-form fade w-100 w-lg-fit-content',
+          'card d-flex flex-column gap-24px p-20px p-lg-30px align-self-center login-form fade w-100 mw-400px w-lg-fit-content flex-shrink-0',
           showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
           screenWidth < 992 && 'order-1',
           !showLoginForm && screenWidth < 992 && 'position-absolute z-index-negative',
@@ -46,7 +46,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
 
         <p className='m-0 text-gray-600 text-center d-flex align-items-center justify-content-center fs-14 gap-8px'>
           <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
-          <span>Sign in if you already have a profile</span>
+          <span className='text-nowrap'>Sign in if you already have a profile</span>
           <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
         </p>
 
