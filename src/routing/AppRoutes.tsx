@@ -45,8 +45,6 @@ const SuspensedView: FC<WithChildren> = ({children}) => {
 }
 
 const AppRoutes: FC = () => {
-  console.log(1)
-
   const {currentUser} = useAuth()
   return (
     <BrowserRouter>
