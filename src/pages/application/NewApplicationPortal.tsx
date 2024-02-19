@@ -19,7 +19,23 @@ const profileBreadCrumbs = {
 }
 
 const NewApplicationPortal = () => {
+  // fake data
+  const data = [
+    {
+      fullname: 'Fung Yong Chang',
+      identification_no: '1234567890',
+    },
+  ]
+
   const {rows} = CREATE_APPLICATION_PORTAL_CONFIG
+
+  const initialValues = {}
+  rows.forEach((row) => {
+    const {key} = row
+    if (data[0].hasOwnProperty(key)) {
+      initialValues[key] = data[0][key]
+    }
+  })
 
   const [isMobile, setIsMobile] = useState<boolean>(
     document.documentElement.clientWidth < 520 ? true : false
@@ -41,7 +57,7 @@ const NewApplicationPortal = () => {
   }, [document.documentElement.clientWidth < 520])
 
   const {values, handleSubmit, handleBlur, handleChange, touched} = useFormik<any>({
-    initialValues: {},
+    initialValues: initialValues,
     validateOnChange: false,
     onSubmit: () => {},
   })
@@ -80,6 +96,7 @@ const NewApplicationPortal = () => {
                             type={infoCreateEdit.type}
                             onChange={handleChange}
                             noThereAreCommas={false}
+                            disabled={true}
                             touched={!!touched[key]}
                           />
                         </div>
