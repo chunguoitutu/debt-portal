@@ -23,7 +23,7 @@ const NewApplicationPortal = () => {
   const data = [
     {
       fullname: 'Fung Yong Chang',
-      identification_no: '1234567890',
+      identification_no: '******7890',
     },
   ]
 
