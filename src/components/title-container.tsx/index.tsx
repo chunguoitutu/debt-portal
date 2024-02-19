@@ -26,7 +26,7 @@ const TitleContainer = ({data}: Props) => {
           {data?.link.map((el, i) => {
             return (
               <div key={i} className='d-flex justify-content-center align-items-center '>
-                <Link to={el?.to} className='link-title-container fs-12 '>
+                <Link to={el?.to} className='link-title-container fs-12 fw-semibold'>
                   {el.titleLink}
                 </Link>
                 <div className='px-12px'>
