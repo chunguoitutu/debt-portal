@@ -19,8 +19,8 @@ type Props = {
 
 const TitleContainer = ({data}: Props) => {
   return (
-    <div className='w-100 wrapper-title-container  p-0 p-md-16px'>
-      <div className='container bg-transparent d-flex flex-column align-items-start py-8px px-20px px-sm-0 py-md-0'>
+    <div className='w-100 wrapper-title-container py-16px'>
+      <div className='wrapper bg-transparent d-flex flex-column align-items-start py-8px py-md-0'>
         <h1 className='title-header-container'>{data.title}</h1>
         <div className='d-flex justify-content-center align-items-center '>
           {data?.link.map((el, i) => {
