@@ -25,7 +25,7 @@ const Profile = () => {
   return (
     <div className='p-0 m-0'>
       <TitleContainer data={profileBreadCrumbs} />
-      <div className='profile container padding-responsive py-20px py-md-40px'>
+      <div className='profile wrapper py-20px py-md-40px'>
         <div className='row gy-24px gx-4px gx-md-16px'>
           <div className='col-12 col-md-4'>
             <AvatarAndMenu activeId={activeId} setActiveId={setActiveId} />

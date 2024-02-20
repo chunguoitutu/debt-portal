@@ -12,11 +12,11 @@ const Introduce: FC<HomeProps> = ({screenWidth}) => {
             <div className={clsx([`introduce introduce-${i} p-16px h-100`, el.className])}>
               <div
                 className={clsx([
-                  'wrap d-flex flex-column gap-24px p-16px py-28px h-100 home-animation fade bot-to-top',
+                  'wrap d-flex flex-column gap-24px p-16px h-100 home-animation fade bot-to-top',
                   screenWidth > 575 && `delay-0-${2 + 2 * i}`, // add delay transition for screen width greater than 575px (screen sm)
                 ])}
               >
-                <h3 className='text-white text-center fs-24 fw-semibold'>{el.label}</h3>
+                <h3 className='text-white text-center fs-24 fw-semibold m-0'>{el.label}</h3>
                 <span className='introduce__text text-center text-gray-500 fs-14 fw-semibold'>
                   {el.content}
                 </span>
