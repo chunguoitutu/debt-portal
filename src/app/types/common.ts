@@ -1,7 +1,7 @@
-import { Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction } from 'react'
-import { FormikProps } from 'formik'
-import { ObjectSchema, Schema } from 'yup'
-import { ApprovalInfo, RejectedInfo } from './response'
+import {Dispatch, FC, HTMLInputTypeAttribute, ReactNode, SetStateAction} from 'react'
+import {FormikProps} from 'formik'
+import {ObjectSchema, Schema} from 'yup'
+import {ApprovalInfo, RejectedInfo} from './response'
 
 export type LoginInfo = {
   username: string
@@ -22,7 +22,7 @@ export type ErrorResponse = {
 export type DataResponse<T> = {
   error: boolean
   message: string
-  searchCriteria?: { [key: string]: string }
+  searchCriteria?: {[key: string]: string}
   data: T
 }
 
@@ -208,7 +208,7 @@ export type TableConfig<T = string> = {
     messageEditSuccess?: string
     messageCreateError?: string
     messageCreateSuccess?: string
-    dependencies?: { [key: string]: string }
+    dependencies?: {[key: string]: string}
     buttonAddNew?: string
     showSearch?: boolean
     showMessageTitle?: string
@@ -254,8 +254,8 @@ export type CheckboxTreeItem = {
   value: string
   label: string
   active?: boolean
-  children?: CheckboxTreeItem[] & { [key: string]: any }
-} & { [key: string]: any }
+  children?: CheckboxTreeItem[] & {[key: string]: any}
+} & {[key: string]: any}
 
 export type Option<T = any> = {
   label: string
@@ -285,7 +285,7 @@ export type ApplicationConfig = {
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: { [key: string]: string | number }[] | DropDownGroup[]
+  options?: {[key: string]: string | number}[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
@@ -660,7 +660,7 @@ export type MyTaskConfig = {
   typeCheckbox?: 'array'
   dependencyApi?: string
   required?: boolean
-  options?: { [key: string]: string | number }[] | DropDownGroup[]
+  options?: {[key: string]: string | number}[] | DropDownGroup[]
   keyLabelOfOptions?: string
   keyValueOfOptions?: string
   desc?: string
@@ -685,10 +685,14 @@ export type MenuItem<T = any> = {
   className?: string
 }
 
-
 // customer portal
 export type CreateApplicationPortal = {
   id: number
   fullname: string
   identification_no: string | any
+}
+
+export type AvatarProps = {
+  type: string
+  base64: string
 }
