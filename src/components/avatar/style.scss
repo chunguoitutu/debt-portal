@@ -1,0 +1,50 @@
+.avatar {
+  aspect-ratio: 1/1;
+  position: relative;
+
+  .close-icon {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 16px;
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0;
+  }
+
+  &:hover {
+    .close-icon {
+      transition: all 0.2s linear;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: unset;
+      user-select: unset;
+    }
+  }
+
+  .camera-wrap {
+    $spacer: 8px;
+    position: absolute;
+    right: calc(0px - $spacer / 2);
+    bottom: calc(0px - $spacer);
+    z-index: 1;
+    padding: 8px;
+    border: 1px solid #f1f1f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: blue;
+    background-color: var(--bs-white);
+
+    &:hover {
+      background-color: var(--bs-gray-100);
+    }
+
+    .camera-img {
+      width: 20px !important;
+      color: inherit;
+    }
+  }
+}
