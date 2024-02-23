@@ -70,7 +70,7 @@ const Header = ({setSCroll, scroll}: Props) => {
     <header className='header bg-black'>
       <div className='wrapper h-100 d-flex align-items-center justify-content-between gap-12px gap-sm-24px'>
         {/* Logged */}
-        <LogoHeader handleNavigate={handleNavigate} />
+        <LogoHeader handleNavigate={handleNavigate} token={!!token} />
 
         {!!token && (
           <div
