@@ -20,7 +20,7 @@ const LoanAmountPortal: React.FC<Props> = ({className}: Props) => {
         <span className='fs-3 fs-20px-responsive fw-bold text-gray-500 me-1 mt-2 align-self-start dollar-responsive'>
           $
         </span>
-        <span className='fs-2hx fw-bold text-gray-900 fs-24px-responsive'>60,785</span>
+        <span className='fs-2hx fw-bold text-gray-900 fs-24px-responsive'>60,785.00</span>
       </div>
 
       <div className='quarter-circle-first'>
