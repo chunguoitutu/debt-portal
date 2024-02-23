@@ -12,7 +12,8 @@ export const LOAN_CUSTOMER_PORTAL: TableConfig = {
         {
             key: 'id',
             name: '#',
-            classNameTableHead: 'pt-8px'
+            classNameTableHead: 'pt-8px text-end pe-10',
+            classNameTableBody: 'w-75px pe-10 text-end'
         },
         {
             key: 'loan_no',

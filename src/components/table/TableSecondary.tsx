@@ -197,7 +197,7 @@ const TableSecondary: FC<Props> = ({
                           color: +item[key] < 0 && ['p&l'].includes(key) ? '#F64E60' : '#071437',
                         }}
                         className={clsx([
-                          'fs-14 fw-normal py-16px px-10px ',
+                          'fs-14 fw-normal py-16px px-10px',
                           isColumnLast && 'text-end pe-0',
                           classNameTableBody,
                           customClassName,
