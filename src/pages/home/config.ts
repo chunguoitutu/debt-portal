@@ -10,22 +10,22 @@ export const COMPONENT_LIST: HomeComponent[] = [
     id: 1,
     component: HomeHeader,
   },
-  {
-    id: 2,
-    component: Introduce,
-  },
-  {
-    id: 3,
-    component: FinancialInstitutions,
-  },
-  {
-    id: 4,
-    component: Team,
-  },
-  {
-    id: 5,
-    component: AboutUs,
-  },
+  // {
+  //   id: 2,
+  //   component: Introduce,
+  // },
+  // {
+  //   id: 3,
+  //   component: FinancialInstitutions,
+  // },
+  // {
+  //   id: 4,
+  //   component: Team,
+  // },
+  // {
+  //   id: 5,
+  //   component: AboutUs,
+  // },
 ]
 
 export const INTRODUCE_LIST = [

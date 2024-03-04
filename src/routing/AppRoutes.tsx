@@ -19,9 +19,10 @@ import {WithChildren} from '@/app/types'
 import Profile from '@/pages/profile'
 import MyLoans from '@/pages/my-loans'
 import LoanDetailsPortal from '@/pages/loan-portal'
-import Cookies from 'js-cookie'
 import NewApplicationPortal from '@/pages/application/NewApplicationPortal'
 import DebtLayout from '@/layouts/debt-layout'
+import {useAuth} from '@/app/context/AuthContext'
+import {AuthLayout} from '@/components/auth-layout/AuthLayout'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 import DebtAllWork from '@/pages/debt-collector/all-work/AllWork'
@@ -46,6 +47,8 @@ const SuspensedView: FC<WithChildren> = ({children}) => {
 }
 
 const AppRoutes: FC = () => {
+  const {currentUser} = useAuth()
+
   return (
     <BrowserRouter>
       <Routes>
@@ -53,7 +56,6 @@ const AppRoutes: FC = () => {
           <Route path='error/*' element={<ErrorsPage />} />
 
           <Route element={<MasterLayout />}>
-            <Route index element={<Home />} />
             <Route path='/profile'>
               <Route index element={<Profile />} />
             </Route>
@@ -92,9 +94,12 @@ const AppRoutes: FC = () => {
             <Route path='*' element={<Navigate to={'/debt'} />} />
           </Route>
 
+          <Route element={<AuthLayout />}>
+            <Route path='login' element={<Home />} />
+          </Route>
           {/* Not match any router */}
-          <Route path='/' element={<Navigate to={Cookies.get('token') ? '/dashboard' : '/'} />} />
-          <Route path='*' element={<Navigate to={Cookies.get('token') ? '/error/404' : '/'} />} />
+          <Route path='/' element={<Navigate to={currentUser ? '/dashboard' : '/login'} />} />
+          <Route path='*' element={<Navigate to={currentUser ? '/error/404' : '/login'} />} />
         </Route>
       </Routes>
     </BrowserRouter>

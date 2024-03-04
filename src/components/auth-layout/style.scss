@@ -1,0 +1,33 @@
+.auth-wrap {
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .title {
+    font-size: 34px;
+    font-weight: 800;
+    @extend .text-white-custom;
+  }
+
+  .text-white-custom {
+    color: #fcfcfc;
+  }
+}
+
+.sign-in-page-custom-dev {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  padding-left: 65px;
+  padding-right: 65px;
+  max-width: 100%;
+
+  @media screen and (max-width: 1440) {
+    width: 300px;
+  }
+}
+
+.responsive-sign-in {
+  width: 470px;
+  @media screen and (max-width: 1440px) {
+    width: 300px;
+  }
+}

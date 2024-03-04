@@ -72,7 +72,7 @@ const Header = ({setSCroll, scroll}: Props) => {
         {/* Logged */}
         <LogoHeader handleNavigate={handleNavigate} token={!!token} />
 
-        {!!token && (
+        {/* {!!token && (
           <div
             className={clsx([
               'd-none d-md-block h-100',
@@ -98,21 +98,19 @@ const Header = ({setSCroll, scroll}: Props) => {
               })}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Not logged */}
-        {!token ? (
-          <LogInHeader toggleFormLogin={toggleFormLogin} />
-        ) : (
-          <ImgHeader
-            setSCroll={setSCroll}
-            scroll={scroll}
-            data={fakeData}
-            hideMenu={hideMenu}
-            showMenu={showMenu}
-            isMenuVisible={isMenuVisible}
-          />
-        )}
+        {/* {!token ? ( */}
+        {/* <LogInHeader toggleFormLogin={toggleFormLogin} /> */}
+        {/* <ImgHeader
+          setSCroll={setSCroll}
+          scroll={scroll}
+          data={fakeData}
+          hideMenu={hideMenu}
+          showMenu={showMenu}
+          isMenuVisible={isMenuVisible}
+        /> */}
       </div>
     </header>
   )
