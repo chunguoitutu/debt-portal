@@ -35,6 +35,11 @@ import ArrowLeft from './ArrowLeft'
 import ActiveMyTasks from './ActiveMyTasks'
 import ActiveMyTasksBlack from './ActiveMyTasksBlack'
 import ArrowLink from './ArrowLink'
+import AllIcon from './All'
+import TodoIcon from './Todo'
+import DoneIcon from './Done'
+import StatisticalIcon from './Statistical'
+import ProfileIcon from './Profile'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -74,6 +79,11 @@ const icons = {
   ActiveMyTasksBlack: ActiveMyTasksBlack,
   ActiveMyTasks: ActiveMyTasks,
   ArrowLink: ArrowLink,
+  All: AllIcon,
+  Todo: TodoIcon,
+  Done: DoneIcon,
+  Statistical: StatisticalIcon,
+  Profile: ProfileIcon,
 }
 
 const Icons = ({name}) => {

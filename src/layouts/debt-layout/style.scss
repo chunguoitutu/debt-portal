@@ -1,28 +1,39 @@
-.debt-page {
+.debt-layout {
   position: relative;
 
   .debt__menu {
     .debt__menu-item {
+      $size-padding: 8px;
+      padding-top: $size-padding;
+      padding-bottom: $size-padding;
+      border-top: 4px solid transparent;
+
       &::before {
         content: '';
-        transition: background 0.2s linear;
+        transition: background 0.2s linear, border 0.2s linear;
       }
 
       &.active,
       &:hover {
         position: relative;
+        border-color: var(--bs-primary);
+
         &::before {
           content: '';
           position: absolute;
           inset: 0;
           background: linear-gradient(
             to bottom,
-            rgba(204, 204, 204, 0.6),
-            rgba(204, 204, 204, 0.3) 60%
+            rgba(204, 204, 204, 0.4),
+            rgba(204, 204, 204, 0.2)
           );
           filter: blur(10px);
         }
       }
     }
   }
+}
+
+.debt {
+  background-color: #ececec;
 }

@@ -21,7 +21,7 @@ import MyLoans from '@/pages/my-loans'
 import LoanDetailsPortal from '@/pages/loan-portal'
 import Cookies from 'js-cookie'
 import NewApplicationPortal from '@/pages/application/NewApplicationPortal'
-import DebtPage from '@/pages/debt'
+import DebtLayout from '@/layouts/debt-layout'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -81,21 +81,13 @@ const AppRoutes: FC = () => {
             />
           </Route>
 
-          <Route
-            element={
-              <div className='d-flex justify-content-center vh-100 overflow-hidden'>
-                <div
-                  className='d-flex flex-column mw-500px w-100 h-100 overflow-auto'
-                  style={{
-                    backgroundColor: 'lightpink',
-                  }}
-                >
-                  <Outlet />
-                </div>
-              </div>
-            }
-          >
-            <Route path='/debt' element={<DebtPage />} />
+          <Route path='/debt' element={<DebtLayout />}>
+            <Route index element={<>All Page</>} />
+            <Route path='todo' element={<>To do Page</>} />
+            <Route path='done' element={<>Done Page</>} />
+            <Route path='statistical' element={<>Statistical Page</>} />
+            <Route path='profile' element={<>Profile Page</>} />
+            <Route path='*' element={<Navigate to={'/debt'} />} />
           </Route>
 
           {/* Not match any router */}
