@@ -1,5 +1,7 @@
+import request from '@/app/axios'
 import {useShared} from '@/app/context/SharedContext'
 import {HomeProps} from '@/app/types'
+import {convertErrorMessageResponse} from '@/app/utils'
 import Button from '@/components/button/Button'
 import {Input} from '@/components/input'
 import clsx from 'clsx'
@@ -9,19 +11,37 @@ import {FC, useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 const LoginForm: FC<HomeProps> = ({screenWidth}) => {
-  const [token, setToken] = useState(Cookies.get('token'))
-  const {setShowLoginForm} = useShared()
-
-  const {status, errors, touched, handleSubmit, getFieldProps, setStatus, setSubmitting} =
+  const {showLoginForm, setShowLoginForm} = useShared()
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const {values, status, setStatus, errors, touched, handleSubmit, getFieldProps, setSubmitting} =
     useFormik({
       initialValues: {
         username: '',
         password: '',
       },
-      onSubmit: () => {},
+      onSubmit: () => {
+        setLoading(true)
+
+        request
+          .post('debt/login', {
+            username: values.username,
+            password: values.password,
+          })
+          .then((data) => {
+            Cookies.set('token', data?.data?.data?.token)
+            setStatus('')
+            navigate(`/dashboard`)
+            setLoading(false)
+          })
+          .catch((e) => {
+            const message = convertErrorMessageResponse(e)
+            setStatus(message)
+            setSubmitting(false)
+            setLoading(false)
+          })
+      },
     })
-  const navigate = useNavigate()
-  const {showLoginForm} = useShared()
 
   return (
     <>
@@ -35,25 +55,22 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
       >
         <h3 className='m-0 text-gray-900 fw-bold fs-26 text-center'>Sign In</h3>
 
-        <Button
-          className='btn btn-light-danger cursor-pointer'
-          // onClick={() => {
-          //   alert('This feature is not available.')
-          // }}
-        >
-          Sign In With Singpass
-        </Button>
-
         <p className='m-0 text-gray-600 text-center d-flex align-items-center justify-content-center fs-14 gap-8px'>
           <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
-          <span className='text-nowrap'>Sign in if you already have a profile</span>
+          <span className='text-nowrap'>Welcome to field service for debt collector</span>
           <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
         </p>
+
+        {status && (
+          <div className='m-0 alert alert-danger'>
+            <div className='alert-text font-weight-bold'>{status}</div>
+          </div>
+        )}
 
         <div className='w-100 w-lg-320px mw-100 d-flex flex-column gap-16px'>
           <Input
             classInputWrap='w-100'
-            label='Customer Login ID'
+            label='Debt Collector ID'
             type='text'
             name='username'
             required
@@ -77,13 +94,17 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
 
         <Button
           className='btn-primary cursor-pointer'
+          loading={loading}
           onClick={() => {
-            const tomorrow = new Date()
-            tomorrow.setDate(tomorrow.getDate() + 1)
-            setShowLoginForm(false)
-            Cookies.set('token', 'kha-dep-trai-cute', {expires: tomorrow})
-            navigate('/dashboard')
+            handleSubmit()
           }}
+          disabled={
+            loading ||
+            !!(touched.password && errors.password) ||
+            !!(touched.username && errors.username) ||
+            !values.password ||
+            !values.username
+          }
         >
           Sign In
         </Button>

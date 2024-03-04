@@ -53,7 +53,7 @@ const Home = () => {
   }, [])
 
   return (
-    <div className='home'>
+    <div className='home h-100'>
       {COMPONENT_LIST.map((el) => {
         const Component = el.component
         return <Component screenWidth={screenWidth} key={el.id} />

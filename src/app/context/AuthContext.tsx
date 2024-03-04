@@ -46,10 +46,6 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
 
   function handleLogout() {
     logout()
-    swalToast.fire({
-      title: 'Login session has expired',
-      icon: 'error',
-    })
     return
   }
 
