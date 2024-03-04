@@ -91,6 +91,7 @@ const AppRoutes: FC = () => {
             <Route path='done' element={<>Done Page</>} />
             <Route path='statistical' element={<>Statistical Page</>} />
             <Route path='task-details/:id' element={<LoanDetailsPortal />} />
+            <Route path='profile' element={<Profile />} />
             <Route path='*' element={<Navigate to={'/debt'} />} />
           </Route>
 
@@ -98,7 +99,7 @@ const AppRoutes: FC = () => {
             <Route path='login' element={<Home />} />
           </Route>
           {/* Not match any router */}
-          <Route path='/' element={<Navigate to={currentUser ? '/dashboard' : '/login'} />} />
+          <Route path='/' element={<Navigate to={currentUser ? '/debt' : '/login'} />} />
           <Route path='*' element={<Navigate to={currentUser ? '/error/404' : '/login'} />} />
         </Route>
       </Routes>

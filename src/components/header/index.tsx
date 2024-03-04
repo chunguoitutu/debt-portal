@@ -49,7 +49,7 @@ const Header = ({setSCroll, scroll}: Props) => {
   }
 
   function handleNavigate() {
-    navigate('/')
+    navigate('/login')
   }
 
   const fakeData = {

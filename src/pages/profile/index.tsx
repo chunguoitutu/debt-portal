@@ -1,41 +1,66 @@
+import Button from '@/components/button/Button'
 import './style.scss'
-import AvatarAndMenu from './AvatarAndMenu'
-import {Fragment, useMemo, useState} from 'react'
-import {PROFILE_MENU} from './config'
-import TitleContainer from '@/components/title-container.tsx'
-
-const profileBreadCrumbs = {
-  title: 'My Profile',
-  link: [
-    {
-      to: '/',
-      titleLink: 'Home',
-    },
-  ],
-  render: ['My Profile'],
-}
+import bgDebt from '@/app/images/bg-debt.png'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
+import {useAuth} from '@/app/context/AuthContext'
+import {useEffect} from 'react'
+import Cookies from 'js-cookie'
+import {useNavigate} from 'react-router-dom'
+import Avatar from '@/components/avatar'
+import {formatMoney} from '@/app/utils'
+import DebtTile from '@/components/debt-title'
 
 const Profile = () => {
-  const [activeId, setActiveId] = useState<number>(PROFILE_MENU.find((el) => el.default)?.id)
+  const {currentUser, setCurrentUser} = useAuth()
+  const navigate = useNavigate()
 
-  const Component = useMemo(() => {
-    return PROFILE_MENU.find((el) => el.id === activeId).component || Fragment
-  }, [activeId])
+  function handleLogout() {
+    setCurrentUser(undefined)
+    Cookies.remove('token')
+    navigate('/login')
+  }
 
   return (
-    <div className='p-0 m-0'>
-      <TitleContainer data={profileBreadCrumbs} />
-      <div className='profile wrapper py-20px py-md-40px'>
-        <div className='row gy-24px gx-4px gx-md-16px'>
-          <div className='col-12 col-md-4'>
-            <AvatarAndMenu activeId={activeId} setActiveId={setActiveId} />
-          </div>
-          <div className='col-12 col-md-8'>
-            <Component />
+    <>
+      <DebtTile title='Profile' />
+
+      <div
+        className='profile d-flex flex-column py-32px px-24px flex-grow-1'
+        style={{
+          background: `url(${bgDebt}) no-repeat center / cover`,
+        }}
+      >
+        <div className='profile-content d-flex flex-column align-items-center p-32px pb-20px rounded-24px mb-4px'>
+          <Avatar
+            size={'150px'}
+            file='https://image.lag.vn/upload/news/23/04/05/tong-hop-ai-art-yae-miko-genshin-impact-1_DPSH.jpg'
+            className='rounded-24px mb-24px'
+            onChange={() => {}}
+            onRemove={() => {}}
+          />
+
+          <h3 className='m-0 fs-20 text-white fw-bolder'>Savannah Nguyen</h3>
+          <div className='profile-role py-4px px-16px rounded-24px mt-8px fw-bolder'>
+            Debt Collector
           </div>
         </div>
+
+        <div className='profile-collected rounded-24px d-flex flex-column align-items-center gap-4px px-32px py-20px mb-32px'>
+          <span className='text-gray-400 fs-14'>You have earned:</span>
+          <span className='fs-20 fw-bolder text-white'>{formatMoney(12540.32)}</span>
+          <span className='text-gray-400 fs-14'>in commissions</span>
+        </div>
+
+        <Button
+          className='d-flex justify-content-between btn-logout mt-auto text-white px-32px py-20px rounded-pill'
+          onClick={handleLogout}
+        >
+          <span className='fs-14'>Log out</span>
+          <FontAwesomeIcon icon={faRightFromBracket} />
+        </Button>
       </div>
-    </div>
+    </>
   )
 }
 

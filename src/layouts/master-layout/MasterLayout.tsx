@@ -11,7 +11,6 @@ import {useAuth} from '@/app/context/AuthContext'
 
 const MasterLayout = () => {
   const [scroll, setSCroll] = useState(false)
-  const {refreshToken} = useAuth()
   const {pathname} = useLocation()
   const [page, setPage] = useState(false)
   // const {refreshToken} = useAuth()
@@ -26,7 +25,6 @@ const MasterLayout = () => {
     if (!token) {
       navigate('/login')
     }
-    refreshToken(token || '')
     setPage(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Cookies.get('token'), pathname])

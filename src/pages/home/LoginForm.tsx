@@ -1,4 +1,5 @@
 import request from '@/app/axios'
+import {useAuth} from '@/app/context/AuthContext'
 import {useShared} from '@/app/context/SharedContext'
 import {HomeProps} from '@/app/types'
 import {convertErrorMessageResponse} from '@/app/utils'
@@ -31,7 +32,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
           .then((data) => {
             Cookies.set('token', data?.data?.data?.token)
             setStatus('')
-            navigate(`/dashboard`)
+            navigate(`/debt`)
             setLoading(false)
           })
           .catch((e) => {

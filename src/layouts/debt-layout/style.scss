@@ -1,34 +1,28 @@
-.debt-layout {
-  position: relative;
+.debt__menu {
+  z-index: 999;
 
-  .debt__menu {
-    .debt__menu-item {
-      $size-padding: 8px;
-      padding-top: $size-padding;
-      padding-bottom: $size-padding;
-      border-top: 4px solid transparent;
+  .debt__menu-item {
+    $size-padding: 8px;
+    padding-top: $size-padding;
+    padding-bottom: $size-padding;
+    border-top: 4px solid transparent;
+
+    &::before {
+      content: '';
+      transition: background 0.2s linear, border 0.2s linear;
+    }
+
+    &.active,
+    &:hover {
+      position: relative;
+      border-color: var(--bs-primary);
 
       &::before {
         content: '';
-        transition: background 0.2s linear, border 0.2s linear;
-      }
-
-      &.active,
-      &:hover {
-        position: relative;
-        border-color: var(--bs-primary);
-
-        &::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to bottom,
-            rgba(204, 204, 204, 0.4),
-            rgba(204, 204, 204, 0.2)
-          );
-          filter: blur(10px);
-        }
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(204, 204, 204, 0.4), rgba(204, 204, 204, 0.2));
+        filter: blur(10px);
       }
     }
   }

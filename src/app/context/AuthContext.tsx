@@ -1,6 +1,5 @@
 import {FC, useState, createContext, useContext, Dispatch, SetStateAction} from 'react'
 import Cookies from 'js-cookie'
-import {swalToast} from '../swal-notification'
 import {JwtDecode, UserInfo, WithChildren} from '../types/common'
 import {getCurrentUser} from '../axios/request'
 import jwtDecode from 'jwt-decode'

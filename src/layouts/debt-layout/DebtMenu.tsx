@@ -17,7 +17,7 @@ const DebtMenu = () => {
   }
 
   return (
-    <nav className='debt__menu mt-auto bg-black'>
+    <nav className='debt__menu mt-auto bg-black position-sticky bottom-0'>
       <ul className='debt__menu-list d-flex list-style-none m-0 p-0 px-12px gap-8px'>
         {DEBT_MENU.map((menu) => {
           const isActive = menu.id === currentActive

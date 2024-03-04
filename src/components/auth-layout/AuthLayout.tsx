@@ -10,7 +10,7 @@ const AuthLayout = () => {
   const [scroll, setSCroll] = useState(false)
   const token = Cookies.get('token')
 
-  if (token) return <Navigate to='/dashboard' />
+  if (token) return <Navigate to='/debt' />
 
   return (
     <>
