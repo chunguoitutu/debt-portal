@@ -40,6 +40,7 @@ import TodoIcon from './Todo'
 import DoneIcon from './Done'
 import StatisticalIcon from './Statistical'
 import ProfileIcon from './Profile'
+import Tags from './Tags'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -84,6 +85,7 @@ const icons = {
   Done: DoneIcon,
   Statistical: StatisticalIcon,
   Profile: ProfileIcon,
+  Tags: Tags,
 }
 
 const Icons = ({name}) => {

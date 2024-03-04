@@ -24,6 +24,8 @@ import NewApplicationPortal from '@/pages/application/NewApplicationPortal'
 import DebtLayout from '@/layouts/debt-layout'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
+import DebtAllWork from '@/pages/debt-collector/all-work/AllWork'
+import DebtListToDo from '@/pages/debt-collector/to-do/ToDoList'
 
 /**
  * Base URL of the website.
@@ -82,11 +84,11 @@ const AppRoutes: FC = () => {
           </Route>
 
           <Route path='/debt' element={<DebtLayout />}>
-            <Route index element={<>All Page</>} />
-            <Route path='todo' element={<>To do Page</>} />
+            <Route index element={<DebtAllWork />} />
+            <Route path='todo' element={<DebtListToDo />} />
             <Route path='done' element={<>Done Page</>} />
             <Route path='statistical' element={<>Statistical Page</>} />
-            <Route path='profile' element={<>Profile Page</>} />
+            <Route path='task-details/:id' element={<LoanDetailsPortal />} />
             <Route path='*' element={<Navigate to={'/debt'} />} />
           </Route>
 
