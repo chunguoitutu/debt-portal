@@ -21,6 +21,7 @@ import MyLoans from '@/pages/my-loans'
 import LoanDetailsPortal from '@/pages/loan-portal'
 import Cookies from 'js-cookie'
 import NewApplicationPortal from '@/pages/application/NewApplicationPortal'
+import DebtPage from '@/pages/debt'
 
 const AccountPage = lazy(() => import('../app/modules/profile/components/profile/AccountPage'))
 
@@ -78,6 +79,23 @@ const AppRoutes: FC = () => {
                 </SuspensedView>
               }
             />
+          </Route>
+
+          <Route
+            element={
+              <div className='d-flex justify-content-center vh-100 overflow-hidden'>
+                <div
+                  className='d-flex flex-column mw-500px w-100 h-100 overflow-auto'
+                  style={{
+                    backgroundColor: 'lightpink',
+                  }}
+                >
+                  <Outlet />
+                </div>
+              </div>
+            }
+          >
+            <Route path='/debt' element={<DebtPage />} />
           </Route>
 
           {/* Not match any router */}
