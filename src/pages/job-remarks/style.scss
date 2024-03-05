@@ -1,0 +1,62 @@
+.wrapper-remarks-job {
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: white;
+  top: 0px;
+  animation: animate-wrapper-remark-mes 0.15s;
+  right: 0px;
+  position: absolute;
+}
+
+@keyframes animate-wrapper-remark-mes {
+  0% {
+    right: -100%;
+  }
+  25% {
+    right: -75%;
+  }
+  50% {
+    right: -50%;
+  }
+  75% {
+    right: -25%;
+  }
+  100% {
+    right: 0px;
+  }
+}
+
+.button-remark-job {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background-color: transparent;
+}
+
+.messenger-remarks-job {
+  overflow-y: auto;
+  height: 100%;
+  background-color: #f6f6f8;
+  padding: 12px;
+}
+.input-remark-import {
+  display: block;
+  width: 100%;
+  padding: 0.775rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--gray-bs-gray-700);
+  background-clip: padding-box;
+  border: 1px solid #fff !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.475rem;
+  box-shadow: false;
+  max-height: 200px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

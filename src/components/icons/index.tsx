@@ -41,6 +41,7 @@ import DoneIcon from './Done'
 import StatisticalIcon from './Statistical'
 import ProfileIcon from './Profile'
 import Tags from './Tags'
+import BackLeftRemark from './BackLeftRemark'
 
 const icons = {
   filterIcon: FilterIcon,
@@ -86,6 +87,7 @@ const icons = {
   Statistical: StatisticalIcon,
   Profile: ProfileIcon,
   Tags: Tags,
+  BackLeftRemark: BackLeftRemark,
 }
 
 const Icons = ({name}) => {
