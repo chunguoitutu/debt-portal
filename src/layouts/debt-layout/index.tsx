@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 
 const DebtLayout = () => {
   const {pathname} = useLocation()
-  // const {refreshToken} = useAuth()
+  const {refreshToken} = useAuth()
 
   // const {pathname} = useLocation()
   const navigate = useNavigate()
@@ -18,8 +18,9 @@ const DebtLayout = () => {
     if (!token) {
       navigate('/login')
     }
+    refreshToken(token || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Cookies.get('token'), pathname])
+  }, [token, pathname])
 
   return (
     <div className='debt d-flex justify-content-center vh-100 overflow-hidden'>
