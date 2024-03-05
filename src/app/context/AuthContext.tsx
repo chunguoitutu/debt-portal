@@ -68,6 +68,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
 
     try {
       const {data: dataRes} = await getCurrentUser()
+
       const {data, error} = dataRes || {}
       const {company_id, priority, company_name} = data || {}
 
