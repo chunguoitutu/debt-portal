@@ -90,7 +90,6 @@ const AppRoutes: FC = () => {
           <Route path='/debt' element={<DebtLayout />}>
             <Route index element={<DebtAllWork />} />
             <Route path='todo' element={<DebtListToDo />} />
-            <Route path='done' element={<>Done Page</>} />
             <Route path='statistical' element={<Statistical />} />
             <Route path='done' element={<Done />} />
             <Route path='statistical' element={<>Statistical Page</>} />

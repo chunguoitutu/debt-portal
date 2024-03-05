@@ -26,7 +26,7 @@ const Done = (props: Props) => {
   const [openRemarks, setOpenRemark] = useState(false)
 
   return (
-    <div className='p-30px'>
+    <div className='p-30px '>
       <Button
         onClick={() => {
           setOpenRemark(true)
