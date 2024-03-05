@@ -19,7 +19,6 @@ interface Props {
 
 const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
   const dataList = Array.isArray(data) ? data : [data]
-  console.log(dataList.map((item) => item))
   return (
     <>
       {dataList.map((item, index) => (
