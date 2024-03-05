@@ -1,0 +1,47 @@
+.loan-details {
+  .loan-info {
+    row-gap: 8px;
+
+    .add-border {
+      padding-top: 8px;
+      border-top: 1px dashed var(--bs-gray-300);
+    }
+  }
+
+  .debt-control {
+    position: sticky;
+    bottom: 70px;
+    z-index: 999;
+    border-radius: unset;
+    border-inline: unset;
+    border-bottom: unset;
+  }
+
+  .input-advance.form-control.form-input-custom {
+    padding: 0px !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    height: fit-content !important;
+    min-height: unset !important;
+
+    &:has(input:focus) {
+      padding: 0px !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      height: fit-content !important;
+      min-height: unset !important;
+    }
+  }
+
+  .debt-input {
+    background-color: transparent !important;
+    padding: 7.5px 0px !important;
+    display: block;
+    font-size: 14px !important;
+
+    &:placeholder-shown {
+      font-size: 14px;
+      font-weight: 400 !important;
+    }
+  }
+}

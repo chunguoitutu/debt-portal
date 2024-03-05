@@ -41,10 +41,8 @@ const HomeHeader: FC<HomeProps> = (props) => {
                 Welcome To <span className='w-60px h-1px bg-white'></span>
               </span>
 
-              <h2 className='company_name fs-66 text-white  fw-bolder m-0 lh-scale-1'>
-                FIELD SERVICE
-              </h2>
-              <h3 className='organization_name fs-44 text-primary fw-bolder m-0 line-height-1-5'>
+              <h2 className='company_name fs-66 text-white  fw-bolder m-0 lh-1'>FIELD SERVICE</h2>
+              <h3 className='organization_name fs-44 text-primary fw-bolder m-0 lh-1-5'>
                 FOR DEBT COLLECTOR.
               </h3>
             </div>

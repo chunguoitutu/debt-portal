@@ -29,6 +29,7 @@ import DebtAllWork from '@/pages/debt-collector/all-work/AllWork'
 import DebtListToDo from '@/pages/debt-collector/to-do/ToDoList'
 import Statistical from '../pages/debt-collector/statistical/Statistical'
 import Done from '@/pages/done'
+import LoanDetails from '@/pages/loan/loan-details'
 
 /**
  * Base URL of the website.
@@ -95,6 +96,7 @@ const AppRoutes: FC = () => {
             <Route path='statistical' element={<>Statistical Page</>} />
             <Route path='task-details/:id' element={<LoanDetailsPortal />} />
             <Route path='profile' element={<Profile />} />
+            <Route path='loan-details' element={<LoanDetails />} />
             <Route path='*' element={<Navigate to={'/debt'} />} />
           </Route>
 

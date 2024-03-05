@@ -97,7 +97,7 @@
   }
 }
 
-.grid-2-column {
+.grid-2-columns {
   display: grid;
   grid-template-columns: repeat(2, auto);
 
@@ -164,11 +164,11 @@ input:-webkit-autofill:active {
   font-style: italic;
 }
 
-.lh-scale-1 {
+.lh-1 {
   line-height: 1;
 }
 
-.line-height-1-5 {
+.lh-1-5 {
   line-height: 1.5;
 }
 
@@ -186,12 +186,55 @@ input:-webkit-autofill:active {
 
 .fs-26 {
   font-size: 26px;
-  @extend .line-height-1-5;
+  @extend .lh-1-5;
+}
+
+.fs-14 {
+  font-size: 14px;
+  @extend .lh-1-5;
+}
+
+.fs16-line22 {
+  font-size: 16px;
+  line-height: 22px !important;
+}
+
+.fs-16 {
+  font-size: 16px;
+  @extend .lh-1-5;
+}
+
+.fs-20 {
+  font-size: 20px;
+  line-height: 24px !important;
+}
+
+.fs-13 {
+  font-size: 13px;
+  @extend .lh-1-5;
+}
+
+.fs-13-line-19 {
+  font-size: 13px;
+  @extend .lh-1-5;
+}
+
+.line-18 {
+  line-height: 18px !important;
+}
+
+.fs-12 {
+  font-size: 12px;
+  line-height: 16px !important;
 }
 
 .fs-24 {
   font-size: 24px;
-  @extend .line-height-1-5;
+  @extend .lh-1-5;
+}
+
+.fs-18 {
+  font-size: 18px !important;
 }
 
 .text-justify {

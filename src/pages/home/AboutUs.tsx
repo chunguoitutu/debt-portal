@@ -22,7 +22,7 @@ const AboutUs: FC<HomeProps> = () => {
           <span className='text-uppercase fs-14 text-gray-600 mb-4px align-self-start letter-spacing-2'>
             GENERAL INTRODUCTION
           </span>
-          <h3 className='fs-46 mb-20px fw-bold align-self-start home__title two-line line-height-1-5'>
+          <h3 className='fs-46 mb-20px fw-bold align-self-start home__title two-line lh-1-5'>
             Message From Our Chairman
           </h3>
 

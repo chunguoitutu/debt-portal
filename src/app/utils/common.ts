@@ -358,3 +358,18 @@ export const getTheBeginningAndEndOfTheName = (str: string) => {
     str.length > 1 && str.charAt(str.length - 1).toUpperCase()
   }`
 }
+
+export function formatValueTableRow(config: TableRow, currentData: any): string {
+  const value = currentData?.[config.key] || ''
+
+  switch (config.format) {
+    case 'fullname':
+      return getFullName(config) || ''
+    case 'money':
+      return formatMoney(+value || 0)
+    case 'phone':
+      return value ? `+64 ${value}` : ''
+    default:
+      return value
+  }
+}
