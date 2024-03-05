@@ -63,27 +63,18 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
       expires,
     })
 
-    const companyIdFromCookie = Number(Cookies.get('company_id')) || 0
-    const companyNameFromCookie = Cookies.get('company_name') || ''
-
     try {
       const {data: dataRes} = await getCurrentUser()
 
       const {data, error} = dataRes || {}
       const {company_id, priority, company_name} = data || {}
 
-      if (error || !data || !companyIdFromCookie) {
+      if (error || !data) {
         return handleLogout()
       }
 
-      if (priority !== 1 && companyIdFromCookie !== companyId) {
-        Cookies.set('company_id', company_id.toString())
-      }
-
       // Super admin receive company id from cookie
-      setCompanyId(priority === 1 ? +companyIdFromCookie : company_id)
       setPriority(priority || 100)
-      setCompanyName(companyNameFromCookie || company_name || '')
       setCurrentUser(data)
     } catch (error: any) {
       return handleLogout()
