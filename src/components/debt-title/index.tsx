@@ -7,7 +7,7 @@ interface Props {
 }
 
 const DebtTile: FC<Props> = ({title, className}) => {
-  const username = 'Lionel Messi'
+  const username = 'Anh Liêm'
   return (
     <div
       className={`card d-flex flex-row align-items-center justify-content-between gap-4px position-sticky top-0 ${className}`}
@@ -19,7 +19,9 @@ const DebtTile: FC<Props> = ({title, className}) => {
     >
       <div className='d-flex flex-column p-12px'>
         <div className='fw-bold fs-16 text-gray-900'>{title}</div>
-        <div className='fw-normal fs-13'>Hi {username} to debt collection!</div>
+        <div className='fw-normal fs-13 text-gray-900'>
+          Hi {username} Welcome To Debt Collection!
+        </div>
       </div>
       <div>
         <img src={mainLogo} alt='main-logo' className='pe-12px' />

@@ -97,3 +97,15 @@
     height: 20px !important;
   }
 }
+.swiper {
+  .swiper-pagination-bullet-active {
+    width: 24px !important;
+    height: 6px !important;
+    border-radius: 60px !important;
+  }
+  .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px !important;
+    border-radius: 60px !important;
+  }
+}
