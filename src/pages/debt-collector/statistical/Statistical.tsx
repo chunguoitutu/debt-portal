@@ -64,7 +64,7 @@ const Statistical = () => {
   return (
     <>
       <DebtTile title='Statistical' />
-      <div className='d-flex flex-column gap-12px'>
+      <div className='d-flex flex-column gap-12px overflow-auto'>
         <div className='card' style={{borderRadius: '0px'}}>
           <Swiper
             pagination={true}
@@ -72,28 +72,28 @@ const Statistical = () => {
             className='mySwiper cursor-grab'
             style={{maxHeight: '220px'}}
           >
-            <SwiperSlide className='p-12px'>
+            <SwiperSlide className='p-12px pb-16px pt-16px'>
               <CollectedAmount
                 title={'collected'}
                 amount_collected={dataCollector.amount_collected}
                 must_collect_amount={dataCollector.must_collect_amount}
               />
             </SwiperSlide>
-            <SwiperSlide className='p-12px'>
+            <SwiperSlide className='p-12px pb-16px pt-16px'>
               <CollectedAmount
                 title={'uncollected'}
                 amount_not_collected={dataCollector.amount_notcollected}
                 must_collect_amount={dataCollector.must_collect_amount}
               />
             </SwiperSlide>
-            <SwiperSlide className='p-12px'>
+            <SwiperSlide className='p-12px pb-16px pt-16px'>
               <CollectedAmount
                 title={'visit'}
                 home_visit={dataCollector.home_visit}
                 total_home_visit={dataCollector.total_home_visit}
               />
             </SwiperSlide>
-            <SwiperSlide className='p-12px'>
+            <SwiperSlide className='p-12px pb-16px pt-16px'>
               <CollectedAmount
                 title={'commission'}
                 task={dataCollector.task}
@@ -107,7 +107,7 @@ const Statistical = () => {
             <div className='d-flex flex-column'>
               <div className='fs-2 fw-bold text-primary'>32 Loan</div>
               <div className='fs-16 fw-medium text-gray-900'>Total Success Collection</div>
-              <div className='fs-13 fw-normal text-gray-600'>
+              <div className='fs-13 fw-normal text-gray-600 mt-4px'>
                 Successful debt collection list on 24-02-2024
               </div>
             </div>
@@ -118,7 +118,7 @@ const Statistical = () => {
                 onChange={handleChange}
                 type='date'
                 max={getDaysOfCurrentDate()}
-                style={{maxWidth: '139px'}}
+                style={{maxWidth: '160px'}}
               />
             </div>
           </div>

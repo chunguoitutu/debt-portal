@@ -41,8 +41,8 @@ const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
             <Icons name={'Tags'} />
 
             <div className='d-flex flex-row gap-8px'>
-              <div className='fs-16px fw-medium text-gray-900'>{item.loan_no}</div>
-              <div>
+              <div className='fs-16 fw-medium text-gray-900'>{item.loan_no}</div>
+              <div className='mt-1'>
                 {item.status === 2 ? <Badge color='danger' title='Unsuccess Collection' /> : <></>}
               </div>
             </div>

@@ -11,6 +11,9 @@
       content: '';
       transition: background 0.2s linear, border 0.2s linear;
     }
+    .opacity-menu-item {
+      opacity: 0.6 !important;
+    }
 
     &.active,
     &:hover {

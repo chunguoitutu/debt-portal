@@ -37,7 +37,7 @@ const DebtAllWork: FC = () => {
   return (
     <>
       <DebtTile title='All' />
-      <div className='debt-page d-flex flex-column flex-grow-1'>
+      <div className='debt-page d-flex flex-column flex-grow-1 overflow-auto'>
         <ToDoList data={data} classShared='' />
       </div>
     </>

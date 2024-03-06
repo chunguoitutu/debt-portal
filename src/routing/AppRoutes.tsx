@@ -30,6 +30,7 @@ import DebtListToDo from '@/pages/debt-collector/to-do/ToDoList'
 import Statistical from '../pages/debt-collector/statistical/Statistical'
 import Done from '@/pages/done'
 import LoanDetails from '@/pages/loan/loan-details'
+import WorkDone from '@/pages/debt-collector/done/WorkDone'
 
 /**
  * Base URL of the website.
@@ -92,7 +93,7 @@ const AppRoutes: FC = () => {
             <Route index element={<DebtAllWork />} />
             <Route path='todo' element={<DebtListToDo />} />
             <Route path='statistical' element={<Statistical />} />
-            <Route path='done' element={<Done />} />
+            <Route path='done' element={<WorkDone />} />
             <Route path='statistical' element={<>Statistical Page</>} />
             <Route path='task-details/:id' element={<LoanDetailsPortal />} />
             <Route path='profile' element={<Profile />} />

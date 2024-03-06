@@ -28,7 +28,7 @@ const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
           style={{backgroundColor: '#f9f9f9'}}
           {...rest}
         >
-          <div className='d-flex flex-row gap-8px'>
+          <div className='d-flex flex-row gap-12px'>
             <div className='h-100 square-id'>
               <div className='h-100 d-flex align-items-center justify-content-center fs-15 text-gray-900 fw-semibold '>
                 #{item.id}

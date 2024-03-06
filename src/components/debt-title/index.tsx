@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import mainLogo from '@/app/images/logo-mc.png'
+import mainLogo from '@/app/images/logo-debt.svg'
 
 interface Props {
   title: string
@@ -18,7 +18,7 @@ const DebtTile: FC<Props> = ({title, className}) => {
       }}
     >
       <div className='d-flex flex-column p-12px'>
-        <div className='fw-bold fs-16 text-gray-900'>{title}</div>
+        <div className='fw-bold fs-18 text-gray-900'>{title}</div>
         <div className='fw-normal fs-13 text-gray-900'>
           Hi {username} Welcome To Debt Collection!
         </div>

@@ -143,7 +143,7 @@ const CollectedAmount: FC<Props> = ({
   //==================================END HANDLE FOR CHART==================================//
 
   return (
-    <div className='w-100 d-flex flex-column gap-12px mb-24px'>
+    <div className='w-100 d-flex flex-column gap-24px mb-24px'>
       <div className='d-flex flex-row align-items-center justify-content-between'>
         <div className='fw-medium fs-16 text-gray-900'>{titleDebt}</div>
         <Input
@@ -152,6 +152,7 @@ const CollectedAmount: FC<Props> = ({
           onChange={handleChange}
           type='date'
           max={getDaysOfCurrentDate()}
+          style={{maxWidth: '160px'}}
         />
       </div>
       <div className='d-flex flex-row align-items-center justify-content-between'>

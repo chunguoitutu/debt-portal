@@ -26,10 +26,11 @@ const DebtMenu = () => {
             <li
               key={menu.id}
               className={clsx([
-                'debt__menu-item cursor-pointer fs-12px flex-grow-1 text-white d-flex flex-column justify-content-center align-items-center gap-8px',
+                'debt__menu-item cursor-pointer fs-13 flex-grow-1 text-white d-flex flex-column justify-content-center fw-semibold align-items-center gap-8px',
                 pathname === menu.path && 'active',
               ])}
               onClick={() => handleChangeActive(menu.path)}
+              style={{opacity: pathname === menu.path ? 'unset' : '0.6'}}
             >
               <Icons name={menu.icon} />
               {menu.label}

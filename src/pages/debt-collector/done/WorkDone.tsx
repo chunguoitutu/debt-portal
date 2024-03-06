@@ -2,7 +2,7 @@ import {FC} from 'react'
 import ToDoList from '@/components/to-do-list'
 import DebtTile from '@/components/debt-title'
 
-const DebtListToDo: FC = () => {
+const WorkDone: FC = () => {
   //fake data
   const data = [
     {
@@ -34,17 +34,16 @@ const DebtListToDo: FC = () => {
     },
   ]
 
-  // With status === 1, the job is completed
-  const ToDoDate = data.filter((item) => item.status !== 1)
+  const workDone = data.filter((item) => item.status === 1)
 
   return (
     <>
-      <DebtTile title='To Do' />
+      <DebtTile title='All' />
       <div className='debt-page d-flex flex-column flex-grow-1 overflow-auto'>
-        <ToDoList data={ToDoDate} classShared='' />
+        <ToDoList data={workDone} classShared='' />
       </div>
     </>
   )
 }
 
-export default DebtListToDo
+export default WorkDone
