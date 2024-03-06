@@ -28,7 +28,6 @@ const AccountPage = lazy(() => import('../app/modules/profile/components/profile
 import DebtAllWork from '@/pages/debt-collector/all-work/AllWork'
 import DebtListToDo from '@/pages/debt-collector/to-do/ToDoList'
 import Statistical from '../pages/debt-collector/statistical/Statistical'
-import Done from '@/pages/done'
 import LoanDetails from '@/pages/loan/loan-details'
 import WorkDone from '@/pages/debt-collector/done/WorkDone'
 
