@@ -118,7 +118,7 @@ const Statistical = () => {
                 onChange={handleChange}
                 type='date'
                 max={getDaysOfCurrentDate()}
-                style={{maxWidth: '160px'}}
+                style={{minWidth: '160px'}}
               />
             </div>
           </div>

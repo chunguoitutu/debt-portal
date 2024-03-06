@@ -223,6 +223,15 @@ input:-webkit-autofill:active {
   @extend .lh-1-5;
 }
 
+.fs-20 {
+  font-size: 20px;
+  @extend .lh-1-5;
+}
+
+.fs-24 {
+  font-size: 24px;
+  @extend .lh-1-5;
+}
 .line-18 {
   line-height: 18px !important;
 }

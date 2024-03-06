@@ -152,15 +152,15 @@ const CollectedAmount: FC<Props> = ({
           onChange={handleChange}
           type='date'
           max={getDaysOfCurrentDate()}
-          style={{maxWidth: '160px'}}
+          style={{minWidth: '160px'}}
         />
       </div>
       <div className='d-flex flex-row align-items-center justify-content-between'>
         {title === 'collected' && (
           <div className='d-flex flex-column gap-4px'>
-            <div className='d-flex flex-row fw-bold fs-2 text-gray-900 gap-8px'>
+            <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
               {formatMoney(amount_collected)}
-              <span className='fs-3 fw-semibold text-gray-600 align-self-center'>USD</span>
+              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>USD</span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               The amount you must collect on {moment(currentDate).format('DD-MM-YYYY')} is{' '}
@@ -171,9 +171,9 @@ const CollectedAmount: FC<Props> = ({
 
         {title === 'uncollected' && (
           <div className='d-flex flex-column gap-4px'>
-            <div className='d-flex flex-row fw-bold fs-2 text-gray-900 gap-8px'>
+            <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
               {formatMoney(amount_not_collected)}
-              <span className='fs-3 fw-semibold text-gray-600 align-self-center'>USD</span>
+              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>USD</span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               The amount you must collect on {moment(currentDate).format('DD-MM-YYYY')} is{' '}
@@ -184,9 +184,9 @@ const CollectedAmount: FC<Props> = ({
 
         {title === 'visit' && (
           <div className='d-flex flex-column gap-4px'>
-            <div className='d-flex flex-row fw-bold fs-2 text-gray-900 gap-8px'>
+            <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
               {home_visit}
-              <span className='fs-3 fw-semibold text-gray-600 align-self-center'>Home</span>
+              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>Home</span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               The number of houses you have to visit on {moment(currentDate).format('DD-MM-YYYY')}{' '}
@@ -197,9 +197,9 @@ const CollectedAmount: FC<Props> = ({
 
         {title === 'commission' && (
           <div className='d-flex flex-column gap-4px'>
-            <div className='d-flex flex-row fw-bold fs-2 text-gray-900 gap-8px'>
+            <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
               {formatMoney(amount_collected)}
-              <span className='fs-3 fw-semibold text-gray-600 align-self-center'>USD</span>
+              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>USD</span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               You have received commissions from <span className='text-primary'>{task}</span>{' '}
@@ -210,12 +210,7 @@ const CollectedAmount: FC<Props> = ({
 
         {title !== 'commission' && (
           <div className='d-flex flex-center'>
-            <div
-              className='position-absolute fw-bold text-gray-900 mb-2'
-              style={{fontSize: '20px'}}
-            >
-              75%
-            </div>
+            <div className='position-absolute fw-bold text-gray-900 mb-2 fs-16'>75%</div>
             <div
               id='kt_card_widget_17_chart'
               ref={chartRef}
