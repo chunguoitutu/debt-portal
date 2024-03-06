@@ -2,6 +2,8 @@ import {FC} from 'react'
 import Badge from '@/components/badge/Badge'
 import {formatMoney} from '@/app/utils'
 import Icons from '../icons'
+import {Link} from 'react-router-dom'
+import './style.scss'
 
 interface LoanData {
   id?: any
@@ -23,9 +25,10 @@ const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
   return (
     <>
       {dataList.map((item, index) => (
-        <div
+        <Link
+          to={`/debt/loan-details/${Math.ceil(Math.random() * 3)}`} // random number 1 to 3
           key={index}
-          className={`card container mb-12px p-12px ${classShared}`}
+          className={`card loan-item container mb-12px p-12px ${classShared}`}
           {...rest}
           style={{borderRadius: '0px'}}
         >
@@ -66,7 +69,7 @@ const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
               {formatMoney(item.outstanding_amount)}
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   )

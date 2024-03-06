@@ -97,7 +97,7 @@ const AppRoutes: FC = () => {
             <Route path='statistical' element={<>Statistical Page</>} />
             <Route path='task-details/:id' element={<LoanDetailsPortal />} />
             <Route path='profile' element={<Profile />} />
-            <Route path='loan-details' element={<LoanDetails />} />
+            <Route path='loan-details/:loanId' element={<LoanDetails />} />
             <Route path='*' element={<Navigate to={'/debt'} />} />
           </Route>
 

@@ -14,13 +14,13 @@ const DebtLayout = () => {
 
   const token = Cookies.get('token')
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/login')
-    }
-    refreshToken(token || '')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, pathname])
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate('/login')
+  //   }
+  //   refreshToken(token || '')
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [token, pathname])
 
   return (
     <div className='debt d-flex justify-content-center vh-100 overflow-hidden'>

@@ -696,3 +696,9 @@ export type AvatarProps = {
   type: string
   base64: string
 }
+
+export type FileInfo = {
+  base64: string
+  name: string
+  id?: number | string
+}

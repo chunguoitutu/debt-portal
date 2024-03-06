@@ -8,6 +8,7 @@ import {Dispatch, SetStateAction, useRef, useState} from 'react'
 import {useAuth} from '@/app/context/AuthContext'
 import {swalToast} from '@/app/swal-notification'
 import request from '@/app/axios'
+import {DetailsHeader} from '../loan/loan-details/DetailsHeader'
 type Props = {
   data: {
     id: string
@@ -15,13 +16,12 @@ type Props = {
     time: number
     user: string
   }[]
-  showClose?: boolean
   idUpdate: string | number | any
   setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
-  handleOnClose: () => void
+  onBack: () => void
 }
 
-const Remarks = ({data, setRemarkList, idUpdate, showClose = false, handleOnClose}: Props) => {
+const Remarks = ({data, setRemarkList, idUpdate, onBack}: Props) => {
   const [inputValue, setInputValue] = useState('')
   const {currentUser} = useAuth()
 
@@ -80,17 +80,7 @@ const Remarks = ({data, setRemarkList, idUpdate, showClose = false, handleOnClos
 
   return (
     <div className='wrapper-remarks-job flex-column'>
-      <div
-        style={{
-          borderBottom: '1px solid #DBDFE9',
-        }}
-        className='p-12px d-flex gap-16px '
-      >
-        <button onClick={handleOnClose} className='button-remark-job'>
-          <Icons name={'BackLeftRemark'} />
-        </button>
-        <h1 className='m-0 p-0 fs-16 fw-bold'>Job Remarks</h1>
-      </div>
+      <DetailsHeader onBack={onBack} title='Job Remarks' />
       <div ref={contentRef} className='messenger-remarks-job d-flex flex-column gap-12px'>
         {data?.map((el, idx) => {
           return (

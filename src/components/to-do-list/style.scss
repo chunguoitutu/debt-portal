@@ -1,0 +1,20 @@
+.loan-item {
+  position: relative;
+
+  &:hover {
+    &::before {
+      clip-path: circle(200%);
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    clip-path: circle(0 at 0 100%);
+    transition: all 0.3s linear;
+    background-color: #1b84ff10;
+    user-select: none;
+    pointer-events: none;
+  }
+}

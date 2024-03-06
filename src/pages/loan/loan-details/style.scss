@@ -10,7 +10,7 @@
 
   .debt-control {
     position: sticky;
-    bottom: 70px;
+    bottom: 0;
     z-index: 999;
     border-radius: unset;
     border-inline: unset;
@@ -42,6 +42,42 @@
     &:placeholder-shown {
       font-size: 14px;
       font-weight: 400 !important;
+    }
+  }
+
+  .tag-overlay {
+    position: fixed;
+    inset-block: 0px;
+    width: 500px;
+    z-index: 99999;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+
+    &.active {
+      background-color: rgba($color: #000000, $alpha: 0.1);
+      pointer-events: unset;
+      user-select: unset;
+      visibility: unset;
+
+      .tag-options {
+        transform: translateY(0);
+      }
+    }
+
+    .tag-options {
+      transition: transform 0.2s linear;
+      border-bottom-left-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+      width: 100%;
+      z-index: 9999999999;
+      transform: translateY(100%);
+    }
+
+    .tag-item {
+      &:hover {
+        background-color: var(--bs-gray-200);
+      }
     }
   }
 }

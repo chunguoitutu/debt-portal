@@ -1,0 +1,28 @@
+:where(.alert-custom) {
+  border: 1px dashed currentColor;
+  position: relative;
+  border-radius: 8px;
+  padding: 12px;
+
+  &.primary {
+    color: var(--bs-primary);
+  }
+
+  &.danger {
+    color: var(--bs-danger);
+  }
+
+  &.secondary {
+    color: var(--bs-gray-400);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    user-select: none;
+    background-color: currentColor;
+    opacity: 0.05;
+  }
+}
