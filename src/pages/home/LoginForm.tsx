@@ -1,7 +1,7 @@
 import request from '@/app/axios'
-import {DEFAULT_MSG_ERROR} from '@/app/constants'
-import {useAuth} from '@/app/context/AuthContext'
+import * as Yup from 'yup'
 import {useShared} from '@/app/context/SharedContext'
+import useClickOutside from '@/app/hooks/useClickOutside'
 import {HomeProps} from '@/app/types'
 import {convertErrorMessageResponse} from '@/app/utils'
 import Button from '@/components/button/Button'
@@ -9,12 +9,25 @@ import {Input} from '@/components/input'
 import clsx from 'clsx'
 import {useFormik} from 'formik'
 import Cookies from 'js-cookie'
-import {FC, useEffect, useState} from 'react'
+import {FC, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
+
+const loginSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(3, 'Minimum 3 symbols')
+    .max(50, 'Maximum 50 symbols')
+    .required('Debt Collector ID is required'),
+  password: Yup.string()
+    .min(8, 'Minimum 8 symbols')
+    .max(50, 'Maximum 50 symbols')
+    .required('Password is required'),
+})
 
 const LoginForm: FC<HomeProps> = ({screenWidth}) => {
   const {showLoginForm, setShowLoginForm} = useShared()
   const navigate = useNavigate()
+  const configColumnRef = useRef(null)
   const {
     values,
     status,
@@ -30,6 +43,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
       username: '',
       password: '',
     },
+    validationSchema: loginSchema,
     onSubmit: handleLogin,
   })
 
@@ -63,11 +77,17 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
     }
   }
 
+  useClickOutside(configColumnRef, () => {
+    if (!showLoginForm) return
+
+    setShowLoginForm(false)
+  })
   return (
     <>
       <div
+        ref={configColumnRef}
         className={clsx([
-          'card d-flex flex-column gap-24px p-20px p-lg-30px align-self-center login-form fade w-100 mw-400px w-lg-fit-content flex-shrink-0',
+          'card d-flex flex-column gap-24px p-30px p-lg-30px align-self-center login-form fade w-100 mw-500px w-lg-fit-content flex-shrink-0',
           showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
           screenWidth < 992 && 'order-1',
           !showLoginForm && screenWidth < 992 && 'position-absolute z-index-negative',
@@ -77,7 +97,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
 
         <p className='m-0 text-gray-600 text-center d-flex align-items-center justify-content-center fs-14 gap-8px'>
           <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
-          <span className='text-nowrap'>Welcome to field service for debt collector</span>
+          <span className='fs-14'>Welcome to field service for debt collector</span>
           <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
         </p>
 

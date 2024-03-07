@@ -2,7 +2,7 @@ import Button from '@/components/button/Button'
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import LoginForm from './LoginForm'
 import dashboardImg from '@/app/images/dashboard.png'
-import {FC} from 'react'
+import {FC, useRef} from 'react'
 import clsx from 'clsx'
 import {HomeProps} from '@/app/types'
 import Cookies from 'js-cookie'
@@ -12,6 +12,7 @@ const HomeHeader: FC<HomeProps> = (props) => {
   const {screenWidth} = props
   const {showLoginForm, setShowLoginForm} = useShared()
   const token = Cookies.get('token')
+
   function toggleFormLogin() {
     if (!showLoginForm) {
       window?.scroll({
@@ -21,6 +22,7 @@ const HomeHeader: FC<HomeProps> = (props) => {
     }
     setShowLoginForm(!showLoginForm)
   }
+
   return (
     <section
       className={clsx(['dashboard-header d-flex align-items-center'])}
