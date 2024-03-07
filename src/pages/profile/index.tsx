@@ -8,7 +8,7 @@ import {ChangeEvent, useEffect, useState} from 'react'
 import Cookies from 'js-cookie'
 import {useNavigate} from 'react-router-dom'
 import Avatar from '@/components/avatar'
-import {convertErrorMessageResponse, formatMoney} from '@/app/utils'
+import {convertErrorMessageResponse, formatMoney, getFullName} from '@/app/utils'
 import {convertFileToBase64} from '@/app/utils'
 
 import DebtTile from '@/components/debt-title'
@@ -151,7 +151,7 @@ const Profile = () => {
             </div>
           )}
 
-          <h3 className='m-0 fs-20 text-white fw-bolder mt-30px'>Ma Dong Seok </h3>
+          <h3 className='m-0 fs-20 text-white fw-bolder mt-30px'>{getFullName(currentUser)} </h3>
           <div className='profile-role py-4px px-16px rounded-24px mt-8px fw-bolder'>
             Debt Collector
           </div>
