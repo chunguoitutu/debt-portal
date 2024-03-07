@@ -51,20 +51,15 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
     try {
       setSubmitting(true) // show loading
       setStatus('') // reset error
-
       const payload = {
         username: values.username,
         password: values.password,
       }
-
       const {data: dataRes} = await request.post('debt/login', payload)
-
       const {error, token, data} = dataRes
-
       if (!token || !data || error) {
         throw new Error(DEFAULT_MSG_ERROR)
       }
-
       const redirect = Cookies.get('lastPageViewed') || '/debt'
       Cookies.set('token', token) // set the token to the cookies
       navigate(redirect)
