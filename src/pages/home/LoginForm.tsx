@@ -87,7 +87,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
       <div
         ref={configColumnRef}
         className={clsx([
-          'card d-flex flex-column gap-24px p-30px p-lg-30px align-self-center login-form fade w-100 mw-500px w-lg-fit-content flex-shrink-0',
+          'card d-flex flex-column gap-24px p-20px p-lg-20px align-self-center login-form fade w-100 mw-500px w-lg-fit-content flex-shrink-0',
           showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
           screenWidth < 992 && 'order-1',
           !showLoginForm && screenWidth < 992 && 'position-absolute z-index-negative',
@@ -107,7 +107,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
           </div>
         )}
 
-        <div className='w-100 w-lg-320px mw-100 d-flex flex-column gap-16px'>
+        <div className='w-100 w-lg-320px mw-100 d-flex flex-column gap-16px px-10px'>
           <Input
             classInputWrap='w-100'
             label='Debt Collector ID'
