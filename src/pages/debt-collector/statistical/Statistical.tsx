@@ -41,7 +41,7 @@ const Statistical = () => {
     {
       id: 2,
       loan_no: 'L-A2024-123',
-      customer_name: 'Nguyen Cong Phuong',
+      customer_name: 'Alicia Ekia',
       total_outstanding: '5000',
       status: 2,
     },

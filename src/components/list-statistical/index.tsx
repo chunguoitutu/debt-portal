@@ -34,7 +34,7 @@ const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
                 #{item.id}
               </div>
             </div>
-            <div className='p-8px ps-4px cursor-pointer' style={{width: '80%'}}>
+            <div className='p-8px ps-4px cursor-pointer' style={{width: '86%'}}>
               <div className='d-flex flex-row align-items-center justify-content-between haithegioi pb-4px'>
                 <div className='fs-15 fw-semibold text-gray-900'>{item.loan_no}</div>
                 <div className='p-5px'>
