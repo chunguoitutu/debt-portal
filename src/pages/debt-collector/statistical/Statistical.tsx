@@ -105,20 +105,20 @@ const Statistical = () => {
         <div className='card p-12px' style={{borderRadius: '0px'}}>
           <div className='d-flex flex-row align-items-center justify-content-between mb-16px'>
             <div className='d-flex flex-column'>
-              <div className='fs-2 fw-bold text-primary'>32 Loan</div>
+              <div className='fs-24 fw-bold text-primary'>32 Loan</div>
               <div className='fs-16 fw-medium text-gray-900'>Total Success Collection</div>
               <div className='fs-13 fw-normal text-gray-600 mt-4px'>
                 Successful debt collection list on 24-02-2024
               </div>
             </div>
-            <div className='h-100 align-self-start'>
+            <div className='align-self-start'>
               <Input
                 name={'date'}
                 value={values.date}
                 onChange={handleChange}
                 type='date'
                 max={getDaysOfCurrentDate()}
-                style={{minWidth: '160px'}}
+                style={{minWidth: '170px'}}
               />
             </div>
           </div>

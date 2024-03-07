@@ -7,6 +7,7 @@ import {getDaysOfCurrentDate} from '@/app/utils/get-current-date'
 import {formatMoney} from '@/app/utils'
 import moment from 'moment'
 import {getCSSVariableValue} from '@/_metronic/assets/ts/_utils'
+import numeral from 'numeral'
 
 type Props = {
   chartSize?: number
@@ -62,6 +63,12 @@ const CollectedAmount: FC<Props> = ({
       break
     default:
       titleDebt = 'Unknown'
+  }
+
+  function formatMoneyNoIcon(value: number) {
+    let newValue = +value || 0
+
+    return numeral(newValue).format('0,0.00')
   }
 
   //==================================START HANDLE FOR CHART==================================//
@@ -152,19 +159,27 @@ const CollectedAmount: FC<Props> = ({
           onChange={handleChange}
           type='date'
           max={getDaysOfCurrentDate()}
-          style={{minWidth: '160px'}}
+          style={{minWidth: '170px'}}
         />
       </div>
       <div className='d-flex flex-row align-items-center justify-content-between'>
         {title === 'collected' && (
           <div className='d-flex flex-column gap-4px'>
             <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
-              {formatMoney(amount_collected)}
-              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>USD</span>
+              {formatMoneyNoIcon(amount_collected)}
+              <span
+                className='fs-20 fw-semibold text-gray-600 align-self-center'
+                style={{marginTop: '1px'}}
+              >
+                SGD
+              </span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               The amount you must collect on {moment(currentDate).format('DD-MM-YYYY')} is{' '}
-              <span className='text-primary'>{formatMoney(must_collect_amount)} USD.</span>
+              <span className='text-primary fw-semibold'>
+                {formatMoneyNoIcon(must_collect_amount)} SGD
+                <span className='text-gray-600'>.</span>
+              </span>
             </div>
           </div>
         )}
@@ -172,12 +187,20 @@ const CollectedAmount: FC<Props> = ({
         {title === 'uncollected' && (
           <div className='d-flex flex-column gap-4px'>
             <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
-              {formatMoney(amount_not_collected)}
-              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>USD</span>
+              {formatMoneyNoIcon(amount_not_collected)}
+              <span
+                className='fs-20 fw-semibold text-gray-600 align-self-center'
+                style={{marginTop: '1px'}}
+              >
+                SGD
+              </span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               The amount you must collect on {moment(currentDate).format('DD-MM-YYYY')} is{' '}
-              <span className='text-primary'>{formatMoney(must_collect_amount)} USD.</span>
+              <span className='text-primary fw-semibold'>
+                {formatMoneyNoIcon(must_collect_amount)} SGD
+                <span className='text-gray-600'>.</span>
+              </span>
             </div>
           </div>
         )}
@@ -190,7 +213,10 @@ const CollectedAmount: FC<Props> = ({
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               The number of houses you have to visit on {moment(currentDate).format('DD-MM-YYYY')}{' '}
-              is <span className='text-primary'>{total_home_visit} Home.</span>
+              is{' '}
+              <span className='text-primary fw-semibold'>
+                {total_home_visit} Home <span className='text-gray-600'>.</span>
+              </span>
             </div>
           </div>
         )}
@@ -198,12 +224,17 @@ const CollectedAmount: FC<Props> = ({
         {title === 'commission' && (
           <div className='d-flex flex-column gap-4px'>
             <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
-              {formatMoney(amount_collected)}
-              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>USD</span>
+              {formatMoneyNoIcon(amount_collected)}
+              <span
+                className='fs-20 fw-semibold text-gray-600 align-self-center'
+                style={{marginTop: '1px'}}
+              >
+                SGD
+              </span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
-              You have received commissions from <span className='text-primary'>{task}</span>{' '}
-              assigned tasks.
+              You have received commissions from{' '}
+              <span className='text-primary fw-semibold'>{task}</span> assigned tasks.
             </div>
           </div>
         )}

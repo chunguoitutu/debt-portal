@@ -3,6 +3,7 @@ import './style.scss'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import {formatMoney} from '@/app/utils'
+import {Link} from 'react-router-dom'
 
 interface LoanData {
   id?: any
@@ -22,16 +23,18 @@ const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
   return (
     <>
       {dataList.map((item, index) => (
-        <div
+        <Link
           key={index}
-          className={`card container mb-12px p-4px mh-100px list-statistical ${classShared}`}
+          className={`card container mb-4px p-4px mh-100px list-statistical ${classShared}`}
           style={{backgroundColor: '#f9f9f9'}}
           {...rest}
+          to={`/debt/loan-details/${Math.ceil(Math.random() * 3)}`}
         >
           <div className='d-flex flex-row gap-12px'>
             <div className='h-100 square-id'>
               <div className='h-100 d-flex align-items-center justify-content-center fs-15 text-gray-900 fw-semibold '>
-                #{item.id}
+                <span className='text-gray-600'>#</span>
+                {item.id}
               </div>
             </div>
             <div className='p-8px ps-4px cursor-pointer' style={{width: '86%'}}>
@@ -55,7 +58,7 @@ const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   )
