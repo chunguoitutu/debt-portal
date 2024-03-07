@@ -15,6 +15,12 @@ const DebtLayout = () => {
   const token = Cookies.get('token')
 
   useEffect(() => {
+    // const pathNameArray = pathname.split('/')?.filter((path) => path)
+    // const firstPathName = pathNameArray?.[0] || 'debt'
+
+    const isViewProfile = pathname.includes('profile')
+    !isViewProfile && Cookies.set('lastPageViewed', pathname)
+
     if (!token) {
       navigate('/login')
     }

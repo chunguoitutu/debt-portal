@@ -22,13 +22,13 @@ export const convertRoleToNumber = (roleName: string) => {
 }
 
 export function convertErrorMessageResponse(error: any) {
-  const err = error as AxiosError<ErrorResponse>
+  const err = error
 
   if (axios.isAxiosError(err)) {
     const message = err?.response?.data?.message || err.message || DEFAULT_MESSAGE_ERROR_500
     return message
   } else {
-    return DEFAULT_MESSAGE_ERROR_500
+    return err?.message || DEFAULT_MESSAGE_ERROR_500
   }
 }
 

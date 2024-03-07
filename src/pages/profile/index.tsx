@@ -23,6 +23,7 @@ const Profile = () => {
   function handleLogout() {
     setCurrentUser(undefined)
     Cookies.remove('token')
+    Cookies.remove('lastPageViewed')
     navigate('/login')
   }
 

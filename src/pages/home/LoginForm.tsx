@@ -1,4 +1,5 @@
 import request from '@/app/axios'
+import {DEFAULT_MSG_ERROR} from '@/app/constants'
 import {useAuth} from '@/app/context/AuthContext'
 import {useShared} from '@/app/context/SharedContext'
 import {HomeProps} from '@/app/types'
@@ -13,36 +14,54 @@ import {useNavigate} from 'react-router-dom'
 
 const LoginForm: FC<HomeProps> = ({screenWidth}) => {
   const {showLoginForm, setShowLoginForm} = useShared()
-  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const {values, status, setStatus, errors, touched, handleSubmit, getFieldProps, setSubmitting} =
-    useFormik({
-      initialValues: {
-        username: '',
-        password: '',
-      },
-      onSubmit: () => {
-        setLoading(true)
+  const {
+    values,
+    status,
+    errors,
+    touched,
+    isSubmitting,
+    setStatus,
+    handleSubmit,
+    getFieldProps,
+    setSubmitting,
+  } = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    onSubmit: handleLogin,
+  })
 
-        request
-          .post('debt/login', {
-            username: values.username,
-            password: values.password,
-          })
-          .then((data) => {
-            Cookies.set('token', data?.data?.data?.token)
-            setStatus('')
-            navigate(`/debt`)
-            setLoading(false)
-          })
-          .catch((e) => {
-            const message = convertErrorMessageResponse(e)
-            setStatus(message)
-            setSubmitting(false)
-            setLoading(false)
-          })
-      },
-    })
+  async function handleLogin() {
+    try {
+      setSubmitting(true) // show loading
+      setStatus('') // reset error
+
+      const payload = {
+        username: values.username,
+        password: values.password,
+      }
+
+      const {data: dataRes} = await request.post('debt/login', payload)
+
+      const {error, token, data} = dataRes
+
+      if (!token || !data || error) {
+        throw new Error(DEFAULT_MSG_ERROR)
+      }
+
+      const redirect = Cookies.get('lastPageViewed') || '/debt'
+      Cookies.set('token', token) // set the token to the cookies
+      navigate(redirect)
+    } catch (error) {
+      const message = convertErrorMessageResponse(error)
+      setStatus(message)
+      setSubmitting(false)
+    } finally {
+      setSubmitting(false) // end loading
+    }
+  }
 
   return (
     <>
@@ -95,12 +114,12 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
 
         <Button
           className='btn-primary cursor-pointer'
-          loading={loading}
+          loading={isSubmitting}
           onClick={() => {
             handleSubmit()
           }}
           disabled={
-            loading ||
+            isSubmitting ||
             !!(touched.password && errors.password) ||
             !!(touched.username && errors.username) ||
             !values.password ||
