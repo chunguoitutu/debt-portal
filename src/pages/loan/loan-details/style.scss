@@ -48,7 +48,8 @@
   .tag-overlay {
     position: fixed;
     inset-block: 0px;
-    width: 768px;
+    width: 100%;
+    max-width: 768px;
     z-index: 99999;
     pointer-events: none;
     user-select: none;

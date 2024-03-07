@@ -1,4 +1,4 @@
-import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom'
+import {Outlet, useLocation, useNavigate} from 'react-router-dom'
 import DebtMenu from './DebtMenu'
 import './style.scss'
 import {useEffect} from 'react'
