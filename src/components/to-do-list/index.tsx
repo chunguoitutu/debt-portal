@@ -28,7 +28,7 @@ const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
         <Link
           to={`/debt/loan-details/${Math.ceil(Math.random() * 3)}`} // random number 1 to 3
           key={index}
-          className={`card loan-item container mb-12px p-12px ${classShared}`}
+          className={`card loan-item container mb-12px p-12px border-0 ${classShared}`}
           {...rest}
           style={{borderRadius: '0px'}}
         >
@@ -38,14 +38,16 @@ const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
                 ? 'text-primary'
                 : item.status === 2
                 ? 'text-danger'
-                : 'text-gray-600'
+                : 'text-gray-300'
             }`}
           >
-            <Icons name={'Tags'} />
+            <div className='d-flex h-100 align-self-center mt-1'>
+              <Icons name={'Tags'} />
+            </div>
 
             <div className='d-flex flex-row gap-8px'>
               <div className='fs-16 fw-medium text-gray-900'>{item.loan_no}</div>
-              <div className='mt-1'>
+              <div>
                 {item.status === 2 ? <Badge color='danger' title='Unsuccess Collection' /> : <></>}
               </div>
             </div>
@@ -64,7 +66,7 @@ const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
             </div>
           </div>
           <div className='d-flex flex-row pt-12px pe-0 pb-0 ps-24px align-items-center justify-content-between'>
-            <div className='fs-13 fw-normal text-gray-900'>Total Outstanding Amount</div>
+            <div className='fs-13 fw-normal text-gray-600'>Total Outstanding Amount</div>
             <div className='fs-16 fw-bold text-gray-900'>
               {formatMoney(item.outstanding_amount)}
             </div>
