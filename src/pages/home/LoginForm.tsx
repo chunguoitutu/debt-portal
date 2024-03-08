@@ -94,14 +94,11 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
           <span className='fs-14'>Welcome To Field Service For Debt Collector</span>
         </p>
 
-        {
+        {status && (
           <div className='m-0 alert alert-danger'>
-            <div className='alert-text font-weight-bold text-break'>
-              {status} Welcome To Field Service For Debt Collector Welcome To Field Service For Debt
-              Collector
-            </div>
+            <div className='alert-text font-weight-bold text-break'>{status}</div>
           </div>
-        }
+        )}
 
         <div className='w-100 mw-100 d-flex flex-column gap-16px px-10px'>
           <Input
