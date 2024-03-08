@@ -64,7 +64,7 @@ const Statistical = () => {
   return (
     <>
       <DebtTile title='Statistical' />
-      <div className='d-flex flex-column gap-12px overflow-auto'>
+      <div className='d-flex flex-column gap-12px overflow-auto h-100'>
         <div className='card border-0' style={{borderRadius: '0px'}}>
           <Swiper
             pagination={true}
@@ -102,7 +102,7 @@ const Statistical = () => {
             </SwiperSlide>
           </Swiper>
         </div>
-        <div className='card p-12px border-0' style={{borderRadius: '0px'}}>
+        <div className='card p-12px border-0 flex-grow-1' style={{borderRadius: '0px'}}>
           <div className='d-flex flex-row align-items-center justify-content-between mb-16px'>
             <div className='d-flex flex-column'>
               <div className='fs-24 fw-bold text-primary'>32 Loan</div>

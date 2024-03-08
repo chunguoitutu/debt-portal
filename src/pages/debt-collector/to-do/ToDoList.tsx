@@ -37,6 +37,8 @@ const DebtListToDo: FC = () => {
   // With status === 1, the job is completed
   const ToDoDate = data.filter((item) => item.status !== 1)
 
+  const idData = data.map((item) => item.id)
+
   return (
     <>
       <DebtTile title='To Do' />
