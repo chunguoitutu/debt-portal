@@ -9,6 +9,7 @@ import {useAuth} from '@/app/context/AuthContext'
 import {swalToast} from '@/app/swal-notification'
 import request from '@/app/axios'
 import {DetailsHeader} from '../loan/loan-details/DetailsHeader'
+import clsx from 'clsx'
 type Props = {
   data: {
     id: string
@@ -16,12 +17,13 @@ type Props = {
     time: number
     user: string
   }[]
+  open: boolean
   idUpdate: string | number | any
   setRemarkList: Dispatch<SetStateAction<RemarkItem[]>>
   onBack: () => void
 }
 
-const Remarks = ({data, setRemarkList, idUpdate, onBack}: Props) => {
+const Remarks = ({data, setRemarkList, idUpdate, onBack, open}: Props) => {
   const [inputValue, setInputValue] = useState('')
   const {currentUser} = useAuth()
 
@@ -79,60 +81,62 @@ const Remarks = ({data, setRemarkList, idUpdate, onBack}: Props) => {
   }
 
   return (
-    <div className='wrapper-remarks-job flex-column'>
-      <DetailsHeader onBack={onBack} title='Job Remarks' />
-      <div ref={contentRef} className='messenger-remarks-job d-flex flex-column gap-12px'>
-        {data?.map((el, idx) => {
-          return (
-            <div key={idx} className='d-flex align-items-start gap-12px'>
-              <div className=' bg-primary  mt-4px w-10px h-10px flex-shrink-0 rounded-circle'></div>
-              <div className='w-100 d-flex flex-column gap-4px'>
-                <div className='d-flex justify-content-between align-items-end'>
-                  <span className='fs-14 fw-semibold text-gray-900'>
-                    {moment(el?.time).format('DD MMM, YYYY')}
-                  </span>
-                  <div className='fs-12 fw-normal text-gray-600'>
-                    {moment().diff(el?.time, 'days')}{' '}
-                    {[0, 1].includes(Number(moment().diff(el?.time, 'days')))
-                      ? `day ago`
-                      : 'days ago'}{' '}
-                    / at {moment(el?.time).format('HH:mm:ss')}
+    <div className={clsx(['wrapper-remarks-job flex-column', open && 'actives'])}>
+      <div className='wrapper-remarks-job-2 flex-column'>
+        <DetailsHeader onBack={onBack} title='Job Remarks' />
+        <div ref={contentRef} className='messenger-remarks-job d-flex flex-column gap-12px'>
+          {data?.map((el, idx) => {
+            return (
+              <div key={idx} className='d-flex align-items-start gap-12px'>
+                <div className=' bg-primary  mt-4px w-10px h-10px flex-shrink-0 rounded-circle'></div>
+                <div className='w-100 d-flex flex-column gap-4px'>
+                  <div className='d-flex justify-content-between align-items-end'>
+                    <span className='fs-14 fw-semibold text-gray-900'>
+                      {moment(el?.time).format('DD MMM, YYYY')}
+                    </span>
+                    <div className='fs-12 fw-normal text-gray-600'>
+                      {moment().diff(el?.time, 'days')}{' '}
+                      {[0, 1].includes(Number(moment().diff(el?.time, 'days')))
+                        ? `day ago`
+                        : 'days ago'}{' '}
+                      / at {moment(el?.time).format('HH:mm:ss')}
+                    </div>
                   </div>
+                  <p
+                    className='mb-0 fs-14 fw-semibold text-break '
+                    style={{color: '#4B5675'}}
+                    dangerouslySetInnerHTML={{__html: el?.message}}
+                  />
                 </div>
-                <p
-                  className='mb-0 fs-14 fw-semibold text-break '
-                  style={{color: '#4B5675'}}
-                  dangerouslySetInnerHTML={{__html: el?.message}}
-                />
               </div>
-            </div>
-          )
-        })}
-      </div>
-      <div className='mt-auto border-top border-gray-200 p-12px '>
-        <div className='d-flex justify-content-center align-items-end gap-4'>
-          <textarea
-            placeholder='Enter remark...'
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            id='myInput'
-            className='w-100 min-h-50px  input-remark-import'
-            style={{
-              border: '1px solid ',
-              outline: 'none',
-            }}
-          />
-          <div className=' flex justify-content-end align-items-end align-self-center'>
-            <Button
-              style={{display: 'flex', flexShrink: '0'}}
-              onClick={() => {
-                handleSubmit()
+            )
+          })}
+        </div>
+        <div className='mt-auto border-top border-gray-200 p-12px '>
+          <div className='d-flex justify-content-center align-items-end gap-4'>
+            <textarea
+              placeholder='Enter remark...'
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              id='myInput'
+              className='w-100 min-h-50px  input-remark-import'
+              style={{
+                border: '1px solid ',
+                outline: 'none',
               }}
-              className='btn-primary p-8px rounded-pill'
-            >
-              <Icons name='ImgSend' />
-            </Button>
+            />
+            <div className=' flex justify-content-end align-items-end align-self-center'>
+              <Button
+                style={{display: 'flex', flexShrink: '0'}}
+                onClick={() => {
+                  handleSubmit()
+                }}
+                className='btn-primary p-8px rounded-pill'
+              >
+                <Icons name='ImgSend' />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
