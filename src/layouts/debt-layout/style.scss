@@ -17,7 +17,7 @@
     }
 
     &.active,
-    &:hover {
+    &:active {
       border-color: var(--bs-primary);
 
       &::before {

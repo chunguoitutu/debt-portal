@@ -215,7 +215,7 @@ const CollectedAmount: FC<Props> = ({
               The number of houses you have to visit on {moment(currentDate).format('DD-MM-YYYY')}{' '}
               is{' '}
               <span className='text-primary fw-semibold'>
-                {total_home_visit} Home <span className='text-gray-600'>.</span>
+                {total_home_visit} Home<span className='text-gray-600'>.</span>
               </span>
             </div>
           </div>
