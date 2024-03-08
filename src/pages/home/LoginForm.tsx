@@ -82,7 +82,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
       <div
         ref={configColumnRef}
         className={clsx([
-          'card d-flex flex-column gap-24px p-20px p-lg-20px align-self-center login-form fade w-100 mw-500px w-lg-fit-content flex-shrink-0',
+          'card d-flex flex-column gap-24px p-20px p-lg-20px align-self-center login-form fade w-400px mw-400px w-lg-fit-content flex-shrink-0',
           showLoginForm ? 'viewed' : 'visibility-hidden pe-none user-select-none',
           screenWidth < 992 && 'order-1',
           !showLoginForm && screenWidth < 992 && 'position-absolute z-index-negative',
@@ -94,11 +94,14 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
           <span className='fs-14'>Welcome To Field Service For Debt Collector</span>
         </p>
 
-        {status && (
+        {
           <div className='m-0 alert alert-danger'>
-            <div className='alert-text font-weight-bold'>{status}</div>
+            <div className='alert-text font-weight-bold text-break'>
+              {status} Welcome To Field Service For Debt Collector Welcome To Field Service For Debt
+              Collector
+            </div>
           </div>
-        )}
+        }
 
         <div className='w-100 mw-100 d-flex flex-column gap-16px px-10px'>
           <Input
@@ -128,6 +131,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
         <Button
           className='btn-primary cursor-pointer'
           loading={isSubmitting}
+          type='submit'
           onClick={() => {
             handleSubmit()
           }}
