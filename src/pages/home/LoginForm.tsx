@@ -91,9 +91,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
         <h3 className='m-0 text-gray-900 fw-bold fs-26 text-center'>Sign In</h3>
 
         <p className='m-0 text-gray-600 text-center d-flex align-items-center justify-content-center fs-14 gap-8px'>
-          <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
           <span className='fs-14'>Welcome to field service for debt collector</span>
-          <span className='d-inline-block w-20px h-1px bg-gray-600'></span>
         </p>
 
         {status && (
