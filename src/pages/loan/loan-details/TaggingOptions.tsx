@@ -4,21 +4,45 @@ import {FC, useRef, useState} from 'react'
 import {TAGGING_OPTIONS} from './config'
 import TagIcon from '@/app/images/tag.svg?react'
 import {LabelTaggingOption} from '@/app/types'
-import {swalToast} from '@/app/swal-notification'
+import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {convertErrorMessageResponse} from '@/app/utils'
 import Loading from '@/components/loading'
 
 type Props = {
   showTaggingOptions: boolean
-  onClose: () => void
+  onToggle: () => void
   onReloadApi: () => void
 }
 
-const TaggingOptions: FC<Props> = ({showTaggingOptions, onClose, onReloadApi}) => {
+const TaggingOptions: FC<Props> = ({showTaggingOptions, onToggle, onReloadApi}) => {
   const [loadingLabel, setLoadingLabel] = useState<LabelTaggingOption | null>(null)
 
   const modalRef = useRef(null)
-  useClickOutside(modalRef, () => showTaggingOptions && onClose())
+  useClickOutside(modalRef, () => showTaggingOptions && onToggle())
+
+  async function handleShowModalConfirm(label: LabelTaggingOption) {
+    try {
+      onToggle()
+
+      const message =
+        label === 'Bankruptcy - death'
+          ? 'Confirm that the borrower is Bankrupt - deceased?'
+          : "Confirm the borrower's payment date?"
+
+      const result = await swalConfirm.fire({
+        title: message,
+        text: `You Won't Be Able To Revert This.`,
+      })
+
+      if (result.isConfirmed) {
+        handleChooseTagItem(label)
+      } else {
+        onToggle()
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   function handleChooseTagItem(label: LabelTaggingOption) {
     switch (label) {
@@ -38,7 +62,6 @@ const TaggingOptions: FC<Props> = ({showTaggingOptions, onClose, onReloadApi}) =
       await new Promise<void>((resolve, reject) => {
         setTimeout(() => resolve(), 500)
       })
-      onClose()
       onReloadApi()
     } catch (error) {
       swalToast.fire({
@@ -57,7 +80,6 @@ const TaggingOptions: FC<Props> = ({showTaggingOptions, onClose, onReloadApi}) =
       await new Promise<void>((resolve, reject) => {
         setTimeout(() => resolve(), 500)
       })
-      onClose()
       onReloadApi()
     } catch (error) {
       swalToast.fire({
@@ -86,9 +108,8 @@ const TaggingOptions: FC<Props> = ({showTaggingOptions, onClose, onReloadApi}) =
                 key={o.label}
                 className={clsx([
                   'tag-item d-flex align-items-center rounded-8px py-16px px-12px gap-8px cursor-pointer',
-                  i !== 0 && 'border-top border-gray-200',
                 ])}
-                onClick={() => handleChooseTagItem(o.label)}
+                onClick={() => handleShowModalConfirm(o.label)}
               >
                 <div className={clsx(['mw-20px', o.classNameIcon])}>
                   <TagIcon />

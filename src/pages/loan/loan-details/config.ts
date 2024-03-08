@@ -15,7 +15,7 @@ export const LOAN_INFO_CONFIG: TableRow[] = [
     key: 'total_outstanding',
     name: 'Total Outstanding',
     format: 'money',
-    className: 'fs-18 text-primary',
+    className: 'fs-18 text-primary fw-bold',
   },
 ]
 

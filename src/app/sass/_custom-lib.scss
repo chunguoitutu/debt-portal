@@ -58,8 +58,16 @@
     display: flex !important;
   }
 }
+
 .swal2-toast-shown .swal2-container.swal2-top-end {
   top: 80px !important;
+}
+
+.swal2-container.swal2-center.swal2-backdrop-show {
+  inset-inline: 50%;
+  width: 768px;
+  display: flex;
+  transform: translateX(-50%);
 }
 
 // custom react pdf viewer
