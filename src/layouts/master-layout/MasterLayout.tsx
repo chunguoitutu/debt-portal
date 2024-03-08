@@ -7,15 +7,14 @@ import {ScrollTop} from '@/_metronic/layout/components/scroll-top'
 import clsx from 'clsx'
 import {useEffect, useState} from 'react'
 import Cookies from 'js-cookie'
-import {useAuth} from '@/app/context/AuthContext'
+import {useSocket} from '@/app/context/SocketContext'
 
 const MasterLayout = () => {
   const [scroll, setSCroll] = useState(false)
-  const {pathname} = useLocation()
   const [page, setPage] = useState(false)
-  // const {refreshToken} = useAuth()
 
-  // const {pathname} = useLocation()
+  const {pathname} = useLocation()
+  const {socket} = useSocket()
   const navigate = useNavigate()
 
   const token = Cookies.get('token')
@@ -24,10 +23,11 @@ const MasterLayout = () => {
     setPage(false)
     if (!token) {
       navigate('/login')
+      socket?.disconnect()
     }
     setPage(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Cookies.get('token'), pathname])
+  }, [token, pathname])
 
   return (
     <>

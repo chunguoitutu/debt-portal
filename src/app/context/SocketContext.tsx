@@ -40,10 +40,11 @@ const SocketProvider: FC<WithChildren> = ({children}) => {
       })
 
       newSocket.on('connect', () => {
-        console.log('Socket connect success!')
+        import.meta.env.MODE !== 'production' && console.log('Socket connected successfully')
       })
 
       newSocket.on('disconnect', () => {
+        import.meta.env.MODE !== 'production' && console.log('Socket disconnected')
         setSocket(null)
         setTimeout(setupSocket, 3000)
       })

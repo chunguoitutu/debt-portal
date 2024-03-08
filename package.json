@@ -107,7 +107,7 @@
     "webpack-rtl-plugin": "^2.0.0"
   },
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "vite",
     "build": "tsc && vite build",
     "staging": "tsc && vite build --mode production",
     "preview": "vite preview",

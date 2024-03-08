@@ -1,12 +1,12 @@
-import axios, { AxiosError } from 'axios'
+import axios, {AxiosError} from 'axios'
 import numeral from 'numeral'
-import { ApplicationConfig, ErrorResponse, Option, TableRow } from '../types/common'
-import { DEFAULT_MESSAGE_ERROR_500 } from '../constants'
+import {ApplicationConfig, ErrorResponse, Option, TableRow} from '../types/common'
+import {DEFAULT_MESSAGE_ERROR_500} from '../constants'
 import moment from 'moment'
-import { TermUnit } from '../types/enum'
-import { formatDate } from './date'
+import {TermUnit} from '../types/enum'
+import {formatDate} from './date'
 
-export const COUNTRY_PHONE_CODE: Option[] = [{ label: '+65', value: '+65' }]
+export const COUNTRY_PHONE_CODE: Option[] = [{label: '+65', value: '+65'}]
 
 export const convertRoleToNumber = (roleName: string) => {
   switch (roleName) {
@@ -44,7 +44,7 @@ export function isJson(str: string) {
 export function parseJson(str: string) {
   try {
     return JSON.parse(str)
-  } catch (error) { }
+  } catch (error) {}
 }
 
 export const formatNumber = (num: any) => {
@@ -63,11 +63,11 @@ export function convertFieldPassword(label: string) {
   return `${label} must be at least 8 characters including at least one letter, one number, and one special character`
 }
 
-export function filterObjectKeyNotEmpty(object: { [key: string]: any }) {
+export function filterObjectKeyNotEmpty(object: {[key: string]: any}) {
   const keys = Object.keys(object)
   return keys
     .filter((key) => !!object[key] === true)
-    .reduce((acc, key) => ({ ...acc, [key]: object[key] }), {})
+    .reduce((acc, key) => ({...acc, [key]: object[key]}), {})
 }
 
 export function convertSize(sizeInBytes) {
@@ -94,7 +94,7 @@ export function handleFormatFilter<T = any>(config: {
   keyNumber?: string[]
   keyDate?: string[]
 }) {
-  const { keyNumber = [], keyDate = [], dataFilter } = config
+  const {keyNumber = [], keyDate = [], dataFilter} = config
 
   if (!isObject(dataFilter)) return {}
 
@@ -107,13 +107,13 @@ export function handleFormatFilter<T = any>(config: {
       if (isObject(dataFilter[key])) {
         if (key === 'status') {
           if (dataFilter[key]?.in.length > 0) {
-            return { ...acc, status: dataFilter[key] }
+            return {...acc, status: dataFilter[key]}
           } else {
-            return { ...acc, status: {} }
+            return {...acc, status: {}}
           }
         }
         const keyHasValue = filterObjectKeyNotEmpty(dataFilter[key])
-        if (!Object.keys(keyHasValue).length) return { ...acc }
+        if (!Object.keys(keyHasValue).length) return {...acc}
 
         // Format type date
         if (keyDate.includes(key)) {
@@ -130,7 +130,7 @@ export function handleFormatFilter<T = any>(config: {
             {}
           )
 
-          return { ...acc, [key]: objectDate }
+          return {...acc, [key]: objectDate}
         } else {
           const newObject = Object.keys(keyHasValue).reduce(
             (acc, key) => ({
@@ -139,13 +139,13 @@ export function handleFormatFilter<T = any>(config: {
             }),
             {}
           )
-          return { ...acc, [key]: newObject }
+          return {...acc, [key]: newObject}
         }
       }
 
       const value = dataFilter[key]
 
-      return { ...acc, [key]: keyNumber.includes(key) ? +value : value }
+      return {...acc, [key]: keyNumber.includes(key) ? +value : value}
     }, {})
 
   return newDataFilter
@@ -245,7 +245,7 @@ export function isFirstGetStepApplication({
   optionListing,
   config,
 }: {
-  optionListing: { [key: string]: any[] }
+  optionListing: {[key: string]: any[]}
   config: ApplicationConfig[]
 }) {
   const keyOptionListing = Object.keys(optionListing)
@@ -253,7 +253,7 @@ export function isFirstGetStepApplication({
   return !endpoint.some((el) => keyOptionListing.includes(el.keyOfOptionFromApi || el.key))
 }
 
-export function getFullName(info?: { [key: string]: any }) {
+export function getFullName(info?: {[key: string]: any}) {
   return [info?.lastname, info?.firstname].filter(Boolean).join(' ')
 }
 
@@ -323,7 +323,7 @@ export const capitalizeFirstLetter = (str: string) => {
 }
 
 export function formatData(row: TableRow, data: any) {
-  const { key, format, formatDate: formatDateType, options } = row
+  const {key, format, formatDate: formatDateType, options} = row
   let value = data?.[key] || ''
 
   switch (format) {
@@ -354,8 +354,9 @@ export function formatData(row: TableRow, data: any) {
 }
 
 export const getTheBeginningAndEndOfTheName = (str: string) => {
-  return `${str.charAt(0).toUpperCase()}${str.length > 1 && str.charAt(str.length - 1).toUpperCase()
-    }`
+  return `${str.charAt(0).toUpperCase()}${
+    str.length > 1 && str.charAt(str.length - 1).toUpperCase()
+  }`
 }
 
 export function formatValueTableRow(config: TableRow, currentData: any): string {
@@ -370,5 +371,16 @@ export function formatValueTableRow(config: TableRow, currentData: any): string 
       return value ? `+64 ${value}` : ''
     default:
       return value
+  }
+}
+
+export function deleteAllCookies() {
+  const cookies = document.cookie.split(';')
+
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i]
+    const eqPos = cookie.indexOf('=')
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
   }
 }
