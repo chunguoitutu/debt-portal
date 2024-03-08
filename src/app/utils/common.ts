@@ -363,7 +363,7 @@ export function formatValueTableRow(config: TableRow, currentData: any): string 
 
   switch (config.format) {
     case 'fullname':
-      return getFullName(config) || ''
+      return getFullName(currentData) || ''
     case 'money':
       return formatMoney(+value || 0)
     case 'phone':

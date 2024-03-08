@@ -39,7 +39,8 @@ const LoanDetails = () => {
 
   const fakeData = {
     loan_no: 'L-MC-2024-00123',
-    customer_name: 'Park Huyn Woo',
+    firstname: 'Huyn Woo',
+    lastname: 'Park',
     address:
       '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
     mobiphone_1: '3655637895',
@@ -151,11 +152,11 @@ const LoanDetails = () => {
   }
 
   return (
-    <div className='loan-details d-flex flex-column gap-24px mt-12px flex-grow-1 overflow-auto'>
+    <div className='loan-details d-flex flex-column gap-12px flex-grow-1 overflow-auto'>
       {/* Modal */}
       <TaggingOptions
         showTaggingOptions={showTaggingOptions}
-        onClose={handleToggleTaggingOptions}
+        onToggle={handleToggleTaggingOptions}
         onReloadApi={handleReloadApi}
       />
       {showRemark && (
@@ -170,15 +171,15 @@ const LoanDetails = () => {
 
       <DetailsHeader onBack={handleBackHistory}>
         <div className='d-flex flex-column flex-grow-1 gap-4px'>
-          <div className='d-flex align-items-center gap-4px'>
-            <div className={clsx(['mw-20px text-gray-300'])}>
+          <div className='d-flex align-items-center gap-8px'>
+            <div className={clsx(['d-flex align-items-center mw-20px text-gray-300'])}>
               <TagIcon />
             </div>
 
-            <h3 className='m-0 fs-16 fw-bold'>{fakeData.loan_no}</h3>
+            <h3 className='m-0 fs-18 fw-bold'>{fakeData.loan_no}</h3>
           </div>
 
-          <span>Task Details</span>
+          <span className='opacity-60'>Task Details</span>
         </div>
 
         {/* Tools */}
@@ -199,7 +200,7 @@ const LoanDetails = () => {
 
       {[1, 2].includes(+loanId) && (
         <Alert type={+loanId === 1 ? 'danger' : 'secondary'} className={clsx(['mx-12px'])}>
-          <h3 className='mb-4px fs-semibold fs-14'>
+          <h3 className='mb-4px fw-semibold fs-14'>
             {+loanId === 1 ? 'Bankruptcy - Death' : 'Payment Appointment'}
           </h3>
           <span className='fs-12 text-gray-700'>
