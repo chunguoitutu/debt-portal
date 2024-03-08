@@ -111,7 +111,7 @@ const TaggingOptions: FC<Props> = ({showTaggingOptions, onToggle, onReloadApi}) 
                 ])}
                 onClick={() => handleShowModalConfirm(o.label)}
               >
-                <div className={clsx(['mw-20px', o.classNameIcon])}>
+                <div className={clsx(['mw-20px d-flex align-items-center', o.classNameIcon])}>
                   <TagIcon />
                 </div>
                 <span className='fs-16 flex-grow-1'>{o.label}</span>

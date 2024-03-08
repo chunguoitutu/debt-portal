@@ -28,7 +28,7 @@ const FileItem: FC<Props> = ({
       {isShowRemoveIcon && (
         <FontAwesomeIcon
           icon={faClose}
-          className='fs-20 cursor-pointer text-hover-danger'
+          className='fs-18 p-4px cursor-pointer text-gray-700 text-hover-danger'
           onClick={() => onDeleteItem && onDeleteItem(fileInfo)}
         />
       )}
@@ -56,7 +56,7 @@ const FileItem: FC<Props> = ({
       <span className='fs-12 text-gray-700 align-self-start flex-grow-1'>{fileInfo.name}</span>
 
       <Button
-        className='d-flex justify-content-center align-items-center btn-secondary w-36px aspect-ratio-1-1'
+        className='d-flex justify-content-center align-items-center btn-secondary w-36px flex-shrink-0 p-0 aspect-ratio-1-1'
         onClick={() => downloadFileFromBase64(removeMimeType(fileInfo.base64), fileInfo.name)}
       >
         <FontAwesomeIcon icon={faDownload} />

@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import {JwtDecode, UserInfo, WithChildren} from '../types/common'
 import {getCurrentUser} from '../axios/request'
 import jwtDecode from 'jwt-decode'
+import {deleteAllCookies} from '../utils'
 
 type AuthContextProps = {
   currentUser: UserInfo | undefined
@@ -40,7 +41,10 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
 
   const logout = () => {
     setCurrentUser(undefined)
-    Cookies.remove('token')
+    deleteAllCookies()
+    setCompanyName('')
+    setPriority(0)
+    setCompanyId(0)
   }
 
   function handleLogout() {
@@ -74,6 +78,8 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
       }
 
       // Super admin receive company id from cookie
+      setCompanyName(company_name)
+      setCompanyId(company_id)
       setPriority(priority || 100)
       setCurrentUser(data)
     } catch (error: any) {

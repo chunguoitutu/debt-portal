@@ -15,9 +15,11 @@ import DebtTile from '@/components/debt-title'
 import {AvatarProps} from '@/app/types'
 import {swalConfirm, swalToast} from '@/app/swal-notification'
 import {DEFAULT_MSG_ERROR} from '@/app/constants'
+import {useSocket} from '@/app/context/SocketContext'
 
 const Profile = () => {
   const {currentUser, setCurrentUser} = useAuth()
+  const {socket} = useSocket()
   const navigate = useNavigate()
 
   function handleLogout() {
@@ -25,6 +27,7 @@ const Profile = () => {
     Cookies.remove('token')
     Cookies.remove('lastPageViewed')
     navigate('/login')
+    socket?.disconnect()
   }
 
   const [avatarEdit, setAvatarEdit] = useState<AvatarProps | null>(null)

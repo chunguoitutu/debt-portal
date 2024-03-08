@@ -218,7 +218,7 @@ const LoanDetails = () => {
               <Fragment key={el.key}>
                 <span
                   className={clsx([
-                    'w-fit-content fs-14 text-gray-600 pe-16px',
+                    'd-flex align-items-end w-fit-content fs-14 text-gray-600 pe-16px',
                     el.key === 'total_outstanding' && 'add-border',
                   ])}
                 >
@@ -226,7 +226,7 @@ const LoanDetails = () => {
                 </span>
                 <span
                   className={clsx([
-                    'fs-14 fw-semibold text-end',
+                    'd-flex align-items-end justify-content-end fs-14 fw-semibold text-end',
                     el.key === 'total_outstanding' && 'add-border',
                     el.className,
                   ])}
@@ -266,10 +266,10 @@ const LoanDetails = () => {
           </label>
 
           <div
-            className='text-gray-700 cursor-pointer text-hover-primary'
+            className='d-flex align-items-center gap-4px text-gray-700 cursor-pointer text-hover-primary ps-16px ms-16px border-start border-gray-300'
             onClick={handleToggleTaggingOptions}
           >
-            Tagging Options <FontAwesomeIcon icon={faChevronDown} />
+            Tagging Options <FontAwesomeIcon icon={faChevronDown} className='w-10px' />
           </div>
         </div>
 
@@ -320,7 +320,7 @@ const LoanDetails = () => {
           </div>
 
           <Button
-            className='d-flex justify-content-center align-items-center btn-primary w-36px h-36px aspect-ratio-1-1'
+            className='d-flex justify-content-center align-items-center btn-primary w-36px h-36px p-0 rounded-8px aspect-ratio-1-1'
             onClick={handleUpdateData}
           >
             <FontAwesomeIcon icon={faChevronRight} />
