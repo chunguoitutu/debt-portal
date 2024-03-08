@@ -159,14 +159,13 @@ const LoanDetails = () => {
         onToggle={handleToggleTaggingOptions}
         onReloadApi={handleReloadApi}
       />
-      {showRemark && (
-        <Remarks
-          data={remarkList}
-          onBack={handleToggleRemark}
-          idUpdate={1}
-          setRemarkList={setRemarkList}
-        />
-      )}
+      <Remarks
+        open={showRemark}
+        data={remarkList}
+        onBack={handleToggleRemark}
+        idUpdate={1}
+        setRemarkList={setRemarkList}
+      />
       {/* End Modal */}
 
       <DetailsHeader onBack={handleBackHistory}>
