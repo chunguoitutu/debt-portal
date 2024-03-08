@@ -1,7 +1,9 @@
 .wrapper-remarks-job {
   z-index: 1000000;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  max-width: 100%;
+  max-height: 100%;
+  height: 100vh;
   display: flex;
   background-color: white;
   top: 0px;
