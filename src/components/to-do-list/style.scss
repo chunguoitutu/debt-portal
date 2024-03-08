@@ -1,7 +1,7 @@
 .loan-item {
   position: relative;
 
-  &:hover {
+  &:active {
     &::before {
       clip-path: circle(200%);
     }
