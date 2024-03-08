@@ -25,8 +25,8 @@ const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
       {dataList.map((item, index) => (
         <Link
           key={index}
-          className={`card container mb-4px p-4px mh-100px list-statistical ${classShared}`}
-          style={{backgroundColor: '#f9f9f9'}}
+          className={`card container p-4px mh-100px list-statistical ${classShared}`}
+          style={{backgroundColor: '#f9f9f9', boxShadow: 'unset'}}
           {...rest}
           to={`/debt/loan-details/${Math.ceil(Math.random() * 3)}`}
         >

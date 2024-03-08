@@ -169,7 +169,7 @@ const CollectedAmount: FC<Props> = ({
               {formatMoneyNoIcon(amount_collected)}
               <span
                 className='fs-20 fw-semibold text-gray-600 align-self-center'
-                style={{marginTop: '1px'}}
+                style={{marginTop: '2px'}}
               >
                 SGD
               </span>
@@ -190,7 +190,7 @@ const CollectedAmount: FC<Props> = ({
               {formatMoneyNoIcon(amount_not_collected)}
               <span
                 className='fs-20 fw-semibold text-gray-600 align-self-center'
-                style={{marginTop: '1px'}}
+                style={{marginTop: '2px'}}
               >
                 SGD
               </span>
@@ -227,7 +227,7 @@ const CollectedAmount: FC<Props> = ({
               {formatMoneyNoIcon(amount_collected)}
               <span
                 className='fs-20 fw-semibold text-gray-600 align-self-center'
-                style={{marginTop: '1px'}}
+                style={{marginTop: '2px'}}
               >
                 SGD
               </span>

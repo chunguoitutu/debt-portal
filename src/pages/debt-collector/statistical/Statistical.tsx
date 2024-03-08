@@ -65,7 +65,7 @@ const Statistical = () => {
     <>
       <DebtTile title='Statistical' />
       <div className='d-flex flex-column gap-12px overflow-auto'>
-        <div className='card' style={{borderRadius: '0px'}}>
+        <div className='card border-0' style={{borderRadius: '0px'}}>
           <Swiper
             pagination={true}
             modules={[Pagination]}
@@ -102,7 +102,7 @@ const Statistical = () => {
             </SwiperSlide>
           </Swiper>
         </div>
-        <div className='card p-12px' style={{borderRadius: '0px'}}>
+        <div className='card p-12px border-0' style={{borderRadius: '0px'}}>
           <div className='d-flex flex-row align-items-center justify-content-between mb-16px'>
             <div className='d-flex flex-column'>
               <div className='fs-24 fw-bold text-primary'>32 Loan</div>
@@ -122,7 +122,7 @@ const Statistical = () => {
               />
             </div>
           </div>
-          <div>
+          <div className='d-flex flex-column gap-8px'>
             <ListStatistical data={dataStatistical} classShared='' />
           </div>
         </div>
