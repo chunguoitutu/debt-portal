@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect, useRef} from 'react'
 import Badge from '@/components/badge/Badge'
 import {formatMoney} from '@/app/utils'
 import Icons from '../icons'
