@@ -369,6 +369,11 @@ export function formatValueTableRow(config: TableRow, currentData: any): string 
       return formatMoney(+value || 0)
     case 'phone':
       return value ? `+64 ${value}` : ''
+    case 'option':
+      const currentOptions = config?.options || []
+      const label = currentOptions.find((o) => o.value === value)?.label || ''
+
+      return label
     default:
       return value
   }

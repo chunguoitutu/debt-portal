@@ -260,7 +260,7 @@ export type CheckboxTreeItem = {
 export type Option<T = any> = {
   label: string
   value: T
-}
+} & {[key: string]: any}
 
 export type DropDownGroup = {
   name: string
