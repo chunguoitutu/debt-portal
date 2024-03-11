@@ -49,7 +49,7 @@ const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
                 </div>
               </div>
               <div className='d-flex gap-4px flex-column'>
-                <div className='d-flex flex-row align-items-center justify-content-between pt-4px'>
+                <div className='d-flex flex-row align-items-center justify-content-between pt-8px'>
                   <div className='fs-13 fw-normal text-gray-600'>Customer Name</div>
                   <div className='fs-13 fw-semibold text-252f4a text-end'>{item.customer_name}</div>
                 </div>
