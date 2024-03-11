@@ -38,6 +38,7 @@ const LoanDetails = () => {
   const navigate = useNavigate()
 
   const fakeData = {
+    status: +loanId < 4 ? +loanId : 3,
     loan_no: 'L-MC-2024-00123',
     firstname: 'Huyn Woo',
     lastname: 'Park',
@@ -106,7 +107,7 @@ const LoanDetails = () => {
     try {
       const {isConfirmed} = await swalConfirm.fire({
         title: 'Are You Sure?',
-        text: `You won't be able to revert this.`,
+        text: `You won't be able to revert this`,
       })
 
       isConfirmed && handleDeleteItem(file)
@@ -214,6 +215,13 @@ const LoanDetails = () => {
       <div className='card py-12px mx-12px'>
         <div className='loan-info grid-2-columns px-12px'>
           {LOAN_INFO_CONFIG.map((el) => {
+            let classNameForKeyFormatOption = ''
+
+            if (el.format === 'option') {
+              const newClass = el.options?.find((o) => o.value === fakeData.status)?.className || ''
+              classNameForKeyFormatOption = `rounded-pill w-fit-content fs-12 lh-1 ms-auto ${newClass}`
+            }
+
             return (
               <Fragment key={el.key}>
                 <span
@@ -232,6 +240,7 @@ const LoanDetails = () => {
                     el.key === 'total_outstanding' && 'add-border',
                     el.key === 'address' && 'align-self-start',
                     el.className,
+                    classNameForKeyFormatOption,
                   ])}
                   data-key={el.key}
                 >

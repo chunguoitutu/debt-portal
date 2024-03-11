@@ -48,8 +48,11 @@ const DebtLayout = () => {
         await swalConfirm.fire({
           showCancelButton: false,
           confirmButtonText: 'OK',
-          title: 'Log out',
+          title: 'Log Out',
           text: 'Your account has been deactivated or deleted by the administrator.',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
         })
       } catch (error) {
         console.error(error)
