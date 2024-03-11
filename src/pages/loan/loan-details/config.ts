@@ -9,7 +9,7 @@ export const fake_file_base64_image =
 export const LoanStatusOption = [
   {label: 'Success Collection', value: 3, className: 'bg-light-primary text-primary p-4px'},
   {label: 'Unsuccess Collection', value: 1, className: 'bg-light-danger text-danger p-4px'},
-  {label: 'Payment Appoiment', value: 2, className: 'bg-light-primary text-primary p-4px'},
+  // {label: 'Payment Appoiment', value: 2, className: 'bg-light-primary text-primary p-4px'},
 ]
 export const LOAN_INFO_CONFIG: TableRow[] = [
   {key: 'status', name: 'Status', format: 'option', options: LoanStatusOption},

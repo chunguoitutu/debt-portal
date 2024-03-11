@@ -222,6 +222,10 @@ const LoanDetails = () => {
               classNameForKeyFormatOption = `rounded-pill w-fit-content fs-12 lh-1 ms-auto ${newClass}`
             }
 
+            if (el.key === 'status' && ![1, 3].includes(fakeData[el.key])) {
+              return <Fragment key={el.key}></Fragment>
+            }
+
             return (
               <Fragment key={el.key}>
                 <span

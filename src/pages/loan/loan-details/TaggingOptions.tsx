@@ -30,14 +30,13 @@ const TaggingOptions: FC<Props> = ({showTaggingOptions, onToggle, onReloadApi}) 
           : 'Confirm That The Borrower Will Make An Appointment To Repay?'
 
       const result = await swalConfirm.fire({
+        confirmButtonText: 'Yes',
         title: message,
         text: `You won't be able to revert this`,
       })
 
       if (result.isConfirmed) {
         handleChooseTagItem(label)
-      } else {
-        onToggle()
       }
     } catch (error) {
       console.error(error)
