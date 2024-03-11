@@ -17,7 +17,7 @@ const loginSchema = Yup.object().shape({
   username: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
-    .required('Debt Collector ID is required'),
+    .required('Username is required'),
   password: Yup.string()
     .min(8, 'Minimum 8 symbols')
     .max(50, 'Maximum 50 symbols')
@@ -103,7 +103,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
         <div className='w-100 mw-100 d-flex flex-column gap-16px '>
           <Input
             classInputWrap='w-100'
-            label='Debt Collector ID'
+            label='Username'
             type='text'
             name='username'
             required
