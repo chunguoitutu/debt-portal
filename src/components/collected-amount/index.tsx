@@ -209,7 +209,12 @@ const CollectedAmount: FC<Props> = ({
           <div className='d-flex flex-column gap-4px'>
             <div className='d-flex flex-row fw-bold fs-24 text-gray-900 gap-8px'>
               {home_visit}
-              <span className='fs-20 fw-semibold text-gray-600 align-self-center'>Home</span>
+              <span
+                className='fs-20 fw-semibold text-gray-600 align-self-center'
+                style={{marginTop: '2px'}}
+              >
+                Home
+              </span>
             </div>
             <div className='fs-13 fw-normal text-gray-600 w-75'>
               The number of houses you have to visit on {moment(currentDate).format('DD-MM-YYYY')}{' '}

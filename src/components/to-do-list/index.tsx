@@ -1,9 +1,10 @@
-import {FC, useEffect, useRef} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import Badge from '@/components/badge/Badge'
 import {formatMoney} from '@/app/utils'
 import Icons from '../icons'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import './style.scss'
+import Cookies from 'js-cookie'
 
 interface LoanData {
   id?: any
@@ -17,20 +18,44 @@ interface LoanData {
 interface Props {
   data: LoanData[] | LoanData
   classShared?: string
+  containerRef?: React.RefObject<any> | null
 }
 
-const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
+const ToDoList: FC<Props> = ({data, classShared, containerRef, ...rest}) => {
   const dataList = Array.isArray(data) ? data : [data]
+  const navigate = useNavigate()
+
+  function goToLoanDetails(id: number) {
+    Cookies.set('lastViewLoanId', id.toString())
+    navigate(`/debt/loan-details/${id}`)
+  }
+
+  const lastView = +Cookies.get('lastViewLoanId') || 0
+
+  const ref = useRef<HTMLDivElement>(null)
+
+  console.log(ref.current)
+
+  useEffect(() => {
+    if (!lastView) return
+
+    setTimeout(() => {
+      ref.current.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }, 300)
+  }, [lastView])
 
   return (
     <>
       {dataList.map((item, index) => (
-        <Link
-          to={`/debt/loan-details/${Math.ceil(Math.random() * 3)}`} // random number 1 to 3
+        <div
+          onClick={() => goToLoanDetails(item.id)}
           key={index}
-          className={`card loan-item container mb-12px p-12px border-0 ${classShared}`}
+          className={`card loan-item container mb-12px p-12px border-0  ${classShared}`}
           {...rest}
           style={{borderRadius: '0px'}}
+          ref={lastView === item.id ? ref : (undefined as any)}
         >
           <div
             className={`d-flex flex-row gap-8px ${
@@ -71,7 +96,7 @@ const ToDoList: FC<Props> = ({data, classShared, ...rest}) => {
               {formatMoney(item.outstanding_amount)}
             </div>
           </div>
-        </Link>
+        </div>
       ))}
     </>
   )

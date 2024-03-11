@@ -32,12 +32,46 @@ const DebtListToDo: FC = () => {
       outstanding_amount: '5000',
       status: 0,
     },
+    {
+      id: 4,
+      loan_no: 'L-A2024-123',
+      customer_name: 'Ronaldo',
+      address:
+        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
+      outstanding_amount: '5000',
+      status: 0,
+    },
+    {
+      id: 5,
+      loan_no: 'L-A2024-123',
+      customer_name: 'Ronaldo',
+      address:
+        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
+      outstanding_amount: '5000',
+      status: 0,
+    },
+    {
+      id: 6,
+      loan_no: 'L-A2024-123',
+      customer_name: 'Ronaldo',
+      address:
+        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
+      outstanding_amount: '5000',
+      status: 0,
+    },
+    {
+      id: 7,
+      loan_no: 'L-A2024-123',
+      customer_name: 'Ronaldo',
+      address:
+        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
+      outstanding_amount: '5000',
+      status: 0,
+    },
   ]
 
   // With status === 1, the job is completed
   const ToDoDate = data.filter((item) => item.status !== 1)
-
-  const idData = data.map((item) => item.id)
 
   return (
     <>

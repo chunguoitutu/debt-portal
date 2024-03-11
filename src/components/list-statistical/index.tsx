@@ -1,9 +1,10 @@
-import {FC} from 'react'
+import {FC, useEffect, useRef} from 'react'
 import './style.scss'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import {formatMoney} from '@/app/utils'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 interface LoanData {
   id?: any
@@ -20,15 +21,39 @@ interface Props {
 
 const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
   const dataList = Array.isArray(data) ? data : [data]
+
+  const navigate = useNavigate()
+
+  function goToLoanDetails(id: number) {
+    Cookies.set('lastViewLoanId', id.toString())
+    navigate(`/debt/loan-details/${id}`)
+  }
+
+  const lastView = +Cookies.get('lastViewLoanId') || 0
+
+  const ref = useRef<HTMLDivElement>(null)
+
+  console.log(ref.current)
+
+  useEffect(() => {
+    if (!lastView) return
+
+    setTimeout(() => {
+      ref.current.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }, 300)
+  }, [lastView])
   return (
     <>
       {dataList.map((item, index) => (
-        <Link
+        <div
           key={index}
           className={`card container p-4px mh-100px list-statistical ${classShared}`}
           style={{backgroundColor: '#f9f9f9', boxShadow: 'unset'}}
           {...rest}
-          to={`/debt/loan-details/${Math.ceil(Math.random() * 3)}`}
+          onClick={() => goToLoanDetails(item.id)}
+          ref={lastView === item.id ? ref : (undefined as any)}
         >
           <div className='d-flex flex-row gap-12px'>
             <div className='h-100 square-id'>
@@ -58,7 +83,7 @@ const ListStatistical: FC<Props> = ({data, classShared, ...rest}) => {
               </div>
             </div>
           </div>
-        </Link>
+        </div>
       ))}
     </>
   )
