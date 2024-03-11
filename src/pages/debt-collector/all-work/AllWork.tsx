@@ -1,7 +1,6 @@
-import {FC, useRef} from 'react'
+import {FC} from 'react'
 import ToDoList from '@/components/to-do-list'
 import DebtTile from '@/components/debt-title'
-import {useParams} from 'react-router-dom'
 
 const DebtAllWork: FC = () => {
   //fake data
@@ -26,51 +25,6 @@ const DebtAllWork: FC = () => {
     },
     {
       id: 3,
-      loan_no: 'L-A2024-123',
-      customer_name: 'Ronaldo',
-      address:
-        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
-      outstanding_amount: '5000',
-      status: 0,
-    },
-    {
-      id: 4,
-      loan_no: 'L-A2024-123',
-      customer_name: 'Ronaldo',
-      address:
-        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
-      outstanding_amount: '5000',
-      status: 0,
-    },
-    {
-      id: 5,
-      loan_no: 'L-A2024-123',
-      customer_name: 'Ronaldo',
-      address:
-        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
-      outstanding_amount: '5000',
-      status: 0,
-    },
-    {
-      id: 6,
-      loan_no: 'L-A2024-123',
-      customer_name: 'Ronaldo',
-      address:
-        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
-      outstanding_amount: '5000',
-      status: 0,
-    },
-    {
-      id: 7,
-      loan_no: 'L-A2024-123',
-      customer_name: 'Ronaldo',
-      address:
-        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
-      outstanding_amount: '5000',
-      status: 0,
-    },
-    {
-      id: 8,
       loan_no: 'L-A2024-123',
       customer_name: 'Ronaldo',
       address:
