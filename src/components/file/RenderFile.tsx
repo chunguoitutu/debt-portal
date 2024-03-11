@@ -34,7 +34,7 @@ const RenderFile = ({arrayMap, setUploadFile, url = '', className, disabled}: Pr
                         swalConfirm
                           .fire({
                             title: 'Are You Sure?',
-                            text: `You Won't Be Able To Revert This.`,
+                            text: `You won't be able to revert this.`,
                           })
                           .then((result) => {
                             if (result.isConfirmed) {

@@ -177,7 +177,7 @@ const Table: FC<Props> = ({
     swalConfirm
       .fire({
         title: 'Are You Sure?',
-        text: textConfirmDelete || `You Won't Be Able To Revert This.`,
+        text: textConfirmDelete || `You won't be able to revert this.`,
       })
       .then((result) => {
         if (result.isConfirmed) {

@@ -26,12 +26,12 @@ const TaggingOptions: FC<Props> = ({showTaggingOptions, onToggle, onReloadApi}) 
 
       const message =
         label === 'Bankruptcy - death'
-          ? 'Confirm that the borrower is Bankrupt - deceased?'
-          : "Confirm the borrower's payment date?"
+          ? 'Confirm That The Borrower Is Bankrupt - Deceased?'
+          : "Confirm The Borrower's Payment Date?"
 
       const result = await swalConfirm.fire({
         title: message,
-        text: `You Won't Be Able To Revert This.`,
+        text: `You won't be able to revert this.`,
       })
 
       if (result.isConfirmed) {

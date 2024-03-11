@@ -69,32 +69,59 @@
   }
 }
 
-.swal2-container.swal2-center.swal2-backdrop-show {
-  inset-inline: 50%;
-  width: 100%;
-  max-width: 768px;
-  display: flex;
-  transform: translateX(-50%);
-}
-
-#swal2-title {
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-#swal2-html-container {
-  margin: 0;
-  font-style: 14px !important;
-  color: var(--bs-gray-900);
-}
-
-.swal2-popup {
-  padding: 20px !important;
-  border-radius: 8px !important;
-}
-
 .swal2-icon {
   margin-top: 0 !important;
+  margin-bottom: 20px !important;
+  border-color: currentColor !important;
+
+  &.swal2-warning {
+    color: var(--bs-warning) !important;
+  }
+
+  &.swal2-error {
+    color: var(--bs-danger) !important;
+
+    [class^='swal2-x-mark-line'] {
+      background-color: currentColor !important;
+    }
+  }
+
+  &.swal2-info,
+  &.swal2-question {
+    color: var(--bs-primary) !important;
+  }
+
+  &.swal2-success {
+    color: var(--bs-success) !important;
+  }
+}
+
+.swal2-container.swal2-center {
+  &.swal2-backdrop-show {
+    inset-inline: 50%;
+    width: 100%;
+    max-width: 768px;
+    display: flex;
+    transform: translateX(-50%);
+    padding: 12px !important;
+  }
+
+  #swal2-title {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  #swal2-html-container {
+    margin: 0;
+    font-size: 14px !important;
+    color: var(--bs-gray-900);
+  }
+
+  .swal2-popup {
+    padding: 44px !important;
+    border-radius: 8px !important;
+  }
 }
 
 // custom react pdf viewer

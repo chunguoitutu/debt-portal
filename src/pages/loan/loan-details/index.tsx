@@ -106,7 +106,7 @@ const LoanDetails = () => {
     try {
       const {isConfirmed} = await swalConfirm.fire({
         title: 'Are You Sure?',
-        text: `You Won't Be Able To Revert This.`,
+        text: `You won't be able to revert this.`,
       })
 
       isConfirmed && handleDeleteItem(file)
