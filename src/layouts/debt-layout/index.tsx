@@ -72,7 +72,7 @@ const DebtLayout = () => {
 
   return (
     <div className='debt d-flex justify-content-center vh-100 overflow-hidden'>
-      <div className='d-flex flex-column mw-768px w-100 h-100 bg-body overflow-hidden position-relative bg-f6f6f6'>
+      <div className='d-flex flex-column wrapper-mobile-debt  h-100 bg-body overflow-hidden position-relative bg-f6f6f6'>
         {!!company_id && <Outlet />}
         <DebtMenu />
       </div>
