@@ -1,13 +1,12 @@
 .list-statistical {
   .square-id {
-    height: 90px !important;
-    width: 92px !important;
+    height: 35px;
+    min-width: 31px;
     background-color: #eaeaea;
     border-radius: 8px;
   }
-  .haithegioi {
+  .border-bottom-header {
     border-bottom: 1px dashed #dbdfe9;
-    max-height: 23px !important;
   }
   .text-252f4a {
     color: #252f4a;
