@@ -100,7 +100,7 @@ const LoginForm: FC<HomeProps> = ({screenWidth}) => {
           </div>
         )}
 
-        <div className='w-100 mw-100 d-flex flex-column gap-16px px-10px'>
+        <div className='w-100 mw-100 d-flex flex-column gap-16px '>
           <Input
             classInputWrap='w-100'
             label='Debt Collector ID'
