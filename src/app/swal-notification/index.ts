@@ -17,10 +17,10 @@ export const swalConfirm = Swal.mixin({
   confirmButtonText: 'Delete',
   focusCancel: true,
   customClass: {
-    htmlContainer: 'fs-3',
-    cancelButton: 'btn btn-lg order-0 btn-secondary m-8px fs-14',
-    confirmButton: 'order-1 btn btn-lg btn-danger m-8px fs-14',
-    actions: 'd-flex justify-content-center w-100 ',
+    htmlContainer: 'fs-14',
+    cancelButton: 'btn btn-lg order-0 btn-secondary fs-14',
+    confirmButton: 'order-1 btn btn-lg btn-danger fs-14',
+    actions: 'd-flex justify-content-center w-100',
   },
 })
 
@@ -33,8 +33,8 @@ export const swalConfirmCancel = Swal.mixin({
   focusCancel: true,
   customClass: {
     htmlContainer: 'fs-3',
-    cancelButton: 'btn btn-lg order-0 btn-secondary m-8px fs-6',
-    confirmButton: 'order-1 btn btn-lg btn-danger m-8px fs-6',
+    cancelButton: 'btn btn-lg order-0 btn-secondary fs-6',
+    confirmButton: 'order-1 btn btn-lg btn-danger fs-6',
     actions: 'd-flex justify-content-center w-100 ',
   },
 })

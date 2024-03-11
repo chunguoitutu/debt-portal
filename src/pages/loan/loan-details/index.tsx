@@ -220,7 +220,9 @@ const LoanDetails = () => {
                   className={clsx([
                     'd-flex align-items-end w-fit-content fs-14 text-gray-600 pe-16px',
                     el.key === 'total_outstanding' && 'add-border',
+                    el.key === 'address' && 'align-self-start',
                   ])}
+                  data-key={el.key}
                 >
                   {el.name}
                 </span>
@@ -228,8 +230,10 @@ const LoanDetails = () => {
                   className={clsx([
                     'd-flex align-items-end justify-content-end fs-14 fw-semibold text-end',
                     el.key === 'total_outstanding' && 'add-border',
+                    el.key === 'address' && 'align-self-start',
                     el.className,
                   ])}
+                  data-key={el.key}
                 >
                   {formatValueTableRow(el, fakeData)}
                 </span>
