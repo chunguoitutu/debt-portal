@@ -51,11 +51,11 @@
 .input-remark-import {
   display: block;
   width: 100%;
-  padding: 0.775rem 1rem;
   font-size: 14px !important;
   font-weight: 400 !important;
   line-height: 20px !important;
   color: var(--gray-bs-gray-700);
+  padding: 7px 0px 7px 0px !important;
   background-clip: padding-box;
   border: 1px solid #fff !important;
   -webkit-appearance: none;
@@ -63,6 +63,5 @@
   appearance: none;
   border-radius: 0.475rem;
   box-shadow: false;
-  max-height: 200px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

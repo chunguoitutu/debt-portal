@@ -120,14 +120,14 @@ const Remarks = ({data, setRemarkList, idUpdate, onBack, open}: Props) => {
           })}
         </div>
         <div className='mt-auto border-top border-gray-200 p-12px '>
-          <div className='d-flex justify-content-center align-items-end gap-4'>
-            <textarea
+          <div className='d-flex justify-content-center h-100 align-items-end gap-4'>
+            <input
               placeholder='Enter job remark...'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               id='myInput'
-              className='w-100 min-h-50px  input-remark-import'
+              className='w-100 h-100  input-remark-import'
               style={{
                 border: '1px solid ',
                 outline: 'none',
