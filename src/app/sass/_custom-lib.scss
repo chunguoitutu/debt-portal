@@ -77,6 +77,26 @@
   transform: translateX(-50%);
 }
 
+#swal2-title {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+#swal2-html-container {
+  margin: 0;
+  font-style: 14px !important;
+  color: var(--bs-gray-900);
+}
+
+.swal2-popup {
+  padding: 20px !important;
+  border-radius: 8px !important;
+}
+
+.swal2-icon {
+  margin-top: 0 !important;
+}
+
 // custom react pdf viewer
 .rpv-core__viewer {
   height: fit-content !important;

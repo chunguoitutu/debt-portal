@@ -131,8 +131,8 @@ const Profile = () => {
       >
         <div className='profile-content d-flex flex-column align-items-center p-32px pb-20px rounded-24px mb-4px'>
           <Avatar
-            className='rounded-circle'
-            size={'140px'}
+            className='rounded-24px'
+            size={'150px'}
             file={avatarEdit?.base64 || avatarDB}
             onChange={handleChangeAvatar}
             onRemove={handleRemoveAvatar}
@@ -155,15 +155,15 @@ const Profile = () => {
             </div>
           )}
 
-          <h3 className='m-0 fs-20 text-white fw-bolder mt-30px'>{getFullName(currentUser)} </h3>
-          <div className='profile-role py-4px px-16px rounded-24px mt-8px fw-bolder'>
+          <h3 className='m-0 fs-20 text-white fw-bold mt-30px'>{getFullName(currentUser)} </h3>
+          <div className='profile-role py-4px px-16px rounded-24px mt-8px fw-bold fs-14'>
             Debt Collector
           </div>
         </div>
 
         <div className='profile-collected rounded-24px d-flex flex-column align-items-center gap-4px px-32px py-20px mb-32px'>
           <span className='text-gray-400 fs-14'>You have earned:</span>
-          <span className='fs-20 fw-bolder text-white'>{formatMoney(12540.32)}</span>
+          <span className='fs-20 fw-bold text-white'>{formatMoney(12540.32)}</span>
           <span className='text-gray-400 fs-14'>in commissions</span>
         </div>
 
