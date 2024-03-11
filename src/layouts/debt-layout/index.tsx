@@ -39,7 +39,7 @@ const DebtLayout = () => {
   }, [company_id])
 
   useEffect(() => {
-    const handleDetectUserInactiveOrDeleted = async (data) => {
+    const handleDetectUserInactiveOrDeleted = async (data: any) => {
       if (data?.userId !== currentUser?.id) return
 
       Cookies.remove('token')
@@ -50,9 +50,6 @@ const DebtLayout = () => {
           confirmButtonText: 'OK',
           title: 'Log out',
           text: 'Your account has been deactivated or deleted by the administrator.',
-          customClass: {
-            confirmButton: 'order-1 btn btn-lg btn-primary m-8px fs-14',
-          },
         })
       } catch (error) {
         console.error(error)
