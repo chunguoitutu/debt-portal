@@ -318,7 +318,7 @@ const LoanDetails = () => {
               placeholder='Enter cash collected'
               classShared='flex-grow-1'
               classInputWrap='border-0'
-              className='h-unset border-0 fs-14 fw-normal debt-input fs-14'
+              className='h-unset border-0 fs-16 fw-normal debt-input fs-14'
               autoComplete='off'
             />
           </div>
