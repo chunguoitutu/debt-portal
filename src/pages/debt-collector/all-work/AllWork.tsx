@@ -32,6 +32,24 @@ const DebtAllWork: FC = () => {
       outstanding_amount: '5000',
       status: 0,
     },
+    {
+      id: 4,
+      loan_no: 'L-A2024-123',
+      customer_name: 'Ronaldo',
+      address:
+        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
+      outstanding_amount: '5000',
+      status: 1,
+    },
+    {
+      id: 5,
+      loan_no: 'L-A2024-123',
+      customer_name: 'Ronaldo',
+      address:
+        '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
+      outstanding_amount: '5000',
+      status: 1,
+    },
   ]
 
   return (

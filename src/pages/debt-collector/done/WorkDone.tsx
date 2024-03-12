@@ -24,16 +24,16 @@ const WorkDone: FC = () => {
       status: 1,
     },
     {
-      id: 3,
+      id: 4,
       loan_no: 'L-A2024-123',
       customer_name: 'Ronaldo',
       address:
         '548, Any Building name, if applicable, 09, 128, Dedok North Avenue 1, 460548, Singapore',
       outstanding_amount: '5000',
-      status: 0,
+      status: 1,
     },
     {
-      id: 4,
+      id: 5,
       loan_no: 'L-A2024-123',
       customer_name: 'Ronaldo',
       address:
