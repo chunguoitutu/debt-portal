@@ -1,7 +1,6 @@
 import './style.scss'
 import {useEffect, useState} from 'react'
 import {COMPONENT_LIST} from './config'
-import {useShared} from '@/app/context/SharedContext'
 
 const Home = () => {
   const [screenWidth, setScreenWidth] = useState<number>(

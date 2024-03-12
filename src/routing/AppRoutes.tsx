@@ -13,13 +13,10 @@ import {MasterLayout} from '../layouts/master-layout/MasterLayout'
 import {getCSSVariableValue} from '../_metronic/assets/ts/_utils'
 import TopBarProgress from 'react-topbar-progress-indicator'
 
-import DashBoardPortal from '@/pages/dashboard-portal'
 import Home from '@/pages/home'
 import {WithChildren} from '@/app/types'
 import Profile from '@/pages/profile'
-import MyLoans from '@/pages/my-loans'
 import LoanDetailsPortal from '@/pages/loan-portal'
-import NewApplicationPortal from '@/pages/application/NewApplicationPortal'
 import DebtLayout from '@/layouts/debt-layout'
 import {useAuth} from '@/app/context/AuthContext'
 import {AuthLayout} from '@/components/auth-layout/AuthLayout'
@@ -59,25 +56,6 @@ const AppRoutes: FC = () => {
           <Route path='error/*' element={<ErrorsPage />} />
 
           <Route element={<MasterLayout />}>
-            <Route path='/profile'>
-              <Route index element={<Profile />} />
-            </Route>
-            <Route path='/application'>
-              <Route index element={<NewApplicationPortal />} />
-            </Route>
-            <Route path='/dashboard'>
-              <Route index element={<DashBoardPortal />} />
-            </Route>
-            <Route path='/customers'></Route>
-            <Route path='/portal' element={<DashBoardPortal />} />
-
-            <Route path='/portal' element={<DashBoardPortal />} />
-
-            <Route path='/my-loans'>
-              <Route index element={<MyLoans />} />
-              <Route path='details/:id' element={<LoanDetailsPortal />} />
-            </Route>
-
             <Route
               path='/account/*'
               element={
