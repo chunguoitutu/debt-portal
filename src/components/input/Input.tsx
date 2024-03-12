@@ -1,8 +1,5 @@
 import {
-  FC,
-  ForwardRefExoticComponent,
   ForwardRefRenderFunction,
-  ForwardedRef,
   HTMLInputTypeAttribute,
   InputHTMLAttributes,
   ReactNode,
@@ -62,6 +59,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 ) => {
   const [typeCustom, setTypeCustom] = useState<string>(
     ['money', 'phone', 'number'].includes(type) ? 'text' : type
+    // ['money', 'number'].includes(type) ? 'number' : type === 'phone' ? 'text' : type
   )
 
   const defaultId = useId()
@@ -73,16 +71,20 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     }
   }
 
-  // handle deleting characters on firefox
+  // handle remove characters not allowed
   function handleKeyPress({noThereAreCommas = true, e}: any) {
-    // Only allow integer values
-    if (noThereAreCommas && e.key === '.') return e.preventDefault()
+    const oldValue = (e.target.value as string) || ''
+    const caretPosition = e.target.selectionStart
+    const newValue = +`${oldValue.slice(0, caretPosition)}${e.data}${oldValue.slice(caretPosition)}`
 
-    // Concatenate old value and key pressed
-    const newValue: string = e.target.value + e.key
+    // Only allow integer
+    if (!noThereAreCommas) {
+      const isInteger = Number.isInteger(newValue)
+      !isInteger && e.preventDefault()
+    }
 
-    // still allow 0
-    ;+newValue !== 0 && !+newValue && e.preventDefault()
+    // Allow positive number
+    !newValue && e.preventDefault()
   }
 
   function handlePaste({noThereAreCommas = true, e}: any) {
@@ -138,9 +140,9 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
           id={id || defaultId || name}
           name={name}
           {...(ref ? {} : {value: value})}
-          onKeyPressCapture={(e) =>
+          onBeforeInput={(e) =>
             ['number', 'money', 'phone'].includes(type) &&
-            handleKeyPress({e: e, noThereAreCommas: noThereAreCommas})
+            handleKeyPress({e: e, onlyInteger: noThereAreCommas})
           }
           onPaste={(e) =>
             ['number', 'money', 'phone'].includes(type) &&
