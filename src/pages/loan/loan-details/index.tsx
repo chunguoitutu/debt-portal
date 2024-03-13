@@ -153,21 +153,13 @@ const LoanDetails = () => {
   }
 
   return (
-    <div className='loan-details d-flex flex-column gap-12px flex-grow-1 overflow-auto'>
+    <div className='loan-details d-flex flex-column gap-12px flex-grow-1 overflow-hidden'>
       {/* Modal */}
       <TaggingOptions
         showTaggingOptions={showTaggingOptions}
         onToggle={handleToggleTaggingOptions}
         onReloadApi={handleReloadApi}
       />
-      <Remarks
-        open={showRemark}
-        data={remarkList}
-        onBack={handleToggleRemark}
-        idUpdate={1}
-        setRemarkList={setRemarkList}
-      />
-      {/* End Modal */}
 
       <DetailsHeader onBack={handleBackHistory}>
         <div className='d-flex flex-column flex-grow-1 gap-4px'>
@@ -198,71 +190,83 @@ const LoanDetails = () => {
         </div>
       </DetailsHeader>
 
-      {[1, 2].includes(+loanId) && (
-        <Alert type={+loanId === 1 ? 'danger' : 'secondary'} className={clsx(['mx-12px'])}>
-          <h3 className='mb-4px fw-semibold fs-14'>
-            {+loanId === 1 ? 'Bankruptcy - Death' : 'Payment Appointment'}
-          </h3>
-          <span className='fs-12 text-gray-700'>
-            {' '}
-            {+loanId === 1
-              ? 'The loan cannot be recovered.'
-              : 'The customer promises to pay another day.'}
-          </span>
-        </Alert>
-      )}
+      <div className='d-flex flex-column flex-grow-1 overflow-auto'>
+        <Remarks
+          open={showRemark}
+          data={remarkList}
+          onBack={handleToggleRemark}
+          idUpdate={1}
+          setRemarkList={setRemarkList}
+        />
+        {/* End Modal */}
 
-      <div className='card py-12px mx-12px'>
-        <div className='loan-info grid-2-columns px-12px'>
-          {LOAN_INFO_CONFIG.map((el) => {
-            let classNameForKeyFormatOption = ''
+        {[1, 2].includes(+loanId) && (
+          <Alert type={+loanId === 1 ? 'danger' : 'secondary'} className={clsx(['mx-12px'])}>
+            <h3 className='mb-4px fw-semibold fs-14'>
+              {+loanId === 1 ? 'Bankruptcy - Death' : 'Payment Appointment'}
+            </h3>
+            <span className='fs-12 text-gray-700'>
+              {' '}
+              {+loanId === 1
+                ? 'The loan cannot be recovered.'
+                : 'The customer promises to pay another day.'}
+            </span>
+          </Alert>
+        )}
 
-            if (el.format === 'option') {
-              const newClass = el.options?.find((o) => o.value === fakeData.status)?.className || ''
-              classNameForKeyFormatOption = `rounded-pill w-fit-content fs-12 lh-1 ms-auto ${newClass}`
-            }
+        <div className='card py-12px mx-12px'>
+          <div className='loan-info grid-2-columns px-12px'>
+            {LOAN_INFO_CONFIG.map((el) => {
+              let classNameForKeyFormatOption = ''
 
-            if (el.key === 'status' && ![1, 3].includes(fakeData[el.key])) {
-              return <Fragment key={el.key}></Fragment>
-            }
+              if (el.format === 'option') {
+                const newClass =
+                  el.options?.find((o) => o.value === fakeData.status)?.className || ''
+                classNameForKeyFormatOption = `rounded-pill w-fit-content fs-12 lh-1 ms-auto ${newClass}`
+              }
 
-            return (
-              <Fragment key={el.key}>
-                <span
-                  className={clsx([
-                    'd-flex align-items-end w-fit-content fs-14 text-gray-600 pe-16px',
-                    el.key === 'total_outstanding' && 'add-border',
-                    el.key === 'address' && 'align-self-start',
-                  ])}
-                  data-key={el.key}
-                >
-                  {el.name}
-                </span>
-                <span
-                  className={clsx([
-                    'd-flex align-items-end justify-content-end fs-14 fw-semibold text-end',
-                    el.key === 'total_outstanding' && 'add-border',
-                    el.key === 'address' && 'align-self-start',
-                    el.className,
-                    classNameForKeyFormatOption,
-                  ])}
-                  data-key={el.key}
-                >
-                  {formatValueTableRow(el, fakeData)}
-                </span>
-              </Fragment>
-            )
-          })}
+              if (el.key === 'status' && ![1, 3].includes(fakeData[el.key])) {
+                return <Fragment key={el.key}></Fragment>
+              }
+
+              return (
+                <Fragment key={el.key}>
+                  <span
+                    className={clsx([
+                      'd-flex align-items-end w-fit-content fs-14 text-gray-600 pe-16px',
+                      el.key === 'total_outstanding' && 'add-border',
+                      el.key === 'address' && 'align-self-start',
+                    ])}
+                    data-key={el.key}
+                  >
+                    {el.name}
+                  </span>
+                  <span
+                    className={clsx([
+                      'd-flex align-items-end justify-content-end fs-14 fw-semibold text-end',
+                      el.key === 'total_outstanding' && 'add-border',
+                      el.key === 'address' && 'align-self-start',
+                      el.className,
+                      classNameForKeyFormatOption,
+                    ])}
+                    data-key={el.key}
+                  >
+                    {formatValueTableRow(el, fakeData)}
+                  </span>
+                </Fragment>
+              )
+            })}
+          </div>
+
+          {FAKE_FILE_LIST.map((f) => (
+            <FileItem
+              key={f.name}
+              fileInfo={f}
+              className='p-12px pb-0 mt-12px w-100 border-top border-2 border-gray-200'
+              onDeleteItem={handleShowConfirmDelete}
+            />
+          ))}
         </div>
-
-        {FAKE_FILE_LIST.map((f) => (
-          <FileItem
-            key={f.name}
-            fileInfo={f}
-            className='p-12px pb-0 mt-12px w-100 border-top border-2 border-gray-200'
-            onDeleteItem={handleShowConfirmDelete}
-          />
-        ))}
       </div>
       {/* control */}
       <div className='debt-control card mt-auto mt-auto'>

@@ -128,6 +128,11 @@
     padding: 44px !important;
     border-radius: 8px !important;
   }
+
+  .swal2-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 // custom react pdf viewer
