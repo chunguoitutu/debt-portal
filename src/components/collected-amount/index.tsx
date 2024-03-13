@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import ToDoList from '@/components/to-do-list'
 import DebtTile from '@/components/debt-title'
 import {Input} from '@/components/input'
@@ -14,12 +14,12 @@ type Props = {
   chartLine?: number
   chartRotate?: number
   className?: string
-  amount_collected?: any
-  amount_not_collected?: any
-  must_collect_amount?: any
-  home_visit?: any
-  total_home_visit?: any
-  task?: any
+  amount_collected?: number
+  amount_not_collected?: number
+  must_collect_amount?: number
+  home_visit?: number
+  total_home_visit?: number
+  task?: number
   title: 'collected' | 'uncollected' | 'visit' | 'commission'
 }
 
@@ -36,6 +36,10 @@ const CollectedAmount: FC<Props> = ({
   task,
   title,
 }) => {
+  const [valueCollected, setValueCollected] = useState<any>(null)
+  const [valueNotCollected, setValueNotCollected] = useState<any>(null)
+  const [valueHomeVisit, setValueHomeVisit] = useState<any>(null)
+
   const {values, handleChange} = useFormik({
     initialValues: {
       date: '',
@@ -69,6 +73,19 @@ const CollectedAmount: FC<Props> = ({
     let newValue = +value || 0
 
     return numeral(newValue).format('0,0.00')
+  }
+
+  function handleChangePercent() {
+    if (title === 'collected') {
+      const percentColleted = +((amount_collected / must_collect_amount) * 100).toFixed(0)
+      setValueCollected(percentColleted)
+    } else if (title === 'uncollected') {
+      const percentUnCollected = +((amount_not_collected / must_collect_amount) * 100).toFixed(0)
+      setValueNotCollected(percentUnCollected)
+    } else if (title === 'visit') {
+      const percentVisit = +((home_visit / total_home_visit) * 100).toFixed(0)
+      setValueHomeVisit(percentVisit)
+    }
   }
 
   //==================================START HANDLE FOR CHART==================================//
@@ -130,7 +147,13 @@ const CollectedAmount: FC<Props> = ({
 
     // Init 2
     drawCircle('#E4E6EF', options.lineWidth, 100 / 100)
-    drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 75 / 100)
+    if (title === 'collected') {
+      drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, valueCollected / 100)
+    } else if (title === 'visit') {
+      drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, valueHomeVisit / 100)
+    } else if (title === 'uncollected') {
+      drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, valueNotCollected / 100)
+    }
   }
 
   const refreshChart = () => {
@@ -148,6 +171,10 @@ const CollectedAmount: FC<Props> = ({
   }, [chartRef])
 
   //==================================END HANDLE FOR CHART==================================//
+
+  useEffect(() => {
+    handleChangePercent()
+  }, [title])
 
   return (
     <div className='w-100 d-flex flex-column gap-24px mb-24px'>
@@ -246,7 +273,11 @@ const CollectedAmount: FC<Props> = ({
 
         {title !== 'commission' && (
           <div className='d-flex flex-center'>
-            <div className='position-absolute fw-bold text-gray-900 mb-2 fs-16'>75%</div>
+            <div className='position-absolute fw-bold text-gray-900 mb-2 fs-16'>
+              {title === 'collected' && valueCollected}
+              {title === 'uncollected' && valueNotCollected}
+              {title === 'visit' && valueHomeVisit}%
+            </div>
             <div
               id='kt_card_widget_17_chart'
               ref={chartRef}
