@@ -168,13 +168,10 @@ const CollectedAmount: FC<Props> = ({
 
   useEffect(() => {
     refreshChart()
-  }, [chartRef])
+    handleChangePercent()
+  }, [chartRef, title, refreshChart])
 
   //==================================END HANDLE FOR CHART==================================//
-
-  useEffect(() => {
-    handleChangePercent()
-  }, [title])
 
   return (
     <div className='w-100 d-flex flex-column gap-24px mb-24px'>
