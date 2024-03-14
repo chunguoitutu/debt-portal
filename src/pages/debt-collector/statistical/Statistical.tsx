@@ -66,20 +66,6 @@ const Statistical = () => {
       total_outstanding: '5000',
       status: 2,
     },
-    {
-      id: 6,
-      loan_no: 'L-A2024-123',
-      customer_name: 'Low G',
-      total_outstanding: '5000',
-      status: 2,
-    },
-    {
-      id: 7,
-      loan_no: 'L-A2024-123',
-      customer_name: 'Low G',
-      total_outstanding: '5000',
-      status: 2,
-    },
   ]
 
   return (
