@@ -27,7 +27,7 @@ const CollectedAmount: FC<Props> = ({
   chartSize = 82,
   chartLine = 13,
   chartRotate = 0,
-  className,
+  className = '',
   amount_collected,
   amount_not_collected,
   must_collect_amount,
@@ -174,7 +174,7 @@ const CollectedAmount: FC<Props> = ({
   //==================================END HANDLE FOR CHART==================================//
 
   return (
-    <div className='w-100 d-flex flex-column gap-24px mb-24px'>
+    <div className={`w-100 d-flex flex-column gap-24px mb-24px ${className}`}>
       <div className='d-flex flex-row align-items-center justify-content-between'>
         <div className='fw-medium fs-16 text-gray-900'>{titleDebt}</div>
         <Input
