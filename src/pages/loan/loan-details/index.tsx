@@ -190,7 +190,7 @@ const LoanDetails = () => {
         </div>
       </DetailsHeader>
 
-      <div className='d-flex flex-column flex-grow-1 overflow-auto'>
+      <div className='d-flex flex-column flex-grow-1 overflow-auto gap-12px'>
         <Remarks
           open={showRemark}
           data={remarkList}
