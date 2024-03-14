@@ -16,7 +16,6 @@ import TopBarProgress from 'react-topbar-progress-indicator'
 import Home from '@/pages/home'
 import {WithChildren} from '@/app/types'
 import Profile from '@/pages/profile'
-import LoanDetailsPortal from '@/pages/loan-portal'
 import DebtLayout from '@/layouts/debt-layout'
 import {useAuth} from '@/app/context/AuthContext'
 import {AuthLayout} from '@/components/auth-layout/AuthLayout'
@@ -27,6 +26,7 @@ import DebtListToDo from '@/pages/debt-collector/to-do/ToDoList'
 import Statistical from '../pages/debt-collector/statistical/Statistical'
 import LoanDetails from '@/pages/loan/loan-details'
 import WorkDone from '@/pages/debt-collector/done/WorkDone'
+import LoanDetailsPortal from '@/pages/loan-portal'
 
 /**
  * Base URL of the website.
